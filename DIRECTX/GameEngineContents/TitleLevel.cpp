@@ -1,5 +1,6 @@
 #include "PreCompile.h"
 #include "TitleLevel.h"
+#include <functional>
 #include "Background.h"
 #include "Enums.h"
 #include <GameEngineCore/GEngine.h>
@@ -41,19 +42,17 @@ void TitleLevel::Start()
 
 	{
 		Background* Cuphead = CreateActor<Background>(GameObjectGroup::UI);
-		GameEngineTextureRenderer* Renderer = Cuphead->CreateComponent<GameEngineTextureRenderer>();
-		Renderer->GetTransform().SetLocalScale({ 313,544,100 });
-		Renderer->CreateFrameAnimationFolder("Cuphead", FrameAnimation_DESC("Cuphead", 0.1f));
-		Renderer->ChangeFrameAnimation("Cuphead");
-		Renderer->GetTransform().SetLocalPosition({ -320,-20,0 });
+		CupheadRenderer = Cuphead->CreateComponent<GameEngineTextureRenderer>();
+		CupheadRenderer->GetTransform().SetLocalScale({ 313,544,100 });
+		CupheadRenderer->CreateFrameAnimationFolder("Cuphead", FrameAnimation_DESC("Cuphead", 0.1f));
+		CupheadRenderer->ChangeFrameAnimation("Cuphead");
+		//CupheadRenderer->AnimationBindEnd("Cuphead", std::bind(&TitleLevel::Test, this, std::placeholders::_1));
+		CupheadRenderer->GetTransform().SetLocalPosition({ -320,-20,0 });
 	}
 
 	{
 		Background* Mugman = CreateActor<Background>(GameObjectGroup::UI);
 		GameEngineTextureRenderer* Renderer = Mugman->CreateComponent<GameEngineTextureRenderer>();
-		//Renderer->GetTransform().SetLocalScale({ -315,560,100 });
-		//Renderer->CreateFrameAnimationFolder("MugmanB", FrameAnimation_DESC("Mugman", 0.1f));
-
 		Renderer->GetTransform().SetLocalScale({ 315,560,100 });
 		Renderer->CreateFrameAnimationFolder("MugmanA", FrameAnimation_DESC("Mugman", 0.1f));
 		Renderer->GetTransform().SetLocalPosition({ 305,-24,0 });
@@ -70,15 +69,6 @@ void TitleLevel::Start()
 		Renderer->SetTexture("TitleChipsLeft.png");
 	}
 
-	{		
-		Background* Iris = CreateActor<Background>(GameObjectGroup::UI);
-		IrisRenderer = Iris->CreateComponent<GameEngineTextureRenderer>();
-		IrisRenderer->GetTransform().SetLocalScale({ 1280,720,100 });
-		IrisRenderer->CreateFrameAnimationFolder("IrisBStart", FrameAnimation_DESC("IrisB", 0.1f));
-		IrisRenderer->CreateFrameAnimationFolder("IrisB", FrameAnimation_DESC("IrisB",0,0, 0.1f,true));
-		IrisRenderer->ChangeFrameAnimation("IrisB");
-	}
-
 	{
 		Background* Button = CreateActor<Background>(GameObjectGroup::UI);
 		GameEngineTextureRenderer* Renderer = Button->CreateComponent<GameEngineTextureRenderer>();
@@ -87,10 +77,22 @@ void TitleLevel::Start()
 		Renderer->ChangeFrameAnimation("Press");
 		Renderer->GetTransform().SetLocalPosition({ 0,-293,0 });
 	}
+
+	{		
+		Background* Iris = CreateActor<Background>(GameObjectGroup::UI);
+		IrisRenderer = Iris->CreateComponent<GameEngineTextureRenderer>();
+		IrisRenderer->GetTransform().SetLocalScale({ 1280,720,100 });
+		IrisRenderer->CreateFrameAnimationFolder("IrisBStart", FrameAnimation_DESC("IrisB", 0.1f));
+		IrisRenderer->AnimationBindEnd("IrisBStart", std::bind(&TitleLevel::EndIrisAnimation, this, std::placeholders::_1));
+		IrisRenderer->CreateFrameAnimationFolder("IrisB", FrameAnimation_DESC("IrisB",0,0, 0.1f,true));
+		IrisRenderer->ChangeFrameAnimation("IrisB");
+	}
+
 }
 
-void ChangeLocalScale(FrameAnimation_DESC _Info)
+void TitleLevel::EndIrisAnimation(FrameAnimation_DESC _Info)
 {
+	GEngine::ChangeLevel("Select");
 }
 
 void TitleLevel::Update(float _DeltaTime)
@@ -98,8 +100,6 @@ void TitleLevel::Update(float _DeltaTime)
 	if (true == GameEngineInput::GetInst()->IsDown("LevelChange"))
 	{
 		IrisRenderer->ChangeFrameAnimation("IrisBStart");
-
-		GEngine::ChangeLevel("Select");
 	}
 }
 

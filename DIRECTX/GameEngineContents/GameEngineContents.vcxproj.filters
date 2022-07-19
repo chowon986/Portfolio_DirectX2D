@@ -126,6 +126,9 @@
     <ClInclude Include="IEvatiable.h">
       <Filter>Actor\Interface</Filter>
     </ClInclude>
+    <ClInclude Include="HourglassLevel.h">
+      <Filter>Level</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp">
@@ -211,6 +214,9 @@
     </ClCompile>
     <ClCompile Include="IEvatiable.cpp">
       <Filter>Actor\Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="HourglassLevel.cpp">
+      <Filter>Level</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

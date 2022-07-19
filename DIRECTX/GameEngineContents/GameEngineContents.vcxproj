@@ -164,6 +164,7 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="Enums.h" />
+    <ClInclude Include="HourglassLevel.h" />
     <ClInclude Include="IAimable.h" />
     <ClInclude Include="IDamageable.h" />
     <ClInclude Include="IDashable.h" />
@@ -206,6 +207,7 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="HourglassLevel.cpp" />
     <ClCompile Include="IAimable.cpp" />
     <ClCompile Include="IDamageable.cpp" />
     <ClCompile Include="IDashable.cpp" />

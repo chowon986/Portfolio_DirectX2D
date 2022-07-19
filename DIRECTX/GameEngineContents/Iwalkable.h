@@ -12,6 +12,8 @@ public:
 	IWalkable& operator=(const IWalkable& _Other) = delete;
 	IWalkable& operator=(IWalkable&& _Other) noexcept = delete;
 
+protected:
+	virtual void Walk() = 0;
 private:
 };
 

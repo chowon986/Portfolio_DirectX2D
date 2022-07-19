@@ -5,6 +5,7 @@
 #include "GameEngineContents/BeforeTitleLevel.h"
 #include "GameEngineContents/SelectLevel.h"
 #include <GameEngineContents/WorldMapLevel.h>
+#include <GameEngineContents/HourglassLevel.h>
 
 #pragma comment(lib, "GameEngineBase.lib")
 
@@ -94,7 +95,11 @@ void ContentsCore::Start()
 	Dir.MoveParent();	
 	Dir.MoveParent();	
 	Dir.MoveParent();
-	Dir.Move("13WorldMapLevel");
+	Dir.Move("13HourglassLevel");
+	GameEngineFolderTexture::Load(Dir.GetFullPath());
+
+	Dir.MoveParent();
+	Dir.Move("14WorldMapLevel");
 	std::vector<GameEngineFile> Shaders3 = Dir.GetAllFile();
 
 	for (size_t i = 0; i < Shaders3.size(); i++)
@@ -102,18 +107,25 @@ void ContentsCore::Start()
 		GameEngineTexture::Load(Shaders3[i].GetFullPath());
 	}
 
+	Dir.Move("WaterLine");
+	GameEngineFolderTexture::Load(Dir.GetFullPath());
+
+	Dir.MoveParent();
 	Dir.Move("WorldMapCharacter");
 	Dir.Move("Cuphead");
 	Dir.Move("Idle");
 	Dir.Move("DownA");
 	GameEngineFolderTexture::Load(Dir.GetFullPath());
 
+
+
 	CreateLevel<BeforeTitleLevel>("BeforeTitle");
 	CreateLevel<TitleLevel>("Title");
 	CreateLevel<SelectLevel>("Select");
+	CreateLevel<HourglassLevel>("Hourglass");
 	CreateLevel<WorldMapLevel>("WorldMap");
 	CreateLevel<PlayLevel>("Play");
-	ChangeLevel("WorldMap");
+	ChangeLevel("Hourglass");
 
 }
 

@@ -8,3 +8,4 @@ IWalkable::IWalkable()
 IWalkable::~IWalkable()
 {
 }
+

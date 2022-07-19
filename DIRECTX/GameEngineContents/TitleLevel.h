@@ -22,6 +22,10 @@ protected:
 	void End() override;
 
 private:
+	void EndIrisAnimation(FrameAnimation_DESC _Info);
+
+private:
 	GameEngineTextureRenderer* IrisRenderer;
+	GameEngineTextureRenderer* CupheadRenderer;
 };
 

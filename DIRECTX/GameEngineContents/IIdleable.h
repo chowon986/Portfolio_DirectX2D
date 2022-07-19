@@ -12,6 +12,9 @@ public:
 	IIdleable& operator=(const IIdleable& _Other) = delete;
 	IIdleable& operator=(IIdleable&& _Other) noexcept = delete;
 
+protected:
+	virtual void Idle() = 0;
+
 private:
 };
 

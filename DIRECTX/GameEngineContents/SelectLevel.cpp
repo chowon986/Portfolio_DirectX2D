@@ -41,18 +41,7 @@ void SelectLevel::Start()
 		OptionRenderer->GetTransform().SetLocalScale({ 61,128,100 });
 		OptionRenderer->GetTransform().SetLocalPosition({ 0,100,0 });
 		OptionRenderer->SetTexture("Start.png");
-	}
-
-	{
-		Background* OptionUI = CreateActor<Background>(GameObjectGroup::UI);
-		GameEngineTextureRenderer* Renderer = OptionUI->CreateComponent<GameEngineTextureRenderer>();
-		Renderer->GetTransform().SetLocalScale({ 595,586,100 });
-		Renderer->SetTexture("slot_selection_bg.png");
-	}
-
-
-
-	
+	}	
 }
 
 void SelectLevel::Update(float _DeltaTime)
@@ -63,7 +52,6 @@ void SelectLevel::Update(float _DeltaTime)
 
 	if (true == GameEngineInput::GetInst()->IsDown("LevelChange"))
 	{
-
 	}
 
 	if (true == GameEngineInput::GetInst()->IsDown("MoveDown"))
@@ -90,7 +78,7 @@ void SelectLevel::Update(float _DeltaTime)
 
 	if (true == GameEngineInput::GetInst()->IsDown("LevelChange"))
 	{
-		GEngine::ChangeLevel("WorldMap");
+		GEngine::ChangeLevel("Hourglass");
 	}
 }
 

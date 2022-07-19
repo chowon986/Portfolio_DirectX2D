@@ -15,6 +15,11 @@ BeforeTitleLevel::~BeforeTitleLevel()
 {
 }
 
+void BeforeTitleLevel::EndHDMRAnimation(FrameAnimation_DESC _Info)
+{
+	GEngine::ChangeLevel("Title");
+}
+
 void BeforeTitleLevel::Start()
 {
 
@@ -26,16 +31,15 @@ void BeforeTitleLevel::Start()
 		Background* MDHRLogo = CreateActor<Background>(GameObjectGroup::UI);
 		GameEngineTextureRenderer* Renderer = MDHRLogo->CreateComponent<GameEngineTextureRenderer>();
 		Renderer->GetTransform().SetLocalScale({ 1280,720,100 });
-		Renderer->CreateFrameAnimationFolder("BeforeTitle", FrameAnimation_DESC("10BeforeTitleLevel", 0.1f));
+		Renderer->CreateFrameAnimationFolder("BeforeTitle", FrameAnimation_DESC("10BeforeTitleLevel", 0.05f));
+		Renderer->AnimationBindEnd("BeforeTitle", std::bind(&BeforeTitleLevel::EndHDMRAnimation, this, std::placeholders::_1));
 		Renderer->ChangeFrameAnimation("BeforeTitle");
+
 	}
 }
 
 void BeforeTitleLevel::Update(float _DeltaTime)
 {
-	// 랜더러의 애니메이션이 끝나면
-	// GEngine::ChangeLevel("Title");
-
 	if (true == GameEngineInput::GetInst()->IsDown("LevelChange"))
 	{
 		GEngine::ChangeLevel("Title");
