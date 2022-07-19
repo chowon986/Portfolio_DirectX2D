@@ -1,10 +1,7 @@
 #include "PreCompile.h"
 #include "PlayLevel.h"
-#include "GlobalContentsValue.h"
 #include <GameEngineCore/GameEngineCameraActor.h>
 #include <GameEngineBase/GameEngineInput.h>
-#include "Player.h"
-#include "Monster.h"
 
 PlayLevel::PlayLevel() 
 {
@@ -39,23 +36,22 @@ void PlayLevel::Start()
 	}
 
 
-	//Player* NewPlayer;
 
-	//{
-	//	NewPlayer = CreateActor<Player>(OBJECTORDER::Player);
-	//}
+	{
+		//NewPlayer = CreateActor<Player>(OBJECTORDER::Player);
+	}
 
-	//{
-	//	Monster* actor = CreateActor<Monster>(OBJECTORDER::Monster);
-	//	actor->GetTransform().SetLocalPosition({ 300.0f, 0.0f, 0.0f });
-	//	actor->GetTransform().SetWorldScale(float4(50.0f, 50.f, 50.0f));
-	//	actor->SetParent(NewPlayer);
-	//}
-
-
+	{
+		//Monster* actor = CreateActor<Monster>(OBJECTORDER::Monster);
+		//actor->GetTransform().SetLocalPosition({ 300.0f, 0.0f, 0.0f });
+		//actor->GetTransform().SetWorldScale(float4(50.0f, 50.f, 50.0f));
+		//actor->SetParent(NewPlayer);
+	}
 }
 void PlayLevel::Update(float _DeltaTime) 
 {
+	// Game
+
 	if(true == GameEngineInput::GetInst()->IsPress("CamLeft"))
 	{
 		GetMainCameraActorTransform().SetLocalMove(-GetMainCameraActorTransform().GetRightVector() * 100 * _DeltaTime);

@@ -22,38 +22,195 @@
     <Filter Include="PreCompile">
       <UniqueIdentifier>{439c0504-814e-4f90-8507-3f4dacd0226c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Level\Title">
+      <UniqueIdentifier>{f61f50c3-27b3-47b5-ac84-8c5854cfa3e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Level\Play">
+      <UniqueIdentifier>{e2a73822-3a6e-4199-9294-e2096fc9417f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\Play\WorldMap">
+      <UniqueIdentifier>{d78df34a-eff3-49ab-afe2-4970c759bb9c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\Interface">
+      <UniqueIdentifier>{296d9911-0422-4af8-93cf-71970832f740}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\Base">
+      <UniqueIdentifier>{cef3b890-fc1f-4cc3-999c-f2ee3bc1998f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ContentsCore.h">
       <Filter>Contents</Filter>
     </ClInclude>
-    <ClInclude Include="TitleLevel.h">
-      <Filter>Level</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayLevel.h">
-      <Filter>Level</Filter>
-    </ClInclude>
     <ClInclude Include="Enums.h">
       <Filter>Global</Filter>
     </ClInclude>
-    <ClInclude Include="GlobalContentsValue.h" />
     <ClInclude Include="PreCompile.h">
       <Filter>PreCompile</Filter>
+    </ClInclude>
+    <ClInclude Include="Background.h">
+      <Filter>Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="BeforeTitleLevel.h">
+      <Filter>Level\Title</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleLevel.h">
+      <Filter>Level\Title</Filter>
+    </ClInclude>
+    <ClInclude Include="SelectLevel.h">
+      <Filter>Level\Title</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldMapLevel.h">
+      <Filter>Level\Play</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayLevel.h">
+      <Filter>Level\Play</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldMapCuphead.h">
+      <Filter>Actor\Play\WorldMap</Filter>
+    </ClInclude>
+    <ClInclude Include="IWalkable.h">
+      <Filter>Actor\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="IDashable.h">
+      <Filter>Actor\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="IJumpable.h">
+      <Filter>Actor\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="IDoubleJumpable.h">
+      <Filter>Actor\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="IShootable.h">
+      <Filter>Actor\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="IRunable.h">
+      <Filter>Actor\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="IParriable.h">
+      <Filter>Actor\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="IPreparable.h">
+      <Filter>Actor\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="IIdleable.h">
+      <Filter>Actor\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="IAimable.h">
+      <Filter>Actor\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="IDuckable.h">
+      <Filter>Actor\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="IDieable.h">
+      <Filter>Actor\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="ISpecialAttackable.h">
+      <Filter>Actor\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="ISuperIIIAttackable.h">
+      <Filter>Actor\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="ISuperIAttackable.h">
+      <Filter>Actor\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="ISuperIIAttackable.h">
+      <Filter>Actor\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="IDamageable.h">
+      <Filter>Actor\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="IWorldMapCharacterBase.h">
+      <Filter>Actor\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="IEvatiable.h">
+      <Filter>Actor\Interface</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp">
       <Filter>Contents</Filter>
     </ClCompile>
-    <ClCompile Include="TitleLevel.cpp">
-      <Filter>Level</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayLevel.cpp">
-      <Filter>Level</Filter>
-    </ClCompile>
-    <ClCompile Include="GlobalContentsValue.cpp" />
     <ClCompile Include="PreCompile.cpp">
       <Filter>PreCompile</Filter>
+    </ClCompile>
+    <ClCompile Include="Background.cpp">
+      <Filter>Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="BeforeTitleLevel.cpp">
+      <Filter>Level\Title</Filter>
+    </ClCompile>
+    <ClCompile Include="TitleLevel.cpp">
+      <Filter>Level\Title</Filter>
+    </ClCompile>
+    <ClCompile Include="SelectLevel.cpp">
+      <Filter>Level\Title</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayLevel.cpp">
+      <Filter>Level\Play</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldMapLevel.cpp">
+      <Filter>Level\Play</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldMapCuphead.cpp">
+      <Filter>Actor\Play\WorldMap</Filter>
+    </ClCompile>
+    <ClCompile Include="IWalkable.cpp">
+      <Filter>Actor\Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="IDashable.cpp">
+      <Filter>Actor\Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="IJumpable.cpp">
+      <Filter>Actor\Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="IDoubleJumpable.cpp">
+      <Filter>Actor\Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="IShootable.cpp">
+      <Filter>Actor\Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="IRunable.cpp">
+      <Filter>Actor\Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="IParriable.cpp">
+      <Filter>Actor\Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="IPreparable.cpp">
+      <Filter>Actor\Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="IIdleable.cpp">
+      <Filter>Actor\Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="IAimable.cpp">
+      <Filter>Actor\Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="IDuckable.cpp">
+      <Filter>Actor\Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="IDieable.cpp">
+      <Filter>Actor\Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="ISpecialAttackable.cpp">
+      <Filter>Actor\Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="ISuperIAttackable.cpp">
+      <Filter>Actor\Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="ISuperIIAttackable.cpp">
+      <Filter>Actor\Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="ISuperIIIAttackable.cpp">
+      <Filter>Actor\Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="IDamageable.cpp">
+      <Filter>Actor\Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="IWorldMapCharacterBase.cpp">
+      <Filter>Actor\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="IEvatiable.cpp">
+      <Filter>Actor\Interface</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

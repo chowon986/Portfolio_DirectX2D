@@ -96,6 +96,18 @@
     <ClInclude Include="ThirdParty\inc\DirectXTex.h">
       <Filter>ThirdParty\Inc</Filter>
     </ClInclude>
+    <ClInclude Include="GameEngineSampler.h">
+      <Filter>Resources\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEngineTextureRenderer.h">
+      <Filter>Object\Component\Rendering\Content</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEngineFolderTexture.h">
+      <Filter>Resources\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEngineDepthStencilTexture.h">
+      <Filter>Resources\OutputMerger</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameEngineActor.cpp">
@@ -192,6 +204,18 @@
     <ClCompile Include="GameEngineShaderResourcesHelper.cpp">
       <Filter>Object\Component\Rendering</Filter>
     </ClCompile>
+    <ClCompile Include="GameEngineSampler.cpp">
+      <Filter>Resources\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEngineTextureRenderer.cpp">
+      <Filter>Object\Component\Rendering\Content</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEngineFolderTexture.cpp">
+      <Filter>Resources\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEngineDepthStencilTexture.cpp">
+      <Filter>Resources\OutputMerger</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Object">
@@ -253,6 +277,9 @@
     </Filter>
     <Filter Include="ThirdParty\Lib\Release">
       <UniqueIdentifier>{56d71c1c-436d-4163-9012-2ec0a5301f4d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Component\Rendering\Content">
+      <UniqueIdentifier>{f47c5ad2-dcc6-4f7d-95c5-8a49c834fb25}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

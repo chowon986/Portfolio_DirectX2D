@@ -157,15 +157,32 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Background.h" />
+    <ClInclude Include="BeforeTitleLevel.h" />
     <ClInclude Include="ContentsCore.h">
       <SubType>
       </SubType>
     </ClInclude>
     <ClInclude Include="Enums.h" />
-    <ClInclude Include="GlobalContentsValue.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
+    <ClInclude Include="IAimable.h" />
+    <ClInclude Include="IDamageable.h" />
+    <ClInclude Include="IDashable.h" />
+    <ClInclude Include="IDieable.h" />
+    <ClInclude Include="IDoubleJumpable.h" />
+    <ClInclude Include="IDuckable.h" />
+    <ClInclude Include="IEvatiable.h" />
+    <ClInclude Include="IIdleable.h" />
+    <ClInclude Include="IJumpable.h" />
+    <ClInclude Include="IParriable.h" />
+    <ClInclude Include="IPreparable.h" />
+    <ClInclude Include="IRunable.h" />
+    <ClInclude Include="IShootable.h" />
+    <ClInclude Include="ISpecialAttackable.h" />
+    <ClInclude Include="ISuperIAttackable.h" />
+    <ClInclude Include="ISuperIIAttackable.h" />
+    <ClInclude Include="ISuperIIIAttackable.h" />
+    <ClInclude Include="IWalkable.h" />
+    <ClInclude Include="IWorldMapCharacterBase.h" />
     <ClInclude Include="PlayLevel.h">
       <SubType>
       </SubType>
@@ -174,20 +191,40 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="SelectLevel.h" />
     <ClInclude Include="TitleLevel.h">
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="WorldMapCuphead.h" />
+    <ClInclude Include="WorldMapLevel.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Background.cpp" />
+    <ClCompile Include="BeforeTitleLevel.cpp" />
     <ClCompile Include="ContentsCore.cpp">
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="GlobalContentsValue.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
+    <ClCompile Include="IAimable.cpp" />
+    <ClCompile Include="IDamageable.cpp" />
+    <ClCompile Include="IDashable.cpp" />
+    <ClCompile Include="IDieable.cpp" />
+    <ClCompile Include="IDoubleJumpable.cpp" />
+    <ClCompile Include="IDuckable.cpp" />
+    <ClCompile Include="IEvatiable.cpp" />
+    <ClCompile Include="IIdleable.cpp" />
+    <ClCompile Include="IJumpable.cpp" />
+    <ClCompile Include="IParriable.cpp" />
+    <ClCompile Include="IPreparable.cpp" />
+    <ClCompile Include="IRunable.cpp" />
+    <ClCompile Include="IShootable.cpp" />
+    <ClCompile Include="ISpecialAttackable.cpp" />
+    <ClCompile Include="ISuperIAttackable.cpp" />
+    <ClCompile Include="ISuperIIAttackable.cpp" />
+    <ClCompile Include="ISuperIIIAttackable.cpp" />
+    <ClCompile Include="IWalkable.cpp" />
+    <ClCompile Include="IWorldMapCharacterBase.cpp" />
     <ClCompile Include="PlayLevel.cpp">
       <SubType>
       </SubType>
@@ -198,10 +235,13 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="SelectLevel.cpp" />
     <ClCompile Include="TitleLevel.cpp">
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="WorldMapCuphead.cpp" />
+    <ClCompile Include="WorldMapLevel.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

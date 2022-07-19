@@ -1,10 +1,11 @@
 #include "PreCompile.h"
 #include "GameEngineTexture.h"
 
-GameEngineTexture::GameEngineTexture() 
+GameEngineTexture::GameEngineTexture()
 	: Texture2D(nullptr)
 	, RenderTargetView(nullptr)
 	, ShaderResourceView(nullptr)
+	, Metadata()
 {
 }
 
@@ -99,10 +100,73 @@ void GameEngineTexture::TextureLoad(const std::string& _Path)
 
 void GameEngineTexture::VSSetting(int _BindPoint)
 {
+	if (nullptr == ShaderResourceView)
+	{
+		MsgBoxAssert("존재하지 않는 텍스처를 사용할 수 없습니다.");
+	}
+
 	GameEngineDevice::GetContext()->VSSetShaderResources(_BindPoint, 1, &ShaderResourceView);
 }
 
 void GameEngineTexture::PSSetting(int _BindPoint)
 {
+	if (nullptr == ShaderResourceView)
+	{
+		MsgBoxAssert("존재하지 않는 텍스처를 사용할 수 없습니다.");
+	}
+
 	GameEngineDevice::GetContext()->PSSetShaderResources(_BindPoint, 1, &ShaderResourceView);
+}
+
+void GameEngineTexture::Cut(const std::string& _Name, UINT _X, UINT _Y)
+{
+	GameEngineTexture* Texture = Find(_Name);
+
+	if (nullptr == Texture)
+	{
+		MsgBoxAssert("존재하지 않는 텍스처를 자르려고 했습니다.");
+		return;
+	}
+
+	Texture->Cut(_X, _Y);
+}
+
+void GameEngineTexture::Cut(UINT _X, UINT _Y)
+{
+	float SizeX = 1.0f / _X;
+	float SizeY = 1.0f / _Y;
+
+	float4 Start = float4::ZERO;
+
+	for (size_t y = 0; y < _Y; y++)
+	{
+		for (size_t x = 0; x < _X; x++)
+		{
+
+			float4 FrameData;
+
+			FrameData.PosX = Start.x;
+			FrameData.PosY = Start.y;
+			FrameData.SizeX = SizeX;
+			FrameData.SizeY = SizeY;
+			CutData.push_back(FrameData);
+			Start.x += SizeX;
+		}
+
+		Start.x = 0.0f;
+		Start.y += SizeY;
+	}
+}
+
+void GameEngineTexture::TextureCreate(const D3D11_TEXTURE2D_DESC& _Desc)
+{
+	Desc = _Desc;
+
+	GameEngineDevice::GetDevice()->CreateTexture2D(&Desc, nullptr, &Texture2D);
+
+	if (nullptr == Texture2D)
+	{
+		MsgBoxAssert("텍스처 생성에 실패했습니다.");
+		return;
+	}
 }
