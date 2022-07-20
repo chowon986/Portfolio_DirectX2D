@@ -158,7 +158,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Background.h" />
+    <ClInclude Include="Bakery.h" />
     <ClInclude Include="BeforeTitleLevel.h" />
+    <ClInclude Include="Boatman.h" />
+    <ClInclude Include="Catus.h" />
     <ClInclude Include="ContentsCore.h">
       <SubType>
       </SubType>
@@ -174,6 +177,7 @@
     <ClInclude Include="IEvatiable.h" />
     <ClInclude Include="IIdleable.h" />
     <ClInclude Include="IJumpable.h" />
+    <ClInclude Include="INonPlayerCharacterBase.h" />
     <ClInclude Include="IParriable.h" />
     <ClInclude Include="IPreparable.h" />
     <ClInclude Include="IRunable.h" />
@@ -182,8 +186,13 @@
     <ClInclude Include="ISuperIAttackable.h" />
     <ClInclude Include="ISuperIIAttackable.h" />
     <ClInclude Include="ISuperIIIAttackable.h" />
+    <ClInclude Include="ITalkable.h" />
     <ClInclude Include="IWalkable.h" />
     <ClInclude Include="IWorldMapCharacterBase.h" />
+    <ClInclude Include="Ladder.h" />
+    <ClInclude Include="Lantern.h" />
+    <ClInclude Include="NewsCat.h" />
+    <ClInclude Include="Pickaxe.h" />
     <ClInclude Include="PlayLevel.h">
       <SubType>
       </SubType>
@@ -193,6 +202,8 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="SelectLevel.h" />
+    <ClInclude Include="Shop.h" />
+    <ClInclude Include="Shovel.h" />
     <ClInclude Include="TitleLevel.h">
       <SubType>
       </SubType>
@@ -202,7 +213,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Background.cpp" />
+    <ClCompile Include="Bakery.cpp" />
     <ClCompile Include="BeforeTitleLevel.cpp" />
+    <ClCompile Include="Boatman.cpp" />
+    <ClCompile Include="Catus.cpp" />
     <ClCompile Include="ContentsCore.cpp">
       <SubType>
       </SubType>
@@ -217,6 +231,7 @@
     <ClCompile Include="IEvatiable.cpp" />
     <ClCompile Include="IIdleable.cpp" />
     <ClCompile Include="IJumpable.cpp" />
+    <ClCompile Include="INonPlayerCharacterBase.cpp" />
     <ClCompile Include="IParriable.cpp" />
     <ClCompile Include="IPreparable.cpp" />
     <ClCompile Include="IRunable.cpp" />
@@ -225,8 +240,13 @@
     <ClCompile Include="ISuperIAttackable.cpp" />
     <ClCompile Include="ISuperIIAttackable.cpp" />
     <ClCompile Include="ISuperIIIAttackable.cpp" />
+    <ClCompile Include="ITalkable.cpp" />
     <ClCompile Include="IWalkable.cpp" />
     <ClCompile Include="IWorldMapCharacterBase.cpp" />
+    <ClCompile Include="Ladder.cpp" />
+    <ClCompile Include="Lantern.cpp" />
+    <ClCompile Include="NewsCat.cpp" />
+    <ClCompile Include="Pickaxe.cpp" />
     <ClCompile Include="PlayLevel.cpp">
       <SubType>
       </SubType>
@@ -238,6 +258,8 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="SelectLevel.cpp" />
+    <ClCompile Include="Shop.cpp" />
+    <ClCompile Include="Shovel.cpp" />
     <ClCompile Include="TitleLevel.cpp">
       <SubType>
       </SubType>

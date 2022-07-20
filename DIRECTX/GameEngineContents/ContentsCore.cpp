@@ -29,10 +29,13 @@ void ContentsCore::Start()
 	Dir.MoveParentToExitsChildDirectory("ConstantResources");
 	Dir.Move("ConstantResources");
 	Dir.Move("Texture");
-	Dir.Move("10BeforeTitleLevel");
-	GameEngineFolderTexture::Load(Dir.GetFullPath());
 
-	Dir.MoveParent();
+	std::vector<GameEngineDirectory> RecursiveDir = Dir.GetRecursiveAllDirectory();
+	for (GameEngineDirectory Dir : RecursiveDir)
+	{
+		GameEngineFolderTexture::Load(Dir.GetFullPath());
+	}
+
 	Dir.Move("11TitleLevel");
 	std::vector<GameEngineFile> Shaders = Dir.GetAllFile();
 
@@ -41,28 +44,6 @@ void ContentsCore::Start()
 		GameEngineTexture::Load(Shaders[i].GetFullPath());
 	}
 
-	Dir.Move("Cuphead");
-	GameEngineFolderTexture::Load(Dir.GetFullPath());
-
-	Dir.MoveParent();
-	Dir.Move("Mugman");
-	GameEngineFolderTexture::Load(Dir.GetFullPath());
-
-	Dir.MoveParent();
-	Dir.Move("Chalice");
-	GameEngineFolderTexture::Load(Dir.GetFullPath());
-
-	Dir.MoveParent();
-	Dir.MoveParent();
-	Dir.Move("00Iris");
-	Dir.Move("IrisA");
-	GameEngineFolderTexture::Load(Dir.GetFullPath());
-
-	Dir.MoveParent();
-	Dir.Move("IrisB");
-	GameEngineFolderTexture::Load(Dir.GetFullPath());
-
-	Dir.MoveParent();
 	Dir.MoveParent();
 	Dir.Move("12SelectLevel");
 	std::vector<GameEngineFile> Shaders2 = Dir.GetAllFile();
@@ -71,32 +52,6 @@ void ContentsCore::Start()
 	{
 		GameEngineTexture::Load(Shaders2[i].GetFullPath());
 	}
-
-	Dir.Move("PressAnyKey");
-	GameEngineFolderTexture::Load(Dir.GetFullPath());
-	
-	Dir.MoveParent();
-	Dir.Move("Option");
-	Dir.Move("Start");
-	GameEngineFolderTexture::Load(Dir.GetFullPath());
-
-	Dir.MoveParent();
-	Dir.Move("Option");
-	GameEngineFolderTexture::Load(Dir.GetFullPath());
-
-	Dir.MoveParent();
-	Dir.Move("DLC");
-	GameEngineFolderTexture::Load(Dir.GetFullPath());
-
-	Dir.MoveParent();
-	Dir.Move("End");
-	GameEngineFolderTexture::Load(Dir.GetFullPath());
-
-	Dir.MoveParent();	
-	Dir.MoveParent();	
-	Dir.MoveParent();
-	Dir.Move("13HourglassLevel");
-	GameEngineFolderTexture::Load(Dir.GetFullPath());
 
 	Dir.MoveParent();
 	Dir.Move("14WorldMapLevel");
@@ -107,26 +62,13 @@ void ContentsCore::Start()
 		GameEngineTexture::Load(Shaders3[i].GetFullPath());
 	}
 
-	Dir.Move("WaterLine");
-	GameEngineFolderTexture::Load(Dir.GetFullPath());
-
-	Dir.MoveParent();
-	Dir.Move("WorldMapCharacter");
-	Dir.Move("Cuphead");
-	Dir.Move("Idle");
-	Dir.Move("DownA");
-	GameEngineFolderTexture::Load(Dir.GetFullPath());
-
-
-
 	CreateLevel<BeforeTitleLevel>("BeforeTitle");
 	CreateLevel<TitleLevel>("Title");
 	CreateLevel<SelectLevel>("Select");
 	CreateLevel<HourglassLevel>("Hourglass");
 	CreateLevel<WorldMapLevel>("WorldMap");
 	CreateLevel<PlayLevel>("Play");
-	ChangeLevel("Hourglass");
-
+	ChangeLevel("WorldMap");
 }
 
 void ContentsCore::Update(float _DeltaTime)

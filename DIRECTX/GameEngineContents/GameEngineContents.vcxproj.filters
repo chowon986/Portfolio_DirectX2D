@@ -129,6 +129,39 @@
     <ClInclude Include="HourglassLevel.h">
       <Filter>Level</Filter>
     </ClInclude>
+    <ClInclude Include="ITalkable.h">
+      <Filter>Actor\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="INonPlayerCharacterBase.h">
+      <Filter>Actor\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Boatman.h">
+      <Filter>Actor\Play\WorldMap</Filter>
+    </ClInclude>
+    <ClInclude Include="Bakery.h">
+      <Filter>Actor\Play\WorldMap</Filter>
+    </ClInclude>
+    <ClInclude Include="NewsCat.h">
+      <Filter>Actor\Play\WorldMap</Filter>
+    </ClInclude>
+    <ClInclude Include="Shop.h">
+      <Filter>Actor\Play\WorldMap</Filter>
+    </ClInclude>
+    <ClInclude Include="Lantern.h">
+      <Filter>Actor\Play\WorldMap</Filter>
+    </ClInclude>
+    <ClInclude Include="Pickaxe.h">
+      <Filter>Actor\Play\WorldMap</Filter>
+    </ClInclude>
+    <ClInclude Include="Shovel.h">
+      <Filter>Actor\Play\WorldMap</Filter>
+    </ClInclude>
+    <ClInclude Include="Catus.h">
+      <Filter>Actor\Play\WorldMap</Filter>
+    </ClInclude>
+    <ClInclude Include="Ladder.h">
+      <Filter>Actor\Play\WorldMap</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp">
@@ -217,6 +250,39 @@
     </ClCompile>
     <ClCompile Include="HourglassLevel.cpp">
       <Filter>Level</Filter>
+    </ClCompile>
+    <ClCompile Include="ITalkable.cpp">
+      <Filter>Actor\Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="INonPlayerCharacterBase.cpp">
+      <Filter>Actor\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Boatman.cpp">
+      <Filter>Actor\Play\WorldMap</Filter>
+    </ClCompile>
+    <ClCompile Include="Bakery.cpp">
+      <Filter>Actor\Play\WorldMap</Filter>
+    </ClCompile>
+    <ClCompile Include="NewsCat.cpp">
+      <Filter>Actor\Play\WorldMap</Filter>
+    </ClCompile>
+    <ClCompile Include="Shop.cpp">
+      <Filter>Actor\Play\WorldMap</Filter>
+    </ClCompile>
+    <ClCompile Include="Lantern.cpp">
+      <Filter>Actor\Play\WorldMap</Filter>
+    </ClCompile>
+    <ClCompile Include="Pickaxe.cpp">
+      <Filter>Actor\Play\WorldMap</Filter>
+    </ClCompile>
+    <ClCompile Include="Shovel.cpp">
+      <Filter>Actor\Play\WorldMap</Filter>
+    </ClCompile>
+    <ClCompile Include="Catus.cpp">
+      <Filter>Actor\Play\WorldMap</Filter>
+    </ClCompile>
+    <ClCompile Include="Ladder.cpp">
+      <Filter>Actor\Play\WorldMap</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

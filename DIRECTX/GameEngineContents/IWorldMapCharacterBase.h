@@ -2,7 +2,7 @@
 #include "Iwalkable.h"
 #include "IIdleable.h"
 
-class IWorldMapCharacterBase : public IWalkable, public IIdleable
+class IWorldMapCharacterBase : public GameEngineActor, public IWalkable, public IIdleable
 {
 public:
 	// constrcuter destructer

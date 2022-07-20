@@ -10,7 +10,7 @@ enum class WorldMapCupheadState
 };
 
 class GameEngineTextureRenderer;
-class WorldMapCuphead : public IWorldMapCharacterBase, public GameEngineActor
+class WorldMapCuphead : public IWorldMapCharacterBase
 {
 public:
 	// constrcuter destructer
