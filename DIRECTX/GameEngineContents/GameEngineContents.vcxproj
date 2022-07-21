@@ -166,7 +166,9 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="Dogfight.h" />
     <ClInclude Include="Enums.h" />
+    <ClInclude Include="Ghost.h" />
     <ClInclude Include="HourglassLevel.h" />
     <ClInclude Include="IAimable.h" />
     <ClInclude Include="IDamageable.h" />
@@ -221,6 +223,8 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="Dogfight.cpp" />
+    <ClCompile Include="Ghost.cpp" />
     <ClCompile Include="HourglassLevel.cpp" />
     <ClCompile Include="IAimable.cpp" />
     <ClCompile Include="IDamageable.cpp" />

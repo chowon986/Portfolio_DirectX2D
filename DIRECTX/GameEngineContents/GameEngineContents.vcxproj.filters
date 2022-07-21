@@ -162,6 +162,12 @@
     <ClInclude Include="Ladder.h">
       <Filter>Actor\Play\WorldMap</Filter>
     </ClInclude>
+    <ClInclude Include="Dogfight.h">
+      <Filter>Actor\Play\WorldMap</Filter>
+    </ClInclude>
+    <ClInclude Include="Ghost.h">
+      <Filter>Actor\Play\WorldMap</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp">
@@ -282,6 +288,12 @@
       <Filter>Actor\Play\WorldMap</Filter>
     </ClCompile>
     <ClCompile Include="Ladder.cpp">
+      <Filter>Actor\Play\WorldMap</Filter>
+    </ClCompile>
+    <ClCompile Include="Dogfight.cpp">
+      <Filter>Actor\Play\WorldMap</Filter>
+    </ClCompile>
+    <ClCompile Include="Ghost.cpp">
       <Filter>Actor\Play\WorldMap</Filter>
     </ClCompile>
   </ItemGroup>

@@ -1,5 +1,6 @@
 #pragma once
 #include <GameEngineCore/GameEngineLevel.h>
+#include <string>
 
 // Ό³Έν :
 class GameEngineTextureRenderer;
@@ -23,5 +24,29 @@ protected:
 
 private:
 	GameEngineTextureRenderer* OptionRenderer;
+	GameEngineTextureRenderer* SelectScreenRenderer;
+	GameEngineTextureRenderer* RedSelectBoxRenderer;
+	GameEngineTextureRenderer* SelectOutlineRenderer1;
+	GameEngineTextureRenderer* SelectOutlineRenderer2;
+	GameEngineTextureRenderer* SelectOutlineRenderer3;
+	GameEngineTextureRenderer* LetterRenderer;
+	GameEngineTextureRenderer* BlackLetterRenderer1;
+	GameEngineTextureRenderer* BlackLetterRenderer2;
+	GameEngineTextureRenderer* SelectPlayerRenderer;
+	GameEngineTextureRenderer* PlayerARenderer;
+	GameEngineTextureRenderer* PlayerBRenderer;
+	std::string OptionNumber;
+	int Num;
+	int SelectBlockNum;
+	bool SelectOptionOn;
+	bool SelectDataOn;
+	bool SelectCharacterOn;
+	bool OnceCheck;
+	bool CupheadOn;
+	bool MugmanOn;
+	float DeltaTime;
+
+private:
+	void EndAnimation(FrameAnimation_DESC _Info);
 };
 

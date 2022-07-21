@@ -68,7 +68,7 @@ void ContentsCore::Start()
 	CreateLevel<HourglassLevel>("Hourglass");
 	CreateLevel<WorldMapLevel>("WorldMap");
 	CreateLevel<PlayLevel>("Play");
-	ChangeLevel("WorldMap");
+	ChangeLevel("Select");
 }
 
 void ContentsCore::Update(float _DeltaTime)
