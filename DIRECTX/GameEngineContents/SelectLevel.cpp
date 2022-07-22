@@ -53,7 +53,7 @@ void SelectLevel::Start()
 	{
 		Background* SelectBackground = CreateActor<Background>(GameObjectGroup::UI);
 		GameEngineTextureRenderer* Renderer = SelectBackground->CreateComponent<GameEngineTextureRenderer>();
-		Renderer->GetTransform().SetLocalScale({ 1280,720,100 });
+		Renderer->GetTransform().SetLocalScale({ 1280,720,1 });
 		Renderer->SetTexture("SelectBackground.png");
 	}
 
@@ -62,53 +62,53 @@ void SelectLevel::Start()
 		OptionRenderer = Button->CreateComponent<GameEngineTextureRenderer>();
 		OptionRenderer->SetTexture("0.png");
 		OptionRenderer->ScaleToTexture();
-		OptionRenderer->GetTransform().SetLocalPosition({ 0,100,0 });
+		OptionRenderer->GetTransform().SetLocalPosition({ 0, 100, (int)ZOrder::UI });
 	}	
 
 	{
 		Background* SelectScreen = CreateActor<Background>(GameObjectGroup::UI);
 		SelectScreenRenderer = SelectScreen->CreateComponent<GameEngineTextureRenderer>();
 		SelectScreenRenderer->SetTexture("slot_selection_bg.png");
-		SelectScreenRenderer->GetTransform().SetLocalPosition({ 0,0,0 });
+		SelectScreenRenderer->GetTransform().SetLocalPosition({ 0,0,(int)ZOrder::UI });
 	}
 
 	{
 		Background* RedBox = CreateActor<Background>(GameObjectGroup::UI);
 		RedSelectBoxRenderer = RedBox->CreateComponent<GameEngineTextureRenderer>();
 		RedSelectBoxRenderer->SetTexture("slot_selection_box_b.png");
-		RedSelectBoxRenderer->GetTransform().SetLocalPosition({ 3,+180,0 });
+		RedSelectBoxRenderer->GetTransform().SetLocalPosition({ 3,+180,(int)ZOrder::UI });
 	}
 
 	{
 		Background* SelectOutLine = CreateActor<Background>(GameObjectGroup::UI);
 		SelectOutlineRenderer1 = SelectOutLine->CreateComponent<GameEngineTextureRenderer>();
 		SelectOutlineRenderer1->SetTexture("slot_selection_box_a.png");
-		SelectOutlineRenderer1->GetTransform().SetLocalPosition({ 0, 180, 0 });
+		SelectOutlineRenderer1->GetTransform().SetLocalPosition({ 0, 180, (int)ZOrder::UI });
 
 		SelectOutlineRenderer2 = SelectOutLine->CreateComponent<GameEngineTextureRenderer>();
 		SelectOutlineRenderer2->SetTexture("slot_selection_box_a.png");
-		SelectOutlineRenderer2->GetTransform().SetLocalPosition({ 0, 25, 0 });
+		SelectOutlineRenderer2->GetTransform().SetLocalPosition({ 0, 25, (int)ZOrder::UI });
 
 		SelectOutlineRenderer3 = SelectOutLine->CreateComponent<GameEngineTextureRenderer>();
 		SelectOutlineRenderer3->SetTexture("slot_selection_box_a.png");
-		SelectOutlineRenderer3->GetTransform().SetLocalPosition({ 0, -130, 0 });
+		SelectOutlineRenderer3->GetTransform().SetLocalPosition({ 0, -130, (int)ZOrder::UI });
 	}
 
 	{
 		Background* Letter = CreateActor<Background>(GameObjectGroup::UI);
 		LetterRenderer = Letter->CreateComponent<GameEngineTextureRenderer>();
 		LetterRenderer->SetTexture("NewGame.png");
-		LetterRenderer->GetTransform().SetLocalPosition({ 0, 180, 0 });
+		LetterRenderer->GetTransform().SetLocalPosition({ 0, 180, (int)ZOrder::UI });
 	}
 
 	{
 		Background* BlackLetter = CreateActor<Background>(GameObjectGroup::UI);
 		BlackLetterRenderer1 = BlackLetter->CreateComponent<GameEngineTextureRenderer>();
 		BlackLetterRenderer1->SetTexture("NewGameBlack.png");
-		BlackLetterRenderer1->GetTransform().SetLocalPosition({ 0, 25, 0 });
+		BlackLetterRenderer1->GetTransform().SetLocalPosition({ 0, 25, (int)ZOrder::UI });
 		BlackLetterRenderer2 = BlackLetter->CreateComponent<GameEngineTextureRenderer>();
 		BlackLetterRenderer2->SetTexture("NewGameBlack.png");
-		BlackLetterRenderer2->GetTransform().SetLocalPosition({ 0, -130, 0 });
+		BlackLetterRenderer2->GetTransform().SetLocalPosition({ 0, -130, (int)ZOrder::UI });
 	}
 
 	{
@@ -125,7 +125,7 @@ void SelectLevel::Start()
 		PlayerARenderer->AnimationBindEnd("SelectCupheadOk", std::bind(&SelectLevel::EndAnimation, this, std::placeholders::_1));
 		PlayerARenderer->CreateFrameAnimationFolder("SelectPlayerALine", FrameAnimation_DESC("SelectPlayerALine", 0.1f));
 		PlayerARenderer->ChangeFrameAnimation("SelectCuphead");
-		PlayerARenderer->GetTransform().SetLocalPosition({ 0, 0, 0 });
+		PlayerARenderer->GetTransform().SetLocalPosition({ 0, 0, (int)ZOrder::UI-1 });
 	}
 
 	{
@@ -136,7 +136,7 @@ void SelectLevel::Start()
 		PlayerBRenderer->CreateFrameAnimationFolder("SelectPlayerBLine", FrameAnimation_DESC("SelectPlayerBLine", 0.1f));
 		PlayerBRenderer->AnimationBindEnd("SelectMugmanOK", std::bind(&SelectLevel::EndAnimation, this, std::placeholders::_1));
 		PlayerBRenderer->ChangeFrameAnimation("SelectPlayerBLine");
-		PlayerBRenderer->GetTransform().SetLocalPosition({ 0, 0, 0 });
+		PlayerBRenderer->GetTransform().SetLocalPosition({ 0, 0, (int)ZOrder::UI-1 });
 	}
 }
 
@@ -153,17 +153,17 @@ void SelectLevel::Update(float _DeltaTime)
 			OnceCheck = false;
 			CupheadOn = false;
 			MugmanOn = false;
-			SelectScreenRenderer->GetTransform().SetLocalScale({ 0, 0, 100 });
-			RedSelectBoxRenderer->GetTransform().SetLocalScale({ 0, 0, 100 });
-			LetterRenderer->GetTransform().SetLocalScale({ 0, 0, 100 });
-			BlackLetterRenderer1->GetTransform().SetLocalScale({ 0, 0, 100 });
-			BlackLetterRenderer2->GetTransform().SetLocalScale({ 0, 0, 100 });
-			SelectOutlineRenderer1->GetTransform().SetLocalScale({ 0, 0, 100 });
-			SelectOutlineRenderer2->GetTransform().SetLocalScale({ 0, 0, 100 });
-			SelectOutlineRenderer3->GetTransform().SetLocalScale({ 0, 0, 100 });
-			SelectPlayerRenderer->GetTransform().SetLocalScale({ 0, 0, 100 });
-			PlayerARenderer->GetTransform().SetLocalScale({ 0, 0, 100 });
-			PlayerBRenderer->GetTransform().SetLocalScale({ 0, 0, 100 });
+			SelectScreenRenderer->GetTransform().SetLocalScale({ 0, 0, 1 });
+			RedSelectBoxRenderer->GetTransform().SetLocalScale({ 0, 0, 1 });
+			LetterRenderer->GetTransform().SetLocalScale({ 0, 0, 1 });
+			BlackLetterRenderer1->GetTransform().SetLocalScale({ 0, 0, 1 });
+			BlackLetterRenderer2->GetTransform().SetLocalScale({ 0, 0, 1 });
+			SelectOutlineRenderer1->GetTransform().SetLocalScale({ 0, 0, 1 });
+			SelectOutlineRenderer2->GetTransform().SetLocalScale({ 0, 0, 1 });
+			SelectOutlineRenderer3->GetTransform().SetLocalScale({ 0, 0, 1 });
+			SelectPlayerRenderer->GetTransform().SetLocalScale({ 0, 0, 1 });
+			PlayerARenderer->GetTransform().SetLocalScale({ 0, 0, 1 });
+			PlayerBRenderer->GetTransform().SetLocalScale({ 0, 0, 1 });
 		}
 
 		if (true == GameEngineInput::GetInst()->IsDown("Select") && Num >= 0 && Num <3)
@@ -176,35 +176,35 @@ void SelectLevel::Update(float _DeltaTime)
 
 	if (SelectCharacterOn == true)
 	{
-		LetterRenderer->GetTransform().SetLocalScale({ 0, 0, 100 });
+		LetterRenderer->GetTransform().SetLocalScale({ 0, 0, 1 });
 		
 		if (OnceCheck == false)
 		{
 			SelectPlayerRenderer->SetTexture("SelectPlayerA.png");
 			SelectPlayerRenderer->ScaleToTexture(); 
 			PlayerARenderer->ChangeFrameAnimation("SelectCuphead");
-			PlayerARenderer->GetTransform().SetLocalScale({ 111, 111, 100 });
-			PlayerBRenderer->GetTransform().SetLocalScale({ 111, 111, 100 });
+			PlayerARenderer->GetTransform().SetLocalScale({ 111, 111, 1 });
+			PlayerBRenderer->GetTransform().SetLocalScale({ 111, 111, 1 });
 			CupheadOn = true;
 			MugmanOn = false;
 			DeltaTime = 0.0f;
 			if (SelectBlockNum == 0)
 			{
-				SelectPlayerRenderer->GetTransform().SetLocalPosition({ -100,+180,0 });
-				PlayerARenderer->GetTransform().SetLocalPosition({ 80, 180, 0 });
-				PlayerBRenderer->GetTransform().SetLocalPosition({ 200, 180, 0 });
+				SelectPlayerRenderer->GetTransform().SetLocalPosition({ -100,+180, -100 });
+				PlayerARenderer->GetTransform().SetLocalPosition({ 80, 180, -100 });
+				PlayerBRenderer->GetTransform().SetLocalPosition({ 200, 180, -100 });
 			}
 			if (SelectBlockNum == 1)
 			{
-				SelectPlayerRenderer->GetTransform().SetLocalPosition({ -100,+25,0 });
-				PlayerARenderer->GetTransform().SetLocalPosition({ 80, 25, 0 });
-				PlayerBRenderer->GetTransform().SetLocalPosition({ 200, 25, 0 });
+				SelectPlayerRenderer->GetTransform().SetLocalPosition({ -100,+25,-100 });
+				PlayerARenderer->GetTransform().SetLocalPosition({ 80, 25, -100 });
+				PlayerBRenderer->GetTransform().SetLocalPosition({ 200, 25, -100 });
 			}
 			if (SelectBlockNum == 2)
 			{
-				SelectPlayerRenderer->GetTransform().SetLocalPosition({ -100,-130,0 });
-				PlayerARenderer->GetTransform().SetLocalPosition({ 80, -130, 0 });
-				PlayerBRenderer->GetTransform().SetLocalPosition({ 200, -130, 0 });
+				SelectPlayerRenderer->GetTransform().SetLocalPosition({ -100,-130, -100 });
+				PlayerARenderer->GetTransform().SetLocalPosition({ 80, -130, -100 });
+				PlayerBRenderer->GetTransform().SetLocalPosition({ 200, -130, -100 });
 			}
 			OnceCheck = true;
 		}
@@ -244,10 +244,10 @@ void SelectLevel::Update(float _DeltaTime)
 					SelectPlayerRenderer->GetTransform().SetLocalPosition({ -100,+180,0 });
 					RedSelectBoxRenderer->GetTransform().SetLocalPosition({ 3,+180,0 });
 					PlayerARenderer->ChangeFrameAnimation("SelectCuphead");
-					PlayerARenderer->GetTransform().SetLocalScale({ 111, 111, 100 });
+					PlayerARenderer->GetTransform().SetLocalScale({ 111, 111, 1 });
 					PlayerARenderer->GetTransform().SetLocalPosition({ 80, 180, 0 });
 					PlayerBRenderer->ChangeFrameAnimation("SelectPlayerBLine");
-					PlayerBRenderer->GetTransform().SetLocalScale({ 111, 111, 100 });
+					PlayerBRenderer->GetTransform().SetLocalScale({ 111, 111, 1 });
 					PlayerBRenderer->GetTransform().SetLocalPosition({ 200, 180, 0 });
 					CupheadOn = true;
 					MugmanOn = false;
@@ -257,10 +257,10 @@ void SelectLevel::Update(float _DeltaTime)
 					SelectPlayerRenderer->GetTransform().SetLocalPosition({ -100,25,0 });
 					RedSelectBoxRenderer->GetTransform().SetLocalPosition({ 3,25,0 });
 					PlayerARenderer->ChangeFrameAnimation("SelectCuphead");
-					PlayerARenderer->GetTransform().SetLocalScale({ 111, 111, 100 });
+					PlayerARenderer->GetTransform().SetLocalScale({ 111, 111, 1 });
 					PlayerARenderer->GetTransform().SetLocalPosition({ 80, 25, 0 });
 					PlayerBRenderer->ChangeFrameAnimation("SelectPlayerBLine");
-					PlayerBRenderer->GetTransform().SetLocalScale({ 111, 111, 100 });
+					PlayerBRenderer->GetTransform().SetLocalScale({ 111, 111, 1 });
 					PlayerBRenderer->GetTransform().SetLocalPosition({ 200, 25, 0 });
 					CupheadOn = true;
 					MugmanOn = false;
@@ -270,10 +270,10 @@ void SelectLevel::Update(float _DeltaTime)
 					SelectPlayerRenderer->GetTransform().SetLocalPosition({ -100,-130,0 });
 					RedSelectBoxRenderer->GetTransform().SetLocalPosition({ 3,-130,0 });
 					PlayerARenderer->ChangeFrameAnimation("SelectCuphead");
-					PlayerARenderer->GetTransform().SetLocalScale({ 111, 111, 100 });
+					PlayerARenderer->GetTransform().SetLocalScale({ 111, 111, 1 });
 					PlayerARenderer->GetTransform().SetLocalPosition({ 80, -130, 0 });
 					PlayerBRenderer->ChangeFrameAnimation("SelectPlayerBLine");
-					PlayerBRenderer->GetTransform().SetLocalScale({ 111, 111, 100 });
+					PlayerBRenderer->GetTransform().SetLocalScale({ 111, 111, 1 });
 					PlayerBRenderer->GetTransform().SetLocalPosition({ 200, -130, 0 });
 					CupheadOn = true;
 					MugmanOn = false;
@@ -291,10 +291,10 @@ void SelectLevel::Update(float _DeltaTime)
 					SelectPlayerRenderer->GetTransform().SetLocalPosition({ -100,+180,0 });
 					RedSelectBoxRenderer->GetTransform().SetLocalPosition({ -1,+180,0 });
 					PlayerARenderer->ChangeFrameAnimation("SelectPlayerALine");
-					PlayerARenderer->GetTransform().SetLocalScale({ 111, 111, 100 });
+					PlayerARenderer->GetTransform().SetLocalScale({ 111, 111, 1 });
 					PlayerARenderer->GetTransform().SetLocalPosition({ 80, 180, 0 });
 					PlayerBRenderer->ChangeFrameAnimation("SelectMugman");
-					PlayerBRenderer->GetTransform().SetLocalScale({ 111, 111, 100 });
+					PlayerBRenderer->GetTransform().SetLocalScale({ 111, 111, 1 });
 					PlayerBRenderer->GetTransform().SetLocalPosition({ 200, 180, 0 });
 					CupheadOn = false;
 					MugmanOn = true;
@@ -304,10 +304,10 @@ void SelectLevel::Update(float _DeltaTime)
 					SelectPlayerRenderer->GetTransform().SetLocalPosition({ -100,25,0 });
 					RedSelectBoxRenderer->GetTransform().SetLocalPosition({ -1,25,0 });
 					PlayerARenderer->ChangeFrameAnimation("SelectPlayerALine");
-					PlayerARenderer->GetTransform().SetLocalScale({ 111, 111, 100 });
+					PlayerARenderer->GetTransform().SetLocalScale({ 111, 111, 1 });
 					PlayerARenderer->GetTransform().SetLocalPosition({ 80, 25, 0 });
 					PlayerBRenderer->ChangeFrameAnimation("SelectMugman");
-					PlayerBRenderer->GetTransform().SetLocalScale({ 111, 111, 100 });
+					PlayerBRenderer->GetTransform().SetLocalScale({ 111, 111, 1 });
 					PlayerBRenderer->GetTransform().SetLocalPosition({ 200, 25, 0 });
 					CupheadOn = false;
 					MugmanOn = true;
@@ -317,10 +317,10 @@ void SelectLevel::Update(float _DeltaTime)
 					SelectPlayerRenderer->GetTransform().SetLocalPosition({ -100,-130,0 });
 					RedSelectBoxRenderer->GetTransform().SetLocalPosition({ -1,-130,0 });
 					PlayerARenderer->ChangeFrameAnimation("SelectPlayerALine");
-					PlayerARenderer->GetTransform().SetLocalScale({ 111, 111, 100 });
+					PlayerARenderer->GetTransform().SetLocalScale({ 111, 111, 1 });
 					PlayerARenderer->GetTransform().SetLocalPosition({ 80, -130, 0 });
 					PlayerBRenderer->ChangeFrameAnimation("SelectMugman");
-					PlayerBRenderer->GetTransform().SetLocalScale({ 111, 111, 100 });
+					PlayerBRenderer->GetTransform().SetLocalScale({ 111, 111, 1 });
 					PlayerBRenderer->GetTransform().SetLocalPosition({ 200, -130, 0 });
 					CupheadOn = false;
 					MugmanOn = true;
@@ -348,10 +348,10 @@ void SelectLevel::Update(float _DeltaTime)
 					SelectPlayerRenderer->GetTransform().SetLocalPosition({ -100,+180,0 });
 					RedSelectBoxRenderer->GetTransform().SetLocalPosition({ 3,+180,0 });
 					PlayerARenderer->ChangeFrameAnimation("SelectCuphead");
-					PlayerARenderer->GetTransform().SetLocalScale({ 111, 111, 100 });
+					PlayerARenderer->GetTransform().SetLocalScale({ 111, 111, 1 });
 					PlayerARenderer->GetTransform().SetLocalPosition({ 80, 180, 0 });
 					PlayerBRenderer->ChangeFrameAnimation("SelectPlayerBLine");
-					PlayerBRenderer->GetTransform().SetLocalScale({ 111, 111, 100 });
+					PlayerBRenderer->GetTransform().SetLocalScale({ 111, 111, 1 });
 					PlayerBRenderer->GetTransform().SetLocalPosition({ 200, 180, 0 });
 					CupheadOn = true;
 					MugmanOn = false;
@@ -361,10 +361,10 @@ void SelectLevel::Update(float _DeltaTime)
 					SelectPlayerRenderer->GetTransform().SetLocalPosition({ -100,25,0 });
 					RedSelectBoxRenderer->GetTransform().SetLocalPosition({ 3,25,0 });
 					PlayerARenderer->ChangeFrameAnimation("SelectCuphead");
-					PlayerARenderer->GetTransform().SetLocalScale({ 111, 111, 100 });
+					PlayerARenderer->GetTransform().SetLocalScale({ 111, 111, 1 });
 					PlayerARenderer->GetTransform().SetLocalPosition({ 80, 25, 0 });
 					PlayerBRenderer->ChangeFrameAnimation("SelectPlayerBLine");
-					PlayerBRenderer->GetTransform().SetLocalScale({ 111, 111, 100 });
+					PlayerBRenderer->GetTransform().SetLocalScale({ 111, 111, 1 });
 					PlayerBRenderer->GetTransform().SetLocalPosition({ 200, 25, 0 });
 					CupheadOn = true;
 					MugmanOn = false;
@@ -374,10 +374,10 @@ void SelectLevel::Update(float _DeltaTime)
 					SelectPlayerRenderer->GetTransform().SetLocalPosition({ -100,-130,0 });
 					RedSelectBoxRenderer->GetTransform().SetLocalPosition({ 3,-130,0 });
 					PlayerARenderer->ChangeFrameAnimation("SelectCuphead");
-					PlayerARenderer->GetTransform().SetLocalScale({ 111, 111, 100 });
+					PlayerARenderer->GetTransform().SetLocalScale({ 111, 111, 1 });
 					PlayerARenderer->GetTransform().SetLocalPosition({ 80, -130, 0 });
 					PlayerBRenderer->ChangeFrameAnimation("SelectPlayerBLine");
-					PlayerBRenderer->GetTransform().SetLocalScale({ 111, 111, 100 });
+					PlayerBRenderer->GetTransform().SetLocalScale({ 111, 111, 1 });
 					PlayerBRenderer->GetTransform().SetLocalPosition({ 200, -130, 0 });
 					CupheadOn = true;
 					MugmanOn = false;
@@ -395,10 +395,10 @@ void SelectLevel::Update(float _DeltaTime)
 					SelectPlayerRenderer->GetTransform().SetLocalPosition({ -100,+180,0 });
 					RedSelectBoxRenderer->GetTransform().SetLocalPosition({ -1,+180,0 });
 					PlayerARenderer->ChangeFrameAnimation("SelectPlayerALine");
-					PlayerARenderer->GetTransform().SetLocalScale({ 111, 111, 100 });
+					PlayerARenderer->GetTransform().SetLocalScale({ 111, 111, 1 });
 					PlayerARenderer->GetTransform().SetLocalPosition({ 80, 180, 0 });
 					PlayerBRenderer->ChangeFrameAnimation("SelectMugman");
-					PlayerBRenderer->GetTransform().SetLocalScale({ 111, 111, 100 });
+					PlayerBRenderer->GetTransform().SetLocalScale({ 111, 111, 1 });
 					PlayerBRenderer->GetTransform().SetLocalPosition({ 200, 180, 0 });
 					CupheadOn = false;
 					MugmanOn = true;
@@ -408,10 +408,10 @@ void SelectLevel::Update(float _DeltaTime)
 					SelectPlayerRenderer->GetTransform().SetLocalPosition({ -100,25,0 });
 					RedSelectBoxRenderer->GetTransform().SetLocalPosition({ -1,25,0 });
 					PlayerARenderer->ChangeFrameAnimation("SelectPlayerALine");
-					PlayerARenderer->GetTransform().SetLocalScale({ 111, 111, 100 });
+					PlayerARenderer->GetTransform().SetLocalScale({ 111, 111, 1 });
 					PlayerARenderer->GetTransform().SetLocalPosition({ 80, 25, 0 });
 					PlayerBRenderer->ChangeFrameAnimation("SelectMugman");
-					PlayerBRenderer->GetTransform().SetLocalScale({ 111, 111, 100 });
+					PlayerBRenderer->GetTransform().SetLocalScale({ 111, 111, 1 });
 					PlayerBRenderer->GetTransform().SetLocalPosition({ 200, 25, 0 });
 					CupheadOn = false;
 					MugmanOn = true;
@@ -421,10 +421,10 @@ void SelectLevel::Update(float _DeltaTime)
 					SelectPlayerRenderer->GetTransform().SetLocalPosition({ -100,-130,0 });
 					RedSelectBoxRenderer->GetTransform().SetLocalPosition({ -1,-130,0 });
 					PlayerARenderer->ChangeFrameAnimation("SelectPlayerALine");
-					PlayerARenderer->GetTransform().SetLocalScale({ 111, 111, 100 });
+					PlayerARenderer->GetTransform().SetLocalScale({ 111, 111, 1 });
 					PlayerARenderer->GetTransform().SetLocalPosition({ 80, -130, 0 });
 					PlayerBRenderer->ChangeFrameAnimation("SelectMugman");
-					PlayerBRenderer->GetTransform().SetLocalScale({ 111, 111, 100 });
+					PlayerBRenderer->GetTransform().SetLocalScale({ 111, 111, 1 });
 					PlayerBRenderer->GetTransform().SetLocalPosition({ 200, -130, 0 });
 					CupheadOn = false;
 					MugmanOn = true;
@@ -441,7 +441,7 @@ void SelectLevel::Update(float _DeltaTime)
 		SelectScreenRenderer->ScaleToTexture();
 		RedSelectBoxRenderer->ScaleToTexture();
 		RedSelectBoxRenderer->GetTransform().SetLocalPosition({ 3, +180, 0 });
-		SelectOutlineRenderer1->GetTransform().SetLocalScale({ 0, 0, 100 });
+		SelectOutlineRenderer1->GetTransform().SetLocalScale({ 0, 0, 1 });
 		SelectOutlineRenderer2->ScaleToTexture();
 		SelectOutlineRenderer3->ScaleToTexture();
 		LetterRenderer->ScaleToTexture(); 
@@ -477,7 +477,7 @@ void SelectLevel::Update(float _DeltaTime)
 				SelectScreenRenderer->ScaleToTexture();
 				RedSelectBoxRenderer->ScaleToTexture();
 				RedSelectBoxRenderer->GetTransform().SetLocalPosition({ 3,+180,0 });
-				SelectOutlineRenderer1->GetTransform().SetLocalScale({ 0, 0, 100 });
+				SelectOutlineRenderer1->GetTransform().SetLocalScale({ 0, 0, 1 });
 				LetterRenderer->ScaleToTexture();
 				LetterRenderer->GetTransform().SetLocalPosition({ 0,+180,0 });
 				BlackLetterRenderer1->ScaleToTexture();
@@ -500,7 +500,7 @@ void SelectLevel::Update(float _DeltaTime)
 				BlackLetterRenderer1->GetTransform().SetLocalPosition({ 0,+180,0 });
 				BlackLetterRenderer2->ScaleToTexture();
 				BlackLetterRenderer2->GetTransform().SetLocalPosition({ 0,-130,0 });
-				SelectOutlineRenderer2->GetTransform().SetLocalScale({ 0, 0, 100 });
+				SelectOutlineRenderer2->GetTransform().SetLocalScale({ 0, 0, 1 });
 				SelectOutlineRenderer3->ScaleToTexture();
 			}
 
@@ -517,7 +517,7 @@ void SelectLevel::Update(float _DeltaTime)
 				BlackLetterRenderer2->GetTransform().SetLocalPosition({ 0,180,0 });
 				SelectOutlineRenderer1->ScaleToTexture();
 				SelectOutlineRenderer2->ScaleToTexture();
-				SelectOutlineRenderer3->GetTransform().SetLocalScale({ 0, 0, 100 });
+				SelectOutlineRenderer3->GetTransform().SetLocalScale({ 0, 0, 1 });
 			}
 		}
 	}
@@ -551,7 +551,7 @@ void SelectLevel::Update(float _DeltaTime)
 				SelectScreenRenderer->ScaleToTexture();
 				RedSelectBoxRenderer->ScaleToTexture();
 				RedSelectBoxRenderer->GetTransform().SetLocalPosition({ 3,+180,0 });
-				SelectOutlineRenderer1->GetTransform().SetLocalScale({ 0, 0, 100 });
+				SelectOutlineRenderer1->GetTransform().SetLocalScale({ 0, 0, 1 });
 				LetterRenderer->ScaleToTexture();
 				LetterRenderer->GetTransform().SetLocalPosition({ 0,+180,0 });
 				BlackLetterRenderer1->ScaleToTexture();
@@ -575,7 +575,7 @@ void SelectLevel::Update(float _DeltaTime)
 				BlackLetterRenderer1->GetTransform().SetLocalPosition({ 0,+180,0 });
 				BlackLetterRenderer2->ScaleToTexture();
 				BlackLetterRenderer2->GetTransform().SetLocalPosition({ 0,-130,0 });
-				SelectOutlineRenderer2->GetTransform().SetLocalScale({ 0, 0, 100 });
+				SelectOutlineRenderer2->GetTransform().SetLocalScale({ 0, 0, 1 });
 				SelectOutlineRenderer3->ScaleToTexture();
 			}
 
@@ -592,7 +592,7 @@ void SelectLevel::Update(float _DeltaTime)
 				BlackLetterRenderer2->GetTransform().SetLocalPosition({ 0,180,0 });
 				SelectOutlineRenderer1->ScaleToTexture();
 				SelectOutlineRenderer2->ScaleToTexture();
-				SelectOutlineRenderer3->GetTransform().SetLocalScale({ 0, 0, 100 });
+				SelectOutlineRenderer3->GetTransform().SetLocalScale({ 0, 0, 1 });
 
 			}
 		}
