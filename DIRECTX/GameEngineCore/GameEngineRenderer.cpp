@@ -8,16 +8,16 @@
 #include "GameEngineVertexBuffer.h"
 #include "GameEngineIndexBuffer.h"
 
-GameEngineRenderer::GameEngineRenderer() 
+GameEngineRenderer::GameEngineRenderer()
 {
 }
 
-GameEngineRenderer::~GameEngineRenderer() 
+GameEngineRenderer::~GameEngineRenderer()
 {
 }
 
 
-void GameEngineRenderer::Start() 
+void GameEngineRenderer::Start()
 {
 	GetActor()->GetLevel()->PushRenderer(this);
 }

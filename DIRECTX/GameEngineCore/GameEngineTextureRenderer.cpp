@@ -10,7 +10,7 @@ void FrameAnimation::Reset()
 }
 
 
-void FrameAnimation::Update(float _Delta) 
+void FrameAnimation::Update(float _Delta)
 {
 
 	Info.FrameTime += _Delta;
@@ -20,7 +20,7 @@ void FrameAnimation::Update(float _Delta)
 		Time(Info, _Delta);
 	}
 
-	if (false == bOnceStart 
+	if (false == bOnceStart
 		&& Info.CurFrame == Info.Start
 		&& nullptr != Start)
 	{
@@ -37,21 +37,7 @@ void FrameAnimation::Update(float _Delta)
 			Frame(Info);
 		}
 
-		if (nullptr != Texture)
-		{
-			ParentRenderer->SetTexture(Texture, Info.CurFrame);
-		}
-		else if(nullptr != FolderTexture)
-		{
-			ParentRenderer->FrameDataReset();
-			ParentRenderer->SetTexture(FolderTexture->GetTexture(Info.CurFrame));
-		}
-		else 
-		{
-			MsgBoxAssert("텍스처가 세팅되지 않은 애니메이션 입니다.");
-		}
-
-		if (Info.CurFrame >= Info.End)
+		if (Info.CurFrame > Info.End)
 		{
 			if (false == bOnceEnd && nullptr != End)
 			{
@@ -64,26 +50,42 @@ void FrameAnimation::Update(float _Delta)
 			{
 				Info.CurFrame = Info.Start;
 			}
-			else {
+			else
+			{
 				Info.CurFrame = Info.End;
 			}
 		}
+
+		if (nullptr != Texture)
+		{
+			ParentRenderer->SetTexture(Texture, Info.CurFrame);
+		}
+		else if (nullptr != FolderTexture)
+		{
+			ParentRenderer->FrameDataReset();
+			ParentRenderer->SetTexture(FolderTexture->GetTexture(Info.CurFrame));
+		}
+		else
+		{
+			MsgBoxAssert("텍스처가 세팅되지 않은 애니메이션 입니다.");
+		}
+
 
 		Info.FrameTime -= Info.Inter;
 	}
 }
 
-GameEngineTextureRenderer::GameEngineTextureRenderer() 
+GameEngineTextureRenderer::GameEngineTextureRenderer()
 	: CurAni(nullptr)
 	, CurTex(nullptr)
 {
 }
 
-GameEngineTextureRenderer::~GameEngineTextureRenderer() 
+GameEngineTextureRenderer::~GameEngineTextureRenderer()
 {
 }
 
-void GameEngineTextureRenderer::Start() 
+void GameEngineTextureRenderer::Start()
 {
 	GameEngineDefaultRenderer::Start();
 	SetPipeLine("TextureAtlas");
@@ -182,7 +184,7 @@ void GameEngineTextureRenderer::AnimationBindFrame(const std::string& _Animation
 }
 
 // Update
-void GameEngineTextureRenderer::AnimationBindTime(const std::string& _AnimationName, std::function<void(const FrameAnimation_DESC& , float)> Function)
+void GameEngineTextureRenderer::AnimationBindTime(const std::string& _AnimationName, std::function<void(const FrameAnimation_DESC&, float)> Function)
 {
 	std::string Name = GameEngineString::ToUpperReturn(_AnimationName);
 
@@ -253,13 +255,20 @@ void GameEngineTextureRenderer::ChangeFrameAnimation(const std::string& _Animati
 	{
 		CurAni = &FrameAni[Name];
 		CurAni->Reset();
-		//SetTexture(CurAni->Texture, CurAni->Info.CurFrame);
+		if (nullptr != CurAni->Texture)
+		{
+			SetTexture(CurAni->Texture, CurAni->Info.CurFrame);
+		}
+		else if (nullptr != CurAni->FolderTexture)
+		{
+			SetTexture(CurAni->FolderTexture->GetTexture(CurAni->Info.CurFrame));
+		}
 	}
 }
 
 void GameEngineTextureRenderer::FrameDataReset()
 {
-	FrameData = { 0.0f , 0.0f, 1.0f, 1.0f};
+	FrameData = { 0.0f , 0.0f, 1.0f, 1.0f };
 }
 
 
@@ -271,7 +280,20 @@ void GameEngineTextureRenderer::Update(float _Delta)
 	}
 }
 
+
+
 void GameEngineTextureRenderer::ScaleToTexture()
 {
 	GetTransform().SetLocalScale(CurTex->GetScale());
+}
+
+void GameEngineTextureRenderer::CurAnimationReset()
+{
+	CurAnimationSetStartPivotFrame(CurAni->Info.Start);
+	// CurAni->Info.CurFrame = CurAni->Info.Start;
+}
+
+void GameEngineTextureRenderer::CurAnimationSetStartPivotFrame(int SetFrame)
+{
+	CurAni->Info.CurFrame += CurAni->Info.Start + SetFrame;
 }

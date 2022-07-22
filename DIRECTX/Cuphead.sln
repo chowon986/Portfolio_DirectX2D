@@ -31,17 +31,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GameEngineContents", "GameE
 		{056025FA-EE6B-4D5A-A2F0-CA4FC17C0C6E} = {056025FA-EE6B-4D5A-A2F0-CA4FC17C0C6E}
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DOC", "DOC", "{9394E016-14F3-4D7A-AA01-3A295E5DC1C9}"
-	ProjectSection(SolutionItems) = preProject
-		Directx.txt = Directx.txt
-		공간변환.txt = 공간변환.txt
-		랜더링파이프라인.txt = 랜더링파이프라인.txt
-		랜파.jpg = 랜파.jpg
-		이벤트.txt = 이벤트.txt
-		프로젝트 구성이유.txt = 프로젝트 구성이유.txt
-		프로젝트 구조.txt = 프로젝트 구조.txt
-	EndProjectSection
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GameEngineShader", "GameEngineResources\GameEngineShader\GameEngineShader.vcxproj", "{688CB3C2-7CC3-4E51-B028-9614041DA912}"
 EndProject
 Global

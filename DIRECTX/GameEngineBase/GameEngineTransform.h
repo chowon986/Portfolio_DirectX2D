@@ -17,14 +17,14 @@ class CollisionData
 {
 	friend class GameEngineTransform;
 
-	union 
+	union
 	{
 		DirectX::BoundingSphere SPHERE;
 		DirectX::BoundingBox AABB;
 		DirectX::BoundingOrientedBox OBB;
 	};
 
-	CollisionData() 
+	CollisionData()
 		: OBB()
 	{
 
@@ -111,6 +111,11 @@ public:
 		CalculateWorld();
 	}
 
+	inline void SetAddWorldRotation(const float4& _World)
+	{
+		SetWorldRotation(Data.WorldRotation + _World);
+	}
+
 	inline void SetWorldRotation(const float4& _World)
 	{
 		float4 Local = _World;
@@ -147,6 +152,36 @@ public:
 		SetLocalPosition(Data.LocalPosition + _Value);
 	}
 
+	inline void SetWorldForwardMove(const float Speed, const float DeltaTime)
+	{
+		SetWorldPosition(Data.WorldPosition + (GetForwardVector() * Speed * DeltaTime));
+	}
+
+	inline void SetWorldBackMove(const float Speed, const float DeltaTime)
+	{
+		SetWorldPosition(Data.WorldPosition + (GetBackVector() * Speed * DeltaTime));
+	}
+
+	inline void SetWorldUpMove(const float Speed, const float DeltaTime)
+	{
+		SetWorldPosition(Data.WorldPosition + (GetUpVector() * Speed * DeltaTime));
+	}
+
+	inline void SetWorldDownMove(const float Speed, const float DeltaTime)
+	{
+		SetWorldPosition(Data.WorldPosition + (GetDownVector() * Speed * DeltaTime));
+	}
+
+	inline void SetWorldLeftMove(const float Speed, const float DeltaTime)
+	{
+		SetWorldPosition(Data.WorldPosition + (GetLeftVector() * Speed * DeltaTime));
+	}
+
+	inline void SetWorldRightMove(const float Speed, const float DeltaTime)
+	{
+		SetWorldPosition(Data.WorldPosition + (GetRightVector() * Speed * DeltaTime));
+	}
+
 	inline void SetWorldMove(const float4& _Value)
 	{
 		SetWorldPosition(Data.WorldPosition + _Value);
@@ -163,6 +198,11 @@ public:
 	inline float4 GetLocalPosition() const
 	{
 		return Data.LocalPosition;
+	}
+
+	inline float4 GetWorldPosition() const
+	{
+		return Data.WorldPosition;
 	}
 
 	inline float4x4 GetLocalWorld() const
@@ -234,10 +274,12 @@ public:
 		Data.ProjectionMatrix = _Mat;
 	}
 
-	const TransformData& GetTransformData() 
+	const TransformData& GetTransformData()
 	{
 		return Data;
 	}
+
+	void Copy(GameEngineTransform& _Trans);
 
 protected:
 
@@ -335,7 +377,7 @@ private:
 	virtual void End() {}
 
 
-/////////////////////////// 面倒包访
+	/////////////////////////// 面倒包访
 public:
 	static bool SphereToSphere(const GameEngineTransform& _Left, const GameEngineTransform& _Right);
 

@@ -4,11 +4,11 @@
 #include "GameEngineLevel.h"
 
 
-GEngine::GEngine() 
+GEngine::GEngine()
 {
 }
 
-GEngine::~GEngine() 
+GEngine::~GEngine()
 {
 }
 
