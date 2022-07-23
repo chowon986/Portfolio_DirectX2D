@@ -14,7 +14,7 @@ void Bakery::Start()
 	Renderer = CreateComponent<GameEngineTextureRenderer>();
 	Renderer->CreateFrameAnimationFolder("Bakery", FrameAnimation_DESC("Bakery", 0.1f));
 	Renderer->ChangeFrameAnimation("Bakery");
-	Renderer->GetTransform().SetLocalScale({ 286,398,100 });
+	Renderer->ScaleToTexture();
 }
 
 void Bakery::Update(float _DeltaTime)

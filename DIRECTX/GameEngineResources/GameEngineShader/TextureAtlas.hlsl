@@ -43,16 +43,16 @@ Output TextureAtlas_VS(Input _Input)
     Output NewOutPut = (Output)0;
     NewOutPut.Pos = mul(_Input.Pos, WorldViewProjection);
     NewOutPut.PosLocal = _Input.Pos;
-
+    
     // 버텍스가 몇번째 버텍스 인지 알수가 없다.
     // NewOutPut.Tex
     // 00    10
-
+    
     // 10    11
-
+    
     NewOutPut.Tex.x = (_Input.Tex.x * TextureFrameSize.x) + TextureFramePos.x;
     NewOutPut.Tex.y = (_Input.Tex.y * TextureFrameSize.y) + TextureFramePos.y;
-
+    
     return NewOutPut;
 }
 

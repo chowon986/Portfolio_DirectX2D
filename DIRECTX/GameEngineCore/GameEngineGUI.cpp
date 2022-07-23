@@ -4,11 +4,11 @@
 #include "GameEngineDevice.h"
 #include <GameEngineBase/GameEngineString.h>
 
-GameEngineGUI::GameEngineGUI()
+GameEngineGUI::GameEngineGUI() 
 {
 }
 
-GameEngineGUI::~GameEngineGUI()
+GameEngineGUI::~GameEngineGUI() 
 {
 }
 
@@ -16,7 +16,7 @@ extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg
 
 void GameEngineGUI::Initialize()
 {
-    IMGUI_CHECKVERSION();
+	IMGUI_CHECKVERSION();
     ImGui::CreateContext();
     ImGuiIO& io = ImGui::GetIO();
     (void)io;

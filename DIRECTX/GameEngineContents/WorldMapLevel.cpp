@@ -221,8 +221,8 @@ void WorldMapLevel::Start()
 
 	{
 		// To do : 
-		/*Ladder* RopeLadder = CreateActor<Ladder>(GameObjectGroup::UI);
-		RopeLadder->GetTransform().SetLocalPosition({ -32.0, -692.0f, 100.0f });*/
+		Ladder* RopeLadder = CreateActor<Ladder>(GameObjectGroup::UI);
+		RopeLadder->GetTransform().SetLocalPosition({ -32.0, -650.0f, 100.0f });
 	}
 
 	{

@@ -21,7 +21,7 @@ PickaxeState Pickaxe::GetState()
 void Pickaxe::Start()
 {
 	Renderer = CreateComponent<GameEngineTextureRenderer>();
-	Renderer->CreateFrameAnimationFolder("Pickaxe", FrameAnimation_DESC("Pickaxe", 0.1f));
+	Renderer->CreateFrameAnimationFolder("Pickaxe", FrameAnimation_DESC("NPCPickaxe", 0.1f));
 	Renderer->ChangeFrameAnimation("Pickaxe");
 	Renderer->GetTransform().SetLocalScale({ 88,83,100 });
 }

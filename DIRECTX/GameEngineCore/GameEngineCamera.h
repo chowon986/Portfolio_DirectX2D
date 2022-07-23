@@ -44,7 +44,7 @@ public:
 
 	float4 GetMouseWorldPositionToActor();
 
-	inline float4 GetMouseWorldDir()
+	inline float4 GetMouseWorldDir() 
 	{
 		return MouseDir;
 	}

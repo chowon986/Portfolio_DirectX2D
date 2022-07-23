@@ -31,14 +31,14 @@ void WorldMapCuphead::Start()
 	}
 
 	Renderer = CreateComponent<GameEngineTextureRenderer>();
-	Renderer->CreateFrameAnimationFolder("DiagDown", FrameAnimation_DESC("DiagDown", 0.1f));
-	Renderer->CreateFrameAnimationFolder("DiagUp", FrameAnimation_DESC("DiagUp", 0.1f));
-	Renderer->CreateFrameAnimationFolder("Down", FrameAnimation_DESC("Down", 0.1f));
-	Renderer->CreateFrameAnimationFolder("WalkDown", FrameAnimation_DESC("WalkDown", 0.05f));
-	Renderer->CreateFrameAnimationFolder("WalkSide", FrameAnimation_DESC("WalkSide", 0.05f));
-	Renderer->CreateFrameAnimationFolder("WalkUp", FrameAnimation_DESC("WalkUp", 0.05f));
+	Renderer->CreateFrameAnimationFolder("DiagDown", FrameAnimation_DESC("WorldMapChupheadWalkDiagDown", 0.1f));
+	Renderer->CreateFrameAnimationFolder("DiagUp", FrameAnimation_DESC("WorldMapChupheadWalkDiagUp", 0.1f));
+	Renderer->CreateFrameAnimationFolder("Down", FrameAnimation_DESC("WorldMapChupheadIdleDown", 0.1f));
+	Renderer->CreateFrameAnimationFolder("WalkDown", FrameAnimation_DESC("WorldMapChupheadWalkDown", 0.05f));
+	Renderer->CreateFrameAnimationFolder("WalkSide", FrameAnimation_DESC("WorldMapChupheadWalkSide", 0.05f));
+	Renderer->CreateFrameAnimationFolder("WalkUp", FrameAnimation_DESC("WorldMapChupheadWalkUp", 0.05f));
 	Renderer->ChangeFrameAnimation("Down");
-	Renderer->GetTransform().SetLocalScale({ 53 ,99,100 });
+	Renderer->ScaleToTexture();
 	SetState(WorldMapCupheadState::Idle);
 	Dir = "Down";
 }

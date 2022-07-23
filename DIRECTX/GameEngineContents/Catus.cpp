@@ -12,9 +12,9 @@ Catus::~Catus()
 void Catus::Start()
 {
 	Renderer = CreateComponent<GameEngineTextureRenderer>();
-	Renderer->GetTransform().SetLocalScale({ 72,120,100 });
-	Renderer->CreateFrameAnimationFolder("Cactus", FrameAnimation_DESC("Cactus", 0.1f, true));
+	Renderer->CreateFrameAnimationFolder("Cactus", FrameAnimation_DESC("NPCCactus", 0.1f, true));
 	Renderer->ChangeFrameAnimation("Cactus");
+	Renderer->ScaleToTexture();
 }
 
 void Catus::Update(float _DeltaTime)

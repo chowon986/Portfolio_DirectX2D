@@ -21,8 +21,8 @@ NewsCatState NewsCat::GetState()
 void NewsCat::Start()
 {
 	Renderer = CreateComponent<GameEngineTextureRenderer>();
-	Renderer->CreateFrameAnimationFolder("NewsCat", FrameAnimation_DESC("NewsCat", 0.1f));
-	Renderer->ChangeFrameAnimation("NewsCat");
+	Renderer->CreateFrameAnimationFolder("Newscat", FrameAnimation_DESC("NPCNewscat", 0.1f));
+	Renderer->ChangeFrameAnimation("Newscat");
 	Renderer->GetTransform().SetLocalScale({ 110,113,100 });
 }
 
