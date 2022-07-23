@@ -6,6 +6,7 @@
 #include "GameEngineContents/SelectLevel.h"
 #include "GameEngineContents/WorldMapLevel.h"
 #include "GameEngineContents/HourglassLevel.h"
+#include "ShopLevel.h"
 
 #pragma comment(lib, "GameEngineBase.lib")
 
@@ -38,30 +39,39 @@ void ContentsCore::Start()
 		GameEngineFolderTexture::Load(Dir.GetFullPath());
 	}
 
-	Dir.Move("11TitleLevel");
-	std::vector<GameEngineFile> Shaders = Dir.GetAllFile();
+	Dir.Move("01ShopLevel");
+	std::vector<GameEngineFile> Textures = Dir.GetAllFile();
 
-	for (size_t i = 0; i < Shaders.size(); i++)
+	for (size_t i = 0; i < Textures.size(); i++)
 	{
-		GameEngineTexture::Load(Shaders[i].GetFullPath());
+		GameEngineTexture::Load(Textures[i].GetFullPath());
+	}
+
+	Dir.MoveParent();
+	Dir.Move("11TitleLevel");
+	std::vector<GameEngineFile> Textures1 = Dir.GetAllFile();
+
+	for (size_t i = 0; i < Textures1.size(); i++)
+	{
+		GameEngineTexture::Load(Textures1[i].GetFullPath());
 	}
 
 	Dir.MoveParent();
 	Dir.Move("12SelectLevel");
-	std::vector<GameEngineFile> Shaders2 = Dir.GetAllFile();
+	std::vector<GameEngineFile> Textures2 = Dir.GetAllFile();
 
-	for (size_t i = 0; i < Shaders2.size(); i++)
+	for (size_t i = 0; i < Textures2.size(); i++)
 	{
-		GameEngineTexture::Load(Shaders2[i].GetFullPath());
+		GameEngineTexture::Load(Textures2[i].GetFullPath());
 	}
 
 	Dir.MoveParent();
 	Dir.Move("14WorldMapLevel");
-	std::vector<GameEngineFile> Shaders3 = Dir.GetAllFile();
+	std::vector<GameEngineFile> Textures3 = Dir.GetAllFile();
 
-	for (size_t i = 0; i < Shaders3.size(); i++)
+	for (size_t i = 0; i < Textures3.size(); i++)
 	{
-		GameEngineTexture::Load(Shaders3[i].GetFullPath());
+		GameEngineTexture::Load(Textures3[i].GetFullPath());
 	}
 
 
@@ -70,8 +80,9 @@ void ContentsCore::Start()
 	CreateLevel<SelectLevel>("Select");
 	CreateLevel<HourglassLevel>("Hourglass");
 	CreateLevel<WorldMapLevel>("WorldMap");
+	CreateLevel<ShopLevel>("Shop");
 	CreateLevel<PlayLevel>("Play");
-	ChangeLevel("WorldMap");
+	ChangeLevel("Shop");
 
 }
 

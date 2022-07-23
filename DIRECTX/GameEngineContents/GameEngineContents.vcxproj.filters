@@ -37,6 +37,9 @@
     <Filter Include="Actor\Base">
       <UniqueIdentifier>{cef3b890-fc1f-4cc3-999c-f2ee3bc1998f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Actor\Play\WorldMap\NPC">
+      <UniqueIdentifier>{8373be1b-d54a-47f7-8ba4-0c62c22a703c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ContentsCore.h">
@@ -135,25 +138,10 @@
     <ClInclude Include="INonPlayerCharacterBase.h">
       <Filter>Actor\Base</Filter>
     </ClInclude>
-    <ClInclude Include="Boatman.h">
-      <Filter>Actor\Play\WorldMap</Filter>
-    </ClInclude>
     <ClInclude Include="Bakery.h">
       <Filter>Actor\Play\WorldMap</Filter>
     </ClInclude>
-    <ClInclude Include="NewsCat.h">
-      <Filter>Actor\Play\WorldMap</Filter>
-    </ClInclude>
     <ClInclude Include="Shop.h">
-      <Filter>Actor\Play\WorldMap</Filter>
-    </ClInclude>
-    <ClInclude Include="Lantern.h">
-      <Filter>Actor\Play\WorldMap</Filter>
-    </ClInclude>
-    <ClInclude Include="Pickaxe.h">
-      <Filter>Actor\Play\WorldMap</Filter>
-    </ClInclude>
-    <ClInclude Include="Shovel.h">
       <Filter>Actor\Play\WorldMap</Filter>
     </ClInclude>
     <ClInclude Include="Catus.h">
@@ -165,8 +153,32 @@
     <ClInclude Include="Dogfight.h">
       <Filter>Actor\Play\WorldMap</Filter>
     </ClInclude>
+    <ClInclude Include="ShopLevel.h">
+      <Filter>Level\Play</Filter>
+    </ClInclude>
+    <ClInclude Include="Boatman.h">
+      <Filter>Actor\Play\WorldMap\NPC</Filter>
+    </ClInclude>
     <ClInclude Include="Ghost.h">
-      <Filter>Actor\Play\WorldMap</Filter>
+      <Filter>Actor\Play\WorldMap\NPC</Filter>
+    </ClInclude>
+    <ClInclude Include="Lantern.h">
+      <Filter>Actor\Play\WorldMap\NPC</Filter>
+    </ClInclude>
+    <ClInclude Include="NewsCat.h">
+      <Filter>Actor\Play\WorldMap\NPC</Filter>
+    </ClInclude>
+    <ClInclude Include="Pickaxe.h">
+      <Filter>Actor\Play\WorldMap\NPC</Filter>
+    </ClInclude>
+    <ClInclude Include="Pig.h">
+      <Filter>Actor\Play\WorldMap\NPC</Filter>
+    </ClInclude>
+    <ClInclude Include="Shovel.h">
+      <Filter>Actor\Play\WorldMap\NPC</Filter>
+    </ClInclude>
+    <ClInclude Include="DogFightLevel.h">
+      <Filter>Level\Play</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -263,25 +275,10 @@
     <ClCompile Include="INonPlayerCharacterBase.cpp">
       <Filter>Actor\Base</Filter>
     </ClCompile>
-    <ClCompile Include="Boatman.cpp">
-      <Filter>Actor\Play\WorldMap</Filter>
-    </ClCompile>
     <ClCompile Include="Bakery.cpp">
       <Filter>Actor\Play\WorldMap</Filter>
     </ClCompile>
-    <ClCompile Include="NewsCat.cpp">
-      <Filter>Actor\Play\WorldMap</Filter>
-    </ClCompile>
     <ClCompile Include="Shop.cpp">
-      <Filter>Actor\Play\WorldMap</Filter>
-    </ClCompile>
-    <ClCompile Include="Lantern.cpp">
-      <Filter>Actor\Play\WorldMap</Filter>
-    </ClCompile>
-    <ClCompile Include="Pickaxe.cpp">
-      <Filter>Actor\Play\WorldMap</Filter>
-    </ClCompile>
-    <ClCompile Include="Shovel.cpp">
       <Filter>Actor\Play\WorldMap</Filter>
     </ClCompile>
     <ClCompile Include="Catus.cpp">
@@ -293,8 +290,32 @@
     <ClCompile Include="Dogfight.cpp">
       <Filter>Actor\Play\WorldMap</Filter>
     </ClCompile>
+    <ClCompile Include="ShopLevel.cpp">
+      <Filter>Level\Play</Filter>
+    </ClCompile>
+    <ClCompile Include="Boatman.cpp">
+      <Filter>Actor\Play\WorldMap\NPC</Filter>
+    </ClCompile>
     <ClCompile Include="Ghost.cpp">
-      <Filter>Actor\Play\WorldMap</Filter>
+      <Filter>Actor\Play\WorldMap\NPC</Filter>
+    </ClCompile>
+    <ClCompile Include="Lantern.cpp">
+      <Filter>Actor\Play\WorldMap\NPC</Filter>
+    </ClCompile>
+    <ClCompile Include="NewsCat.cpp">
+      <Filter>Actor\Play\WorldMap\NPC</Filter>
+    </ClCompile>
+    <ClCompile Include="Pickaxe.cpp">
+      <Filter>Actor\Play\WorldMap\NPC</Filter>
+    </ClCompile>
+    <ClCompile Include="Pig.cpp">
+      <Filter>Actor\Play\WorldMap\NPC</Filter>
+    </ClCompile>
+    <ClCompile Include="Shovel.cpp">
+      <Filter>Actor\Play\WorldMap\NPC</Filter>
+    </ClCompile>
+    <ClCompile Include="DogFightLevel.cpp">
+      <Filter>Level\Play</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

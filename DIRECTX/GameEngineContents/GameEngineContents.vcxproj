@@ -167,6 +167,7 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="Dogfight.h" />
+    <ClInclude Include="DogFightLevel.h" />
     <ClInclude Include="Enums.h" />
     <ClInclude Include="Ghost.h" />
     <ClInclude Include="HourglassLevel.h" />
@@ -195,6 +196,7 @@
     <ClInclude Include="Lantern.h" />
     <ClInclude Include="NewsCat.h" />
     <ClInclude Include="Pickaxe.h" />
+    <ClInclude Include="Pig.h" />
     <ClInclude Include="PlayLevel.h">
       <SubType>
       </SubType>
@@ -205,6 +207,7 @@
     </ClInclude>
     <ClInclude Include="SelectLevel.h" />
     <ClInclude Include="Shop.h" />
+    <ClInclude Include="ShopLevel.h" />
     <ClInclude Include="Shovel.h" />
     <ClInclude Include="TitleLevel.h">
       <SubType>
@@ -224,6 +227,7 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="Dogfight.cpp" />
+    <ClCompile Include="DogFightLevel.cpp" />
     <ClCompile Include="Ghost.cpp" />
     <ClCompile Include="HourglassLevel.cpp" />
     <ClCompile Include="IAimable.cpp" />
@@ -251,6 +255,7 @@
     <ClCompile Include="Lantern.cpp" />
     <ClCompile Include="NewsCat.cpp" />
     <ClCompile Include="Pickaxe.cpp" />
+    <ClCompile Include="Pig.cpp" />
     <ClCompile Include="PlayLevel.cpp">
       <SubType>
       </SubType>
@@ -263,6 +268,7 @@
     </ClCompile>
     <ClCompile Include="SelectLevel.cpp" />
     <ClCompile Include="Shop.cpp" />
+    <ClCompile Include="ShopLevel.cpp" />
     <ClCompile Include="Shovel.cpp" />
     <ClCompile Include="TitleLevel.cpp">
       <SubType>
