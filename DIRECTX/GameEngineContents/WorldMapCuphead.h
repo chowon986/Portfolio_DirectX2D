@@ -3,13 +3,8 @@
 #include "IWorldMapCharacterBase.h"
 #include <string>
 
-enum class WorldMapCupheadState
-{
-	Idle,
-	Walk,
-};
-
-class GameEngineTextureRenderer;
+class MovementComponent;
+class WorldMapCharacterAnimationControllerComponent;
 class WorldMapCuphead : public IWorldMapCharacterBase
 {
 public:
@@ -23,10 +18,6 @@ public:
 	WorldMapCuphead& operator=(const WorldMapCuphead& _Other) = delete;
 	WorldMapCuphead& operator=(WorldMapCuphead&& _Other) noexcept = delete;
 
-public:
-	void SetState(WorldMapCupheadState _State);
-	WorldMapCupheadState GetState();
-
 protected:
 	void Start() override;
 	void Update(float _DeltaTime);
@@ -34,10 +25,10 @@ protected:
 	void Walk() override;
 	void Idle() override;
 
-
 private:
-	GameEngineTextureRenderer* Renderer;
-	float Speed;
-	WorldMapCupheadState State;
-	std::string Dir;
+	MovementComponent* Movement;
+	WorldMapCharacterAnimationControllerComponent* Animation;
+
+	float WalkCheckInterval;
+	float WalkCheckElapsedTime;
 };

@@ -40,6 +40,9 @@
     <Filter Include="Actor\Play\WorldMap\NPC">
       <UniqueIdentifier>{8373be1b-d54a-47f7-8ba4-0c62c22a703c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Components">
+      <UniqueIdentifier>{410e80f7-6d6c-439d-ad7d-64d824d7112e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ContentsCore.h">
@@ -180,6 +183,12 @@
     <ClInclude Include="DogFightLevel.h">
       <Filter>Level\Play</Filter>
     </ClInclude>
+    <ClInclude Include="MovementComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldMapCharacterAnimationControllerComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp">
@@ -316,6 +325,12 @@
     </ClCompile>
     <ClCompile Include="DogFightLevel.cpp">
       <Filter>Level\Play</Filter>
+    </ClCompile>
+    <ClCompile Include="MovementComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldMapCharacterAnimationControllerComponent.cpp">
+      <Filter>Components</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

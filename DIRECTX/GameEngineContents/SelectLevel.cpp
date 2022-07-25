@@ -610,7 +610,7 @@ void SelectLevel::Update(float _DeltaTime)
 
 void SelectLevel::End()
 {
-	int a = 0;
+	GameEngineInput::GetInst()->Reset();
 }
 
 void SelectLevel::EndAnimation(FrameAnimation_DESC _Info)

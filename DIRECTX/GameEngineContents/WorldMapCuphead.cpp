@@ -1,25 +1,19 @@
 #include "PreCompile.h"
 #include "WorldMapCuphead.h"
+#include "MovementComponent.h"
+#include "WorldMapCharacterAnimationControllerComponent.h"
 
 WorldMapCuphead::WorldMapCuphead()
-	: Renderer(nullptr)
-	, Speed(200)
+	: Movement(nullptr)
+	, Animation(nullptr)
+	, WalkCheckInterval(0.1)
+	, WalkCheckElapsedTime(0)
 {
 
 }
 
 WorldMapCuphead::~WorldMapCuphead()
 {
-}
-
-void WorldMapCuphead::SetState(WorldMapCupheadState _State)
-{
-	State = _State;
-}
-
-WorldMapCupheadState WorldMapCuphead::GetState()
-{
-	return State;
 }
 
 void WorldMapCuphead::Start()
@@ -30,22 +24,39 @@ void WorldMapCuphead::Start()
 		GameEngineInput::GetInst()->CreateKey("MoveRight", VK_RIGHT);
 	}
 
-	Renderer = CreateComponent<GameEngineTextureRenderer>();
-	Renderer->CreateFrameAnimationFolder("DiagDown", FrameAnimation_DESC("WorldMapChupheadWalkDiagDown", 0.1f));
-	Renderer->CreateFrameAnimationFolder("DiagUp", FrameAnimation_DESC("WorldMapChupheadWalkDiagUp", 0.1f));
-	Renderer->CreateFrameAnimationFolder("Down", FrameAnimation_DESC("WorldMapChupheadIdleDown", 0.1f));
-	Renderer->CreateFrameAnimationFolder("WalkDown", FrameAnimation_DESC("WorldMapChupheadWalkDown", 0.05f));
-	Renderer->CreateFrameAnimationFolder("WalkSide", FrameAnimation_DESC("WorldMapChupheadWalkSide", 0.05f));
-	Renderer->CreateFrameAnimationFolder("WalkUp", FrameAnimation_DESC("WorldMapChupheadWalkUp", 0.05f));
-	Renderer->ChangeFrameAnimation("Down");
-	Renderer->ScaleToTexture();
+	GameEngineTextureRenderer* Renderer = CreateComponent<GameEngineTextureRenderer>();
+	SetRenderer(Renderer);
+
+	// Idle
+	Renderer->CreateFrameAnimationFolder("WorldMapCupheadIdleDiagDown", FrameAnimation_DESC("WorldMapChupheadIdleDiagDown", 0.1f));
+	Renderer->CreateFrameAnimationFolder("WorldMapCupheadIdleDiagUp", FrameAnimation_DESC("WorldMapChupheadIdleDiagUp", 0.1f));
+	Renderer->CreateFrameAnimationFolder("WorldMapCupheadIdleDown", FrameAnimation_DESC("WorldMapChupheadIdleDown", 0.1f));
+	Renderer->CreateFrameAnimationFolder("WorldMapCupheadIdleDownB", FrameAnimation_DESC("WorldMapChupheadIdleDownB", 0.1f)); // Idle 상태로 지속 시 1번 발동
+	Renderer->CreateFrameAnimationFolder("WorldMapCupheadIdleSide", FrameAnimation_DESC("WorldMapChupheadIdleSide", 0.1f));
+	Renderer->CreateFrameAnimationFolder("WorldMapCupheadIdleSideB", FrameAnimation_DESC("WorldMapChupheadIdleSideB", 0.1f)); // Idle 상태로 지속 시 1번 발동
+	Renderer->CreateFrameAnimationFolder("WorldMapCupheadIdleUp", FrameAnimation_DESC("WorldMapChupheadIdleUp", 0.1f));
+
+	// Walk
+	Renderer->CreateFrameAnimationFolder("WorldMapCupheadWalkDiagDown", FrameAnimation_DESC("WorldMapChupheadWalkDiagDown", 0.1f));
+	Renderer->CreateFrameAnimationFolder("WorldMapCupheadWalkDiagUp", FrameAnimation_DESC("WorldMapChupheadWalkDiagUp", 0.1f));
+	Renderer->CreateFrameAnimationFolder("WorldMapCupheadWalkDown", FrameAnimation_DESC("WorldMapChupheadWalkDown", 0.1f));
+	Renderer->CreateFrameAnimationFolder("WorldMapCupheadWalkSide", FrameAnimation_DESC("WorldMapChupheadWalkSide", 0.1f));
+	Renderer->CreateFrameAnimationFolder("WorldMapCupheadWalkUp", FrameAnimation_DESC("WorldMapChupheadWalkUp", 0.1f));
+	
+	// Win
+	Renderer->CreateFrameAnimationFolder("WorldMapCupheadWin", FrameAnimation_DESC("WorldMapCupheadWin", 0.1f));
+	
 	SetState(WorldMapCupheadState::Idle);
-	Dir = "Down";
+	Renderer->ChangeFrameAnimation("WorldMapCupheadIdleDown");
+	Renderer->ScaleToTexture();
+
+	Movement = CreateComponent<MovementComponent>();
+	Animation = CreateComponent<WorldMapCharacterAnimationControllerComponent>();
+	Animation->SetCharacterName("Cuphead");
 }
 
 void WorldMapCuphead::Update(float _DeltaTime)
 {
-	
 	GetLevel()->GetMainCameraActorTransform().SetLocalPosition({ GetTransform().GetLocalPosition().x+6.0f, GetTransform().GetLocalPosition().y - 32});
 
 	if (true == GameEngineInput::GetInst()->IsPress("MoveLeft") ||
@@ -53,83 +64,70 @@ void WorldMapCuphead::Update(float _DeltaTime)
 		true == GameEngineInput::GetInst()->IsPress("MoveDown") ||
 		true == GameEngineInput::GetInst()->IsPress("MoveUp"))
 	{
-		SetState(WorldMapCupheadState::Walk);
+		Walk();
 	}
 	else
 	{
-		SetState(WorldMapCupheadState::Idle);
-	}
-
-
-	switch (State)
-	{
-	case WorldMapCupheadState::Idle:
 		Idle();
-		break;
-	case WorldMapCupheadState::Walk:
-		Walk();
-		break;
 	}
-
 }
 
 void WorldMapCuphead::Idle()
 {
-	if (Dir == "Right")
-	{
-		Renderer->ChangeFrameAnimation("Side");
-	}
-	else if(Dir == "Left")
-	{
-		Renderer->ChangeFrameAnimation("WalkSide");
-		Renderer->GetTransform().SetLocalScale({ -53 ,99,100 });
-	}
-	else if (Dir == "Up")
-	{
-		Renderer->ChangeFrameAnimation("Up");
-	}
-	else if (Dir == "Down")
-	{
-		Renderer->ChangeFrameAnimation("Down");
-	}
+	SetState(WorldMapCupheadState::Idle);
+	WalkCheckElapsedTime = 0;
 }
 
 
 void WorldMapCuphead::Walk()
 {
-	if (true == GameEngineInput::GetInst()->IsPress("MoveLeft"))
+	WalkCheckElapsedTime += GameEngineTime::GetDeltaTime();
+	if (WalkCheckElapsedTime > WalkCheckInterval)
 	{
-		Renderer->ChangeFrameAnimation("WalkSide");
-		if (Renderer->GetTransform().GetLocalScale().x > 0)
+		WalkCheckElapsedTime = 0;
+	}
+
+	if (WalkCheckElapsedTime == 0)
+	{
+		if (true == GameEngineInput::GetInst()->IsPress("MoveLeft"))
 		{
-			Renderer->GetTransform().SetLocalScale({ -66,85,100 });
+			if (true == GameEngineInput::GetInst()->IsPress("MoveUp"))
+			{
+				SetDirection("LeftUp");
+			}
+			else if (true == GameEngineInput::GetInst()->IsPress("MoveDown"))
+			{
+				SetDirection("LeftDown");
+			}
+			else
+			{
+				SetDirection("Left");
+			}
 		}
-		GetTransform().SetWorldMove(GetTransform().GetLeftVector() * Speed * GameEngineTime::GetDeltaTime());
-	}
-
-	if (true == GameEngineInput::GetInst()->IsPress("MoveRight"))
-	{
-		Renderer->ChangeFrameAnimation("WalkSide");
-		if (Renderer->GetTransform().GetLocalScale().x < 0)
+		else if (true == GameEngineInput::GetInst()->IsPress("MoveRight"))
 		{
-			Renderer->GetTransform().SetLocalScale({ 66,85,100 });
+			if (true == GameEngineInput::GetInst()->IsPress("MoveUp"))
+			{
+				SetDirection("RightUp");
+			}
+			else if (true == GameEngineInput::GetInst()->IsPress("MoveDown"))
+			{
+				SetDirection("RightDown");
+			}
+			else
+			{
+				SetDirection("Right");
+			}
 		}
-		GetTransform().SetWorldMove(GetTransform().GetRightVector() * Speed * GameEngineTime::GetDeltaTime());
+		else if (true == GameEngineInput::GetInst()->IsPress("MoveDown"))
+		{
+			SetDirection("Down");
+		}
+		else if (true == GameEngineInput::GetInst()->IsPress("MoveUp"))
+		{
+			SetDirection("Up");
+		}
 	}
 
-	if (true == GameEngineInput::GetInst()->IsPress("MoveDown"))
-	{
-		Renderer->ChangeFrameAnimation("WalkDown");
-		Renderer->GetTransform().SetLocalScale({ 66,85,100 });
-
-		GetTransform().SetWorldMove(GetTransform().GetDownVector() * Speed * GameEngineTime::GetDeltaTime());
-	}
-
-	if (true == GameEngineInput::GetInst()->IsPress("MoveUp"))
-	{
-		Renderer->ChangeFrameAnimation("WalkUp");
-		Renderer->GetTransform().SetLocalScale({ 66,85,100 });
-
-		GetTransform().SetWorldMove(GetTransform().GetUpVector() * Speed * GameEngineTime::GetDeltaTime());
-	}
+	SetState(WorldMapCupheadState::Walk);
 }
