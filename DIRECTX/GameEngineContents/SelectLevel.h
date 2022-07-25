@@ -47,6 +47,6 @@ private:
 	float DeltaTime;
 
 private:
-	void EndAnimation(FrameAnimation_DESC _Info);
+	void EndAnimation(const FrameAnimation_DESC& _Info);
 };
 

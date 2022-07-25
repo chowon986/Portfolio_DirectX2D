@@ -122,7 +122,7 @@ void SelectLevel::Start()
 		PlayerARenderer = PlayerA->CreateComponent<GameEngineTextureRenderer>();
 		PlayerARenderer->CreateFrameAnimationFolder("SelectCuphead", FrameAnimation_DESC("SelectCuphead", 0.1f));
 		PlayerARenderer->CreateFrameAnimationFolder("SelectCupheadOk", FrameAnimation_DESC("SelectCupheadOk", 0.1f));
-		PlayerARenderer->AnimationBindEnd("SelectCupheadOk", std::bind(&SelectLevel::EndAnimation, this, std::placeholders::_1));
+		PlayerARenderer->AnimationBindEnd("SelectCupheadOk", &SelectLevel::EndAnimation, this);
 		PlayerARenderer->CreateFrameAnimationFolder("SelectPlayerALine", FrameAnimation_DESC("SelectPlayerALine", 0.1f));
 		PlayerARenderer->ChangeFrameAnimation("SelectCuphead");
 		PlayerARenderer->GetTransform().SetLocalPosition({ 0, 0, (int)ZOrder::UI-1 });
@@ -134,7 +134,7 @@ void SelectLevel::Start()
 		PlayerBRenderer->CreateFrameAnimationFolder("SelectMugman", FrameAnimation_DESC("SelectMugman", 0.1f));
 		PlayerBRenderer->CreateFrameAnimationFolder("SelectMugmanOK", FrameAnimation_DESC("SelectMugmanOK", 0.1f));
 		PlayerBRenderer->CreateFrameAnimationFolder("SelectPlayerBLine", FrameAnimation_DESC("SelectPlayerBLine", 0.1f));
-		PlayerBRenderer->AnimationBindEnd("SelectMugmanOK", std::bind(&SelectLevel::EndAnimation, this, std::placeholders::_1));
+		PlayerBRenderer->AnimationBindEnd("SelectMugmanOK", &SelectLevel::EndAnimation, this);
 		PlayerBRenderer->ChangeFrameAnimation("SelectPlayerBLine");
 		PlayerBRenderer->GetTransform().SetLocalPosition({ 0, 0, (int)ZOrder::UI-1 });
 	}
@@ -613,7 +613,7 @@ void SelectLevel::End()
 	GameEngineInput::GetInst()->Reset();
 }
 
-void SelectLevel::EndAnimation(FrameAnimation_DESC _Info)
+void SelectLevel::EndAnimation(const FrameAnimation_DESC& _Info)
 {
 	GEngine::ChangeLevel("Hourglass");
 }

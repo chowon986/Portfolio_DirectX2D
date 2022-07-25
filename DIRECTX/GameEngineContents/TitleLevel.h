@@ -22,7 +22,7 @@ protected:
 	void End() override;
 
 private:
-	void EndIrisAnimation(FrameAnimation_DESC _Info);
+	void EndIrisAnimation(const FrameAnimation_DESC& _Info);
 
 private:
 	GameEngineTextureRenderer* IrisRenderer;

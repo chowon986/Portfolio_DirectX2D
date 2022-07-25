@@ -83,14 +83,14 @@ void TitleLevel::Start()
 		IrisRenderer = Iris->CreateComponent<GameEngineTextureRenderer>();
 		IrisRenderer->GetTransform().SetLocalScale({ 1280,720,100 });
 		IrisRenderer->CreateFrameAnimationFolder("IrisBStart", FrameAnimation_DESC("IrisB", 0.1f));
-		IrisRenderer->AnimationBindEnd("IrisBStart", std::bind(&TitleLevel::EndIrisAnimation, this, std::placeholders::_1));
+		IrisRenderer->AnimationBindEnd("IrisBStart", &TitleLevel::EndIrisAnimation, this);
 		IrisRenderer->CreateFrameAnimationFolder("IrisB", FrameAnimation_DESC("IrisB",0,0, 0.1f,true));
 		IrisRenderer->ChangeFrameAnimation("IrisB");
 	}
 
 }
 
-void TitleLevel::EndIrisAnimation(FrameAnimation_DESC _Info)
+void TitleLevel::EndIrisAnimation(const FrameAnimation_DESC& _Info)
 {
 	GEngine::ChangeLevel("Select");
 }

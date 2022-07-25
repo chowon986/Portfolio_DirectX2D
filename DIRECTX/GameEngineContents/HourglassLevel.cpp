@@ -24,7 +24,7 @@ void HourglassLevel::Start()
 	Background* Hourglass = CreateActor<Background>(GameObjectGroup::UI);
 	GameEngineTextureRenderer* Renderer = Hourglass->CreateComponent<GameEngineTextureRenderer>();
 	Renderer->CreateFrameAnimationFolder("Hourglass", FrameAnimation_DESC("13HourglassLevel", 0.1f));
-	Renderer->AnimationBindEnd("Hourglass", std::bind(&HourglassLevel::EndAnimation, this, std::placeholders::_1));
+	Renderer->AnimationBindEnd("Hourglass", &HourglassLevel::EndAnimation, this);
 	Renderer->ChangeFrameAnimation("Hourglass");
 	Renderer->GetTransform().SetLocalScale({ 191,326,100 });
 	Renderer->GetTransform().SetLocalPosition({ 500,-180,100 });
@@ -42,7 +42,7 @@ void HourglassLevel::End()
 {
 }
 
-void HourglassLevel::EndAnimation(FrameAnimation_DESC _Info)
+void HourglassLevel::EndAnimation(const FrameAnimation_DESC& _Info)
 {
 	GEngine::ChangeLevel("WorldMap");
 }

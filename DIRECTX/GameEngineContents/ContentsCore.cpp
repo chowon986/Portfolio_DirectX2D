@@ -1,11 +1,11 @@
 #include "PreCompile.h"
 #include "ContentsCore.h"
-#include "GameEngineContents/PlayLevel.h"
-#include "GameEngineContents/TitleLevel.h"
-#include "GameEngineContents/BeforeTitleLevel.h"
-#include "GameEngineContents/SelectLevel.h"
-#include "GameEngineContents/WorldMapLevel.h"
-#include "GameEngineContents/HourglassLevel.h"
+#include "PlayLevel.h"
+#include "TitleLevel.h"
+#include "BeforeTitleLevel.h"
+#include "SelectLevel.h"
+#include "WorldMapLevel.h"
+#include "HourglassLevel.h"
 #include "ShopLevel.h"
 
 #pragma comment(lib, "GameEngineBase.lib")
@@ -84,14 +84,12 @@ void ContentsCore::Start()
 	CreateLevel<PlayLevel>("Play");
 	ChangeLevel("WorldMap");
 
+	GameEngineGUI::CreateGUIWindow<GameEngineStatusWindow>("EngineStatus", nullptr);
+
 }
 
 void ContentsCore::Update(float _DeltaTime)
 {
-	// 서버가 종료되었어.
-	// 무조건 경고 메세지창을 띄워줘야한다.
-	
-	
 }
 
 void ContentsCore::End()

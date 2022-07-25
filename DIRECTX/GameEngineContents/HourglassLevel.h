@@ -21,6 +21,6 @@ protected:
 	void Update(float _DeltaTime) override;
 	void End() override;
 private:
-	void EndAnimation(FrameAnimation_DESC _Info);
+	void EndAnimation(const FrameAnimation_DESC& _Info);
 };
 

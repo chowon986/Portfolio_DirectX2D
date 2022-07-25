@@ -135,6 +135,9 @@
     <ClInclude Include="imstb_textedit.h">
       <Filter>GUI\IMGUI</Filter>
     </ClInclude>
+    <ClInclude Include="GameEngineStatusWindow.h">
+      <Filter>GUI\EngineGUIWindow</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameEngineActor.cpp">
@@ -264,6 +267,9 @@
     <ClCompile Include="imgui_widgets.cpp">
       <Filter>GUI\IMGUI</Filter>
     </ClCompile>
+    <ClCompile Include="GameEngineStatusWindow.cpp">
+      <Filter>GUI\EngineGUIWindow</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Object">
@@ -334,6 +340,9 @@
     </Filter>
     <Filter Include="GUI\IMGUI">
       <UniqueIdentifier>{74676aca-deda-4634-894a-aa04952cb4f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GUI\EngineGUIWindow">
+      <UniqueIdentifier>{beebeba0-142c-4996-9860-a64c7202cf4e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

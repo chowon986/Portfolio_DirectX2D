@@ -17,7 +17,7 @@ public:
 	BeforeTitleLevel& operator=(BeforeTitleLevel&& _Other) noexcept = delete;
 
 public:
-	void EndHDMRAnimation(FrameAnimation_DESC _Info);
+	void EndHDMRAnimation(const FrameAnimation_DESC& _Info);
 
 protected:
 	void Start() override;
