@@ -12,6 +12,9 @@ public:
 	IRunable& operator=(const IRunable& _Other) = delete;
 	IRunable& operator=(IRunable&& _Other) noexcept = delete;
 
+protected:
+	virtual void Run() = 0;
+
 private:
 };
 

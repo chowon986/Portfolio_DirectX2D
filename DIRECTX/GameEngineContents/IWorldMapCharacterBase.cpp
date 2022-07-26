@@ -3,7 +3,7 @@
 
 IWorldMapCharacterBase::IWorldMapCharacterBase()
 	: Renderer(nullptr)
-	, State(WorldMapCupheadState::Idle)
+	, State(WorldMapCharacterState::Idle)
 	, Dir("Down")
 {
 }
@@ -12,7 +12,7 @@ IWorldMapCharacterBase::~IWorldMapCharacterBase()
 {
 }
 
-void IWorldMapCharacterBase::SetState(WorldMapCupheadState _State)
+void IWorldMapCharacterBase::SetState(WorldMapCharacterState _State)
 {
 	if (State != _State)
 	{
@@ -21,7 +21,7 @@ void IWorldMapCharacterBase::SetState(WorldMapCupheadState _State)
 	}
 }
 
-WorldMapCupheadState IWorldMapCharacterBase::GetState()
+WorldMapCharacterState IWorldMapCharacterBase::GetState()
 {
 	return State;
 }

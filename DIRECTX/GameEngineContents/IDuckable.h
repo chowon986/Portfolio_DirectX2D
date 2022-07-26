@@ -12,6 +12,9 @@ public:
 	IDuckable& operator=(const IDuckable& _Other) = delete;
 	IDuckable& operator=(IDuckable&& _Other) noexcept = delete;
 
+protected:
+	virtual void Duck() = 0;
+
 private:
 };
 

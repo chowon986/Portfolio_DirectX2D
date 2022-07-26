@@ -43,6 +43,15 @@
     <Filter Include="Components">
       <UniqueIdentifier>{410e80f7-6d6c-439d-ad7d-64d824d7112e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Actor\Play\WorldMap\PC">
+      <UniqueIdentifier>{59147346-30ff-4d5d-8db4-dd5c7c0d97d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\Play\WorldMap\Object">
+      <UniqueIdentifier>{a62afb56-00ff-4b4d-9e56-256100099870}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\Play\WorldMap\Object\Entry">
+      <UniqueIdentifier>{18255c14-63a1-4ca8-bf08-f1cfc8733fac}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ContentsCore.h">
@@ -71,9 +80,6 @@
     </ClInclude>
     <ClInclude Include="PlayLevel.h">
       <Filter>Level\Play</Filter>
-    </ClInclude>
-    <ClInclude Include="WorldMapCuphead.h">
-      <Filter>Actor\Play\WorldMap</Filter>
     </ClInclude>
     <ClInclude Include="IWalkable.h">
       <Filter>Actor\Interface</Filter>
@@ -129,9 +135,6 @@
     <ClInclude Include="IWorldMapCharacterBase.h">
       <Filter>Actor\Base</Filter>
     </ClInclude>
-    <ClInclude Include="IEvatiable.h">
-      <Filter>Actor\Interface</Filter>
-    </ClInclude>
     <ClInclude Include="HourglassLevel.h">
       <Filter>Level</Filter>
     </ClInclude>
@@ -140,21 +143,6 @@
     </ClInclude>
     <ClInclude Include="INonPlayerCharacterBase.h">
       <Filter>Actor\Base</Filter>
-    </ClInclude>
-    <ClInclude Include="Bakery.h">
-      <Filter>Actor\Play\WorldMap</Filter>
-    </ClInclude>
-    <ClInclude Include="Shop.h">
-      <Filter>Actor\Play\WorldMap</Filter>
-    </ClInclude>
-    <ClInclude Include="Catus.h">
-      <Filter>Actor\Play\WorldMap</Filter>
-    </ClInclude>
-    <ClInclude Include="Ladder.h">
-      <Filter>Actor\Play\WorldMap</Filter>
-    </ClInclude>
-    <ClInclude Include="Dogfight.h">
-      <Filter>Actor\Play\WorldMap</Filter>
     </ClInclude>
     <ClInclude Include="ShopLevel.h">
       <Filter>Level\Play</Filter>
@@ -189,6 +177,78 @@
     <ClInclude Include="WorldMapCharacterAnimationControllerComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
+    <ClInclude Include="WorldMapCuphead.h">
+      <Filter>Actor\Play\WorldMap\PC</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldMapMugman.h">
+      <Filter>Actor\Play\WorldMap\PC</Filter>
+    </ClInclude>
+    <ClInclude Include="Boat.h">
+      <Filter>Actor\Play\WorldMap\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="BoatRipples.h">
+      <Filter>Actor\Play\WorldMap\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Catus.h">
+      <Filter>Actor\Play\WorldMap\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="WaterLine.h">
+      <Filter>Actor\Play\WorldMap\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Bakery.h">
+      <Filter>Actor\Play\WorldMap\Object\Entry</Filter>
+    </ClInclude>
+    <ClInclude Include="Cart.h">
+      <Filter>Actor\Play\WorldMap\Object\Entry</Filter>
+    </ClInclude>
+    <ClInclude Include="Dogfight.h">
+      <Filter>Actor\Play\WorldMap\Object\Entry</Filter>
+    </ClInclude>
+    <ClInclude Include="Omm.h">
+      <Filter>Actor\Play\WorldMap\Object\Entry</Filter>
+    </ClInclude>
+    <ClInclude Include="Ladder.h">
+      <Filter>Actor\Play\WorldMap\Object\Entry</Filter>
+    </ClInclude>
+    <ClInclude Include="Shop.h">
+      <Filter>Actor\Play\WorldMap\Object\Entry</Filter>
+    </ClInclude>
+    <ClInclude Include="Waterfall.h">
+      <Filter>Actor\Play\WorldMap\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="WaterfallBase.h">
+      <Filter>Actor\Play\WorldMap\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Rumrunners.h">
+      <Filter>Actor\Play\WorldMap\Object\Entry</Filter>
+    </ClInclude>
+    <ClInclude Include="Cowgirl.h">
+      <Filter>Actor\Play\WorldMap\Object\Entry</Filter>
+    </ClInclude>
+    <ClInclude Include="Snow.h">
+      <Filter>Actor\Play\WorldMap\Object\Entry</Filter>
+    </ClInclude>
+    <ClInclude Include="IInGameCharacterBase.h">
+      <Filter>Actor\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="InGameCuphead.h">
+      <Filter>Actor\Play\WorldMap\PC</Filter>
+    </ClInclude>
+    <ClInclude Include="InGameMugman.h">
+      <Filter>Actor\Play\WorldMap\PC</Filter>
+    </ClInclude>
+    <ClInclude Include="InGameChalice.h">
+      <Filter>Actor\Play\WorldMap\PC</Filter>
+    </ClInclude>
+    <ClInclude Include="IEvadable.h">
+      <Filter>Actor\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="InGameCharacterMovementCompmonent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="InGameCharacterAnimationControllerComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp">
@@ -214,9 +274,6 @@
     </ClCompile>
     <ClCompile Include="WorldMapLevel.cpp">
       <Filter>Level\Play</Filter>
-    </ClCompile>
-    <ClCompile Include="WorldMapCuphead.cpp">
-      <Filter>Actor\Play\WorldMap</Filter>
     </ClCompile>
     <ClCompile Include="IWalkable.cpp">
       <Filter>Actor\Interface</Filter>
@@ -272,9 +329,6 @@
     <ClCompile Include="IWorldMapCharacterBase.cpp">
       <Filter>Actor\Base</Filter>
     </ClCompile>
-    <ClCompile Include="IEvatiable.cpp">
-      <Filter>Actor\Interface</Filter>
-    </ClCompile>
     <ClCompile Include="HourglassLevel.cpp">
       <Filter>Level</Filter>
     </ClCompile>
@@ -283,21 +337,6 @@
     </ClCompile>
     <ClCompile Include="INonPlayerCharacterBase.cpp">
       <Filter>Actor\Base</Filter>
-    </ClCompile>
-    <ClCompile Include="Bakery.cpp">
-      <Filter>Actor\Play\WorldMap</Filter>
-    </ClCompile>
-    <ClCompile Include="Shop.cpp">
-      <Filter>Actor\Play\WorldMap</Filter>
-    </ClCompile>
-    <ClCompile Include="Catus.cpp">
-      <Filter>Actor\Play\WorldMap</Filter>
-    </ClCompile>
-    <ClCompile Include="Ladder.cpp">
-      <Filter>Actor\Play\WorldMap</Filter>
-    </ClCompile>
-    <ClCompile Include="Dogfight.cpp">
-      <Filter>Actor\Play\WorldMap</Filter>
     </ClCompile>
     <ClCompile Include="ShopLevel.cpp">
       <Filter>Level\Play</Filter>
@@ -330,6 +369,78 @@
       <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="WorldMapCharacterAnimationControllerComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldMapCuphead.cpp">
+      <Filter>Actor\Play\WorldMap\PC</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldMapMugman.cpp">
+      <Filter>Actor\Play\WorldMap\PC</Filter>
+    </ClCompile>
+    <ClCompile Include="Boat.cpp">
+      <Filter>Actor\Play\WorldMap\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="BoatRipples.cpp">
+      <Filter>Actor\Play\WorldMap\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Catus.cpp">
+      <Filter>Actor\Play\WorldMap\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="WaterLine.cpp">
+      <Filter>Actor\Play\WorldMap\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Bakery.cpp">
+      <Filter>Actor\Play\WorldMap\Object\Entry</Filter>
+    </ClCompile>
+    <ClCompile Include="Cart.cpp">
+      <Filter>Actor\Play\WorldMap\Object\Entry</Filter>
+    </ClCompile>
+    <ClCompile Include="Dogfight.cpp">
+      <Filter>Actor\Play\WorldMap\Object\Entry</Filter>
+    </ClCompile>
+    <ClCompile Include="Omm.cpp">
+      <Filter>Actor\Play\WorldMap\Object\Entry</Filter>
+    </ClCompile>
+    <ClCompile Include="Ladder.cpp">
+      <Filter>Actor\Play\WorldMap\Object\Entry</Filter>
+    </ClCompile>
+    <ClCompile Include="Shop.cpp">
+      <Filter>Actor\Play\WorldMap\Object\Entry</Filter>
+    </ClCompile>
+    <ClCompile Include="Waterfall.cpp">
+      <Filter>Actor\Play\WorldMap\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="WaterfallBase.cpp">
+      <Filter>Actor\Play\WorldMap\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Rumrunners.cpp">
+      <Filter>Actor\Play\WorldMap\Object\Entry</Filter>
+    </ClCompile>
+    <ClCompile Include="Cowgirl.cpp">
+      <Filter>Actor\Play\WorldMap\Object\Entry</Filter>
+    </ClCompile>
+    <ClCompile Include="Snow.cpp">
+      <Filter>Actor\Play\WorldMap\Object\Entry</Filter>
+    </ClCompile>
+    <ClCompile Include="IInGameCharacterBase.cpp">
+      <Filter>Actor\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="InGameCuphead.cpp">
+      <Filter>Actor\Play\WorldMap\PC</Filter>
+    </ClCompile>
+    <ClCompile Include="InGameMugman.cpp">
+      <Filter>Actor\Play\WorldMap\PC</Filter>
+    </ClCompile>
+    <ClCompile Include="InGameChalice.cpp">
+      <Filter>Actor\Play\WorldMap\PC</Filter>
+    </ClCompile>
+    <ClCompile Include="IEvadable.cpp">
+      <Filter>Actor\Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="InGameCharacterMovementCompmonent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="InGameCharacterAnimationControllerComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
   </ItemGroup>

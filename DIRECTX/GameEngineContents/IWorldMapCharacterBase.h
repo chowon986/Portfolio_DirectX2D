@@ -4,10 +4,11 @@
 
 class GameEngineTextureRenderer;
 
-enum class WorldMapCupheadState
+enum class WorldMapCharacterState
 {
 	Idle,
 	Walk,
+	// talk, enter
 };
 
 template<typename T>
@@ -44,8 +45,8 @@ public:
 	IWorldMapCharacterBase& operator=(IWorldMapCharacterBase&& _Other) noexcept = delete;
 
 public:
-	void SetState(WorldMapCupheadState _State);
-	WorldMapCupheadState GetState();
+	void SetState(WorldMapCharacterState _State);
+	WorldMapCharacterState GetState();
 
 	void SetDirection(std::string _Dir);
 	std::string GetDirection() { return Dir; }
@@ -53,14 +54,14 @@ public:
 	void SetRenderer(GameEngineTextureRenderer* _Renderer);
 	GameEngineTextureRenderer* GetRenderer() { return Renderer; }
 
-	MulticastDelegate<WorldMapCupheadState>& GetStateChangedDelegate() { return StateChangedDelegate; }
+	MulticastDelegate<WorldMapCharacterState>& GetStateChangedDelegate() { return StateChangedDelegate; }
 	MulticastDelegate<std::string>& GetDirectionChangedDelegate() { return DirectionChangedDelegate; }
 
 private:
 	GameEngineTextureRenderer* Renderer;
-	WorldMapCupheadState State;
+	WorldMapCharacterState State;
 	std::string Dir;
-	MulticastDelegate<WorldMapCupheadState> StateChangedDelegate;
+	MulticastDelegate<WorldMapCharacterState> StateChangedDelegate;
 	MulticastDelegate<std::string> DirectionChangedDelegate;
 };
 

@@ -1,10 +1,10 @@
 #include "PreCompile.h"
 #include "ISpecialAttackable.h"
 
-ISpeacialAttackable::ISpeacialAttackable()
+ISpecialAttackable::ISpecialAttackable()
 {
 }
 
-ISpeacialAttackable::~ISpeacialAttackable()
+ISpecialAttackable::~ISpecialAttackable()
 {
 }

@@ -1,7 +1,7 @@
 #pragma once
 #include <GameEngineCore/GameEngineComponent.h>
 
-enum class WorldMapCupheadState;
+enum class WorldMapCharacterState;
 
 class MovementComponent : public GameEngineComponent
 {
@@ -19,7 +19,7 @@ public:
 	float4 GetDirection() const { return Direction; }
 	void SetDirection(float4 _Direction) { Direction = _Direction; }
 
-	void OnStateChanged(WorldMapCupheadState _State);
+	void OnStateChanged(WorldMapCharacterState _State);
 	void OnDirectionChanged(std::string _Dir);
 
 private:

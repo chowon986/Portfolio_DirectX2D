@@ -12,6 +12,9 @@ public:
 	IDamageable& operator=(const IDamageable& _Other) = delete;
 	IDamageable& operator=(IDamageable&& _Other) noexcept = delete;
 
+protected:
+	virtual void TakeDamage() = 0;
+
 private:
 };
 

@@ -1,10 +1,10 @@
 #include "PreCompile.h"
 #include "IDieable.h"
 
-IDiable::IDiable()
+IDieable::IDieable()
 {
 }
 
-IDiable::~IDiable()
+IDieable::~IDieable()
 {
 }

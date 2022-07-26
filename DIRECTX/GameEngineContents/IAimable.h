@@ -12,6 +12,9 @@ public:
 	IAimable& operator=(const IAimable& _Other) = delete;
 	IAimable& operator=(IAimable&& _Other) noexcept = delete;
 
+protected:
+	virtual void Aim() = 0;
+
 private:
 };
 

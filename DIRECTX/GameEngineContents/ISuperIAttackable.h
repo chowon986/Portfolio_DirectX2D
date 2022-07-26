@@ -12,6 +12,9 @@ public:
 	ISuperIAttackable& operator=(const ISuperIAttackable& _Other) = delete;
 	ISuperIAttackable& operator=(ISuperIAttackable&& _Other) noexcept = delete;
 
+protected:
+	virtual void SuperIAttack() = 0;
+
 private:
 };
 

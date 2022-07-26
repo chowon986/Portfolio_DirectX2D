@@ -1,7 +1,7 @@
 #pragma once
 #include <GameEngineCore/GameEngineComponent.h>
 
-enum class WorldMapCupheadState;
+enum class WorldMapCharacterState;
 class WorldMapCharacterAnimationControllerComponent : public GameEngineComponent
 {
 public:
@@ -16,7 +16,7 @@ public:
 	WorldMapCharacterAnimationControllerComponent& operator=(WorldMapCharacterAnimationControllerComponent&& _Other) noexcept = delete;
 
 
-	void OnStateChanged(WorldMapCupheadState _State);
+	void OnStateChanged(WorldMapCharacterState _State);
 	void OnDirectionChanged(std::string _Dir);
 
 	void SetCharacterName(std::string _CharacterName)

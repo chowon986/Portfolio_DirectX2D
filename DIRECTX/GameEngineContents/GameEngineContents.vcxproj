@@ -160,12 +160,16 @@
     <ClInclude Include="Background.h" />
     <ClInclude Include="Bakery.h" />
     <ClInclude Include="BeforeTitleLevel.h" />
+    <ClInclude Include="Boat.h" />
     <ClInclude Include="Boatman.h" />
+    <ClInclude Include="BoatRipples.h" />
+    <ClInclude Include="Cart.h" />
     <ClInclude Include="Catus.h" />
     <ClInclude Include="ContentsCore.h">
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="Cowgirl.h" />
     <ClInclude Include="Dogfight.h" />
     <ClInclude Include="DogFightLevel.h" />
     <ClInclude Include="Enums.h" />
@@ -177,9 +181,15 @@
     <ClInclude Include="IDieable.h" />
     <ClInclude Include="IDoubleJumpable.h" />
     <ClInclude Include="IDuckable.h" />
-    <ClInclude Include="IEvatiable.h" />
+    <ClInclude Include="IEvadable.h" />
     <ClInclude Include="IIdleable.h" />
+    <ClInclude Include="IInGameCharacterBase.h" />
     <ClInclude Include="IJumpable.h" />
+    <ClInclude Include="InGameChalice.h" />
+    <ClInclude Include="InGameCharacterAnimationControllerComponent.h" />
+    <ClInclude Include="InGameCharacterMovementCompmonent.h" />
+    <ClInclude Include="InGameCuphead.h" />
+    <ClInclude Include="InGameMugman.h" />
     <ClInclude Include="INonPlayerCharacterBase.h" />
     <ClInclude Include="IParriable.h" />
     <ClInclude Include="IPreparable.h" />
@@ -195,6 +205,7 @@
     <ClInclude Include="Ladder.h" />
     <ClInclude Include="Lantern.h" />
     <ClInclude Include="NewsCat.h" />
+    <ClInclude Include="Omm.h" />
     <ClInclude Include="Pickaxe.h" />
     <ClInclude Include="Pig.h" />
     <ClInclude Include="PlayLevel.h">
@@ -205,29 +216,39 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="Rumrunners.h" />
     <ClInclude Include="SelectLevel.h" />
     <ClInclude Include="Shop.h" />
     <ClInclude Include="ShopLevel.h" />
     <ClInclude Include="Shovel.h" />
+    <ClInclude Include="Snow.h" />
     <ClInclude Include="TitleLevel.h">
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="Waterfall.h" />
+    <ClInclude Include="WaterfallBase.h" />
+    <ClInclude Include="WaterLine.h" />
     <ClInclude Include="WorldMapCharacterAnimationControllerComponent.h" />
     <ClInclude Include="WorldMapCuphead.h" />
     <ClInclude Include="WorldMapLevel.h" />
     <ClInclude Include="MovementComponent.h" />
+    <ClInclude Include="WorldMapMugman.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Background.cpp" />
     <ClCompile Include="Bakery.cpp" />
     <ClCompile Include="BeforeTitleLevel.cpp" />
+    <ClCompile Include="Boat.cpp" />
     <ClCompile Include="Boatman.cpp" />
+    <ClCompile Include="BoatRipples.cpp" />
+    <ClCompile Include="Cart.cpp" />
     <ClCompile Include="Catus.cpp" />
     <ClCompile Include="ContentsCore.cpp">
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="Cowgirl.cpp" />
     <ClCompile Include="Dogfight.cpp" />
     <ClCompile Include="DogFightLevel.cpp" />
     <ClCompile Include="Ghost.cpp" />
@@ -238,9 +259,15 @@
     <ClCompile Include="IDieable.cpp" />
     <ClCompile Include="IDoubleJumpable.cpp" />
     <ClCompile Include="IDuckable.cpp" />
-    <ClCompile Include="IEvatiable.cpp" />
+    <ClCompile Include="IEvadable.cpp" />
     <ClCompile Include="IIdleable.cpp" />
+    <ClCompile Include="IInGameCharacterBase.cpp" />
     <ClCompile Include="IJumpable.cpp" />
+    <ClCompile Include="InGameChalice.cpp" />
+    <ClCompile Include="InGameCharacterAnimationControllerComponent.cpp" />
+    <ClCompile Include="InGameCharacterMovementCompmonent.cpp" />
+    <ClCompile Include="InGameCuphead.cpp" />
+    <ClCompile Include="InGameMugman.cpp" />
     <ClCompile Include="INonPlayerCharacterBase.cpp" />
     <ClCompile Include="IParriable.cpp" />
     <ClCompile Include="IPreparable.cpp" />
@@ -256,6 +283,7 @@
     <ClCompile Include="Ladder.cpp" />
     <ClCompile Include="Lantern.cpp" />
     <ClCompile Include="NewsCat.cpp" />
+    <ClCompile Include="Omm.cpp" />
     <ClCompile Include="Pickaxe.cpp" />
     <ClCompile Include="Pig.cpp" />
     <ClCompile Include="PlayLevel.cpp">
@@ -268,18 +296,24 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Rumrunners.cpp" />
     <ClCompile Include="SelectLevel.cpp" />
     <ClCompile Include="Shop.cpp" />
     <ClCompile Include="ShopLevel.cpp" />
     <ClCompile Include="Shovel.cpp" />
+    <ClCompile Include="Snow.cpp" />
     <ClCompile Include="TitleLevel.cpp">
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="Waterfall.cpp" />
+    <ClCompile Include="WaterfallBase.cpp" />
+    <ClCompile Include="WaterLine.cpp" />
     <ClCompile Include="WorldMapCharacterAnimationControllerComponent.cpp" />
     <ClCompile Include="WorldMapCuphead.cpp" />
     <ClCompile Include="WorldMapLevel.cpp" />
     <ClCompile Include="MovementComponent.cpp" />
+    <ClCompile Include="WorldMapMugman.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

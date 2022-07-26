@@ -1,22 +1,22 @@
 #include "PreCompile.h"
-#include "WorldMapCuphead.h"
+#include "WorldMapMugman.h"
 #include "MovementComponent.h"
 #include "WorldMapCharacterAnimationControllerComponent.h"
 
-WorldMapCuphead::WorldMapCuphead()
+WorldMapMugman::WorldMapMugman()
 	: Movement(nullptr)
 	, Animation(nullptr)
-	, WalkCheckInterval(0.05)
+	, WalkCheckInterval(0.1)
 	, WalkCheckElapsedTime(0)
 {
 
 }
 
-WorldMapCuphead::~WorldMapCuphead()
+WorldMapMugman::~WorldMapMugman()
 {
 }
 
-void WorldMapCuphead::Start()
+void WorldMapMugman::Start()
 {
 	if (false == GameEngineInput::GetInst()->IsKey("MoveLeft"))
 	{
@@ -28,37 +28,37 @@ void WorldMapCuphead::Start()
 	SetRenderer(Renderer);
 
 	// Idle
-	Renderer->CreateFrameAnimationFolder("WorldMapCupheadIdleDiagDown", FrameAnimation_DESC("WorldMapChupheadIdleDiagDown", 0.1f));
-	Renderer->CreateFrameAnimationFolder("WorldMapCupheadIdleDiagUp", FrameAnimation_DESC("WorldMapChupheadIdleDiagUp", 0.1f));
-	Renderer->CreateFrameAnimationFolder("WorldMapCupheadIdleDown", FrameAnimation_DESC("WorldMapChupheadIdleDown", 0.1f));
-	Renderer->CreateFrameAnimationFolder("WorldMapCupheadIdleDownB", FrameAnimation_DESC("WorldMapChupheadIdleDownB", 0.1f)); // Idle 상태로 지속 시 1번 발동
-	Renderer->CreateFrameAnimationFolder("WorldMapCupheadIdleSide", FrameAnimation_DESC("WorldMapChupheadIdleSide", 0.1f));
-	Renderer->CreateFrameAnimationFolder("WorldMapCupheadIdleSideB", FrameAnimation_DESC("WorldMapChupheadIdleSideB", 0.1f)); // Idle 상태로 지속 시 1번 발동
-	Renderer->CreateFrameAnimationFolder("WorldMapCupheadIdleUp", FrameAnimation_DESC("WorldMapChupheadIdleUp", 0.1f));
+	Renderer->CreateFrameAnimationFolder("WorldMapMugmanIdleDiagDown", FrameAnimation_DESC("WorldMapChupheadIdleDiagDown", 0.1f));
+	Renderer->CreateFrameAnimationFolder("WorldMapMugmanIdleDiagUp", FrameAnimation_DESC("WorldMapChupheadIdleDiagUp", 0.1f));
+	Renderer->CreateFrameAnimationFolder("WorldMapMugmanIdleDown", FrameAnimation_DESC("WorldMapChupheadIdleDown", 0.1f));
+	Renderer->CreateFrameAnimationFolder("WorldMapMugmanIdleDownB", FrameAnimation_DESC("WorldMapChupheadIdleDownB", 0.1f)); // Idle 상태로 지속 시 1번 발동
+	Renderer->CreateFrameAnimationFolder("WorldMapMugmanIdleSide", FrameAnimation_DESC("WorldMapChupheadIdleSide", 0.1f));
+	Renderer->CreateFrameAnimationFolder("WorldMapMugmanIdleSideB", FrameAnimation_DESC("WorldMapChupheadIdleSideB", 0.1f)); // Idle 상태로 지속 시 1번 발동
+	Renderer->CreateFrameAnimationFolder("WorldMapMugmanIdleUp", FrameAnimation_DESC("WorldMapChupheadIdleUp", 0.1f));
 
 	// Walk
-	Renderer->CreateFrameAnimationFolder("WorldMapCupheadWalkDiagDown", FrameAnimation_DESC("WorldMapChupheadWalkDiagDown", 0.1f));
-	Renderer->CreateFrameAnimationFolder("WorldMapCupheadWalkDiagUp", FrameAnimation_DESC("WorldMapChupheadWalkDiagUp", 0.1f));
-	Renderer->CreateFrameAnimationFolder("WorldMapCupheadWalkDown", FrameAnimation_DESC("WorldMapChupheadWalkDown", 0.1f));
-	Renderer->CreateFrameAnimationFolder("WorldMapCupheadWalkSide", FrameAnimation_DESC("WorldMapChupheadWalkSide", 0.1f));
-	Renderer->CreateFrameAnimationFolder("WorldMapCupheadWalkUp", FrameAnimation_DESC("WorldMapChupheadWalkUp", 0.1f));
-	
+	Renderer->CreateFrameAnimationFolder("WorldMapMugmanWalkDiagDown", FrameAnimation_DESC("WorldMapChupheadWalkDiagDown", 0.1f));
+	Renderer->CreateFrameAnimationFolder("WorldMapMugmanWalkDiagUp", FrameAnimation_DESC("WorldMapChupheadWalkDiagUp", 0.1f));
+	Renderer->CreateFrameAnimationFolder("WorldMapMugmanWalkDown", FrameAnimation_DESC("WorldMapChupheadWalkDown", 0.1f));
+	Renderer->CreateFrameAnimationFolder("WorldMapMugmanWalkSide", FrameAnimation_DESC("WorldMapChupheadWalkSide", 0.1f));
+	Renderer->CreateFrameAnimationFolder("WorldMapMugmanWalkUp", FrameAnimation_DESC("WorldMapChupheadWalkUp", 0.1f));
+
 	// Win
-	Renderer->CreateFrameAnimationFolder("WorldMapCupheadWin", FrameAnimation_DESC("WorldMapCupheadWin", 0.1f));
-	
+	Renderer->CreateFrameAnimationFolder("WorldMapMugmanWin", FrameAnimation_DESC("WorldMapMugmanWin", 0.1f));
+
 	SetState(WorldMapCharacterState::Idle);
-	Renderer->ChangeFrameAnimation("WorldMapCupheadIdleDown");
+	Renderer->ChangeFrameAnimation("WorldMapMugmanIdleDown");
 	Renderer->ScaleToTexture();
 	Renderer->SetPivot(PIVOTMODE::BOT);
 
 	Movement = CreateComponent<MovementComponent>();
 	Animation = CreateComponent<WorldMapCharacterAnimationControllerComponent>();
-	Animation->SetCharacterName("Cuphead");
+	Animation->SetCharacterName("Mugman");
 }
 
-void WorldMapCuphead::Update(float _DeltaTime)
+void WorldMapMugman::Update(float _DeltaTime)
 {
-	GetLevel()->GetMainCameraActorTransform().SetLocalPosition({ GetTransform().GetLocalPosition().x+6.0f, GetTransform().GetLocalPosition().y - 32});
+	GetLevel()->GetMainCameraActorTransform().SetLocalPosition({ GetTransform().GetLocalPosition().x + 6.0f, GetTransform().GetLocalPosition().y - 32 });
 
 	if (true == GameEngineInput::GetInst()->IsPress("MoveLeft") ||
 		true == GameEngineInput::GetInst()->IsPress("MoveRight") ||
@@ -73,14 +73,14 @@ void WorldMapCuphead::Update(float _DeltaTime)
 	}
 }
 
-void WorldMapCuphead::Idle()
+void WorldMapMugman::Idle()
 {
 	SetState(WorldMapCharacterState::Idle);
 	WalkCheckElapsedTime = 0;
 }
 
 
-void WorldMapCuphead::Walk()
+void WorldMapMugman::Walk()
 {
 	WalkCheckElapsedTime += GameEngineTime::GetDeltaTime();
 	if (WalkCheckElapsedTime > WalkCheckInterval)

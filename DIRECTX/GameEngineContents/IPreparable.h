@@ -12,6 +12,9 @@ public:
 	IPreparable& operator=(const IPreparable& _Other) = delete;
 	IPreparable& operator=(IPreparable&& _Other) noexcept = delete;
 
+protected:
+	virtual void Prepare() = 0;
+
 private:
 };
 

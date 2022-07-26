@@ -12,6 +12,9 @@ public:
 	IDoubleJumpable& operator=(const IDoubleJumpable& _Other) = delete;
 	IDoubleJumpable& operator=(IDoubleJumpable&& _Other) noexcept = delete;
 
+protected:
+	virtual void DoubleJump() = 0;
+
 private:
 };
 

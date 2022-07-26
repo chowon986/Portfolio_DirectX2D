@@ -12,6 +12,9 @@ public:
 	IShootable& operator=(const IShootable& _Other) = delete;
 	IShootable& operator=(IShootable&& _Other) noexcept = delete;
 
+protected:
+	virtual void Shoot() = 0;
+
 private:
 };
 

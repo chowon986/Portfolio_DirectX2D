@@ -1,16 +1,19 @@
 #pragma once
-class IDiable
+class IDieable
 {
 public:
 	// constrcuter destructer
-	IDiable();
-	~IDiable();
+	IDieable();
+	~IDieable();
 
 	// delete Function
-	IDiable(const IDiable& _Other) = delete;
-	IDiable(IDiable&& _Other) noexcept = delete;
-	IDiable& operator=(const IDiable& _Other) = delete;
-	IDiable& operator=(IDiable&& _Other) noexcept = delete;
+	IDieable(const IDieable& _Other) = delete;
+	IDieable(IDieable&& _Other) noexcept = delete;
+	IDieable& operator=(const IDieable& _Other) = delete;
+	IDieable& operator=(IDieable&& _Other) noexcept = delete;
+
+protected:
+	virtual void Die() = 0;
 
 private:
 };

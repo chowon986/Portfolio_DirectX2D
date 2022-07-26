@@ -1,16 +1,19 @@
 #pragma once
-class ISpeacialAttackable
+class ISpecialAttackable
 {
 public:
 	// constrcuter destructer
-	ISpeacialAttackable();
-	~ISpeacialAttackable();
+	ISpecialAttackable();
+	~ISpecialAttackable();
 
 	// delete Function
-	ISpeacialAttackable(const ISpeacialAttackable& _Other) = delete;
-	ISpeacialAttackable(ISpeacialAttackable&& _Other) noexcept = delete;
-	ISpeacialAttackable& operator=(const ISpeacialAttackable& _Other) = delete;
-	ISpeacialAttackable& operator=(ISpeacialAttackable&& _Other) noexcept = delete;
+	ISpecialAttackable(const ISpecialAttackable& _Other) = delete;
+	ISpecialAttackable(ISpecialAttackable&& _Other) noexcept = delete;
+	ISpecialAttackable& operator=(const ISpecialAttackable& _Other) = delete;
+	ISpecialAttackable& operator=(ISpecialAttackable&& _Other) noexcept = delete;
+
+protected:
+	virtual void SpecialAttack() = 0;
 
 private:
 };

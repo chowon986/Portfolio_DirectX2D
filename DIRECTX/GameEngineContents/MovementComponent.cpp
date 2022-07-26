@@ -13,7 +13,7 @@ MovementComponent::~MovementComponent()
 {
 }
 
-void MovementComponent::OnStateChanged(WorldMapCupheadState _State)
+void MovementComponent::OnStateChanged(WorldMapCharacterState _State)
 {
 	UpdateDirection();
 }
@@ -27,7 +27,7 @@ void MovementComponent::UpdateDirection()
 {
 	IWorldMapCharacterBase* WorldMapCharacter = GetParent<IWorldMapCharacterBase>();
 	if (WorldMapCharacter == nullptr ||
-		WorldMapCharacter->GetState() != WorldMapCupheadState::Walk)
+		WorldMapCharacter->GetState() != WorldMapCharacterState::Walk)
 	{
 		Direction = float4::ZERO;
 		return;

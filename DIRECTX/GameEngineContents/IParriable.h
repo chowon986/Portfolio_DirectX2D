@@ -12,6 +12,9 @@ public:
 	IParriable& operator=(const IParriable& _Other) = delete;
 	IParriable& operator=(IParriable&& _Other) noexcept = delete;
 
+protected:
+	virtual void Parry() = 0;
+
 private:
 };
 

@@ -12,6 +12,9 @@ public:
 	IDashable& operator=(const IDashable& _Other) = delete;
 	IDashable& operator=(IDashable&& _Other) noexcept = delete;
 
+protected:
+	virtual void Dash() = 0;
+
 private:
 };
 
