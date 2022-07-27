@@ -61,7 +61,6 @@ void TitleLevel::Start()
 	}
 
 	{
-
 		Background* Bottom = CreateActor<Background>(GameObjectGroup::UI);
 		GameEngineTextureRenderer* Renderer = Bottom->CreateComponent<GameEngineTextureRenderer>();
 		Renderer->GetTransform().SetLocalScale({ 1328,176,100 });

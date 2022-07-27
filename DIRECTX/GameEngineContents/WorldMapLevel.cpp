@@ -37,74 +37,97 @@ WorldMapLevel::~WorldMapLevel()
 {
 }
 
+void WorldMapLevel::ColMapOnOffSwitch()
+{
+	if (true == GameEngineInput::GetInst()->IsDown("ColMapOnOffSwitch"))
+	{
+		MainLandRenderer->OnOffSwitch();
+		//UnderWaterLandRenderer->OnOffSwitch();
+		OutsideOfMainLandLeftRenderer->OnOffSwitch();
+		OutsideOfMainLandRightRenderer->OnOffSwitch();
+	}
+}
+
+
 void WorldMapLevel::Start()
 {
+	if (false == GameEngineInput::GetInst()->IsKey("ColMapOnOffSwitch"))
+	{
+		GameEngineInput::GetInst()->CreateKey("ColMapOnOffSwitch", 'O');
+	}
+
+
 	GameEngineCameraActor* CameraActor = CreateActor<GameEngineCameraActor>();
 	CameraActor->GetCameraComponent()->SetProjectionMode(CAMERAPROJECTIONMODE::Orthographic);
 	CameraActor->GetTransform().SetLocalPosition({ 0.0, 0.0f, -500.0f });
 
 
+
 	{
 		// 바다 배경 왼쪽
 		Background* OutsideOfMainLandLeft = CreateActor<Background>(GameObjectGroup::UI);
-		GameEngineTextureRenderer* Renderer = OutsideOfMainLandLeft->CreateComponent<GameEngineTextureRenderer>();
-		Renderer->SetTexture("dlc_water_multiply.png");
-		Renderer->ScaleToTexture();
-		Renderer->SetPivot(PIVOTMODE::LEFTTOP);
-		Renderer->GetTransform().SetLocalPosition({ -2164, 0, (int)ZOrder::Background });
+		OutsideOfMainLandLeftRenderer = OutsideOfMainLandLeft->CreateComponent<GameEngineTextureRenderer>();
+		OutsideOfMainLandLeftRenderer->SetTexture("dlc_water_multiply.png");
+		OutsideOfMainLandLeftRenderer->ScaleToTexture();
+		OutsideOfMainLandLeftRenderer->SetPivot(PIVOTMODE::LEFTTOP);
+		OutsideOfMainLandLeftRenderer->GetTransform().SetLocalPosition({ -2164, -1500, (int)ZOrder::Background });
 	}
 
 	{
 		// 바다 배경 오른쪽
 		Background* OutsideOfMainLandRight = CreateActor<Background>(GameObjectGroup::UI);
-		GameEngineTextureRenderer* Renderer = OutsideOfMainLandRight->CreateComponent<GameEngineTextureRenderer>();
-		Renderer->SetTexture("dlc_water_multiply.png");
-		Renderer->ScaleToTexture();
-		Renderer->SetPivot(PIVOTMODE::LEFTTOP);
-		Renderer->GetTransform().SetLocalPosition({ 2164, 0, (int)ZOrder::Background });
+		OutsideOfMainLandRightRenderer= OutsideOfMainLandRight->CreateComponent<GameEngineTextureRenderer>();
+		OutsideOfMainLandRightRenderer->SetTexture("dlc_water_multiply.png");
+		OutsideOfMainLandRightRenderer->ScaleToTexture();
+		OutsideOfMainLandRightRenderer->SetPivot(PIVOTMODE::LEFTTOP);
+		OutsideOfMainLandRightRenderer->GetTransform().SetLocalPosition({ 2164, -1500, (int)ZOrder::Background });
 	}
 
 	{
 		// 바다 아래 세상
 		Background* UnderWaterLand = CreateActor<Background>(GameObjectGroup::UI);
-		GameEngineTextureRenderer* Renderer = UnderWaterLand->CreateComponent<GameEngineTextureRenderer>();
-		Renderer->SetTexture("dlc_underwater_land.png");
-		Renderer->ScaleToTexture();
-		Renderer->GetTransform().SetLocalPosition({ -1, -213, (int)ZOrder::Background-1 });
+		UnderWaterLandRenderer = UnderWaterLand->CreateComponent<GameEngineTextureRenderer>();
+		UnderWaterLandRenderer->SetTexture("dlc_underwater_land.png");
+		UnderWaterLandRenderer->ScaleToTexture();
+		UnderWaterLandRenderer->SetPivot(PIVOTMODE::LEFTTOP);
+		UnderWaterLandRenderer->GetTransform().SetLocalPosition({ 1853, -1318, (int)ZOrder::Background-1 });
+
 	}
 
 	{
 		// 바닷물
 		WaterLine* MainLandWaterLine = CreateActor<WaterLine>(GameObjectGroup::UI);
-		MainLandWaterLine->GetTransform().SetLocalPosition({ -1.0, -219.0f, (int)ZOrder::Background - 2 });
+		MainLandWaterLine->GetTransform().SetLocalPosition({ 0, -437, (int)ZOrder::Background - 2 });
 	}
 
 	{
 		// 땅
 		Background* MainLand = CreateActor<Background>(GameObjectGroup::UI);
-		GameEngineTextureRenderer* Renderer = MainLand->CreateComponent<GameEngineTextureRenderer>();
-		Renderer->SetTexture("dlc_main_land.png");
-		Renderer->ScaleToTexture();
-		Renderer->GetTransform().SetLocalPosition({ 0.0, 0.0, (int)ZOrder::Background - 3 });
+		MainLandRenderer = MainLand->CreateComponent<GameEngineTextureRenderer>();
+		MainLandRenderer->SetTexture("dlc_main_land.png");
+		MainLandRenderer->ScaleToTexture();
+		MainLandRenderer->GetTransform().SetLocalPosition({ 1855, -1105, (int)ZOrder::Background - 3 });
 	}
 
 	{
 		// 보트맨, 보트, 보트 물결
 		Boatman* BoatMan = CreateActor<Boatman>(GameObjectGroup::UI);
-		BoatMan->GetTransform().SetLocalPosition({ -1625.0f, -345.0f, (int)ZOrder::NPC});
-
+		BoatMan->GetTransform().SetLocalPosition({ 240, -1450.0f, (int)ZOrder::NPC});
+	}
+	{
 		Boat* BoatManBoat = CreateActor<Boat>(GameObjectGroup::UI);
-		BoatManBoat->GetTransform().SetLocalPosition({ -1626.0f, -562.0f,(int)ZOrder::NPC });
-
+		BoatManBoat->GetTransform().SetLocalPosition({ 240, -1667.0f,(int)ZOrder::NPC });
+	}
+	{
 		BoatRipples* BoatmanRipples = CreateActor<BoatRipples>(GameObjectGroup::UI);
-		BoatmanRipples->GetTransform().SetLocalPosition({ -1626.0f, -610.0f, (int)ZOrder::NPC + 1 });
+		BoatmanRipples->GetTransform().SetLocalPosition({ 240, -1715, (int)ZOrder::NPC + 1 });
 	}
 
 
 	{
 		// 빵집
 		Bakery* SaltBakerBakery = CreateActor<Bakery>(GameObjectGroup::UI);
-		SaltBakerBakery->GetTransform().SetLocalPosition({ -840.0f, 575.0f, (int)ZOrder::NPC });
+		SaltBakerBakery->GetTransform().SetLocalPosition({ 1020, -530, (int)ZOrder::NPC });
 	}
 
 	{
@@ -113,31 +136,32 @@ void WorldMapLevel::Start()
 		GameEngineTextureRenderer* Renderer = NextToBakery->CreateComponent<GameEngineTextureRenderer>();
 		Renderer->SetTexture("bakery_neighbor.png");
 		Renderer->ScaleToTexture();
-		Renderer->GetTransform().SetLocalPosition({ -975.0f, 460.0f, (int)ZOrder::NPC-1 });
+		Renderer->GetTransform().SetLocalPosition({ 880, -645.0f, (int)ZOrder::NPC - 1 });
 	}
 
 	{
 		// 튜토리얼 카트
 		Cart* TutorialCart = CreateActor<Cart>(GameObjectGroup::UI);
-		TutorialCart->GetTransform().SetLocalPosition({ -430.0f, 490.0f, (int)ZOrder::NPC });
+		TutorialCart->GetTransform().SetLocalPosition({ 1425, -615.0f, (int)ZOrder::NPC });
+		//TutorialCart->GetTransform().SetLocalPosition({ -430.0f, 490.0f, (int)ZOrder::NPC });
 	}
 
 	{
 		// 뉴스캣
 		NewsCat* NewsieCat = CreateActor<NewsCat>(GameObjectGroup::UI);
-		NewsieCat->GetTransform().SetLocalPosition({ -225.0f, 300.0f, (int)ZOrder::NPC });
+		NewsieCat->GetTransform().SetLocalPosition({ 1630.0, -805.0, (int)ZOrder::NPC });
 	}
 
 	{
 		// 상점
 		Shop* ItemShop = CreateActor<Shop>(GameObjectGroup::UI);
-		ItemShop->GetTransform().SetLocalPosition({ -90.0f, 600.0f, (int)ZOrder::NPC });
+		ItemShop->GetTransform().SetLocalPosition({ 1765.0, -505.0f, (int)ZOrder::NPC });
 	}
 
 	{
 		// 거인 입구
 		Omm* OmmEntry = CreateActor<Omm>(GameObjectGroup::UI);
-		OmmEntry->GetTransform().SetLocalPosition({ 653.0f, 704.0f, (int)ZOrder::NPC });
+		OmmEntry->GetTransform().SetLocalPosition({ 2508.0, -401.0f, (int)ZOrder::NPC });
 	}
 	{
 		// 거인 입구 옆 나무1
@@ -145,7 +169,7 @@ void WorldMapLevel::Start()
 		GameEngineTextureRenderer* Renderer = OmmTree->CreateComponent<GameEngineTextureRenderer>();
 		Renderer->SetTexture("omm_trees.png");
 		Renderer->ScaleToTexture();
-		Renderer->GetTransform().SetLocalPosition({ 578.0f, 675.0f, (int)ZOrder::NPC - 1 });
+		Renderer->GetTransform().SetLocalPosition({ 2433.0f, -430.0f, (int)ZOrder::NPC - 1 });
 	}
 	{
 		// 거인 입구 옆 나무2
@@ -153,19 +177,19 @@ void WorldMapLevel::Start()
 		GameEngineTextureRenderer* Renderer = OmmTree2->CreateComponent<GameEngineTextureRenderer>();
 		Renderer->SetTexture("omm_trees_B.png");
 		Renderer->ScaleToTexture();
-		Renderer->GetTransform().SetLocalPosition({ 766.0f, 559.0f, (int)ZOrder::NPC-2 });
+		Renderer->GetTransform().SetLocalPosition({ 2621.0f, -546.0f, (int)ZOrder::NPC - 2 });
 	}
 
 	{
 		// 폭포
 		Waterfall* MainWaterfall = CreateActor<Waterfall>(GameObjectGroup::UI);
-		MainWaterfall->GetTransform().SetLocalPosition({ 25.0f, 95.0f, (int)ZOrder::NPC });
+		MainWaterfall->GetTransform().SetLocalPosition({ 1880.0f, -1010.0f, (int)ZOrder::NPC });
 	}
 
 	{
 		// 폭포 물
 		WaterfallBase* MainWaterfallBase = CreateActor<WaterfallBase>(GameObjectGroup::UI);
-		MainWaterfallBase->GetTransform().SetLocalPosition({ 38.0f, -55.0f, (int)ZOrder::NPC-1 });
+		MainWaterfallBase->GetTransform().SetLocalPosition({ 1900.0f, -1150.0f, (int)ZOrder::NPC - 1 });
 	}
 
 	{
@@ -174,7 +198,7 @@ void WorldMapLevel::Start()
 		GameEngineTextureRenderer* Renderer = waterfall_trees->CreateComponent<GameEngineTextureRenderer>();
 		Renderer->SetTexture("waterfall_trees.png");
 		Renderer->ScaleToTexture();
-		Renderer->GetTransform().SetLocalPosition({ 135.0f, 52.0f, (int)ZOrder::NPC-2 });
+		Renderer->GetTransform().SetLocalPosition({ 1990.0f, -1053.0f, (int)ZOrder::NPCB });
 	}
 
 	{
@@ -183,49 +207,50 @@ void WorldMapLevel::Start()
 		GameEngineTextureRenderer* Renderer = waterfall_left_overlay->CreateComponent<GameEngineTextureRenderer>();
 		Renderer->SetTexture("waterfall_left_overlay.png");
 		Renderer->ScaleToTexture();
-		Renderer->GetTransform().SetLocalPosition({ -57.0f, 10.0f, (int)ZOrder::NPC-3 });
+		Renderer->GetTransform().SetLocalPosition({ 1799.0, -1094.0f, (int)ZOrder::NPCB });
 	}
 
 	{
 		// NPC 3명 중 가운데
 		Lantern* NPCLantern = CreateActor<Lantern>(GameObjectGroup::UI);
-		NPCLantern->GetTransform().SetLocalPosition({ 175.0f, 746.0f, (int)ZOrder::NPC });
+		NPCLantern->GetTransform().SetLocalPosition({ 2025, -359.0, (int)ZOrder::NPC });
 	}
 
 	{
 		// NPC 3명 중 오른쪽
 		Pickaxe* NPCPickaxe = CreateActor<Pickaxe>(GameObjectGroup::UI);
-		NPCPickaxe->GetTransform().SetLocalPosition({ 265.0f, 725.0f,(int)ZOrder::NPC });
+		NPCPickaxe->GetTransform().SetLocalPosition({ 2120.0f, -380.0f,(int)ZOrder::NPC });
 	}
 
 	{
 		// NPC 3명 중 왼쪽
 		Shovel* NPCShovel = CreateActor<Shovel>(GameObjectGroup::UI);
-		NPCShovel->GetTransform().SetLocalPosition({ 75.0f, 725.0f, (int)ZOrder::NPC });
+		NPCShovel->GetTransform().SetLocalPosition({ 1930.0f, -380.0f, (int)ZOrder::NPC });
 	}
 
 	{
 		// Rumrunner 입구
-		Rumrunners* RumrunnersEntry = CreateActor<Rumrunners>(GameObjectGroup::UI);
-		RumrunnersEntry->GetTransform().SetLocalPosition({ -705.0, -268.0f, (int)ZOrder::NPC });
+		Rumrunners* RumrunnersEntry = CreateActor
+			<Rumrunners>(GameObjectGroup::UI);
+		RumrunnersEntry->GetTransform().SetLocalPosition({ 1150.0, -1373.0f, (int)ZOrder::NPC });
 	}
 
 	{
 		// Cowgirl 입구
 		Cowgirl* CowgirlEntry = CreateActor<Cowgirl>(GameObjectGroup::UI);
-		CowgirlEntry->GetTransform().SetLocalPosition({ -475.0, -750.0f, (int)ZOrder::NPC });
+		CowgirlEntry->GetTransform().SetLocalPosition({ 1380.0f, -1855.0f, (int)ZOrder::NPCB });
 	}
 
 	{
 		// NPC
 		Catus* CatusGirl = CreateActor<Catus>(GameObjectGroup::UI);
-		CatusGirl->GetTransform().SetLocalPosition({ -32.0, -692.0f, (int)ZOrder::NPC });
+		CatusGirl->GetTransform().SetLocalPosition({ 1823.0f, -1797.0f, (int)ZOrder::NPCB });
 	}
 
 	{
 		// 사다리 입구
 		Ladder* RopeLadder = CreateActor<Ladder>(GameObjectGroup::UI);
-		RopeLadder->GetTransform().SetLocalPosition({ -32.0, -650.0f, 100.0f });
+		RopeLadder->GetTransform().SetLocalPosition({ 1823.0, -1755.0f, 100.0f });
 	}
 
 	{
@@ -234,7 +259,7 @@ void WorldMapLevel::Start()
 		GameEngineTextureRenderer* Renderer = BridgeShadow->CreateComponent<GameEngineTextureRenderer>();
 		Renderer->SetTexture("dlc_wood_bridge_shadow.png");
 		Renderer->ScaleToTexture();
-		Renderer->GetTransform().SetLocalPosition({ 322.0, -480.0f, (int)ZOrder::NPC+1 });
+		Renderer->GetTransform().SetLocalPosition({ 2177.0f, -1585.0f, (int)ZOrder::NPC + 1 });
 	}
 
 	{
@@ -243,19 +268,19 @@ void WorldMapLevel::Start()
 		GameEngineTextureRenderer* Renderer = Bridge->CreateComponent<GameEngineTextureRenderer>();
 		Renderer->SetTexture("dlc_wood_bridge.png");
 		Renderer->ScaleToTexture();
-		Renderer->GetTransform().SetLocalPosition({ 322.0, -480.0f, (int)ZOrder::Foreground });
+		Renderer->GetTransform().SetLocalPosition({ 2177.0f, -1585.0f, (int)ZOrder::Foreground });
 	}
 
 	{
 		// Dogfight 입구
 		Dogfight* DogfightEntry = CreateActor<Dogfight>(GameObjectGroup::UI);
-		DogfightEntry->GetTransform().SetLocalPosition({ 760.0, -390.0f, (int)ZOrder::NPC });
+		DogfightEntry->GetTransform().SetLocalPosition({ 2615.0f, -1495.0f, (int)ZOrder::NPCB });
 	}
 
 	{
 		// NPC
 		Ghost* GhostDetective = CreateActor<Ghost>(GameObjectGroup::UI);
-		GhostDetective->GetTransform().SetLocalPosition({ 835.0f, -40.0f, (int)ZOrder::NPC });
+		GhostDetective->GetTransform().SetLocalPosition({ 2691.0f, -1143.0f, (int)ZOrder::NPC });
 	}
 
 	{
@@ -264,7 +289,7 @@ void WorldMapLevel::Start()
 		GameEngineTextureRenderer* Renderer = StoneBridgeShadow->CreateComponent<GameEngineTextureRenderer>();
 		Renderer->SetTexture("dlc_stepping_stone_bridge_waterline_temp.png");
 		Renderer->ScaleToTexture();
-		Renderer->GetTransform().SetLocalPosition({ 1185.0, -45.0f, (int)ZOrder::Foreground });
+		Renderer->GetTransform().SetLocalPosition({ 3040.0f, -1150.0f, (int)ZOrder::Foreground });
 	}
 
 	{
@@ -273,13 +298,13 @@ void WorldMapLevel::Start()
 		GameEngineTextureRenderer* Renderer = StoneBridge->CreateComponent<GameEngineTextureRenderer>();
 		Renderer->SetTexture("dlc_stepping_stone_bridge_bottom.png");
 		Renderer->ScaleToTexture();
-		Renderer->GetTransform().SetLocalPosition({ 1085.0, -10.0f, (int)ZOrder::Foreground });
+		Renderer->GetTransform().SetLocalPosition({ 2940.0f, -1115.0f, (int)ZOrder::Foreground });
 	}
 
 	{
 		// Snow 맵 입구
 		Snow* SnowEntry = CreateActor<Snow>(GameObjectGroup::UI);
-		SnowEntry->GetTransform().SetLocalPosition({ 1400, 450.0f,  (int)ZOrder::NPC });
+		SnowEntry->GetTransform().SetLocalPosition({ 3255.0f, -650.0f,  (int)ZOrder::NPC });
 	}
 
 	{
@@ -288,7 +313,7 @@ void WorldMapLevel::Start()
 		GameEngineTextureRenderer* Renderer = snowbank_b->CreateComponent<GameEngineTextureRenderer>();
 		Renderer->SetTexture("snowbank_b.png");
 		Renderer->ScaleToTexture();
-		Renderer->GetTransform().SetLocalPosition({ 1485, 331.0f, (int)ZOrder::NPC-1 });
+		Renderer->GetTransform().SetLocalPosition({ 3340.0f, -780.0f, (int)ZOrder::NPC -1 });
 	}
 
 	{
@@ -297,7 +322,7 @@ void WorldMapLevel::Start()
 		GameEngineTextureRenderer* Renderer = snowbank_c->CreateComponent<GameEngineTextureRenderer>();
 		Renderer->SetTexture("snowbank_c.png");
 		Renderer->ScaleToTexture();
-		Renderer->GetTransform().SetLocalPosition({ 1222, 373.0f, (int)ZOrder::NPC-1 });
+		Renderer->GetTransform().SetLocalPosition({ 3077.0f, -731.0f, (int)ZOrder::NPC - 1 });
 	}
 
 	{
@@ -306,7 +331,7 @@ void WorldMapLevel::Start()
 		GameEngineTextureRenderer* Renderer = dlc_ice_stairs_shadow->CreateComponent<GameEngineTextureRenderer>();
 		Renderer->SetTexture("dlc_ice_stairs_shadow.png");
 		Renderer->ScaleToTexture();
-		Renderer->GetTransform().SetLocalPosition({ 860, 250.0f, (int)ZOrder::NPC+1 });
+		Renderer->GetTransform().SetLocalPosition({ 2715.0f, -850.0f, (int)ZOrder::NPC + 1 });
 	}
 
 	{
@@ -315,16 +340,16 @@ void WorldMapLevel::Start()
 		GameEngineTextureRenderer* Renderer = dlc_ice_stairs->CreateComponent<GameEngineTextureRenderer>();
 		Renderer->SetTexture("dlc_ice_stairs.png");
 		Renderer->ScaleToTexture();
-		Renderer->GetTransform().SetLocalPosition({ 925, 335.0f, (int)ZOrder::NPC-1 });
+		Renderer->GetTransform().SetLocalPosition({ 2780.0f, -770.0f, (int)ZOrder::NPC - 1 });
 	}
-	
+
 	{
 		// 연결 통로 옆
 		Background* dlc_ice_stairs_front = CreateActor<Background>(GameObjectGroup::UI);
 		GameEngineTextureRenderer* Renderer = dlc_ice_stairs_front->CreateComponent<GameEngineTextureRenderer>();
 		Renderer->SetTexture("dlc_ice_stairs_front.png");
 		Renderer->ScaleToTexture();
-		Renderer->GetTransform().SetLocalPosition({ 894, 300.0f, (int)ZOrder::NPC-2 });
+		Renderer->GetTransform().SetLocalPosition({ 2749.0f, -805.0f, (int)ZOrder::NPCB });
 	}
 
 	{
@@ -333,7 +358,7 @@ void WorldMapLevel::Start()
 		GameEngineTextureRenderer* Renderer = dlc_canyon_stairs->CreateComponent<GameEngineTextureRenderer>();
 		Renderer->SetTexture("dlc_canyon_stairs.png");
 		Renderer->ScaleToTexture();
-		Renderer->GetTransform().SetLocalPosition({ -205.0, -455.0f, (int)ZOrder::NPC });
+		Renderer->GetTransform().SetLocalPosition({ 1650.0f, -1565.0f, (int)ZOrder::NPC });
 	}
 
 	{
@@ -342,13 +367,23 @@ void WorldMapLevel::Start()
 		GameEngineTextureRenderer* Renderer = dlc_canyon_stairs_back->CreateComponent<GameEngineTextureRenderer>();
 		Renderer->SetTexture("dlc_canyon_stairs_back.png");
 		Renderer->ScaleToTexture();
-		Renderer->GetTransform().SetLocalPosition({ -230.0, -450.0f, (int)ZOrder::NPC-1 });
+		Renderer->GetTransform().SetLocalPosition({ 1625.0f, -1560.0f, (int)ZOrder::NPC - 1 });
 	}
 
 	{
+		//ColMap
+
+		Background* ColMap = CreateActor<Background>(GameObjectGroup::UI);
+		GameEngineTextureRenderer* MainLandColMapRenderer = ColMap->CreateComponent<GameEngineTextureRenderer>(); 
+		MainLandColMapRenderer->SetTexture("dlc_main_land_ColMap.png");
+		MainLandColMapRenderer->ScaleToTexture();
+		MainLandColMapRenderer->SetPivot(PIVOTMODE::LEFTTOP);
+		MainLandColMapRenderer->GetTransform().SetLocalPosition({ 1855.0f, -1105.0f, (int)ZOrder::Background+1 });
+
 		// PC
 		WorldMapCuphead* Cuphead = CreateActor<WorldMapCuphead>(GameObjectGroup::Player);
-		Cuphead->GetTransform().SetLocalPosition({ -1473.0f, -296.0f, 100.0f, (int)ZOrder::Player});
+		Cuphead->GetTransform().SetLocalPosition({ 382, -1450, (int)ZOrder::Player });
+		Cuphead->SetColMapImage(MainLandColMapRenderer);
 	}
 
 	{
@@ -357,7 +392,7 @@ void WorldMapLevel::Start()
 		GameEngineTextureRenderer* Renderer = dlc_entrance_stairs_top->CreateComponent<GameEngineTextureRenderer>();
 		Renderer->SetTexture("dlc_entrance_stairs_top.png");
 		Renderer->ScaleToTexture();
-		Renderer->GetTransform().SetLocalPosition({ -1040.0f, -160.0f, 100.0f, (int)ZOrder::NPC-500 });
+		Renderer->GetTransform().SetLocalPosition({ 815.0f, -1265.0f, (int)ZOrder::NPCB });
 	}
 
 	{
@@ -366,7 +401,25 @@ void WorldMapLevel::Start()
 		GameEngineTextureRenderer* Renderer = dlc_chips_shack_awning_top->CreateComponent<GameEngineTextureRenderer>();
 		Renderer->SetTexture("dlc_chips_shack_awning_top.png");
 		Renderer->ScaleToTexture();
-		Renderer->GetTransform().SetLocalPosition({ -1367.0f, -117.0f,(int)ZOrder::NPC-2 });
+		Renderer->GetTransform().SetLocalPosition({ 488.0f, -1220.0f,(int)ZOrder::NPCB });
+	}
+
+	{		
+		// 가로등 아래
+		Background* lower_flower_light = CreateActor<Background>(GameObjectGroup::UI);
+		GameEngineTextureRenderer* Renderer = lower_flower_light->CreateComponent<GameEngineTextureRenderer>();
+		Renderer->SetTexture("lower_flower_light.png");
+		Renderer->ScaleToTexture();
+		Renderer->GetTransform().SetLocalPosition({ 1235.0f, -1340.0f, (int)ZOrder::NPC -1 });
+	}
+
+	{
+		// 가로등 위
+		Background* top_flower_light = CreateActor<Background>(GameObjectGroup::UI);
+		GameEngineTextureRenderer* Renderer = top_flower_light->CreateComponent<GameEngineTextureRenderer>();
+		Renderer->SetTexture("top_flower_light.png");
+		Renderer->ScaleToTexture();
+		Renderer->GetTransform().SetLocalPosition({ 1235.0f, -1340.0f, (int)ZOrder::NPC - 2 });
 	}
 
 	{
@@ -375,7 +428,7 @@ void WorldMapLevel::Start()
 		GameEngineTextureRenderer* Renderer = dlc_main_top->CreateComponent<GameEngineTextureRenderer>();
 		Renderer->SetTexture("dlc_main_top.png");
 		Renderer->ScaleToTexture();
-		Renderer->GetTransform().SetLocalPosition({ 5, 20.0f, (int)ZOrder::NPC-1000 });
+		Renderer->GetTransform().SetLocalPosition({ 1860.0f, -1085.0f, (int)ZOrder::NPCB });
 	}
 
 }
@@ -386,6 +439,9 @@ void WorldMapLevel::Update(float _DeltaTime)
 	{
 		//GEngine::ChangeLevel("Title");
 	}
+
+	ColMapOnOffSwitch();
+
 }
 
 

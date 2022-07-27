@@ -11,6 +11,7 @@ class GameEngineCamera;
 class GameEngineRenderer;
 class GameEngineTransform;
 class GameEngineCameraActor;
+class GameEngineTextureRenderer;
 class GameEngineLevel :
 	public GameEngineNameObject ,
 	public GameEngineUpdateObject
@@ -119,6 +120,7 @@ private:
 	// 2¹ø ±×·ì
 	std::map<int, std::list<GameEngineActor*>> AllActors;
 	std::list<GameEngineUpdateObject*> DeleteObject;
+
 
 	void ActorUpdate(float _DelataTime);
 

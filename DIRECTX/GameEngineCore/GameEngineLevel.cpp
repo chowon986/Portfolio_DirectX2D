@@ -35,7 +35,6 @@ GameEngineLevel::~GameEngineLevel()
 	}
 }
 
-
 void GameEngineLevel::ActorUpdate(float _DeltaTime)
 {
 	//if (true == GetMainCameraActor()->IsFreeCameraMode())

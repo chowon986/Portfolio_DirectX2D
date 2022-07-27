@@ -16,6 +16,9 @@ public:
 	WorldMapLevel& operator=(const WorldMapLevel& _Other) = delete;
 	WorldMapLevel& operator=(WorldMapLevel&& _Other) noexcept = delete;
 
+public:
+	void ColMapOnOffSwitch();
+
 protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;
@@ -23,5 +26,10 @@ protected:
 
 private:
 	GameEngineTextureRenderer* IrisRenderer;
+	GameEngineTextureRenderer* MainLandRenderer;
+	GameEngineTextureRenderer* MainLandColMapRenderer;
+	GameEngineTextureRenderer* UnderWaterLandRenderer;
+	GameEngineTextureRenderer* OutsideOfMainLandLeftRenderer;
+	GameEngineTextureRenderer* OutsideOfMainLandRightRenderer;
 };
 

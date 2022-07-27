@@ -12,7 +12,8 @@ enum class ZOrder:int
 	Background = 1000,
 	Foreground = 900,
 	Monster = 500,
-	Player = 300,
 	NPC = 400,
+	Player = 300,
+	NPCB = 200,
 	UI = 0,	
 };
