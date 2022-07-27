@@ -12,6 +12,7 @@ enum class CAMERAPROJECTIONMODE
 // Ό³Έν :
 class GameEngineLevel;
 class GameEngineCamera;
+enum class CAMERAORDER;
 class GameEngineCamera : public GameEngineTransformComponent
 {
 	friend GameEngineLevel;
@@ -31,6 +32,8 @@ public:
 	{
 		return Mode;
 	}
+
+	void SetCameraOrder(CAMERAORDER _Order);
 
 	void SetProjectionMode(CAMERAPROJECTIONMODE _Mode)
 	{

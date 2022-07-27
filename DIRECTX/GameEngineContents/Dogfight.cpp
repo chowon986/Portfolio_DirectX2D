@@ -14,7 +14,9 @@ void Dogfight::Start()
 	Renderer = CreateComponent<GameEngineTextureRenderer>();
 	Renderer->CreateFrameAnimationFolder("Dogfight", FrameAnimation_DESC("Dogfight", 0.1f));
 	Renderer->ChangeFrameAnimation("Dogfight");
-	Renderer->GetTransform().SetLocalScale({ 189,163,100 });
+	Renderer->GetTransform().SetLocalScale({ 189,163,1 });
+	Renderer->SetPivot(PIVOTMODE::CENTER);
+
 }
 
 void Dogfight::Update(float _DeltaTime)

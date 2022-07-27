@@ -23,7 +23,8 @@ void Boatman::Start()
 	Renderer = CreateComponent<GameEngineTextureRenderer>();
 	Renderer->CreateFrameAnimationFolder("BoatmanIdle", FrameAnimation_DESC("BoatmanIdle", 0.17f));
 	Renderer->ChangeFrameAnimation("BoatmanIdle");
-	Renderer->GetTransform().SetLocalScale({ -121,160,100 });
+	Renderer->GetTransform().SetLocalScale({ -121,160, 1 });
+	Renderer->SetPivot(PIVOTMODE::CENTER);
 }
 
 void Boatman::Update(float _DeltaTime)

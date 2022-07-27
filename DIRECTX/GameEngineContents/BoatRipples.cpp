@@ -16,6 +16,7 @@ void BoatRipples::Start()
 	Renderer->GetTransform().SetLocalScale({ -238,66,1 });
 	Renderer->CreateFrameAnimationFolder("BoatRipples", FrameAnimation_DESC("BoatmanRipples", 0.1f));
 	Renderer->ChangeFrameAnimation("BoatRipples");
+	Renderer->SetPivot(PIVOTMODE::CENTER);
 }
 
 void BoatRipples::Update(float _DeltaTime)

@@ -15,6 +15,7 @@ void Bakery::Start()
 	Renderer->CreateFrameAnimationFolder("Bakery", FrameAnimation_DESC("Bakery", 0.1f));
 	Renderer->ChangeFrameAnimation("Bakery");
 	Renderer->ScaleToTexture();
+	Renderer->SetPivot(PIVOTMODE::CENTER);
 }
 
 void Bakery::Update(float _DeltaTime)

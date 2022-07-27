@@ -13,10 +13,10 @@ Boat::~Boat()
 void Boat::Start()
 {
 	Renderer = CreateComponent<GameEngineTextureRenderer>();
-	Renderer->GetTransform().SetLocalScale({ -233,148,1 });
 	Renderer->CreateFrameAnimationFolder("Boat", FrameAnimation_DESC("Boat", 0.1f));
 	Renderer->ChangeFrameAnimation("Boat");
-
+	Renderer->GetTransform().SetLocalScale({ -233,148,1 });
+	Renderer->SetPivot(PIVOTMODE::CENTER);
 }
 
 void Boat::Update(float _DeltaTime)

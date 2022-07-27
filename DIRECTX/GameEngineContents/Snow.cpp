@@ -15,6 +15,7 @@ void Snow::Start()
 	Renderer->GetTransform().SetLocalScale({ 346,335,1 });
 	Renderer->CreateFrameAnimationFolder("Snow", FrameAnimation_DESC("Snow", 0.1f, true));
 	Renderer->ChangeFrameAnimation("Snow");
+	Renderer->SetPivot(PIVOTMODE::CENTER);
 }
 
 void Snow::Update(float _DeltaTime)

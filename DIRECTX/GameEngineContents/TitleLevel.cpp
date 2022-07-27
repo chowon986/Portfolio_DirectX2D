@@ -4,7 +4,6 @@
 #include "Background.h"
 #include "Enums.h"
 #include <GameEngineCore/GEngine.h>
-#include <GameEngineCore/GameEngineCameraActor.h>
 #include <GameEngineBase/GameEngineInput.h>
 #include <GameEngineCore/GameEngineTextureRenderer.h>
 
@@ -18,11 +17,6 @@ TitleLevel::~TitleLevel()
 
 void TitleLevel::Start()
 {
-
-	GameEngineCameraActor* CameraActor = CreateActor<GameEngineCameraActor>();
-	CameraActor->GetCameraComponent()->SetProjectionMode(CAMERAPROJECTIONMODE::Orthographic);
-	CameraActor->GetTransform().SetLocalPosition({ 0.0f, 0.0f, -500.0f });
-
 	{
 		// Background
 		Background* Title = CreateActor<Background>(GameObjectGroup::UI);

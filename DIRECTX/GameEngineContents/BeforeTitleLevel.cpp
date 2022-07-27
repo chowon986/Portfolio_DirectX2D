@@ -3,7 +3,6 @@
 #include "Background.h"
 #include "Enums.h"
 #include <GameEngineCore/GEngine.h>
-#include <GameEngineCore/GameEngineCameraActor.h>
 #include <GameEngineBase/GameEngineInput.h>
 #include <GameEngineCore/GameEngineTextureRenderer.h>
 
@@ -22,11 +21,6 @@ void BeforeTitleLevel::EndHDMRAnimation(const FrameAnimation_DESC& _Info)
 
 void BeforeTitleLevel::Start()
 {
-
-	GameEngineCameraActor* CameraActor = CreateActor<GameEngineCameraActor>();
-	CameraActor->GetCameraComponent()->SetProjectionMode(CAMERAPROJECTIONMODE::Orthographic);
-	CameraActor->GetTransform().SetLocalPosition({ 0.0f, 0.0f, -500.0f });
-
 	{
 		Background* MDHRLogo = CreateActor<Background>(GameObjectGroup::UI);
 		GameEngineTextureRenderer* Renderer = MDHRLogo->CreateComponent<GameEngineTextureRenderer>();

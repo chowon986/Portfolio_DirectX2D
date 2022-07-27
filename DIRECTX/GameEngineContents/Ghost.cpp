@@ -14,12 +14,8 @@ void Ghost::Start()
 	Renderer = CreateComponent<GameEngineTextureRenderer>();
 	Renderer->CreateFrameAnimationFolder("Ghost", FrameAnimation_DESC("Ghost", 0.1f));
 	Renderer->ChangeFrameAnimation("Ghost");
-	Renderer->GetTransform().SetLocalScale({ 114,98,100 });
-	HandRenderer = CreateComponent<GameEngineTextureRenderer>();
-	HandRenderer->CreateFrameAnimationFolder("GhostHand", FrameAnimation_DESC("GhostHand", 0.1f));
-	HandRenderer->ChangeFrameAnimation("GhostHand");
-	HandRenderer->GetTransform().SetLocalScale({ 32, 40, 100 });
-	HandRenderer->GetTransform().SetLocalPosition({-30, 20, 100});
+	Renderer->GetTransform().SetLocalScale({ 114,98,1 });
+	Renderer->SetPivot(PIVOTMODE::CENTER);
 }
 
 void Ghost::Update(float _DeltaTime)

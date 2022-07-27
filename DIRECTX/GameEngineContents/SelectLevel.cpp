@@ -3,7 +3,6 @@
 #include "Background.h"
 #include "Enums.h"
 #include <GameEngineCore/GEngine.h>
-#include <GameEngineCore/GameEngineCameraActor.h>
 #include <GameEngineBase/GameEngineInput.h>
 #include <GameEngineCore/GameEngineTextureRenderer.h>
 #include <functional>
@@ -45,10 +44,6 @@ void SelectLevel::Start()
 		GameEngineInput::GetInst()->CreateKey("Select", VK_RETURN);
 		GameEngineInput::GetInst()->CreateKey("ESC", VK_ESCAPE);
 	}
-
-	GameEngineCameraActor* CameraActor = CreateActor<GameEngineCameraActor>();
-	CameraActor->GetCameraComponent()->SetProjectionMode(CAMERAPROJECTIONMODE::Orthographic);
-	CameraActor->GetTransform().SetLocalPosition({ 0.0f, 0.0f, -500.0f });
 
 	{
 		Background* SelectBackground = CreateActor<Background>(GameObjectGroup::UI);

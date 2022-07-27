@@ -15,6 +15,7 @@ void Rumrunners::Start()
 	Renderer->GetTransform().SetLocalScale({ 179,178,1 });
 	Renderer->CreateFrameAnimationFolder("Rumrunners", FrameAnimation_DESC("Rumrunners", 0.1f, true));
 	Renderer->ChangeFrameAnimation("Rumrunners");
+	Renderer->SetPivot(PIVOTMODE::CENTER);
 }
 
 void Rumrunners::Update(float _DeltaTime)

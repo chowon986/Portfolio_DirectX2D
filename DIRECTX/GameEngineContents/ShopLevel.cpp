@@ -18,11 +18,6 @@ ShopLevel::~ShopLevel()
 
 void ShopLevel::Start()
 {
-	{
-		GameEngineCameraActor* actor = CreateActor<GameEngineCameraActor>();
-		actor->GetCameraComponent()->SetProjectionMode(CAMERAPROJECTIONMODE::Orthographic);
-		actor->GetTransform().SetLocalPosition({ 0.0f, 0.0f, -500.0f });
-	}
 
 	{
 		Background* ShopBackground = CreateActor<Background>(GameObjectGroup::UI);

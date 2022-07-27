@@ -15,6 +15,7 @@ void WaterfallBase::Start()
 	Renderer->CreateFrameAnimationFolder("WaterfallBase", FrameAnimation_DESC("WaterfallBase", 0.1f, true));
 	Renderer->ChangeFrameAnimation("WaterfallBase");
 	Renderer->GetTransform().SetLocalScale({ 160,100,1 });
+	Renderer->SetPivot(PIVOTMODE::CENTER);
 }
 
 void WaterfallBase::Update(float _DeltaTime)

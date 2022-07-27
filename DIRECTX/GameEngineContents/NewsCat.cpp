@@ -24,6 +24,7 @@ void NewsCat::Start()
 	Renderer->CreateFrameAnimationFolder("Newscat", FrameAnimation_DESC("NPCNewscat", 0.1f));
 	Renderer->ChangeFrameAnimation("Newscat");
 	Renderer->GetTransform().SetLocalScale({ 110,113,100 });
+	Renderer->SetPivot(PIVOTMODE::CENTER);
 }
 
 void NewsCat::Update(float _DeltaTime)

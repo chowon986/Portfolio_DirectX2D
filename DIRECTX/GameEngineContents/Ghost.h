@@ -23,10 +23,6 @@ public:
 	Ghost& operator=(const Ghost& _Other) = delete;
 	Ghost& operator=(Ghost&& _Other) noexcept = delete;
 
-public:
-	void SetState(GhostState _State);
-	GhostState GetState();
-
 protected:
 	void Start() override;
 	void Update(float _DeltaTime);
@@ -37,8 +33,4 @@ protected:
 
 private:
 	GameEngineTextureRenderer* Renderer;
-	GameEngineTextureRenderer* HandRenderer;
-	float Speed;
-	GhostState State;
-	std::string Dir;
 };

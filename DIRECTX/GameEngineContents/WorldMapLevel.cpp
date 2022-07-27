@@ -4,7 +4,6 @@
 #include "WorldMapCuphead.h"
 #include "Enums.h"
 #include <GameEngineCore/GEngine.h>
-#include <GameEngineCore/GameEngineCameraActor.h>
 #include <GameEngineBase/GameEngineInput.h>
 #include <GameEngineCore/GameEngineTextureRenderer.h>
 #include "Boatman.h"
@@ -56,13 +55,6 @@ void WorldMapLevel::Start()
 		GameEngineInput::GetInst()->CreateKey("ColMapOnOffSwitch", 'O');
 	}
 
-
-	GameEngineCameraActor* CameraActor = CreateActor<GameEngineCameraActor>();
-	CameraActor->GetCameraComponent()->SetProjectionMode(CAMERAPROJECTIONMODE::Orthographic);
-	CameraActor->GetTransform().SetLocalPosition({ 0.0, 0.0f, -500.0f });
-
-
-
 	{
 		// 바다 배경 왼쪽
 		Background* OutsideOfMainLandLeft = CreateActor<Background>(GameObjectGroup::UI);
@@ -91,7 +83,6 @@ void WorldMapLevel::Start()
 		UnderWaterLandRenderer->ScaleToTexture();
 		UnderWaterLandRenderer->SetPivot(PIVOTMODE::LEFTTOP);
 		UnderWaterLandRenderer->GetTransform().SetLocalPosition({ 1853, -1318, (int)ZOrder::Background-1 });
-
 	}
 
 	{
@@ -112,7 +103,7 @@ void WorldMapLevel::Start()
 	{
 		// 보트맨, 보트, 보트 물결
 		Boatman* BoatMan = CreateActor<Boatman>(GameObjectGroup::UI);
-		BoatMan->GetTransform().SetLocalPosition({ 240, -1450.0f, (int)ZOrder::NPC});
+		BoatMan->GetTransform().SetLocalPosition({ 240, -1450.0f, (int)ZOrder::NPCB});
 	}
 	{
 		Boat* BoatManBoat = CreateActor<Boat>(GameObjectGroup::UI);
@@ -143,7 +134,6 @@ void WorldMapLevel::Start()
 		// 튜토리얼 카트
 		Cart* TutorialCart = CreateActor<Cart>(GameObjectGroup::UI);
 		TutorialCart->GetTransform().SetLocalPosition({ 1425, -615.0f, (int)ZOrder::NPC });
-		//TutorialCart->GetTransform().SetLocalPosition({ -430.0f, 490.0f, (int)ZOrder::NPC });
 	}
 
 	{
@@ -230,8 +220,7 @@ void WorldMapLevel::Start()
 
 	{
 		// Rumrunner 입구
-		Rumrunners* RumrunnersEntry = CreateActor
-			<Rumrunners>(GameObjectGroup::UI);
+		Rumrunners* RumrunnersEntry = CreateActor<Rumrunners>(GameObjectGroup::UI);
 		RumrunnersEntry->GetTransform().SetLocalPosition({ 1150.0, -1373.0f, (int)ZOrder::NPC });
 	}
 
@@ -281,6 +270,13 @@ void WorldMapLevel::Start()
 		// NPC
 		Ghost* GhostDetective = CreateActor<Ghost>(GameObjectGroup::UI);
 		GhostDetective->GetTransform().SetLocalPosition({ 2691.0f, -1143.0f, (int)ZOrder::NPC });
+
+		Background* GhostHand = CreateActor<Background>(GameObjectGroup::UI); 
+		GameEngineTextureRenderer* HandRenderer = GhostHand->CreateComponent<GameEngineTextureRenderer>();
+		HandRenderer->CreateFrameAnimationFolder("GhostHand", FrameAnimation_DESC("GhostHand", 0.1f));
+		HandRenderer->ChangeFrameAnimation("GhostHand");
+		HandRenderer->ScaleToTexture();
+		HandRenderer->GetTransform().SetLocalPosition({ 2660, -1123,  (int)ZOrder::NPC });
 	}
 
 	{
@@ -372,7 +368,6 @@ void WorldMapLevel::Start()
 
 	{
 		//ColMap
-
 		Background* ColMap = CreateActor<Background>(GameObjectGroup::UI);
 		GameEngineTextureRenderer* MainLandColMapRenderer = ColMap->CreateComponent<GameEngineTextureRenderer>(); 
 		MainLandColMapRenderer->SetTexture("dlc_main_land_ColMap.png");
@@ -412,7 +407,7 @@ void WorldMapLevel::Start()
 		Renderer->ScaleToTexture();
 		Renderer->GetTransform().SetLocalPosition({ 1235.0f, -1340.0f, (int)ZOrder::NPC -1 });
 	}
-
+	
 	{
 		// 가로등 위
 		Background* top_flower_light = CreateActor<Background>(GameObjectGroup::UI);
