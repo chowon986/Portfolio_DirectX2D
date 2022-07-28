@@ -23,6 +23,106 @@ void MovementComponent::OnDirectionChanged(std::string _Dir)
 	UpdateDirection();
 }
 
+bool MovementComponent::GroundCheck()
+{
+	IWorldMapCharacterBase* WorldMapCharacter = GetParent<IWorldMapCharacterBase>();
+	if (WorldMapCharacter != nullptr)
+	{
+	ColMapImage = WorldMapCharacter->GetColMapImage();
+	}
+	GameEngineTexture* ColMapTexture = ColMapImage->GetCurTexture();
+	if (nullptr == ColMapTexture)
+	{
+		MsgBoxAssert("콜맵이 존재하지 않습니다.");
+	}
+
+	float4 Transform = WorldMapCharacter->GetTransform().GetWorldPosition();
+
+	float4 Color = ColMapTexture->GetPixel(Transform.ix(), -Transform.iy());
+	float4 Black = { 0.0f, 0.0f, 0.0f, 1.0f };
+	float4 White = { 1.0f, 1.0f, 1.0f, 1.0f };
+
+	float4 RightColor = ColMapTexture->GetPixel(Transform.ix() + 10, -Transform.iy());
+	float4 RightUpColor = ColMapTexture->GetPixel(Transform.ix() + 10, -(Transform.iy() + 10));
+	float4 RightDownColor = ColMapTexture->GetPixel(Transform.ix() + 10, -(Transform.iy() - 10));
+
+	float4 LeftColor = ColMapTexture->GetPixel(Transform.ix() - 10, -Transform.iy());
+	float4 LeftUpColor = ColMapTexture->GetPixel(Transform.ix() - 10, -(Transform.iy() +10));
+	float4 LeftDownColor = ColMapTexture->GetPixel(Transform.ix() - 10, -(Transform.iy() -10));
+
+	float4 UpColor = ColMapTexture->GetPixel(Transform.ix(), -(Transform.iy() +10));
+	float4 DownColor = ColMapTexture->GetPixel(Transform.ix(), -(Transform.iy() - 10));
+
+	std::string Dir = WorldMapCharacter->GetDirection();
+	if (true == Color.CompareInt4D(Black)) // 현재 움직일 수 있는 땅이고
+	{
+		if (Dir == "Left") // 왼쪽을 보고 있으며
+		{
+			if (true == LeftColor.CompareInt4D(White))
+			{
+				return false;
+			}
+		}
+		else if (Dir == "LeftUp")
+		{
+			if (true == LeftUpColor.CompareInt4D(White))
+			{
+				return false;
+			}
+		}
+		else if (Dir == "LeftDown")
+		{
+			if (true == LeftDownColor.CompareInt4D(White))
+			{
+				return false;
+			}
+		}
+		else if (Dir == "Right")
+		{
+			if (true == RightColor.CompareInt4D(White))
+			{
+				return false;
+			}
+		}
+		else if (Dir == "RightUp")
+		{
+			if (true == RightUpColor.CompareInt4D(White))
+			{
+				return false;
+			}
+		}
+		else if (Dir == "RightDown")
+		{
+			if (true == RightDownColor.CompareInt4D(White))
+			{
+				return false;
+			}
+		}
+		else if (Dir == "Up")
+		{
+			if (true == UpColor.CompareInt4D(White))
+			{
+				return false;
+			}
+		}
+		else if (Dir == "Down")
+		{
+			if (true == DownColor.CompareInt4D(White))
+			{
+				return false;
+			}
+		}
+		else
+		{
+			return true;
+		}
+	}
+	else
+	{
+		return false;
+	}
+}
+
 void MovementComponent::UpdateDirection()
 {
 	IWorldMapCharacterBase* WorldMapCharacter = GetParent<IWorldMapCharacterBase>();
@@ -93,7 +193,14 @@ void MovementComponent::Update(float _DeltaTime)
 		return;
 	}
 
-	Actor->GetTransform().SetWorldMove(Direction * Speed * _DeltaTime);
+	if (false == GroundCheck())
+	{
+		return;
+	}
+	else
+	{
+		Actor->GetTransform().SetWorldMove(Direction * Speed * _DeltaTime);
+	}
 }
 
 void MovementComponent::End()

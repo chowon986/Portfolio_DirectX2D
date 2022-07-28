@@ -23,6 +23,7 @@ void InGameCuphead::Start()
 	SetRenderer(Renderer);
 
 	// Aim
+
 	Renderer->CreateFrameAnimationFolder("IngameCupheadAimDiagDown", FrameAnimation_DESC("IngameCupheadAimDiagDown", 0.1f));
 	Renderer->CreateFrameAnimationFolder("IngameCupheadAimDiagUp", FrameAnimation_DESC("IngameCupheadAimDiagUp", 0.1f));
 	Renderer->CreateFrameAnimationFolder("IngameCupheadAimDown", FrameAnimation_DESC("IngameCupheadAimDown", 0.1f));
@@ -43,7 +44,7 @@ void InGameCuphead::Start()
 	Renderer->CreateFrameAnimationFolder("IngameCupheadParryHand", FrameAnimation_DESC("IngameCupheadParryHand", 0.1f));
 
 	// Run
-	Renderer->CreateFrameAnimationFolder("IngameCupheadRun", FrameAnimation_DESC("IngameCupheadRun", 0.1f));
+	Renderer->CreateFrameAnimationFolder("IngameCupheadRun", FrameAnimation_DESC("IngameCupheadRun", 0.05f));
 
 	// Shoot
 	Renderer->CreateFrameAnimationFolder("IngameCupheadRunShooting", FrameAnimation_DESC("IngameCupheadRunShooting", 0.1f));
@@ -59,9 +60,9 @@ void InGameCuphead::Start()
 
 	// Idle
 	Renderer->CreateFrameAnimationFolder("IngameCupheadIdle", FrameAnimation_DESC("IngameCupheadIdle", 0.1f));
-	Renderer->CreateFrameAnimationFolder("IngameCupheadIdleDownStart", FrameAnimation_DESC("InGameCupheadIdleDownStart", 0, 7, 0.1f, true));
-	Renderer->CreateFrameAnimationFolder("IngameCupheadIdleDown", FrameAnimation_DESC("IngameCupheadIdleDown", 0, 3, 0.1f, true));
-	Renderer->CreateFrameAnimationFolder("IngameCupheadIdleDownTurn", FrameAnimation_DESC("InGameCupheadIdleDownTurn", 0, 0, 0.1f, true));
+	Renderer->CreateFrameAnimationFolder("IngameCupheadIdleDownStart", FrameAnimation_DESC("InGameCupheadIdleDownStart", 0, 7, 0.05f, true));
+	Renderer->CreateFrameAnimationFolder("IngameCupheadIdleDown", FrameAnimation_DESC("IngameCupheadIdleDown", 0, 3, 0.05f, true));
+	Renderer->CreateFrameAnimationFolder("IngameCupheadIdleDownTurn", FrameAnimation_DESC("InGameCupheadIdleDownTurn", 0, 0, 0.05f, true));
 
 	SetState(InGameCharacterState::Idle);
 	Renderer->ChangeFrameAnimation("IngameCupheadIdle");
@@ -94,8 +95,7 @@ void InGameCuphead::Update(float _DeltaTime)
 	//Die
 	//Preparable
 	//Idleable
-
-	GetLevel()->GetMainCameraActorTransform().SetLocalPosition({ GetTransform().GetLocalPosition().x, GetTransform().GetLocalPosition().y });
+	GetLevel()->GetMainCameraActorTransform().SetLocalPosition({0, 0 });
 
 	if (true == GameEngineInput::GetInst()->IsPress("MoveLeft"))
 	{

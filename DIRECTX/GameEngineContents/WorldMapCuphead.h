@@ -19,23 +19,16 @@ public:
 	WorldMapCuphead& operator=(const WorldMapCuphead& _Other) = delete;
 	WorldMapCuphead& operator=(WorldMapCuphead&& _Other) noexcept = delete;
 
-public:
-	void SetColMapImage(GameEngineTextureRenderer* _ColMapImage) { ColMapImage = _ColMapImage; }
-	GameEngineTextureRenderer* GetColMapImage() { return ColMapImage; }
-
 protected:
 	void Start() override;
 	void Update(float _DeltaTime);
 	void End() {}
 	void Walk() override;
 	void Idle() override;
-	void GroundCheck();
-
 
 private:
 	MovementComponent* Movement;
 	WorldMapCharacterAnimationControllerComponent* Animation;
-	GameEngineTextureRenderer* ColMapImage;
 	float WalkCheckInterval;
 	float WalkCheckElapsedTime;
 };

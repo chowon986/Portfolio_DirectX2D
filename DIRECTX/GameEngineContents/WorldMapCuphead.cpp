@@ -71,8 +71,6 @@ void WorldMapCuphead::Update(float _DeltaTime)
 	{
 		Idle();
 	}
-
-	//GroundCheck();
 }
 
 void WorldMapCuphead::Idle()
@@ -80,48 +78,6 @@ void WorldMapCuphead::Idle()
 	SetState(WorldMapCharacterState::Idle);
 	WalkCheckElapsedTime = 0;
 }
-
-void WorldMapCuphead::GroundCheck()
-{
-	GameEngineTexture* ColMapTexture = GetColMapImage()->GetCurTexture();
-	if (nullptr == ColMapTexture)
-	{
-		MsgBoxAssert("콜맵이 존재하지 않습니다.");
-	}
-
-	float4 Color = ColMapTexture->GetPixel(GetTransform().GetWorldPosition().ix(), -GetTransform().GetWorldPosition().iy());
-	float4 Black = { 0.0f, 0.0f, 0.0f, 1.0f };
-	float4 White = { 1.0f, 1.0f, 1.0f, 1.0f };
-
-	float4 RightColor = ColMapTexture->GetPixel(GetTransform().GetWorldPosition().ix() + 5, GetTransform().GetWorldPosition().iy());
-	float4 LeftColor = ColMapTexture->GetPixel(GetTransform().GetWorldPosition().ix() - 5, GetTransform().GetWorldPosition().iy());
-	float4 DownColor = ColMapTexture->GetPixel(GetTransform().GetWorldPosition().ix(), GetTransform().GetWorldPosition().iy() - 1);
-	float4 UpColor = ColMapTexture->GetPixel(GetTransform().GetWorldPosition().ix(), GetTransform().GetWorldPosition().iy() + 1);
-
-	//while (true == RightColor.CompareInt4D(White))// ||
-	//	/*true == LeftColor.CompareInt4D(White) ||
-	//	true == DownColor.CompareInt4D(White) ||
-	//	true == UpColor.CompareInt4D(White))*/
-	//{
-
-	//}
-
-	if (true == Color.CompareInt4D(Black))
-	{
-		if (true == GameEngineInput::GetInst()->IsPress("MoveLeft") ||
-			true == GameEngineInput::GetInst()->IsPress("MoveRight") ||
-			true == GameEngineInput::GetInst()->IsPress("MoveDown") ||
-			true == GameEngineInput::GetInst()->IsPress("MoveUp"))
-		{
-			Walk();
-		}
-		else
-		{
-			Idle();
-		}
-	}
-}
-
 
 void WorldMapCuphead::Walk()
 {

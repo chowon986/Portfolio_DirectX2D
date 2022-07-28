@@ -2,7 +2,7 @@
 #include <GameEngineCore/GameEngineComponent.h>
 
 enum class WorldMapCharacterState;
-
+class GameEngineTextureRenderer;
 class MovementComponent : public GameEngineComponent
 {
 public:
@@ -22,6 +22,8 @@ public:
 	void OnStateChanged(WorldMapCharacterState _State);
 	void OnDirectionChanged(std::string _Dir);
 
+	bool GroundCheck();
+
 private:
 	void UpdateDirection();
 
@@ -33,5 +35,6 @@ protected:
 private:
 	float4 Direction;
 	float Speed;
+	GameEngineTextureRenderer* ColMapImage;
 };
 

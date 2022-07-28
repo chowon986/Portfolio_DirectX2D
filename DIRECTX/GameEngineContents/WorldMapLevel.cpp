@@ -377,12 +377,12 @@ void WorldMapLevel::Start()
 		MainLandColMapRenderer->GetTransform().SetLocalPosition({ 1855.0f, -1105.0f, (int)ZOrder::Background+1 });
 
 		// PC
-		//WorldMapCuphead* Cuphead = CreateActor<WorldMapCuphead>(GameObjectGroup::Player);
-		//Cuphead->GetTransform().SetLocalPosition({ 382, -1450, (int)ZOrder::Player });
-		//Cuphead->SetColMapImage(MainLandColMapRenderer);
+		WorldMapCuphead* Cuphead = CreateActor<WorldMapCuphead>(GameObjectGroup::Player);
+		Cuphead->GetTransform().SetLocalPosition({ 382, -1450, (int)ZOrder::Player });
+		Cuphead->SetColMapImage(MainLandColMapRenderer);
 
-		WorldMapMugman* Mugman = CreateActor<WorldMapMugman>(GameObjectGroup::Player);
-		Mugman->GetTransform().SetLocalPosition({ 382, -1450, (int)ZOrder::Player });
+		//WorldMapMugman* Mugman = CreateActor<WorldMapMugman>(GameObjectGroup::Player);
+		//Mugman->GetTransform().SetLocalPosition({ 382, -1450, (int)ZOrder::Player });
 		//Mugman->SetColMapImage(MainLandColMapRenderer);
 	}
 
@@ -437,11 +437,10 @@ void WorldMapLevel::Update(float _DeltaTime)
 {
 	if (true == GameEngineInput::GetInst()->IsDown("LevelChange"))
 	{
-		//GEngine::ChangeLevel("Title");
+		GEngine::ChangeLevel("Tutorial");
 	}
 
 	ColMapOnOffSwitch();
-
 }
 
 

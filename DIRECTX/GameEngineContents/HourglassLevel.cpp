@@ -27,7 +27,7 @@ void HourglassLevel::Start()
 	{
 		Background* Hourglass = CreateActor<Background>(GameObjectGroup::UI);
 		GameEngineTextureRenderer* Renderer = Hourglass->CreateComponent<GameEngineTextureRenderer>();
-		Renderer->CreateFrameAnimationFolder("Hourglass", FrameAnimation_DESC("13HourglassLevel", 0.1f));
+		Renderer->CreateFrameAnimationFolder("Hourglass", FrameAnimation_DESC("13HourglassLevel", 0.05f));
 		Renderer->AnimationBindEnd("Hourglass", &HourglassLevel::EndAnimation, this);
 		Renderer->ChangeFrameAnimation("Hourglass");
 		Renderer->ScaleToTexture();

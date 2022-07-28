@@ -54,11 +54,15 @@ public:
 	void SetRenderer(GameEngineTextureRenderer* _Renderer);
 	GameEngineTextureRenderer* GetRenderer() { return Renderer; }
 
+	void SetColMapImage(GameEngineTextureRenderer* _ColMapImage) { ColMapImage = _ColMapImage; }
+	GameEngineTextureRenderer* GetColMapImage() { return ColMapImage; }
+
 	MulticastDelegate<WorldMapCharacterState>& GetStateChangedDelegate() { return StateChangedDelegate; }
 	MulticastDelegate<std::string>& GetDirectionChangedDelegate() { return DirectionChangedDelegate; }
 
 private:
 	GameEngineTextureRenderer* Renderer;
+	GameEngineTextureRenderer* ColMapImage;
 	WorldMapCharacterState State;
 	std::string Dir;
 	MulticastDelegate<WorldMapCharacterState> StateChangedDelegate;

@@ -5,7 +5,7 @@
 
 InGameCharacterMovementCompmonent::InGameCharacterMovementCompmonent()
 	: Direction(float4::ZERO)
-	, Speed(200)
+	, Speed(400)
 {
 }
 
