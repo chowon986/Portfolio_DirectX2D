@@ -5,7 +5,7 @@
 #include "GameEngineLevel.h"
 #include <GameEngineBase/GameEngineWindow.h>
 
-GameEngineCamera::GameEngineCamera() 
+GameEngineCamera::GameEngineCamera()
 {
 	// 윈도우가 여러분들 생각하기 가장 쉬운 비율이라서 여기서 하는거고.
 	Size = GameEngineWindow::GetInst()->GetScale();
@@ -21,10 +21,10 @@ GameEngineCamera::GameEngineCamera()
 	ViewPortDesc.MinDepth = 0.0f;
 	ViewPortDesc.MaxDepth = 1.0f;
 
-	
+
 }
 
-GameEngineCamera::~GameEngineCamera() 
+GameEngineCamera::~GameEngineCamera()
 {
 }
 
@@ -40,8 +40,8 @@ void GameEngineCamera::Render(float _DeltaTime)
 
 	// 랜더하기 전에 
 	View.LookAtLH(
-		GetActor()->GetTransform().GetLocalPosition(), 
-		GetActor()->GetTransform().GetForwardVector(), 
+		GetActor()->GetTransform().GetLocalPosition(),
+		GetActor()->GetTransform().GetForwardVector(),
 		GetActor()->GetTransform().GetUpVector());
 
 	switch (Mode)
@@ -123,7 +123,7 @@ void GameEngineCamera::Release(float _DelataTime)
 	}
 }
 
-float4 GameEngineCamera::GetScreenPosition() 
+float4 GameEngineCamera::GetScreenPosition()
 {
 	POINT P;
 
@@ -134,7 +134,7 @@ float4 GameEngineCamera::GetScreenPosition()
 	return { static_cast<float>(P.x), static_cast<float>(P.y) };
 }
 
-void GameEngineCamera::Update(float _DeltaTime) 
+void GameEngineCamera::Update(float _DeltaTime)
 {
 	float4 MousePos = GetMouseWorldPosition();
 	MousePos.w = 0.0f;
@@ -164,4 +164,39 @@ float4 GameEngineCamera::GetMouseWorldPosition()
 float4 GameEngineCamera::GetMouseWorldPositionToActor()
 {
 	return GetTransform().GetWorldPosition() + GetMouseWorldPosition();
+}
+
+void GameEngineCamera::OverRenderer(GameEngineCamera* _NextCamera)
+{
+	if (nullptr == _NextCamera)
+	{
+		MsgBoxAssert("next camera is nullptr! fuck you");
+		return;
+	}
+
+	std::map<int, std::list<GameEngineRenderer*>>::iterator StartGroupIter = AllRenderer_.begin();
+	std::map<int, std::list<GameEngineRenderer*>>::iterator EndGroupIter = AllRenderer_.end();
+
+	for (; StartGroupIter != EndGroupIter; ++StartGroupIter)
+	{
+		std::list<GameEngineRenderer*>& Group = StartGroupIter->second;
+		std::list<GameEngineRenderer*>::iterator GroupStart = Group.begin();
+		std::list<GameEngineRenderer*>::iterator GroupEnd = Group.end();
+
+		for (; GroupStart != GroupEnd; )
+		{
+			GameEngineActor* Root = (*GroupStart)->GetRoot<GameEngineActor>();
+
+			if (true == Root->IsLevelOver)
+			{
+				_NextCamera->AllRenderer_[StartGroupIter->first].push_back(*GroupStart);
+				GroupStart = Group.erase(GroupStart);
+			}
+			else
+			{
+				++GroupStart;
+			}
+
+		}
+	}
 }

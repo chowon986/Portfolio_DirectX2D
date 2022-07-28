@@ -23,6 +23,8 @@
 
 // base
 #include <GameEngineBase/GameEngineDebug.h>
+#include <GameEngineCore/GEngine.h>
 
 // core
 #include <GameEngineCore/CoreMinimal.h>
+#include "Enums.h"

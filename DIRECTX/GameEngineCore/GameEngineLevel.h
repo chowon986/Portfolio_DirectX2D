@@ -26,7 +26,7 @@ class GameEngineRenderer;
 class GameEngineTransform;
 class GameEngineCameraActor;
 class GameEngineLevel :
-	public GameEngineNameObject ,
+	public GameEngineNameObject,
 	public GameEngineUpdateObject
 {
 	friend GameEngineCore;
@@ -46,7 +46,7 @@ public:
 	GameEngineLevel& operator=(const GameEngineLevel& _Other) = delete;
 	GameEngineLevel& operator=(GameEngineLevel&& _Other) noexcept = delete;
 
-	GameEngineCamera* GetMainCamera() 
+	GameEngineCamera* GetMainCamera()
 	{
 		return Cameras[static_cast<int>(CAMERAORDER::MAINCAMERA)];
 	}
@@ -132,7 +132,7 @@ public:
 	}
 
 protected:
-	
+
 
 
 
@@ -149,13 +149,15 @@ private:
 
 	void RemoveActor(GameEngineActor* _Actor);
 
+	void OverChildMove(GameEngineLevel* _NextLevel);
+
 private:
 	// 0번 백그라운드
 	// 1번 플레이어
 	// 2번 UI
 	std::vector<GameEngineCamera*> Cameras;
 
-	void PushCamera(GameEngineCamera* _Camera, CAMERAORDER _Order) 
+	void PushCamera(GameEngineCamera* _Camera, CAMERAORDER _Order)
 	{
 		PushCamera(_Camera, static_cast<int>(_Order));
 	}
@@ -170,7 +172,7 @@ private:
 		PushRenderer(_Renderer, static_cast<int>(CAMERAORDER::UICAMERA));
 	}
 
-	void PushRenderer(GameEngineRenderer* _Renderer, CAMERAORDER _Order) 
+	void PushRenderer(GameEngineRenderer* _Renderer, CAMERAORDER _Order)
 	{
 		PushRenderer(_Renderer, static_cast<int>(_Order));
 	}
