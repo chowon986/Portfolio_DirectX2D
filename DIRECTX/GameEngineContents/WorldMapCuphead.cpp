@@ -6,7 +6,7 @@
 WorldMapCuphead::WorldMapCuphead()
 	: Movement(nullptr)
 	, Animation(nullptr)
-	, WalkCheckInterval(0.05)
+	, WalkCheckInterval(0.03)
 	, WalkCheckElapsedTime(0)
 {
 

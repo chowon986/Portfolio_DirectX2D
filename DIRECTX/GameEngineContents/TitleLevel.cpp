@@ -31,7 +31,7 @@ void TitleLevel::Start()
 		Background* Chalice = CreateActor<Background>(GameObjectGroup::UI);
 		GameEngineTextureRenderer* Renderer = Chalice->CreateComponent<GameEngineTextureRenderer>();
 		Renderer->GetTransform().SetLocalScale({ 300,476,100 });
-		Renderer->CreateFrameAnimationFolder("Chalice", FrameAnimation_DESC("Chalice", 0.1f));
+		Renderer->CreateFrameAnimationFolder("Chalice", FrameAnimation_DESC("Chalice", 0.07f));
 		Renderer->ChangeFrameAnimation("Chalice");
 		Renderer->GetTransform().SetLocalPosition({ -25,-50,0 });
 	}
@@ -40,7 +40,7 @@ void TitleLevel::Start()
 		Background* Cuphead = CreateActor<Background>(GameObjectGroup::UI);
 		CupheadRenderer = Cuphead->CreateComponent<GameEngineTextureRenderer>();
 		CupheadRenderer->GetTransform().SetLocalScale({ 313,544,100 });
-		CupheadRenderer->CreateFrameAnimationFolder("Cuphead", FrameAnimation_DESC("Cuphead", 0.1f));
+		CupheadRenderer->CreateFrameAnimationFolder("Cuphead", FrameAnimation_DESC("Cuphead", 0.07f));
 		CupheadRenderer->ChangeFrameAnimation("Cuphead");
 		CupheadRenderer->GetTransform().SetLocalPosition({ -320,-20,0 });
 	}
@@ -49,7 +49,7 @@ void TitleLevel::Start()
 		Background* Mugman = CreateActor<Background>(GameObjectGroup::UI);
 		GameEngineTextureRenderer* Renderer = Mugman->CreateComponent<GameEngineTextureRenderer>();
 		Renderer->GetTransform().SetLocalScale({ 315,560,100 });
-		Renderer->CreateFrameAnimationFolder("MugmanA", FrameAnimation_DESC("Mugman", 0.1f));
+		Renderer->CreateFrameAnimationFolder("MugmanA", FrameAnimation_DESC("Mugman", 0.07f));
 		Renderer->GetTransform().SetLocalPosition({ 305,-24,0 });
 		Renderer->ChangeFrameAnimation("MugmanA");
 
