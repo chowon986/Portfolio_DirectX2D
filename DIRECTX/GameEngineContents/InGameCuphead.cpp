@@ -16,6 +16,7 @@ void InGameCuphead::Start()
 	if (false == GameEngineInput::GetInst()->IsKey("Aim"))
 	{
 		GameEngineInput::GetInst()->CreateKey("Aim", 'A');
+		GameEngineInput::GetInst()->CreateKey("Shoot", VK_LSHIFT);
 	}
 
 	GameEngineTextureRenderer* Renderer = CreateComponent<GameEngineTextureRenderer>();
@@ -46,11 +47,11 @@ void InGameCuphead::Start()
 
 	// Shoot
 	Renderer->CreateFrameAnimationFolder("IngameCupheadRunShooting", FrameAnimation_DESC("IngameCupheadRunShooting", 0.1f));
-	Renderer->CreateFrameAnimationFolder("IngameCupheadShootDiagDown", FrameAnimation_DESC("IngameCupheadShootDiagDown", 0.1f));
-	Renderer->CreateFrameAnimationFolder("IngameCupheadShootDiagUp", FrameAnimation_DESC("IngameCupheadShootDiagUp", 0.1f));
-	Renderer->CreateFrameAnimationFolder("IngameCupheadShootDown", FrameAnimation_DESC("IngameCupheadShootDown", 0.1f));
-	Renderer->CreateFrameAnimationFolder("IngameCupheadShootStraight", FrameAnimation_DESC("IngameCupheadShootStraight", 0.1f));
 	Renderer->CreateFrameAnimationFolder("IngameCupheadShootUp", FrameAnimation_DESC("IngameCupheadShootUp", 0.1f));
+	Renderer->CreateFrameAnimationFolder("IngameCupheadShootDiagUp", FrameAnimation_DESC("IngameCupheadShootDiagUp", 0.1f));
+	Renderer->CreateFrameAnimationFolder("IngameCupheadShootStraight", FrameAnimation_DESC("IngameCupheadShootStraight", 0.1f));
+	Renderer->CreateFrameAnimationFolder("IngameCupheadShootDiagDown", FrameAnimation_DESC("IngameCupheadShootDiagDown", 0.1f));
+	Renderer->CreateFrameAnimationFolder("IngameCupheadShootDown", FrameAnimation_DESC("IngameCupheadShootDown", 0.1f));
 
 	// TakeDamage
 	Renderer->CreateFrameAnimationFolder("IngameCupheadTakeDamageAir", FrameAnimation_DESC("IngameCupheadTakeDamageAir", 0.1f));
@@ -108,7 +109,6 @@ void InGameCuphead::Update(float _DeltaTime)
 	{
 		SetHorizontalDirection("Center");
 	}
-
 	
 	if (true == GameEngineInput::GetInst()->IsPress("MoveUp"))
 	{
@@ -127,15 +127,23 @@ void InGameCuphead::Update(float _DeltaTime)
 	{
 		Aim();
 	}
+
+	else if (true == GameEngineInput::GetInst()->IsPress("Shoot"))
+	{
+		Shoot();
+	}
+
 	else if (true == GameEngineInput::GetInst()->IsPress("MoveLeft") ||
 		true == GameEngineInput::GetInst()->IsPress("MoveRight"))
 	{
 		Walk();
 	}
+
 	else if (true == GameEngineInput::GetInst()->IsPress("MoveDown"))
 	{
 		Duck();
 	}
+
 	else
 	{
 		Idle();
@@ -192,6 +200,7 @@ void InGameCuphead::Run()
 
 void InGameCuphead::Shoot()
 {
+	SetState(InGameCharacterState::Shoot);
 }
 
 void InGameCuphead::SpecialAttack()

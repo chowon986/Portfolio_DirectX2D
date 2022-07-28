@@ -20,16 +20,16 @@
 
 enum class InGameCharacterState
 {
-	Aim,
+	Aim, // 완료
 	TakeDamage,
 	Dash,
 	Die,
-	Duck,
+	Duck, // 완료
 	Evade,
 	Jump,
 	Parry,
 	Prepare,
-	Run,
+	Run, // 완료
 	Shoot,
 	SpecialAttack,
 	SuperIAttack,

@@ -40,7 +40,6 @@ void IInGameCharacterBase::SetHorizontalDirection(std::string _Dir)
 	}
 }
 
-
 void IInGameCharacterBase::SetRenderer(GameEngineTextureRenderer* _Renderer)
 {
 	Renderer = _Renderer;

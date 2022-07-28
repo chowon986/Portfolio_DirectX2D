@@ -27,12 +27,10 @@ void ContentsCore::Start()
 		GameEngineInput::GetInst()->CreateKey("LevelChange", 'P');
 	}
 
-
 	GameEngineDirectory Dir;
 	Dir.MoveParentToExitsChildDirectory("ConstantResources");
 	Dir.Move("ConstantResources");
 	Dir.Move("Texture");
-	//Dir.Move("Login");
 
 	std::vector<GameEngineDirectory> RecursiveDir = Dir.GetRecursiveAllDirectory();
 	for (GameEngineDirectory Dir : RecursiveDir)
@@ -74,7 +72,6 @@ void ContentsCore::Start()
 	{
 		GameEngineTexture::Load(Textures3[i].GetFullPath());
 	}
-
 
 	CreateLevel<BeforeTitleLevel>("BeforeTitle");
 	CreateLevel<TitleLevel>("Title");

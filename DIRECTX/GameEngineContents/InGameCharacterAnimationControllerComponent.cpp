@@ -76,8 +76,45 @@ void InGameCharacterAnimationControllerComponent::UpdateAnimation()
 		{
 			Renderer->ChangeFrameAnimation("Ingame" + Name + "Idle");
 		}
+	
 		Renderer->ScaleToTexture();
 	}
+
+	if (State == InGameCharacterState::Shoot)
+	{
+		if (VerticalDir == "Up")
+		{
+			if (true == GameEngineInput::GetInst()->IsPress("MoveRight") ||
+				true == GameEngineInput::GetInst()->IsPress("MoveLeft"))
+			{
+				Renderer->ChangeFrameAnimation("Ingame" + Name + "ShootDiagUp");
+			}
+
+			else
+			{
+				Renderer->ChangeFrameAnimation("Ingame" + Name + "ShootUp");
+			}
+		}
+		else if (VerticalDir == "Down")
+		{
+			if (true == GameEngineInput::GetInst()->IsPress("MoveRight") ||
+				true == GameEngineInput::GetInst()->IsPress("MoveLeft"))
+			{
+				Renderer->ChangeFrameAnimation("Ingame" + Name + "ShootDiagDown");
+			}
+			else
+			{
+				Renderer->ChangeFrameAnimation("Ingame" + Name + "ShootDown");
+			}
+		}
+		else
+		{
+			Renderer->ChangeFrameAnimation("Ingame" + Name + "ShootStraight");
+		}
+		Renderer->ScaleToTexture();
+	}
+
+
 	if (State == InGameCharacterState::Aim)
 	{
 		if (VerticalDir == "Up")
