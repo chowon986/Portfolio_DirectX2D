@@ -43,6 +43,6 @@ protected:
 	void Idle() override;
 
 private:
-
-
+	InGameCharacterMovementCompmonent* Movement;
+	InGameCharacterAnimationControllerComponent* Animation;
 };

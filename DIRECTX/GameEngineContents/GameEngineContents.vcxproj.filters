@@ -249,6 +249,9 @@
     <ClInclude Include="InGameCharacterAnimationControllerComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
+    <ClInclude Include="TutorialLevel.h">
+      <Filter>Level\Play</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp">
@@ -442,6 +445,9 @@
     </ClCompile>
     <ClCompile Include="InGameCharacterAnimationControllerComponent.cpp">
       <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="TutorialLevel.cpp">
+      <Filter>Level\Play</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

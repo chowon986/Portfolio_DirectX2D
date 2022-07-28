@@ -7,7 +7,9 @@
 #include <GameEngineBase/GameEngineInput.h>
 #include <GameEngineCore/GameEngineTextureRenderer.h>
 
-TitleLevel::TitleLevel() 
+TitleLevel::TitleLevel()
+	: IrisRenderer(nullptr)
+	, CupheadRenderer(nullptr)
 {
 }
 
@@ -40,7 +42,6 @@ void TitleLevel::Start()
 		CupheadRenderer->GetTransform().SetLocalScale({ 313,544,100 });
 		CupheadRenderer->CreateFrameAnimationFolder("Cuphead", FrameAnimation_DESC("Cuphead", 0.1f));
 		CupheadRenderer->ChangeFrameAnimation("Cuphead");
-		//CupheadRenderer->AnimationBindEnd("Cuphead", std::bind(&TitleLevel::Test, this, std::placeholders::_1));
 		CupheadRenderer->GetTransform().SetLocalPosition({ -320,-20,0 });
 	}
 
@@ -75,7 +76,7 @@ void TitleLevel::Start()
 		Background* Iris = CreateActor<Background>(GameObjectGroup::UI);
 		IrisRenderer = Iris->CreateComponent<GameEngineTextureRenderer>();
 		IrisRenderer->GetTransform().SetLocalScale({ 1280,720,100 });
-		IrisRenderer->CreateFrameAnimationFolder("IrisBStart", FrameAnimation_DESC("IrisB", 0.1f));
+		IrisRenderer->CreateFrameAnimationFolder("IrisBStart", FrameAnimation_DESC("IrisB", 0.1f, false));
 		IrisRenderer->AnimationBindEnd("IrisBStart", &TitleLevel::EndIrisAnimation, this);
 		IrisRenderer->CreateFrameAnimationFolder("IrisB", FrameAnimation_DESC("IrisB",0,0, 0.1f,true));
 		IrisRenderer->ChangeFrameAnimation("IrisB");

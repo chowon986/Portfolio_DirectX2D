@@ -27,6 +27,7 @@
 #include "Rumrunners.h"
 #include "Cowgirl.h"
 #include "Snow.h"
+#include <GameEngineContents/WorldMapMugman.h>
 
 WorldMapLevel::WorldMapLevel()
 {
@@ -376,9 +377,13 @@ void WorldMapLevel::Start()
 		MainLandColMapRenderer->GetTransform().SetLocalPosition({ 1855.0f, -1105.0f, (int)ZOrder::Background+1 });
 
 		// PC
-		WorldMapCuphead* Cuphead = CreateActor<WorldMapCuphead>(GameObjectGroup::Player);
-		Cuphead->GetTransform().SetLocalPosition({ 382, -1450, (int)ZOrder::Player });
-		Cuphead->SetColMapImage(MainLandColMapRenderer);
+		//WorldMapCuphead* Cuphead = CreateActor<WorldMapCuphead>(GameObjectGroup::Player);
+		//Cuphead->GetTransform().SetLocalPosition({ 382, -1450, (int)ZOrder::Player });
+		//Cuphead->SetColMapImage(MainLandColMapRenderer);
+
+		WorldMapMugman* Mugman = CreateActor<WorldMapMugman>(GameObjectGroup::Player);
+		Mugman->GetTransform().SetLocalPosition({ 382, -1450, (int)ZOrder::Player });
+		//Mugman->SetColMapImage(MainLandColMapRenderer);
 	}
 
 	{

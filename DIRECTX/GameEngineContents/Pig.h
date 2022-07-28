@@ -27,6 +27,7 @@ public:
 public:
 	void SetState(PigState _State);
 	PigState GetState();
+	GameEngineTextureRenderer* GetRenderer() { return Renderer; }
 
 protected:
 	void Start() override;

@@ -1,5 +1,7 @@
 #include "PreCompile.h"
 #include "InGameCuphead.h"
+#include "InGameCharacterAnimationControllerComponent.h"
+#include "InGameCharacterMovementCompmonent.h"
 
 InGameCuphead::InGameCuphead()
 {
@@ -11,34 +13,63 @@ InGameCuphead::~InGameCuphead()
 
 void InGameCuphead::Start()
 {
-	//if (false == GameEngineInput::GetInst()->IsKey("Dash"))
-	//{
-	//	// 키 생성 만들기
-	//}
+	if (false == GameEngineInput::GetInst()->IsKey("Aim"))
+	{
+		GameEngineInput::GetInst()->CreateKey("Aim", 'A');
+	}
 
 	GameEngineTextureRenderer* Renderer = CreateComponent<GameEngineTextureRenderer>();
+	SetRenderer(Renderer);
+
+	// Aim
+	Renderer->CreateFrameAnimationFolder("IngameCupheadAimDiagDown", FrameAnimation_DESC("IngameCupheadAimDiagDown", 0.1f));
+	Renderer->CreateFrameAnimationFolder("IngameCupheadAimDiagUp", FrameAnimation_DESC("IngameCupheadAimDiagUp", 0.1f));
+	Renderer->CreateFrameAnimationFolder("IngameCupheadAimDown", FrameAnimation_DESC("IngameCupheadAimDown", 0.1f));
+	Renderer->CreateFrameAnimationFolder("IngameCupheadAimStraight", FrameAnimation_DESC("IngameCupheadAimStraight", 0.1f));
+	Renderer->CreateFrameAnimationFolder("IngameCupheadAimUp", FrameAnimation_DESC("IngameCupheadAimUp", 0.1f));
+
+	// Dash
+	Renderer->CreateFrameAnimationFolder("IngameCupheadDashGround", FrameAnimation_DESC("IngameCupheadDashGround", 0.1f));
+	Renderer->CreateFrameAnimationFolder("IngameCupheadDashAir", FrameAnimation_DESC("IngameCupheadDashAir", 0.1f));
+
+	// Intro
+	Renderer->CreateFrameAnimationFolder("IngameCupheadIntro", FrameAnimation_DESC("IngameCupheadIntro", 0.1f));
+
+	// Jump
+	Renderer->CreateFrameAnimationFolder("IngameCupheadJump", FrameAnimation_DESC("IngameCupheadJump", 0.1f));
+
+	// Parry
+	Renderer->CreateFrameAnimationFolder("IngameCupheadParryHand", FrameAnimation_DESC("IngameCupheadParryHand", 0.1f));
+
+	// Run
+	Renderer->CreateFrameAnimationFolder("IngameCupheadRun", FrameAnimation_DESC("IngameCupheadRun", 0.1f));
+
+	// Shoot
+	Renderer->CreateFrameAnimationFolder("IngameCupheadRunShooting", FrameAnimation_DESC("IngameCupheadRunShooting", 0.1f));
+	Renderer->CreateFrameAnimationFolder("IngameCupheadShootDiagDown", FrameAnimation_DESC("IngameCupheadShootDiagDown", 0.1f));
+	Renderer->CreateFrameAnimationFolder("IngameCupheadShootDiagUp", FrameAnimation_DESC("IngameCupheadShootDiagUp", 0.1f));
+	Renderer->CreateFrameAnimationFolder("IngameCupheadShootDown", FrameAnimation_DESC("IngameCupheadShootDown", 0.1f));
+	Renderer->CreateFrameAnimationFolder("IngameCupheadShootStraight", FrameAnimation_DESC("IngameCupheadShootStraight", 0.1f));
+	Renderer->CreateFrameAnimationFolder("IngameCupheadShootUp", FrameAnimation_DESC("IngameCupheadShootUp", 0.1f));
+
+	// TakeDamage
+	Renderer->CreateFrameAnimationFolder("IngameCupheadTakeDamageAir", FrameAnimation_DESC("IngameCupheadTakeDamageAir", 0.1f));
+	Renderer->CreateFrameAnimationFolder("IngameCupheadTakeDamageGround", FrameAnimation_DESC("IngameCupheadTakeDamageGround", 0.1f));
 
 	// Idle
-	Renderer->CreateFrameAnimationFolder("InGameCupheadIdleDiagDown", FrameAnimation_DESC("InGameCupheadIdleDiagDown", 0.1f));
-	Renderer->CreateFrameAnimationFolder("InGameCupheadIdleDiagUp", FrameAnimation_DESC("InGameCupheadIdleDiagUp", 0.1f));
-	Renderer->CreateFrameAnimationFolder("InGameCupheadIdleDown", FrameAnimation_DESC("InGameCupheadIdleDown", 0.1f));
-	Renderer->CreateFrameAnimationFolder("InGameCupheadIdleSide", FrameAnimation_DESC("InGameCupheadIdleSide", 0.1f));
-	Renderer->CreateFrameAnimationFolder("InGameCupheadIdleUp", FrameAnimation_DESC("InGameCupheadIdleUp", 0.1f));
-										  
-	// Walk								  
-	Renderer->CreateFrameAnimationFolder("InGameCupheadWalkDiagDown", FrameAnimation_DESC("WorldMapChupheadWalkDiagDown", 0.1f));
-	Renderer->CreateFrameAnimationFolder("InGameCupheadWalkDiagUp", FrameAnimation_DESC("WorldMapChupheadWalkDiagUp", 0.1f));
-	Renderer->CreateFrameAnimationFolder("InGameCupheadWalkDown", FrameAnimation_DESC("WorldMapChupheadWalkDown", 0.1f));
-	Renderer->CreateFrameAnimationFolder("InGameCupheadWalkSide", FrameAnimation_DESC("WorldMapChupheadWalkSide", 0.1f));
-	Renderer->CreateFrameAnimationFolder("InGameCupheadWalkUp", FrameAnimation_DESC("WorldMapChupheadWalkUp", 0.1f));
-
-	// Win
-	Renderer->CreateFrameAnimationFolder("WorldMapCupheadWin", FrameAnimation_DESC("WorldMapCupheadWin", 0.1f));
+	Renderer->CreateFrameAnimationFolder("IngameCupheadIdle", FrameAnimation_DESC("IngameCupheadIdle", 0.1f));
+	Renderer->CreateFrameAnimationFolder("IngameCupheadIdleDownStart", FrameAnimation_DESC("InGameCupheadIdleDownStart", 0, 7, 0.1f, true));
+	Renderer->CreateFrameAnimationFolder("IngameCupheadIdleDown", FrameAnimation_DESC("IngameCupheadIdleDown", 0, 3, 0.1f, true));
+	Renderer->CreateFrameAnimationFolder("IngameCupheadIdleDownTurn", FrameAnimation_DESC("InGameCupheadIdleDownTurn", 0, 0, 0.1f, true));
 
 	SetState(InGameCharacterState::Idle);
-	Renderer->ChangeFrameAnimation("WorldMapCupheadIdleDown");
+	Renderer->ChangeFrameAnimation("IngameCupheadIdle");
 	Renderer->ScaleToTexture();
 	Renderer->SetPivot(PIVOTMODE::BOT);
+
+	Movement = CreateComponent<InGameCharacterMovementCompmonent>();
+	Animation = CreateComponent<InGameCharacterAnimationControllerComponent>();
+	Animation->SetCharacterName("Cuphead");
 }
 
 void InGameCuphead::Update(float _DeltaTime)
@@ -65,10 +96,45 @@ void InGameCuphead::Update(float _DeltaTime)
 
 	GetLevel()->GetMainCameraActorTransform().SetLocalPosition({ GetTransform().GetLocalPosition().x, GetTransform().GetLocalPosition().y });
 
-	if (true == GameEngineInput::GetInst()->IsPress("MoveLeft") ||
+	if (true == GameEngineInput::GetInst()->IsPress("MoveLeft"))
+	{
+		SetHorizontalDirection("Left");
+	}
+	else if (true == GameEngineInput::GetInst()->IsPress("MoveRight"))
+	{
+		SetHorizontalDirection("Right");
+	}
+	else
+	{
+		SetHorizontalDirection("Center");
+	}
+
+	
+	if (true == GameEngineInput::GetInst()->IsPress("MoveUp"))
+	{
+		SetVerticalDirection("Up");
+	}
+	else if (true == GameEngineInput::GetInst()->IsPress("MoveDown"))
+	{
+		SetVerticalDirection("Down");
+	}
+	else
+	{
+		SetVerticalDirection("Center");
+	}
+
+	if (true == GameEngineInput::GetInst()->IsPress("Aim"))
+	{
+		Aim();
+	}
+	else if (true == GameEngineInput::GetInst()->IsPress("MoveLeft") ||
 		true == GameEngineInput::GetInst()->IsPress("MoveRight"))
 	{
 		Walk();
+	}
+	else if (true == GameEngineInput::GetInst()->IsPress("MoveDown"))
+	{
+		Duck();
 	}
 	else
 	{
@@ -78,54 +144,6 @@ void InGameCuphead::Update(float _DeltaTime)
 
 void InGameCuphead::Walk()
 {
-	//WalkCheckElapsedTime += GameEngineTime::GetDeltaTime();
-	//if (WalkCheckElapsedTime > WalkCheckInterval)
-	//{
-	//	WalkCheckElapsedTime = 0;
-	//}
-
-	//if (WalkCheckElapsedTime == 0)
-	//{
-		if (true == GameEngineInput::GetInst()->IsPress("MoveLeft"))
-		{
-			if (true == GameEngineInput::GetInst()->IsPress("MoveUp"))
-			{
-				SetDirection("LeftUp");
-			}
-			else if (true == GameEngineInput::GetInst()->IsPress("MoveDown"))
-			{
-				SetDirection("LeftDown");
-			}
-			else
-			{
-				SetDirection("Left");
-			}
-		}
-		else if (true == GameEngineInput::GetInst()->IsPress("MoveRight"))
-		{
-			if (true == GameEngineInput::GetInst()->IsPress("MoveUp"))
-			{
-				SetDirection("RightUp");
-			}
-			else if (true == GameEngineInput::GetInst()->IsPress("MoveDown"))
-			{
-				SetDirection("RightDown");
-			}
-			else
-			{
-				SetDirection("Right");
-			}
-		}
-		else if (true == GameEngineInput::GetInst()->IsPress("MoveDown"))
-		{
-			SetDirection("Down");
-		}
-		else if (true == GameEngineInput::GetInst()->IsPress("MoveUp"))
-		{
-			SetDirection("Up");
-		}
-	//}
-
 	SetState(InGameCharacterState::Walk);
 }
 
@@ -136,6 +154,7 @@ void InGameCuphead::Idle()
 
 void InGameCuphead::Aim()
 {
+	SetState(InGameCharacterState::Aim);
 }
 
 void InGameCuphead::TakeDamage()
@@ -152,6 +171,7 @@ void InGameCuphead::Die()
 
 void InGameCuphead::Duck()
 {
+	SetState(InGameCharacterState::Duck);
 }
 
 void InGameCuphead::Jump()

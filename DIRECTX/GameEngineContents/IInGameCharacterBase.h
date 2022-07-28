@@ -75,12 +75,30 @@ public:
 	IInGameCharacterBase& operator=(IInGameCharacterBase&& _Other) noexcept = delete;
 
 public:
-	void SetState(InGameCharacterState _State) { State = _State; }
+	void SetState(InGameCharacterState _State);
 	InGameCharacterState GetState() { return  State; }
-	void SetDirection(std::string _Dir);
-	std::string GetDirection() { return Dir; }
+
+	void SetVerticalDirection(std::string _Dir);
+	std::string GetVerticalDirection() { return VerticalDir; }
+
+	void SetHorizontalDirection(std::string _Dir);
+	std::string GetHorizontalDirection() { return HorizontalDir; }
+
+
+	void SetRenderer(GameEngineTextureRenderer* _Renderer);
+	GameEngineTextureRenderer* GetRenderer() { return Renderer; }
+
+	MulticastDelegate<InGameCharacterState>& GetStateChangedDelegate() { return StateChangedDelegate; }
+	MulticastDelegate<std::string>& GetVerticalDirectionChangedDelegate() { return VerticalDirectionChangedDelegate; }
+	MulticastDelegate<std::string>& GetHorizontalDirectionChangedDelegate() { return HorizontalDirectionChangedDelegate; }
+
 private:
+	GameEngineTextureRenderer* Renderer;
 	InGameCharacterState State;
-	std::string Dir;
+	std::string VerticalDir; // 수직 방향 (상하)
+	std::string HorizontalDir; // 수평 방향 (좌우)
+	MulticastDelegate<InGameCharacterState> StateChangedDelegate;
+	MulticastDelegate<std::string> VerticalDirectionChangedDelegate;
+	MulticastDelegate<std::string> HorizontalDirectionChangedDelegate;
 };
 

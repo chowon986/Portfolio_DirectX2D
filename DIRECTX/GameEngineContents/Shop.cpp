@@ -1,5 +1,8 @@
 #include "PreCompile.h"
 #include "Shop.h"
+#include "GameEngineCore/GameEngineCollision.h"
+#include "WorldMapCuphead.h"
+
 
 Shop::Shop()
 {
@@ -20,6 +23,7 @@ void Shop::Start()
 
 void Shop::Update(float _DeltaTime)
 {
+	std::list<WorldMapCuphead*> PlayerList = GetLevel()->GetConvertToGroup<WorldMapCuphead>(GameObjectGroup::Player);
 }
 
 void Shop::End()

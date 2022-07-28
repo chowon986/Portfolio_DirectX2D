@@ -2,7 +2,10 @@
 #include "IInGameCharacterBase.h"
 
 IInGameCharacterBase::IInGameCharacterBase()
-	:State(InGameCharacterState::Idle)
+	: State(InGameCharacterState::Idle)
+	, Renderer(nullptr)
+	, VerticalDir("Center")
+	, HorizontalDir("Right")
 {
 }
 
@@ -10,7 +13,36 @@ IInGameCharacterBase::~IInGameCharacterBase()
 {
 }
 
-void IInGameCharacterBase::SetDirection(std::string _Dir)
+void IInGameCharacterBase::SetState(InGameCharacterState _State)
 {
-	Dir = _Dir;
+	if (State != _State)
+	{
+		State = _State;
+		StateChangedDelegate.Invoke(State);
+	}
 }
+
+void IInGameCharacterBase::SetVerticalDirection(std::string _Dir)
+{
+	if (VerticalDir != _Dir)
+	{
+		VerticalDir = _Dir;
+		VerticalDirectionChangedDelegate.Invoke(VerticalDir);
+	}
+}
+
+void IInGameCharacterBase::SetHorizontalDirection(std::string _Dir)
+{
+	if (HorizontalDir != _Dir)
+	{
+		HorizontalDir = _Dir;
+		HorizontalDirectionChangedDelegate.Invoke(HorizontalDir);
+	}
+}
+
+
+void IInGameCharacterBase::SetRenderer(GameEngineTextureRenderer* _Renderer)
+{
+	Renderer = _Renderer;
+}
+

@@ -9,6 +9,7 @@
 
 ShopLevel::ShopLevel()
 	: IrisRenderer(nullptr)
+	, IsLeftDrawerOpen(false)
 {
 }
 
@@ -60,7 +61,7 @@ void ShopLevel::Start()
 	}
 
 	{
-		Pig* ShopPig = CreateActor<Pig>(GameObjectGroup::UI);
+		ShopPig = CreateActor<Pig>(GameObjectGroup::UI);
 	}
 
 	{
@@ -69,22 +70,25 @@ void ShopLevel::Start()
 		IrisRenderer->GetTransform().SetLocalScale({ 1280,720,1 });
 		IrisRenderer->GetTransform().SetLocalPosition({ 0,0,(int)ZOrder::UI });
 		IrisRenderer->CreateFrameAnimationFolder("IrisAStart", FrameAnimation_DESC("IrisA", 0.1f, false));
+		IrisRenderer->AnimationBindEnd("IrisAStart", &ShopLevel::EndIrisAnimation, this);
 		IrisRenderer->ChangeFrameAnimation("IrisAStart");
 	}
-
-
 }
 
 void ShopLevel::Update(float _DeltaTime)
 {
 	Time += _DeltaTime;
-
-	if (Time < 2.5)
+	if (Time > 1.0f && Time < 3.5f)
 	{
-	LeftDrawerRenderer->GetTransform().SetWorldMove(LeftDrawerRenderer->GetTransform().GetLeftVector() * 200 * GameEngineTime::GetDeltaTime());
+		LeftDrawerRenderer->GetTransform().SetWorldMove(LeftDrawerRenderer->GetTransform().GetLeftVector() * 200 * GameEngineTime::GetDeltaTime());
 	}
 }
 
 void ShopLevel::End()
 {
+}
+
+void ShopLevel::EndIrisAnimation(const FrameAnimation_DESC& _Info)
+{
+	ShopPig->GetRenderer()->ChangeFrameAnimation("Welcome");
 }

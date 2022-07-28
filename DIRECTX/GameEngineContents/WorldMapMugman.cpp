@@ -28,20 +28,20 @@ void WorldMapMugman::Start()
 	SetRenderer(Renderer);
 
 	// Idle
-	Renderer->CreateFrameAnimationFolder("WorldMapMugmanIdleDiagDown", FrameAnimation_DESC("WorldMapChupheadIdleDiagDown", 0.1f));
-	Renderer->CreateFrameAnimationFolder("WorldMapMugmanIdleDiagUp", FrameAnimation_DESC("WorldMapChupheadIdleDiagUp", 0.1f));
-	Renderer->CreateFrameAnimationFolder("WorldMapMugmanIdleDown", FrameAnimation_DESC("WorldMapChupheadIdleDown", 0.1f));
-	Renderer->CreateFrameAnimationFolder("WorldMapMugmanIdleDownB", FrameAnimation_DESC("WorldMapChupheadIdleDownB", 0.1f)); // Idle 상태로 지속 시 1번 발동
-	Renderer->CreateFrameAnimationFolder("WorldMapMugmanIdleSide", FrameAnimation_DESC("WorldMapChupheadIdleSide", 0.1f));
-	Renderer->CreateFrameAnimationFolder("WorldMapMugmanIdleSideB", FrameAnimation_DESC("WorldMapChupheadIdleSideB", 0.1f)); // Idle 상태로 지속 시 1번 발동
-	Renderer->CreateFrameAnimationFolder("WorldMapMugmanIdleUp", FrameAnimation_DESC("WorldMapChupheadIdleUp", 0.1f));
+	Renderer->CreateFrameAnimationFolder("WorldMapMugmanIdleDiagDown", FrameAnimation_DESC("WorldMapMugmanIdleDiagDown", 0.1f));
+	Renderer->CreateFrameAnimationFolder("WorldMapMugmanIdleDiagUp", FrameAnimation_DESC("WorldMapMugmanIdleDiagUp", 0.1f));
+	Renderer->CreateFrameAnimationFolder("WorldMapMugmanIdleDown", FrameAnimation_DESC("WorldMapMugmanIdleDown", 0.1f));
+	Renderer->CreateFrameAnimationFolder("WorldMapMugmanIdleDownB", FrameAnimation_DESC("WorldMapMugmanIdleDownB", 0.1f)); // Idle 상태로 지속 시 1번 발동
+	Renderer->CreateFrameAnimationFolder("WorldMapMugmanIdleSide", FrameAnimation_DESC("WorldMapMugmanIdleSide", 0.1f));
+	Renderer->CreateFrameAnimationFolder("WorldMapMugmanIdleSideB", FrameAnimation_DESC("WorldMapMugmanIdleSideB", 0.1f)); // Idle 상태로 지속 시 1번 발동
+	Renderer->CreateFrameAnimationFolder("WorldMapMugmanIdleUp", FrameAnimation_DESC("WorldMapMugmanIdleUp", 0.1f));
 
 	// Walk
-	Renderer->CreateFrameAnimationFolder("WorldMapMugmanWalkDiagDown", FrameAnimation_DESC("WorldMapChupheadWalkDiagDown", 0.1f));
-	Renderer->CreateFrameAnimationFolder("WorldMapMugmanWalkDiagUp", FrameAnimation_DESC("WorldMapChupheadWalkDiagUp", 0.1f));
-	Renderer->CreateFrameAnimationFolder("WorldMapMugmanWalkDown", FrameAnimation_DESC("WorldMapChupheadWalkDown", 0.1f));
-	Renderer->CreateFrameAnimationFolder("WorldMapMugmanWalkSide", FrameAnimation_DESC("WorldMapChupheadWalkSide", 0.1f));
-	Renderer->CreateFrameAnimationFolder("WorldMapMugmanWalkUp", FrameAnimation_DESC("WorldMapChupheadWalkUp", 0.1f));
+	Renderer->CreateFrameAnimationFolder("WorldMapMugmanWalkDiagDown", FrameAnimation_DESC("WorldMapMugmanWalkDiagDown", 0.1f));
+	Renderer->CreateFrameAnimationFolder("WorldMapMugmanWalkDiagUp", FrameAnimation_DESC("WorldMapMugmanWalkDiagUp", 0.1f));
+	Renderer->CreateFrameAnimationFolder("WorldMapMugmanWalkDown", FrameAnimation_DESC("WorldMapMugmanWalkDown", 0.1f));
+	Renderer->CreateFrameAnimationFolder("WorldMapMugmanWalkSide", FrameAnimation_DESC("WorldMapMugmanWalkSide", 0.1f));
+	Renderer->CreateFrameAnimationFolder("WorldMapMugmanWalkUp", FrameAnimation_DESC("WorldMapMugmanWalkUp", 0.1f));
 
 	// Win
 	Renderer->CreateFrameAnimationFolder("WorldMapMugmanWin", FrameAnimation_DESC("WorldMapMugmanWin", 0.1f));

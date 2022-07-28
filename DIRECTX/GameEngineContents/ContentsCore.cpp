@@ -7,6 +7,7 @@
 #include "WorldMapLevel.h"
 #include "HourglassLevel.h"
 #include "ShopLevel.h"
+#include "TutorialLevel.h"
 
 #pragma comment(lib, "GameEngineBase.lib")
 
@@ -81,8 +82,9 @@ void ContentsCore::Start()
 	CreateLevel<HourglassLevel>("Hourglass");
 	CreateLevel<WorldMapLevel>("WorldMap");
 	CreateLevel<ShopLevel>("Shop");
+	CreateLevel<TutorialLevel>("Tutorial");
 	CreateLevel<PlayLevel>("Play");
-	ChangeLevel("BeforeTitle");
+	ChangeLevel("Tutorial");
 
 	GameEngineGUI::CreateGUIWindow<GameEngineStatusWindow>("EngineStatus", nullptr);
 

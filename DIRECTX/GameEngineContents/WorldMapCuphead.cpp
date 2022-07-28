@@ -60,7 +60,19 @@ void WorldMapCuphead::Update(float _DeltaTime)
 {
 	GetLevel()->GetMainCameraActorTransform().SetLocalPosition({ GetTransform().GetLocalPosition().x+6.0f, GetTransform().GetLocalPosition().y - 32});
 
-	GroundCheck();
+	if (true == GameEngineInput::GetInst()->IsPress("MoveLeft") ||
+		true == GameEngineInput::GetInst()->IsPress("MoveRight") ||
+		true == GameEngineInput::GetInst()->IsPress("MoveDown") ||
+		true == GameEngineInput::GetInst()->IsPress("MoveUp"))
+	{
+		Walk();
+	}
+	else
+	{
+		Idle();
+	}
+
+	//GroundCheck();
 }
 
 void WorldMapCuphead::Idle()
@@ -96,7 +108,7 @@ void WorldMapCuphead::GroundCheck()
 
 	if (true == Color.CompareInt4D(Black))
 	{
-			if (true == GameEngineInput::GetInst()->IsPress("MoveLeft") ||
+		if (true == GameEngineInput::GetInst()->IsPress("MoveLeft") ||
 			true == GameEngineInput::GetInst()->IsPress("MoveRight") ||
 			true == GameEngineInput::GetInst()->IsPress("MoveDown") ||
 			true == GameEngineInput::GetInst()->IsPress("MoveUp"))

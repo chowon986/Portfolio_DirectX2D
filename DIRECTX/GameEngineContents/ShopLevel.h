@@ -3,6 +3,7 @@
 
 // Ό³Έν :
 class GameEngineTextureRenderer;
+class Pig;
 class ShopLevel : public GameEngineLevel
 {
 public:
@@ -21,11 +22,14 @@ protected:
 	void Update(float _DeltaTime) override;
 	void End() override;
 
-private:
-	void EndIrisAnimation(FrameAnimation_DESC _Info);
+public:
+	void EndIrisAnimation(const FrameAnimation_DESC& _Info);
+
 private:
 	GameEngineTextureRenderer* IrisRenderer;
 	GameEngineTextureRenderer* LeftDrawerRenderer;
 	float Time;
+	bool IsLeftDrawerOpen;
+	Pig* ShopPig;
 };
 
