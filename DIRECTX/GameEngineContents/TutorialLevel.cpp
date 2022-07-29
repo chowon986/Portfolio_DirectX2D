@@ -40,7 +40,6 @@ void TutorialLevel::Start()
 
 void TutorialLevel::Update(float _DeltaTime)
 {
-	Cuphead->GetTransform().SetLocalPosition({ 0, 0, -100 });
 }
 
 
