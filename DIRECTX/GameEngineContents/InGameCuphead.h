@@ -41,8 +41,10 @@ protected:
 	void SuperIIIAttack() override;
 	void Walk() override;
 	void Idle() override;
+	void IsPrepareAnimationStarted(const FrameAnimation_DESC& _Info);
 
 private:
 	InGameCharacterMovementCompmonent* Movement;
+	bool IsPrepareAnimationEnd;
 	InGameCharacterAnimationControllerComponent* Animation;
 };

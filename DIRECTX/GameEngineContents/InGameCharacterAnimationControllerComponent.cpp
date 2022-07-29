@@ -66,6 +66,17 @@ void InGameCharacterAnimationControllerComponent::UpdateAnimation()
 	std::string HorizontalDir = InGameCharacter->GetHorizontalDirection();
 	std::string Name = GetCharacterName();
 
+	if (State == InGameCharacterState::Prepare)
+	{
+		Renderer->ChangeFrameAnimation("Ingame" + Name + "Intro");
+	}
+
+	if (State == InGameCharacterState::Dash)
+	{
+		// Air 추가 필요
+		Renderer->ChangeFrameAnimation("Ingame" + Name + "DashGround");
+	}
+
 	if (State == InGameCharacterState::Idle)
 	{
 		if (VerticalDir == "Up")

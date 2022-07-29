@@ -29,14 +29,14 @@ enum class InGameCharacterState
 	Jump,
 	Parry,
 	Prepare,
-	Run, // 완료
-	Shoot,
+	RunShoot, 
+	Shoot, // 총 구현 필요
 	SpecialAttack,
 	SuperIAttack,
 	SuperIIAttack,
 	SuperIIIAttack,
-	Walk,
-	Idle,
+	Walk, // 완료
+	Idle, // 완료
 };
 
 template<typename T>
