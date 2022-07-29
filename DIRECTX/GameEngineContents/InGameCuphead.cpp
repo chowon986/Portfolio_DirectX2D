@@ -183,7 +183,7 @@ void InGameCuphead::TakeDamage()
 
 void InGameCuphead::Dash()
 {
-	SetState(InGameCharacterState::Dash);
+	//SetState(InGameCharacterState::Dash);
 }
 
 void InGameCuphead::Die()

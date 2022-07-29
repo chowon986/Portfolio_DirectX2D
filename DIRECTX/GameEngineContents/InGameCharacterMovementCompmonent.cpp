@@ -6,7 +6,6 @@
 InGameCharacterMovementCompmonent::InGameCharacterMovementCompmonent()
 	: Direction(float4::ZERO)
 	, Speed(400)
-	, DashSpeed(1)
 {
 }
 
@@ -27,9 +26,8 @@ void InGameCharacterMovementCompmonent::OnDirectionChanged(std::string _Dir)
 void InGameCharacterMovementCompmonent::UpdateDirection()
 {
 	IInGameCharacterBase* InGameCharacter = GetParent<IInGameCharacterBase>();
-	if (InGameCharacter == nullptr &&
-		InGameCharacter->GetState() != InGameCharacterState::Walk &&
-		InGameCharacter->GetState() != InGameCharacterState::Dash)
+	if (InGameCharacter == nullptr ||
+		InGameCharacter->GetState() != InGameCharacterState::Walk)
 	{
 			Direction = float4::ZERO;
 			return;
@@ -73,17 +71,7 @@ void InGameCharacterMovementCompmonent::Update(float _DeltaTime)
 		return;
 	}
 
-	IInGameCharacterBase* InGameCharacter = GetParent<IInGameCharacterBase>();
-	if (InGameCharacter == nullptr &&
-		InGameCharacter->GetState() != InGameCharacterState::Dash)
-	{
-		DashSpeed = 2;
-	}
-	else
-	{
-		DashSpeed = 1;
-	}
-	Actor->GetTransform().SetWorldMove(Direction * Speed * _DeltaTime * DashSpeed);
+	Actor->GetTransform().SetWorldMove(Direction * Speed * _DeltaTime );
 }
 
 void InGameCharacterMovementCompmonent::End()

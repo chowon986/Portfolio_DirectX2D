@@ -71,11 +71,11 @@ void InGameCharacterAnimationControllerComponent::UpdateAnimation()
 		Renderer->ChangeFrameAnimation("Ingame" + Name + "Intro");
 	}
 
-	if (State == InGameCharacterState::Dash)
-	{
-		// Air 추가 필요
-		Renderer->ChangeFrameAnimation("Ingame" + Name + "DashGround");
-	}
+	//if (State == InGameCharacterState::Dash)
+	//{
+	//	// Air 추가 필요
+	//	Renderer->ChangeFrameAnimation("Ingame" + Name + "DashGround");
+	//}
 
 	if (State == InGameCharacterState::Idle)
 	{

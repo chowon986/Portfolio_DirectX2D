@@ -81,7 +81,7 @@ void ContentsCore::Start()
 	CreateLevel<ShopLevel>("Shop");
 	CreateLevel<TutorialLevel>("Tutorial");
 	CreateLevel<PlayLevel>("Play");
-	ChangeLevel("BeforeTitle");
+	ChangeLevel("WorldMap");
 
 	GameEngineGUI::CreateGUIWindow<GameEngineStatusWindow>("EngineStatus", nullptr);
 
