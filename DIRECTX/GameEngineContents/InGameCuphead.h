@@ -23,8 +23,8 @@ public:
 
 protected:
 	void Start() override;
-	void Update(float _DeltaTime);
-	void End() {}
+	void Update(float _DeltaTime) override;
+	void End() override {}
 	void Aim() override;
 	void TakeDamage() override;
 	void Dash() override;
@@ -36,12 +36,10 @@ protected:
 	void Run() override;
 	void Shoot() override;
 	void SpecialAttack() override;
-	void SuperIAttack() override;
-	void SuperIIAttack() override;
-	void SuperIIIAttack() override;
+	void SuperAttack() override;
 	void Walk() override;
 	void Idle() override;
-	void IsPrepareAnimationStarted(const FrameAnimation_DESC& _Info);
+	void OnPrepareAnimationEnded(const FrameAnimation_DESC& _Info);
 
 private:
 	InGameCharacterMovementCompmonent* Movement;

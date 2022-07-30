@@ -13,6 +13,15 @@ IInGameCharacterBase::~IInGameCharacterBase()
 {
 }
 
+void IInGameCharacterBase::SetAttackState(InGameCharacterAttackState _State)
+{
+	if (AttackState != _State)
+	{
+		AttackState = _State;
+		AttackStateChangedDelegate.Invoke(AttackState);
+	}
+}
+
 void IInGameCharacterBase::SetState(InGameCharacterState _State)
 {
 	if (State != _State)

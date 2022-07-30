@@ -2,9 +2,10 @@
 #include "InGameCuphead.h"
 #include "InGameCharacterAnimationControllerComponent.h"
 #include "InGameCharacterMovementCompmonent.h"
+#include "PeaShooter.h"
 
 InGameCuphead::InGameCuphead()
-:IsPrepareAnimationEnd(false)
+	: IsPrepareAnimationEnd(false)
 {
 }
 
@@ -37,7 +38,7 @@ void InGameCuphead::Start()
 
 	// Intro
 	Renderer->CreateFrameAnimationFolder("IngameCupheadIntro", FrameAnimation_DESC("IngameCupheadIntro", 0.1f));
-	Renderer->AnimationBindEnd("IngameCupheadIntro", &InGameCuphead::IsPrepareAnimationStarted, this);
+	Renderer->AnimationBindEnd("IngameCupheadIntro", &InGameCuphead::OnPrepareAnimationEnded, this);
 
 	// Jump
 	Renderer->CreateFrameAnimationFolder("IngameCupheadJump", FrameAnimation_DESC("IngameCupheadJump", 0.1f));
@@ -49,12 +50,14 @@ void InGameCuphead::Start()
 	Renderer->CreateFrameAnimationFolder("IngameCupheadRun", FrameAnimation_DESC("IngameCupheadRun", 0.05f));
 
 	// Shoot
-	Renderer->CreateFrameAnimationFolder("IngameCupheadRunShooting", FrameAnimation_DESC("IngameCupheadRunShooting", 0.1f));
 	Renderer->CreateFrameAnimationFolder("IngameCupheadShootUp", FrameAnimation_DESC("IngameCupheadShootUp", 0.1f));
 	Renderer->CreateFrameAnimationFolder("IngameCupheadShootDiagUp", FrameAnimation_DESC("IngameCupheadShootDiagUp", 0.1f));
 	Renderer->CreateFrameAnimationFolder("IngameCupheadShootStraight", FrameAnimation_DESC("IngameCupheadShootStraight", 0.1f));
 	Renderer->CreateFrameAnimationFolder("IngameCupheadShootDiagDown", FrameAnimation_DESC("IngameCupheadShootDiagDown", 0.1f));
 	Renderer->CreateFrameAnimationFolder("IngameCupheadShootDown", FrameAnimation_DESC("IngameCupheadShootDown", 0.1f));
+	Renderer->CreateFrameAnimationFolder("IngameCupheadRunShootStraight", FrameAnimation_DESC("IngameCupheadRunShootStraight", 0.1f));
+	Renderer->CreateFrameAnimationFolder("IngameCupheadRunShootDiagUp", FrameAnimation_DESC("IngameCupheadRunShootDiagUp", 0.1f));
+	Renderer->CreateFrameAnimationFolder("IngameCupheadDuckShoot", FrameAnimation_DESC("IngameCupheadDuckShoot", 0.1f));
 
 	// TakeDamage
 	Renderer->CreateFrameAnimationFolder("IngameCupheadTakeDamageAir", FrameAnimation_DESC("IngameCupheadTakeDamageAir", 0.1f));
@@ -74,10 +77,17 @@ void InGameCuphead::Start()
 	Movement = CreateComponent<InGameCharacterMovementCompmonent>();
 	Animation = CreateComponent<InGameCharacterAnimationControllerComponent>();
 	Animation->SetCharacterName("Cuphead");
+	PeaShooter* Shooter = GetLevel()->CreateActor<PeaShooter>();
+	Shooter->SetParent(this);
 }
 
 void InGameCuphead::Update(float _DeltaTime)
 {
+	if (IsPrepareAnimationEnd == false)
+	{
+		return;
+	}
+
 	// 키보드로 가능한 애들
 	//Aim
 	//Dash
@@ -135,11 +145,6 @@ void InGameCuphead::Update(float _DeltaTime)
 		Aim();
 	}
 
-	else if (true == GameEngineInput::GetInst()->IsPress("Shoot"))
-	{
-		Shoot();
-	}
-
 	else if (true == GameEngineInput::GetInst()->IsPress("MoveLeft") ||
 		true == GameEngineInput::GetInst()->IsPress("MoveRight"))
 	{
@@ -151,9 +156,20 @@ void InGameCuphead::Update(float _DeltaTime)
 		Duck();
 	}
 
-	else if(IsPrepareAnimationEnd == true)
+	else
 	{
 		Idle();
+	}
+
+
+
+	if (true == GameEngineInput::GetInst()->IsPress("Shoot"))
+	{
+		Shoot();
+	}
+	else
+	{
+		SetAttackState(InGameCharacterAttackState::None);
 	}
 }
 
@@ -167,7 +183,7 @@ void InGameCuphead::Idle()
 	SetState(InGameCharacterState::Idle);
 }
 
-void InGameCuphead::IsPrepareAnimationStarted(const FrameAnimation_DESC& _Info)
+void InGameCuphead::OnPrepareAnimationEnded(const FrameAnimation_DESC& _Info)
 {
 	IsPrepareAnimationEnd = true;
 }
@@ -214,22 +230,13 @@ void InGameCuphead::Run()
 
 void InGameCuphead::Shoot()
 {
-	SetState(InGameCharacterState::Shoot);
+	SetAttackState(InGameCharacterAttackState::Shoot);
 }
 
 void InGameCuphead::SpecialAttack()
 {
 }
 
-void InGameCuphead::SuperIAttack()
+void InGameCuphead::SuperAttack()
 {
 }
-
-void InGameCuphead::SuperIIAttack()
-{
-}
-
-void InGameCuphead::SuperIIIAttack()
-{
-}
-

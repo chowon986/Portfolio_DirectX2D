@@ -34,7 +34,14 @@ void GameEngineActor::AllUpdate(float _ScaleDeltaTime, float _DeltaTime)
 			continue;
 		}
 
-		Com->Update(_ScaleDeltaTime);
+		if (GameEngineActor* ChildActor = dynamic_cast<GameEngineActor*>(Com))
+		{
+			ChildActor->AllUpdate(_ScaleDeltaTime, _DeltaTime);
+		}
+		else
+		{
+			Com->Update(_ScaleDeltaTime);
+		}
 	}
 }
 void GameEngineActor::DetachObject()

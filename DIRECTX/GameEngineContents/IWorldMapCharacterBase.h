@@ -1,34 +1,14 @@
 #pragma once
-#include "Iwalkable.h"
+#include "Delegates.h"
+#include "IWalkable.h"
 #include "IIdleable.h"
 
 class GameEngineTextureRenderer;
-
 enum class WorldMapCharacterState
 {
 	Idle,
 	Walk,
 	// talk, enter
-};
-
-template<typename T>
-class MulticastDelegate
-{
-public:
-	void Add(std::function<void(T)> func)
-	{
-		Delegates.push_back(func);
-	}
-
-	void Invoke(T Value)
-	{
-		for (auto Delegate : Delegates)
-		{
-			Delegate(Value);
-		}
-	}
-
-	std::vector<std::function<void(T)>> Delegates;
 };
 
 class IWorldMapCharacterBase : public GameEngineActor, public IWalkable, public IIdleable

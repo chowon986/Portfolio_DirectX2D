@@ -29,9 +29,9 @@ private:
 	void UpdateAnimation();
 
 protected:
-	virtual void Start();
-	virtual void Update(float _DeltaTime);
-	virtual void End();
+	virtual void Start() override;
+	virtual void Update(float _DeltaTime) override;
+	virtual void End() override;
 
 private:
 	std::string CharacterName;

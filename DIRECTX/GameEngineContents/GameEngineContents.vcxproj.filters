@@ -52,6 +52,15 @@
     <Filter Include="Actor\Play\WorldMap\Object\Entry">
       <UniqueIdentifier>{18255c14-63a1-4ca8-bf08-f1cfc8733fac}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Actor\Weapon">
+      <UniqueIdentifier>{e279934f-38e9-487b-b5ec-2367cc843109}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\Weapon\Shooter">
+      <UniqueIdentifier>{2d173cf4-8dcf-4cbb-ba39-ba7fb944c720}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\Weapon\Bullet">
+      <UniqueIdentifier>{c0d225ea-7e0d-41b0-99fe-bf099155c31b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ContentsCore.h">
@@ -120,13 +129,7 @@
     <ClInclude Include="ISpecialAttackable.h">
       <Filter>Actor\Interface</Filter>
     </ClInclude>
-    <ClInclude Include="ISuperIIIAttackable.h">
-      <Filter>Actor\Interface</Filter>
-    </ClInclude>
-    <ClInclude Include="ISuperIAttackable.h">
-      <Filter>Actor\Interface</Filter>
-    </ClInclude>
-    <ClInclude Include="ISuperIIAttackable.h">
+    <ClInclude Include="ISuperAttackable.h">
       <Filter>Actor\Interface</Filter>
     </ClInclude>
     <ClInclude Include="IDamageable.h">
@@ -252,6 +255,24 @@
     <ClInclude Include="TutorialLevel.h">
       <Filter>Level\Play</Filter>
     </ClInclude>
+    <ClInclude Include="WeaponBase.h">
+      <Filter>Actor\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="PeaShooter.h">
+      <Filter>Actor\Weapon\Shooter</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletBase.h">
+      <Filter>Actor\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="PeaBullet.h">
+      <Filter>Actor\Weapon\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletMovementComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Delegates.h">
+      <Filter>Contents</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp">
@@ -317,13 +338,7 @@
     <ClCompile Include="ISpecialAttackable.cpp">
       <Filter>Actor\Interface</Filter>
     </ClCompile>
-    <ClCompile Include="ISuperIAttackable.cpp">
-      <Filter>Actor\Interface</Filter>
-    </ClCompile>
-    <ClCompile Include="ISuperIIAttackable.cpp">
-      <Filter>Actor\Interface</Filter>
-    </ClCompile>
-    <ClCompile Include="ISuperIIIAttackable.cpp">
+    <ClCompile Include="ISuperAttackable.cpp">
       <Filter>Actor\Interface</Filter>
     </ClCompile>
     <ClCompile Include="IDamageable.cpp">
@@ -448,6 +463,21 @@
     </ClCompile>
     <ClCompile Include="TutorialLevel.cpp">
       <Filter>Level\Play</Filter>
+    </ClCompile>
+    <ClCompile Include="WeaponBase.cpp">
+      <Filter>Actor\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="PeaShooter.cpp">
+      <Filter>Actor\Weapon\Shooter</Filter>
+    </ClCompile>
+    <ClCompile Include="BulletBase.cpp">
+      <Filter>Actor\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="PeaBullet.cpp">
+      <Filter>Actor\Weapon\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="BulletMovementComponent.cpp">
+      <Filter>Components</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

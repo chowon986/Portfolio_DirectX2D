@@ -2,6 +2,7 @@
 #include <GameEngineCore/GameEngineComponent.h>
 
 enum class InGameCharacterState;
+enum class InGameCharacterAttackState;
 class InGameCharacterAnimationControllerComponent : public GameEngineComponent
 {
 public:
@@ -17,6 +18,7 @@ public:
 
 
 	void OnStateChanged(InGameCharacterState _State);
+	void OnAttackStateChanged(InGameCharacterAttackState _AttackState);
 	void OnVerticalDirectionChanged(std::string _Dir);
 	void OnHorizontalDirectionChanged(std::string _Dir);
 	void OnIdleDownStartAnimationEnded(const FrameAnimation_DESC& _Info);
@@ -29,9 +31,9 @@ private:
 
 
 protected:
-	virtual void Start();
-	virtual void Update(float _DeltaTime);
-	virtual void End();
+	virtual void Start() override;
+	virtual void Update(float _DeltaTime) override;
+	virtual void End() override;
 
 private:
 	std::string CharacterName;

@@ -163,6 +163,8 @@
     <ClInclude Include="Boat.h" />
     <ClInclude Include="Boatman.h" />
     <ClInclude Include="BoatRipples.h" />
+    <ClInclude Include="BulletBase.h" />
+    <ClInclude Include="BulletMovementComponent.h" />
     <ClInclude Include="Cart.h" />
     <ClInclude Include="Catus.h" />
     <ClInclude Include="ContentsCore.h">
@@ -170,6 +172,7 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="Cowgirl.h" />
+    <ClInclude Include="Delegates.h" />
     <ClInclude Include="Dogfight.h" />
     <ClInclude Include="DogFightLevel.h" />
     <ClInclude Include="Enums.h" />
@@ -196,9 +199,7 @@
     <ClInclude Include="IRunable.h" />
     <ClInclude Include="IShootable.h" />
     <ClInclude Include="ISpecialAttackable.h" />
-    <ClInclude Include="ISuperIAttackable.h" />
-    <ClInclude Include="ISuperIIAttackable.h" />
-    <ClInclude Include="ISuperIIIAttackable.h" />
+    <ClInclude Include="ISuperAttackable.h" />
     <ClInclude Include="ITalkable.h" />
     <ClInclude Include="IWalkable.h" />
     <ClInclude Include="IWorldMapCharacterBase.h" />
@@ -206,6 +207,8 @@
     <ClInclude Include="Lantern.h" />
     <ClInclude Include="NewsCat.h" />
     <ClInclude Include="Omm.h" />
+    <ClInclude Include="PeaBullet.h" />
+    <ClInclude Include="PeaShooter.h" />
     <ClInclude Include="Pickaxe.h" />
     <ClInclude Include="Pig.h" />
     <ClInclude Include="PlayLevel.h">
@@ -230,6 +233,7 @@
     <ClInclude Include="Waterfall.h" />
     <ClInclude Include="WaterfallBase.h" />
     <ClInclude Include="WaterLine.h" />
+    <ClInclude Include="WeaponBase.h" />
     <ClInclude Include="WorldMapCharacterAnimationControllerComponent.h" />
     <ClInclude Include="WorldMapCuphead.h" />
     <ClInclude Include="WorldMapLevel.h" />
@@ -243,6 +247,8 @@
     <ClCompile Include="Boat.cpp" />
     <ClCompile Include="Boatman.cpp" />
     <ClCompile Include="BoatRipples.cpp" />
+    <ClCompile Include="BulletBase.cpp" />
+    <ClCompile Include="BulletMovementComponent.cpp" />
     <ClCompile Include="Cart.cpp" />
     <ClCompile Include="Catus.cpp" />
     <ClCompile Include="ContentsCore.cpp">
@@ -275,9 +281,7 @@
     <ClCompile Include="IRunable.cpp" />
     <ClCompile Include="IShootable.cpp" />
     <ClCompile Include="ISpecialAttackable.cpp" />
-    <ClCompile Include="ISuperIAttackable.cpp" />
-    <ClCompile Include="ISuperIIAttackable.cpp" />
-    <ClCompile Include="ISuperIIIAttackable.cpp" />
+    <ClCompile Include="ISuperAttackable.cpp" />
     <ClCompile Include="ITalkable.cpp" />
     <ClCompile Include="IWalkable.cpp" />
     <ClCompile Include="IWorldMapCharacterBase.cpp" />
@@ -285,6 +289,8 @@
     <ClCompile Include="Lantern.cpp" />
     <ClCompile Include="NewsCat.cpp" />
     <ClCompile Include="Omm.cpp" />
+    <ClCompile Include="PeaBullet.cpp" />
+    <ClCompile Include="PeaShooter.cpp" />
     <ClCompile Include="Pickaxe.cpp" />
     <ClCompile Include="Pig.cpp" />
     <ClCompile Include="PlayLevel.cpp">
@@ -311,6 +317,7 @@
     <ClCompile Include="Waterfall.cpp" />
     <ClCompile Include="WaterfallBase.cpp" />
     <ClCompile Include="WaterLine.cpp" />
+    <ClCompile Include="WeaponBase.cpp" />
     <ClCompile Include="WorldMapCharacterAnimationControllerComponent.cpp" />
     <ClCompile Include="WorldMapCuphead.cpp" />
     <ClCompile Include="WorldMapLevel.cpp" />
