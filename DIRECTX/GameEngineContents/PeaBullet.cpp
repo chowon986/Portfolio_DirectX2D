@@ -1,10 +1,12 @@
 #include "PreCompile.h"
 #include "PeaBullet.h"
 #include "GameEngineCore/GameEngineTextureRenderer.h"
-#include "BulletMovementComponent.h"
 #include "PeaShooter.h"
+#include "BulletMovementComponent.h"
+#include "IInGameCharacterBase.h"
 
 PeaBullet::PeaBullet()
+	: Weapon(nullptr)
 {
 }
 
@@ -15,7 +17,8 @@ PeaBullet::~PeaBullet()
 void PeaBullet::SetParent(GameEngineUpdateObject* _Parent)
 {
 	BulletBase::SetParent(_Parent);
-	PeaShooter* Weapon = dynamic_cast<PeaShooter*>(GetParent());
+
+	Weapon = dynamic_cast<PeaShooter*>(GetParent());
 	if (Weapon != nullptr)
 	{
 		MovementComponent->SetHorizontalDirection(Weapon->GetHorizontalDirection());
@@ -25,8 +28,10 @@ void PeaBullet::SetParent(GameEngineUpdateObject* _Parent)
 
 void PeaBullet::Start()
 {
+
 	Renderer = CreateComponent<GameEngineTextureRenderer>();
-	Renderer->SetTexture("PeaBullet.png");
+	Renderer->CreateFrameAnimationFolder("PeashotLoop", FrameAnimation_DESC("PeashotLoop", 0.1f));
+	Renderer->ChangeFrameAnimation("PeashotLoop");
 	Renderer->ScaleToTexture();
 
 	MovementComponent = CreateComponent<BulletMovementComponent>();

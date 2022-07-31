@@ -225,6 +225,8 @@
     <ClInclude Include="ShopLevel.h" />
     <ClInclude Include="Shovel.h" />
     <ClInclude Include="Snow.h" />
+    <ClInclude Include="SpreadBullet.h" />
+    <ClInclude Include="SpreadShooter.h" />
     <ClInclude Include="TitleLevel.h">
       <SubType>
       </SubType>
@@ -309,6 +311,8 @@
     <ClCompile Include="ShopLevel.cpp" />
     <ClCompile Include="Shovel.cpp" />
     <ClCompile Include="Snow.cpp" />
+    <ClCompile Include="SpreadBullet.cpp" />
+    <ClCompile Include="SpreadShooter.cpp" />
     <ClCompile Include="TitleLevel.cpp">
       <SubType>
       </SubType>

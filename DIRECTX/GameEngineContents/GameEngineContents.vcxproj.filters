@@ -61,6 +61,9 @@
     <Filter Include="Actor\Weapon\Bullet">
       <UniqueIdentifier>{c0d225ea-7e0d-41b0-99fe-bf099155c31b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Actor\Weapon\Base">
+      <UniqueIdentifier>{f8a9d82a-48ef-4e85-87eb-332a82778d91}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ContentsCore.h">
@@ -255,14 +258,8 @@
     <ClInclude Include="TutorialLevel.h">
       <Filter>Level\Play</Filter>
     </ClInclude>
-    <ClInclude Include="WeaponBase.h">
-      <Filter>Actor\Weapon</Filter>
-    </ClInclude>
     <ClInclude Include="PeaShooter.h">
       <Filter>Actor\Weapon\Shooter</Filter>
-    </ClInclude>
-    <ClInclude Include="BulletBase.h">
-      <Filter>Actor\Weapon</Filter>
     </ClInclude>
     <ClInclude Include="PeaBullet.h">
       <Filter>Actor\Weapon\Bullet</Filter>
@@ -272,6 +269,18 @@
     </ClInclude>
     <ClInclude Include="Delegates.h">
       <Filter>Contents</Filter>
+    </ClInclude>
+    <ClInclude Include="SpreadShooter.h">
+      <Filter>Actor\Weapon\Shooter</Filter>
+    </ClInclude>
+    <ClInclude Include="SpreadBullet.h">
+      <Filter>Actor\Weapon\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletBase.h">
+      <Filter>Actor\Weapon\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="WeaponBase.h">
+      <Filter>Actor\Weapon\Base</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -464,20 +473,26 @@
     <ClCompile Include="TutorialLevel.cpp">
       <Filter>Level\Play</Filter>
     </ClCompile>
-    <ClCompile Include="WeaponBase.cpp">
-      <Filter>Actor\Weapon</Filter>
-    </ClCompile>
     <ClCompile Include="PeaShooter.cpp">
       <Filter>Actor\Weapon\Shooter</Filter>
-    </ClCompile>
-    <ClCompile Include="BulletBase.cpp">
-      <Filter>Actor\Weapon</Filter>
     </ClCompile>
     <ClCompile Include="PeaBullet.cpp">
       <Filter>Actor\Weapon\Bullet</Filter>
     </ClCompile>
     <ClCompile Include="BulletMovementComponent.cpp">
       <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="SpreadShooter.cpp">
+      <Filter>Actor\Weapon\Shooter</Filter>
+    </ClCompile>
+    <ClCompile Include="SpreadBullet.cpp">
+      <Filter>Actor\Weapon\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="BulletBase.cpp">
+      <Filter>Actor\Weapon\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="WeaponBase.cpp">
+      <Filter>Actor\Weapon\Base</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

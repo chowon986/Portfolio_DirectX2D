@@ -13,10 +13,13 @@ public:
 	BulletBase& operator=(BulletBase&& _Other) noexcept = delete;
 
 protected:
+	std::string GetVerticalDirection() { return VerticalDirection; }
+	std::string GetHorizontalDirection() { return HorizontalDirection; }
+
+protected:
 	std::string VerticalDirection;
 	std::string HorizontalDirection;
 
 	GameEngineTextureRenderer* Renderer;
 	BulletMovementComponent* MovementComponent;
 };
-

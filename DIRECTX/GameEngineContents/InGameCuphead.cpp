@@ -117,6 +117,7 @@ void InGameCuphead::Update(float _DeltaTime)
 	{
 		SetHorizontalDirection("Right");
 	}
+
 	else
 	{
 		SetHorizontalDirection("Center");
@@ -145,23 +146,21 @@ void InGameCuphead::Update(float _DeltaTime)
 		Aim();
 	}
 
+	else if (true == GameEngineInput::GetInst()->IsPress("MoveDown"))
+	{
+		Duck();
+	}
+
 	else if (true == GameEngineInput::GetInst()->IsPress("MoveLeft") ||
 		true == GameEngineInput::GetInst()->IsPress("MoveRight"))
 	{
 		Walk();
 	}
 
-	else if (true == GameEngineInput::GetInst()->IsPress("MoveDown"))
-	{
-		Duck();
-	}
-
 	else
 	{
 		Idle();
 	}
-
-
 
 	if (true == GameEngineInput::GetInst()->IsPress("Shoot"))
 	{

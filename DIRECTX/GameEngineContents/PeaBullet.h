@@ -1,6 +1,7 @@
 #pragma once
 #include "BulletBase.h"
 
+class PeaShooter;
 class GameEngineTextureRenderer;
 class PeaBullet : public BulletBase
 {
@@ -19,5 +20,8 @@ private:
 	virtual void Start() override;
 	virtual void Update(float _DeltaTime) override;
 	virtual void End() override;
+
+private:
+	PeaShooter* Weapon;
 };
 

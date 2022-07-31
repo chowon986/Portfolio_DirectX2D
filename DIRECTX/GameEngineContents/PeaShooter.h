@@ -24,7 +24,7 @@ public:
 	void SetParent(GameEngineUpdateObject* _Parent) override;
 
 private:
-	void UpdateDirection();
+	void UpdateDirection() override;
 
 private:
 	void Start() override;

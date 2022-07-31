@@ -5,7 +5,7 @@ IInGameCharacterBase::IInGameCharacterBase()
 	: State(InGameCharacterState::Idle)
 	, Renderer(nullptr)
 	, VerticalDir("Center")
-	, HorizontalDir("Right")
+	, HorizontalDir("Center")
 {
 }
 

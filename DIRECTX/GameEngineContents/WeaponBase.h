@@ -1,6 +1,9 @@
 #pragma once
 #include "GameEngineCore/GameEngineActor.h"
 
+enum class InGameCharacterAttackState;
+enum class InGameCharacterState;
+class IInGameCharacterBase;
 class WeaponBase : public GameEngineActor
 {
 public:
@@ -15,9 +18,18 @@ public:
 	std::string GetHorizontalDirection() { return HorizontalDirection; }
 
 protected:
+	virtual void UpdateDirection();
+	void Update(float _DeltaTime) override;
+
+protected:
 	float IntervalTime;
 	float ElapsedTime;
 	std::string VerticalDirection;
 	std::string HorizontalDirection;
+	IInGameCharacterBase* Character;
+	InGameCharacterState State;
+	std::string CharacterHorizontalDirection;
+	std::string CharacterVerticalDirection;
+	InGameCharacterAttackState AttackState;
 };
 

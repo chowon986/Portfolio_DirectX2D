@@ -63,31 +63,26 @@ void PeaShooter::SetParent(GameEngineUpdateObject* _Parent)
 
 void PeaShooter::UpdateDirection()
 {
-	IInGameCharacterBase* Character = dynamic_cast<IInGameCharacterBase*>(GetParent());
-	if (Character == nullptr)
-	{
-		return;
-	}
+	WeaponBase::UpdateDirection();
 
-	InGameCharacterState State = Character->GetState();
-	std::string CharacterHorizontalDirection = Character->GetHorizontalDirection();
-	std::string CharacterVerticalDirection = Character->GetVerticalDirection();
-
-	if (State == InGameCharacterState::Idle)
-	{
-		VerticalDirection = CharacterVerticalDirection;
-		HorizontalDirection = CharacterVerticalDirection == "Up" ? "Center" : Character->GetRenderer()->GetTransform().GetLocalScale().x < 0 ? "Left" : "Right";
-	}
-	else if (State == InGameCharacterState::Duck)
+	if (State == InGameCharacterState::Duck)
 	{
 		VerticalDirection = "Center";
 		HorizontalDirection = Character->GetRenderer()->GetTransform().GetLocalScale().x < 0 ? "Left" : "Right";
 	}
+
 	else if (State == InGameCharacterState::Walk)
 	{
 		VerticalDirection = CharacterVerticalDirection == "Down" ? "Center" : CharacterVerticalDirection;
 		HorizontalDirection = Character->GetRenderer()->GetTransform().GetLocalScale().x < 0 ? "Left" : "Right";
 	}
+
+	else if (State == InGameCharacterState::Idle)
+	{
+		VerticalDirection = CharacterVerticalDirection;
+		HorizontalDirection = CharacterVerticalDirection == "Up" ? "Center" : Character->GetRenderer()->GetTransform().GetLocalScale().x < 0 ? "Left" : "Right";
+	}
+
 	else
 	{
 		VerticalDirection = CharacterVerticalDirection;
@@ -101,22 +96,7 @@ void PeaShooter::Start()
 
 void PeaShooter::Update(float _DeltaTime)
 {
-	IInGameCharacterBase* Character = dynamic_cast<IInGameCharacterBase*>(GetParent());
-	if (Character == nullptr)
-	{
-		return;
-	}
-
-	InGameCharacterAttackState AttackState = Character->GetAttackState();
-	if (AttackState == InGameCharacterAttackState::None)
-	{
-		return;
-	}
-
-	if (ElapsedTime == -1 || IntervalTime == -1)
-	{
-		return;
-	}
+	WeaponBase::Update(_DeltaTime);
 
 	ElapsedTime += _DeltaTime;
 	if (ElapsedTime > IntervalTime)
@@ -138,7 +118,6 @@ void PeaShooter::Update(float _DeltaTime)
 			break;
 		}
 	}
-
 }
 
 void PeaShooter::End()
