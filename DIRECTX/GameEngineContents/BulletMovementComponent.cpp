@@ -5,6 +5,7 @@
 
 BulletMovementComponent::BulletMovementComponent()
 	: Speed(10.0f)
+	, Direction(float4::ZERO)
 {
 }
 
@@ -18,29 +19,14 @@ void BulletMovementComponent::Start()
 
 void BulletMovementComponent::Update(float _DeltaTime)
 {
-	float4 Direction = float4::ZERO;
-	if (HorizontalDirection == "Right")
-	{
-		Direction += float4::RIGHT;
-	}
-	else if(HorizontalDirection == "Left")
-	{
-		Direction += float4::LEFT;
-	}
-
-	if (VerticalDirection == "Up")
-	{
-		Direction += float4::UP;
-	}
-	else if (VerticalDirection == "Down")
-	{
-		Direction += float4::DOWN;
-	}
+	float4 _Direction = Direction;
 
 	BulletBase* Bullet = GetParent<BulletBase>();
 	if (Bullet != nullptr)
 	{
-		Bullet->GetTransform().SetWorldMove(Direction * Speed);
+		//Speed -= 10*_DeltaTime;
+		_Direction *= Speed;
+		Bullet->GetTransform().SetWorldMove(_Direction);
 	}
 }
 

@@ -3,9 +3,10 @@
 #include "InGameCharacterAnimationControllerComponent.h"
 #include "InGameCharacterMovementCompmonent.h"
 #include "PeaShooter.h"
+#include "SpreadShooter.h"
 
 InGameCuphead::InGameCuphead()
-	: IsPrepareAnimationEnd(false)
+	: IsInputEnabled(false)
 {
 }
 
@@ -33,8 +34,8 @@ void InGameCuphead::Start()
 	Renderer->CreateFrameAnimationFolder("IngameCupheadAimUp", FrameAnimation_DESC("IngameCupheadAimUp", 0.1f));
 
 	// Dash
-	Renderer->CreateFrameAnimationFolder("IngameCupheadDashGround", FrameAnimation_DESC("IngameCupheadDashGround", 0.1f));
-	Renderer->CreateFrameAnimationFolder("IngameCupheadDashAir", FrameAnimation_DESC("IngameCupheadDashAir", 0.1f));
+	Renderer->CreateFrameAnimationFolder("IngameCupheadDash", FrameAnimation_DESC("IngameCupheadDash", 0.05f));
+	Renderer->AnimationBindEnd("IngameCupheadDash", &InGameCuphead::OnDashAnimationEnded, this);
 
 	// Intro
 	Renderer->CreateFrameAnimationFolder("IngameCupheadIntro", FrameAnimation_DESC("IngameCupheadIntro", 0.1f));
@@ -77,19 +78,21 @@ void InGameCuphead::Start()
 	Movement = CreateComponent<InGameCharacterMovementCompmonent>();
 	Animation = CreateComponent<InGameCharacterAnimationControllerComponent>();
 	Animation->SetCharacterName("Cuphead");
-	PeaShooter* Shooter = GetLevel()->CreateActor<PeaShooter>();
+	//PeaShooter* Shooter = GetLevel()->CreateActor<PeaShooter>();
+	//Shooter->SetParent(this);
+
+	SpreadShooter* Shooter = GetLevel()->CreateActor<SpreadShooter>();
 	Shooter->SetParent(this);
 }
 
 void InGameCuphead::Update(float _DeltaTime)
 {
-	if (IsPrepareAnimationEnd == false)
+	if (IsInputEnabled == false)
 	{
 		return;
 	}
 
 	// 키보드로 가능한 애들
-	//Aim
 	//Dash
 	//Duck
 	//Jumpable
@@ -107,7 +110,7 @@ void InGameCuphead::Update(float _DeltaTime)
 	//Die
 	//Preparable
 	//Idleable
-	GetLevel()->GetMainCameraActorTransform().SetLocalPosition({0, 0 });
+	GetLevel()->GetMainCameraActorTransform().SetLocalPosition({ 0, 0 });
 
 	if (true == GameEngineInput::GetInst()->IsPress("MoveLeft"))
 	{
@@ -117,7 +120,6 @@ void InGameCuphead::Update(float _DeltaTime)
 	{
 		SetHorizontalDirection("Right");
 	}
-
 	else
 	{
 		SetHorizontalDirection("Center");
@@ -136,23 +138,27 @@ void InGameCuphead::Update(float _DeltaTime)
 		SetVerticalDirection("Center");
 	}
 
-	//if (true == GameEngineInput::GetInst()->IsDown("Dash"))
-	//{
-	//	Dash();
-	//}
 
-	if (true == GameEngineInput::GetInst()->IsPress("Aim"))
+
+
+	if (true == GameEngineInput::GetInst()->IsDown("Dash"))
+	{
+		IsInputEnabled = false;
+		Dash();
+	}
+
+	else if (true == GameEngineInput::GetInst()->IsPress("Aim"))
 	{
 		Aim();
 	}
 
 	else if (true == GameEngineInput::GetInst()->IsPress("MoveDown"))
 	{
-		Duck();
+		Duck(); 
 	}
 
 	else if (true == GameEngineInput::GetInst()->IsPress("MoveLeft") ||
-		true == GameEngineInput::GetInst()->IsPress("MoveRight"))
+	         true == GameEngineInput::GetInst()->IsPress("MoveRight"))
 	{
 		Walk();
 	}
@@ -162,7 +168,8 @@ void InGameCuphead::Update(float _DeltaTime)
 		Idle();
 	}
 
-	if (true == GameEngineInput::GetInst()->IsPress("Shoot"))
+	if (true == GameEngineInput::GetInst()->IsPress("Shoot") &&
+		GetState() != InGameCharacterState::Dash)
 	{
 		Shoot();
 	}
@@ -184,7 +191,12 @@ void InGameCuphead::Idle()
 
 void InGameCuphead::OnPrepareAnimationEnded(const FrameAnimation_DESC& _Info)
 {
-	IsPrepareAnimationEnd = true;
+	IsInputEnabled = true;
+}
+
+void InGameCuphead::OnDashAnimationEnded(const FrameAnimation_DESC& _Info)
+{
+	IsInputEnabled = true;
 }
 
 void InGameCuphead::Aim()
@@ -198,7 +210,7 @@ void InGameCuphead::TakeDamage()
 
 void InGameCuphead::Dash()
 {
-	//SetState(InGameCharacterState::Dash);
+	SetState(InGameCharacterState::Dash);
 }
 
 void InGameCuphead::Die()

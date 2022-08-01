@@ -14,24 +14,12 @@ SpreadBullet::~SpreadBullet()
 {
 }
 
-void SpreadBullet::SetParent(GameEngineUpdateObject* _Parent)
-{
-	BulletBase::SetParent(_Parent);
-
-	Weapon = dynamic_cast<SpreadShooter*>(GetParent());
-	if (Weapon != nullptr)
-	{
-		MovementComponent->SetHorizontalDirection(Weapon->GetHorizontalDirection());
-		MovementComponent->SetVerticalDirection(Weapon->GetVerticalDirection());
-	}
-}
-
 void SpreadBullet::Start()
 {
 
 	Renderer = CreateComponent<GameEngineTextureRenderer>();
-	Renderer->CreateFrameAnimationFolder("SpreadshotLoop", FrameAnimation_DESC("SpreadshotLoop", 0.1f));
-	Renderer->ChangeFrameAnimation("SpreadshotLoop");
+	Renderer->CreateFrameAnimationFolder("SpreadExIntro", FrameAnimation_DESC("SpreadExIntro", 0.1f));
+	Renderer->ChangeFrameAnimation("SpreadExIntro");
 	Renderer->ScaleToTexture();
 
 	MovementComponent = CreateComponent<BulletMovementComponent>();

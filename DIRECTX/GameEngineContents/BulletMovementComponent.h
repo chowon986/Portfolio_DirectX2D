@@ -16,11 +16,8 @@ public:
 	BulletMovementComponent& operator=(const BulletMovementComponent& _Other) = delete;
 	BulletMovementComponent& operator=(BulletMovementComponent&& _Other) noexcept = delete;
 
-	std::string GetHorizontalDirection() const { return HorizontalDirection; }
-	void SetHorizontalDirection(std::string _HorizontalDirection) { HorizontalDirection = _HorizontalDirection; }
-
-	std::string GetVerticalDirection() const { return VerticalDirection; }
-	void SetVerticalDirection(std::string _VerticalDirection) { VerticalDirection = _VerticalDirection; }
+	float4 GetDirection() const { return Direction; }
+	void SetDirection(float4 _Direction) { Direction = _Direction; }
 
 	float GetSpeed() const { return Speed; }
 	void SetSpeed(float _Speed) { Speed = _Speed; }
@@ -33,8 +30,7 @@ protected:
 	virtual void End() override;
 
 private:
-	std::string VerticalDirection;
-	std::string HorizontalDirection;
+	float4 Direction;
 	float Speed;
 };
 

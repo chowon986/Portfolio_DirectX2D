@@ -11,3 +11,12 @@ BulletBase::BulletBase()
 BulletBase::~BulletBase()
 {
 }
+
+void BulletBase::SetDirection(float4 _Direction)
+{
+	Direction = _Direction;
+	 if (nullptr != MovementComponent)
+	 {
+		 MovementComponent->SetDirection(Direction);
+	 }
+}

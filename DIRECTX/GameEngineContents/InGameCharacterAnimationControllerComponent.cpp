@@ -75,15 +75,17 @@ void InGameCharacterAnimationControllerComponent::UpdateAnimation()
 	if (State == InGameCharacterState::Prepare)
 	{
 		Renderer->ChangeFrameAnimation("Ingame" + Name + "Intro");
+		Renderer->ScaleToTexture();
 	}
 
-	//if (State == InGameCharacterState::Dash)
-	//{
-	//	// Air 추가 필요
-	//	Renderer->ChangeFrameAnimation("Ingame" + Name + "DashGround");
-	//}
+	if (State == InGameCharacterState::Dash)
+	{
+		Renderer->ChangeFrameAnimation("Ingame" + Name + "Dash");
+		Renderer->ScaleToTexture();
 
-	if (State == InGameCharacterState::Idle)
+	}
+
+	else if (State == InGameCharacterState::Idle)
 	{
 		if (AttackState == InGameCharacterAttackState::Shoot)
 		{
@@ -227,6 +229,15 @@ void InGameCharacterAnimationControllerComponent::UpdateAnimation()
 	if (HorizontalDir == "Left")
 	{
 		if (Renderer->GetTransform().GetLocalScale().x > 0)
+		{
+			float x = Renderer->GetTransform().GetLocalScale().x * -1;
+			Renderer->GetTransform().SetLocalScale({ x,Renderer->GetTransform().GetLocalScale().y, Renderer->GetTransform().GetLocalScale().z });
+		}
+	}
+
+	else if (HorizontalDir == "Right")
+	{
+		if (Renderer->GetTransform().GetLocalScale().x < 0)
 		{
 			float x = Renderer->GetTransform().GetLocalScale().x * -1;
 			Renderer->GetTransform().SetLocalScale({ x,Renderer->GetTransform().GetLocalScale().y, Renderer->GetTransform().GetLocalScale().z });

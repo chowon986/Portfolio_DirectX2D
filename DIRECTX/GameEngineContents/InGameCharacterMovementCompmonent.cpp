@@ -65,13 +65,23 @@ void InGameCharacterMovementCompmonent::Start()
 
 void InGameCharacterMovementCompmonent::Update(float _DeltaTime)
 {
-	GameEngineActor* Actor = GetParent<GameEngineActor>();
-	if (Actor == nullptr)
+	IInGameCharacterBase* InGameCharacter = GetParent<IInGameCharacterBase>();
+	if (InGameCharacter == nullptr)
 	{
 		return;
 	}
 
-	Actor->GetTransform().SetWorldMove(Direction * Speed * _DeltaTime );
+	InGameCharacterState State = InGameCharacter->GetState();
+	if (State == InGameCharacterState::Dash)
+	{
+		float4 Dir = InGameCharacter->GetRenderer()->GetTransform().GetLocalScale().x < 0 ? float4::LEFT : float4::RIGHT;
+		float DashSpeed = Speed * 2;
+		InGameCharacter->GetTransform().SetWorldMove(Dir * DashSpeed * _DeltaTime);
+	}
+	else
+	{
+		InGameCharacter->GetTransform().SetWorldMove(Direction * Speed * _DeltaTime);
+	}
 }
 
 void InGameCharacterMovementCompmonent::End()

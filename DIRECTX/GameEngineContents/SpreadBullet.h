@@ -13,9 +13,6 @@ public:
 	SpreadBullet& operator=(const SpreadBullet& _Other) = delete;
 	SpreadBullet& operator=(SpreadBullet&& _Other) noexcept = delete;
 
-public:
-	void SetParent(GameEngineUpdateObject* _Parent) override;
-
 private:
 	virtual void Start() override;
 	virtual void Update(float _DeltaTime) override;

@@ -64,6 +64,12 @@
     <Filter Include="Actor\Weapon\Base">
       <UniqueIdentifier>{f8a9d82a-48ef-4e85-87eb-332a82778d91}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Actor\Play\InGame">
+      <UniqueIdentifier>{71886622-044a-412c-a4e8-b209a119ef55}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\Play\InGame\PC">
+      <UniqueIdentifier>{f84aea89-2b05-4d4e-ae14-7a0cf4eaeedb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ContentsCore.h">
@@ -237,15 +243,6 @@
     <ClInclude Include="IInGameCharacterBase.h">
       <Filter>Actor\Base</Filter>
     </ClInclude>
-    <ClInclude Include="InGameCuphead.h">
-      <Filter>Actor\Play\WorldMap\PC</Filter>
-    </ClInclude>
-    <ClInclude Include="InGameMugman.h">
-      <Filter>Actor\Play\WorldMap\PC</Filter>
-    </ClInclude>
-    <ClInclude Include="InGameChalice.h">
-      <Filter>Actor\Play\WorldMap\PC</Filter>
-    </ClInclude>
     <ClInclude Include="IEvadable.h">
       <Filter>Actor\Interface</Filter>
     </ClInclude>
@@ -281,6 +278,15 @@
     </ClInclude>
     <ClInclude Include="WeaponBase.h">
       <Filter>Actor\Weapon\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="InGameChalice.h">
+      <Filter>Actor\Play\InGame\PC</Filter>
+    </ClInclude>
+    <ClInclude Include="InGameCuphead.h">
+      <Filter>Actor\Play\InGame\PC</Filter>
+    </ClInclude>
+    <ClInclude Include="InGameMugman.h">
+      <Filter>Actor\Play\InGame\PC</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -452,15 +458,6 @@
     <ClCompile Include="IInGameCharacterBase.cpp">
       <Filter>Actor\Base</Filter>
     </ClCompile>
-    <ClCompile Include="InGameCuphead.cpp">
-      <Filter>Actor\Play\WorldMap\PC</Filter>
-    </ClCompile>
-    <ClCompile Include="InGameMugman.cpp">
-      <Filter>Actor\Play\WorldMap\PC</Filter>
-    </ClCompile>
-    <ClCompile Include="InGameChalice.cpp">
-      <Filter>Actor\Play\WorldMap\PC</Filter>
-    </ClCompile>
     <ClCompile Include="IEvadable.cpp">
       <Filter>Actor\Interface</Filter>
     </ClCompile>
@@ -493,6 +490,15 @@
     </ClCompile>
     <ClCompile Include="WeaponBase.cpp">
       <Filter>Actor\Weapon\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="InGameChalice.cpp">
+      <Filter>Actor\Play\InGame\PC</Filter>
+    </ClCompile>
+    <ClCompile Include="InGameCuphead.cpp">
+      <Filter>Actor\Play\InGame\PC</Filter>
+    </ClCompile>
+    <ClCompile Include="InGameMugman.cpp">
+      <Filter>Actor\Play\InGame\PC</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

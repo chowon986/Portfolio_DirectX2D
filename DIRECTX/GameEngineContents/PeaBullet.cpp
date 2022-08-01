@@ -14,18 +14,6 @@ PeaBullet::~PeaBullet()
 {
 }
 
-void PeaBullet::SetParent(GameEngineUpdateObject* _Parent)
-{
-	BulletBase::SetParent(_Parent);
-
-	Weapon = dynamic_cast<PeaShooter*>(GetParent());
-	if (Weapon != nullptr)
-	{
-		MovementComponent->SetHorizontalDirection(Weapon->GetHorizontalDirection());
-		MovementComponent->SetVerticalDirection(Weapon->GetVerticalDirection());
-	}
-}
-
 void PeaBullet::Start()
 {
 

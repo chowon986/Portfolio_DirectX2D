@@ -13,9 +13,6 @@ public:
 	PeaBullet& operator=(const PeaBullet& _Other) = delete;
 	PeaBullet& operator=(PeaBullet&& _Other) noexcept = delete;
 
-public:
-	void SetParent(GameEngineUpdateObject* _Parent) override;
-
 private:
 	virtual void Start() override;
 	virtual void Update(float _DeltaTime) override;

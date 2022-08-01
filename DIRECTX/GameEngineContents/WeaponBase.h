@@ -1,5 +1,6 @@
 #pragma once
 #include "GameEngineCore/GameEngineActor.h"
+#include "Delegates.h"
 
 enum class InGameCharacterAttackState;
 enum class InGameCharacterState;
@@ -14,8 +15,17 @@ public:
 	WeaponBase& operator=(const WeaponBase& _Other) = delete;
 	WeaponBase& operator=(WeaponBase&& _Other) noexcept = delete;
 
-	std::string GetVerticalDirection() { return VerticalDirection; }
-	std::string GetHorizontalDirection() { return HorizontalDirection; }
+	float4 GetVerticalDirection() { return VerticalDirection; }
+	float4 GetHorizontalDirection() { return HorizontalDirection; }
+	MulticastDelegate<float4>& GetOnVerticalDirectionChangedDelegate() { return OnVerticalDirectionChangedDelegate; }
+	MulticastDelegate<float4>& GetOnHorizontalDirectionChangedDelegate() { return OnHorizontalDirectionChangedDelegate; }
+
+	void OnCharacterStateChanged(InGameCharacterState _State);
+	void OnCharacterAttackStateChanged(InGameCharacterAttackState _AttackState);
+	void OnCharacterVerticalDirectionChanged(std::string VerticalDirection);
+	void OnCharacterHorizontalDirectionChanged(std::string HorizontalDirection);
+
+	void SetParent(GameEngineUpdateObject* _Parent) override;
 
 protected:
 	virtual void UpdateDirection();
@@ -24,12 +34,16 @@ protected:
 protected:
 	float IntervalTime;
 	float ElapsedTime;
-	std::string VerticalDirection;
-	std::string HorizontalDirection;
+	float4 VerticalDirection;
+	float4 HorizontalDirection;
 	IInGameCharacterBase* Character;
 	InGameCharacterState State;
 	std::string CharacterHorizontalDirection;
 	std::string CharacterVerticalDirection;
 	InGameCharacterAttackState AttackState;
+
+private:
+	MulticastDelegate<float4> OnVerticalDirectionChangedDelegate;
+	MulticastDelegate<float4> OnHorizontalDirectionChangedDelegate;
 };
 

@@ -18,9 +18,6 @@ public:
 	InGameCuphead& operator=(const InGameCuphead& _Other) = delete;
 	InGameCuphead& operator=(InGameCuphead&& _Other) noexcept = delete;
 
-public:
-
-
 protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;
@@ -40,9 +37,10 @@ protected:
 	void Walk() override;
 	void Idle() override;
 	void OnPrepareAnimationEnded(const FrameAnimation_DESC& _Info);
+	void OnDashAnimationEnded(const FrameAnimation_DESC& _Info);
 
 private:
 	InGameCharacterMovementCompmonent* Movement;
-	bool IsPrepareAnimationEnd;
+	bool IsInputEnabled;
 	InGameCharacterAnimationControllerComponent* Animation;
 };
