@@ -32,6 +32,11 @@ public:
 
 	static inline float GetDeltaTime()
 	{
+		if (0.05f <= Inst_->DeltaTimef)
+		{
+			Inst_->DeltaTimef = 0.05f;
+		}
+
 		return Inst_->DeltaTimef;
 	}
 
@@ -53,7 +58,7 @@ public:
 	}
 
 
-	void SetTimeScale(int _Key, float _TimeScale) 
+	void SetTimeScale(int _Key, float _TimeScale)
 	{
 		TimeScale_[_Key] = _TimeScale;
 	}
