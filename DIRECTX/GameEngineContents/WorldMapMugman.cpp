@@ -51,6 +51,22 @@ void WorldMapMugman::Start()
 	Renderer->ScaleToTexture();
 	Renderer->SetPivot(PIVOTMODE::BOT);
 
+	// EnterRenderer
+	EnterRenderer = CreateComponent<GameEngineTextureRenderer>();
+	EnterRenderer->SetTexture("BBox.png");
+	EnterRenderer->ScaleToTexture();
+	EnterRenderer->GetTransform().SetLocalPosition({ 0.0f, 110.0f });
+	EnterRenderer->Off();
+
+	{
+		// Ãæµ¹
+		Collision = CreateComponent<GameEngineCollision>();
+		SetCollision(Collision);
+		Collision->SetParent(this);
+		Collision->GetTransform().SetLocalScale({ 100.0f, 100.0f, 1.0f });
+		Collision->ChangeOrder(ObjectOrder::PC);
+	}
+
 	Movement = CreateComponent<MovementComponent>();
 	Animation = CreateComponent<WorldMapCharacterAnimationControllerComponent>();
 	Animation->SetCharacterName("Mugman");
@@ -59,6 +75,16 @@ void WorldMapMugman::Start()
 void WorldMapMugman::Update(float _DeltaTime)
 {
 	GetLevel()->GetMainCameraActorTransform().SetLocalPosition({ GetTransform().GetLocalPosition().x + 6.0f, GetTransform().GetLocalPosition().y - 32 });
+
+	if (false == Collision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::NPC, CollisionType::CT_AABB2D,
+		std::bind(&WorldMapMugman::CanPortalCollision, this, std::placeholders::_1, std::placeholders::_2)))
+	{
+		EnterRenderer->Off();
+	}
+	else
+	{
+		EnterRenderer->On();
+	}
 
 	if (true == GameEngineInput::GetInst()->IsPress("MoveLeft") ||
 		true == GameEngineInput::GetInst()->IsPress("MoveRight") ||
@@ -77,6 +103,12 @@ void WorldMapMugman::Idle()
 {
 	SetState(WorldMapCharacterState::Idle);
 	WalkCheckElapsedTime = 0;
+}
+
+bool WorldMapMugman::CanPortalCollision(GameEngineCollision* _This, GameEngineCollision* _Other)
+{
+
+	return true;
 }
 
 

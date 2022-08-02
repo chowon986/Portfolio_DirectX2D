@@ -73,6 +73,8 @@ void ContentsCore::Start()
 		GameEngineTexture::Load(Textures3[i].GetFullPath());
 	}
 
+	GameEngineTexture::Cut("Cup.png", 20, 20);
+
 	CreateLevel<BeforeTitleLevel>("BeforeTitle");
 	CreateLevel<TitleLevel>("Title");
 	CreateLevel<SelectLevel>("Select");

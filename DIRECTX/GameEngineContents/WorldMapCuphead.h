@@ -28,11 +28,12 @@ protected:
 	void Idle() override;
 
 private:
-	bool OnPortalCollision(GameEngineCollision* _This, GameEngineCollision* _Other);
+	bool CanPortalCollision(GameEngineCollision* _This, GameEngineCollision* _Other);
 
 private:
 	MovementComponent* Movement;
 	GameEngineCollision* Collision;
+	GameEngineTextureRenderer* EnterRenderer;
 	WorldMapCharacterAnimationControllerComponent* Animation;
 	float WalkCheckInterval;
 	float WalkCheckElapsedTime;

@@ -24,7 +24,6 @@
 #include <GameEngineBase/GameEngineDebug.h>
 
 #include "GameEngineDevice.h"
-
 #include "GameEngineLevel.h"
 #include <GameEngineBase/GameEngineDirectory.h>
 #include <GameEngineBase/GameEngineFile.h>

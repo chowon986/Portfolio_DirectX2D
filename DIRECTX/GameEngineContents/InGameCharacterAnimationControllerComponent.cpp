@@ -75,14 +75,11 @@ void InGameCharacterAnimationControllerComponent::UpdateAnimation()
 	if (State == InGameCharacterState::Prepare)
 	{
 		Renderer->ChangeFrameAnimation("Ingame" + Name + "Intro");
-		Renderer->ScaleToTexture();
 	}
 
 	if (State == InGameCharacterState::Dash)
 	{
 		Renderer->ChangeFrameAnimation("Ingame" + Name + "Dash");
-		Renderer->ScaleToTexture();
-
 	}
 
 	else if (State == InGameCharacterState::Idle)
@@ -109,9 +106,8 @@ void InGameCharacterAnimationControllerComponent::UpdateAnimation()
 				Renderer->ChangeFrameAnimation("Ingame" + Name + "Idle");
 			}
 		}
-
-		Renderer->ScaleToTexture();
 	}
+
 	else if (State == InGameCharacterState::Aim)
 	{
 		if (AttackState == InGameCharacterAttackState::Shoot)
@@ -145,6 +141,7 @@ void InGameCharacterAnimationControllerComponent::UpdateAnimation()
 				Renderer->ChangeFrameAnimation("Ingame" + Name + "ShootStraight");
 			}
 		}
+
 		else
 		{
 			if (VerticalDir == "Up")
@@ -176,7 +173,6 @@ void InGameCharacterAnimationControllerComponent::UpdateAnimation()
 				Renderer->ChangeFrameAnimation("Ingame" + Name + "AimStraight");
 			}
 		}
-		Renderer->ScaleToTexture();
 	}
 	else if (State == InGameCharacterState::Duck)
 	{
@@ -190,12 +186,10 @@ void InGameCharacterAnimationControllerComponent::UpdateAnimation()
 			if (IsIdleDownStartAnimationChanged == false)
 			{
 				Renderer->ChangeFrameAnimation("Ingame" + Name + "IdleDownStart");
-				Renderer->ScaleToTexture();
 			}
 			else
 			{
 				Renderer->ChangeFrameAnimation("Ingame" + Name + "IdleDown");
-				Renderer->ScaleToTexture();
 			}
 		}
 	}
@@ -218,7 +212,6 @@ void InGameCharacterAnimationControllerComponent::UpdateAnimation()
 			Renderer->ChangeFrameAnimation("Ingame" + Name + "Run");
 		}
 
-		Renderer->ScaleToTexture();
 	}
 
 	if (HorizontalDir == "Center")
@@ -226,22 +219,10 @@ void InGameCharacterAnimationControllerComponent::UpdateAnimation()
 		HorizontalDir = BeforeDir;
 	}
 
+
 	if (HorizontalDir == "Left")
 	{
-		if (Renderer->GetTransform().GetLocalScale().x > 0)
-		{
-			float x = Renderer->GetTransform().GetLocalScale().x * -1;
-			Renderer->GetTransform().SetLocalScale({ x,Renderer->GetTransform().GetLocalScale().y, Renderer->GetTransform().GetLocalScale().z });
-		}
-	}
-
-	else if (HorizontalDir == "Right")
-	{
-		if (Renderer->GetTransform().GetLocalScale().x < 0)
-		{
-			float x = Renderer->GetTransform().GetLocalScale().x * -1;
-			Renderer->GetTransform().SetLocalScale({ x,Renderer->GetTransform().GetLocalScale().y, Renderer->GetTransform().GetLocalScale().z });
-		}
+		//Renderer->GetTransform().PixLocalNegativeX();
 	}
 
 	if (State != InGameCharacterState::Duck)

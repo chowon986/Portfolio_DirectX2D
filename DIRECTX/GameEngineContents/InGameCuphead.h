@@ -40,6 +40,7 @@ protected:
 	void OnDashAnimationEnded(const FrameAnimation_DESC& _Info);
 
 private:
+	GameEngineTextureRenderer* Renderer;
 	InGameCharacterMovementCompmonent* Movement;
 	bool IsInputEnabled;
 	InGameCharacterAnimationControllerComponent* Animation;

@@ -3,7 +3,9 @@
 #include "IWorldMapCharacterBase.h"
 #include <string>
 
+class GameEngineCollision;
 class MovementComponent;
+class GameEngineTextureRenderer;
 class WorldMapCharacterAnimationControllerComponent;
 class WorldMapMugman : public IWorldMapCharacterBase
 {
@@ -26,9 +28,13 @@ protected:
 	void Idle() override;
 
 private:
-	MovementComponent* Movement;
-	WorldMapCharacterAnimationControllerComponent* Animation;
+	bool CanPortalCollision(GameEngineCollision* _This, GameEngineCollision* _Other);
 
+private:
+	MovementComponent* Movement;
+	GameEngineCollision* Collision;
+	WorldMapCharacterAnimationControllerComponent* Animation;
+	GameEngineTextureRenderer* EnterRenderer;
 	float WalkCheckInterval;
 	float WalkCheckElapsedTime;
 };

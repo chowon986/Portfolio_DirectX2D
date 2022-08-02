@@ -3,6 +3,7 @@
 #include <GameEngineBase/GameEngineWindow.h>
 #include <GameEngineBase/GameEngineInput.h>
 #include <GameEngineBase/GameEngineTime.h>
+#include <GameEngineBase/GameEngineSound.h>
 #include "GameEngineLevel.h"
 #include "GameEngineVertexs.h"
 #include "GameEngineConstantBuffer.h"
@@ -18,7 +19,6 @@
 #include "GameEngineRenderTarget.h"
 #include "GameEngineDepthStencilTexture.h"
 #include "GameEngineDepthStencil.h"
-
 #include "GameEngineVertexShader.h"
 #include "GameEnginePixelShader.h"
 #include "GameEngineRasterizer.h"
@@ -310,6 +310,7 @@ void GameEngineCore::EngineResourcesDestroy()
 	GameEngineRasterizer::ResourcesDestroy();
 	GameEngineBlend::ResourcesDestroy();
 	GameEngineConstantBuffer::ResourcesDestroy();
+	GameEngineSound::ResourcesDestroy();
 
 	GameEngineDevice::Destroy();
 }

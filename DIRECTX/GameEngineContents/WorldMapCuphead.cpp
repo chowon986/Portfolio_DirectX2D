@@ -24,6 +24,7 @@ void WorldMapCuphead::Start()
 		{
 			GameEngineInput::GetInst()->CreateKey("MoveLeft", VK_LEFT);
 			GameEngineInput::GetInst()->CreateKey("MoveRight", VK_RIGHT);
+			GameEngineInput::GetInst()->CreateKey("Enter", 'B');
 		}
 	}
 
@@ -55,6 +56,13 @@ void WorldMapCuphead::Start()
 		Renderer->ChangeFrameAnimation("WorldMapCupheadIdleDown");
 		Renderer->ScaleToTexture();
 		Renderer->SetPivot(PIVOTMODE::BOT);
+
+		// EnterRenderer
+		EnterRenderer = CreateComponent<GameEngineTextureRenderer>();
+		EnterRenderer->SetTexture("BBox.png");
+		EnterRenderer->ScaleToTexture();
+		EnterRenderer->GetTransform().SetLocalPosition({ 0.0f, 110.0f });
+		EnterRenderer->Off();
 	}
 
 	{
@@ -76,11 +84,17 @@ void WorldMapCuphead::Start()
 
 void WorldMapCuphead::Update(float _DeltaTime)
 {
-	GetLevel()->GetMainCameraActorTransform().SetLocalPosition({ GetTransform().GetLocalPosition().x+6.0f, GetTransform().GetLocalPosition().y - 32});
+	GetLevel()->GetMainCameraActorTransform().SetLocalPosition({ GetTransform().GetLocalPosition().x + 6.0f, GetTransform().GetLocalPosition().y - 32 });
 
-
-	Collision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::NPC, CollisionType::CT_AABB2D,
-		std::bind(&WorldMapCuphead::OnPortalCollision, this, std::placeholders::_1, std::placeholders::_2));
+	if (false == Collision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::NPC, CollisionType::CT_AABB2D,
+		std::bind(&WorldMapCuphead::CanPortalCollision, this, std::placeholders::_1, std::placeholders::_2)))
+	{
+		EnterRenderer->Off();
+	}
+	else
+	{
+		EnterRenderer->On();
+	}
 
 	if (true == GameEngineInput::GetInst()->IsPress("MoveLeft") ||
 		true == GameEngineInput::GetInst()->IsPress("MoveRight") ||
@@ -101,7 +115,7 @@ void WorldMapCuphead::Idle()
 	WalkCheckElapsedTime = 0;
 }
 
-bool WorldMapCuphead::OnPortalCollision(GameEngineCollision* _This, GameEngineCollision* _Other)
+bool WorldMapCuphead::CanPortalCollision(GameEngineCollision* _This, GameEngineCollision* _Other)
 {
 	return true;
 }
