@@ -5,6 +5,7 @@ IWorldMapCharacterBase::IWorldMapCharacterBase()
 	: Renderer(nullptr)
 	, State(WorldMapCharacterState::Idle)
 	, Dir("Down")
+	, Collision(nullptr)
 {
 }
 

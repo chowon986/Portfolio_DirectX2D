@@ -11,16 +11,21 @@ Dogfight::~Dogfight()
 
 void Dogfight::Start()
 {
-	Renderer = CreateComponent<GameEngineTextureRenderer>();
+	PortalBase::Start();
+
 	Renderer->CreateFrameAnimationFolder("Dogfight", FrameAnimation_DESC("Dogfight", 0.1f));
 	Renderer->ChangeFrameAnimation("Dogfight");
 	Renderer->GetTransform().SetLocalScale({ 189,163,1 });
 	Renderer->SetPivot(PIVOTMODE::CENTER);
 
+	Collision->GetTransform().SetLocalScale({ 100.0f, 100.0f, 1.0f });
+
 }
 
 void Dogfight::Update(float _DeltaTime)
 {
+	PortalBase::Update(_DeltaTime);
+
 }
 
 void Dogfight::End()

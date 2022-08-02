@@ -13,9 +13,6 @@
     <Filter Include="Actor\Play">
       <UniqueIdentifier>{f046c344-41c5-461f-9a13-3bf9f04d9882}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Actor\Title">
-      <UniqueIdentifier>{804cf31e-d3ed-4dc6-9803-e76637ce47a4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Global">
       <UniqueIdentifier>{5c0d327c-f680-4cd4-a5c1-9a7caec22b46}</UniqueIdentifier>
     </Filter>
@@ -49,9 +46,6 @@
     <Filter Include="Actor\Play\WorldMap\Object">
       <UniqueIdentifier>{a62afb56-00ff-4b4d-9e56-256100099870}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Actor\Play\WorldMap\Object\Entry">
-      <UniqueIdentifier>{18255c14-63a1-4ca8-bf08-f1cfc8733fac}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Actor\Weapon">
       <UniqueIdentifier>{e279934f-38e9-487b-b5ec-2367cc843109}</UniqueIdentifier>
     </Filter>
@@ -69,6 +63,12 @@
     </Filter>
     <Filter Include="Actor\Play\InGame\PC">
       <UniqueIdentifier>{f84aea89-2b05-4d4e-ae14-7a0cf4eaeedb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\Play\WorldMap\Object\Portal">
+      <UniqueIdentifier>{18255c14-63a1-4ca8-bf08-f1cfc8733fac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\Play\WorldMap\Object\Portal\Base">
+      <UniqueIdentifier>{7e497bdf-c814-49f2-a7cc-f33363d646c4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -208,22 +208,22 @@
       <Filter>Actor\Play\WorldMap\Object</Filter>
     </ClInclude>
     <ClInclude Include="Bakery.h">
-      <Filter>Actor\Play\WorldMap\Object\Entry</Filter>
+      <Filter>Actor\Play\WorldMap\Object\Portal</Filter>
     </ClInclude>
     <ClInclude Include="Cart.h">
-      <Filter>Actor\Play\WorldMap\Object\Entry</Filter>
+      <Filter>Actor\Play\WorldMap\Object\Portal</Filter>
     </ClInclude>
     <ClInclude Include="Dogfight.h">
-      <Filter>Actor\Play\WorldMap\Object\Entry</Filter>
+      <Filter>Actor\Play\WorldMap\Object\Portal</Filter>
     </ClInclude>
     <ClInclude Include="Omm.h">
-      <Filter>Actor\Play\WorldMap\Object\Entry</Filter>
+      <Filter>Actor\Play\WorldMap\Object\Portal</Filter>
     </ClInclude>
     <ClInclude Include="Ladder.h">
-      <Filter>Actor\Play\WorldMap\Object\Entry</Filter>
+      <Filter>Actor\Play\WorldMap\Object\Portal</Filter>
     </ClInclude>
     <ClInclude Include="Shop.h">
-      <Filter>Actor\Play\WorldMap\Object\Entry</Filter>
+      <Filter>Actor\Play\WorldMap\Object\Portal</Filter>
     </ClInclude>
     <ClInclude Include="Waterfall.h">
       <Filter>Actor\Play\WorldMap\Object</Filter>
@@ -232,13 +232,13 @@
       <Filter>Actor\Play\WorldMap\Object</Filter>
     </ClInclude>
     <ClInclude Include="Rumrunners.h">
-      <Filter>Actor\Play\WorldMap\Object\Entry</Filter>
+      <Filter>Actor\Play\WorldMap\Object\Portal</Filter>
     </ClInclude>
     <ClInclude Include="Cowgirl.h">
-      <Filter>Actor\Play\WorldMap\Object\Entry</Filter>
+      <Filter>Actor\Play\WorldMap\Object\Portal</Filter>
     </ClInclude>
     <ClInclude Include="Snow.h">
-      <Filter>Actor\Play\WorldMap\Object\Entry</Filter>
+      <Filter>Actor\Play\WorldMap\Object\Portal</Filter>
     </ClInclude>
     <ClInclude Include="IInGameCharacterBase.h">
       <Filter>Actor\Base</Filter>
@@ -287,6 +287,9 @@
     </ClInclude>
     <ClInclude Include="InGameMugman.h">
       <Filter>Actor\Play\InGame\PC</Filter>
+    </ClInclude>
+    <ClInclude Include="PortalBase.h">
+      <Filter>Actor\Play\WorldMap\Object\Portal\Base</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -423,22 +426,22 @@
       <Filter>Actor\Play\WorldMap\Object</Filter>
     </ClCompile>
     <ClCompile Include="Bakery.cpp">
-      <Filter>Actor\Play\WorldMap\Object\Entry</Filter>
+      <Filter>Actor\Play\WorldMap\Object\Portal</Filter>
     </ClCompile>
     <ClCompile Include="Cart.cpp">
-      <Filter>Actor\Play\WorldMap\Object\Entry</Filter>
+      <Filter>Actor\Play\WorldMap\Object\Portal</Filter>
     </ClCompile>
     <ClCompile Include="Dogfight.cpp">
-      <Filter>Actor\Play\WorldMap\Object\Entry</Filter>
+      <Filter>Actor\Play\WorldMap\Object\Portal</Filter>
     </ClCompile>
     <ClCompile Include="Omm.cpp">
-      <Filter>Actor\Play\WorldMap\Object\Entry</Filter>
+      <Filter>Actor\Play\WorldMap\Object\Portal</Filter>
     </ClCompile>
     <ClCompile Include="Ladder.cpp">
-      <Filter>Actor\Play\WorldMap\Object\Entry</Filter>
+      <Filter>Actor\Play\WorldMap\Object\Portal</Filter>
     </ClCompile>
     <ClCompile Include="Shop.cpp">
-      <Filter>Actor\Play\WorldMap\Object\Entry</Filter>
+      <Filter>Actor\Play\WorldMap\Object\Portal</Filter>
     </ClCompile>
     <ClCompile Include="Waterfall.cpp">
       <Filter>Actor\Play\WorldMap\Object</Filter>
@@ -447,13 +450,13 @@
       <Filter>Actor\Play\WorldMap\Object</Filter>
     </ClCompile>
     <ClCompile Include="Rumrunners.cpp">
-      <Filter>Actor\Play\WorldMap\Object\Entry</Filter>
+      <Filter>Actor\Play\WorldMap\Object\Portal</Filter>
     </ClCompile>
     <ClCompile Include="Cowgirl.cpp">
-      <Filter>Actor\Play\WorldMap\Object\Entry</Filter>
+      <Filter>Actor\Play\WorldMap\Object\Portal</Filter>
     </ClCompile>
     <ClCompile Include="Snow.cpp">
-      <Filter>Actor\Play\WorldMap\Object\Entry</Filter>
+      <Filter>Actor\Play\WorldMap\Object\Portal</Filter>
     </ClCompile>
     <ClCompile Include="IInGameCharacterBase.cpp">
       <Filter>Actor\Base</Filter>
@@ -499,6 +502,9 @@
     </ClCompile>
     <ClCompile Include="InGameMugman.cpp">
       <Filter>Actor\Play\InGame\PC</Filter>
+    </ClCompile>
+    <ClCompile Include="PortalBase.cpp">
+      <Filter>Actor\Play\WorldMap\Object\Portal\Base</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

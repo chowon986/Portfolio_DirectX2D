@@ -4,6 +4,7 @@
 #include <string>
 
 class MovementComponent;
+class GameEngineCollision;
 class GameEngineTextureRenderer;
 class WorldMapCharacterAnimationControllerComponent;
 class WorldMapCuphead : public IWorldMapCharacterBase
@@ -27,7 +28,11 @@ protected:
 	void Idle() override;
 
 private:
+	bool OnPortalCollision(GameEngineCollision* _This, GameEngineCollision* _Other);
+
+private:
 	MovementComponent* Movement;
+	GameEngineCollision* Collision;
 	WorldMapCharacterAnimationControllerComponent* Animation;
 	float WalkCheckInterval;
 	float WalkCheckElapsedTime;

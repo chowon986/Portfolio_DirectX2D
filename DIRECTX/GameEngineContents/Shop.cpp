@@ -14,16 +14,21 @@ Shop::~Shop()
 
 void Shop::Start()
 {
-	Renderer = CreateComponent<GameEngineTextureRenderer>();
+	PortalBase::Start();
+
 	Renderer->CreateFrameAnimationFolder("Shop", FrameAnimation_DESC("Shop", 0.1f));
 	Renderer->ChangeFrameAnimation("Shop");
 	Renderer->GetTransform().SetLocalScale({ 222,259,100 });
 	Renderer->SetPivot(PIVOTMODE::CENTER);
+
+	Collision->GetTransform().SetLocalScale({ 100.0f, 100.0f, 1.0f });
+
 }
 
 void Shop::Update(float _DeltaTime)
 {
-	std::list<WorldMapCuphead*> PlayerList = GetLevel()->GetConvertToGroup<WorldMapCuphead>(GameObjectGroup::Player);
+	PortalBase::Update(_DeltaTime);
+
 }
 
 void Shop::End()

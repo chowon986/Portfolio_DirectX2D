@@ -30,6 +30,12 @@
 #include <GameEngineContents/WorldMapMugman.h>
 
 WorldMapLevel::WorldMapLevel()
+	: IrisRenderer(nullptr)
+	, MainLandRenderer(nullptr)
+	, MainLandColMapRenderer(nullptr)
+	, UnderWaterLandRenderer(nullptr)
+	, OutsideOfMainLandLeftRenderer(nullptr)
+	, OutsideOfMainLandRightRenderer(nullptr)
 {
 }
 

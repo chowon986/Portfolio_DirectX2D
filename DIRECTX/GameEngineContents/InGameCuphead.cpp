@@ -7,6 +7,8 @@
 
 InGameCuphead::InGameCuphead()
 	: IsInputEnabled(false)
+	, Animation(nullptr)
+	, Movement(nullptr)
 {
 }
 

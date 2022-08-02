@@ -3,6 +3,7 @@
 #include "IWalkable.h"
 #include "IIdleable.h"
 
+class GameEngineCollision;
 class GameEngineTextureRenderer;
 enum class WorldMapCharacterState
 {
@@ -28,6 +29,9 @@ public:
 	void SetState(WorldMapCharacterState _State);
 	WorldMapCharacterState GetState();
 
+	void SetCollision(GameEngineCollision* _Collision) { Collision = _Collision; }
+	GameEngineCollision* GetCollision() { return Collision; }
+
 	void SetDirection(std::string _Dir);
 	std::string GetDirection() { return Dir; }
 
@@ -40,7 +44,9 @@ public:
 	MulticastDelegate<WorldMapCharacterState>& GetStateChangedDelegate() { return StateChangedDelegate; }
 	MulticastDelegate<std::string>& GetDirectionChangedDelegate() { return DirectionChangedDelegate; }
 
+
 private:
+	GameEngineCollision* Collision;
 	GameEngineTextureRenderer* Renderer;
 	GameEngineTextureRenderer* ColMapImage;
 	WorldMapCharacterState State;

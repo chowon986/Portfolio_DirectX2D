@@ -1,5 +1,14 @@
 #pragma once
 
+enum class ObjectOrder
+{
+	PC,
+	NPC,
+	MONSTER,
+	PC_BULLET,
+	MONSTER_BULLET,
+};
+
 enum class GameObjectGroup 
 {
 	UI,

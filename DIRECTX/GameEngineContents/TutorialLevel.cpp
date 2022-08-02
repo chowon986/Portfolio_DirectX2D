@@ -8,6 +8,8 @@
 #include "InGameCuphead.h"
 
 TutorialLevel::TutorialLevel()
+	: BackgroundRenderer(nullptr)
+	, Cuphead(nullptr)
 {
 }
 

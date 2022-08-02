@@ -1,9 +1,9 @@
 #pragma once
-#include <GameEngineCore/GameEngineActor.h>
+#include "PortalBase.h"
 
 // Ό³Έν :
 class GameEngineTextureRenderer;
-class Shop : public GameEngineActor
+class Shop : public PortalBase
 {
 public:
 	// constrcuter destructer
@@ -20,9 +20,6 @@ protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;
 	void End() override;
-
-private:
-	GameEngineTextureRenderer* Renderer;
 
 };
 
