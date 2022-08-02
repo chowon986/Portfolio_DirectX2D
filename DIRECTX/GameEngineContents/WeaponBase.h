@@ -2,6 +2,7 @@
 #include "GameEngineCore/GameEngineActor.h"
 #include "Delegates.h"
 
+class GameEngineTextureRenderer;
 enum class InGameCharacterAttackState;
 enum class InGameCharacterState;
 class IInGameCharacterBase;
@@ -42,6 +43,7 @@ protected:
 	std::string CharacterHorizontalDirection;
 	std::string CharacterVerticalDirection;
 	InGameCharacterAttackState AttackState;
+	GameEngineTextureRenderer* SparkRenderer;
 
 private:
 	MulticastDelegate<float4> OnVerticalDirectionChangedDelegate;

@@ -13,6 +13,10 @@ PeaShooter::~PeaShooter()
 
 void PeaShooter::Start()
 {
+	//SparkRenderer = CreateComponent<GameEngineTextureRenderer>();
+	//SparkRenderer->CreateFrameAnimationFolder("PeashotSpark", FrameAnimation_DESC("PeashotSpark", 0.1f));
+	//SparkRenderer->ChangeFrameAnimation("PeashotSpark");
+	//SparkRenderer->ScaleToTexture();
 }
 
 void PeaShooter::End()
@@ -35,10 +39,10 @@ void PeaShooter::Update(float _DeltaTime)
 			float4 Direction = GetVerticalDirection() + GetHorizontalDirection();
 
 			PeaBullet* Bullet = GetLevel()->CreateActor<PeaBullet>();
-			Bullet->GetTransform().SetWorldPosition(GetTransform().GetWorldPosition());
+			Bullet->GetTransform().SetWorldPosition(GetTransform().GetWorldPosition()); // Need to CHK
 			Bullet->SetDirection(Direction);
 		}
-		break;
+			break;
 		case InGameCharacterAttackState::SpecialAttack:
 			// Å« ÃÑ¾ËÀ» ½ð´Ù.
 			break;

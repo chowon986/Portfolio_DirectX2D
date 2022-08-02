@@ -19,7 +19,10 @@ void PeaBullet::Start()
 
 	Renderer = CreateComponent<GameEngineTextureRenderer>();
 	Renderer->CreateFrameAnimationFolder("PeashotLoop", FrameAnimation_DESC("PeashotLoop", 0.1f));
-	Renderer->ChangeFrameAnimation("PeashotLoop");
+	Renderer->CreateFrameAnimationFolder("PeashotIntro", FrameAnimation_DESC("PeashotIntro", 0.05f));
+	Renderer->AnimationBindEnd("PeashotIntro", &PeaBullet::PeashotLoop, this);
+
+	Renderer->ChangeFrameAnimation("PeashotIntro");
 	Renderer->ScaleToTexture();
 
 	MovementComponent = CreateComponent<BulletMovementComponent>();
@@ -28,9 +31,14 @@ void PeaBullet::Start()
 
 void PeaBullet::Update(float _DeltaTime)
 {
-
+	Renderer->ScaleToTexture();
 }
 
 void PeaBullet::End()
 {
+}
+
+void PeaBullet::PeashotLoop(const FrameAnimation_DESC& _DESC)
+{
+	Renderer->ChangeFrameAnimation("PeashotLoop");
 }

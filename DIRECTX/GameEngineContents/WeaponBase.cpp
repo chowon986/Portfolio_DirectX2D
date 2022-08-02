@@ -217,7 +217,7 @@ void WeaponBase::OnCharacterAttackStateChanged(InGameCharacterAttackState _Attac
 		ElapsedTime = -1;
 		break;
 	case InGameCharacterAttackState::Shoot:
-		IntervalTime = 0.1f;
+		IntervalTime = 0.2f;
 		ElapsedTime = 0.0f;
 		break;
 	case InGameCharacterAttackState::SpecialAttack:
