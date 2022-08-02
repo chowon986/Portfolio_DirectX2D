@@ -30,6 +30,7 @@ public:
 protected:
 	virtual void UpdateDirection();
 	void Update(float _DeltaTime) override;
+	void UpdatePivot();
 
 protected:
 	float IntervalTime;

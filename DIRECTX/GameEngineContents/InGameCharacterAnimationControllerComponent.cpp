@@ -222,7 +222,20 @@ void InGameCharacterAnimationControllerComponent::UpdateAnimation()
 
 	if (HorizontalDir == "Left")
 	{
-		//Renderer->GetTransform().PixLocalNegativeX();
+		if (Renderer->GetTransform().GetLocalScale().x > 0)
+		{
+			float x = Renderer->GetTransform().GetLocalScale().x * -1;
+			Renderer->GetTransform().SetLocalScale({ x,Renderer->GetTransform().GetLocalScale().y, Renderer->GetTransform().GetLocalScale().z });
+		}
+	}
+
+	else if (HorizontalDir == "Right")
+	{
+		if (Renderer->GetTransform().GetLocalScale().x < 0)
+		{
+			float x = Renderer->GetTransform().GetLocalScale().x * -1;
+			Renderer->GetTransform().SetLocalScale({ x,Renderer->GetTransform().GetLocalScale().y, Renderer->GetTransform().GetLocalScale().z });
+		}
 	}
 
 	if (State != InGameCharacterState::Duck)

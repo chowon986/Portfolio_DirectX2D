@@ -41,8 +41,10 @@ void InGameCuphead::Start()
 	//Renderer->CreateFrameAnimationFolder("IngameCupheadAimUp", FrameAnimation_DESC("IngameCupheadAimUp", 0.1f));
 
 	// Dash
-	Renderer->CreateFrameAnimationFolder("IngameCupheadDash", FrameAnimation_DESC("IngameCupheadDash", 0.05f));
+	Renderer->CreateFrameAnimation("IngameCupheadDash", FrameAnimation_DESC("Cup_Dash.png", 0, 7, 0.1f, true));
 	Renderer->AnimationBindEnd("IngameCupheadDash", &InGameCuphead::OnDashAnimationEnded, this);
+
+	//Renderer->CreateFrameAnimationFolder("IngameCupheadDash", FrameAnimation_DESC("IngameCupheadDash", 0.05f));
 
 	// Intro (v)
 	Renderer->CreateFrameAnimation("IngameCupheadIntro", FrameAnimation_DESC("Cup.png", 220, 247, 0.1f, true));

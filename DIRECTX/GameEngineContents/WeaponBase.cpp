@@ -75,7 +75,10 @@ void WeaponBase::UpdateDirection()
 		VerticalDirection = CharacterVerticalDirection == "Up" ? float4::UP : CharacterVerticalDirection == "Center" ? float4::ZERO : float4::DOWN;
 		HorizontalDirection = CharacterHorizontalDirection == "Left" ? float4::LEFT : CharacterHorizontalDirection == "Right" ? float4::RIGHT : float4::ZERO;
 	}
+
+	UpdatePivot();
 }
+
 
 void WeaponBase::Update(float _DeltaTime)
 {
@@ -95,6 +98,95 @@ void WeaponBase::Update(float _DeltaTime)
 	if (ElapsedTime == -1 || IntervalTime == -1)
 	{
 		return;
+	}
+}
+
+void WeaponBase::UpdatePivot()
+{
+	if (AttackState != InGameCharacterAttackState::Shoot)
+	{
+		return;
+	}
+
+	if (State == InGameCharacterState::Duck)
+	{
+		if (Character->GetRenderer()->GetTransform().GetLocalScale().x > 0)
+		{
+			GetTransform().SetLocalPosition({ 80.0f, 60.0f });
+		}
+		else
+		{
+			GetTransform().SetLocalPosition({ -80.0f, 60.0f });
+		}
+	}
+
+	if (State == InGameCharacterState::Aim ||
+		State == InGameCharacterState::Idle)
+	{
+		if (HorizontalDirection.CompareInt2D(float4::RIGHT))
+		{
+			if (VerticalDirection.CompareInt2D(float4::UP))
+			{
+				GetTransform().SetLocalPosition({ 60.0f, 120.0f });
+			}
+
+			else if (VerticalDirection.CompareInt2D(float4::DOWN))
+			{
+				GetTransform().SetLocalPosition({ 60.0f, 50.0f });
+			}
+
+			else
+			{
+				GetTransform().SetLocalPosition({ 60.0f, 80.0f });
+			}
+		}
+
+		else if (HorizontalDirection.CompareInt2D(float4::LEFT))
+		{
+			if (VerticalDirection.CompareInt2D(float4::UP))
+			{
+				GetTransform().SetLocalPosition({ -60.0f, 120.0f });
+			}
+
+			else if (VerticalDirection.CompareInt2D(float4::DOWN))
+			{
+				GetTransform().SetLocalPosition({ -60.0f, 50.0f });
+			}
+
+			else
+			{
+				GetTransform().SetLocalPosition({ -60.0f, 80.0f });
+			}
+		}
+
+		else
+		{
+			if (Character->GetRenderer()->GetTransform().GetLocalScale().x >0)
+			{
+				if (VerticalDirection.CompareInt2D(float4::UP))
+				{
+					GetTransform().SetLocalPosition({ 25.0f, 150.0f });
+				}
+
+				else if (VerticalDirection.CompareInt2D(float4::DOWN))
+				{
+					GetTransform().SetLocalPosition({ 30.0f, 0.0f });
+				}
+			}
+			else
+			{
+				if (VerticalDirection.CompareInt2D(float4::UP))
+				{
+					GetTransform().SetLocalPosition({ -25.0f, 150.0f });
+				}
+
+				else if (VerticalDirection.CompareInt2D(float4::DOWN))
+				{
+					GetTransform().SetLocalPosition({ -30.0f, 0.0f });
+				}
+			}
+		}
+
 	}
 }
 

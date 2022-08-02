@@ -74,6 +74,7 @@ void ContentsCore::Start()
 	}
 
 	GameEngineTexture::Cut("Cup.png", 20, 20);
+	GameEngineTexture::Cut("Cup_Dash.png", 8, 1);
 
 	CreateLevel<BeforeTitleLevel>("BeforeTitle");
 	CreateLevel<TitleLevel>("Title");
