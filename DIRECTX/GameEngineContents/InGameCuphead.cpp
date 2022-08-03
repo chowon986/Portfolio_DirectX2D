@@ -107,11 +107,12 @@ void InGameCuphead::Start()
 	Movement = CreateComponent<InGameCharacterMovementCompmonent>();
 	Animation = CreateComponent<InGameCharacterAnimationControllerComponent>();
 	Animation->SetCharacterName("Cuphead");
-	//PeaShooter* Shooter = GetLevel()->CreateActor<PeaShooter>();
-	//Shooter->SetParent(this);
 
-	SpreadShooter* Shooter = GetLevel()->CreateActor<SpreadShooter>();
+	PeaShooter* Shooter = GetLevel()->CreateActor<PeaShooter>();
 	Shooter->SetParent(this);
+
+	//SpreadShooter* Shooter = GetLevel()->CreateActor<SpreadShooter>();
+	//Shooter->SetParent(this);
 }
 
 void InGameCuphead::Update(float _DeltaTime)

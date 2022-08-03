@@ -70,6 +70,18 @@
     <Filter Include="Actor\Play\WorldMap\Object\Portal\Base">
       <UniqueIdentifier>{7e497bdf-c814-49f2-a7cc-f33363d646c4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Components\Bullet">
+      <UniqueIdentifier>{3adf8f45-ee90-4a17-9d4c-afabdc278c2f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\Character">
+      <UniqueIdentifier>{6fb8d6af-957a-4430-9e6f-0905073c2f88}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\Character\InGame">
+      <UniqueIdentifier>{3235f3fa-546e-4bbb-82a0-41001af88b10}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\Character\WorldMap">
+      <UniqueIdentifier>{62b914ad-843b-440d-b661-f63fe5110ca5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ContentsCore.h">
@@ -183,12 +195,6 @@
     <ClInclude Include="DogFightLevel.h">
       <Filter>Level\Play</Filter>
     </ClInclude>
-    <ClInclude Include="MovementComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="WorldMapCharacterAnimationControllerComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
     <ClInclude Include="WorldMapCuphead.h">
       <Filter>Actor\Play\WorldMap\PC</Filter>
     </ClInclude>
@@ -246,12 +252,6 @@
     <ClInclude Include="IEvadable.h">
       <Filter>Actor\Interface</Filter>
     </ClInclude>
-    <ClInclude Include="InGameCharacterMovementCompmonent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="InGameCharacterAnimationControllerComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
     <ClInclude Include="TutorialLevel.h">
       <Filter>Level\Play</Filter>
     </ClInclude>
@@ -260,9 +260,6 @@
     </ClInclude>
     <ClInclude Include="PeaBullet.h">
       <Filter>Actor\Weapon\Bullet</Filter>
-    </ClInclude>
-    <ClInclude Include="BulletMovementComponent.h">
-      <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="Delegates.h">
       <Filter>Contents</Filter>
@@ -290,6 +287,21 @@
     </ClInclude>
     <ClInclude Include="PortalBase.h">
       <Filter>Actor\Play\WorldMap\Object\Portal\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletMovementComponent.h">
+      <Filter>Components\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="InGameCharacterAnimationControllerComponent.h">
+      <Filter>Components\Character\InGame</Filter>
+    </ClInclude>
+    <ClInclude Include="InGameCharacterMovementCompmonent.h">
+      <Filter>Components\Character\InGame</Filter>
+    </ClInclude>
+    <ClInclude Include="MovementComponent.h">
+      <Filter>Components\Character\WorldMap</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldMapCharacterAnimationControllerComponent.h">
+      <Filter>Components\Character\WorldMap</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -401,12 +413,6 @@
     <ClCompile Include="DogFightLevel.cpp">
       <Filter>Level\Play</Filter>
     </ClCompile>
-    <ClCompile Include="MovementComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="WorldMapCharacterAnimationControllerComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
     <ClCompile Include="WorldMapCuphead.cpp">
       <Filter>Actor\Play\WorldMap\PC</Filter>
     </ClCompile>
@@ -464,12 +470,6 @@
     <ClCompile Include="IEvadable.cpp">
       <Filter>Actor\Interface</Filter>
     </ClCompile>
-    <ClCompile Include="InGameCharacterMovementCompmonent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="InGameCharacterAnimationControllerComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
     <ClCompile Include="TutorialLevel.cpp">
       <Filter>Level\Play</Filter>
     </ClCompile>
@@ -478,9 +478,6 @@
     </ClCompile>
     <ClCompile Include="PeaBullet.cpp">
       <Filter>Actor\Weapon\Bullet</Filter>
-    </ClCompile>
-    <ClCompile Include="BulletMovementComponent.cpp">
-      <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="SpreadShooter.cpp">
       <Filter>Actor\Weapon\Shooter</Filter>
@@ -505,6 +502,21 @@
     </ClCompile>
     <ClCompile Include="PortalBase.cpp">
       <Filter>Actor\Play\WorldMap\Object\Portal\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="BulletMovementComponent.cpp">
+      <Filter>Components\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="InGameCharacterAnimationControllerComponent.cpp">
+      <Filter>Components\Character\InGame</Filter>
+    </ClCompile>
+    <ClCompile Include="InGameCharacterMovementCompmonent.cpp">
+      <Filter>Components\Character\InGame</Filter>
+    </ClCompile>
+    <ClCompile Include="MovementComponent.cpp">
+      <Filter>Components\Character\WorldMap</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldMapCharacterAnimationControllerComponent.cpp">
+      <Filter>Components\Character\WorldMap</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

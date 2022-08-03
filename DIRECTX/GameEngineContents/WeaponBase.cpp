@@ -120,7 +120,47 @@ void WeaponBase::UpdatePivot()
 		}
 	}
 
-	if (State == InGameCharacterState::Aim ||
+	else if (State == InGameCharacterState::Walk)
+	{
+
+		if (HorizontalDirection.CompareInt2D(float4::RIGHT))
+		{
+			if (VerticalDirection.CompareInt2D(float4::UP))
+			{
+				GetTransform().SetLocalPosition({ 75.0f, 120.0f });
+			}
+
+			else if (VerticalDirection.CompareInt2D(float4::ZERO))
+			{
+				GetTransform().SetLocalPosition({ 75.0f, 60.0f });
+			}
+
+			else
+			{
+				return;
+			}
+		}
+
+		else if (HorizontalDirection.CompareInt2D(float4::LEFT))
+		{
+			if (VerticalDirection.CompareInt2D(float4::UP))
+			{
+				GetTransform().SetLocalPosition({ -80.0f, 120.0f });
+			}
+
+			else if (VerticalDirection.CompareInt2D(float4::ZERO))
+			{
+				GetTransform().SetLocalPosition({ -75.0f, 60.0f });
+			}
+
+			else
+			{
+				return;
+			}
+		}
+	}
+
+	else if (State == InGameCharacterState::Aim ||
 		State == InGameCharacterState::Idle)
 	{
 		if (HorizontalDirection.CompareInt2D(float4::RIGHT))
