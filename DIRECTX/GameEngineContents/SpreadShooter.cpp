@@ -32,6 +32,27 @@ void SpreadShooter::Update(float _DeltaTime)
 		case InGameCharacterAttackState::Shoot:
 		{
 			float4 Direction = GetVerticalDirection() + GetHorizontalDirection();
+			//{
+			//	SpreadBullet* Bullet = GetLevel()->CreateActor<SpreadBullet>();
+			//	Bullet->GetTransform().SetWorldPosition(GetTransform().GetWorldPosition());
+			//	float4 Dir = float4::VectorRotationToDegreeZAxis(Direction, -7.5);
+			//	Bullet->SetDirection(Dir);
+			//}
+
+			//{
+			//	SpreadBullet* Bullet = GetLevel()->CreateActor<SpreadBullet>();
+			//	Bullet->GetTransform().SetWorldPosition(GetTransform().GetWorldPosition());
+			//	float4 Dir = float4::VectorRotationToDegreeZAxis(Direction, 7.5);
+			//	Bullet->SetDirection(Dir);
+			//}
+
+			//{
+			//	SpreadBullet* Bullet = GetLevel()->CreateActor<SpreadBullet>();
+			//	Bullet->GetTransform().SetWorldPosition(GetTransform().GetWorldPosition());
+			//	float4 Dir = float4::VectorRotationToDegreeZAxis(Direction, 0);
+			//	Bullet->SetDirection(Dir);
+			//}		
+
 			{
 				SpreadBullet* Bullet = GetLevel()->CreateActor<SpreadBullet>();
 				Bullet->GetTransform().SetWorldPosition(GetTransform().GetWorldPosition());
@@ -50,20 +71,6 @@ void SpreadShooter::Update(float _DeltaTime)
 				SpreadBullet* Bullet = GetLevel()->CreateActor<SpreadBullet>();
 				Bullet->GetTransform().SetWorldPosition(GetTransform().GetWorldPosition());
 				float4 Dir = float4::VectorRotationToDegreeZAxis(Direction, 0);
-				Bullet->SetDirection(Dir);
-			}
-
-			{
-				SpreadBullet* Bullet = GetLevel()->CreateActor<SpreadBullet>();
-				Bullet->GetTransform().SetWorldPosition(GetTransform().GetWorldPosition());
-				float4 Dir = float4::VectorRotationToDegreeZAxis(Direction, 7.5);
-				Bullet->SetDirection(Dir);
-			}
-
-			{
-				SpreadBullet* Bullet = GetLevel()->CreateActor<SpreadBullet>();
-				Bullet->GetTransform().SetWorldPosition(GetTransform().GetWorldPosition());
-				float4 Dir = float4::VectorRotationToDegreeZAxis(Direction, -7.5);
 				Bullet->SetDirection(Dir);
 			}
 		}

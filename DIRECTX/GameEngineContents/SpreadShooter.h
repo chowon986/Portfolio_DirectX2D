@@ -2,6 +2,7 @@
 #include "WeaponBase.h"
 #include "Delegates.h"
 
+enum class InGameCharacterState;
 enum class InGameCharacterAttackState;
 class GameEngineUpdateObject;
 class SpreadShooter : public WeaponBase

@@ -171,6 +171,8 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="ConvergeBullet.h" />
+    <ClInclude Include="ConvergeShooter.h" />
     <ClInclude Include="Cowgirl.h" />
     <ClInclude Include="Delegates.h" />
     <ClInclude Include="Dogfight.h" />
@@ -259,6 +261,8 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="ConvergeBullet.cpp" />
+    <ClCompile Include="ConvergeShooter.cpp" />
     <ClCompile Include="Cowgirl.cpp" />
     <ClCompile Include="Dogfight.cpp" />
     <ClCompile Include="DogFightLevel.cpp" />

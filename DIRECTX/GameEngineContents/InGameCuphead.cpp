@@ -4,6 +4,7 @@
 #include "InGameCharacterMovementCompmonent.h"
 #include "PeaShooter.h"
 #include "SpreadShooter.h"
+#include "ConvergeShooter.h"
 
 InGameCuphead::InGameCuphead()
 	: IsInputEnabled(false)
@@ -111,11 +112,14 @@ void InGameCuphead::Start()
 	Animation = CreateComponent<InGameCharacterAnimationControllerComponent>();
 	Animation->SetCharacterName("Cuphead");
 
-	PeaShooter* Shooter = GetLevel()->CreateActor<PeaShooter>();
-	Shooter->SetParent(this);
+	//PeaShooter* Shooter = GetLevel()->CreateActor<PeaShooter>();
+	//Shooter->SetParent(this);
 
 	//SpreadShooter* Shooter = GetLevel()->CreateActor<SpreadShooter>();
 	//Shooter->SetParent(this);
+
+	ConvergeShooter* Shooter = GetLevel()->CreateActor<ConvergeShooter>();
+	Shooter->SetParent(this);
 }
 
 void InGameCuphead::Update(float _DeltaTime)

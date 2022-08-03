@@ -309,6 +309,12 @@
     <ClInclude Include="TutorialBackground.h">
       <Filter>Actor\Play\InGame\Object</Filter>
     </ClInclude>
+    <ClInclude Include="ConvergeBullet.h">
+      <Filter>Actor\Weapon\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="ConvergeShooter.h">
+      <Filter>Actor\Weapon\Shooter</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp">
@@ -526,6 +532,12 @@
     </ClCompile>
     <ClCompile Include="TutorialBackground.cpp">
       <Filter>Actor\Play\InGame\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="ConvergeBullet.cpp">
+      <Filter>Actor\Weapon\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="ConvergeShooter.cpp">
+      <Filter>Actor\Weapon\Shooter</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
