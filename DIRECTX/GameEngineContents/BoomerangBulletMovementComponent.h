@@ -2,18 +2,18 @@
 #include <GameEngineCore/GameEngineComponent.h>
 
 class GameEngineTextureRenderer;
-class BulletMovementComponent : public GameEngineComponent
+class BoomerangBulletMovementComponent : public GameEngineComponent
 {
 public:
 	// constrcuter destructer
-	BulletMovementComponent();
-	~BulletMovementComponent();
+	BoomerangBulletMovementComponent();
+	~BoomerangBulletMovementComponent();
 
 	// delete Function
-	BulletMovementComponent(const BulletMovementComponent& _Other) = delete;
-	BulletMovementComponent(BulletMovementComponent&& _Other) noexcept = delete;
-	BulletMovementComponent& operator=(const BulletMovementComponent& _Other) = delete;
-	BulletMovementComponent& operator=(BulletMovementComponent&& _Other) noexcept = delete;
+	BoomerangBulletMovementComponent(const BoomerangBulletMovementComponent& _Other) = delete;
+	BoomerangBulletMovementComponent(BoomerangBulletMovementComponent&& _Other) noexcept = delete;
+	BoomerangBulletMovementComponent& operator=(const BoomerangBulletMovementComponent& _Other) = delete;
+	BoomerangBulletMovementComponent& operator=(BoomerangBulletMovementComponent&& _Other) noexcept = delete;
 
 	float4 GetDirection() const { return Direction; }
 	void SetDirection(float4 _Direction) { Direction = _Direction; }

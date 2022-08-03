@@ -5,6 +5,7 @@
 #include "PeaShooter.h"
 #include "SpreadShooter.h"
 #include "ConvergeShooter.h"
+#include "BoomerangShooter.h"
 
 InGameCuphead::InGameCuphead()
 	: IsInputEnabled(false)
@@ -118,7 +119,10 @@ void InGameCuphead::Start()
 	//SpreadShooter* Shooter = GetLevel()->CreateActor<SpreadShooter>();
 	//Shooter->SetParent(this);
 
-	ConvergeShooter* Shooter = GetLevel()->CreateActor<ConvergeShooter>();
+	//ConvergeShooter* Shooter = GetLevel()->CreateActor<ConvergeShooter>();
+	//Shooter->SetParent(this);
+
+	BoomerangShooter* Shooter = GetLevel()->CreateActor<BoomerangShooter>();
 	Shooter->SetParent(this);
 }
 

@@ -163,6 +163,10 @@
     <ClInclude Include="Boat.h" />
     <ClInclude Include="Boatman.h" />
     <ClInclude Include="BoatRipples.h" />
+    <ClInclude Include="BoomerangBullet.h" />
+    <ClInclude Include="BoomerangBulletBase.h" />
+    <ClInclude Include="BoomerangBulletMovementComponent.h" />
+    <ClInclude Include="BoomerangShooter.h" />
     <ClInclude Include="BulletBase.h" />
     <ClInclude Include="BulletMovementComponent.h" />
     <ClInclude Include="Cart.h" />
@@ -253,6 +257,10 @@
     <ClCompile Include="Boat.cpp" />
     <ClCompile Include="Boatman.cpp" />
     <ClCompile Include="BoatRipples.cpp" />
+    <ClCompile Include="BoomerangBullet.cpp" />
+    <ClCompile Include="BoomerangBulletBase.cpp" />
+    <ClCompile Include="BoomerangBulletMovementComponent.cpp" />
+    <ClCompile Include="BoomerangShooter.cpp" />
     <ClCompile Include="BulletBase.cpp" />
     <ClCompile Include="BulletMovementComponent.cpp" />
     <ClCompile Include="Cart.cpp" />
