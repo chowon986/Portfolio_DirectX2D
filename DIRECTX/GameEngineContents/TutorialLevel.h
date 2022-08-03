@@ -27,6 +27,7 @@ protected:
 
 private:
 	GameEngineTextureRenderer* BackgroundRenderer;
+	GameEngineTextureRenderer* ColMapRenderer;
 	InGameCuphead* Cuphead;
 };
 

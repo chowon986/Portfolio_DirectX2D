@@ -22,6 +22,7 @@ void InGameCuphead::Start()
 	{
 		GameEngineInput::GetInst()->CreateKey("Aim", 'A');
 		GameEngineInput::GetInst()->CreateKey("Shoot", VK_LSHIFT);
+		GameEngineInput::GetInst()->CreateKey("Jump", VK_CONTROL);
 		GameEngineInput::GetInst()->CreateKey("Dash", 'Z');
 	}
 
@@ -53,6 +54,8 @@ void InGameCuphead::Start()
 
 	// Jump (v)
 	Renderer->CreateFrameAnimation("IngameCupheadJump", FrameAnimation_DESC("Cup.png", 20, 27, 0.1f, true));
+	Renderer->AnimationBindEnd("IngameCupheadJump", &InGameCuphead::OnJumpAnimationEnded, this);
+
 	//Renderer->CreateFrameAnimationFolder("IngameCupheadJump", FrameAnimation_DESC("IngameCupheadJump", 0.1f));
 
 	// Parry (v)
@@ -117,6 +120,8 @@ void InGameCuphead::Start()
 
 void InGameCuphead::Update(float _DeltaTime)
 {
+	GetLevel()->GetMainCameraActorTransform().SetLocalPosition({640,-360 });
+
 	if (IsInputEnabled == false)
 	{
 		return;
@@ -140,7 +145,7 @@ void InGameCuphead::Update(float _DeltaTime)
 	//Die
 	//Preparable
 	//Idleable
-	GetLevel()->GetMainCameraActorTransform().SetLocalPosition({ 0, 0 });
+
 
 	if (true == GameEngineInput::GetInst()->IsPress("MoveLeft"))
 	{
@@ -168,14 +173,18 @@ void InGameCuphead::Update(float _DeltaTime)
 		SetVerticalDirection("Center");
 	}
 
-
-
 	if (true == GameEngineInput::GetInst()->IsDown("Dash"))
 	{
 		IsInputEnabled = false;
 		Dash();
 	}
 
+	else if (true == GameEngineInput::GetInst()->IsDown("Jump"))
+	{
+		IsInputEnabled = false;
+		Jump();
+	}
+	
 	else if (true == GameEngineInput::GetInst()->IsPress("Aim"))
 	{
 		Aim();
@@ -228,6 +237,11 @@ void InGameCuphead::OnDashAnimationEnded(const FrameAnimation_DESC& _Info)
 	IsInputEnabled = true;
 }
 
+void InGameCuphead::OnJumpAnimationEnded(const FrameAnimation_DESC& _Info)
+{
+	IsInputEnabled = true;
+}
+
 void InGameCuphead::Aim()
 {
 	SetState(InGameCharacterState::Aim);
@@ -253,6 +267,7 @@ void InGameCuphead::Duck()
 
 void InGameCuphead::Jump()
 {
+	SetState(InGameCharacterState::Jump);
 }
 
 void InGameCuphead::Parry()

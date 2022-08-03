@@ -70,6 +70,8 @@ public:
 	void SetHorizontalDirection(std::string _Dir);
 	std::string GetHorizontalDirection() { return HorizontalDir; }
 
+	void SetColMapImage(GameEngineTextureRenderer* _ColMapImage) { ColMapImage = _ColMapImage; }
+	GameEngineTextureRenderer* GetColMapImage() { return ColMapImage; }
 
 	void SetRenderer(GameEngineTextureRenderer* _Renderer);
 	GameEngineTextureRenderer* GetRenderer() { return Renderer; }
@@ -80,6 +82,7 @@ public:
 	MulticastDelegate<std::string>& GetHorizontalDirectionChangedDelegate() { return HorizontalDirectionChangedDelegate; }
 
 private:
+	GameEngineTextureRenderer* ColMapImage;
 	GameEngineTextureRenderer* Renderer;
 	InGameCharacterState State;
 	InGameCharacterAttackState AttackState;

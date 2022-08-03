@@ -38,6 +38,7 @@ protected:
 	void Idle() override;
 	void OnPrepareAnimationEnded(const FrameAnimation_DESC& _Info);
 	void OnDashAnimationEnded(const FrameAnimation_DESC& _Info);
+	void OnJumpAnimationEnded(const FrameAnimation_DESC& _Info);
 
 private:
 	GameEngineTextureRenderer* Renderer;

@@ -82,6 +82,9 @@
     <Filter Include="Components\Character\WorldMap">
       <UniqueIdentifier>{62b914ad-843b-440d-b661-f63fe5110ca5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Actor\Play\InGame\Object">
+      <UniqueIdentifier>{3eb5b2c7-75d8-450a-92e6-07ddb92d508e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ContentsCore.h">
@@ -303,6 +306,9 @@
     <ClInclude Include="WorldMapCharacterAnimationControllerComponent.h">
       <Filter>Components\Character\WorldMap</Filter>
     </ClInclude>
+    <ClInclude Include="TutorialBackground.h">
+      <Filter>Actor\Play\InGame\Object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp">
@@ -517,6 +523,9 @@
     </ClCompile>
     <ClCompile Include="WorldMapCharacterAnimationControllerComponent.cpp">
       <Filter>Components\Character\WorldMap</Filter>
+    </ClCompile>
+    <ClCompile Include="TutorialBackground.cpp">
+      <Filter>Actor\Play\InGame\Object</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

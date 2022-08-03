@@ -82,6 +82,11 @@ void InGameCharacterAnimationControllerComponent::UpdateAnimation()
 		Renderer->ChangeFrameAnimation("Ingame" + Name + "Dash");
 	}
 
+	else if (State == InGameCharacterState::Jump)
+	{
+		Renderer->ChangeFrameAnimation("Ingame" + Name + "Jump");
+	}
+
 	else if (State == InGameCharacterState::Idle)
 	{
 		if (AttackState == InGameCharacterAttackState::Shoot)
@@ -174,6 +179,7 @@ void InGameCharacterAnimationControllerComponent::UpdateAnimation()
 			}
 		}
 	}
+
 	else if (State == InGameCharacterState::Duck)
 	{
 		if (AttackState == InGameCharacterAttackState::Shoot)

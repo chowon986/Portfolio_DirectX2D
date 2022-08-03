@@ -232,6 +232,7 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="TutorialBackground.h" />
     <ClInclude Include="TutorialLevel.h" />
     <ClInclude Include="Waterfall.h" />
     <ClInclude Include="WaterfallBase.h" />
@@ -319,6 +320,7 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="TutorialBackground.cpp" />
     <ClCompile Include="TutorialLevel.cpp" />
     <ClCompile Include="Waterfall.cpp" />
     <ClCompile Include="WaterfallBase.cpp" />
