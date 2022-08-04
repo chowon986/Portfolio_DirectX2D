@@ -27,6 +27,7 @@ void BoomerangBulletMovementComponent::Update(float _DeltaTime)
 		Speed -= 10*_DeltaTime;
 
 		_Direction *= Speed;
+		_Direction.y += 0.25;
 		Bullet->GetTransform().SetWorldMove(_Direction);
 	}
 
