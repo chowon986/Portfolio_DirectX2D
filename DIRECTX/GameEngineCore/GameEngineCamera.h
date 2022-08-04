@@ -12,7 +12,6 @@ enum class CAMERAPROJECTIONMODE
 // 설명 :
 class GameEngineLevel;
 class GameEngineCamera;
-enum class CAMERAORDER;
 class GameEngineCamera : public GameEngineTransformComponent
 {
 	friend GameEngineLevel;
@@ -50,6 +49,17 @@ public:
 	inline float4 GetMouseWorldDir()
 	{
 		return MouseDir;
+	}
+
+	inline void SetProjectionSize(const float4& _Value)
+	{
+		Size = _Value;
+		// return float4();
+	}
+
+	inline float4 GetProjectionSize()
+	{
+		return Size;
 	}
 
 	// 뷰포트는 계속 달라질수가 있으므로 다르게

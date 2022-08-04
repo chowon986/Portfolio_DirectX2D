@@ -22,8 +22,10 @@
 #pragma comment(lib, "dxguid")
 
 #include <GameEngineBase/GameEngineDebug.h>
+#include <GameEngineBase/GameEngineSound.h>
 
 #include "GameEngineDevice.h"
+
 #include "GameEngineLevel.h"
 #include <GameEngineBase/GameEngineDirectory.h>
 #include <GameEngineBase/GameEngineFile.h>

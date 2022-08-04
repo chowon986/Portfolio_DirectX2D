@@ -5,8 +5,6 @@ bool (*GameEngineCollision::CollisionFunction[static_cast<int>(CollisionType::CT
 
 class GameEngineCollisionFunctionInit
 {
-
-
 public:
 	GameEngineCollisionFunctionInit()
 	{
@@ -81,6 +79,7 @@ bool GameEngineCollision::IsCollision(CollisionType _ThisType, int _GroupOrder
 					return true;
 				}
 			}
+			// return true; 이부분 잘못됐어요.
 		}
 	}
 

@@ -313,7 +313,18 @@ public:
 		return x == 0.0f && y == 0.0f;
 	}
 
-public:
+	UINT GetUIntColor() const
+	{
+		UINT Int;
+		char* ColorPtr = reinterpret_cast<char*>(&Int);
+		ColorPtr[0] = static_cast<int>(x * 255.0f); // 1.0f * 255.0f
+		ColorPtr[1] = static_cast<int>(y * 255.0f);
+		ColorPtr[2] = static_cast<int>(z * 255.0f);
+		ColorPtr[3] = static_cast<int>(w * 255.0f);
+
+		return Int;
+	}
+
 	int uix() const
 	{
 		return static_cast<unsigned int>(x);

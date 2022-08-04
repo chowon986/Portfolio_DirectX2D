@@ -86,6 +86,8 @@ void ContentsCore::Start()
 	CreateLevel<PlayLevel>("Play");
 	ChangeLevel("Tutorial");
 
+	GameEngineFont::Load("±Ã¼­");
+
 	GameEngineGUI::CreateGUIWindow<GameEngineStatusWindow>("EngineStatus", nullptr);
 
 }
