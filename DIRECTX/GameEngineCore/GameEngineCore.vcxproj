@@ -329,6 +329,14 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </CopyFileToFolders>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="ThirdParty\bin\Debug\FW1FontWrapper.dll" />
+    <None Include="ThirdParty\bin\Release\FW1FontWrapper.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="ThirdParty\bin\Debug\FW1FontWrapper.lib" />
+    <Library Include="ThirdParty\bin\Release\FW1FontWrapper.lib" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>

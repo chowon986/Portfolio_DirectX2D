@@ -353,4 +353,20 @@
       <Filter>ThirdParty\Lib\Debug</Filter>
     </CopyFileToFolders>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="ThirdParty\bin\Debug\FW1FontWrapper.dll">
+      <Filter>ThirdParty\Lib\Debug</Filter>
+    </None>
+    <None Include="ThirdParty\bin\Release\FW1FontWrapper.dll">
+      <Filter>ThirdParty\Lib\Release</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="ThirdParty\bin\Debug\FW1FontWrapper.lib">
+      <Filter>ThirdParty\Lib\Debug</Filter>
+    </Library>
+    <Library Include="ThirdParty\bin\Release\FW1FontWrapper.lib">
+      <Filter>ThirdParty\Lib\Release</Filter>
+    </Library>
+  </ItemGroup>
 </Project>
