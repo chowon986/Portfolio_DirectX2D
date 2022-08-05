@@ -1,6 +1,7 @@
 #include "PreCompile.h"
 #include "InGameCharacterMovementCompmonent.h"
 #include "IngameCuphead.h"
+#include "PhysicsComponent.h"
 #include <functional>
 
 InGameCharacterMovementCompmonent::InGameCharacterMovementCompmonent()
@@ -18,7 +19,8 @@ InGameCharacterMovementCompmonent::InGameCharacterMovementCompmonent()
 	, DropSpeed(0.0f)
 	, Gravity(0.0f)
 	, DownDir(float4::DOWN)
-	, JumpHeight(150)
+	, JumpHeight(50)
+	, IsSetZero(false)
 {
 }
 
@@ -48,7 +50,7 @@ bool InGameCharacterMovementCompmonent::CanMoveAreaCheck()
 	UpColor = ColMapTexture->GetPixel(Transform.ix(), -(Transform.iy() + 10));
 	DownColor = ColMapTexture->GetPixel(Transform.ix(), -(Transform.iy() - 10));
 
-	CurrentColor = ColMapTexture->GetPixel(Transform.ix(), -Transform.iy());
+	CurrentColor = ColMapTexture->GetPixel(Transform.x, -Transform.y);
 
 	std::string HorizontalDirectionDir = InGameCharacter->GetHorizontalDirection();
 	std::string VerticalDirectionDir = InGameCharacter->GetVerticalDirection();
@@ -112,10 +114,10 @@ void InGameCharacterMovementCompmonent::UpdateDirection()
 {
 	IInGameCharacterBase* InGameCharacter = GetParent<IInGameCharacterBase>();
 	if (InGameCharacter == nullptr ||
-		InGameCharacter->GetState() != InGameCharacterState::Walk)
+		InGameCharacter->GetState() == InGameCharacterState::Idle)
 	{
-			Direction = float4::ZERO;
-			return;
+		Direction = float4::ZERO;
+		return;
 	}
 
 	VerticalDir = InGameCharacter->GetVerticalDirection();
@@ -155,67 +157,62 @@ void InGameCharacterMovementCompmonent::Update(float _DeltaTime)
 		return;
 	}
 
+	PhysicsComponent* Physics = InGameCharacter->GetPhysicsComponent();
+	if (Physics == nullptr)
+	{
+		return;
+	}
+
 	InGameCharacterState State = InGameCharacter->GetState();
+	ColMapImage = InGameCharacter->GetColMapImage();
+	ColMapTexture = ColMapImage->GetCurTexture();
+	if (ColMapTexture == nullptr)
+	{
+		return;
+	}
+	
+	while (true == ColMapTexture->GetPixel(InGameCharacter->GetTransform().GetWorldPosition().x, -InGameCharacter->GetTransform().GetWorldPosition().y).CompareInt4D(float4::BLACK))
+	{
+		if (State != InGameCharacterState::Jump)
+		{
+			Physics->SetZero();
+		}
+
+		InGameCharacter->GetTransform().SetWorldMove(float4::UP * _DeltaTime);
+	}
 
 	if (State == InGameCharacterState::Jump)
 	{
-		JumpHeight -= 5;
-		float4 Dir = JumpHeight > -250 ? float4::UP : float4::DOWN;
-		
-		HorizontalDir = InGameCharacter->GetHorizontalDirection();
+		if (IsSetZero == false)
+		{
+			Physics->Reset();
+			IsSetZero = true;
+		}
+		//InGameCharacter->GetTransform().SetWorldMove({ Direction * Speed * _DeltaTime });
+		InGameCharacter->GetTransform().SetWorldMove({ Direction.x * 100 * _DeltaTime, -Physics->GetSpeed(), 0});
+	}
 
-		if (HorizontalDir == "Left")
+	else if (State == InGameCharacterState::Dash)
+	{
+		if (Physics->GetGravity() != -0.98f)
 		{
-			Dir += float4::LEFT;
-		}
-		else if (HorizontalDir == "Right")
-		{
-			Dir += float4::RIGHT;
-		}
-		else
-		{
-			Dir += float4::ZERO;
+			Physics->Reset();
 		}
 
-		InGameCharacter->GetTransform().SetWorldMove(Dir * 200 * _DeltaTime);
+		float4 Dir = InGameCharacter->GetRenderer()->GetTransform().GetLocalScale().x < 0 ? float4::LEFT : float4::RIGHT;
+		float DashSpeed = Speed;
+		InGameCharacter->GetTransform().SetWorldMove(Dir * DashSpeed * _DeltaTime);
 	}
 
 	else
 	{
-		JumpHeight = 150;
-
-		if (true == CanMoveAreaCheck()) // 흰색에 있고
+		JumpHeight = 50.0f;
+		IsSetZero = false;
+		if (Physics->GetGravity() != -0.98f)
 		{
-			if (true == IsOnGround()) // 아래가 검은색일때
-			{
-				if (State == InGameCharacterState::Dash)
-				{
-					float4 Dir = InGameCharacter->GetRenderer()->GetTransform().GetLocalScale().x < 0 ? float4::LEFT : float4::RIGHT;
-					float DashSpeed = Speed;
-					InGameCharacter->GetTransform().SetWorldMove(Dir * DashSpeed * _DeltaTime);
-				}
-
-				else
-				{
-					InGameCharacter->GetTransform().SetWorldMove(Direction * Speed * _DeltaTime);
-				}
-			}
-
-			else
-			{
-				Gravity = 3.0f;
-				DownDir.y -= Gravity;
-				InGameCharacter->GetTransform().SetWorldMove(DownDir * _DeltaTime);
-			}
+			Physics->Reset();
 		}
-
-		else
-		{
-			while (true == CurrentColor.CompareInt4D(float4::BLACK))
-			{
-				InGameCharacter->GetTransform().SetWorldMove(float4::UP * _DeltaTime);
-			}
-		}
+		InGameCharacter->GetTransform().SetWorldMove(Direction * Speed * _DeltaTime);
 	}
 }
 

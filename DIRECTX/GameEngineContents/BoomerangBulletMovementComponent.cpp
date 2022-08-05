@@ -24,7 +24,7 @@ void BoomerangBulletMovementComponent::Update(float _DeltaTime)
 	BoomerangBulletBase* Bullet = GetParent<BoomerangBulletBase>();
 	if (Bullet != nullptr)
 	{
-		Speed -= 10*_DeltaTime;
+		Speed -= 20*_DeltaTime;
 
 		_Direction *= Speed;
 		_Direction.y += 0.25;

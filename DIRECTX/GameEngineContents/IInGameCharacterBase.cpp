@@ -54,3 +54,8 @@ void IInGameCharacterBase::SetRenderer(GameEngineTextureRenderer* _Renderer)
 	Renderer = _Renderer;
 }
 
+void IInGameCharacterBase::SetPhysicsComponent(PhysicsComponent* _Physics)
+{
+	Physics = _Physics;
+}
+

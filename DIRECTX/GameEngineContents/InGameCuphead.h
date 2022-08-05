@@ -3,6 +3,7 @@
 #include "IInGameCharacterBase.h"
 
 enum class InGameCharacterState;
+class GameEngineCollision;
 class InGameCharacterMovementCompmonent;
 class InGameCharacterAnimationControllerComponent;
 class InGameCuphead : public IInGameCharacterBase
@@ -44,5 +45,7 @@ private:
 	GameEngineTextureRenderer* Renderer;
 	InGameCharacterMovementCompmonent* Movement;
 	bool IsInputEnabled;
+	bool IsOnGround;
+	GameEngineCollision* Collision;
 	InGameCharacterAnimationControllerComponent* Animation;
 };

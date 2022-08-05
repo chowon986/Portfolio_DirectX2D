@@ -41,7 +41,7 @@ enum class InGameCharacterAttackState
 };
 
 
-
+class PhysicsComponent;
 class IInGameCharacterBase : public GameEngineActor, public IAimable, public IDamageable, public IDashable, public IDieable, public IDuckable,
 							 public IJumpable, public IParriable, public IPreparable, public IRunable, public IShootable, public ISpecialAttackable,
 							 public ISuperAttackable, public IWalkable, public IIdleable
@@ -76,6 +76,9 @@ public:
 	void SetRenderer(GameEngineTextureRenderer* _Renderer);
 	GameEngineTextureRenderer* GetRenderer() { return Renderer; }
 
+	void SetPhysicsComponent(PhysicsComponent* _Physics);
+	PhysicsComponent* GetPhysicsComponent() { return Physics; }
+
 	MulticastDelegate<InGameCharacterState>& GetStateChangedDelegate() { return StateChangedDelegate; }
 	MulticastDelegate<InGameCharacterAttackState>& GetAttackStateChangedDelegate() { return AttackStateChangedDelegate; }
 	MulticastDelegate<std::string>& GetVerticalDirectionChangedDelegate() { return VerticalDirectionChangedDelegate; }
@@ -84,6 +87,7 @@ public:
 private:
 	GameEngineTextureRenderer* ColMapImage;
 	GameEngineTextureRenderer* Renderer;
+	PhysicsComponent* Physics;
 	InGameCharacterState State;
 	InGameCharacterAttackState AttackState;
 	std::string VerticalDir; // 수직 방향 (상하)

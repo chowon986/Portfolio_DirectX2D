@@ -19,12 +19,6 @@
     <Filter Include="PreCompile">
       <UniqueIdentifier>{439c0504-814e-4f90-8507-3f4dacd0226c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Level\Title">
-      <UniqueIdentifier>{f61f50c3-27b3-47b5-ac84-8c5854cfa3e7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Level\Play">
-      <UniqueIdentifier>{e2a73822-3a6e-4199-9294-e2096fc9417f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Actor\Play\WorldMap">
       <UniqueIdentifier>{d78df34a-eff3-49ab-afe2-4970c759bb9c}</UniqueIdentifier>
     </Filter>
@@ -85,6 +79,12 @@
     <Filter Include="Actor\Play\InGame\Object">
       <UniqueIdentifier>{3eb5b2c7-75d8-450a-92e6-07ddb92d508e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Level\00 Title">
+      <UniqueIdentifier>{f61f50c3-27b3-47b5-ac84-8c5854cfa3e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Level\01 Play">
+      <UniqueIdentifier>{e2a73822-3a6e-4199-9294-e2096fc9417f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ContentsCore.h">
@@ -100,19 +100,19 @@
       <Filter>Actor</Filter>
     </ClInclude>
     <ClInclude Include="BeforeTitleLevel.h">
-      <Filter>Level\Title</Filter>
+      <Filter>Level\00 Title</Filter>
     </ClInclude>
     <ClInclude Include="TitleLevel.h">
-      <Filter>Level\Title</Filter>
+      <Filter>Level\00 Title</Filter>
     </ClInclude>
     <ClInclude Include="SelectLevel.h">
-      <Filter>Level\Title</Filter>
+      <Filter>Level\00 Title</Filter>
     </ClInclude>
     <ClInclude Include="WorldMapLevel.h">
-      <Filter>Level\Play</Filter>
+      <Filter>Level\01 Play</Filter>
     </ClInclude>
     <ClInclude Include="PlayLevel.h">
-      <Filter>Level\Play</Filter>
+      <Filter>Level\01 Play</Filter>
     </ClInclude>
     <ClInclude Include="IWalkable.h">
       <Filter>Actor\Interface</Filter>
@@ -172,7 +172,7 @@
       <Filter>Actor\Base</Filter>
     </ClInclude>
     <ClInclude Include="ShopLevel.h">
-      <Filter>Level\Play</Filter>
+      <Filter>Level\01 Play</Filter>
     </ClInclude>
     <ClInclude Include="Boatman.h">
       <Filter>Actor\Play\WorldMap\NPC</Filter>
@@ -196,7 +196,7 @@
       <Filter>Actor\Play\WorldMap\NPC</Filter>
     </ClInclude>
     <ClInclude Include="DogFightLevel.h">
-      <Filter>Level\Play</Filter>
+      <Filter>Level\01 Play</Filter>
     </ClInclude>
     <ClInclude Include="WorldMapCuphead.h">
       <Filter>Actor\Play\WorldMap\PC</Filter>
@@ -256,7 +256,7 @@
       <Filter>Actor\Interface</Filter>
     </ClInclude>
     <ClInclude Include="TutorialLevel.h">
-      <Filter>Level\Play</Filter>
+      <Filter>Level\01 Play</Filter>
     </ClInclude>
     <ClInclude Include="PeaShooter.h">
       <Filter>Actor\Weapon\Shooter</Filter>
@@ -327,6 +327,15 @@
     <ClInclude Include="BoomerangBulletBase.h">
       <Filter>Actor\Weapon\Base</Filter>
     </ClInclude>
+    <ClInclude Include="ChargerBullet.h">
+      <Filter>Actor\Weapon\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="ChargerShooter.h">
+      <Filter>Actor\Weapon\Shooter</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicsComponent.h">
+      <Filter>Components\Character\InGame</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp">
@@ -339,19 +348,19 @@
       <Filter>Actor</Filter>
     </ClCompile>
     <ClCompile Include="BeforeTitleLevel.cpp">
-      <Filter>Level\Title</Filter>
+      <Filter>Level\00 Title</Filter>
     </ClCompile>
     <ClCompile Include="TitleLevel.cpp">
-      <Filter>Level\Title</Filter>
+      <Filter>Level\00 Title</Filter>
     </ClCompile>
     <ClCompile Include="SelectLevel.cpp">
-      <Filter>Level\Title</Filter>
+      <Filter>Level\00 Title</Filter>
     </ClCompile>
     <ClCompile Include="PlayLevel.cpp">
-      <Filter>Level\Play</Filter>
+      <Filter>Level\01 Play</Filter>
     </ClCompile>
     <ClCompile Include="WorldMapLevel.cpp">
-      <Filter>Level\Play</Filter>
+      <Filter>Level\01 Play</Filter>
     </ClCompile>
     <ClCompile Include="IWalkable.cpp">
       <Filter>Actor\Interface</Filter>
@@ -411,7 +420,7 @@
       <Filter>Actor\Base</Filter>
     </ClCompile>
     <ClCompile Include="ShopLevel.cpp">
-      <Filter>Level\Play</Filter>
+      <Filter>Level\01 Play</Filter>
     </ClCompile>
     <ClCompile Include="Boatman.cpp">
       <Filter>Actor\Play\WorldMap\NPC</Filter>
@@ -435,7 +444,7 @@
       <Filter>Actor\Play\WorldMap\NPC</Filter>
     </ClCompile>
     <ClCompile Include="DogFightLevel.cpp">
-      <Filter>Level\Play</Filter>
+      <Filter>Level\01 Play</Filter>
     </ClCompile>
     <ClCompile Include="WorldMapCuphead.cpp">
       <Filter>Actor\Play\WorldMap\PC</Filter>
@@ -495,7 +504,7 @@
       <Filter>Actor\Interface</Filter>
     </ClCompile>
     <ClCompile Include="TutorialLevel.cpp">
-      <Filter>Level\Play</Filter>
+      <Filter>Level\01 Play</Filter>
     </ClCompile>
     <ClCompile Include="PeaShooter.cpp">
       <Filter>Actor\Weapon\Shooter</Filter>
@@ -562,6 +571,15 @@
     </ClCompile>
     <ClCompile Include="BoomerangBulletBase.cpp">
       <Filter>Actor\Weapon\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="ChargerBullet.cpp">
+      <Filter>Actor\Weapon\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="ChargerShooter.cpp">
+      <Filter>Actor\Weapon\Shooter</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysicsComponent.cpp">
+      <Filter>Components\Character\InGame</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

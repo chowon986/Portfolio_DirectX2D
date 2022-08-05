@@ -171,6 +171,8 @@
     <ClInclude Include="BulletMovementComponent.h" />
     <ClInclude Include="Cart.h" />
     <ClInclude Include="Catus.h" />
+    <ClInclude Include="ChargerBullet.h" />
+    <ClInclude Include="ChargerShooter.h" />
     <ClInclude Include="ContentsCore.h">
       <SubType>
       </SubType>
@@ -215,6 +217,7 @@
     <ClInclude Include="Omm.h" />
     <ClInclude Include="PeaBullet.h" />
     <ClInclude Include="PeaShooter.h" />
+    <ClInclude Include="PhysicsComponent.h" />
     <ClInclude Include="Pickaxe.h" />
     <ClInclude Include="Pig.h" />
     <ClInclude Include="PlayLevel.h">
@@ -265,6 +268,8 @@
     <ClCompile Include="BulletMovementComponent.cpp" />
     <ClCompile Include="Cart.cpp" />
     <ClCompile Include="Catus.cpp" />
+    <ClCompile Include="ChargerBullet.cpp" />
+    <ClCompile Include="ChargerShooter.cpp" />
     <ClCompile Include="ContentsCore.cpp">
       <SubType>
       </SubType>
@@ -307,6 +312,7 @@
     <ClCompile Include="Omm.cpp" />
     <ClCompile Include="PeaBullet.cpp" />
     <ClCompile Include="PeaShooter.cpp" />
+    <ClCompile Include="PhysicsComponent.cpp" />
     <ClCompile Include="Pickaxe.cpp" />
     <ClCompile Include="Pig.cpp" />
     <ClCompile Include="PlayLevel.cpp">

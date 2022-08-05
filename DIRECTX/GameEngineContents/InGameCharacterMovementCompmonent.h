@@ -53,6 +53,7 @@ private:
 	float4 UpColor;
 	float4 DownColor;
 	std::string VerticalDir;
-		std::string HorizontalDir;
+	std::string HorizontalDir;
+	bool IsSetZero;
 };
 

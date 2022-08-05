@@ -2,10 +2,12 @@
 #include "InGameCuphead.h"
 #include "InGameCharacterAnimationControllerComponent.h"
 #include "InGameCharacterMovementCompmonent.h"
+#include "PhysicsComponent.h"
 #include "PeaShooter.h"
 #include "SpreadShooter.h"
 #include "ConvergeShooter.h"
 #include "BoomerangShooter.h"
+#include "ChargerShooter.h"
 
 InGameCuphead::InGameCuphead()
 	: IsInputEnabled(false)
@@ -31,44 +33,32 @@ void InGameCuphead::Start()
 	Renderer = CreateComponent<GameEngineTextureRenderer>();
 	SetRenderer(Renderer);
 
-	// Aim (v)
+	// Aim
 	Renderer->CreateFrameAnimationCutTexture("IngameCupheadAimDiagDown", FrameAnimation_DESC("Cup.png", 180, 184, 0.1f, true));
 	Renderer->CreateFrameAnimationCutTexture("IngameCupheadAimDiagUp", FrameAnimation_DESC("Cup.png", 186, 190, 0.1f, true));
 	Renderer->CreateFrameAnimationCutTexture("IngameCupheadAimDown", FrameAnimation_DESC("Cup.png", 192, 196, 0.1f, true));
 	Renderer->CreateFrameAnimationCutTexture("IngameCupheadAimStraight", FrameAnimation_DESC("Cup.png", 200, 204, 0.1f, true));
 	Renderer->CreateFrameAnimationCutTexture("IngameCupheadAimUp", FrameAnimation_DESC("Cup.png", 206, 210, 0.1f, true));
-	//Renderer->CreateFrameAnimationFolder("IngameCupheadAimDiagDown", FrameAnimation_DESC("IngameCupheadAimDiagDown", 0.1f));
-	//Renderer->CreateFrameAnimationFolder("IngameCupheadAimDiagUp", FrameAnimation_DESC("IngameCupheadAimDiagUp", 0.1f));
-	//Renderer->CreateFrameAnimationFolder("IngameCupheadAimDown", FrameAnimation_DESC("IngameCupheadAimDown", 0.1f));
-	//Renderer->CreateFrameAnimationFolder("IngameCupheadAimStraight", FrameAnimation_DESC("IngameCupheadAimStraight", 0.1f));
-	//Renderer->CreateFrameAnimationFolder("IngameCupheadAimUp", FrameAnimation_DESC("IngameCupheadAimUp", 0.1f));
 
 	// Dash
 	Renderer->CreateFrameAnimationCutTexture("IngameCupheadDash", FrameAnimation_DESC("Cup_Dash.png", 0, 7, 0.1f, true));
 	Renderer->AnimationBindEnd("IngameCupheadDash", &InGameCuphead::OnDashAnimationEnded, this);
 
-	//Renderer->CreateFrameAnimationFolder("IngameCupheadDash", FrameAnimation_DESC("IngameCupheadDash", 0.05f));
-
-	// Intro (v)
+	// Intro
 	Renderer->CreateFrameAnimationCutTexture("IngameCupheadIntro", FrameAnimation_DESC("Cup.png", 220, 247, 0.1f, true));
 	Renderer->AnimationBindEnd("IngameCupheadIntro", &InGameCuphead::OnPrepareAnimationEnded, this);
-	//Renderer->CreateFrameAnimationFolder("IngameCupheadIntro", FrameAnimation_DESC("IngameCupheadIntro", 0.1f));
 
-	// Jump (v)
+	// Jump
 	Renderer->CreateFrameAnimationCutTexture("IngameCupheadJump", FrameAnimation_DESC("Cup.png", 20, 27, 0.1f, true));
 	Renderer->AnimationBindEnd("IngameCupheadJump", &InGameCuphead::OnJumpAnimationEnded, this);
 
-	//Renderer->CreateFrameAnimationFolder("IngameCupheadJump", FrameAnimation_DESC("IngameCupheadJump", 0.1f));
-
-	// Parry (v)
+	// Parry
 	Renderer->CreateFrameAnimationCutTexture("IngameCupheadParryHand", FrameAnimation_DESC("Cup.png", 120, 127, 0.1f, true));
-	//Renderer->CreateFrameAnimationFolder("IngameCupheadParryHand", FrameAnimation_DESC("IngameCupheadParryHand", 0.1f));
 
-	// Run (v)
-	//Renderer->CreateFrameAnimationFolder("IngameCupheadRun", FrameAnimation_DESC("IngameCupheadRun", 0.05f));
+	// Run
 	Renderer->CreateFrameAnimationCutTexture("IngameCupheadRun", FrameAnimation_DESC("Cup.png", 40, 55, 0.1f, true));
 
-	// Shoot (v)
+	// Shoot
 	Renderer->CreateFrameAnimationCutTexture("IngameCupheadRunShootStraight", FrameAnimation_DESC("Cup.png", 60, 75, 0.1f, true));
 	Renderer->CreateFrameAnimationCutTexture("IngameCupheadRunShootDiagUp", FrameAnimation_DESC("Cup.png", 80, 95, 0.1f, true));
 	Renderer->CreateFrameAnimationCutTexture("IngameCupheadShootStraight", FrameAnimation_DESC("Cup.png", 100, 102, 0.1f, true));
@@ -77,83 +67,63 @@ void InGameCuphead::Start()
 	Renderer->CreateFrameAnimationCutTexture("IngameCupheadShootDown", FrameAnimation_DESC("Cup.png", 112, 114, 0.1f, true));
 	Renderer->CreateFrameAnimationCutTexture("IngameCupheadShootUp", FrameAnimation_DESC("Cup.png", 116, 118, 0.1f, true));
 	Renderer->CreateFrameAnimationCutTexture("IngameCupheadDuckShoot", FrameAnimation_DESC("Cup.png", 174, 176, 0.1f, true));
-	
-	//Renderer->CreateFrameAnimationFolder("IngameCupheadShootUp", FrameAnimation_DESC("IngameCupheadShootUp", 0.1f));
-	//Renderer->CreateFrameAnimationFolder("IngameCupheadShootDiagUp", FrameAnimation_DESC("IngameCupheadShootDiagUp", 0.1f));
-	//Renderer->CreateFrameAnimationFolder("IngameCupheadShootStraight", FrameAnimation_DESC("IngameCupheadShootStraight", 0.1f));
-	//Renderer->CreateFrameAnimationFolder("IngameCupheadShootDiagDown", FrameAnimation_DESC("IngameCupheadShootDiagDown", 0.1f));
-	//Renderer->CreateFrameAnimationFolder("IngameCupheadShootDown", FrameAnimation_DESC("IngameCupheadShootDown", 0.1f));
-	//Renderer->CreateFrameAnimationFolder("IngameCupheadRunShootStraight", FrameAnimation_DESC("IngameCupheadRunShootStraight", 0.1f));
-	//Renderer->CreateFrameAnimationFolder("IngameCupheadRunShootDiagUp", FrameAnimation_DESC("IngameCupheadRunShootDiagUp", 0.1f));
-	//Renderer->CreateFrameAnimationFolder("IngameCupheadDuckShoot", FrameAnimation_DESC("IngameCupheadDuckShoot", 0.1f));
 
-	// TakeDamage (v)
+	// TakeDamage
 	Renderer->CreateFrameAnimationCutTexture("IngameCupheadTakeDamage", FrameAnimation_DESC("Cup.png", 28, 33, 0.1f, true));
 
-	//Renderer->CreateFrameAnimationFolder("IngameCupheadTakeDamageAir", FrameAnimation_DESC("IngameCupheadTakeDamageAir", 0.1f));
-	//Renderer->CreateFrameAnimationFolder("IngameCupheadTakeDamageGround", FrameAnimation_DESC("IngameCupheadTakeDamageGround", 0.1f));
-
-	// Idle (v)
+	// Idle
 	Renderer->CreateFrameAnimationCutTexture("IngameCupheadIdle", FrameAnimation_DESC("Cup.png", 0, 7, 0.1f, true));
 	Renderer->CreateFrameAnimationCutTexture("IngameCupheadIdleDownStart", FrameAnimation_DESC("Cup.png", 160, 166, 0.1f, true));
 	Renderer->CreateFrameAnimationCutTexture("IngameCupheadIdleDown", FrameAnimation_DESC("Cup.png", 168, 172, 0.1f, true));
 	Renderer->CreateFrameAnimationCutTexture("IngameCupheadIdleDownTurn", FrameAnimation_DESC("Cup.png", 159, 159, 0.1f, true));
-	
-	//Renderer->CreateFrameAnimationFolder("IngameCupheadIdleDownStart", FrameAnimation_DESC("InGameCupheadIdleDownStart", 0, 7, 0.05f, true));
-	//Renderer->CreateFrameAnimationFolder("IngameCupheadIdleDown", FrameAnimation_DESC("IngameCupheadIdleDown", 0, 8, 0.05f, true));
-	//Renderer->CreateFrameAnimationFolder("IngameCupheadIdleDownTurn", FrameAnimation_DESC("InGameCupheadIdleDownTurn", 0, 0, 0.05f, true));
-	//
-	//Renderer->CreateFrameAnimationFolder("IngameCupheadIdle", FrameAnimation_DESC("IngameCupheadIdle", 0.1f));
+
+	{
+		// Collision
+		Collision = CreateComponent<GameEngineCollision>();
+		Collision->SetParent(this);
+		Collision->GetTransform().SetLocalScale({ 100.0f, 100.0f, 1.0f });
+		Collision->ChangeOrder(ObjectOrder::PC);
+	}
 
 	SetState(InGameCharacterState::Prepare);
 	Renderer->ChangeFrameAnimation("IngameCupheadIntro");
 	Renderer->ScaleToCutTexture(0);
 	Renderer->SetPivot(PIVOTMODE::BOT);
+
+	SetPhysicsComponent(CreateComponent<PhysicsComponent>());
 	Movement = CreateComponent<InGameCharacterMovementCompmonent>();
 	Animation = CreateComponent<InGameCharacterAnimationControllerComponent>();
 	Animation->SetCharacterName("Cuphead");
 
-	//PeaShooter* Shooter = GetLevel()->CreateActor<PeaShooter>();
-	//Shooter->SetParent(this);
+	{
+		// 총
+		
+		//PeaShooter* Shooter = GetLevel()->CreateActor<PeaShooter>();
+		//Shooter->SetParent(this);
 
-	//SpreadShooter* Shooter = GetLevel()->CreateActor<SpreadShooter>();
-	//Shooter->SetParent(this);
+		//SpreadShooter* Shooter = GetLevel()->CreateActor<SpreadShooter>();
+		//Shooter->SetParent(this);
 
-	//ConvergeShooter* Shooter = GetLevel()->CreateActor<ConvergeShooter>();
-	//Shooter->SetParent(this);
+		//ConvergeShooter* Shooter = GetLevel()->CreateActor<ConvergeShooter>();
+		//Shooter->SetParent(this);
 
-	BoomerangShooter* Shooter = GetLevel()->CreateActor<BoomerangShooter>();
-	Shooter->SetParent(this);
+		//BoomerangShooter* Shooter = GetLevel()->CreateActor<BoomerangShooter>();
+		//Shooter->SetParent(this);
+
+		ChargerShooter* Shooter = GetLevel()->CreateActor<ChargerShooter>();
+		Shooter->SetParent(this);
+	}
 }
 
 void InGameCuphead::Update(float _DeltaTime)
 {
+
 	GetLevel()->GetMainCameraActorTransform().SetLocalPosition({640,-360 });
 
 	if (IsInputEnabled == false)
 	{
 		return;
 	}
-
-	// 키보드로 가능한 애들
-	//Dash
-	//Duck
-	//Jumpable
-	//Parriable
-	//Runable
-	//Shootable
-	//SpecialAttackable
-	//SuperIAttackable
-	//SuperIIAttackable
-	//SuperIIIAttackable
-	//Walkable
-	
-	// 불가능한 애들
-	//TakeDamage
-	//Die
-	//Preparable
-	//Idleable
-
 
 	if (true == GameEngineInput::GetInst()->IsPress("MoveLeft"))
 	{
@@ -211,6 +181,7 @@ void InGameCuphead::Update(float _DeltaTime)
 
 	else
 	{
+
 		Idle();
 	}
 
@@ -276,6 +247,7 @@ void InGameCuphead::Duck()
 void InGameCuphead::Jump()
 {
 	SetState(InGameCharacterState::Jump);
+	GetPhysicsComponent()->AddForce(10);
 }
 
 void InGameCuphead::Parry()
