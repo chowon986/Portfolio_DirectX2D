@@ -22,7 +22,7 @@ protected:
 	virtual void End() override;
 
 public:
-	// Y 방향만..
+	// Y 방향만
 	void AddForce(float _Power);
 
 	float GetGravity() { return Gravity; }
@@ -36,8 +36,7 @@ public:
 
 	float GetSpeed() { return Speed; }
 
-	void SetZero() { Speed = 0.0f; Acceleration = 0.0f; Power = 0.0f, Gravity = 0.0f; }
-	void Reset() { Power = 200.0f, Acceleration = 0.0f, Gravity = -0.98, Speed = 0.0f; }
+	void Reset() { Power = 0.0f, Acceleration = 0.0f, Speed = 0.0f; }
 
 private:
 	float Power;

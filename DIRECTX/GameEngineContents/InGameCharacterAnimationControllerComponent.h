@@ -22,6 +22,7 @@ public:
 	void OnVerticalDirectionChanged(std::string _Dir);
 	void OnHorizontalDirectionChanged(std::string _Dir);
 	void OnIdleDownStartAnimationEnded(const FrameAnimation_DESC& _Info);
+	void OnIsOnGroundChanged(bool _IsOnGround);
 
 	void SetCharacterName(std::string _CharacterName);
 	std::string GetCharacterName() { return CharacterName; }

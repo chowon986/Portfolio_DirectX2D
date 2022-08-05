@@ -83,6 +83,10 @@ public:
 	MulticastDelegate<InGameCharacterAttackState>& GetAttackStateChangedDelegate() { return AttackStateChangedDelegate; }
 	MulticastDelegate<std::string>& GetVerticalDirectionChangedDelegate() { return VerticalDirectionChangedDelegate; }
 	MulticastDelegate<std::string>& GetHorizontalDirectionChangedDelegate() { return HorizontalDirectionChangedDelegate; }
+	MulticastDelegate<bool>& GetIsOnGroundChangedDelegate() { return IsOnGroundChangedDelegate; }
+
+	void SetIsOnGround(bool _IsOnGround);
+	bool GetIsOnGround() { return IsOnGround; }
 
 private:
 	GameEngineTextureRenderer* ColMapImage;
@@ -96,5 +100,7 @@ private:
 	MulticastDelegate<InGameCharacterAttackState> AttackStateChangedDelegate;
 	MulticastDelegate<std::string> VerticalDirectionChangedDelegate;
 	MulticastDelegate<std::string> HorizontalDirectionChangedDelegate;
+	MulticastDelegate<bool> IsOnGroundChangedDelegate;
+	bool IsOnGround;
 };
 

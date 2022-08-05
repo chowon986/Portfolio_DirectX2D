@@ -24,8 +24,6 @@ public:
 
 private:
 	void UpdateDirection();
-	bool CanMoveAreaCheck();
-	bool IsOnGround();
 
 protected:
 	virtual void Start() override;
@@ -33,27 +31,12 @@ protected:
 	virtual void End() override;
 
 private:
-	GameEngineTextureRenderer* ColMapImage;
-	GameEngineTexture* ColMapTexture;
 	IInGameCharacterBase* InGameCharacter;
 	float4 Direction;
 	float Speed;
-	float DropSpeed;
-	float Gravity;
-	float JumpHeight;
 	float4 DownDir;
-	float4 RightColor;
-	float4 RightUpColor;
-	float4 RightDownColor;
-	float4 Transform;
-	float4 LeftColor;
-	float4 LeftUpColor;
-	float4 LeftDownColor;
-	float4 CurrentColor;
-	float4 UpColor;
-	float4 DownColor;
 	std::string VerticalDir;
 	std::string HorizontalDir;
-	bool IsSetZero;
+	bool IsOnGround;
 };
 

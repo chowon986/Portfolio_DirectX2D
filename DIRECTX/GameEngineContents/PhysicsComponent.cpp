@@ -3,12 +3,12 @@
 #include "IInGameCharacterBase.h"
 
 PhysicsComponent::PhysicsComponent()
-	: Speed (0.0f)
-	, Power(200.0f)
-	, Gravity(-0.98f)
-	, Mass(1.0f)
-	, Acceleration(0.0f)
+	: Speed(0.0f)
+	, Power(0.0f)
+	, Gravity(-9.8f)
+	, Mass(0.5f)
 {
+	Acceleration = Gravity / Mass;
 }
 
 PhysicsComponent::~PhysicsComponent()
@@ -27,15 +27,45 @@ void PhysicsComponent::Update(float _DeltaTime)
 		return;
 	}
 
-	State == Actor->GetState();
+	GameEngineTextureRenderer* CollisionMap = Actor->GetColMapImage();
+	if (CollisionMap == nullptr)
+	{
+		return;
+	}
+
+	GameEngineTexture* ColMapTexture = CollisionMap->GetCurTexture();
+	if (ColMapTexture == nullptr)
+	{
+		return;
+	}
+
 
 	// F = ma, 힘 = 질량 * 가속도
-
-	Power += Gravity * _DeltaTime;
-	Power = Power > Gravity ? Power : -Power;
+	Power += Gravity * 20 * _DeltaTime;
 	Acceleration = Power / Mass;
-	Speed -= Acceleration * _DeltaTime;
+	Speed += Acceleration * _DeltaTime;
 	Actor->GetTransform().SetWorldMove({ 0, Speed, 0 });
+
+
+	while (true == ColMapTexture->GetPixel(Actor->GetTransform().GetWorldPosition().x, -Actor->GetTransform().GetWorldPosition().y).CompareInt4D(float4::BLACK))
+	{
+		Actor->GetTransform().SetWorldMove(float4::UP * _DeltaTime);
+		Reset();
+	}
+
+	Actor->SetIsOnGround(Speed == 0);
+
+	while (true == ColMapTexture->GetPixel(Actor->GetTransform().GetWorldPosition().x - 10, -Actor->GetTransform().GetWorldPosition().y ).CompareInt4D(float4::BLACK) ||
+		true == ColMapTexture->GetPixel(Actor->GetTransform().GetWorldPosition().x - 10, -Actor->GetTransform().GetWorldPosition().y - 10).CompareInt4D(float4::BLACK))
+	{
+		Actor->GetTransform().SetWorldMove(float4::RIGHT * _DeltaTime);
+	}
+
+	while (true == ColMapTexture->GetPixel(Actor->GetTransform().GetWorldPosition().x + 10, -Actor->GetTransform().GetWorldPosition().y).CompareInt4D(float4::BLACK)||
+		true == ColMapTexture->GetPixel(Actor->GetTransform().GetWorldPosition().x + 10, -Actor->GetTransform().GetWorldPosition().y - 10).CompareInt4D(float4::BLACK))
+	{
+		Actor->GetTransform().SetWorldMove(float4::LEFT * _DeltaTime);
+	}
 }
 
 void PhysicsComponent::End()
@@ -44,5 +74,5 @@ void PhysicsComponent::End()
 
 void PhysicsComponent::AddForce(float _Power)
 {
-	Power = _Power;
+	Power += _Power;
 }

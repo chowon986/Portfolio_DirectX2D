@@ -42,6 +42,11 @@ void InGameCharacterAnimationControllerComponent::OnIdleDownStartAnimationEnded(
 	UpdateAnimation();
 }
 
+void InGameCharacterAnimationControllerComponent::OnIsOnGroundChanged(bool _IsOnGround)
+{
+	UpdateAnimation();
+}
+
 void InGameCharacterAnimationControllerComponent::SetCharacterName(std::string _CharacterName)
 {
 	CharacterName = _CharacterName;
@@ -72,152 +77,158 @@ void InGameCharacterAnimationControllerComponent::UpdateAnimation()
 	std::string HorizontalDir = InGameCharacter->GetHorizontalDirection();
 	std::string Name = GetCharacterName();
 
-	if (State == InGameCharacterState::Prepare)
-	{
-		Renderer->ChangeFrameAnimation("Ingame" + Name + "Intro");
-	}
+	bool IsOnGround = InGameCharacter->GetIsOnGround();
 
-	if (State == InGameCharacterState::Dash)
-	{
-		Renderer->ChangeFrameAnimation("Ingame" + Name + "Dash");
-	}
-
-	else if (State == InGameCharacterState::Jump)
+	if (IsOnGround != true &&
+		State != InGameCharacterState::Dash)
 	{
 		Renderer->ChangeFrameAnimation("Ingame" + Name + "Jump");
 	}
 
-	else if (State == InGameCharacterState::Idle)
+	else
 	{
-		if (AttackState == InGameCharacterAttackState::Shoot)
+		if (State == InGameCharacterState::Prepare)
 		{
-			if (VerticalDir == "Up")
-			{
-				Renderer->ChangeFrameAnimation("Ingame" + Name + "ShootUp");
-			}
-			else
-			{
-				Renderer->ChangeFrameAnimation("Ingame" + Name + "ShootStraight");
-			}
+			Renderer->ChangeFrameAnimation("Ingame" + Name + "Intro");
 		}
-		else
-		{
-			if (VerticalDir == "Up")
-			{
-				Renderer->ChangeFrameAnimation("Ingame" + Name + "AimUp");
-			}
-			else
-			{
-				Renderer->ChangeFrameAnimation("Ingame" + Name + "Idle");
-			}
-		}
-	}
 
-	else if (State == InGameCharacterState::Aim)
-	{
-		if (AttackState == InGameCharacterAttackState::Shoot)
+		if (State == InGameCharacterState::Dash)
 		{
-			if (VerticalDir == "Up")
+			Renderer->ChangeFrameAnimation("Ingame" + Name + "Dash");
+		}
+
+		else if (State == InGameCharacterState::Idle)
+		{
+			if (AttackState == InGameCharacterAttackState::Shoot)
 			{
-				if (true == GameEngineInput::GetInst()->IsPress("MoveRight") ||
-					true == GameEngineInput::GetInst()->IsPress("MoveLeft"))
-				{
-					Renderer->ChangeFrameAnimation("Ingame" + Name + "ShootDiagUp");
-				}
-				else
+				if (VerticalDir == "Up")
 				{
 					Renderer->ChangeFrameAnimation("Ingame" + Name + "ShootUp");
 				}
-			}
-			else  if (VerticalDir == "Down")
-			{
-				if (true == GameEngineInput::GetInst()->IsPress("MoveRight") ||
-					true == GameEngineInput::GetInst()->IsPress("MoveLeft"))
-				{
-					Renderer->ChangeFrameAnimation("Ingame" + Name + "ShootDiagDown");
-				}
 				else
 				{
-					Renderer->ChangeFrameAnimation("Ingame" + Name + "ShootDown");
+					Renderer->ChangeFrameAnimation("Ingame" + Name + "ShootStraight");
 				}
 			}
 			else
 			{
-				Renderer->ChangeFrameAnimation("Ingame" + Name + "ShootStraight");
-			}
-		}
-
-		else
-		{
-			if (VerticalDir == "Up")
-			{
-				if (true == GameEngineInput::GetInst()->IsPress("MoveRight") ||
-					true == GameEngineInput::GetInst()->IsPress("MoveLeft"))
-				{
-					Renderer->ChangeFrameAnimation("Ingame" + Name + "AimDiagUp");
-				}
-				else
+				if (VerticalDir == "Up")
 				{
 					Renderer->ChangeFrameAnimation("Ingame" + Name + "AimUp");
 				}
-			}
-			else if (VerticalDir == "Down")
-			{
-				if (true == GameEngineInput::GetInst()->IsPress("MoveRight") ||
-					true == GameEngineInput::GetInst()->IsPress("MoveLeft"))
+				else
 				{
-					Renderer->ChangeFrameAnimation("Ingame" + Name + "AimDiagDown");
+					Renderer->ChangeFrameAnimation("Ingame" + Name + "Idle");
+				}
+			}
+		}
+
+		else if (State == InGameCharacterState::Aim)
+		{
+			if (AttackState == InGameCharacterAttackState::Shoot)
+			{
+				if (VerticalDir == "Up")
+				{
+					if (true == GameEngineInput::GetInst()->IsPress("MoveRight") ||
+						true == GameEngineInput::GetInst()->IsPress("MoveLeft"))
+					{
+						Renderer->ChangeFrameAnimation("Ingame" + Name + "ShootDiagUp");
+					}
+					else
+					{
+						Renderer->ChangeFrameAnimation("Ingame" + Name + "ShootUp");
+					}
+				}
+				else  if (VerticalDir == "Down")
+				{
+					if (true == GameEngineInput::GetInst()->IsPress("MoveRight") ||
+						true == GameEngineInput::GetInst()->IsPress("MoveLeft"))
+					{
+						Renderer->ChangeFrameAnimation("Ingame" + Name + "ShootDiagDown");
+					}
+					else
+					{
+						Renderer->ChangeFrameAnimation("Ingame" + Name + "ShootDown");
+					}
 				}
 				else
 				{
-					Renderer->ChangeFrameAnimation("Ingame" + Name + "AimDown");
+					Renderer->ChangeFrameAnimation("Ingame" + Name + "ShootStraight");
+				}
+			}
+
+			else
+			{
+				if (VerticalDir == "Up")
+				{
+					if (true == GameEngineInput::GetInst()->IsPress("MoveRight") ||
+						true == GameEngineInput::GetInst()->IsPress("MoveLeft"))
+					{
+						Renderer->ChangeFrameAnimation("Ingame" + Name + "AimDiagUp");
+					}
+					else
+					{
+						Renderer->ChangeFrameAnimation("Ingame" + Name + "AimUp");
+					}
+				}
+				else if (VerticalDir == "Down")
+				{
+					if (true == GameEngineInput::GetInst()->IsPress("MoveRight") ||
+						true == GameEngineInput::GetInst()->IsPress("MoveLeft"))
+					{
+						Renderer->ChangeFrameAnimation("Ingame" + Name + "AimDiagDown");
+					}
+					else
+					{
+						Renderer->ChangeFrameAnimation("Ingame" + Name + "AimDown");
+					}
+				}
+				else
+				{
+					Renderer->ChangeFrameAnimation("Ingame" + Name + "AimStraight");
+				}
+			}
+		}
+
+		else if (State == InGameCharacterState::Duck)
+		{
+			if (AttackState == InGameCharacterAttackState::Shoot)
+			{
+				Renderer->ChangeFrameAnimation("Ingame" + Name + "DuckShoot");
+			}
+
+			else
+			{
+				if (IsIdleDownStartAnimationChanged == false)
+				{
+					Renderer->ChangeFrameAnimation("Ingame" + Name + "IdleDownStart");
+				}
+				else
+				{
+					Renderer->ChangeFrameAnimation("Ingame" + Name + "IdleDown");
+				}
+			}
+		}
+
+		else if (State == InGameCharacterState::Walk)
+		{
+			if (AttackState == InGameCharacterAttackState::Shoot)
+			{
+				if (VerticalDir == "Up")
+				{
+					Renderer->ChangeFrameAnimation("Ingame" + Name + "RunShootDiagUp");
+				}
+				else
+				{
+					Renderer->ChangeFrameAnimation("Ingame" + Name + "RunShootStraight");
 				}
 			}
 			else
 			{
-				Renderer->ChangeFrameAnimation("Ingame" + Name + "AimStraight");
+				Renderer->ChangeFrameAnimation("Ingame" + Name + "Run");
 			}
-		}
-	}
 
-	else if (State == InGameCharacterState::Duck)
-	{
-		if (AttackState == InGameCharacterAttackState::Shoot)
-		{
-			Renderer->ChangeFrameAnimation("Ingame" + Name + "DuckShoot");
 		}
-
-		else
-		{
-			if (IsIdleDownStartAnimationChanged == false)
-			{
-				Renderer->ChangeFrameAnimation("Ingame" + Name + "IdleDownStart");
-			}
-			else
-			{
-				Renderer->ChangeFrameAnimation("Ingame" + Name + "IdleDown");
-			}
-		}
-	}
-
-	else if (State == InGameCharacterState::Walk)
-	{
-		if (AttackState == InGameCharacterAttackState::Shoot)
-		{
-			if (VerticalDir == "Up")
-			{
-				Renderer->ChangeFrameAnimation("Ingame" + Name + "RunShootDiagUp");
-			}
-			else
-			{
-				Renderer->ChangeFrameAnimation("Ingame" + Name + "RunShootStraight");
-			}
-		}
-		else
-		{
-			Renderer->ChangeFrameAnimation("Ingame" + Name + "Run");
-		}
-
 	}
 
 	if (HorizontalDir == "Center")
@@ -259,6 +270,7 @@ void InGameCharacterAnimationControllerComponent::Start()
 		InGameCharacter->GetAttackStateChangedDelegate().Add(std::bind(&InGameCharacterAnimationControllerComponent::OnAttackStateChanged, this, std::placeholders::_1));
 		InGameCharacter->GetVerticalDirectionChangedDelegate().Add(std::bind(&InGameCharacterAnimationControllerComponent::OnVerticalDirectionChanged, this, std::placeholders::_1));
 		InGameCharacter->GetHorizontalDirectionChangedDelegate().Add(std::bind(&InGameCharacterAnimationControllerComponent::OnHorizontalDirectionChanged, this, std::placeholders::_1));
+		InGameCharacter->GetIsOnGroundChangedDelegate().Add(std::bind(&InGameCharacterAnimationControllerComponent::OnIsOnGroundChanged, this, std::placeholders::_1));
 
 		GameEngineTextureRenderer* Renderer = InGameCharacter->GetRenderer();
 	}

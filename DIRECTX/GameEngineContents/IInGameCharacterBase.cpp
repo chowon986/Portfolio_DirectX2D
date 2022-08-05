@@ -6,6 +6,7 @@ IInGameCharacterBase::IInGameCharacterBase()
 	, Renderer(nullptr)
 	, VerticalDir("Center")
 	, HorizontalDir("Center")
+	, IsOnGround(false)
 {
 }
 
@@ -57,5 +58,14 @@ void IInGameCharacterBase::SetRenderer(GameEngineTextureRenderer* _Renderer)
 void IInGameCharacterBase::SetPhysicsComponent(PhysicsComponent* _Physics)
 {
 	Physics = _Physics;
+}
+
+void IInGameCharacterBase::SetIsOnGround(bool _IsOnGround)
+{
+	if (IsOnGround != _IsOnGround)
+	{
+		IsOnGround = _IsOnGround;
+		IsOnGroundChangedDelegate.Invoke(IsOnGround);
+	}
 }
 

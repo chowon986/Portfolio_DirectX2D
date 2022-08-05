@@ -33,7 +33,7 @@ void GameEngineActor::AllUpdate(float _ScaleDeltaTime, float _DeltaTime)
 		{
 			continue;
 		}
-
+		/// √ 
 		if (GameEngineActor* ChildActor = dynamic_cast<GameEngineActor*>(Com))
 		{
 			ChildActor->AllUpdate(_ScaleDeltaTime, _DeltaTime);

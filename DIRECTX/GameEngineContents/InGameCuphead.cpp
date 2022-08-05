@@ -49,8 +49,7 @@ void InGameCuphead::Start()
 	Renderer->AnimationBindEnd("IngameCupheadIntro", &InGameCuphead::OnPrepareAnimationEnded, this);
 
 	// Jump
-	Renderer->CreateFrameAnimationCutTexture("IngameCupheadJump", FrameAnimation_DESC("Cup.png", 20, 27, 0.1f, true));
-	Renderer->AnimationBindEnd("IngameCupheadJump", &InGameCuphead::OnJumpAnimationEnded, this);
+	Renderer->CreateFrameAnimationCutTexture("IngameCupheadJump", FrameAnimation_DESC("Cup.png", 20, 27, 0.05f, true));
 
 	// Parry
 	Renderer->CreateFrameAnimationCutTexture("IngameCupheadParryHand", FrameAnimation_DESC("Cup.png", 120, 127, 0.1f, true));
@@ -90,8 +89,8 @@ void InGameCuphead::Start()
 	Renderer->ScaleToCutTexture(0);
 	Renderer->SetPivot(PIVOTMODE::BOT);
 
-	SetPhysicsComponent(CreateComponent<PhysicsComponent>());
 	Movement = CreateComponent<InGameCharacterMovementCompmonent>();
+	SetPhysicsComponent(CreateComponent<PhysicsComponent>());
 	Animation = CreateComponent<InGameCharacterAnimationControllerComponent>();
 	Animation->SetCharacterName("Cuphead");
 
@@ -125,65 +124,8 @@ void InGameCuphead::Update(float _DeltaTime)
 		return;
 	}
 
-	if (true == GameEngineInput::GetInst()->IsPress("MoveLeft"))
-	{
-		SetHorizontalDirection("Left");
-	}
-	else if (true == GameEngineInput::GetInst()->IsPress("MoveRight"))
-	{
-		SetHorizontalDirection("Right");
-	}
-	else
-	{
-		SetHorizontalDirection("Center");
-	}
-	
-	if (true == GameEngineInput::GetInst()->IsPress("MoveUp"))
-	{
-		SetVerticalDirection("Up");
-	}
-	else if (true == GameEngineInput::GetInst()->IsPress("MoveDown"))
-	{
-		SetVerticalDirection("Down");
-	}
-	else
-	{
-		SetVerticalDirection("Center");
-	}
-
-	if (true == GameEngineInput::GetInst()->IsDown("Dash"))
-	{
-		IsInputEnabled = false;
-		Dash();
-	}
-
-	else if (true == GameEngineInput::GetInst()->IsDown("Jump"))
-	{
-		IsInputEnabled = false;
-		Jump();
-	}
-	
-	else if (true == GameEngineInput::GetInst()->IsPress("Aim"))
-	{
-		Aim();
-	}
-
-	else if (true == GameEngineInput::GetInst()->IsPress("MoveDown"))
-	{
-		Duck(); 
-	}
-
-	else if (true == GameEngineInput::GetInst()->IsPress("MoveLeft") ||
-	         true == GameEngineInput::GetInst()->IsPress("MoveRight"))
-	{
-		Walk();
-	}
-
-	else
-	{
-
-		Idle();
-	}
+	UpdateDirection();
+	UpdateState();
 
 	if (true == GameEngineInput::GetInst()->IsPress("Shoot") &&
 		GetState() != InGameCharacterState::Dash)
@@ -216,10 +158,6 @@ void InGameCuphead::OnDashAnimationEnded(const FrameAnimation_DESC& _Info)
 	IsInputEnabled = true;
 }
 
-void InGameCuphead::OnJumpAnimationEnded(const FrameAnimation_DESC& _Info)
-{
-	IsInputEnabled = true;
-}
 
 void InGameCuphead::Aim()
 {
@@ -247,7 +185,8 @@ void InGameCuphead::Duck()
 void InGameCuphead::Jump()
 {
 	SetState(InGameCharacterState::Jump);
-	GetPhysicsComponent()->AddForce(10);
+	GetPhysicsComponent()->Reset();
+	GetPhysicsComponent()->AddForce(55);
 }
 
 void InGameCuphead::Parry()
@@ -274,4 +213,68 @@ void InGameCuphead::SpecialAttack()
 
 void InGameCuphead::SuperAttack()
 {
+}
+
+void InGameCuphead::UpdateState()
+{
+	if (true == GameEngineInput::GetInst()->IsDown("Dash"))
+	{
+		IsInputEnabled = false;
+		Dash();
+	}
+
+	else if (true == GameEngineInput::GetInst()->IsDown("Jump"))
+	{
+		Jump();
+	}
+
+	else if (true == GameEngineInput::GetInst()->IsPress("Aim"))
+	{
+		Aim();
+	}
+
+	else if (true == GameEngineInput::GetInst()->IsPress("MoveDown"))
+	{
+		Duck();
+	}
+
+	else if (true == GameEngineInput::GetInst()->IsPress("MoveLeft") ||
+		true == GameEngineInput::GetInst()->IsPress("MoveRight"))
+	{
+		Walk();
+	}
+
+	else
+	{
+		Idle();
+	}
+}
+
+void InGameCuphead::UpdateDirection()
+{
+	if (true == GameEngineInput::GetInst()->IsPress("MoveLeft"))
+	{
+		SetHorizontalDirection("Left");
+	}
+	else if (true == GameEngineInput::GetInst()->IsPress("MoveRight"))
+	{
+		SetHorizontalDirection("Right");
+	}
+	else
+	{
+		SetHorizontalDirection("Center");
+	}
+
+	if (true == GameEngineInput::GetInst()->IsPress("MoveUp"))
+	{
+		SetVerticalDirection("Up");
+	}
+	else if (true == GameEngineInput::GetInst()->IsPress("MoveDown"))
+	{
+		SetVerticalDirection("Down");
+	}
+	else
+	{
+		SetVerticalDirection("Center");
+	}
 }
