@@ -31,5 +31,6 @@ protected:
 private:
 	float4 Direction;
 	float Speed;
+	float InitialY;
 };
 

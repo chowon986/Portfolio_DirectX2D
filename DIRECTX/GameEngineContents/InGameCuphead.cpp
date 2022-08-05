@@ -106,11 +106,11 @@ void InGameCuphead::Start()
 		//ConvergeShooter* Shooter = GetLevel()->CreateActor<ConvergeShooter>();
 		//Shooter->SetParent(this);
 
-		//BoomerangShooter* Shooter = GetLevel()->CreateActor<BoomerangShooter>();
-		//Shooter->SetParent(this);
-
-		ChargerShooter* Shooter = GetLevel()->CreateActor<ChargerShooter>();
+		BoomerangShooter* Shooter = GetLevel()->CreateActor<BoomerangShooter>();
 		Shooter->SetParent(this);
+
+		//ChargerShooter* Shooter = GetLevel()->CreateActor<ChargerShooter>();
+		//Shooter->SetParent(this);
 	}
 }
 

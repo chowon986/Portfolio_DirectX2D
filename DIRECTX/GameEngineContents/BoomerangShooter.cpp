@@ -5,6 +5,7 @@
 
 BoomerangShooter::BoomerangShooter()
 {
+	IntervalTime = 0.5f;
 }
 
 BoomerangShooter::~BoomerangShooter()

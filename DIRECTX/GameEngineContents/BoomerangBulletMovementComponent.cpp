@@ -7,6 +7,7 @@ BoomerangBulletMovementComponent::BoomerangBulletMovementComponent()
 	: Speed(10.0f)
 	, Direction(float4::ZERO)
 {
+	InitialY = 2.0f;
 }
 
 BoomerangBulletMovementComponent::~BoomerangBulletMovementComponent()
@@ -24,10 +25,15 @@ void BoomerangBulletMovementComponent::Update(float _DeltaTime)
 	BoomerangBulletBase* Bullet = GetParent<BoomerangBulletBase>();
 	if (Bullet != nullptr)
 	{
-		Speed -= 20*_DeltaTime;
+		Speed -= 10 * _DeltaTime;
 
 		_Direction *= Speed;
-		_Direction.y += 0.25;
+		InitialY -= _DeltaTime;
+		if (InitialY <= 0)
+		{
+			InitialY = 0;
+		}
+		_Direction.y += InitialY;
 		Bullet->GetTransform().SetWorldMove(_Direction);
 	}
 

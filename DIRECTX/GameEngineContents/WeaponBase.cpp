@@ -95,7 +95,7 @@ void WeaponBase::Update(float _DeltaTime)
 		return;
 	}
 
-	if (ElapsedTime == -1 || IntervalTime == -1)
+	if (ElapsedTime == -1)
 	{
 		return;
 	}
@@ -253,19 +253,15 @@ void WeaponBase::OnCharacterAttackStateChanged(InGameCharacterAttackState _Attac
 	switch (_AttackState)
 	{
 	case InGameCharacterAttackState::None:
-		IntervalTime = -1;
 		ElapsedTime = -1;
 		break;
 	case InGameCharacterAttackState::Shoot:
-		IntervalTime = 0.2f;
 		ElapsedTime = 0.0f;
 		break;
 	case InGameCharacterAttackState::SpecialAttack:
-		IntervalTime = 1.0f;
 		ElapsedTime = 0.0f;
 		break;
 	case InGameCharacterAttackState::SuperAttack:
-		IntervalTime = 5.0f;
 		ElapsedTime = 0.0f;
 		break;
 	}
