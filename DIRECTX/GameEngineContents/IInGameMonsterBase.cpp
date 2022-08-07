@@ -21,6 +21,11 @@ void IInGameMonsterBase::SetAttackState(InGameMonsterAttackState _State)
 	}
 }
 
+void IInGameMonsterBase::SetRenderer(GameEngineTextureRenderer* _Renderer)
+{
+	Renderer = _Renderer;
+}
+
 void IInGameMonsterBase::SetState(InGameMonsterState _State)
 {
 	if (State != _State)

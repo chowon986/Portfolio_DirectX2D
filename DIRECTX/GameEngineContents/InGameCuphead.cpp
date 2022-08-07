@@ -117,7 +117,8 @@ void InGameCuphead::Start()
 void InGameCuphead::Update(float _DeltaTime)
 {
 
-	GetLevel()->GetMainCameraActorTransform().SetLocalPosition({640,-360 });
+	//GetLevel()->GetMainCameraActorTransform().SetLocalPosition({640,-360 });
+	GetLevel()->GetMainCameraActorTransform().SetLocalPosition({ GetTransform().GetLocalPosition().x, GetTransform().GetLocalPosition().y });
 
 	if (IsInputEnabled == false)
 	{

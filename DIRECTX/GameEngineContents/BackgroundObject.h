@@ -26,10 +26,6 @@ public:
 	void SetMoveSpeed(float _MoveSpeed);
 	float GetMoveSpeed() { return MoveSpeed; }
 
-	void SetStartPosition(float4 _StartPosition);
-	float4 GetStartPosition() { return StartPosition; }
-
-
 protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;
@@ -38,7 +34,6 @@ protected:
 private:
 	GameEngineTextureRenderer* Renderer;
 	float4 Direction;
-	float4 StartPosition;
 	float MoveSpeed;
 };
 

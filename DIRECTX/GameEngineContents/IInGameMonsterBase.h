@@ -42,6 +42,9 @@ public:
 	void SetAttackState(InGameMonsterAttackState _State);
 	InGameMonsterAttackState GetAttackState() { return  AttackState; }
 
+	void SetRenderer(GameEngineTextureRenderer* _Renderer);
+	GameEngineTextureRenderer* GetRenderer() { return Renderer; }
+
 	MulticastDelegate<InGameMonsterState>& GetStateChangedDelegate() { return StateChangedDelegate; }
 	MulticastDelegate<InGameMonsterAttackState>& GetAttackStateChangedDelegate() { return AttackStateChangedDelegate; }
 

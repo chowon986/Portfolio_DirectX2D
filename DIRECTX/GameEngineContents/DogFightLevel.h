@@ -21,6 +21,13 @@ public:
 public:
 	void ColMapOnOffSwitch();
 	void ResetPositionCloudLeftA(const FrameAnimation_DESC& _Info);
+	void ResetPositionCloudLeftA2(const FrameAnimation_DESC& _Info);
+	void ResetPositionCloudLeftB(const FrameAnimation_DESC& _Info);
+	void ResetPositionCloudLeftC(const FrameAnimation_DESC& _Info);
+	void ResetPositionCloudLeftC2(const FrameAnimation_DESC& _Info);
+	void ResetPositionCloudLeftD(const FrameAnimation_DESC& _Info);
+	void ResetPositionCloudLeftD2(const FrameAnimation_DESC& _Info);
+	void ResetPositionPatchLeftA(const FrameAnimation_DESC& _Info);
 
 protected:
 	void Start() override;
@@ -31,6 +38,16 @@ private:
 	BackgroundHills* Hills;
 	GameEngineTextureRenderer* ColMapRenderer;
 	GameEngineTextureRenderer* BackgroundSkyRenderer;
-	BackgroundObject* CloudLeftA;
+	// Cloud
+	BackgroundObject* CloudA1;
+	BackgroundObject* CloudA2;
+	BackgroundObject* CloudB2;
+	BackgroundObject* CloudC1;
+	BackgroundObject* CloudC2;
+	BackgroundObject* CloudD1;
+	BackgroundObject* CloudD2;
+	// 
+	BackgroundObject* PatchLeftA;
+
 };
 

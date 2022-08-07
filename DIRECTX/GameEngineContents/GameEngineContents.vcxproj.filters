@@ -70,9 +70,6 @@
     <Filter Include="Components\Character\InGame">
       <UniqueIdentifier>{3235f3fa-546e-4bbb-82a0-41001af88b10}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Components\Character\WorldMap">
-      <UniqueIdentifier>{62b914ad-843b-440d-b661-f63fe5110ca5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Actor\Play\InGame\Object">
       <UniqueIdentifier>{3eb5b2c7-75d8-450a-92e6-07ddb92d508e}</UniqueIdentifier>
     </Filter>
@@ -96,6 +93,9 @@
     </Filter>
     <Filter Include="Actor\PreCompile">
       <UniqueIdentifier>{439c0504-814e-4f90-8507-3f4dacd0226c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\Monster\WorldMap">
+      <UniqueIdentifier>{62b914ad-843b-440d-b661-f63fe5110ca5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -313,10 +313,10 @@
       <Filter>Components\Character\InGame</Filter>
     </ClInclude>
     <ClInclude Include="MovementComponent.h">
-      <Filter>Components\Character\WorldMap</Filter>
+      <Filter>Components\Monster\WorldMap</Filter>
     </ClInclude>
     <ClInclude Include="WorldMapCharacterAnimationControllerComponent.h">
-      <Filter>Components\Character\WorldMap</Filter>
+      <Filter>Components\Monster\WorldMap</Filter>
     </ClInclude>
     <ClInclude Include="ConvergeBullet.h">
       <Filter>Actor\Weapon\Bullet</Filter>
@@ -576,10 +576,10 @@
       <Filter>Components\Character\InGame</Filter>
     </ClCompile>
     <ClCompile Include="MovementComponent.cpp">
-      <Filter>Components\Character\WorldMap</Filter>
+      <Filter>Components\Monster\WorldMap</Filter>
     </ClCompile>
     <ClCompile Include="WorldMapCharacterAnimationControllerComponent.cpp">
-      <Filter>Components\Character\WorldMap</Filter>
+      <Filter>Components\Monster\WorldMap</Filter>
     </ClCompile>
     <ClCompile Include="ConvergeBullet.cpp">
       <Filter>Actor\Weapon\Bullet</Filter>

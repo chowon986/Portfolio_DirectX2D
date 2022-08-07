@@ -44,9 +44,9 @@ protected:
 
 private:
 	GameEngineTextureRenderer* Renderer;
-	InGameCharacterMovementCompmonent* Movement;
 	bool IsInputEnabled;
 	bool IsOnGround;
 	GameEngineCollision* Collision;
+	InGameCharacterMovementCompmonent* Movement;
 	InGameCharacterAnimationControllerComponent* Animation;
 };

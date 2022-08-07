@@ -4,7 +4,6 @@
 BackgroundObject::BackgroundObject()
 	: Renderer(nullptr)
 	, Direction(float4::ZERO)
-	, StartPosition(float4::ZERO)
 	, MoveSpeed(0.0f)
 {
 }
@@ -28,20 +27,18 @@ void BackgroundObject::SetMoveSpeed(float _MoveSpeed)
 	MoveSpeed = _MoveSpeed;
 }
 
-void BackgroundObject::SetStartPosition(float4 _StartPosition)
-{
-	StartPosition = _StartPosition;
-}
-
 void BackgroundObject::Start()
 {
-	Renderer = CreateComponent<GameEngineTextureRenderer>();
-	GetTransform().SetLocalPosition(GetStartPosition());
+	GameEngineTextureRenderer* Renderer = CreateComponent<GameEngineTextureRenderer>();
 	SetRenderer(Renderer);
 }
 
 void BackgroundObject::Update(float _DeltaTime)
 {
+	if (Renderer == nullptr)
+	{
+		return;
+	}
 	Renderer->ScaleToTexture();
 	GetTransform().SetWorldMove(Direction * MoveSpeed * _DeltaTime);
 }

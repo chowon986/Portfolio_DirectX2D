@@ -3,7 +3,7 @@
 
 enum class InGameCharacterState;
 class GameEngineCollision;
-class InGameMonsterMovementCompmonent;
+class InGameMonsterMovementComponent;
 class InGameMonsterAnimationControllerComponent;
 class Bulldog : public IInGameMonsterBase
 {
@@ -28,7 +28,8 @@ protected:
 	void Die() override;
 
 private:
-	InGameMonsterMovementCompmonent* Movement;
+	GameEngineTextureRenderer* Renderer;
+	InGameMonsterMovementComponent* Movement;
 	bool IsInputEnabled;
 	bool IsOnGround;
 	GameEngineCollision* Collision;
