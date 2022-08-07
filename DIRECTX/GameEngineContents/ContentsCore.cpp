@@ -73,6 +73,15 @@ void ContentsCore::Start()
 		GameEngineTexture::Load(Textures3[i].GetFullPath());
 	}
 
+	Dir.MoveParent();
+	Dir.Move("15DogFightLevel");
+	std::vector<GameEngineFile> Textures3 = Dir.GetAllFile();
+
+	for (size_t i = 0; i < Textures3.size(); i++)
+	{
+		GameEngineTexture::Load(Textures3[i].GetFullPath());
+	}
+
 	GameEngineTexture::Cut("Cup.png", 20, 20);
 	GameEngineTexture::Cut("Cup_Dash.png", 8, 1);
 
