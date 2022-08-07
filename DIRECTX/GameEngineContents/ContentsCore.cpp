@@ -75,11 +75,11 @@ void ContentsCore::Start()
 
 	Dir.MoveParent();
 	Dir.Move("15DogFightLevel");
-	std::vector<GameEngineFile> Textures3 = Dir.GetAllFile();
+	std::vector<GameEngineFile> Textures4 = Dir.GetAllFile();
 
-	for (size_t i = 0; i < Textures3.size(); i++)
+	for (size_t i = 0; i < Textures4.size(); i++)
 	{
-		GameEngineTexture::Load(Textures3[i].GetFullPath());
+		GameEngineTexture::Load(Textures4[i].GetFullPath());
 	}
 
 	GameEngineTexture::Cut("Cup.png", 20, 20);

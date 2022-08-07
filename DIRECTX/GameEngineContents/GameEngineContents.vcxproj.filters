@@ -85,6 +85,12 @@
     <Filter Include="Level\01 Play">
       <UniqueIdentifier>{e2a73822-3a6e-4199-9294-e2096fc9417f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Actor\Play\InGame\NPC">
+      <UniqueIdentifier>{ba948490-ad7a-49dd-8c60-c813e2565b4b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\Monster">
+      <UniqueIdentifier>{8d25c102-e447-435b-a6da-566bb735d797}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ContentsCore.h">
@@ -336,6 +342,18 @@
     <ClInclude Include="PhysicsComponent.h">
       <Filter>Components\Character\InGame</Filter>
     </ClInclude>
+    <ClInclude Include="Bulldog.h">
+      <Filter>Actor\Play\InGame\NPC</Filter>
+    </ClInclude>
+    <ClInclude Include="IInGameMonsterBase.h">
+      <Filter>Actor\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="InGameMonsterMovementComponent.h">
+      <Filter>Components\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="InGameMonsterAnimationControllerComponent.h">
+      <Filter>Components\Monster</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp">
@@ -580,6 +598,18 @@
     </ClCompile>
     <ClCompile Include="PhysicsComponent.cpp">
       <Filter>Components\Character\InGame</Filter>
+    </ClCompile>
+    <ClCompile Include="Bulldog.cpp">
+      <Filter>Actor\Play\InGame\NPC</Filter>
+    </ClCompile>
+    <ClCompile Include="IInGameMonsterBase.cpp">
+      <Filter>Actor\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="InGameMonsterMovementComponent.cpp">
+      <Filter>Components\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="InGameMonsterAnimationControllerComponent.cpp">
+      <Filter>Components\Monster</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

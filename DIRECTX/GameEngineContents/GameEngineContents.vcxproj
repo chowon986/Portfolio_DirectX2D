@@ -167,6 +167,7 @@
     <ClInclude Include="BoomerangBulletBase.h" />
     <ClInclude Include="BoomerangBulletMovementComponent.h" />
     <ClInclude Include="BoomerangShooter.h" />
+    <ClInclude Include="Bulldog.h" />
     <ClInclude Include="BulletBase.h" />
     <ClInclude Include="BulletMovementComponent.h" />
     <ClInclude Include="Cart.h" />
@@ -200,6 +201,9 @@
     <ClInclude Include="InGameCharacterAnimationControllerComponent.h" />
     <ClInclude Include="InGameCharacterMovementCompmonent.h" />
     <ClInclude Include="InGameCuphead.h" />
+    <ClInclude Include="IInGameMonsterBase.h" />
+    <ClInclude Include="InGameMonsterAnimationControllerComponent.h" />
+    <ClInclude Include="InGameMonsterMovementComponent.h" />
     <ClInclude Include="InGameMugman.h" />
     <ClInclude Include="INonPlayerCharacterBase.h" />
     <ClInclude Include="IParriable.h" />
@@ -264,6 +268,7 @@
     <ClCompile Include="BoomerangBulletBase.cpp" />
     <ClCompile Include="BoomerangBulletMovementComponent.cpp" />
     <ClCompile Include="BoomerangShooter.cpp" />
+    <ClCompile Include="Bulldog.cpp" />
     <ClCompile Include="BulletBase.cpp" />
     <ClCompile Include="BulletMovementComponent.cpp" />
     <ClCompile Include="Cart.cpp" />
@@ -295,6 +300,9 @@
     <ClCompile Include="InGameCharacterAnimationControllerComponent.cpp" />
     <ClCompile Include="InGameCharacterMovementCompmonent.cpp" />
     <ClCompile Include="InGameCuphead.cpp" />
+    <ClCompile Include="IInGameMonsterBase.cpp" />
+    <ClCompile Include="InGameMonsterAnimationControllerComponent.cpp" />
+    <ClCompile Include="InGameMonsterMovementComponent.cpp" />
     <ClCompile Include="InGameMugman.cpp" />
     <ClCompile Include="INonPlayerCharacterBase.cpp" />
     <ClCompile Include="IParriable.cpp" />
