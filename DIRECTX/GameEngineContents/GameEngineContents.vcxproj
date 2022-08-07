@@ -158,6 +158,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Background.h" />
+    <ClInclude Include="BackgroundHills.h" />
+    <ClInclude Include="BackgroundObject.h" />
     <ClInclude Include="Bakery.h" />
     <ClInclude Include="BeforeTitleLevel.h" />
     <ClInclude Include="Boat.h" />
@@ -259,6 +261,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Background.cpp" />
+    <ClCompile Include="BackgroundHills.cpp" />
+    <ClCompile Include="BackgroundObject.cpp" />
     <ClCompile Include="Bakery.cpp" />
     <ClCompile Include="BeforeTitleLevel.cpp" />
     <ClCompile Include="Boat.cpp" />

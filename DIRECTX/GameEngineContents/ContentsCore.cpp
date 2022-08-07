@@ -1,13 +1,15 @@
 #include "PreCompile.h"
 #include "ContentsCore.h"
+
 #include "PlayLevel.h"
+#include "ShopLevel.h"
 #include "TitleLevel.h"
-#include "BeforeTitleLevel.h"
 #include "SelectLevel.h"
+#include "DogFightLevel.h"
+#include "TutorialLevel.h"
 #include "WorldMapLevel.h"
 #include "HourglassLevel.h"
-#include "ShopLevel.h"
-#include "TutorialLevel.h"
+#include "BeforeTitleLevel.h"
 
 #pragma comment(lib, "GameEngineBase.lib")
 
@@ -85,15 +87,16 @@ void ContentsCore::Start()
 	GameEngineTexture::Cut("Cup.png", 20, 20);
 	GameEngineTexture::Cut("Cup_Dash.png", 8, 1);
 
-	CreateLevel<BeforeTitleLevel>("BeforeTitle");
-	CreateLevel<TitleLevel>("Title");
+	//CreateLevel<BeforeTitleLevel>("BeforeTitle");
+	//CreateLevel<TitleLevel>("Title");
 	CreateLevel<SelectLevel>("Select");
-	CreateLevel<HourglassLevel>("Hourglass");
+	//CreateLevel<HourglassLevel>("Hourglass");
 	CreateLevel<WorldMapLevel>("WorldMap");
-	CreateLevel<ShopLevel>("Shop");
+	//CreateLevel<ShopLevel>("Shop");
 	CreateLevel<TutorialLevel>("Tutorial");
-	CreateLevel<PlayLevel>("Play");
-	ChangeLevel("Tutorial");
+	//CreateLevel<PlayLevel>("Play");
+	CreateLevel<DogFightLevel>("DogFight");
+	ChangeLevel("DogFight");
 
 	GameEngineFont::Load("±Ã¼­");
 

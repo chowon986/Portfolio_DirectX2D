@@ -16,9 +16,6 @@
     <Filter Include="Global">
       <UniqueIdentifier>{5c0d327c-f680-4cd4-a5c1-9a7caec22b46}</UniqueIdentifier>
     </Filter>
-    <Filter Include="PreCompile">
-      <UniqueIdentifier>{439c0504-814e-4f90-8507-3f4dacd0226c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Actor\Play\WorldMap">
       <UniqueIdentifier>{d78df34a-eff3-49ab-afe2-4970c759bb9c}</UniqueIdentifier>
     </Filter>
@@ -91,6 +88,15 @@
     <Filter Include="Components\Monster">
       <UniqueIdentifier>{8d25c102-e447-435b-a6da-566bb735d797}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Actor\Play\InGame\Object\Tutorial">
+      <UniqueIdentifier>{f7603430-46f6-4671-bd55-e20bc81764ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\Play\InGame\Object\DogFight">
+      <UniqueIdentifier>{43eb2f33-75e0-451e-9445-f69de1a8b8b5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\PreCompile">
+      <UniqueIdentifier>{439c0504-814e-4f90-8507-3f4dacd0226c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ContentsCore.h">
@@ -100,7 +106,7 @@
       <Filter>Global</Filter>
     </ClInclude>
     <ClInclude Include="PreCompile.h">
-      <Filter>PreCompile</Filter>
+      <Filter>Actor\PreCompile</Filter>
     </ClInclude>
     <ClInclude Include="Background.h">
       <Filter>Actor</Filter>
@@ -312,9 +318,6 @@
     <ClInclude Include="WorldMapCharacterAnimationControllerComponent.h">
       <Filter>Components\Character\WorldMap</Filter>
     </ClInclude>
-    <ClInclude Include="TutorialBackground.h">
-      <Filter>Actor\Play\InGame\Object</Filter>
-    </ClInclude>
     <ClInclude Include="ConvergeBullet.h">
       <Filter>Actor\Weapon\Bullet</Filter>
     </ClInclude>
@@ -354,13 +357,22 @@
     <ClInclude Include="InGameMonsterAnimationControllerComponent.h">
       <Filter>Components\Monster</Filter>
     </ClInclude>
+    <ClInclude Include="TutorialBackground.h">
+      <Filter>Actor\Play\InGame\Object\Tutorial</Filter>
+    </ClInclude>
+    <ClInclude Include="BackgroundHills.h">
+      <Filter>Actor\Play\InGame\Object\DogFight</Filter>
+    </ClInclude>
+    <ClInclude Include="BackgroundObject.h">
+      <Filter>Actor\Play\InGame\Object\DogFight</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp">
       <Filter>Contents</Filter>
     </ClCompile>
     <ClCompile Include="PreCompile.cpp">
-      <Filter>PreCompile</Filter>
+      <Filter>Actor\PreCompile</Filter>
     </ClCompile>
     <ClCompile Include="Background.cpp">
       <Filter>Actor</Filter>
@@ -569,9 +581,6 @@
     <ClCompile Include="WorldMapCharacterAnimationControllerComponent.cpp">
       <Filter>Components\Character\WorldMap</Filter>
     </ClCompile>
-    <ClCompile Include="TutorialBackground.cpp">
-      <Filter>Actor\Play\InGame\Object</Filter>
-    </ClCompile>
     <ClCompile Include="ConvergeBullet.cpp">
       <Filter>Actor\Weapon\Bullet</Filter>
     </ClCompile>
@@ -610,6 +619,15 @@
     </ClCompile>
     <ClCompile Include="InGameMonsterAnimationControllerComponent.cpp">
       <Filter>Components\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="TutorialBackground.cpp">
+      <Filter>Actor\Play\InGame\Object\Tutorial</Filter>
+    </ClCompile>
+    <ClCompile Include="BackgroundHills.cpp">
+      <Filter>Actor\Play\InGame\Object\DogFight</Filter>
+    </ClCompile>
+    <ClCompile Include="BackgroundObject.cpp">
+      <Filter>Actor\Play\InGame\Object\DogFight</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -5,8 +5,10 @@ enum class PIVOTMODE
 {
 	CENTER,
 	LEFTTOP,
+	LEFTCENTER,
 	BOT,
 	CUSTOM,
+	RIGHTTOP,
 };
 
 enum class SCALEMODE

@@ -208,7 +208,6 @@ void MovementComponent::Update(float _DeltaTime)
 	if (false != GroundCheck())
 	{
 		Actor->GetTransform().SetWorldMove(Direction * Speed * _DeltaTime);
-		
 	}
 
 }
