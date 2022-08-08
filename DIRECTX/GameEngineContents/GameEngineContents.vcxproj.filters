@@ -366,6 +366,9 @@
     <ClInclude Include="BackgroundObject.h">
       <Filter>Actor\Play\InGame\Object\DogFight</Filter>
     </ClInclude>
+    <ClInclude Include="BulldogPlane.h">
+      <Filter>Actor\Play\InGame\Object\DogFight</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp">
@@ -627,6 +630,9 @@
       <Filter>Actor\Play\InGame\Object\DogFight</Filter>
     </ClCompile>
     <ClCompile Include="BackgroundObject.cpp">
+      <Filter>Actor\Play\InGame\Object\DogFight</Filter>
+    </ClCompile>
+    <ClCompile Include="BulldogPlane.cpp">
       <Filter>Actor\Play\InGame\Object\DogFight</Filter>
     </ClCompile>
   </ItemGroup>

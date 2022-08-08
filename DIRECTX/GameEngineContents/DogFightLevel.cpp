@@ -5,6 +5,7 @@
 #include "BackgroundHills.h"
 #include "BackgroundObject.h"
 #include "Bulldog.h"
+#include "BulldogPlane.h"
 
 DogFightLevel::DogFightLevel()
 	: ColMapRenderer(nullptr)
@@ -230,13 +231,97 @@ CloudB2->SetMoveSpeed(250.0f);
 		}
 	}
 
+	//{
+	//	Bulldog* PH1BullDog = CreateActor<Bulldog>(GameObjectGroup::Monster);
+	//	if (PH1BullDog == nullptr)
+	//	{
+	//		return;
+	//	}
+	//	PH1BullDog->GetTransform().SetLocalPosition({ 640, -300, (int)ZOrder::NPC });
+	//}
+
 	{
-		Bulldog* PH1BullDog = CreateActor<Bulldog>(GameObjectGroup::Monster);
-		if (PH1BullDog == nullptr)
+		BulldogPlane* PH1BulldogPlane = CreateActor<BulldogPlane>(GameObjectGroup::Monster);
+		if (PH1BulldogPlane == nullptr)
 		{
 			return;
 		}
-		PH1BullDog->GetTransform().SetLocalPosition({ 1000, -100, (int)ZOrder::NPC });
+		GameEngineTextureRenderer* Renderer = PH1BulldogPlane->GetRenderer();
+		Renderer->CreateFrameAnimationFolder("BulldogPlaneFront", FrameAnimation_DESC("BulldogPlaneFront", 0.1f, true));
+		Renderer->ChangeFrameAnimation("BulldogPlaneFront");
+		Renderer->ScaleToTexture();
+		Renderer->SetPivot(PIVOTMODE::BOT);
+		PH1BulldogPlane->GetTransform().SetLocalPosition({ 640, -435, (int)ZOrder::NPC + 1 });
+	}
+
+	{
+		BulldogPlane* PH1BulldogPlane = CreateActor<BulldogPlane>(GameObjectGroup::Monster);
+		if (PH1BulldogPlane == nullptr)
+		{
+			return;
+		}
+		GameEngineTextureRenderer* Renderer = PH1BulldogPlane->GetRenderer();
+		Renderer->CreateFrameAnimationFolder("BulldogPlaneWingLeft", FrameAnimation_DESC("BulldogPlaneWingLeft", 0.1f, true));
+		Renderer->ChangeFrameAnimation("BulldogPlaneWingLeft");
+		Renderer->ScaleToTexture();
+		Renderer->SetPivot(PIVOTMODE::BOT);
+		PH1BulldogPlane->GetTransform().SetLocalPosition({ 300, -400, (int)ZOrder::NPC + 3 });
+	}
+
+	{
+		BulldogPlane* PH1BulldogPlane = CreateActor<BulldogPlane>(GameObjectGroup::Monster);
+		if (PH1BulldogPlane == nullptr)
+		{
+			return;
+		}
+		GameEngineTextureRenderer* Renderer = PH1BulldogPlane->GetRenderer();
+		Renderer->CreateFrameAnimationFolder("BulldogPlaneWingRight", FrameAnimation_DESC("BulldogPlaneWingRight", 0.1f, true));
+		Renderer->ChangeFrameAnimation("BulldogPlaneWingRight");
+		Renderer->ScaleToTexture();
+		Renderer->SetPivot(PIVOTMODE::BOT);
+		PH1BulldogPlane->GetTransform().SetLocalPosition({ 980, -400, (int)ZOrder::NPC + 3 });
+	}
+
+	{
+		BulldogPlane* PH1BulldogPlane = CreateActor<BulldogPlane>(GameObjectGroup::Monster);
+		if (PH1BulldogPlane == nullptr)
+		{
+			return;
+		}
+		GameEngineTextureRenderer* Renderer = PH1BulldogPlane->GetRenderer();
+		Renderer->CreateFrameAnimationFolder("BulldogPlaneBack", FrameAnimation_DESC("BulldogPlaneBack", 0.1f, true));
+		Renderer->ChangeFrameAnimation("BulldogPlaneBack");
+		Renderer->ScaleToTexture();
+		Renderer->SetPivot(PIVOTMODE::BOT);
+		PH1BulldogPlane->GetTransform().SetLocalPosition({ 640, -262, (int)ZOrder::NPC + 2 });
+	}
+
+	{
+		BulldogPlane* PH1BulldogPlane = CreateActor<BulldogPlane>(GameObjectGroup::Monster);
+		if (PH1BulldogPlane == nullptr)
+		{
+			return;
+		}
+		GameEngineTextureRenderer* Renderer = PH1BulldogPlane->GetRenderer();
+		Renderer->CreateFrameAnimationFolder("BulldogPlaneTail", FrameAnimation_DESC("BulldogPlaneTail", 0.1f, true));
+		Renderer->ChangeFrameAnimation("BulldogPlaneTail");
+		Renderer->ScaleToTexture();
+		Renderer->SetPivot(PIVOTMODE::BOT);
+		PH1BulldogPlane->GetTransform().SetLocalPosition({ 640, -170, (int)ZOrder::NPC + 3 });
+	}
+
+	{
+		BulldogPlane* PH1BulldogPlane = CreateActor<BulldogPlane>(GameObjectGroup::Monster);
+		if (PH1BulldogPlane == nullptr)
+		{
+			return;
+		}
+		GameEngineTextureRenderer* Renderer = PH1BulldogPlane->GetRenderer();
+		Renderer->CreateFrameAnimationFolder("BulldogPropelloRingLeft", FrameAnimation_DESC("BulldogPropelloRingLeft", 0.1f, true));
+		Renderer->ChangeFrameAnimation("BulldogPropelloRingLeft");
+		Renderer->ScaleToTexture();
+		Renderer->SetPivot(PIVOTMODE::CENTER);
+		PH1BulldogPlane->GetTransform().SetLocalPosition({ 400, -250, (int)ZOrder::NPC + 3 });
 	}
 
 	WorldMapCuphead* Cuphead = CreateActor<WorldMapCuphead>(GameObjectGroup::Player);

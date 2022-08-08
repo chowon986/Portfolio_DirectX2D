@@ -28,6 +28,8 @@ protected:
 	void Die() override;
 
 private:
+	void SetStateIdle(const FrameAnimation_DESC& _Info);
+private:
 	GameEngineTextureRenderer* Renderer;
 	InGameMonsterMovementComponent* Movement;
 	bool IsInputEnabled;

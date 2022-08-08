@@ -15,9 +15,12 @@ void Bulldog::Start()
 {
 	Renderer = CreateComponent<GameEngineTextureRenderer>();
 	Renderer->CreateFrameAnimationFolder("BulldogIntro", FrameAnimation_DESC("BulldogIntro", 0.1f));
+	Renderer->AnimationBindEnd("BulldogIntro", &Bulldog::SetStateIdle, this);
+	Renderer->CreateFrameAnimationFolder("BulldogIdle", FrameAnimation_DESC("BulldogIdle", 0.1f));
 	Renderer->ChangeFrameAnimation("BulldogIntro");
 	Renderer->ScaleToTexture();
 	Renderer->SetPivot(PIVOTMODE::BOT);
+	SetRenderer(Renderer);
 	Prepare();
 
 	Movement = CreateComponent<InGameMonsterMovementComponent>();
@@ -28,7 +31,6 @@ void Bulldog::Start()
 void Bulldog::Update(float _DeltaTime)
 {
 	Renderer->ScaleToTexture();
-
 }
 
 void Bulldog::TakeDamage()
@@ -42,6 +44,7 @@ void Bulldog::Prepare()
 
 void Bulldog::Idle()
 {
+	SetState(InGameMonsterState::Idle);
 }
 
 void Bulldog::Shoot()
@@ -50,4 +53,9 @@ void Bulldog::Shoot()
 
 void Bulldog::Die()
 {
+}
+
+void Bulldog::SetStateIdle(const FrameAnimation_DESC& _Info)
+{
+	SetState(InGameMonsterState::Idle);
 }

@@ -87,14 +87,14 @@ void ContentsCore::Start()
 	GameEngineTexture::Cut("Cup.png", 20, 20);
 	GameEngineTexture::Cut("Cup_Dash.png", 8, 1);
 
-	//CreateLevel<BeforeTitleLevel>("BeforeTitle");
-	//CreateLevel<TitleLevel>("Title");
+	CreateLevel<BeforeTitleLevel>("BeforeTitle");
+	CreateLevel<TitleLevel>("Title");
 	CreateLevel<SelectLevel>("Select");
-	//CreateLevel<HourglassLevel>("Hourglass");
+	CreateLevel<HourglassLevel>("Hourglass");
 	CreateLevel<WorldMapLevel>("WorldMap");
-	//CreateLevel<ShopLevel>("Shop");
+	CreateLevel<ShopLevel>("Shop");
 	CreateLevel<TutorialLevel>("Tutorial");
-	//CreateLevel<PlayLevel>("Play");
+	CreateLevel<PlayLevel>("Play");
 	CreateLevel<DogFightLevel>("DogFight");
 	ChangeLevel("DogFight");
 

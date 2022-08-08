@@ -170,6 +170,7 @@
     <ClInclude Include="BoomerangBulletMovementComponent.h" />
     <ClInclude Include="BoomerangShooter.h" />
     <ClInclude Include="Bulldog.h" />
+    <ClInclude Include="BulldogPlane.h" />
     <ClInclude Include="BulletBase.h" />
     <ClInclude Include="BulletMovementComponent.h" />
     <ClInclude Include="Cart.h" />
@@ -273,6 +274,7 @@
     <ClCompile Include="BoomerangBulletMovementComponent.cpp" />
     <ClCompile Include="BoomerangShooter.cpp" />
     <ClCompile Include="Bulldog.cpp" />
+    <ClCompile Include="BulldogPlane.cpp" />
     <ClCompile Include="BulletBase.cpp" />
     <ClCompile Include="BulletMovementComponent.cpp" />
     <ClCompile Include="Cart.cpp" />

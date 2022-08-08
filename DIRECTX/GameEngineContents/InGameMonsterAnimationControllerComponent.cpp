@@ -32,15 +32,25 @@ void InGameMonsterAnimationControllerComponent::UpdateAnimation()
 	{
 		return;
 	}
-	
+
 	GameEngineTextureRenderer* Renderer = InGameMonster->GetRenderer();
+	if (Renderer == nullptr)
+	{
+		return;
+	}
 	InGameMonsterState State = InGameMonster->GetState();
 	InGameMonsterAttackState AttackState = InGameMonster->GetAttackState();
 
-		if (State == InGameMonsterState::Prepare)
-		{
-			Renderer->ChangeFrameAnimation(Name + "Intro");
-		}
+	if (State == InGameMonsterState::Prepare)
+	{
+		Renderer->ChangeFrameAnimation(Name + "Intro");
+	}
+
+	else if (State == InGameMonsterState::Idle)
+	{
+
+		Renderer->ChangeFrameAnimation(Name + "Idle");
+	}
 }
 
 void InGameMonsterAnimationControllerComponent::Start()
