@@ -104,49 +104,41 @@ void WorldMapCharacterAnimationControllerComponent::UpdateAnimation()
 		{
 			Renderer->ChangeFrameAnimation("WorldMap" + Name + "WalkSide");
 			Renderer->ScaleToTexture();
-
+			Renderer->GetTransform().PixLocalPositiveX();
 		}
 		else if (Dir == "RightUp")
 		{
 			Renderer->ChangeFrameAnimation("WorldMap" + Name + "WalkDiagUp");
 			Renderer->ScaleToTexture();
+			Renderer->GetTransform().PixLocalPositiveX();
+
 		}
 		else if (Dir == "RightDown")
 		{
 			Renderer->ChangeFrameAnimation("WorldMap" + Name + "WalkDiagDown");
 			Renderer->ScaleToTexture();
+			Renderer->GetTransform().PixLocalPositiveX();
+
 		}
 		else if (Dir == "Left")
 		{
 			Renderer->ChangeFrameAnimation("WorldMap" + Name + "WalkSide");
 			Renderer->ScaleToTexture();
-			if (Renderer->GetTransform().GetLocalScale().x > 0)
-			{
-				float x = Renderer->GetTransform().GetLocalScale().x * -1;
-				Renderer->GetTransform().SetLocalScale({ x,Renderer->GetTransform().GetLocalScale().y, Renderer->GetTransform().GetLocalScale().z });
-			}
+			Renderer->GetTransform().PixLocalNegativeX();
 
 		}
 		else if (Dir == "LeftUp")
 		{
 			Renderer->ChangeFrameAnimation("WorldMap" + Name + "WalkDiagUp");
 			Renderer->ScaleToTexture();
-			if (Renderer->GetTransform().GetLocalScale().x > 0)
-			{
-				float x = Renderer->GetTransform().GetLocalScale().x * -1;
-				Renderer->GetTransform().SetLocalScale({ x,Renderer->GetTransform().GetLocalScale().y, Renderer->GetTransform().GetLocalScale().z });
-			}
+			Renderer->GetTransform().PixLocalNegativeX();
 
 		}
 		else if (Dir == "LeftDown")
 		{
 			Renderer->ChangeFrameAnimation("WorldMap" + Name + "WalkDiagDown");
 			Renderer->ScaleToTexture();
-			if (Renderer->GetTransform().GetLocalScale().x > 0)
-			{
-				float x = Renderer->GetTransform().GetLocalScale().x * -1;
-				Renderer->GetTransform().SetLocalScale({ x,Renderer->GetTransform().GetLocalScale().y, Renderer->GetTransform().GetLocalScale().z });
-			}
+			Renderer->GetTransform().PixLocalNegativeX();
 
 		}
 		else if (Dir == "Up")
