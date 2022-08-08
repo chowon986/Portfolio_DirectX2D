@@ -28,6 +28,8 @@ public:
 	void ResetPositionCloudLeftD(const FrameAnimation_DESC& _Info);
 	void ResetPositionCloudLeftD2(const FrameAnimation_DESC& _Info);
 	void ResetPositionPatchLeftA(const FrameAnimation_DESC& _Info);
+	void ResetPositionPlanePuffRight(const FrameAnimation_DESC& _Info);
+	void ResetPositionPlanePuffLeft(const FrameAnimation_DESC& _Info);
 
 protected:
 	void Start() override;
@@ -46,6 +48,8 @@ private:
 	BackgroundObject* CloudC2;
 	BackgroundObject* CloudD1;
 	BackgroundObject* CloudD2;
+	BackgroundObject* PlanePuffRight;
+	BackgroundObject* PlanePuffLeft;
 	// 
 	BackgroundObject* PatchLeftA;
 
