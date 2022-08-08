@@ -14,7 +14,7 @@ void TutorialBackground::Start()
 	Renderer = CreateComponent<GameEngineTextureRenderer>();
 	Renderer->CreateFrameAnimationFolder("TutorialStartBackground", FrameAnimation_DESC("TutorialStartBackground", 0.05f, false));
 	Renderer->CreateFrameAnimationFolder("TutorialBackground", FrameAnimation_DESC("TutorialBackground", 0.1f, false));
-	Renderer->AnimationBindEnd("TutorialStartBackground", &TutorialBackground::EndTutorialStartAnimation, this);
+	Renderer->AnimationBindEnd("TutorialStartBackground", std::bind(&TutorialBackground::EndTutorialStartAnimation, this, std::placeholders::_1));
 	Renderer->ChangeFrameAnimation("TutorialStartBackground");
 	Renderer->ScaleToTexture();
 	Renderer->SetPivot(PIVOTMODE::LEFTTOP);

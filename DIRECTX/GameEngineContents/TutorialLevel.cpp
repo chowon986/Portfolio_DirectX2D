@@ -47,6 +47,11 @@ void TutorialLevel::Update(float _DeltaTime)
 	{
 		ColMapRenderer->OnOffSwitch();
 	}
+
+	if (GameEngineInput::GetInst()->IsDown("FreeCameaOnOff"))
+	{
+		GetMainCameraActor()->FreeCameraModeOnOff();
+	}
 }
 
 

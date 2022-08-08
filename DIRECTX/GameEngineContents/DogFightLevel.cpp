@@ -77,7 +77,7 @@ void DogFightLevel::Start()
 				return;
 			}
 			Renderer->CreateFrameAnimationFolder("CloudA1", FrameAnimation_DESC("CloudA1", 0.06f, true));
-			Renderer->AnimationBindEnd("CloudA1", &DogFightLevel::ResetPositionCloudLeftA, this);
+			Renderer->AnimationBindEnd("CloudA1", std::bind(&DogFightLevel::ResetPositionCloudLeftA, this, std::placeholders::_1));
 			Renderer->ChangeFrameAnimation("CloudA1");
 			Renderer->SetPivot(PIVOTMODE::LEFTCENTER);
 			CloudA1->GetTransform().SetLocalPosition({ -150, -250, (int)ZOrder::Background - 1 });
@@ -97,7 +97,7 @@ void DogFightLevel::Start()
 				return;
 			}
 			Renderer->CreateFrameAnimationFolder("CloudA1", FrameAnimation_DESC("CloudA1", 0.06f, true));
-			Renderer->AnimationBindEnd("CloudA1", &DogFightLevel::ResetPositionCloudLeftA2, this);
+			Renderer->AnimationBindEnd("CloudA1", std::bind(&DogFightLevel::ResetPositionCloudLeftA2, this, std::placeholders::_1));
 			Renderer->ChangeFrameAnimation("CloudA1");
 			Renderer->SetPivot(PIVOTMODE::RIGHTCENTER);
 			Renderer->GetTransform().PixLocalNegativeX();
@@ -118,7 +118,7 @@ if (Renderer == nullptr)
 	return;
 }
 Renderer->CreateFrameAnimationFolder("CloudB2", FrameAnimation_DESC("CloudB2", 0.06f, true));
-Renderer->AnimationBindEnd("CloudB2", &DogFightLevel::ResetPositionCloudLeftB, this);
+Renderer->AnimationBindEnd("CloudB2", std::bind(&DogFightLevel::ResetPositionCloudLeftB, this, std::placeholders::_1));
 Renderer->ChangeFrameAnimation("CloudB2");
 Renderer->SetPivot(PIVOTMODE::LEFTCENTER);
 CloudB2->GetTransform().SetLocalPosition({ -150, -20, (int)ZOrder::Background - 1 });
@@ -138,7 +138,7 @@ CloudB2->SetMoveSpeed(250.0f);
 			return;
 		}
 		Renderer->CreateFrameAnimationFolder("CloudC1", FrameAnimation_DESC("CloudC1", 0.05f, true));
-		Renderer->AnimationBindEnd("CloudC1", &DogFightLevel::ResetPositionCloudLeftC, this);
+		Renderer->AnimationBindEnd("CloudC1", std::bind(&DogFightLevel::ResetPositionCloudLeftC, this, std::placeholders::_1));
 		Renderer->ChangeFrameAnimation("CloudC1");
 		Renderer->GetTransform().PixLocalNegativeX();
 		Renderer->SetPivot(PIVOTMODE::RIGHTCENTER);
@@ -159,7 +159,7 @@ CloudB2->SetMoveSpeed(250.0f);
 				return;
 			}
 			Renderer->CreateFrameAnimationFolder("CloudC2", FrameAnimation_DESC("CloudC2", 0.05f, true));
-			Renderer->AnimationBindEnd("CloudC2", &DogFightLevel::ResetPositionCloudLeftC2, this);
+			Renderer->AnimationBindEnd("CloudC2", std::bind(&DogFightLevel::ResetPositionCloudLeftC2, this, std::placeholders::_1));
 			Renderer->ChangeFrameAnimation("CloudC2");
 			Renderer->SetPivot(PIVOTMODE::LEFTCENTER);
 			CloudC2->GetTransform().SetLocalPosition({ 150, -20, (int)ZOrder::Background - 1 });
@@ -179,7 +179,7 @@ CloudB2->SetMoveSpeed(250.0f);
 				return;
 			}
 			Renderer->CreateFrameAnimationFolder("CloudD1", FrameAnimation_DESC("CloudD1", 0.05f, true));
-			Renderer->AnimationBindEnd("CloudD1", &DogFightLevel::ResetPositionCloudLeftD, this);
+			Renderer->AnimationBindEnd("CloudD1", std::bind(&DogFightLevel::ResetPositionCloudLeftD, this, std::placeholders::_1));
 			Renderer->ChangeFrameAnimation("CloudD1");
 			Renderer->SetPivot(PIVOTMODE::CENTER);
 			CloudD1->GetTransform().SetLocalPosition({ 640, -20, (int)ZOrder::Background - 1 });
@@ -199,7 +199,7 @@ CloudB2->SetMoveSpeed(250.0f);
 				return;
 			}
 			Renderer->CreateFrameAnimationFolder("CloudD2", FrameAnimation_DESC("CloudD2", 0.05f, true));
-			Renderer->AnimationBindEnd("CloudD2", &DogFightLevel::ResetPositionCloudLeftD2, this);
+			Renderer->AnimationBindEnd("CloudD2", std::bind(&DogFightLevel::ResetPositionCloudLeftD2, this, std::placeholders::_1));
 			Renderer->ChangeFrameAnimation("CloudD2");
 			Renderer->SetPivot(PIVOTMODE::CENTER);
 			CloudD2->GetTransform().SetLocalPosition({ 1130, -20, (int)ZOrder::Background - 1 });
@@ -222,7 +222,7 @@ CloudB2->SetMoveSpeed(250.0f);
 				return;
 			}
 			Renderer->CreateFrameAnimationFolder("PatchLeftA", FrameAnimation_DESC("PatchLeftA", 0.06f, true));
-			Renderer->AnimationBindEnd("PatchLeftA", &DogFightLevel::ResetPositionPatchLeftA, this);
+			Renderer->AnimationBindEnd("PatchLeftA", std::bind(&DogFightLevel::ResetPositionPatchLeftA, this, std::placeholders::_1));
 			Renderer->ChangeFrameAnimation("PatchLeftA");
 			Renderer->SetPivot(PIVOTMODE::LEFTCENTER);
 			PatchLeftA->GetTransform().SetLocalPosition({ 100, -720, (int)ZOrder::Background - 3 });

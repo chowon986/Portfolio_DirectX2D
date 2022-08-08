@@ -15,7 +15,7 @@ void Bulldog::Start()
 {
 	Renderer = CreateComponent<GameEngineTextureRenderer>();
 	Renderer->CreateFrameAnimationFolder("BulldogIntro", FrameAnimation_DESC("BulldogIntro", 0.1f));
-	Renderer->AnimationBindEnd("BulldogIntro", &Bulldog::SetStateIdle, this);
+	Renderer->AnimationBindEnd("BulldogIntro", std::bind(&Bulldog::SetStateIdle, this, std::placeholders::_1));
 	Renderer->CreateFrameAnimationFolder("BulldogIdle", FrameAnimation_DESC("BulldogIdle", 0.1f));
 	Renderer->ChangeFrameAnimation("BulldogIntro");
 	Renderer->ScaleToTexture();

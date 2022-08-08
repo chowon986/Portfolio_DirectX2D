@@ -26,7 +26,7 @@ void BeforeTitleLevel::Start()
 		GameEngineTextureRenderer* Renderer = MDHRLogo->CreateComponent<GameEngineTextureRenderer>();
 		Renderer->GetTransform().SetLocalScale({ 1280,720,100 });
 		Renderer->CreateFrameAnimationFolder("BeforeTitle", FrameAnimation_DESC("10BeforeTitleLevel", 0.05f));
-		Renderer->AnimationBindEnd("BeforeTitle", &BeforeTitleLevel::EndHDMRAnimation, this);
+		Renderer->AnimationBindEnd("BeforeTitle", std::bind(&BeforeTitleLevel::EndHDMRAnimation, this, std::placeholders::_1));
 		Renderer->ChangeFrameAnimation("BeforeTitle");
 
 	}

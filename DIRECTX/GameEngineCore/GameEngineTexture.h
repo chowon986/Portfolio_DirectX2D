@@ -7,6 +7,29 @@
 #pragma comment(lib, "DirectXTex.lib")
 
 
+struct PixelColor
+{
+	union
+	{
+		struct
+		{
+			char r;
+			char g;
+			char b;
+			char a;
+		};
+
+		unsigned int Color;
+	};
+
+public:
+	PixelColor()
+		: Color(0)
+	{
+
+	}
+};
+
 // Ό³Έν :
 class GameEngineTexture : public GameEngineRes<GameEngineTexture>
 {
@@ -81,7 +104,10 @@ public:
 
 	void TextureCreate(const D3D11_TEXTURE2D_DESC& _Desc);
 
-	float4 GetPixel(int _x, int _y);
+	PixelColor GetPixelToPixelColor(int _x, int _y);
+
+	float4 GetPixelToFloat4(int _x, int _y);
+
 
 protected:
 

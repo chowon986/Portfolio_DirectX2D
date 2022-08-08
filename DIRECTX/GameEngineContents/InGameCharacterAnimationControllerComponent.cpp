@@ -58,7 +58,7 @@ void InGameCharacterAnimationControllerComponent::SetCharacterName(std::string _
 		if (Renderer != nullptr)
 		{
 			std::string Name = GetCharacterName();
-			Renderer->AnimationBindEnd("Ingame" + Name + "IdleDownStart", &InGameCharacterAnimationControllerComponent::OnIdleDownStartAnimationEnded, this);
+			Renderer->AnimationBindEnd("Ingame" + Name + "IdleDownStart", std::bind(&InGameCharacterAnimationControllerComponent::OnIdleDownStartAnimationEnded, this, std::placeholders::_1));
 		}
 	}
 }

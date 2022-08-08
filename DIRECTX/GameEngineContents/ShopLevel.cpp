@@ -70,7 +70,7 @@ void ShopLevel::Start()
 		IrisRenderer->GetTransform().SetLocalScale({ 1280,720,1 });
 		IrisRenderer->GetTransform().SetLocalPosition({ 0,0,(int)ZOrder::UI });
 		IrisRenderer->CreateFrameAnimationFolder("IrisAStart", FrameAnimation_DESC("IrisA", 0.1f, false));
-		IrisRenderer->AnimationBindEnd("IrisAStart", &ShopLevel::EndIrisAnimation, this);
+		IrisRenderer->AnimationBindEnd("IrisAStart", std::bind(&ShopLevel::EndIrisAnimation, this, std::placeholders::_1));
 		IrisRenderer->ChangeFrameAnimation("IrisAStart");
 	}
 }

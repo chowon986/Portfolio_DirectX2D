@@ -20,7 +20,7 @@ void PeaBullet::Start()
 	Renderer = CreateComponent<GameEngineTextureRenderer>();
 	Renderer->CreateFrameAnimationFolder("PeashotLoop", FrameAnimation_DESC("PeashotLoop", 0.1f));
 	Renderer->CreateFrameAnimationFolder("PeashotIntro", FrameAnimation_DESC("PeashotIntro", 0.05f));
-	Renderer->AnimationBindEnd("PeashotIntro", &PeaBullet::PeashotLoop, this);
+	Renderer->AnimationBindEnd("PeashotIntro", std::bind(&PeaBullet::PeashotLoop, this, std::placeholders::_1));
 
 	Renderer->ChangeFrameAnimation("PeashotIntro");
 	Renderer->ScaleToTexture();

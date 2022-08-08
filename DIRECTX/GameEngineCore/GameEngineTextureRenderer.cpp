@@ -53,7 +53,7 @@ void FrameAnimation::Update(float _Delta)
 			}
 			else
 			{
-				Info.CurFrame = Info.Frames.size() - 1;
+				Info.CurFrame = static_cast<unsigned int>(Info.Frames.size()) - 1;
 			}
 		}
 
@@ -168,8 +168,10 @@ void GameEngineTextureRenderer::SetPivot(PIVOTMODE _Mode)
 		break;
 	case PIVOTMODE::RIGHTTOP:
 		SetPivotToVector(float4(-GetTransform().GetWorldScale().hx(), -GetTransform().GetWorldScale().hy()));
+		break;
 	case PIVOTMODE::LEFTCENTER:
 		SetPivotToVector(float4(GetTransform().GetWorldScale().hx(), 0.0f));
+		break;
 	case PIVOTMODE::RIGHTCENTER:
 		SetPivotToVector(float4(-GetTransform().GetWorldScale().hx(), 0.0f));
 	default:
@@ -241,12 +243,10 @@ void GameEngineTextureRenderer::CreateFrameAnimationFolder(const std::string& _A
 
 	if (NewAni.Info.Frames.size() == 0)
 	{
-		for (unsigned int i = 0; i < NewAni.FolderTexture->GetTextureCount() - 1; i++)
+		for (unsigned int i = 0; i < NewAni.FolderTexture->GetTextureCount(); i++)
 		{
 			NewAni.Info.Frames.push_back(i);
 		}
-		//NewAni.Info.Start = 0;
-		//NewAni.Info.End = static_cast<unsigned int>(NewAni.FolderTexture->GetTextureCount() - 1);
 	}
 }
 

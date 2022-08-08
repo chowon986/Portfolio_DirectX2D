@@ -38,18 +38,18 @@ bool MovementComponent::GroundCheck()
 
 	float4 Transform = WorldMapCharacter->GetTransform().GetWorldPosition();
 
-	float4 Color = ColMapTexture->GetPixel(Transform.ix(), -Transform.iy());
+	float4 Color = ColMapTexture->GetPixelToFloat4(Transform.ix(), -Transform.iy());
 
-	float4 RightColor = ColMapTexture->GetPixel(Transform.ix() + 10, -Transform.iy());
-	float4 RightUpColor = ColMapTexture->GetPixel(Transform.ix() + 10, -(Transform.iy() + 10));
-	float4 RightDownColor = ColMapTexture->GetPixel(Transform.ix() + 10, -(Transform.iy() - 10));
+	float4 RightColor = ColMapTexture->GetPixelToFloat4(Transform.ix() + 10, -Transform.iy());
+	float4 RightUpColor = ColMapTexture->GetPixelToFloat4(Transform.ix() + 10, -(Transform.iy() + 10));
+	float4 RightDownColor = ColMapTexture->GetPixelToFloat4(Transform.ix() + 10, -(Transform.iy() - 10));
 
-	float4 LeftColor = ColMapTexture->GetPixel(Transform.ix() - 10, -Transform.iy());
-	float4 LeftUpColor = ColMapTexture->GetPixel(Transform.ix() - 10, -(Transform.iy() +10));
-	float4 LeftDownColor = ColMapTexture->GetPixel(Transform.ix() - 10, -(Transform.iy() -10));
+	float4 LeftColor = ColMapTexture->GetPixelToFloat4(Transform.ix() - 10, -Transform.iy());
+	float4 LeftUpColor = ColMapTexture->GetPixelToFloat4(Transform.ix() - 10, -(Transform.iy() +10));
+	float4 LeftDownColor = ColMapTexture->GetPixelToFloat4(Transform.ix() - 10, -(Transform.iy() -10));
 
-	float4 UpColor = ColMapTexture->GetPixel(Transform.ix(), -(Transform.iy() +10));
-	float4 DownColor = ColMapTexture->GetPixel(Transform.ix(), -(Transform.iy() - 10));
+	float4 UpColor = ColMapTexture->GetPixelToFloat4(Transform.ix(), -(Transform.iy() +10));
+	float4 DownColor = ColMapTexture->GetPixelToFloat4(Transform.ix(), -(Transform.iy() - 10));
 
 	std::string Dir = WorldMapCharacter->GetDirection();
 	if (true == Color.CompareInt4D(float4::BLACK)) // 현재 움직일 수 있는 땅이고

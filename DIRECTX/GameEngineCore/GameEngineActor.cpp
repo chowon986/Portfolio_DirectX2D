@@ -19,31 +19,6 @@ void GameEngineActor::Start() {}
 void GameEngineActor::Update(float _DeltaTime) {}
 void GameEngineActor::End() {}
 
-void GameEngineActor::AllUpdate(float _ScaleDeltaTime, float _DeltaTime)
-{
-	AddAccTime(_DeltaTime);
-	ReleaseUpdate(_DeltaTime);
-	Update(_ScaleDeltaTime);
-
-	for (GameEngineUpdateObject* Com : Childs)
-	{
-		Com->AddAccTime(_DeltaTime);
-		Com->ReleaseUpdate(_DeltaTime);
-		if (false == Com->IsUpdate())
-		{
-			continue;
-		}
-		/// √ 
-		if (GameEngineActor* ChildActor = dynamic_cast<GameEngineActor*>(Com))
-		{
-			ChildActor->AllUpdate(_ScaleDeltaTime, _DeltaTime);
-		}
-		else
-		{
-			Com->Update(_ScaleDeltaTime);
-		}
-	}
-}
 void GameEngineActor::DetachObject()
 {
 	GameEngineUpdateObject::DetachObject();

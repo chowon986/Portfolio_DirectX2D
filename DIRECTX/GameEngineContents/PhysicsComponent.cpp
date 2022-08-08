@@ -47,7 +47,7 @@ void PhysicsComponent::Update(float _DeltaTime)
 	Actor->GetTransform().SetWorldMove({ 0, Speed, 0 });
 
 
-	while (true == ColMapTexture->GetPixel(Actor->GetTransform().GetWorldPosition().x, -Actor->GetTransform().GetWorldPosition().y).CompareInt4D(float4::BLACK))
+	while (true == ColMapTexture->GetPixelToFloat4(Actor->GetTransform().GetWorldPosition().x, -Actor->GetTransform().GetWorldPosition().y).CompareInt4D(float4::BLACK))
 	{
 		Actor->GetTransform().SetWorldMove(float4::UP * _DeltaTime);
 		Reset();
@@ -55,14 +55,14 @@ void PhysicsComponent::Update(float _DeltaTime)
 
 	Actor->SetIsOnGround(Speed == 0);
 
-	while (true == ColMapTexture->GetPixel(Actor->GetTransform().GetWorldPosition().x - 10, -Actor->GetTransform().GetWorldPosition().y ).CompareInt4D(float4::BLACK) ||
-		true == ColMapTexture->GetPixel(Actor->GetTransform().GetWorldPosition().x - 10, -Actor->GetTransform().GetWorldPosition().y - 10).CompareInt4D(float4::BLACK))
+	while (true == ColMapTexture->GetPixelToFloat4(Actor->GetTransform().GetWorldPosition().x - 10, -Actor->GetTransform().GetWorldPosition().y ).CompareInt4D(float4::BLACK) ||
+		true == ColMapTexture->GetPixelToFloat4(Actor->GetTransform().GetWorldPosition().x - 10, -Actor->GetTransform().GetWorldPosition().y - 10).CompareInt4D(float4::BLACK))
 	{
 		Actor->GetTransform().SetWorldMove(float4::RIGHT * _DeltaTime);
 	}
 
-	while (true == ColMapTexture->GetPixel(Actor->GetTransform().GetWorldPosition().x + 10, -Actor->GetTransform().GetWorldPosition().y).CompareInt4D(float4::BLACK)||
-		true == ColMapTexture->GetPixel(Actor->GetTransform().GetWorldPosition().x + 10, -Actor->GetTransform().GetWorldPosition().y - 10).CompareInt4D(float4::BLACK))
+	while (true == ColMapTexture->GetPixelToFloat4(Actor->GetTransform().GetWorldPosition().x + 10, -Actor->GetTransform().GetWorldPosition().y).CompareInt4D(float4::BLACK)||
+		true == ColMapTexture->GetPixelToFloat4(Actor->GetTransform().GetWorldPosition().x + 10, -Actor->GetTransform().GetWorldPosition().y - 10).CompareInt4D(float4::BLACK))
 	{
 		Actor->GetTransform().SetWorldMove(float4::LEFT * _DeltaTime);
 	}

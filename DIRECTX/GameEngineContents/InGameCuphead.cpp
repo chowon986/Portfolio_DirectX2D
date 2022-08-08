@@ -42,11 +42,11 @@ void InGameCuphead::Start()
 
 	// Dash
 	Renderer->CreateFrameAnimationCutTexture("IngameCupheadDash", FrameAnimation_DESC("Cup_Dash.png", 0, 7, 0.1f, true));
-	Renderer->AnimationBindEnd("IngameCupheadDash", &InGameCuphead::OnDashAnimationEnded, this);
+	Renderer->AnimationBindEnd("IngameCupheadDash", std::bind(&InGameCuphead::OnDashAnimationEnded, this, std::placeholders::_1));
 
 	// Intro
 	Renderer->CreateFrameAnimationCutTexture("IngameCupheadIntro", FrameAnimation_DESC("Cup.png", 220, 247, 0.1f, true));
-	Renderer->AnimationBindEnd("IngameCupheadIntro", &InGameCuphead::OnPrepareAnimationEnded, this);
+	Renderer->AnimationBindEnd("IngameCupheadIntro", std::bind(&InGameCuphead::OnPrepareAnimationEnded, this, std::placeholders::_1));
 
 	// Jump
 	Renderer->CreateFrameAnimationCutTexture("IngameCupheadJump", FrameAnimation_DESC("Cup.png", 20, 27, 0.05f, true));
@@ -116,6 +116,10 @@ void InGameCuphead::Start()
 
 void InGameCuphead::Update(float _DeltaTime)
 {
+	if (true == GetLevel()->GetMainCameraActor()->IsFreeCameraMode())
+	{
+		return;
+	}
 
 	//GetLevel()->GetMainCameraActorTransform().SetLocalPosition({640,-360 });
 	GetLevel()->GetMainCameraActorTransform().SetLocalPosition({ GetTransform().GetLocalPosition().x, GetTransform().GetLocalPosition().y });
