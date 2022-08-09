@@ -27,11 +27,18 @@ void ChargerBullet::Start()
 
 	MovementComponent = CreateComponent<BulletMovementComponent>();
 	MovementComponent->SetSpeed(10.0f);
+
+	Collision = CreateComponent<GameEngineCollision>();
+	Collision->SetParent(this);
+	SetCollision(Collision);
+	Collision->ChangeOrder(ObjectOrder::PC_BULLET);
+	Collision->GetTransform().SetLocalScale({ 50.0f,50.0f });
 }
 
 void ChargerBullet::Update(float _DeltaTime)
 {
 	Renderer->ScaleToTexture();
+	GameEngineDebug::DrawBox(GetCollision()->GetTransform(), { 1.0f, 0.0f,0.0f, 0.5f });
 }
 
 void ChargerBullet::End()

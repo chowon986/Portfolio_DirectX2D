@@ -48,6 +48,9 @@ public:
 
 	MulticastDelegate<InGameMonsterState>& GetStateChangedDelegate() { return StateChangedDelegate; }
 	MulticastDelegate<InGameMonsterAttackState>& GetAttackStateChangedDelegate() { return AttackStateChangedDelegate; }
+	
+	float GetHP() { return HP; }
+	void SetHP(float _HP) { HP = _HP; }
 
 private:
 	GameEngineTextureRenderer* Renderer;
@@ -55,5 +58,6 @@ private:
 	InGameMonsterAttackState AttackState;
 	MulticastDelegate<InGameMonsterState> StateChangedDelegate;
 	MulticastDelegate<InGameMonsterAttackState> AttackStateChangedDelegate;
+	float HP;
 };
 

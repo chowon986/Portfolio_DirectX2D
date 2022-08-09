@@ -27,6 +27,16 @@ public:
 		return ColMapImage;
 	}
 
+	void SetCollision(GameEngineCollision* _Collision)
+	{
+		Collision = _Collision;
+	}
+
+	GameEngineCollision* GetCollision()
+	{
+		return Collision;
+	}
+
 	void Death();
 
 protected:

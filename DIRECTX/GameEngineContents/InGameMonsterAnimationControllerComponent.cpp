@@ -59,7 +59,6 @@ void InGameMonsterAnimationControllerComponent::UpdateAnimation()
 
 	else if (State == InGameMonsterState::TakeDamage)
 	{
-		
 	}
 
 	else if (State == InGameMonsterState::Die)

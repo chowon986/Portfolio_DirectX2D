@@ -8,7 +8,6 @@ Bulldog::Bulldog()
 	, Renderer(nullptr)
 	, Movement(nullptr)
 	, Animation(nullptr)
-	, HP(5)
 	, ElapsedTime(-5.0f)
 	, AttackIntervalTime(10.0f)
 {
@@ -29,6 +28,8 @@ void Bulldog::Start()
 	Renderer->CreateFrameAnimationFolder("BulldogCatgunIdle", FrameAnimation_DESC("BulldogCatgunIdle", 0.1f));
 	Renderer->CreateFrameAnimationFolder("BulldogCatgunShoot", FrameAnimation_DESC("BulldogCatgunShoot", 0.1f));
 	Renderer->CreateFrameAnimationFolder("BulldogCatgunExit", FrameAnimation_DESC("BulldogCatgunExit", 0.1f));
+	Renderer->CreateFrameAnimationFolder("BulldogDie", FrameAnimation_DESC("BulldogDie", 0.1f));
+	Renderer->AnimationBindEnd("BulldogDie", std::bind(&Bulldog::BulldogDieCheck, this, std::placeholders::_1));
 	Renderer->ChangeFrameAnimation("BulldogIntro");
 	Renderer->ScaleToTexture();
 	Renderer->SetPivot(PIVOTMODE::BOT);
@@ -44,10 +45,14 @@ void Bulldog::Start()
 	Collision->SetParent(this);
 	Collision->GetTransform().SetLocalScale({ 100.0f, 100.0f, 1.0f });
 	Collision->ChangeOrder(ObjectOrder::MONSTER);
+
+	SetHP(5);
 }
 
 void Bulldog::Update(float _DeltaTime)
 {
+	GameEngineDebug::DrawBox(Collision->GetTransform(), {1.0f, 0.0f,0.0f, 0.5f});
+
 	Renderer->ScaleToTexture();
 	UpdateState();
 
@@ -69,13 +74,14 @@ void Bulldog::UpdateState()
 	if (true == Collision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::PC_BULLET, CollisionType::CT_AABB2D,
 		std::bind(&Bulldog::OnTakeDamage, this, std::placeholders::_1, std::placeholders::_2)))
 	{
+		SetHP(GetHP() - 1);
 		TakeDamage();
 	}
 
 	if (ElapsedTime >= AttackIntervalTime)
 	{
 		ElapsedTime = 0.0f;
-		Shoot();
+		//Shoot();
 	}
 
 	if (GetState() != InGameMonsterState::TakeDamage &&
@@ -120,5 +126,10 @@ void Bulldog::SetStateIdle(const FrameAnimation_DESC& _Info)
 
 bool Bulldog::OnTakeDamage(GameEngineCollision* _This, GameEngineCollision* _Other)
 {
-	return false;
+	return true;
+}
+
+void Bulldog::BulldogDieCheck(const FrameAnimation_DESC& _Info)
+{
+	Death();
 }
