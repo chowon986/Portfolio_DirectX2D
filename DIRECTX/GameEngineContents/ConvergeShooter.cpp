@@ -34,6 +34,7 @@ void ConvergeShooter::Update(float _DeltaTime)
 			float4 Direction = GetVerticalDirection() + GetHorizontalDirection();
 			{
 				ConvergeBullet* Bullet = GetLevel()->CreateActor<ConvergeBullet>();
+				Bullet->SetColMapImage(GetColMapImage());
 				Bullet->GetTransform().SetWorldPosition(GetTransform().GetWorldPosition());
 				float4 Dir = float4::VectorRotationToDegreeZAxis(Direction, -15);
 				Bullet->SetDirection(Dir);
@@ -41,6 +42,7 @@ void ConvergeShooter::Update(float _DeltaTime)
 
 			{
 				ConvergeBullet* Bullet = GetLevel()->CreateActor<ConvergeBullet>();
+				Bullet->SetColMapImage(GetColMapImage());
 				Bullet->GetTransform().SetWorldPosition(GetTransform().GetWorldPosition());
 				float4 Dir = float4::VectorRotationToDegreeZAxis(Direction, 15);
 				Bullet->SetDirection(Dir);
@@ -48,6 +50,7 @@ void ConvergeShooter::Update(float _DeltaTime)
 
 			{
 				ConvergeBullet* Bullet = GetLevel()->CreateActor<ConvergeBullet>();
+				Bullet->SetColMapImage(GetColMapImage());
 				Bullet->GetTransform().SetWorldPosition(GetTransform().GetWorldPosition());
 				float4 Dir = float4::VectorRotationToDegreeZAxis(Direction, 0);
 				Bullet->SetDirection(Dir);

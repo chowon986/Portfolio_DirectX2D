@@ -174,6 +174,10 @@ void GameEngineTextureRenderer::SetPivot(PIVOTMODE _Mode)
 		break;
 	case PIVOTMODE::RIGHTCENTER:
 		SetPivotToVector(float4(-GetTransform().GetWorldScale().hx(), 0.0f));
+		break;
+	case PIVOTMODE::TOP:
+		SetPivotToVector(float4(0.0f, -GetTransform().GetWorldScale().hy()));
+		break;
 	default:
 		break;
 	}

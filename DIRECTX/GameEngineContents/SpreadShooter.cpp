@@ -58,6 +58,8 @@ void SpreadShooter::Update(float _DeltaTime)
 				Bullet->GetTransform().SetWorldPosition(GetTransform().GetWorldPosition());
 				float4 Dir = float4::VectorRotationToDegreeZAxis(Direction, -15);
 				Bullet->SetDirection(Dir);
+				Bullet->SetColMapImage(GetColMapImage());
+
 			}
 
 			{
@@ -65,6 +67,8 @@ void SpreadShooter::Update(float _DeltaTime)
 				Bullet->GetTransform().SetWorldPosition(GetTransform().GetWorldPosition());
 				float4 Dir = float4::VectorRotationToDegreeZAxis(Direction, 15);
 				Bullet->SetDirection(Dir);
+				Bullet->SetColMapImage(GetColMapImage());
+
 			}
 
 			{
@@ -72,6 +76,8 @@ void SpreadShooter::Update(float _DeltaTime)
 				Bullet->GetTransform().SetWorldPosition(GetTransform().GetWorldPosition());
 				float4 Dir = float4::VectorRotationToDegreeZAxis(Direction, 0);
 				Bullet->SetDirection(Dir);
+				Bullet->SetColMapImage(GetColMapImage());
+
 			}
 		}
 		break;

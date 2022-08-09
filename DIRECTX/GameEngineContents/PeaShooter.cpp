@@ -39,6 +39,7 @@ void PeaShooter::Update(float _DeltaTime)
 			float4 Direction = GetVerticalDirection() + GetHorizontalDirection();
 
 			PeaBullet* Bullet = GetLevel()->CreateActor<PeaBullet>();
+			Bullet->SetColMapImage(GetColMapImage());
 			Bullet->GetTransform().SetWorldPosition(GetTransform().GetWorldPosition()); // Need to CHK
 			Bullet->SetDirection(Direction);
 		}

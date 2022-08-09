@@ -12,6 +12,7 @@ WeaponBase::WeaponBase()
 	, CharacterHorizontalDirection("Center")
 	, CharacterVerticalDirection("Center")
 	, AttackState(InGameCharacterAttackState::None)
+	, ColMapImage(nullptr)
 {
 }
 
@@ -281,5 +282,6 @@ void WeaponBase::SetParent(GameEngineUpdateObject* _Parent)
 		Character->GetVerticalDirectionChangedDelegate().Add(std::bind(&WeaponBase::OnCharacterVerticalDirectionChanged, this, std::placeholders::_1));
 		Character->GetHorizontalDirectionChangedDelegate().Add(std::bind(&WeaponBase::OnCharacterHorizontalDirectionChanged, this, std::placeholders::_1));
 		UpdateDirection();
+		SetColMapImage(Character->GetColMapImage());
 	}
 }

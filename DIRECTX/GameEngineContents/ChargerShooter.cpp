@@ -38,6 +38,7 @@ void ChargerShooter::Update(float _DeltaTime)
 			ChargerBullet* Bullet = GetLevel()->CreateActor<ChargerBullet>();
 			Bullet->GetTransform().SetWorldPosition(GetTransform().GetWorldPosition()); // Need to CHK
 			Bullet->SetDirection(Direction);
+			Bullet->SetColMapImage(GetColMapImage());
 		}
 		break;
 		case InGameCharacterAttackState::SpecialAttack:

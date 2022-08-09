@@ -10,6 +10,7 @@ enum class PIVOTMODE
 	CUSTOM,
 	RIGHTTOP,
 	RIGHTCENTER,
+	TOP,
 };
 
 enum class SCALEMODE

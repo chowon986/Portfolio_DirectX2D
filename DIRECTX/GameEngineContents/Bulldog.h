@@ -1,7 +1,8 @@
 #pragma once
 #include "IInGameMonsterBase.h"
 
-enum class InGameCharacterState;
+enum class InGameMonsterState;
+enum class InGameMonsterAttackState;
 class GameEngineCollision;
 class InGameMonsterMovementComponent;
 class InGameMonsterAnimationControllerComponent;
@@ -17,6 +18,9 @@ public:
 	Bulldog& operator=(const Bulldog& _Other) = delete;
 	Bulldog& operator=(Bulldog&& _Other) noexcept = delete;
 
+public:
+	void SetHP(float _HP) { HP = _HP; }
+	float GetHP() { return HP; }
 protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;
@@ -26,14 +30,18 @@ protected:
 	void Idle() override;
 	void Shoot() override;
 	void Die() override;
+	void UpdateState();
 
 private:
 	void SetStateIdle(const FrameAnimation_DESC& _Info);
+	bool OnTakeDamage(GameEngineCollision* _This, GameEngineCollision* _Other);
+
 private:
+	GameEngineCollision* Collision;
 	GameEngineTextureRenderer* Renderer;
 	InGameMonsterMovementComponent* Movement;
-	bool IsInputEnabled;
-	bool IsOnGround;
-	GameEngineCollision* Collision;
 	InGameMonsterAnimationControllerComponent* Animation;
+	float HP;
+	float ElapsedTime;
+	float AttackIntervalTime;
 };

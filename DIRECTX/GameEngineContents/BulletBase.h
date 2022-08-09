@@ -17,10 +17,30 @@ public:
 	float4 GetDirection() { return Direction; }
 	void SetDirection(float4 _Direction);
 
+	void SetColMapImage(GameEngineTextureRenderer* _ColMapImage)
+	{
+		ColMapImage = _ColMapImage;
+	}
+
+	GameEngineTextureRenderer* GetColMapImage()
+	{
+		return ColMapImage;
+	}
+
+	void Death();
+
+protected:
+	void Start() override;
+	void Update(float _DeltaTime) override;
+	void End() override;
+
 private:
 	float4 Direction;
+	bool CollisionCheck(GameEngineCollision* _This, GameEngineCollision* _Other);
 
 protected:
 	GameEngineTextureRenderer* Renderer;
 	BulletMovementComponent* MovementComponent;
+	GameEngineTextureRenderer* ColMapImage;
+	GameEngineCollision* Collision;
 };

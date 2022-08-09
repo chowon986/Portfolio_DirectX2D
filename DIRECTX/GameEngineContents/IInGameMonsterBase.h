@@ -12,7 +12,8 @@ enum class InGameMonsterState
 	Prepare, // 완료
 	Idle, // 완료
 	TakeDamage,
-	Die
+	Die,
+	Shoot
 };
 
 enum class InGameMonsterAttackState

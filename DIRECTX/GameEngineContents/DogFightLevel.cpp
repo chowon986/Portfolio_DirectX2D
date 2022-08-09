@@ -1,7 +1,7 @@
 #include "PreCompile.h"
 #include "DogFightLevel.h"
 #include "Background.h"
-#include "WorldMapCuphead.h"
+#include "InGameCuphead.h"
 #include "BackgroundHills.h"
 #include "BackgroundObject.h"
 #include "Bulldog.h"
@@ -27,7 +27,6 @@ void DogFightLevel::ColMapOnOffSwitch()
 
 void DogFightLevel::Start()
 {
-
 	{
 		Background* ColMapImage = CreateActor<Background>(GameObjectGroup::UI);
 		ColMapRenderer = ColMapImage->CreateComponent<GameEngineTextureRenderer>();
@@ -35,10 +34,10 @@ void DogFightLevel::Start()
 		{
 			return;
 		}
-		ColMapRenderer->SetTexture("Test2.png");
+		ColMapRenderer->SetTexture("TestColMap.png");
 		ColMapRenderer->ScaleToTexture();
 		ColMapRenderer->SetPivot(PIVOTMODE::LEFTTOP);
-		ColMapRenderer->GetTransform().SetLocalPosition({ ColMapRenderer->GetTransform().GetLocalPosition().x,ColMapRenderer->GetTransform().GetLocalPosition().y, (int)ZOrder::Background + 1 });
+		ColMapRenderer->GetTransform().SetLocalPosition({ ColMapRenderer->GetTransform().GetLocalPosition().x, ColMapRenderer->GetTransform().GetLocalPosition().y, (int)ZOrder::Background + 1 });
 	}
 
 	{
@@ -244,290 +243,295 @@ void DogFightLevel::Start()
 
 
 	{
+		//{
+		//	PatchLeftA = CreateActor<BackgroundObject>(GameObjectGroup::UI);
+		//	if (PatchLeftA == nullptr)
+		//	{
+		//		return;
+		//	}
+		//	GameEngineTextureRenderer* Renderer = PatchLeftA->GetRenderer();
+		//	if (Renderer == nullptr)
+		//	{
+		//		return;
+		//	}
+		//	Renderer->CreateFrameAnimationFolder("PatchMiddleA", FrameAnimation_DESC("PatchMiddleA", 0.04f, true));
+		//	Renderer->AnimationBindEnd("PatchMiddleA", std::bind(&DogFightLevel::ResetPositionPatchMiddleA, this, std::placeholders::_1));
+		//	Renderer->ChangeFrameAnimation("PatchMiddleA");
+		//	Renderer->SetPivot(PIVOTMODE::CENTER);
+		//	Renderer->ScaleToTexture();
+		//	PatchLeftA->GetTransform().SetLocalPosition({ 640, -770, (int)ZOrder::Background - 3 });
+		//	PatchLeftA->SetDirection(float4::UP);
+		//	PatchLeftA->SetMoveSpeed(200.0f);
+		//}
+	}
+
+	// BulldogPlane
+	{
 		{
-			PatchLeftA = CreateActor<BackgroundObject>(GameObjectGroup::UI);
-			if (PatchLeftA == nullptr)
+			PH1BullDog = CreateActor<Bulldog>(GameObjectGroup::Monster);
+			if (PH1BullDog == nullptr)
 			{
 				return;
 			}
-			GameEngineTextureRenderer* Renderer = PatchLeftA->GetRenderer();
-			if (Renderer == nullptr)
+			PH1BullDog->GetTransform().SetLocalPosition({ 640, -300, (int)ZOrder::NPC });
+		}
+
+		{
+			BulldogPlane* PH1BulldogPlane = CreateActor<BulldogPlane>(GameObjectGroup::Monster);
+
+			if (PH1BulldogPlane == nullptr)
 			{
 				return;
 			}
-			Renderer->CreateFrameAnimationFolder("PatchLeftA", FrameAnimation_DESC("PatchLeftA", 0.06f, true));
-			Renderer->AnimationBindEnd("PatchLeftA", std::bind(&DogFightLevel::ResetPositionPatchLeftA, this, std::placeholders::_1));
-			Renderer->ChangeFrameAnimation("PatchLeftA");
-			Renderer->SetPivot(PIVOTMODE::LEFTCENTER);
-			PatchLeftA->GetTransform().SetLocalPosition({ 100, -720, (int)ZOrder::Background - 3 });
-			PatchLeftA->SetDirection(float4::RIGHT * 1.0 + (float4::UP * 0.5));
-			PatchLeftA->SetMoveSpeed(280.0f);
+			GameEngineTextureRenderer* Renderer = PH1BulldogPlane->GetRenderer();
+			Renderer->CreateFrameAnimationFolder("BulldogPlaneFront", FrameAnimation_DESC("BulldogPlaneFront", 0.1f, true));
+			Renderer->ChangeFrameAnimation("BulldogPlaneFront");
+			Renderer->ScaleToTexture();
+			Renderer->SetPivot(PIVOTMODE::BOT);
+			PH1BulldogPlane->GetTransform().SetLocalPosition({ 640, -435, (int)ZOrder::NPC + 1 });
 		}
-	}
 
-	{
-		Bulldog* PH1BullDog = CreateActor<Bulldog>(GameObjectGroup::Monster);
-		if (PH1BullDog == nullptr)
 		{
-			return;
+			BulldogPlane* PH1BulldogPlane = CreateActor<BulldogPlane>(GameObjectGroup::Monster);
+			if (PH1BulldogPlane == nullptr)
+			{
+				return;
+			}
+			GameEngineTextureRenderer* Renderer = PH1BulldogPlane->GetRenderer();
+			Renderer->CreateFrameAnimationFolder("BulldogPlaneWingLeft", FrameAnimation_DESC("BulldogPlaneWingLeft", 0.1f, true));
+			Renderer->ChangeFrameAnimation("BulldogPlaneWingLeft");
+			Renderer->ScaleToTexture();
+			Renderer->SetPivot(PIVOTMODE::BOT);
+			PH1BulldogPlane->GetTransform().SetLocalPosition({ 300, -400, (int)ZOrder::NPC + 3 });
 		}
-		PH1BullDog->GetTransform().SetLocalPosition({ 640, -300, (int)ZOrder::NPC });
-	}
 
-	{
-		BulldogPlane* PH1BulldogPlane = CreateActor<BulldogPlane>(GameObjectGroup::Monster);
-		if (PH1BulldogPlane == nullptr)
 		{
-			return;
+			BulldogPlane* PH1BulldogPlane = CreateActor<BulldogPlane>(GameObjectGroup::Monster);
+			if (PH1BulldogPlane == nullptr)
+			{
+				return;
+			}
+			GameEngineTextureRenderer* Renderer = PH1BulldogPlane->GetRenderer();
+			Renderer->CreateFrameAnimationFolder("BulldogPlaneWingRight", FrameAnimation_DESC("BulldogPlaneWingRight", 0.1f, true));
+			Renderer->ChangeFrameAnimation("BulldogPlaneWingRight");
+			Renderer->ScaleToTexture();
+			Renderer->SetPivot(PIVOTMODE::BOT);
+			PH1BulldogPlane->GetTransform().SetLocalPosition({ 980, -400, (int)ZOrder::NPC + 3 });
 		}
-		GameEngineTextureRenderer* Renderer = PH1BulldogPlane->GetRenderer();
-		Renderer->CreateFrameAnimationFolder("BulldogPlaneFront", FrameAnimation_DESC("BulldogPlaneFront", 0.1f, true));
-		Renderer->ChangeFrameAnimation("BulldogPlaneFront");
-		Renderer->ScaleToTexture();
-		Renderer->SetPivot(PIVOTMODE::BOT);
-		PH1BulldogPlane->GetTransform().SetLocalPosition({ 640, -435, (int)ZOrder::NPC + 1 });
-	}
 
-	{
-		BulldogPlane* PH1BulldogPlane = CreateActor<BulldogPlane>(GameObjectGroup::Monster);
-		if (PH1BulldogPlane == nullptr)
 		{
-			return;
+			BulldogPlane* PH1BulldogPlane = CreateActor<BulldogPlane>(GameObjectGroup::Monster);
+			if (PH1BulldogPlane == nullptr)
+			{
+				return;
+			}
+			GameEngineTextureRenderer* Renderer = PH1BulldogPlane->GetRenderer();
+			Renderer->CreateFrameAnimationFolder("BulldogPlaneBack", FrameAnimation_DESC("BulldogPlaneBack", 0.1f, true));
+			Renderer->ChangeFrameAnimation("BulldogPlaneBack");
+			Renderer->ScaleToTexture();
+			Renderer->SetPivot(PIVOTMODE::BOT);
+			PH1BulldogPlane->GetTransform().SetLocalPosition({ 640, -262, (int)ZOrder::NPC + 2 });
 		}
-		GameEngineTextureRenderer* Renderer = PH1BulldogPlane->GetRenderer();
-		Renderer->CreateFrameAnimationFolder("BulldogPlaneWingLeft", FrameAnimation_DESC("BulldogPlaneWingLeft", 0.1f, true));
-		Renderer->ChangeFrameAnimation("BulldogPlaneWingLeft");
-		Renderer->ScaleToTexture();
-		Renderer->SetPivot(PIVOTMODE::BOT);
-		PH1BulldogPlane->GetTransform().SetLocalPosition({ 300, -400, (int)ZOrder::NPC + 3 });
-	}
 
-	{
-		BulldogPlane* PH1BulldogPlane = CreateActor<BulldogPlane>(GameObjectGroup::Monster);
-		if (PH1BulldogPlane == nullptr)
 		{
-			return;
+			BulldogPlane* PH1BulldogPlane = CreateActor<BulldogPlane>(GameObjectGroup::Monster);
+			if (PH1BulldogPlane == nullptr)
+			{
+				return;
+			}
+			GameEngineTextureRenderer* Renderer = PH1BulldogPlane->GetRenderer();
+			Renderer->CreateFrameAnimationFolder("BulldogPlaneTail", FrameAnimation_DESC("BulldogPlaneTail", 0.1f, true));
+			Renderer->ChangeFrameAnimation("BulldogPlaneTail");
+			Renderer->ScaleToTexture();
+			Renderer->SetPivot(PIVOTMODE::BOT);
+			PH1BulldogPlane->GetTransform().SetLocalPosition({ 640, -170, (int)ZOrder::NPC + 3 });
 		}
-		GameEngineTextureRenderer* Renderer = PH1BulldogPlane->GetRenderer();
-		Renderer->CreateFrameAnimationFolder("BulldogPlaneWingRight", FrameAnimation_DESC("BulldogPlaneWingRight", 0.1f, true));
-		Renderer->ChangeFrameAnimation("BulldogPlaneWingRight");
-		Renderer->ScaleToTexture();
-		Renderer->SetPivot(PIVOTMODE::BOT);
-		PH1BulldogPlane->GetTransform().SetLocalPosition({ 980, -400, (int)ZOrder::NPC + 3 });
-	}
 
-	{
-		BulldogPlane* PH1BulldogPlane = CreateActor<BulldogPlane>(GameObjectGroup::Monster);
-		if (PH1BulldogPlane == nullptr)
 		{
-			return;
+			BulldogPlane* PH1BulldogPlane = CreateActor<BulldogPlane>(GameObjectGroup::Monster);
+			if (PH1BulldogPlane == nullptr)
+			{
+				return;
+			}
+			GameEngineTextureRenderer* Renderer = PH1BulldogPlane->GetRenderer();
+			Renderer->CreateFrameAnimationFolder("BulldogPropellorRingCenter", FrameAnimation_DESC("BulldogPropellorRingCenter", 0.1f, true));
+			Renderer->ChangeFrameAnimation("BulldogPropellorRingCenter");
+			Renderer->ScaleToTexture();
+			Renderer->SetPivot(PIVOTMODE::CENTER);
+			PH1BulldogPlane->GetTransform().SetLocalPosition({ 640, -350, (int)ZOrder::NPC });
 		}
-		GameEngineTextureRenderer* Renderer = PH1BulldogPlane->GetRenderer();
-		Renderer->CreateFrameAnimationFolder("BulldogPlaneBack", FrameAnimation_DESC("BulldogPlaneBack", 0.1f, true));
-		Renderer->ChangeFrameAnimation("BulldogPlaneBack");
-		Renderer->ScaleToTexture();
-		Renderer->SetPivot(PIVOTMODE::BOT);
-		PH1BulldogPlane->GetTransform().SetLocalPosition({ 640, -262, (int)ZOrder::NPC + 2 });
-	}
 
-	{
-		BulldogPlane* PH1BulldogPlane = CreateActor<BulldogPlane>(GameObjectGroup::Monster);
-		if (PH1BulldogPlane == nullptr)
 		{
-			return;
+			BulldogPlane* PH1BulldogPlane = CreateActor<BulldogPlane>(GameObjectGroup::Monster);
+			if (PH1BulldogPlane == nullptr)
+			{
+				return;
+			}
+			GameEngineTextureRenderer* Renderer = PH1BulldogPlane->GetRenderer();
+			Renderer->CreateFrameAnimationFolder("BulldogPropellorTipCenter", FrameAnimation_DESC("BulldogPropellorTipCenter", 0.1f, true));
+			Renderer->ChangeFrameAnimation("BulldogPropellorTipCenter");
+			Renderer->ScaleToTexture();
+			Renderer->SetPivot(PIVOTMODE::CENTER);
+			PH1BulldogPlane->GetTransform().SetLocalPosition({ 640, -360, (int)ZOrder::NPC - 1 });
 		}
-		GameEngineTextureRenderer* Renderer = PH1BulldogPlane->GetRenderer();
-		Renderer->CreateFrameAnimationFolder("BulldogPlaneTail", FrameAnimation_DESC("BulldogPlaneTail", 0.1f, true));
-		Renderer->ChangeFrameAnimation("BulldogPlaneTail");
-		Renderer->ScaleToTexture();
-		Renderer->SetPivot(PIVOTMODE::BOT);
-		PH1BulldogPlane->GetTransform().SetLocalPosition({ 640, -170, (int)ZOrder::NPC + 3 });
-	}
 
-	{
-		BulldogPlane* PH1BulldogPlane = CreateActor<BulldogPlane>(GameObjectGroup::Monster);
-		if (PH1BulldogPlane == nullptr)
 		{
-			return;
+			BulldogPlane* PH1BulldogPlane = CreateActor<BulldogPlane>(GameObjectGroup::Monster);
+			if (PH1BulldogPlane == nullptr)
+			{
+				return;
+			}
+			GameEngineTextureRenderer* Renderer = PH1BulldogPlane->GetRenderer();
+			Renderer->CreateFrameAnimationFolder("BulldogPropellorSpinCenter", FrameAnimation_DESC("BulldogPropellorSpinCenter", 0.05f, true));
+			Renderer->ChangeFrameAnimation("BulldogPropellorSpinCenter");
+			Renderer->ScaleToTexture();
+			Renderer->SetPivot(PIVOTMODE::CENTER);
+			PH1BulldogPlane->GetTransform().SetLocalPosition({ 638, -350, (int)ZOrder::NPC });
 		}
-		GameEngineTextureRenderer* Renderer = PH1BulldogPlane->GetRenderer();
-		Renderer->CreateFrameAnimationFolder("BulldogPropellorRingCenter", FrameAnimation_DESC("BulldogPropellorRingCenter", 0.1f, true));
-		Renderer->ChangeFrameAnimation("BulldogPropellorRingCenter");
-		Renderer->ScaleToTexture();
-		Renderer->SetPivot(PIVOTMODE::CENTER);
-		PH1BulldogPlane->GetTransform().SetLocalPosition({ 640, -350, (int)ZOrder::NPC });
-	}
 
-	{
-		BulldogPlane* PH1BulldogPlane = CreateActor<BulldogPlane>(GameObjectGroup::Monster);
-		if (PH1BulldogPlane == nullptr)
 		{
-			return;
+			BulldogPlane* PH1BulldogPlane = CreateActor<BulldogPlane>(GameObjectGroup::Monster);
+			if (PH1BulldogPlane == nullptr)
+			{
+				return;
+			}
+			GameEngineTextureRenderer* Renderer = PH1BulldogPlane->GetRenderer();
+			Renderer->CreateFrameAnimationFolder("BulldogPropelloRingLeft", FrameAnimation_DESC("BulldogPropelloRingLeft", 0.1f, true));
+			Renderer->ChangeFrameAnimation("BulldogPropelloRingLeft");
+			Renderer->ScaleToTexture();
+			Renderer->SetPivot(PIVOTMODE::CENTER);
+			Renderer->GetTransform().PixLocalNegativeX();
+			PH1BulldogPlane->GetTransform().SetLocalPosition({ 1020, -340, (int)ZOrder::NPC });
 		}
-		GameEngineTextureRenderer* Renderer = PH1BulldogPlane->GetRenderer();
-		Renderer->CreateFrameAnimationFolder("BulldogPropellorTipCenter", FrameAnimation_DESC("BulldogPropellorTipCenter", 0.1f, true));
-		Renderer->ChangeFrameAnimation("BulldogPropellorTipCenter");
-		Renderer->ScaleToTexture();
-		Renderer->SetPivot(PIVOTMODE::CENTER);
-		PH1BulldogPlane->GetTransform().SetLocalPosition({ 640, -360, (int)ZOrder::NPC - 1});
-	}
 
-	{
-		BulldogPlane* PH1BulldogPlane = CreateActor<BulldogPlane>(GameObjectGroup::Monster);
-		if (PH1BulldogPlane == nullptr)
 		{
-			return;
+			BulldogPlane* PH1BulldogPlane = CreateActor<BulldogPlane>(GameObjectGroup::Monster);
+			if (PH1BulldogPlane == nullptr)
+			{
+				return;
+			}
+			GameEngineTextureRenderer* Renderer = PH1BulldogPlane->GetRenderer();
+			Renderer->CreateFrameAnimationFolder("BulldogPropellorTipRight", FrameAnimation_DESC("BulldogPropellorTipRight", 0.1f, true));
+			Renderer->ChangeFrameAnimation("BulldogPropellorTipRight");
+			Renderer->ScaleToTexture();
+			Renderer->SetPivot(PIVOTMODE::CENTER);
+			PH1BulldogPlane->GetTransform().SetLocalPosition({ 1020, -340, (int)ZOrder::NPC - 1 });
 		}
-		GameEngineTextureRenderer* Renderer = PH1BulldogPlane->GetRenderer();
-		Renderer->CreateFrameAnimationFolder("BulldogPropellorSpinCenter", FrameAnimation_DESC("BulldogPropellorSpinCenter", 0.05f, true));
-		Renderer->ChangeFrameAnimation("BulldogPropellorSpinCenter");
-		Renderer->ScaleToTexture();
-		Renderer->SetPivot(PIVOTMODE::CENTER);
-		PH1BulldogPlane->GetTransform().SetLocalPosition({ 638, -350, (int)ZOrder::NPC });
-	}
 
-	{
-		BulldogPlane* PH1BulldogPlane = CreateActor<BulldogPlane>(GameObjectGroup::Monster);
-		if (PH1BulldogPlane == nullptr)
 		{
-			return;
+			BulldogPlane* PH1BulldogPlane = CreateActor<BulldogPlane>(GameObjectGroup::Monster);
+			if (PH1BulldogPlane == nullptr)
+			{
+				return;
+			}
+			GameEngineTextureRenderer* Renderer = PH1BulldogPlane->GetRenderer();
+			Renderer->CreateFrameAnimationFolder("BulldogPropellorSpinRight", FrameAnimation_DESC("BulldogPropellorSpinRight", 0.05f, true));
+			Renderer->ChangeFrameAnimation("BulldogPropellorSpinRight");
+			Renderer->ScaleToTexture();
+			Renderer->SetPivot(PIVOTMODE::CENTER);
+			PH1BulldogPlane->GetTransform().SetLocalPosition({ 1025, -335, (int)ZOrder::NPC });
 		}
-		GameEngineTextureRenderer* Renderer = PH1BulldogPlane->GetRenderer();
-		Renderer->CreateFrameAnimationFolder("BulldogPropelloRingLeft", FrameAnimation_DESC("BulldogPropelloRingLeft", 0.1f, true));
-		Renderer->ChangeFrameAnimation("BulldogPropelloRingLeft");
-		Renderer->ScaleToTexture();
-		Renderer->SetPivot(PIVOTMODE::CENTER);
-		Renderer->GetTransform().PixLocalNegativeX();
-		PH1BulldogPlane->GetTransform().SetLocalPosition({ 1020, -340, (int)ZOrder::NPC });
-	}
 
-	{
-		BulldogPlane* PH1BulldogPlane = CreateActor<BulldogPlane>(GameObjectGroup::Monster);
-		if (PH1BulldogPlane == nullptr)
 		{
-			return;
+			BulldogPlane* PH1BulldogPlane = CreateActor<BulldogPlane>(GameObjectGroup::Monster);
+			if (PH1BulldogPlane == nullptr)
+			{
+				return;
+			}
+			GameEngineTextureRenderer* Renderer = PH1BulldogPlane->GetRenderer();
+			Renderer->CreateFrameAnimationFolder("BulldogPropelloRingLeft", FrameAnimation_DESC("BulldogPropelloRingLeft", 0.1f, true));
+			Renderer->ChangeFrameAnimation("BulldogPropelloRingLeft");
+			Renderer->ScaleToTexture();
+			Renderer->SetPivot(PIVOTMODE::CENTER);
+			PH1BulldogPlane->GetTransform().SetLocalPosition({ 260, -340, (int)ZOrder::NPC });
 		}
-		GameEngineTextureRenderer* Renderer = PH1BulldogPlane->GetRenderer();
-		Renderer->CreateFrameAnimationFolder("BulldogPropellorTipRight", FrameAnimation_DESC("BulldogPropellorTipRight", 0.1f, true));
-		Renderer->ChangeFrameAnimation("BulldogPropellorTipRight");
-		Renderer->ScaleToTexture();
-		Renderer->SetPivot(PIVOTMODE::CENTER);
-		PH1BulldogPlane->GetTransform().SetLocalPosition({ 1020, -340, (int)ZOrder::NPC - 1 });
-	}
 
-	{
-		BulldogPlane* PH1BulldogPlane = CreateActor<BulldogPlane>(GameObjectGroup::Monster);
-		if (PH1BulldogPlane == nullptr)
 		{
-			return;
+			BulldogPlane* PH1BulldogPlane = CreateActor<BulldogPlane>(GameObjectGroup::Monster);
+			if (PH1BulldogPlane == nullptr)
+			{
+				return;
+			}
+			GameEngineTextureRenderer* Renderer = PH1BulldogPlane->GetRenderer();
+			Renderer->CreateFrameAnimationFolder("BulldogPropellorTipLeft", FrameAnimation_DESC("BulldogPropellorTipLeft", 0.1f, true));
+			Renderer->ChangeFrameAnimation("BulldogPropellorTipLeft");
+			Renderer->ScaleToTexture();
+			Renderer->SetPivot(PIVOTMODE::CENTER);
+			PH1BulldogPlane->GetTransform().SetLocalPosition({ 260, -340, (int)ZOrder::NPC - 1 });
 		}
-		GameEngineTextureRenderer* Renderer = PH1BulldogPlane->GetRenderer();
-		Renderer->CreateFrameAnimationFolder("BulldogPropellorSpinRight", FrameAnimation_DESC("BulldogPropellorSpinRight", 0.05f, true));
-		Renderer->ChangeFrameAnimation("BulldogPropellorSpinRight");
-		Renderer->ScaleToTexture();
-		Renderer->SetPivot(PIVOTMODE::CENTER);
-		PH1BulldogPlane->GetTransform().SetLocalPosition({ 1025, -335, (int)ZOrder::NPC });
-	}
 
-	{
-		BulldogPlane* PH1BulldogPlane = CreateActor<BulldogPlane>(GameObjectGroup::Monster);
-		if (PH1BulldogPlane == nullptr)
 		{
-			return;
+			BulldogPlane* PH1BulldogPlane = CreateActor<BulldogPlane>(GameObjectGroup::Monster);
+			if (PH1BulldogPlane == nullptr)
+			{
+				return;
+			}
+			GameEngineTextureRenderer* Renderer = PH1BulldogPlane->GetRenderer();
+			Renderer->CreateFrameAnimationFolder("BulldogPlaneFlapLeftA", FrameAnimation_DESC("BulldogPlaneFlapLeftA", 0.1f, true));
+			Renderer->ChangeFrameAnimation("BulldogPlaneFlapLeftA");
+			Renderer->ScaleToTexture();
+			Renderer->SetPivot(PIVOTMODE::CENTER);
+			PH1BulldogPlane->GetTransform().SetLocalPosition({ 430, -260, (int)ZOrder::NPC + 4 });
 		}
-		GameEngineTextureRenderer* Renderer = PH1BulldogPlane->GetRenderer();
-		Renderer->CreateFrameAnimationFolder("BulldogPropelloRingLeft", FrameAnimation_DESC("BulldogPropelloRingLeft", 0.1f, true));
-		Renderer->ChangeFrameAnimation("BulldogPropelloRingLeft");
-		Renderer->ScaleToTexture();
-		Renderer->SetPivot(PIVOTMODE::CENTER);
-		PH1BulldogPlane->GetTransform().SetLocalPosition({ 260, -340, (int)ZOrder::NPC });
-	}
 
-	{
-		BulldogPlane* PH1BulldogPlane = CreateActor<BulldogPlane>(GameObjectGroup::Monster);
-		if (PH1BulldogPlane == nullptr)
 		{
-			return;
+			BulldogPlane* PH1BulldogPlane = CreateActor<BulldogPlane>(GameObjectGroup::Monster);
+			if (PH1BulldogPlane == nullptr)
+			{
+				return;
+			}
+			GameEngineTextureRenderer* Renderer = PH1BulldogPlane->GetRenderer();
+			Renderer->CreateFrameAnimationFolder("BulldogPlaneFlapLeftB", FrameAnimation_DESC("BulldogPlaneFlapLeftB", 0.1f, true));
+			Renderer->ChangeFrameAnimation("BulldogPlaneFlapLeftB");
+			Renderer->ScaleToTexture();
+			Renderer->SetPivot(PIVOTMODE::CENTER);
+			PH1BulldogPlane->GetTransform().SetLocalPosition({ 150, -240, (int)ZOrder::NPC + 4 });
 		}
-		GameEngineTextureRenderer* Renderer = PH1BulldogPlane->GetRenderer();
-		Renderer->CreateFrameAnimationFolder("BulldogPropellorTipLeft", FrameAnimation_DESC("BulldogPropellorTipLeft", 0.1f, true));
-		Renderer->ChangeFrameAnimation("BulldogPropellorTipLeft");
-		Renderer->ScaleToTexture();
-		Renderer->SetPivot(PIVOTMODE::CENTER);
-		PH1BulldogPlane->GetTransform().SetLocalPosition({ 260, -340, (int)ZOrder::NPC - 1 });
-	}
 
-	{
-		BulldogPlane* PH1BulldogPlane = CreateActor<BulldogPlane>(GameObjectGroup::Monster);
-		if (PH1BulldogPlane == nullptr)
 		{
-			return;
+			BulldogPlane* PH1BulldogPlane = CreateActor<BulldogPlane>(GameObjectGroup::Monster);
+			if (PH1BulldogPlane == nullptr)
+			{
+				return;
+			}
+			GameEngineTextureRenderer* Renderer = PH1BulldogPlane->GetRenderer();
+			Renderer->CreateFrameAnimationFolder("BulldogPlaneFlapRightA", FrameAnimation_DESC("BulldogPlaneFlapRightA", 0.1f, true));
+			Renderer->ChangeFrameAnimation("BulldogPlaneFlapRightA");
+			Renderer->ScaleToTexture();
+			Renderer->SetPivot(PIVOTMODE::CENTER);
+			PH1BulldogPlane->GetTransform().SetLocalPosition({ 850, -260, (int)ZOrder::NPC + 4 });
 		}
-		GameEngineTextureRenderer* Renderer = PH1BulldogPlane->GetRenderer();
-		Renderer->CreateFrameAnimationFolder("BulldogPlaneFlapLeftA", FrameAnimation_DESC("BulldogPlaneFlapLeftA", 0.1f, true));
-		Renderer->ChangeFrameAnimation("BulldogPlaneFlapLeftA");
-		Renderer->ScaleToTexture();
-		Renderer->SetPivot(PIVOTMODE::CENTER);
-		PH1BulldogPlane->GetTransform().SetLocalPosition({ 430, -260, (int)ZOrder::NPC + 4 });
-	}
 
-	{
-		BulldogPlane* PH1BulldogPlane = CreateActor<BulldogPlane>(GameObjectGroup::Monster);
-		if (PH1BulldogPlane == nullptr)
 		{
-			return;
+			BulldogPlane* PH1BulldogPlane = CreateActor<BulldogPlane>(GameObjectGroup::Monster);
+			if (PH1BulldogPlane == nullptr)
+			{
+				return;
+			}
+			GameEngineTextureRenderer* Renderer = PH1BulldogPlane->GetRenderer();
+			Renderer->CreateFrameAnimationFolder("BulldogPlaneFlapRightB", FrameAnimation_DESC("BulldogPlaneFlapRightB", 0.1f, true));
+			Renderer->ChangeFrameAnimation("BulldogPlaneFlapRightB");
+			Renderer->ScaleToTexture();
+			Renderer->SetPivot(PIVOTMODE::CENTER);
+			PH1BulldogPlane->GetTransform().SetLocalPosition({ 1130, -240, (int)ZOrder::NPC + 4 });
 		}
-		GameEngineTextureRenderer* Renderer = PH1BulldogPlane->GetRenderer();
-		Renderer->CreateFrameAnimationFolder("BulldogPlaneFlapLeftB", FrameAnimation_DESC("BulldogPlaneFlapLeftB", 0.1f, true));
-		Renderer->ChangeFrameAnimation("BulldogPlaneFlapLeftB");
-		Renderer->ScaleToTexture();
-		Renderer->SetPivot(PIVOTMODE::CENTER);
-		PH1BulldogPlane->GetTransform().SetLocalPosition({ 150, -240, (int)ZOrder::NPC + 4 });
-	}
 
-	{
-		BulldogPlane* PH1BulldogPlane = CreateActor<BulldogPlane>(GameObjectGroup::Monster);
-		if (PH1BulldogPlane == nullptr)
 		{
-			return;
+			BulldogPlane* PH1BulldogPlane = CreateActor<BulldogPlane>(GameObjectGroup::Monster);
+			if (PH1BulldogPlane == nullptr)
+			{
+				return;
+			}
+			GameEngineTextureRenderer* Renderer = PH1BulldogPlane->GetRenderer();
+			Renderer->CreateFrameAnimationFolder("BulldogPropellorSpinLeft", FrameAnimation_DESC("BulldogPropellorSpinLeft", 0.05f, true));
+			Renderer->ChangeFrameAnimation("BulldogPropellorSpinLeft");
+			Renderer->ScaleToTexture();
+			Renderer->SetPivot(PIVOTMODE::CENTER);
+			PH1BulldogPlane->GetTransform().SetLocalPosition({ 260, -340, (int)ZOrder::NPC });
 		}
-		GameEngineTextureRenderer* Renderer = PH1BulldogPlane->GetRenderer();
-		Renderer->CreateFrameAnimationFolder("BulldogPlaneFlapRightA", FrameAnimation_DESC("BulldogPlaneFlapRightA", 0.1f, true));
-		Renderer->ChangeFrameAnimation("BulldogPlaneFlapRightA");
-		Renderer->ScaleToTexture();
-		Renderer->SetPivot(PIVOTMODE::CENTER);
-		PH1BulldogPlane->GetTransform().SetLocalPosition({ 850, -260, (int)ZOrder::NPC + 4 });
 	}
 
-	{
-		BulldogPlane* PH1BulldogPlane = CreateActor<BulldogPlane>(GameObjectGroup::Monster);
-		if (PH1BulldogPlane == nullptr)
-		{
-			return;
-		}
-		GameEngineTextureRenderer* Renderer = PH1BulldogPlane->GetRenderer();
-		Renderer->CreateFrameAnimationFolder("BulldogPlaneFlapRightB", FrameAnimation_DESC("BulldogPlaneFlapRightB", 0.1f, true));
-		Renderer->ChangeFrameAnimation("BulldogPlaneFlapRightB");
-		Renderer->ScaleToTexture();
-		Renderer->SetPivot(PIVOTMODE::CENTER);
-		PH1BulldogPlane->GetTransform().SetLocalPosition({ 1130, -240, (int)ZOrder::NPC + 4 });
-	}
-
-	{
-		BulldogPlane* PH1BulldogPlane = CreateActor<BulldogPlane>(GameObjectGroup::Monster);
-		if (PH1BulldogPlane == nullptr)
-		{
-			return;
-		}
-		GameEngineTextureRenderer* Renderer = PH1BulldogPlane->GetRenderer();
-		Renderer->CreateFrameAnimationFolder("BulldogPropellorSpinLeft", FrameAnimation_DESC("BulldogPropellorSpinLeft", 0.05f, true));
-		Renderer->ChangeFrameAnimation("BulldogPropellorSpinLeft");
-		Renderer->ScaleToTexture();
-		Renderer->SetPivot(PIVOTMODE::CENTER);
-		PH1BulldogPlane->GetTransform().SetLocalPosition({ 260, -340, (int)ZOrder::NPC });
-	}
-
-	WorldMapCuphead* Cuphead = CreateActor<WorldMapCuphead>(GameObjectGroup::Player);
+	InGameCuphead* Cuphead = CreateActor<InGameCuphead>(GameObjectGroup::Player);
 	Cuphead->SetColMapImage(ColMapRenderer);
 	Cuphead->GetTransform().SetLocalPosition({ 640, -360, -100 });
 }
@@ -567,9 +571,9 @@ void DogFightLevel::ResetPositionCloudLeftD2(const FrameAnimation_DESC& _Info)
 	CloudD2->GetTransform().SetLocalPosition({ 1130, -20, (int)ZOrder::Background - 1 });
 }
 
-void DogFightLevel::ResetPositionPatchLeftA(const FrameAnimation_DESC& _Info)
+void DogFightLevel::ResetPositionPatchMiddleA(const FrameAnimation_DESC& _Info)
 {
-	PatchLeftA->GetTransform().SetLocalPosition({ 100, -720, (int)ZOrder::Background - 3 });
+	PatchLeftA->GetTransform().SetLocalPosition({ 640, -1000, (int)ZOrder::Background - 3 });
 }
 
 void DogFightLevel::ResetPositionPlanePuffRight(const FrameAnimation_DESC& _Info)

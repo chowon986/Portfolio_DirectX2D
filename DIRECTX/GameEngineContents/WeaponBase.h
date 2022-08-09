@@ -28,6 +28,16 @@ public:
 
 	void SetParent(GameEngineUpdateObject* _Parent) override;
 
+	void SetColMapImage(GameEngineTextureRenderer* _ColMapImage)
+	{
+		ColMapImage = _ColMapImage;
+	}
+
+	GameEngineTextureRenderer* GetColMapImage()
+	{
+		return ColMapImage;
+	}
+
 protected:
 	virtual void UpdateDirection();
 	void Update(float _DeltaTime) override;
@@ -48,5 +58,6 @@ protected:
 private:
 	MulticastDelegate<float4> OnVerticalDirectionChangedDelegate;
 	MulticastDelegate<float4> OnHorizontalDirectionChangedDelegate;
+	GameEngineTextureRenderer* ColMapImage;
 };
 

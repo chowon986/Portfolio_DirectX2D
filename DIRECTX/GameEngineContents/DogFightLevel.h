@@ -5,6 +5,7 @@
 class GameEngineTextureRenderer;
 class BackgroundHills;
 class BackgroundObject;
+class Bulldog;
 class DogFightLevel : public GameEngineLevel
 {
 public:
@@ -27,7 +28,7 @@ public:
 	void ResetPositionCloudLeftC2(const FrameAnimation_DESC& _Info);
 	void ResetPositionCloudLeftD(const FrameAnimation_DESC& _Info);
 	void ResetPositionCloudLeftD2(const FrameAnimation_DESC& _Info);
-	void ResetPositionPatchLeftA(const FrameAnimation_DESC& _Info);
+	void ResetPositionPatchMiddleA(const FrameAnimation_DESC& _Info);
 	void ResetPositionPlanePuffRight(const FrameAnimation_DESC& _Info);
 	void ResetPositionPlanePuffLeft(const FrameAnimation_DESC& _Info);
 
@@ -52,6 +53,8 @@ private:
 	BackgroundObject* PlanePuffLeft;
 	// 
 	BackgroundObject* PatchLeftA;
+
+	Bulldog* PH1BullDog;
 
 };
 

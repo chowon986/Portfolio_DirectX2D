@@ -38,7 +38,7 @@
 #include <GameEngineCore/GameEngineCollision.h>
 #include <GameEngineCore/GameEngineFont.h>
 #include <GameEngineCore/GameEngineFontRenderer.h>
-
+#include <GameEngineCore/GameEngineCoreDebug.h>
 
 
 #include <GameEngineContents/Enums.h>

@@ -32,7 +32,6 @@ void InGameMonsterMovementComponent::UpdateDirection()
 		Direction = float4::ZERO;
 		return;
 	}
-
 }
 
 void InGameMonsterMovementComponent::Start()

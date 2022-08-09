@@ -5,6 +5,8 @@
 BulletBase::BulletBase()
 	: Renderer(nullptr)
 	, MovementComponent(nullptr)
+	, Collision(nullptr)
+	, ColMapImage(nullptr)
 {
 }
 
@@ -19,6 +21,7 @@ void BulletBase::SetDirection(float4 _Direction)
 	 {
 		 MovementComponent->SetDirection(Direction);
 	 }
+
 	 if (nullptr != Renderer)
 	 {
 		 if (Direction.CompareInt2D(float4::UP))
@@ -61,4 +64,37 @@ void BulletBase::SetDirection(float4 _Direction)
 			 Renderer->GetTransform().SetLocalRotate({ 0,0, 270 });
 		 }
 	 }
+}
+
+void BulletBase::Death()
+{
+}
+
+void BulletBase::Start()
+{
+}
+
+void BulletBase::Update(float _DeltaTime)
+{
+	GameEngineTexture* ColMapTexture = ColMapImage->GetCurTexture();
+	if (ColMapTexture == nullptr)
+	{
+		return;
+	}
+
+	if (true == ColMapTexture->GetPixelToFloat4(GetTransform().GetWorldPosition().ix(), -GetTransform().GetWorldPosition().iy()).CompareInt4D(float4::BLACK) ||
+		true == Collision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::MONSTER, CollisionType::CT_AABB2D,
+			std::bind(&BulletBase::CollisionCheck, this, std::placeholders::_1, std::placeholders::_2)))
+	{
+		Death();
+	}
+}
+
+void BulletBase::End()
+{
+}
+
+bool BulletBase::CollisionCheck(GameEngineCollision* _This, GameEngineCollision* _Other)
+{
+	return false;
 }

@@ -46,11 +46,27 @@ void InGameMonsterAnimationControllerComponent::UpdateAnimation()
 		Renderer->ChangeFrameAnimation(Name + "Intro");
 	}
 
+	else if (AttackState== InGameMonsterAttackState::Attack)
+	{
+		Renderer->ChangeFrameAnimation(Name + "Attack");
+	}
+
 	else if (State == InGameMonsterState::Idle)
 	{
 
 		Renderer->ChangeFrameAnimation(Name + "Idle");
 	}
+
+	else if (State == InGameMonsterState::TakeDamage)
+	{
+		
+	}
+
+	else if (State == InGameMonsterState::Die)
+	{
+		Renderer->ChangeFrameAnimation(Name + "Die");
+	}
+
 }
 
 void InGameMonsterAnimationControllerComponent::Start()
