@@ -171,6 +171,7 @@
     <ClInclude Include="BoomerangShooter.h" />
     <ClInclude Include="Bulldog.h" />
     <ClInclude Include="BulldogPlane.h" />
+    <ClInclude Include="BulldogShooter.h" />
     <ClInclude Include="BulletBase.h" />
     <ClInclude Include="BulletMovementComponent.h" />
     <ClInclude Include="Cart.h" />
@@ -206,7 +207,7 @@
     <ClInclude Include="InGameCuphead.h" />
     <ClInclude Include="IInGameMonsterBase.h" />
     <ClInclude Include="InGameMonsterAnimationControllerComponent.h" />
-    <ClInclude Include="InGameMonsterMovementComponent.h" />
+    <ClInclude Include="InGameMovementComponent.h" />
     <ClInclude Include="InGameMugman.h" />
     <ClInclude Include="INonPlayerCharacterBase.h" />
     <ClInclude Include="IParriable.h" />
@@ -220,6 +221,7 @@
     <ClInclude Include="IWorldMapCharacterBase.h" />
     <ClInclude Include="Ladder.h" />
     <ClInclude Include="Lantern.h" />
+    <ClInclude Include="MonsterWeaponBase.h" />
     <ClInclude Include="NewsCat.h" />
     <ClInclude Include="Omm.h" />
     <ClInclude Include="PeaBullet.h" />
@@ -244,6 +246,7 @@
     <ClInclude Include="Snow.h" />
     <ClInclude Include="SpreadBullet.h" />
     <ClInclude Include="SpreadShooter.h" />
+    <ClInclude Include="TattooBullet.h" />
     <ClInclude Include="TitleLevel.h">
       <SubType>
       </SubType>
@@ -259,6 +262,7 @@
     <ClInclude Include="WorldMapLevel.h" />
     <ClInclude Include="MovementComponent.h" />
     <ClInclude Include="WorldMapMugman.h" />
+    <ClInclude Include="YarnballBullet.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Background.cpp" />
@@ -275,6 +279,7 @@
     <ClCompile Include="BoomerangShooter.cpp" />
     <ClCompile Include="Bulldog.cpp" />
     <ClCompile Include="BulldogPlane.cpp" />
+    <ClCompile Include="BulldogShooter.cpp" />
     <ClCompile Include="BulletBase.cpp" />
     <ClCompile Include="BulletMovementComponent.cpp" />
     <ClCompile Include="Cart.cpp" />
@@ -308,7 +313,7 @@
     <ClCompile Include="InGameCuphead.cpp" />
     <ClCompile Include="IInGameMonsterBase.cpp" />
     <ClCompile Include="InGameMonsterAnimationControllerComponent.cpp" />
-    <ClCompile Include="InGameMonsterMovementComponent.cpp" />
+    <ClCompile Include="InGameMovementComponent.cpp" />
     <ClCompile Include="InGameMugman.cpp" />
     <ClCompile Include="INonPlayerCharacterBase.cpp" />
     <ClCompile Include="IParriable.cpp" />
@@ -322,6 +327,7 @@
     <ClCompile Include="IWorldMapCharacterBase.cpp" />
     <ClCompile Include="Ladder.cpp" />
     <ClCompile Include="Lantern.cpp" />
+    <ClCompile Include="MonsterWeaponBase.cpp" />
     <ClCompile Include="NewsCat.cpp" />
     <ClCompile Include="Omm.cpp" />
     <ClCompile Include="PeaBullet.cpp" />
@@ -348,6 +354,7 @@
     <ClCompile Include="Snow.cpp" />
     <ClCompile Include="SpreadBullet.cpp" />
     <ClCompile Include="SpreadShooter.cpp" />
+    <ClCompile Include="TattooBullet.cpp" />
     <ClCompile Include="TitleLevel.cpp">
       <SubType>
       </SubType>
@@ -363,6 +370,7 @@
     <ClCompile Include="WorldMapLevel.cpp" />
     <ClCompile Include="MovementComponent.cpp" />
     <ClCompile Include="WorldMapMugman.cpp" />
+    <ClCompile Include="YarnballBullet.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

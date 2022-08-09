@@ -7,6 +7,7 @@ IInGameCharacterBase::IInGameCharacterBase()
 	, VerticalDir("Center")
 	, HorizontalDir("Center")
 	, IsOnGround(false)
+	, HP(0)
 {
 }
 

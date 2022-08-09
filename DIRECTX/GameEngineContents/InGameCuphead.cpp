@@ -76,6 +76,8 @@ void InGameCuphead::Start()
 	Renderer->CreateFrameAnimationCutTexture("IngameCupheadIdleDown", FrameAnimation_DESC("Cup.png", 168, 172, 0.1f, true));
 	Renderer->CreateFrameAnimationCutTexture("IngameCupheadIdleDownTurn", FrameAnimation_DESC("Cup.png", 159, 159, 0.1f, true));
 
+	SetHP(5);
+
 	{
 		// Collision
 		Collision = CreateComponent<GameEngineCollision>();
@@ -116,6 +118,9 @@ void InGameCuphead::Start()
 
 void InGameCuphead::Update(float _DeltaTime)
 {
+	CheckCollision();
+	OnCollisionDebug();
+
 	if (true == GetLevel()->GetMainCameraActor()->IsFreeCameraMode())
 	{
 		return;
@@ -170,6 +175,7 @@ void InGameCuphead::Aim()
 
 void InGameCuphead::TakeDamage()
 {
+	SetState(InGameCharacterState::TakeDamage);
 }
 
 void InGameCuphead::Dash()
@@ -281,4 +287,31 @@ void InGameCuphead::UpdateDirection()
 	{
 		SetVerticalDirection("Center");
 	}
+}
+
+void InGameCuphead::CheckCollision()
+{
+	if (true == Collision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::MONSTER_BULLET, CollisionType::CT_AABB2D,
+		std::bind(&InGameCuphead::OnTakeDamage, this, std::placeholders::_1, std::placeholders::_2)))
+	{
+		SetHP(GetHP() - 1);
+		TakeDamage();
+	}
+
+	if (true == Collision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::MONSTER, CollisionType::CT_AABB2D,
+		std::bind(&InGameCuphead::OnTakeDamage, this, std::placeholders::_1, std::placeholders::_2)))
+	{
+		SetHP(GetHP() - 1);
+		TakeDamage();
+	}
+}
+
+bool InGameCuphead::OnTakeDamage(GameEngineCollision* _This, GameEngineCollision* _Other)
+{
+	return false;
+}
+
+void InGameCuphead::OnCollisionDebug()
+{
+	GameEngineDebug::DrawBox(Collision->GetTransform(), { 1.0f, 0.0f,0.0f, 0.5f });
 }

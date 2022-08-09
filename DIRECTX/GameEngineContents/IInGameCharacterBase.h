@@ -79,6 +79,9 @@ public:
 	void SetPhysicsComponent(PhysicsComponent* _Physics);
 	PhysicsComponent* GetPhysicsComponent() { return Physics; }
 
+	void SetHP(float _HP) { HP = _HP; }
+	float GetHP() { return HP; }
+
 	MulticastDelegate<InGameCharacterState>& GetStateChangedDelegate() { return StateChangedDelegate; }
 	MulticastDelegate<InGameCharacterAttackState>& GetAttackStateChangedDelegate() { return AttackStateChangedDelegate; }
 	MulticastDelegate<std::string>& GetVerticalDirectionChangedDelegate() { return VerticalDirectionChangedDelegate; }
@@ -102,5 +105,6 @@ private:
 	MulticastDelegate<std::string> HorizontalDirectionChangedDelegate;
 	MulticastDelegate<bool> IsOnGroundChangedDelegate;
 	bool IsOnGround;
+	float HP;
 };
 

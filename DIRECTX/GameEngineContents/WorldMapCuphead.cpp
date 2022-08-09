@@ -69,7 +69,6 @@ void WorldMapCuphead::Start()
 		// Ãæµ¹
 		Collision = CreateComponent<GameEngineCollision>();
 		SetCollision(Collision);
-		Collision->SetParent(this);
 		Collision->GetTransform().SetLocalScale({ 100.0f, 100.0f, 1.0f });
 		Collision->ChangeOrder(ObjectOrder::PC);
 	}

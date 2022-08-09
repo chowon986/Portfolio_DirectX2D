@@ -12,14 +12,22 @@ enum class InGameMonsterState
 	Prepare, // 완료
 	Idle, // 완료
 	TakeDamage,
+	Unmount,
+	Mount,
 	Die,
-	Shoot
+	Attack1,
+	Attack2,
+	PrepareAttack1,
+	PrepareAttack2,
+	AttackFinish1,
+	AttackFinish2,
 };
 
 enum class InGameMonsterAttackState
 {
 	None,
-	Attack
+	Shoot1,
+	Shoot2,
 };
 
 
@@ -40,7 +48,7 @@ public:
 	void SetState(InGameMonsterState _State);
 	InGameMonsterState GetState() { return  State; }
 
-	void SetAttackState(InGameMonsterAttackState _State);
+	virtual void SetAttackState(InGameMonsterAttackState _State);
 	InGameMonsterAttackState GetAttackState() { return  AttackState; }
 
 	void SetRenderer(GameEngineTextureRenderer* _Renderer);
@@ -52,12 +60,16 @@ public:
 	float GetHP() { return HP; }
 	void SetHP(float _HP) { HP = _HP; }
 
+	void SetColMapImage(GameEngineTextureRenderer* _ColMapImage) { ColMapImage = _ColMapImage; }
+	GameEngineTextureRenderer* GetColMapImage() { return ColMapImage; }
+
 private:
 	GameEngineTextureRenderer* Renderer;
 	InGameMonsterState State;
 	InGameMonsterAttackState AttackState;
 	MulticastDelegate<InGameMonsterState> StateChangedDelegate;
 	MulticastDelegate<InGameMonsterAttackState> AttackStateChangedDelegate;
+	GameEngineTextureRenderer* ColMapImage;
 	float HP;
 };
 

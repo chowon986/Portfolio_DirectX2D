@@ -31,7 +31,8 @@ void InGameCharacterMovementCompmonent::UpdateDirection()
 	IInGameCharacterBase* InGameCharacter = GetParent<IInGameCharacterBase>();
 	if (InGameCharacter == nullptr ||
 		InGameCharacter->GetState() == InGameCharacterState::Idle ||
-		InGameCharacter->GetState() == InGameCharacterState::Aim)
+		InGameCharacter->GetState() == InGameCharacterState::Aim ||
+		InGameCharacter->GetState() == InGameCharacterState::TakeDamage)
 	{
 		Direction = float4::ZERO;
 		return;

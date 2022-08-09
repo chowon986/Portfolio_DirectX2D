@@ -76,6 +76,11 @@ void BulletBase::Start()
 
 void BulletBase::Update(float _DeltaTime)
 {
+	if (ColMapImage == nullptr)
+	{
+		return;
+	}
+
 	GameEngineTexture* ColMapTexture = ColMapImage->GetCurTexture();
 	if (ColMapTexture == nullptr)
 	{

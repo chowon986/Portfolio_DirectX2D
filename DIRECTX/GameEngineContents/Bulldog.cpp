@@ -1,15 +1,17 @@
 #include "PreCompile.h"
 #include "Bulldog.h"
 #include "InGameMonsterAnimationControllerComponent.h"
-#include "InGameMonsterMovementComponent.h"
+#include "InGameMovementComponent.h"
+#include "BulldogShooter.h"
 
 Bulldog::Bulldog()
 	: Collision(nullptr)
 	, Renderer(nullptr)
 	, Movement(nullptr)
 	, Animation(nullptr)
-	, ElapsedTime(-5.0f)
-	, AttackIntervalTime(10.0f)
+	, ElapsedTime(99.0f)
+	, AttackIntervalTime(100.0f)
+	, AttackInProgress(false)
 {
 }
 
@@ -21,13 +23,23 @@ void Bulldog::Start()
 {
 	Renderer = CreateComponent<GameEngineTextureRenderer>();
 	Renderer->CreateFrameAnimationFolder("BulldogIntro", FrameAnimation_DESC("BulldogIntro", 0.1f));
-	Renderer->AnimationBindEnd("BulldogIntro", std::bind(&Bulldog::SetStateIdle, this, std::placeholders::_1));
 	Renderer->CreateFrameAnimationFolder("BulldogIdle", FrameAnimation_DESC("BulldogIdle", 0.1f));
-	Renderer->CreateFrameAnimationFolder("BulldogAttack", FrameAnimation_DESC("BulldogAttack", 0.1f));
-	Renderer->CreateFrameAnimationFolder("BulldogCatgunIntro", FrameAnimation_DESC("BulldogCatgunIntro", 0.1f));
-	Renderer->CreateFrameAnimationFolder("BulldogCatgunIdle", FrameAnimation_DESC("BulldogCatgunIdle", 0.1f));
-	Renderer->CreateFrameAnimationFolder("BulldogCatgunShoot", FrameAnimation_DESC("BulldogCatgunShoot", 0.1f));
-	Renderer->CreateFrameAnimationFolder("BulldogCatgunExit", FrameAnimation_DESC("BulldogCatgunExit", 0.1f));
+	Renderer->CreateFrameAnimationFolder("BulldogUnmount", FrameAnimation_DESC("BulldogUnmount", 0.1f));
+	Renderer->CreateFrameAnimationFolder("BulldogPrepareAttack1", FrameAnimation_DESC("BulldogPrepareAttack1", 0.1f)); // Catgun
+	//Renderer->CreateFrameAnimationFolder("BulldogPrepareAttack2", FrameAnimation_DESC("BulldogPrepareAttack2", 0.1f)); // Tattoo
+	Renderer->CreateFrameAnimationFolder("BulldogAttack1", FrameAnimation_DESC("BulldogAttack1", 0.1f)); // Catgun
+	Renderer->CreateFrameAnimationFolder("BulldogAttackFinish1", FrameAnimation_DESC("BulldogAttackFinish1", 0.1f)); // Catgun
+	//Renderer->CreateFrameAnimationFolder("BulldogAttack2", FrameAnimation_DESC("BulldogAttack2", 0.1f)); // Tattoo
+	//Renderer->CreateFrameAnimationFolder("BulldogMount", FrameAnimation_DESC("BulldogMount", 0.1f));
+
+	Renderer->AnimationBindEnd("BulldogIntro", std::bind(&Bulldog::SetStateIdle, this, std::placeholders::_1));
+	Renderer->AnimationBindEnd("BulldogUnmount", std::bind(&Bulldog::OnUnmountAnimationFinished, this, std::placeholders::_1));
+	Renderer->AnimationBindEnd("BulldogPrepareAttack1", std::bind(&Bulldog::OnPrepareAttack1AnimationFinished, this, std::placeholders::_1));
+	Renderer->AnimationBindEnd("BulldogAttack1", std::bind(&Bulldog::OnAttack1AnimationFinished, this, std::placeholders::_1));
+	Renderer->AnimationBindEnd("BulldogAttackFinish1", std::bind(&Bulldog::OnAttackFinish1AnimationFinished, this, std::placeholders::_1));
+
+	Renderer->AnimationBindFrame("BulldogAttack1", std::bind(&Bulldog::OnAttack1AnimationFrameChanged, this, std::placeholders::_1));
+	
 	Renderer->CreateFrameAnimationFolder("BulldogDie", FrameAnimation_DESC("BulldogDie", 0.1f));
 	Renderer->AnimationBindEnd("BulldogDie", std::bind(&Bulldog::BulldogDieCheck, this, std::placeholders::_1));
 	Renderer->ChangeFrameAnimation("BulldogIntro");
@@ -36,7 +48,7 @@ void Bulldog::Start()
 	SetRenderer(Renderer);
 	Prepare();
 
-	Movement = CreateComponent<InGameMonsterMovementComponent>();
+	Movement = CreateComponent<InGameMovementComponent>();
 	Animation = CreateComponent<InGameMonsterAnimationControllerComponent>();
 	Animation->SetMonsterName("Bulldog");
 
@@ -47,6 +59,9 @@ void Bulldog::Start()
 	Collision->ChangeOrder(ObjectOrder::MONSTER);
 
 	SetHP(5);
+
+	BulldogShooter* Shooter = GetLevel()->CreateActor<BulldogShooter>();
+	Shooter->SetParent(this);
 }
 
 void Bulldog::Update(float _DeltaTime)
@@ -58,10 +73,6 @@ void Bulldog::Update(float _DeltaTime)
 
 	ElapsedTime += _DeltaTime;
 
-	if (GetAttackState() == InGameMonsterAttackState::Attack)
-	{
-		GetTransform().SetWorldMove(float4::UP * _DeltaTime * 200); 
-	}
 }
 
 void Bulldog::UpdateState()
@@ -81,13 +92,12 @@ void Bulldog::UpdateState()
 	if (ElapsedTime >= AttackIntervalTime)
 	{
 		ElapsedTime = 0.0f;
-		//Shoot();
+		Unmount();
 	}
 
 	if (GetState() != InGameMonsterState::TakeDamage &&
 		GetState() != InGameMonsterState::Die &&
-		GetAttackState() != InGameMonsterAttackState::Attack &&
-		GetState() != InGameMonsterState::Prepare)
+		AttackInProgress == false)
 	{
 		Idle();
 	}
@@ -110,13 +120,38 @@ void Bulldog::Idle()
 
 void Bulldog::Shoot()
 {
-	SetAttackState(InGameMonsterAttackState::Attack);
-	//SetAttackState(InGameMonsterAttackState::None);
+	SetState(InGameMonsterState::Attack1);
 }
 
 void Bulldog::Die()
 {
 	SetState(InGameMonsterState::Die);
+}
+
+void Bulldog::PrepareAttack()
+{
+	// 좌우 위치 번갈아가며 변경
+	GetTransform().SetWorldPosition(float4{ 1100,-500 });
+	SetState(InGameMonsterState::PrepareAttack1);
+}
+
+void Bulldog::Unmount()
+{
+	AttackInProgress = true;
+	SetState(InGameMonsterState::Unmount);
+}
+
+void Bulldog::Mount()
+{
+	AttackInProgress = false;
+	SetState(InGameMonsterState::Mount);
+}
+
+void Bulldog::FinishAttack()
+{
+	// Movementcomponent로 위로 이동 시키기
+	SetAttackState(InGameMonsterAttackState::None);
+	SetState(InGameMonsterState::AttackFinish1);
 }
 
 void Bulldog::SetStateIdle(const FrameAnimation_DESC& _Info)
@@ -132,4 +167,35 @@ bool Bulldog::OnTakeDamage(GameEngineCollision* _This, GameEngineCollision* _Oth
 void Bulldog::BulldogDieCheck(const FrameAnimation_DESC& _Info)
 {
 	Death();
+}
+
+void Bulldog::OnUnmountAnimationFinished(const FrameAnimation_DESC& _Info)
+{
+	Renderer->SetPivot(PIVOTMODE::LEFTCENTER);
+	PrepareAttack();
+}
+
+void Bulldog::OnPrepareAttack1AnimationFinished(const FrameAnimation_DESC& _Info)
+{
+	Shoot();
+}
+
+void Bulldog::OnAttack1AnimationFinished(const FrameAnimation_DESC& _Info)
+{
+	FinishAttack();
+}
+
+void Bulldog::OnAttackFinish1AnimationFinished(const FrameAnimation_DESC& _Info)
+{
+	Mount();
+}
+
+void Bulldog::OnAttack1AnimationFrameChanged(const FrameAnimation_DESC& _Info)
+{
+	if (_Info.CurFrame == 3)
+	{
+		SetAttackState(InGameMonsterAttackState::Shoot1);
+		// 몬스터의 이미지 x값에따라 좌 우로 이동하는 총, 총알, 총알이동컴포넌트
+	}
+
 }

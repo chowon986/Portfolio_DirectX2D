@@ -80,13 +80,19 @@ void InGameCharacterAnimationControllerComponent::UpdateAnimation()
 	bool IsOnGround = InGameCharacter->GetIsOnGround();
 
 	if (IsOnGround != true &&
-		State != InGameCharacterState::Dash)
+		State != InGameCharacterState::Dash &&
+		State != InGameCharacterState::TakeDamage)
 	{
 		Renderer->ChangeFrameAnimation("Ingame" + Name + "Jump");
 	}
 
 	else
 	{
+		if (State == InGameCharacterState::TakeDamage)
+		{
+			Renderer->ChangeFrameAnimation("Ingame" + Name + "TakeDamage");
+		}
+
 		if (State == InGameCharacterState::Prepare)
 		{
 			Renderer->ChangeFrameAnimation("Ingame" + Name + "Intro");

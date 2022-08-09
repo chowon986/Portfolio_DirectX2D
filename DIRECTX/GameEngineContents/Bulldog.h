@@ -4,7 +4,7 @@
 enum class InGameMonsterState;
 enum class InGameMonsterAttackState;
 class GameEngineCollision;
-class InGameMonsterMovementComponent;
+class InGameMovementComponent;
 class InGameMonsterAnimationControllerComponent;
 class Bulldog : public IInGameMonsterBase
 {
@@ -30,15 +30,25 @@ protected:
 	void UpdateState();
 
 private:
+	void PrepareAttack();
+	void Unmount();
+	void Mount();
+	void FinishAttack();
 	void SetStateIdle(const FrameAnimation_DESC& _Info);
 	bool OnTakeDamage(GameEngineCollision* _This, GameEngineCollision* _Other);
 	void BulldogDieCheck(const FrameAnimation_DESC& _Info);
+	void OnUnmountAnimationFinished(const FrameAnimation_DESC& _Info);
+	void OnPrepareAttack1AnimationFinished(const FrameAnimation_DESC& _Info);
+	void OnAttack1AnimationFinished(const FrameAnimation_DESC& _Info);
+	void OnAttackFinish1AnimationFinished(const FrameAnimation_DESC& _Info);
+	void OnAttack1AnimationFrameChanged(const FrameAnimation_DESC& _Info);
 
 private:
 	GameEngineCollision* Collision;
 	GameEngineTextureRenderer* Renderer;
-	InGameMonsterMovementComponent* Movement;
+	InGameMovementComponent* Movement;
 	InGameMonsterAnimationControllerComponent* Animation;
 	float ElapsedTime;
 	float AttackIntervalTime;
+	bool AttackInProgress;
 };

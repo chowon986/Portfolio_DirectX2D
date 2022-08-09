@@ -61,9 +61,6 @@
     <Filter Include="Actor\Play\WorldMap\Object\Portal\Base">
       <UniqueIdentifier>{7e497bdf-c814-49f2-a7cc-f33363d646c4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Components\Bullet">
-      <UniqueIdentifier>{3adf8f45-ee90-4a17-9d4c-afabdc278c2f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Components\Character">
       <UniqueIdentifier>{6fb8d6af-957a-4430-9e6f-0905073c2f88}</UniqueIdentifier>
     </Filter>
@@ -94,8 +91,29 @@
     <Filter Include="Actor\PreCompile">
       <UniqueIdentifier>{439c0504-814e-4f90-8507-3f4dacd0226c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Components\Monster\WorldMap">
+    <Filter Include="Components\Character\InGame\Bullet">
+      <UniqueIdentifier>{3adf8f45-ee90-4a17-9d4c-afabdc278c2f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\Character\InGame\Animation">
+      <UniqueIdentifier>{695ba7d9-657d-452f-ac38-f847b1b35e65}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\Character\InGame\Movement">
+      <UniqueIdentifier>{77af3fc0-f70f-4d76-a9b8-33f5a0ced851}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\Character\WorldMap">
       <UniqueIdentifier>{62b914ad-843b-440d-b661-f63fe5110ca5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\Weapon\Shooter\Player">
+      <UniqueIdentifier>{b24500db-8592-4188-9933-c869a2148ae6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\Weapon\Shooter\Monster">
+      <UniqueIdentifier>{f933d8d7-887b-468b-b05c-5c39b238320b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\Weapon\Bullet\Player">
+      <UniqueIdentifier>{70d8b6c3-590b-4ffc-b88a-471120a5f2f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\Weapon\Bullet\Monster">
+      <UniqueIdentifier>{af2f4a4e-1e18-4644-ae9e-0e2dc419e9d7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -270,20 +288,8 @@
     <ClInclude Include="TutorialLevel.h">
       <Filter>Level\01 Play</Filter>
     </ClInclude>
-    <ClInclude Include="PeaShooter.h">
-      <Filter>Actor\Weapon\Shooter</Filter>
-    </ClInclude>
-    <ClInclude Include="PeaBullet.h">
-      <Filter>Actor\Weapon\Bullet</Filter>
-    </ClInclude>
     <ClInclude Include="Delegates.h">
       <Filter>Contents</Filter>
-    </ClInclude>
-    <ClInclude Include="SpreadShooter.h">
-      <Filter>Actor\Weapon\Shooter</Filter>
-    </ClInclude>
-    <ClInclude Include="SpreadBullet.h">
-      <Filter>Actor\Weapon\Bullet</Filter>
     </ClInclude>
     <ClInclude Include="BulletBase.h">
       <Filter>Actor\Weapon\Base</Filter>
@@ -304,55 +310,25 @@
       <Filter>Actor\Play\WorldMap\Object\Portal\Base</Filter>
     </ClInclude>
     <ClInclude Include="BulletMovementComponent.h">
-      <Filter>Components\Bullet</Filter>
-    </ClInclude>
-    <ClInclude Include="InGameCharacterAnimationControllerComponent.h">
-      <Filter>Components\Character\InGame</Filter>
-    </ClInclude>
-    <ClInclude Include="InGameCharacterMovementCompmonent.h">
-      <Filter>Components\Character\InGame</Filter>
+      <Filter>Components\Character\InGame\Bullet</Filter>
     </ClInclude>
     <ClInclude Include="MovementComponent.h">
-      <Filter>Components\Monster\WorldMap</Filter>
+      <Filter>Components\Character\WorldMap</Filter>
     </ClInclude>
     <ClInclude Include="WorldMapCharacterAnimationControllerComponent.h">
-      <Filter>Components\Monster\WorldMap</Filter>
-    </ClInclude>
-    <ClInclude Include="ConvergeBullet.h">
-      <Filter>Actor\Weapon\Bullet</Filter>
-    </ClInclude>
-    <ClInclude Include="ConvergeShooter.h">
-      <Filter>Actor\Weapon\Shooter</Filter>
-    </ClInclude>
-    <ClInclude Include="BoomerangShooter.h">
-      <Filter>Actor\Weapon\Shooter</Filter>
-    </ClInclude>
-    <ClInclude Include="BoomerangBullet.h">
-      <Filter>Actor\Weapon\Bullet</Filter>
+      <Filter>Components\Character\WorldMap</Filter>
     </ClInclude>
     <ClInclude Include="BoomerangBulletMovementComponent.h">
-      <Filter>Components\Bullet</Filter>
+      <Filter>Components\Character\InGame\Bullet</Filter>
     </ClInclude>
     <ClInclude Include="BoomerangBulletBase.h">
       <Filter>Actor\Weapon\Base</Filter>
-    </ClInclude>
-    <ClInclude Include="ChargerBullet.h">
-      <Filter>Actor\Weapon\Bullet</Filter>
-    </ClInclude>
-    <ClInclude Include="ChargerShooter.h">
-      <Filter>Actor\Weapon\Shooter</Filter>
-    </ClInclude>
-    <ClInclude Include="PhysicsComponent.h">
-      <Filter>Components\Character\InGame</Filter>
     </ClInclude>
     <ClInclude Include="Bulldog.h">
       <Filter>Actor\Play\InGame\NPC</Filter>
     </ClInclude>
     <ClInclude Include="IInGameMonsterBase.h">
       <Filter>Actor\Base</Filter>
-    </ClInclude>
-    <ClInclude Include="InGameMonsterMovementComponent.h">
-      <Filter>Components\Monster</Filter>
     </ClInclude>
     <ClInclude Include="InGameMonsterAnimationControllerComponent.h">
       <Filter>Components\Monster</Filter>
@@ -368,6 +344,60 @@
     </ClInclude>
     <ClInclude Include="BulldogPlane.h">
       <Filter>Actor\Play\InGame\Object\DogFight</Filter>
+    </ClInclude>
+    <ClInclude Include="InGameMovementComponent.h">
+      <Filter>Components\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="InGameCharacterAnimationControllerComponent.h">
+      <Filter>Components\Character\InGame\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicsComponent.h">
+      <Filter>Components\Character\InGame\Movement</Filter>
+    </ClInclude>
+    <ClInclude Include="InGameCharacterMovementCompmonent.h">
+      <Filter>Components\Character\InGame\Movement</Filter>
+    </ClInclude>
+    <ClInclude Include="BoomerangShooter.h">
+      <Filter>Actor\Weapon\Shooter\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="ChargerShooter.h">
+      <Filter>Actor\Weapon\Shooter\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="ConvergeShooter.h">
+      <Filter>Actor\Weapon\Shooter\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="PeaShooter.h">
+      <Filter>Actor\Weapon\Shooter\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="SpreadShooter.h">
+      <Filter>Actor\Weapon\Shooter\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="BoomerangBullet.h">
+      <Filter>Actor\Weapon\Bullet\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="ChargerBullet.h">
+      <Filter>Actor\Weapon\Bullet\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="ConvergeBullet.h">
+      <Filter>Actor\Weapon\Bullet\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="PeaBullet.h">
+      <Filter>Actor\Weapon\Bullet\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="SpreadBullet.h">
+      <Filter>Actor\Weapon\Bullet\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="YarnballBullet.h">
+      <Filter>Actor\Weapon\Bullet\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="TattooBullet.h">
+      <Filter>Actor\Weapon\Bullet\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="BulldogShooter.h">
+      <Filter>Actor\Weapon\Shooter\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="MonsterWeaponBase.h">
+      <Filter>Actor\Weapon\Base</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -539,18 +569,6 @@
     <ClCompile Include="TutorialLevel.cpp">
       <Filter>Level\01 Play</Filter>
     </ClCompile>
-    <ClCompile Include="PeaShooter.cpp">
-      <Filter>Actor\Weapon\Shooter</Filter>
-    </ClCompile>
-    <ClCompile Include="PeaBullet.cpp">
-      <Filter>Actor\Weapon\Bullet</Filter>
-    </ClCompile>
-    <ClCompile Include="SpreadShooter.cpp">
-      <Filter>Actor\Weapon\Shooter</Filter>
-    </ClCompile>
-    <ClCompile Include="SpreadBullet.cpp">
-      <Filter>Actor\Weapon\Bullet</Filter>
-    </ClCompile>
     <ClCompile Include="BulletBase.cpp">
       <Filter>Actor\Weapon\Base</Filter>
     </ClCompile>
@@ -570,55 +588,25 @@
       <Filter>Actor\Play\WorldMap\Object\Portal\Base</Filter>
     </ClCompile>
     <ClCompile Include="BulletMovementComponent.cpp">
-      <Filter>Components\Bullet</Filter>
-    </ClCompile>
-    <ClCompile Include="InGameCharacterAnimationControllerComponent.cpp">
-      <Filter>Components\Character\InGame</Filter>
-    </ClCompile>
-    <ClCompile Include="InGameCharacterMovementCompmonent.cpp">
-      <Filter>Components\Character\InGame</Filter>
+      <Filter>Components\Character\InGame\Bullet</Filter>
     </ClCompile>
     <ClCompile Include="MovementComponent.cpp">
-      <Filter>Components\Monster\WorldMap</Filter>
+      <Filter>Components\Character\WorldMap</Filter>
     </ClCompile>
     <ClCompile Include="WorldMapCharacterAnimationControllerComponent.cpp">
-      <Filter>Components\Monster\WorldMap</Filter>
-    </ClCompile>
-    <ClCompile Include="ConvergeBullet.cpp">
-      <Filter>Actor\Weapon\Bullet</Filter>
-    </ClCompile>
-    <ClCompile Include="ConvergeShooter.cpp">
-      <Filter>Actor\Weapon\Shooter</Filter>
-    </ClCompile>
-    <ClCompile Include="BoomerangShooter.cpp">
-      <Filter>Actor\Weapon\Shooter</Filter>
-    </ClCompile>
-    <ClCompile Include="BoomerangBullet.cpp">
-      <Filter>Actor\Weapon\Bullet</Filter>
+      <Filter>Components\Character\WorldMap</Filter>
     </ClCompile>
     <ClCompile Include="BoomerangBulletMovementComponent.cpp">
-      <Filter>Components\Bullet</Filter>
+      <Filter>Components\Character\InGame\Bullet</Filter>
     </ClCompile>
     <ClCompile Include="BoomerangBulletBase.cpp">
       <Filter>Actor\Weapon\Base</Filter>
-    </ClCompile>
-    <ClCompile Include="ChargerBullet.cpp">
-      <Filter>Actor\Weapon\Bullet</Filter>
-    </ClCompile>
-    <ClCompile Include="ChargerShooter.cpp">
-      <Filter>Actor\Weapon\Shooter</Filter>
-    </ClCompile>
-    <ClCompile Include="PhysicsComponent.cpp">
-      <Filter>Components\Character\InGame</Filter>
     </ClCompile>
     <ClCompile Include="Bulldog.cpp">
       <Filter>Actor\Play\InGame\NPC</Filter>
     </ClCompile>
     <ClCompile Include="IInGameMonsterBase.cpp">
       <Filter>Actor\Base</Filter>
-    </ClCompile>
-    <ClCompile Include="InGameMonsterMovementComponent.cpp">
-      <Filter>Components\Monster</Filter>
     </ClCompile>
     <ClCompile Include="InGameMonsterAnimationControllerComponent.cpp">
       <Filter>Components\Monster</Filter>
@@ -634,6 +622,60 @@
     </ClCompile>
     <ClCompile Include="BulldogPlane.cpp">
       <Filter>Actor\Play\InGame\Object\DogFight</Filter>
+    </ClCompile>
+    <ClCompile Include="InGameMovementComponent.cpp">
+      <Filter>Components\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="InGameCharacterAnimationControllerComponent.cpp">
+      <Filter>Components\Character\InGame\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="InGameCharacterMovementCompmonent.cpp">
+      <Filter>Components\Character\InGame\Movement</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysicsComponent.cpp">
+      <Filter>Components\Character\InGame\Movement</Filter>
+    </ClCompile>
+    <ClCompile Include="BoomerangShooter.cpp">
+      <Filter>Actor\Weapon\Shooter\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="ChargerShooter.cpp">
+      <Filter>Actor\Weapon\Shooter\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="ConvergeShooter.cpp">
+      <Filter>Actor\Weapon\Shooter\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="PeaShooter.cpp">
+      <Filter>Actor\Weapon\Shooter\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="SpreadShooter.cpp">
+      <Filter>Actor\Weapon\Shooter\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="BoomerangBullet.cpp">
+      <Filter>Actor\Weapon\Bullet\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="ChargerBullet.cpp">
+      <Filter>Actor\Weapon\Bullet\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="ConvergeBullet.cpp">
+      <Filter>Actor\Weapon\Bullet\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="PeaBullet.cpp">
+      <Filter>Actor\Weapon\Bullet\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="SpreadBullet.cpp">
+      <Filter>Actor\Weapon\Bullet\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="YarnballBullet.cpp">
+      <Filter>Actor\Weapon\Bullet\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="TattooBullet.cpp">
+      <Filter>Actor\Weapon\Bullet\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="BulldogShooter.cpp">
+      <Filter>Actor\Weapon\Shooter\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="MonsterWeaponBase.cpp">
+      <Filter>Actor\Weapon\Base</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

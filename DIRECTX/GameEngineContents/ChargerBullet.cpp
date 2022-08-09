@@ -16,7 +16,7 @@ ChargerBullet::~ChargerBullet()
 
 void ChargerBullet::Start()
 {
-
+	BulletBase::Start();
 	Renderer = CreateComponent<GameEngineTextureRenderer>();
 	Renderer->CreateFrameAnimationFolder("PeashotLoop", FrameAnimation_DESC("PeashotLoop", 0.1f));
 	Renderer->CreateFrameAnimationFolder("PeashotIntro", FrameAnimation_DESC("PeashotIntro", 0.05f));
@@ -37,6 +37,7 @@ void ChargerBullet::Start()
 
 void ChargerBullet::Update(float _DeltaTime)
 {
+	BulletBase::Update(_DeltaTime);
 	Renderer->ScaleToTexture();
 	GameEngineDebug::DrawBox(GetCollision()->GetTransform(), { 1.0f, 0.0f,0.0f, 0.5f });
 }

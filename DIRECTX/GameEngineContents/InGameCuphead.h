@@ -41,6 +41,10 @@ protected:
 	void OnDashAnimationEnded(const FrameAnimation_DESC& _Info);
 	void UpdateState();
 	void UpdateDirection();
+	void CheckCollision();
+
+	bool OnTakeDamage(GameEngineCollision* _This, GameEngineCollision* _Other);
+	void OnCollisionDebug();
 
 private:
 	GameEngineTextureRenderer* Renderer;
