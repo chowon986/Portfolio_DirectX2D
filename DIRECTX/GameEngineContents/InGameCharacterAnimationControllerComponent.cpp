@@ -81,24 +81,30 @@ void InGameCharacterAnimationControllerComponent::UpdateAnimation()
 
 	if (IsOnGround != true &&
 		State != InGameCharacterState::Dash &&
-		State != InGameCharacterState::TakeDamage)
+		State != InGameCharacterState::TakeDamage &&
+		State != InGameCharacterState::Die)
 	{
 		Renderer->ChangeFrameAnimation("Ingame" + Name + "Jump");
 	}
 
 	else
 	{
-		if (State == InGameCharacterState::TakeDamage)
+		if (State == InGameCharacterState::Die)
+		{
+			Renderer->ChangeFrameAnimation("Ingame" + Name + "Ghost");
+		}
+
+		else if (State == InGameCharacterState::TakeDamage)
 		{
 			Renderer->ChangeFrameAnimation("Ingame" + Name + "TakeDamage");
 		}
 
-		if (State == InGameCharacterState::Prepare)
+		else if (State == InGameCharacterState::Prepare)
 		{
 			Renderer->ChangeFrameAnimation("Ingame" + Name + "Intro");
 		}
 
-		if (State == InGameCharacterState::Dash)
+		else if (State == InGameCharacterState::Dash)
 		{
 			Renderer->ChangeFrameAnimation("Ingame" + Name + "Dash");
 		}

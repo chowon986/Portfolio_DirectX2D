@@ -37,18 +37,25 @@ protected:
 	void SuperAttack() override;
 	void Walk() override;
 	void Idle() override;
+
 	void OnPrepareAnimationEnded(const FrameAnimation_DESC& _Info);
 	void OnDashAnimationEnded(const FrameAnimation_DESC& _Info);
+	void OnTakeDamageAnimationEnded(const FrameAnimation_DESC& _Info);
+	void OnGhostAnimationEnded(const FrameAnimation_DESC& _Info);
 	void UpdateState();
 	void UpdateDirection();
 	void CheckCollision();
-
-	bool OnTakeDamage(GameEngineCollision* _This, GameEngineCollision* _Other);
 	void OnCollisionDebug();
+
+	void OpenScoreBoard();
+	
+	bool GetIsOpenScoreBoard();
+	bool OnTakeDamage(GameEngineCollision* _This, GameEngineCollision* _Other);
 
 private:
 	GameEngineTextureRenderer* Renderer;
 	bool IsInputEnabled;
+	bool IsOpenScoreBoard;
 	GameEngineCollision* Collision;
 	InGameCharacterMovementCompmonent* Movement;
 	InGameCharacterAnimationControllerComponent* Animation;

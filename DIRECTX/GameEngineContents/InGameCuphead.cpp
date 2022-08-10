@@ -13,6 +13,7 @@ InGameCuphead::InGameCuphead()
 	: IsInputEnabled(false)
 	, Animation(nullptr)
 	, Movement(nullptr)
+	, IsOpenScoreBoard(false)
 {
 }
 
@@ -69,6 +70,11 @@ void InGameCuphead::Start()
 
 	// TakeDamage
 	Renderer->CreateFrameAnimationCutTexture("IngameCupheadTakeDamage", FrameAnimation_DESC("Cup.png", 28, 33, 0.1f, true));
+	Renderer->AnimationBindEnd("IngameCupheadTakeDamage", std::bind(&InGameCuphead::OnTakeDamageAnimationEnded, this, std::placeholders::_1));
+
+	// Die
+	Renderer->CreateFrameAnimationCutTexture("IngameCupheadGhost", FrameAnimation_DESC("Cup.png", 140, 155, 0.1f, true));
+	Renderer->AnimationBindEnd("IngameCupheadGhost", std::bind(&InGameCuphead::OnGhostAnimationEnded, this, std::placeholders::_1));
 
 	// Idle
 	Renderer->CreateFrameAnimationCutTexture("IngameCupheadIdle", FrameAnimation_DESC("Cup.png", 0, 7, 0.1f, true));
@@ -81,9 +87,9 @@ void InGameCuphead::Start()
 	{
 		// Collision
 		Collision = CreateComponent<GameEngineCollision>();
+		Collision->ChangeOrder(ObjectOrder::PC);
 		Collision->SetParent(this);
 		Collision->GetTransform().SetLocalScale({ 100.0f, 100.0f, 1.0f });
-		Collision->ChangeOrder(ObjectOrder::PC);
 	}
 
 	SetState(InGameCharacterState::Prepare);
@@ -118,8 +124,8 @@ void InGameCuphead::Start()
 
 void InGameCuphead::Update(float _DeltaTime)
 {
-	CheckCollision();
 	OnCollisionDebug();
+	CheckCollision();
 
 	if (true == GetLevel()->GetMainCameraActor()->IsFreeCameraMode())
 	{
@@ -167,6 +173,21 @@ void InGameCuphead::OnDashAnimationEnded(const FrameAnimation_DESC& _Info)
 	IsInputEnabled = true;
 }
 
+void InGameCuphead::OnTakeDamageAnimationEnded(const FrameAnimation_DESC& _Info)
+{
+	IsInputEnabled = true;
+}
+
+void InGameCuphead::OnGhostAnimationEnded(const FrameAnimation_DESC& _Info)
+{
+	if (IsInputEnabled == false)
+	{
+		IsInputEnabled = true;
+	}
+
+	OpenScoreBoard();
+}
+
 
 void InGameCuphead::Aim()
 {
@@ -175,6 +196,7 @@ void InGameCuphead::Aim()
 
 void InGameCuphead::TakeDamage()
 {
+	IsInputEnabled = false;
 	SetState(InGameCharacterState::TakeDamage);
 }
 
@@ -185,6 +207,10 @@ void InGameCuphead::Dash()
 
 void InGameCuphead::Die()
 {
+	if (GetHP() <= 0)
+	{
+		SetState(InGameCharacterState::Die);
+	}
 }
 
 void InGameCuphead::Duck()
@@ -296,6 +322,7 @@ void InGameCuphead::CheckCollision()
 	{
 		SetHP(GetHP() - 1);
 		TakeDamage();
+		Die();
 	}
 
 	if (true == Collision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::MONSTER, CollisionType::CT_AABB2D,
@@ -303,7 +330,13 @@ void InGameCuphead::CheckCollision()
 	{
 		SetHP(GetHP() - 1);
 		TakeDamage();
+		Die();
 	}
+}
+
+bool InGameCuphead::GetIsOpenScoreBoard()
+{
+	return IsOpenScoreBoard;
 }
 
 bool InGameCuphead::OnTakeDamage(GameEngineCollision* _This, GameEngineCollision* _Other)
@@ -314,4 +347,9 @@ bool InGameCuphead::OnTakeDamage(GameEngineCollision* _This, GameEngineCollision
 void InGameCuphead::OnCollisionDebug()
 {
 	GameEngineDebug::DrawBox(Collision->GetTransform(), { 1.0f, 0.0f,0.0f, 0.5f });
+}
+
+void InGameCuphead::OpenScoreBoard()
+{
+	IsOpenScoreBoard = true;
 }
