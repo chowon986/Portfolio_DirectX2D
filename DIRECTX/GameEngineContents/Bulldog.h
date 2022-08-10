@@ -18,6 +18,11 @@ public:
 	Bulldog& operator=(const Bulldog& _Other) = delete;
 	Bulldog& operator=(Bulldog&& _Other) noexcept = delete;
 
+
+public:
+	float4 GetBeforePosition() { return BeforePosition; }
+	void SetBeforePosition(float4 _BeforePosition) { BeforePosition = _BeforePosition; }
+
 protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;
@@ -34,7 +39,7 @@ private:
 	void Unmount();
 	void Mount();
 	void FinishAttack();
-	void SetStateIdle(const FrameAnimation_DESC& _Info);
+	void OnPrepareAnimationFinished(const FrameAnimation_DESC& _Info);
 	bool OnTakeDamage(GameEngineCollision* _This, GameEngineCollision* _Other);
 	void BulldogDieCheck(const FrameAnimation_DESC& _Info);
 	void OnUnmountAnimationFinished(const FrameAnimation_DESC& _Info);
@@ -42,6 +47,7 @@ private:
 	void OnAttack1AnimationFinished(const FrameAnimation_DESC& _Info);
 	void OnAttackFinish1AnimationFinished(const FrameAnimation_DESC& _Info);
 	void OnAttack1AnimationFrameChanged(const FrameAnimation_DESC& _Info);
+	void OnBulldogMountAnimationFinished(const FrameAnimation_DESC& _Info);
 
 private:
 	GameEngineCollision* Collision;
@@ -51,4 +57,6 @@ private:
 	float ElapsedTime;
 	float AttackIntervalTime;
 	bool AttackInProgress;
+	float4 BeforePosition;
+	bool OnCountTime;
 };

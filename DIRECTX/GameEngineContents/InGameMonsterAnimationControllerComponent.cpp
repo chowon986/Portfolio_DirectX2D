@@ -51,6 +51,11 @@ void InGameMonsterAnimationControllerComponent::UpdateAnimation()
 		Renderer->ChangeFrameAnimation(Name + "Unmount");
 	}
 
+	else if (State == InGameMonsterState::Mount)
+	{
+		Renderer->ChangeFrameAnimation(Name + "Mount");
+	}
+
 	else if (State == InGameMonsterState::PrepareAttack1)
 	{
 		Renderer->ChangeFrameAnimation(Name + "PrepareAttack1");

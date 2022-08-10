@@ -273,7 +273,7 @@ void DogFightLevel::Start()
 			{
 				return;
 			}
-			PH1BullDog->GetTransform().SetLocalPosition({ 640, -300, (int)ZOrder::NPC });
+			PH1BullDog->GetTransform().SetWorldPosition({ 640, -300, (int)ZOrder::NPC });
 		}
 
 		//{

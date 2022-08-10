@@ -9,9 +9,11 @@ Bulldog::Bulldog()
 	, Renderer(nullptr)
 	, Movement(nullptr)
 	, Animation(nullptr)
-	, ElapsedTime(99.0f)
-	, AttackIntervalTime(100.0f)
+	, ElapsedTime(5.0f)
+	, AttackIntervalTime(10.0f)
 	, AttackInProgress(false)
+	, BeforePosition(float4::ZERO)
+	, OnCountTime(true)
 {
 }
 
@@ -30,13 +32,14 @@ void Bulldog::Start()
 	Renderer->CreateFrameAnimationFolder("BulldogAttack1", FrameAnimation_DESC("BulldogAttack1", 0.1f)); // Catgun
 	Renderer->CreateFrameAnimationFolder("BulldogAttackFinish1", FrameAnimation_DESC("BulldogAttackFinish1", 0.1f)); // Catgun
 	//Renderer->CreateFrameAnimationFolder("BulldogAttack2", FrameAnimation_DESC("BulldogAttack2", 0.1f)); // Tattoo
-	//Renderer->CreateFrameAnimationFolder("BulldogMount", FrameAnimation_DESC("BulldogMount", 0.1f));
+	Renderer->CreateFrameAnimationFolder("BulldogMount", FrameAnimation_DESC("BulldogMount", 0.1f));
 
-	Renderer->AnimationBindEnd("BulldogIntro", std::bind(&Bulldog::SetStateIdle, this, std::placeholders::_1));
+	Renderer->AnimationBindEnd("BulldogIntro", std::bind(&Bulldog::OnPrepareAnimationFinished, this, std::placeholders::_1));
 	Renderer->AnimationBindEnd("BulldogUnmount", std::bind(&Bulldog::OnUnmountAnimationFinished, this, std::placeholders::_1));
 	Renderer->AnimationBindEnd("BulldogPrepareAttack1", std::bind(&Bulldog::OnPrepareAttack1AnimationFinished, this, std::placeholders::_1));
 	Renderer->AnimationBindEnd("BulldogAttack1", std::bind(&Bulldog::OnAttack1AnimationFinished, this, std::placeholders::_1));
 	Renderer->AnimationBindEnd("BulldogAttackFinish1", std::bind(&Bulldog::OnAttackFinish1AnimationFinished, this, std::placeholders::_1));
+	Renderer->AnimationBindEnd("BulldogMount", std::bind(&Bulldog::OnBulldogMountAnimationFinished, this, std::placeholders::_1));
 
 	Renderer->AnimationBindFrame("BulldogAttack1", std::bind(&Bulldog::OnAttack1AnimationFrameChanged, this, std::placeholders::_1));
 	
@@ -62,6 +65,8 @@ void Bulldog::Start()
 
 	BulldogShooter* Shooter = GetLevel()->CreateActor<BulldogShooter>();
 	Shooter->SetParent(this);
+
+	SetBeforePosition({ 640, 100, (int)ZOrder::NPC });
 }
 
 void Bulldog::Update(float _DeltaTime)
@@ -70,8 +75,10 @@ void Bulldog::Update(float _DeltaTime)
 
 	Renderer->ScaleToTexture();
 	UpdateState();
-
-	ElapsedTime += _DeltaTime;
+	if (OnCountTime == true)
+	{
+		ElapsedTime += _DeltaTime;
+	}
 
 }
 
@@ -92,13 +99,16 @@ void Bulldog::UpdateState()
 	if (ElapsedTime >= AttackIntervalTime)
 	{
 		ElapsedTime = 0.0f;
+		OnCountTime = false;
 		Unmount();
 	}
 
 	if (GetState() != InGameMonsterState::TakeDamage &&
 		GetState() != InGameMonsterState::Die &&
+		GetState() != InGameMonsterState::Prepare &&
 		AttackInProgress == false)
 	{
+		OnCountTime = true;
 		Idle();
 	}
 }
@@ -131,7 +141,8 @@ void Bulldog::Die()
 void Bulldog::PrepareAttack()
 {
 	// 좌우 위치 번갈아가며 변경
-	GetTransform().SetWorldPosition(float4{ 1100,-500 });
+	SetBeforePosition({ GetTransform().GetLocalPosition().x, GetTransform().GetLocalPosition().y + 100 });
+	GetTransform().SetLocalPosition(float4{ 1200,-500 });
 	SetState(InGameMonsterState::PrepareAttack1);
 }
 
@@ -143,7 +154,6 @@ void Bulldog::Unmount()
 
 void Bulldog::Mount()
 {
-	AttackInProgress = false;
 	SetState(InGameMonsterState::Mount);
 }
 
@@ -154,9 +164,9 @@ void Bulldog::FinishAttack()
 	SetState(InGameMonsterState::AttackFinish1);
 }
 
-void Bulldog::SetStateIdle(const FrameAnimation_DESC& _Info)
+void Bulldog::OnPrepareAnimationFinished(const FrameAnimation_DESC& _Info)
 {
-	SetState(InGameMonsterState::Idle);
+	Mount();
 }
 
 bool Bulldog::OnTakeDamage(GameEngineCollision* _This, GameEngineCollision* _Other)
@@ -187,7 +197,10 @@ void Bulldog::OnAttack1AnimationFinished(const FrameAnimation_DESC& _Info)
 
 void Bulldog::OnAttackFinish1AnimationFinished(const FrameAnimation_DESC& _Info)
 {
+	Renderer->SetPivot(PIVOTMODE::BOT);
 	Mount();
+	ElapsedTime = 0.0f;
+
 }
 
 void Bulldog::OnAttack1AnimationFrameChanged(const FrameAnimation_DESC& _Info)
@@ -198,4 +211,9 @@ void Bulldog::OnAttack1AnimationFrameChanged(const FrameAnimation_DESC& _Info)
 		// 몬스터의 이미지 x값에따라 좌 우로 이동하는 총, 총알, 총알이동컴포넌트
 	}
 
+}
+
+void Bulldog::OnBulldogMountAnimationFinished(const FrameAnimation_DESC& _Info)
+{
+	AttackInProgress = false;
 }
