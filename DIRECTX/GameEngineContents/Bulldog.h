@@ -65,7 +65,6 @@ private:
 	InGameMonsterAnimationControllerComponent* Animation;
 	float ElapsedTime;
 	float AttackIntervalTime;
-	bool AttackInProgress;
 	float4 BeforePosition;
 	bool CountTimeOnOff;
 	bool DirecitonChangeOn;

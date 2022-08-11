@@ -12,7 +12,6 @@ Bulldog::Bulldog()
 	, Animation(nullptr)
 	, ElapsedTime(3.0f)
 	, AttackIntervalTime(10.0f)
-	, AttackInProgress(false)
 	, BeforePosition(float4::ZERO)
 	, CountTimeOnOff(true)
 	, DirecitonChangeOn(true)
@@ -162,6 +161,8 @@ void Bulldog::UpdateState()
 		CountTimeOnOff = false;
 		Unmount();
 	}
+
+	GetState();
 }
 
 void Bulldog::TakeDamage()
@@ -176,7 +177,6 @@ void Bulldog::Prepare()
 
 void Bulldog::Idle()
 {
-	AttackInProgress = true;
 	CountTimeOnOff = true;
 
 	SetState(InGameMonsterState::Idle);
@@ -238,7 +238,6 @@ void Bulldog::PrepareAttack2()
 
 void Bulldog::Unmount()
 {
-	AttackInProgress = true;
 	SetBeforePosition({ GetTransform().GetLocalPosition().x, 50 });
 	SetState(InGameMonsterState::Unmount);
 }
@@ -360,7 +359,5 @@ void Bulldog::OnAttack2AnimationFrameChanged(const FrameAnimation_DESC& _Info)
 
 void Bulldog::OnBulldogMountAnimationFinished(const FrameAnimation_DESC& _Info)
 {
-	SetAttackState(InGameMonsterAttackState::None);
-
 	Idle();
 }
