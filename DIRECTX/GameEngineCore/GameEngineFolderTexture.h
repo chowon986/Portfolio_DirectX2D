@@ -19,12 +19,12 @@ public:
 
 	static GameEngineFolderTexture* Load(const std::string& _Path, const std::string& _Name);
 
-	size_t GetTextureCount() 
+	size_t GetTextureCount()
 	{
 		return Textures.size();
 	}
 
-	GameEngineTexture* GetTexture(int _Index)
+	GameEngineTexture* GetTexture(size_t _Index)
 	{
 		if (Textures.size() <= _Index)
 		{

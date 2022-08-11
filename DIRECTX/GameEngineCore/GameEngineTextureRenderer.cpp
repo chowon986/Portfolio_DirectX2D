@@ -32,6 +32,15 @@ void FrameAnimation::Update(float _Delta)
 
 	if (Info.Inter <= Info.FrameTime)
 	{
+		if (Info.CurFrame == (Info.Frames.size() - 1)
+			&& false == bOnceEnd
+			&& nullptr != End)
+		{
+			End(Info);
+			bOnceEnd = true;
+			bOnceStart = false;
+		}
+
 		++Info.CurFrame;
 		if (nullptr != Frame)
 		{
@@ -40,12 +49,6 @@ void FrameAnimation::Update(float _Delta)
 
 		if (Info.CurFrame >= Info.Frames.size())
 		{
-			if (false == bOnceEnd && nullptr != End)
-			{
-				End(Info);
-				bOnceEnd = true;
-				bOnceStart = false;
-			}
 
 			if (true == Info.Loop)
 			{
@@ -166,18 +169,6 @@ void GameEngineTextureRenderer::SetPivot(PIVOTMODE _Mode)
 	case PIVOTMODE::BOT:
 		SetPivotToVector(float4(0.0f, GetTransform().GetWorldScale().hy()));
 		break;
-	case PIVOTMODE::RIGHTTOP:
-		SetPivotToVector(float4(-GetTransform().GetWorldScale().hx(), -GetTransform().GetWorldScale().hy()));
-		break;
-	case PIVOTMODE::LEFTCENTER:
-		SetPivotToVector(float4(GetTransform().GetWorldScale().hx(), 0.0f));
-		break;
-	case PIVOTMODE::RIGHTCENTER:
-		SetPivotToVector(float4(-GetTransform().GetWorldScale().hx(), 0.0f));
-		break;
-	case PIVOTMODE::TOP:
-		SetPivotToVector(float4(0.0f, -GetTransform().GetWorldScale().hy()));
-		break;
 	default:
 		break;
 	}
@@ -288,10 +279,13 @@ void GameEngineTextureRenderer::ChangeFrameAnimation(const std::string& _Animati
 		if (nullptr != CurAni->Texture)
 		{
 			SetTexture(CurAni->Texture, CurAni->Info.Frames[CurAni->Info.CurFrame]);
+			ScaleToCutTexture(CurAni->Info.CurFrame);
 		}
 		else if (nullptr != CurAni->FolderTexture)
 		{
 			SetTexture(CurAni->FolderTexture->GetTexture(CurAni->Info.Frames[CurAni->Info.CurFrame]));
+			ScaleToTexture();
+
 		}
 	}
 }
