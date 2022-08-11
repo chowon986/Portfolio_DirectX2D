@@ -2,6 +2,7 @@
 #include "BulletBase.h"
 
 class BulldogShooter;
+class GameEngineCollision;
 class GameEngineTextureRenderer;
 class TattooBullet : public BulletBase
 {
@@ -13,6 +14,10 @@ public:
 	TattooBullet& operator=(const TattooBullet& _Other) = delete;
 	TattooBullet& operator=(TattooBullet&& _Other) noexcept = delete;
 
+public:
+	GameEngineTextureRenderer* GetRenderer() { return Renderer; }
+	void SetRenderer(GameEngineTextureRenderer* _Renderer) { Renderer = _Renderer; }
+
 private:
 	virtual void Start() override;
 	virtual void Update(float _DeltaTime) override;
@@ -20,6 +25,6 @@ private:
 
 private:
 	BulldogShooter* Weapon;
-	void TattooshotLoop(const FrameAnimation_DESC& _DESC);
+	GameEngineCollision* Collision;
 };
 

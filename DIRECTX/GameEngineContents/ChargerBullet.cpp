@@ -33,6 +33,7 @@ void ChargerBullet::Start()
 	SetCollision(Collision);
 	Collision->ChangeOrder(ObjectOrder::PC_BULLET);
 	Collision->GetTransform().SetLocalScale({ 50.0f,50.0f });
+
 }
 
 void ChargerBullet::Update(float _DeltaTime)

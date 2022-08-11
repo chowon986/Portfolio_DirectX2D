@@ -5,7 +5,7 @@
 MonsterWeaponBase::MonsterWeaponBase()
 	: IntervalTime(0.1f)
 	, ElapsedTime(0.0f)
-	, Monster(nullptr)
+	, Character(nullptr)
 	, State(InGameMonsterState::Prepare)
 	, AttackState(InGameMonsterAttackState::None)
 	, ColMapImage(nullptr)
@@ -18,22 +18,22 @@ MonsterWeaponBase::~MonsterWeaponBase()
 
 void MonsterWeaponBase::UpdateDirection()
 {
-	Monster = dynamic_cast<IInGameMonsterBase*>(GetParent());
-	if (Monster == nullptr)
+	Character = dynamic_cast<IInGameMonsterBase*>(GetParent());
+	if (Character == nullptr)
 	{
 		return;
 	}
 
-	State = Monster->GetState();
-	AttackState = Monster->GetAttackState();
+	State = Character->GetState();
+	AttackState = Character->GetAttackState();
 	if (State == InGameMonsterState::Attack1)
 	{
-		Direction = Monster->GetRenderer()->GetTransform().GetLocalScale().x < 0 ? float4::RIGHT : float4::LEFT;
+		Direction = Character->GetRenderer()->GetTransform().GetLocalScale().x > 0 ? float4::LEFT : float4::RIGHT;
 	}
 
-	if (State == InGameMonsterState::Attack1)
+	if (State == InGameMonsterState::Attack2)
 	{
-		Direction = Monster->GetRenderer()->GetTransform().GetLocalScale().x < 0 ? float4::RIGHT : float4::LEFT;
+		Direction = Character->GetRenderer()->GetTransform().GetLocalScale().x > 0 ? float4::RIGHT : float4::LEFT;
 	}
 
 	UpdatePivot();
@@ -42,14 +42,14 @@ void MonsterWeaponBase::UpdateDirection()
 
 void MonsterWeaponBase::Update(float _DeltaTime)
 {
-	Monster = dynamic_cast<IInGameMonsterBase*>(GetParent());
+	Character = dynamic_cast<IInGameMonsterBase*>(GetParent());
 
-	if (Monster == nullptr)
+	if (Character == nullptr)
 	{
 		return;
 	}
 
-	AttackState = Monster->GetAttackState();
+	AttackState = Character->GetAttackState();
 	if (AttackState == InGameMonsterAttackState::None)
 	{
 		return;
@@ -64,33 +64,33 @@ void MonsterWeaponBase::Update(float _DeltaTime)
 void MonsterWeaponBase::UpdatePivot()
 {
 
-	if (AttackState != InGameMonsterAttackState::Shoot1 ||
-		AttackState != InGameMonsterAttackState::Shoot2)
+	if (State != InGameMonsterState::Attack1 &&
+		State != InGameMonsterState::Attack2)
 	{
 		return;
 	}
 
-	if (AttackState == InGameMonsterAttackState::Shoot1)
+	if (State == InGameMonsterState::Attack1)
 	{
-		if (Monster->GetRenderer()->GetTransform().GetLocalScale().x > 0)
+		if (Character->GetRenderer()->GetTransform().GetLocalScale().x > 0)
 		{
-			GetTransform().SetLocalPosition({ 80.0f, 60.0f });
+			GetTransform().SetLocalPosition({ 80.0f, 0.0f });
 		}
 		else
 		{
-			//GetTransform().SetLocalPosition({ -80.0f, 60.0f });
+			GetTransform().SetLocalPosition({ -80.0f, 0.0f });
 		}
 	}
 
-	else if (AttackState == InGameMonsterAttackState::Shoot2)
+	else if (State == InGameMonsterState::Attack2)
 	{
-		if (Monster->GetRenderer()->GetTransform().GetLocalScale().x > 0)
+		if (Character->GetRenderer()->GetTransform().GetLocalScale().x > 0)
 		{
-			//GetTransform().SetLocalPosition({ 80.0f, 60.0f });
+			GetTransform().SetLocalPosition({ 80.0f, 220.0f });
 		}
 		else
 		{
-			//GetTransform().SetLocalPosition({ -80.0f, 60.0f });
+			GetTransform().SetLocalPosition({ -80.0f, 220.0f });
 		}
 	}
 }
@@ -107,11 +107,21 @@ void MonsterWeaponBase::OnMonsterAttackStateChanged(InGameMonsterAttackState _At
 	case InGameMonsterAttackState::None:
 		ElapsedTime = -1;
 		break;
-	case InGameMonsterAttackState::Shoot1:
+	case InGameMonsterAttackState::YarnBall1:
 		ElapsedTime = 0.0f;
 		break;
-	case InGameMonsterAttackState::Shoot2:
+	case InGameMonsterAttackState::YarnBall2:
 		ElapsedTime = 0.0f;
+		break;
+	case InGameMonsterAttackState::YarnBall3:
+		ElapsedTime = 0.0f;
+		break;
+	case InGameMonsterAttackState::Tatto1:
+		ElapsedTime = 0.0f;
+		break;
+	case InGameMonsterAttackState::Tatto2:
+		ElapsedTime = 0.0f;
+		break;
 	}
 	UpdateDirection();
 }

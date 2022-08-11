@@ -14,6 +14,10 @@ public:
 	YarnballBullet& operator=(const YarnballBullet& _Other) = delete;
 	YarnballBullet& operator=(YarnballBullet&& _Other) noexcept = delete;
 
+public:
+	GameEngineTextureRenderer* GetRenderer() { return Renderer; }
+	void SetRenderer(GameEngineTextureRenderer* _Renderer) { Renderer = _Renderer; }
+
 private:
 	virtual void Start() override;
 	virtual void Update(float _DeltaTime) override;

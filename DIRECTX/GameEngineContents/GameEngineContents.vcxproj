@@ -171,7 +171,6 @@
     <ClInclude Include="BoomerangShooter.h" />
     <ClInclude Include="Bulldog.h" />
     <ClInclude Include="BulldogPlane.h" />
-    <ClInclude Include="BulldogShooter.h" />
     <ClInclude Include="BulletBase.h" />
     <ClInclude Include="BulletMovementComponent.h" />
     <ClInclude Include="Cart.h" />
@@ -248,6 +247,7 @@
     <ClInclude Include="SpreadBullet.h" />
     <ClInclude Include="SpreadShooter.h" />
     <ClInclude Include="TattooBullet.h" />
+    <ClInclude Include="TattooShooter.h" />
     <ClInclude Include="TitleLevel.h">
       <SubType>
       </SubType>
@@ -264,6 +264,7 @@
     <ClInclude Include="MovementComponent.h" />
     <ClInclude Include="WorldMapMugman.h" />
     <ClInclude Include="YarnballBullet.h" />
+    <ClInclude Include="YarnballShooter.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Background.cpp" />
@@ -280,7 +281,6 @@
     <ClCompile Include="BoomerangShooter.cpp" />
     <ClCompile Include="Bulldog.cpp" />
     <ClCompile Include="BulldogPlane.cpp" />
-    <ClCompile Include="BulldogShooter.cpp" />
     <ClCompile Include="BulletBase.cpp" />
     <ClCompile Include="BulletMovementComponent.cpp" />
     <ClCompile Include="Cart.cpp" />
@@ -357,6 +357,7 @@
     <ClCompile Include="SpreadBullet.cpp" />
     <ClCompile Include="SpreadShooter.cpp" />
     <ClCompile Include="TattooBullet.cpp" />
+    <ClCompile Include="TattooShooter.cpp" />
     <ClCompile Include="TitleLevel.cpp">
       <SubType>
       </SubType>
@@ -373,6 +374,7 @@
     <ClCompile Include="MovementComponent.cpp" />
     <ClCompile Include="WorldMapMugman.cpp" />
     <ClCompile Include="YarnballBullet.cpp" />
+    <ClCompile Include="YarnballShooter.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -5,6 +5,7 @@
 InGameMovementComponent::InGameMovementComponent()
 	:Speed(100.0f)
 	, Direction(float4::ZERO)
+	, ImageDir(float4::ZERO)
 {
 }
 
@@ -32,17 +33,26 @@ void InGameMovementComponent::OnStateChanged(InGameMonsterState _State)
 
 	switch (_State)
 	{
+	case InGameMonsterState::Unmount:
+	{
+		if (nullptr != GetParent<Bulldog>())
+		{
+			Bulldog* BulldogMonster = GetParent<Bulldog>();
+
+			Move(BulldogMonster->GetTransform().GetLocalPosition(), { BulldogMonster->GetTransform().GetLocalPosition().x, BulldogMonster->GetTransform().GetLocalPosition().y + 300 });
+			SetSpeed(100.0f);
+		}
+		break;
+	}
+
 	case InGameMonsterState::Mount:
 	{
 		if (nullptr != GetParent<Bulldog>())
 		{
 			Bulldog* BulldogMonster = GetParent<Bulldog>();
-			if (false == BulldogMonster->GetTransform().GetLocalPosition().CompareInt2D(BulldogMonster->GetBeforePosition()))
-			{
 				MoveBeforePos(BulldogMonster->GetBeforePosition());
-				Move(BulldogMonster->GetTransform().GetLocalPosition(), { BulldogMonster->GetTransform().GetLocalPosition().x, BulldogMonster->GetTransform().GetLocalPosition().y - 500 });
-				SetSpeed(200.0f);
-			}
+				Move(BulldogMonster->GetTransform().GetLocalPosition(), { BulldogMonster->GetTransform().GetLocalPosition().x, BulldogMonster->GetTransform().GetLocalPosition().y - 300});
+				SetSpeed(150.0f);
 		}
 		break;
 	}
@@ -52,11 +62,42 @@ void InGameMovementComponent::OnStateChanged(InGameMonsterState _State)
 		if (nullptr != GetParent<Bulldog>())
 		{
 			Bulldog* BulldogMonster = GetParent<Bulldog>();
-			if (false == BulldogMonster->GetTransform().GetLocalPosition().CompareInt2D(BulldogMonster->GetBeforePosition()))
-			{
-				Move(BulldogMonster->GetTransform().GetLocalPosition(), { BulldogMonster->GetTransform().GetLocalPosition().x - 200, BulldogMonster->GetTransform().GetLocalPosition().y});
+				ImageDir = BulldogMonster->GetRenderer()->GetTransform().GetLocalScale().x < 0 ? BulldogMonster->GetTransform().GetLocalPosition().x + 200 : BulldogMonster->GetTransform().GetLocalPosition().x - 200;
+				Move(BulldogMonster->GetTransform().GetLocalPosition(), { ImageDir.x, BulldogMonster->GetTransform().GetLocalPosition().y });
 				SetSpeed(100.0f);
-			}
+		}
+		break;
+	}
+
+	case InGameMonsterState::PrepareAttack2:
+	{
+		if (nullptr != GetParent<Bulldog>())
+		{
+			Bulldog* BulldogMonster = GetParent<Bulldog>();
+				Move(BulldogMonster->GetTransform().GetLocalPosition(), { BulldogMonster->GetTransform().GetLocalPosition().x, BulldogMonster->GetTransform().GetLocalPosition().y - 300 });
+				SetSpeed(100.0f);
+		}
+		break;
+	}
+
+	case InGameMonsterState::Attack2:
+	{
+		if (nullptr != GetParent<Bulldog>())
+		{
+			Bulldog* BulldogMonster = GetParent<Bulldog>();
+				Move(BulldogMonster->GetTransform().GetLocalPosition(), { BulldogMonster->GetTransform().GetLocalPosition().x, BulldogMonster->GetTransform().GetLocalPosition().y - 300 });
+				SetSpeed(100.0f);
+		}
+		break;
+	}
+
+	case InGameMonsterState::AttackFinish2:
+	{
+		if (nullptr != GetParent<Bulldog>())
+		{
+			Bulldog* BulldogMonster = GetParent<Bulldog>();
+				Move(BulldogMonster->GetTransform().GetLocalPosition(), { BulldogMonster->GetTransform().GetLocalPosition().x, 100 });
+				SetSpeed(200.0f);
 		}
 		break;
 	}
@@ -121,7 +162,7 @@ void InGameMovementComponent::Update(float _DeltaTime)
 	}
 
 	if (Direction.CompareInt2D(float4::DOWN) &&
-		Actor->GetTransform().GetWorldPosition().y <= EndPos.x)
+		Actor->GetTransform().GetWorldPosition().y <= EndPos.y)
 	{
 		return;
 	}

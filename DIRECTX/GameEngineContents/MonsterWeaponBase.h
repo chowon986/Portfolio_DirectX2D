@@ -35,7 +35,7 @@ protected:
 protected:
 	float ElapsedTime;
 	float IntervalTime;
-	IInGameMonsterBase* Monster;
+	IInGameMonsterBase* Character;
 	InGameMonsterState State;
 	InGameMonsterAttackState AttackState;
 	float4 Direction;

@@ -35,5 +35,6 @@ private:
 	float4 Direction;
 	float4 StartPos;
 	float4 EndPos;
+	float4 ImageDir;
 };
 

@@ -1,12 +1,13 @@
 #include "PreCompile.h"
 #include "TattooBullet.h"
 #include "GameEngineCore/GameEngineTextureRenderer.h"
-#include "BulldogShooter.h"
+#include "TattooShooter.h"
 #include "BulletMovementComponent.h"
 #include "IInGameCharacterBase.h"
 
 TattooBullet::TattooBullet()
 	: Weapon(nullptr)
+	, Collision(nullptr)
 {
 }
 
@@ -18,27 +19,24 @@ void TattooBullet::Start()
 {
 
 	Renderer = CreateComponent<GameEngineTextureRenderer>();
-	Renderer->CreateFrameAnimationFolder("TattooshotLoop", FrameAnimation_DESC("TattooshotLoop", 0.1f));
-	Renderer->CreateFrameAnimationFolder("TattooshotIntro", FrameAnimation_DESC("TattooshotIntro", 0.05f));
-	Renderer->AnimationBindEnd("TattooshotIntro", std::bind(&TattooBullet::TattooshotLoop, this, std::placeholders::_1));
-
-	Renderer->ChangeFrameAnimation("TattooshotIntro");
+	Renderer->CreateFrameAnimationFolder("TattoBoomerang", FrameAnimation_DESC("TattoBoomerang", 0.1f));
+	Renderer->ChangeFrameAnimation("TattoBoomerang");
 	Renderer->ScaleToTexture();
+	SetRenderer(Renderer);
+	Collision = CreateComponent<GameEngineCollision>();
+	Collision->GetTransform().SetLocalScale({ 80.0f, 80.0f, 1.0f });
+	Collision->ChangeOrder(ObjectOrder::MONSTER_BULLET);
 
 	MovementComponent = CreateComponent<BulletMovementComponent>();
-	MovementComponent->SetSpeed(10.0f);
+	MovementComponent->SetSpeed(20.0f);
 }
 
 void TattooBullet::Update(float _DeltaTime)
 {
 	Renderer->ScaleToTexture();
+	//GameEngineDebug::DrawBox(Collision->GetTransform(), { 1.0f, 0.0f,0.0f, 0.5f });
 }
 
 void TattooBullet::End()
 {
-}
-
-void TattooBullet::TattooshotLoop(const FrameAnimation_DESC& _DESC)
-{
-	Renderer->ChangeFrameAnimation("TattooshotLoop");
 }

@@ -22,6 +22,8 @@ public:
 public:
 	float4 GetBeforePosition() { return BeforePosition; }
 	void SetBeforePosition(float4 _BeforePosition) { BeforePosition = _BeforePosition; }
+	bool DirectionChangeOnOffSwitch();
+	bool AttackChangeOnOffSwitch();
 
 protected:
 	void Start() override;
@@ -35,7 +37,8 @@ protected:
 	void UpdateState();
 
 private:
-	void PrepareAttack();
+	void PrepareAttack1();
+	void PrepareAttack2();
 	void Unmount();
 	void Mount();
 	void FinishAttack();
@@ -43,10 +46,16 @@ private:
 	bool OnTakeDamage(GameEngineCollision* _This, GameEngineCollision* _Other);
 	void BulldogDieCheck(const FrameAnimation_DESC& _Info);
 	void OnUnmountAnimationFinished(const FrameAnimation_DESC& _Info);
-	void OnPrepareAttack1AnimationFinished(const FrameAnimation_DESC& _Info);
-	void OnAttack1AnimationFinished(const FrameAnimation_DESC& _Info);
-	void OnAttackFinish1AnimationFinished(const FrameAnimation_DESC& _Info);
+
+	void OnPrepareAttackAnimationFinished(const FrameAnimation_DESC& _Info);
+
+	void OnAttackAnimationFinished(const FrameAnimation_DESC& _Info);
+
+	void OnAttackFinishAnimationFinished(const FrameAnimation_DESC& _Info);
+
 	void OnAttack1AnimationFrameChanged(const FrameAnimation_DESC& _Info);
+	void OnAttack2AnimationFrameChanged(const FrameAnimation_DESC& _Info);
+
 	void OnBulldogMountAnimationFinished(const FrameAnimation_DESC& _Info);
 
 private:
@@ -58,5 +67,7 @@ private:
 	float AttackIntervalTime;
 	bool AttackInProgress;
 	float4 BeforePosition;
-	bool OnCountTime;
+	bool CountTimeOnOff;
+	bool DirecitonChangeOn;
+	bool Attack1On;
 };

@@ -61,14 +61,29 @@ void InGameMonsterAnimationControllerComponent::UpdateAnimation()
 		Renderer->ChangeFrameAnimation(Name + "PrepareAttack1");
 	}
 
+	else if (State == InGameMonsterState::PrepareAttack2)
+	{
+		Renderer->ChangeFrameAnimation(Name + "PrepareAttack2");
+	}
+
 	else if (State== InGameMonsterState::Attack1)
 	{
 		Renderer->ChangeFrameAnimation(Name + "Attack1");
 	}
 
+	else if (State == InGameMonsterState::Attack2)
+	{
+		Renderer->ChangeFrameAnimation(Name + "Attack2");
+	}
+
 	else if (State == InGameMonsterState::AttackFinish1)
 	{
 		Renderer->ChangeFrameAnimation(Name + "AttackFinish1");
+	}
+
+	else if (State == InGameMonsterState::AttackFinish2)
+	{
+		Renderer->ChangeFrameAnimation(Name + "AttackFinish2");
 	}
 
 	else if (State == InGameMonsterState::Idle)

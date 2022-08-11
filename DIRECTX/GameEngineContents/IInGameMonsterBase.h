@@ -26,8 +26,11 @@ enum class InGameMonsterState
 enum class InGameMonsterAttackState
 {
 	None,
-	Shoot1,
-	Shoot2,
+	YarnBall1, // Yellow
+	YarnBall2, // Green
+	YarnBall3, // Red
+	Tatto1,
+	Tatto2, // Pink
 };
 
 
