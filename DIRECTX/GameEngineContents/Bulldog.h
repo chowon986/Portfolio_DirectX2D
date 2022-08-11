@@ -69,4 +69,6 @@ private:
 	bool CountTimeOnOff;
 	bool DirecitonChangeOn;
 	bool Attack1On;
+	int OnceAttack1FrameChanged;
+	int OnceAttack2FrameChanged;
 };

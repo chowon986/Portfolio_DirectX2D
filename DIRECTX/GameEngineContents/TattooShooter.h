@@ -20,5 +20,8 @@ private:
 	void Update(float _DeltaTime) override;
 	void End() override;
 
+private:
+	InGameMonsterAttackState MonsterAttackState;
+
 };
 

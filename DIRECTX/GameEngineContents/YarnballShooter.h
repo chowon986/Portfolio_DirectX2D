@@ -21,5 +21,6 @@ private:
 	void End() override;
 
 private:
+	InGameMonsterAttackState MonsterAttackState;
 };
 

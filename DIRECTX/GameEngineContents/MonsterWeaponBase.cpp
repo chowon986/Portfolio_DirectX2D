@@ -26,6 +26,7 @@ void MonsterWeaponBase::UpdateDirection()
 
 	State = Character->GetState();
 	AttackState = Character->GetAttackState();
+
 	if (State == InGameMonsterState::Attack1)
 	{
 		Direction = Character->GetRenderer()->GetTransform().GetLocalScale().x > 0 ? float4::LEFT : float4::RIGHT;
@@ -49,6 +50,7 @@ void MonsterWeaponBase::Update(float _DeltaTime)
 		return;
 	}
 
+	State = Character->GetState();
 	AttackState = Character->GetAttackState();
 	if (AttackState == InGameMonsterAttackState::None)
 	{
@@ -74,11 +76,11 @@ void MonsterWeaponBase::UpdatePivot()
 	{
 		if (Character->GetRenderer()->GetTransform().GetLocalScale().x > 0)
 		{
-			GetTransform().SetLocalPosition({ 80.0f, 0.0f });
+			GetTransform().SetLocalPosition({ -80.0f, 220.0f });
 		}
 		else
 		{
-			GetTransform().SetLocalPosition({ -80.0f, 0.0f });
+			GetTransform().SetLocalPosition({ 80.0f, 220.0f });
 		}
 	}
 
@@ -134,8 +136,8 @@ void MonsterWeaponBase::SetParent(GameEngineUpdateObject* _Parent)
 	IInGameMonsterBase* Monster = dynamic_cast<IInGameMonsterBase*>(GetParent());
 	if (Monster != nullptr)
 	{
-		Monster->GetStateChangedDelegate().Add(std::bind(&MonsterWeaponBase::OnMonsterStateChanged, this, std::placeholders::_1));
 		Monster->GetAttackStateChangedDelegate().Add(std::bind(&MonsterWeaponBase::OnMonsterAttackStateChanged, this, std::placeholders::_1));
+		Monster->GetStateChangedDelegate().Add(std::bind(&MonsterWeaponBase::OnMonsterStateChanged, this, std::placeholders::_1));
 		UpdateDirection();
 		SetColMapImage(Monster->GetColMapImage());
 	}

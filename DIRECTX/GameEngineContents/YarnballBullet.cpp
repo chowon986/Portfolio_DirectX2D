@@ -36,7 +36,7 @@ void YarnballBullet::Start()
 void YarnballBullet::Update(float _DeltaTime)
 {
 	Renderer->ScaleToTexture();
-	//GameEngineDebug::DrawBox(Collision->GetTransform(), { 1.0f, 0.0f,0.0f, 0.5f });
+	GameEngineDebug::DrawBox(Collision->GetTransform(), { 1.0f, 0.0f,0.0f, 0.5f });
 }
 
 void YarnballBullet::End()

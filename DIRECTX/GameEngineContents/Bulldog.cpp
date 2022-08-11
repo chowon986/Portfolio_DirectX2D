@@ -15,6 +15,8 @@ Bulldog::Bulldog()
 	, BeforePosition(float4::ZERO)
 	, CountTimeOnOff(true)
 	, DirecitonChangeOn(true)
+	, OnceAttack1FrameChanged(-1)
+	, OnceAttack2FrameChanged(-1)
 {
 }
 
@@ -39,16 +41,7 @@ bool Bulldog::DirectionChangeOnOffSwitch()
 
 bool Bulldog::AttackChangeOnOffSwitch()
 {
-	int RandomAttack = (rand() % 3);
-	++RandomAttack;
-	if (RandomAttack == 1)
-	{
-		Attack1On = true;
-	}
-	else
-	{
-		Attack1On = false;
-	}
+	Attack1On = !Attack1On;
 	return Attack1On;
 }
 
@@ -204,16 +197,14 @@ void Bulldog::PrepareAttack1()
 	DirectionChangeOnOffSwitch();
 	if (DirecitonChangeOn == true)
 	{
-		Renderer->SetPivot(PIVOTMODE::LEFTCENTER);
 		Renderer->GetTransform().PixLocalNegativeX();
-		GetTransform().SetLocalPosition(float4{ 80,-500 });
+		GetTransform().SetWorldPosition(float4{ 0,-500 });
 		SetState(InGameMonsterState::PrepareAttack1);
 	}
 	else
 	{
-		Renderer->SetPivot(PIVOTMODE::LEFTCENTER);
 		Renderer->GetTransform().PixLocalPositiveX();
-		GetTransform().SetLocalPosition(float4{ 1200,-500 });
+		GetTransform().SetWorldPosition(float4{ 1280,-500 });
 		SetState(InGameMonsterState::PrepareAttack1);
 	}
 
@@ -282,9 +273,10 @@ void Bulldog::OnUnmountAnimationFinished(const FrameAnimation_DESC& _Info)
 	AttackChangeOnOffSwitch();
 	if (Attack1On == true)
 	{
+		Renderer->SetPivot(PIVOTMODE::LEFTCENTER);
 		PrepareAttack1();
 	}
-	else
+	else if(Attack1On == false)
 	{
 		Renderer->SetPivot(PIVOTMODE::BOT);
 		PrepareAttack2();
@@ -319,21 +311,25 @@ void Bulldog::OnAttackFinishAnimationFinished(const FrameAnimation_DESC& _Info)
 
 void Bulldog::OnAttack1AnimationFrameChanged(const FrameAnimation_DESC& _Info)
 {
-	if (_Info.CurFrame == 2)
+	if (OnceAttack1FrameChanged != _Info.CurFrame)
 	{
-		SetAttackState(InGameMonsterAttackState::YarnBall1);
-	}
-	else if (_Info.CurFrame == 8)
-	{
-		SetAttackState(InGameMonsterAttackState::YarnBall2);
-	}
-	else if (_Info.CurFrame == 14)
-	{
-		SetAttackState(InGameMonsterAttackState::YarnBall3);
-	}
-	else
-	{
-		SetAttackState(InGameMonsterAttackState::None);
+		OnceAttack1FrameChanged = _Info.CurFrame;
+		if (OnceAttack1FrameChanged == 2)
+		{
+			SetAttackState(InGameMonsterAttackState::YarnBall1);
+		}
+		else if (OnceAttack1FrameChanged == 8)
+		{
+			SetAttackState(InGameMonsterAttackState::YarnBall2);
+		}
+		else if (OnceAttack1FrameChanged == 14)
+		{
+			SetAttackState(InGameMonsterAttackState::YarnBall3);
+		}
+		else
+		{
+			SetAttackState(InGameMonsterAttackState::None);
+		}
 	}
 }
 
@@ -341,15 +337,33 @@ void Bulldog::OnAttack2AnimationFrameChanged(const FrameAnimation_DESC& _Info)
 {
 	if (_Info.CurFrame == 2)
 	{
+		int RandomTatto = (rand() % 2);
+		++RandomTatto;
+		if (RandomTatto == 1)
+		{
 		SetAttackState(InGameMonsterAttackState::Tatto1);
+		}
+		else
+		{
+			SetAttackState(InGameMonsterAttackState::Tatto3);
+		}
 	}
 	else if (_Info.CurFrame == 11)
 	{
-		SetAttackState(InGameMonsterAttackState::Tatto1);
+		SetAttackState(InGameMonsterAttackState::Tatto2);
 	}
 	else if (_Info.CurFrame == 29)
 	{
-		SetAttackState(InGameMonsterAttackState::Tatto1);
+		int RandomTatto = (rand() % 2);
+		++RandomTatto;
+		if (RandomTatto == 1)
+		{
+			SetAttackState(InGameMonsterAttackState::Tatto1);
+		}
+		else
+		{
+			SetAttackState(InGameMonsterAttackState::Tatto3);
+		}
 	}
 	else
 	{

@@ -30,7 +30,8 @@ enum class InGameMonsterAttackState
 	YarnBall2, // Green
 	YarnBall3, // Red
 	Tatto1,
-	Tatto2, // Pink
+	Tatto2,
+	Tatto3, // Pink
 };
 
 
