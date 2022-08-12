@@ -5,6 +5,7 @@
 #include "YarnballShooter.h"
 #include "TattooShooter.h"
 #include "BulldogPlane.h"
+#include "IInGameCharacterBase.h"
 
 Bulldog::Bulldog()
 	: Collision(nullptr)
@@ -12,7 +13,7 @@ Bulldog::Bulldog()
 	, Movement(nullptr)
 	, Animation(nullptr)
 	, ElapsedTime(3.0f)
-	, AttackIntervalTime(1000.0f)
+	, AttackIntervalTime(10.0f)
 	, BeforePosition(float4::ZERO)
 	, CountTimeOnOff(true)
 	, DirecitonChangeOn(true)
@@ -46,6 +47,16 @@ bool Bulldog::AttackChangeOnOffSwitch()
 	return Attack1On;
 }
 
+void Bulldog::LookRight()
+{
+	SetState(InGameMonsterState::LookRight);
+}
+
+void Bulldog::LookLeft()
+{
+	SetState(InGameMonsterState::LookLeft);
+}
+
 void Bulldog::Start()
 {
 	// 局聪皋捞记 积己
@@ -65,6 +76,9 @@ void Bulldog::Start()
 
 		Renderer->CreateFrameAnimationFolder("BulldogMount", FrameAnimation_DESC("BulldogMount", 0.1f));
 
+		Renderer->CreateFrameAnimationFolder("BulldogLookLeft", FrameAnimation_DESC("BulldogLookLeft", 0.1f));
+		Renderer->CreateFrameAnimationFolder("BulldogLookRight", FrameAnimation_DESC("BulldogLookRight", 0.1f));
+
 		Renderer->AnimationBindEnd("BulldogIntro", std::bind(&Bulldog::OnPrepareAnimationFinished, this, std::placeholders::_1));
 		Renderer->AnimationBindEnd("BulldogUnmount", std::bind(&Bulldog::OnUnmountAnimationFinished, this, std::placeholders::_1));
 
@@ -78,8 +92,14 @@ void Bulldog::Start()
 		Renderer->AnimationBindEnd("BulldogAttackFinish2", std::bind(&Bulldog::OnAttackFinishAnimationFinished, this, std::placeholders::_1));
 
 		Renderer->AnimationBindEnd("BulldogMount", std::bind(&Bulldog::OnBulldogMountAnimationFinished, this, std::placeholders::_1));
+		
+		Renderer->AnimationBindEnd("BulldogIdle", std::bind(&Bulldog::OnBulldogIdleAnimationFinished, this, std::placeholders::_1));
+
+		Renderer->AnimationBindEnd("BulldogLookRight", std::bind(&Bulldog::OnBulldogLookAnimationFinished, this, std::placeholders::_1));
+		Renderer->AnimationBindEnd("BulldogLookLeft", std::bind(&Bulldog::OnBulldogLookAnimationFinished, this, std::placeholders::_1));
 
 		Renderer->AnimationBindFrame("BulldogMount", std::bind(&Bulldog::OnMountAnimationFrameChanged, this, std::placeholders::_1));
+		Renderer->AnimationBindFrame("BulldogIdle", std::bind(&Bulldog::OnIdleAnimationFrameChanged, this, std::placeholders::_1));
 		Renderer->AnimationBindFrame("BulldogAttack1", std::bind(&Bulldog::OnAttack1AnimationFrameChanged, this, std::placeholders::_1));
 		Renderer->AnimationBindFrame("BulldogAttack2", std::bind(&Bulldog::OnAttack2AnimationFrameChanged, this, std::placeholders::_1));
 
@@ -159,11 +179,6 @@ void Bulldog::Update(float _DeltaTime)
 
 void Bulldog::UpdateState()
 {
-	if (GetHP() <= 0)
-	{
-		Die();
-	}
-
 	if (true == Collision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::PC_BULLET, CollisionType::CT_AABB2D,
 		std::bind(&Bulldog::OnTakeDamage, this, std::placeholders::_1, std::placeholders::_2)))
 	{
@@ -171,12 +186,12 @@ void Bulldog::UpdateState()
 		TakeDamage();
 	}
 
-	if (ElapsedTime >= AttackIntervalTime)
-	{
-		ElapsedTime = 0.0f;
-		CountTimeOnOff = false;
-		Unmount();
-	}
+	//if (ElapsedTime >= AttackIntervalTime)
+	//{
+	//	ElapsedTime = 0.0f;
+	//	CountTimeOnOff = false;
+	//	Unmount();
+	//}
 
 	GetState();
 }
@@ -307,6 +322,11 @@ void Bulldog::OnUnmountAnimationFinished(const FrameAnimation_DESC& _Info)
 
 }
 
+void Bulldog::OnBulldogLookAnimationFinished(const FrameAnimation_DESC& _Info)
+{
+	Unmount();
+}
+
 void Bulldog::OnPrepareAttackAnimationFinished(const FrameAnimation_DESC& _Info)
 {
 	if (GetHP() <= 0)
@@ -404,9 +424,51 @@ void Bulldog::OnMountAnimationFrameChanged(const FrameAnimation_DESC& _Info)
 	if (_Info.CurFrame == 3)
 	{
 		StartPos = Plane->GetTransform().GetLocalPosition();
-		EndPos = float4(Plane->GetTransform().GetLocalPosition().x, Plane->GetTransform().GetLocalPosition().y - 400);
+		if (Plane->GetTransform().GetLocalPosition().y > 0)
+		{
+			EndPos = float4(Plane->GetTransform().GetLocalPosition().x, Plane->GetTransform().GetLocalPosition().y - 400);
+		}
+		else
+		{
+			EndPos = float4(Plane->GetTransform().GetLocalPosition().x, Plane->GetTransform().GetLocalPosition().y - 50);
+		}
 		MoveSpeed = 100.0f;
 		MoveToEndPos(StartPos, EndPos, Plane);
+	}
+}
+
+void Bulldog::OnIdleAnimationFrameChanged(const FrameAnimation_DESC& _Info)
+{
+	if (_Info.CurFrame == 4)
+	{
+		if (-345 > EndPos.y)
+		{
+			StartPos = Plane->GetTransform().GetLocalPosition();
+			EndPos = float4(Plane->GetTransform().GetLocalPosition().x, Plane->GetTransform().GetLocalPosition().y + 50);
+			MoveSpeed = 100.0f;
+			MoveToEndPos(StartPos, EndPos, Plane);
+			PlayerPosX = Plane->GetPlayer()->GetTransform().GetLocalPosition().x;
+		}
+	}
+}
+
+void Bulldog::OnBulldogIdleAnimationFinished(const FrameAnimation_DESC& _Info)
+{
+	if (GetHP() <= 0)
+	{
+		Die();
+	}
+
+	else
+	{
+		if (PlayerPosX > GetTransform().GetLocalPosition().x)
+		{
+			LookRight();
+		}
+		else
+		{
+			LookLeft();
+		}
 	}
 }
 

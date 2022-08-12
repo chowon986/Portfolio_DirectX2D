@@ -21,6 +21,8 @@ enum class InGameMonsterState
 	PrepareAttack2,
 	AttackFinish1,
 	AttackFinish2,
+	LookRight,
+	LookLeft,
 };
 
 enum class InGameMonsterAttackState

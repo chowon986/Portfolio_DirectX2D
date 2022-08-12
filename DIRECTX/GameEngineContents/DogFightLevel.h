@@ -7,6 +7,7 @@ class GameEngineTextureRenderer;
 class BackgroundHills;
 class BackgroundObject;
 class Bulldog;
+class InGameCuphead;
 class DogFightLevel : public GameEngineLevel
 {
 public:
@@ -58,5 +59,7 @@ private:
 	Bulldog* PH1BullDog;
 
 	BulldogPlane* PH1BulldogPlane;
+
+	InGameCuphead* Cuphead;
 };
 

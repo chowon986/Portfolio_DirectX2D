@@ -101,6 +101,16 @@ void InGameMonsterAnimationControllerComponent::UpdateAnimation()
 		Renderer->ChangeFrameAnimation(Name + "Die");
 	}
 
+	else if (State == InGameMonsterState::LookRight)
+	{
+		Renderer->ChangeFrameAnimation(Name + "LookRight");
+	}
+
+	else if (State == InGameMonsterState::LookLeft)
+	{
+		Renderer->ChangeFrameAnimation(Name + "LookLeft");
+	}
+
 }
 
 void InGameMonsterAnimationControllerComponent::Start()

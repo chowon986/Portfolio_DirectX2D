@@ -267,15 +267,17 @@ void DogFightLevel::Start()
 		}
 	}
 
+	Cuphead = CreateActor<InGameCuphead>(GameObjectGroup::Player);
+	Cuphead->GetTransform().SetLocalPosition({ 100, -40, -100 });
+	Cuphead->SetColMapImage(ColMapRenderer);
+
 	{
 		PH1BulldogPlane = CreateActor<BulldogPlane>(GameObjectGroup::Monster);
 		PH1BulldogPlane->GetTransform().SetWorldPosition({ 0, 100 });
+		PH1BulldogPlane->SetPlayer(Cuphead);
 	}
 	
 
-	InGameCuphead* Cuphead = CreateActor<InGameCuphead>(GameObjectGroup::Player);
-	Cuphead->GetTransform().SetLocalPosition({ 100, -40, -100 });
-	Cuphead->SetColMapImage(ColMapRenderer);
 
 	//WorldMapCuphead* Cuphead = CreateActor<WorldMapCuphead>(GameObjectGroup::Player);
 	//Cuphead->SetColMapImage(ColMapRenderer);

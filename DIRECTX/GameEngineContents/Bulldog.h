@@ -3,6 +3,7 @@
 
 enum class InGameMonsterState;
 enum class InGameMonsterAttackState;
+class InGameCharacter;
 class BulldogPlane;
 class GameEngineCollision;
 class InGameMovementComponent;
@@ -25,6 +26,9 @@ public:
 	void SetBeforePosition(float4 _BeforePosition) { BeforePosition = _BeforePosition; }
 	bool DirectionChangeOnOffSwitch();
 	bool AttackChangeOnOffSwitch();
+	void LookRight();
+	void LookLeft();
+
 
 protected:
 	void Start() override;
@@ -48,6 +52,8 @@ private:
 	void BulldogDieCheck(const FrameAnimation_DESC& _Info);
 	void OnUnmountAnimationFinished(const FrameAnimation_DESC& _Info);
 
+	void OnBulldogLookAnimationFinished(const FrameAnimation_DESC& _Info);
+
 	void OnPrepareAttackAnimationFinished(const FrameAnimation_DESC& _Info);
 
 	void OnAttackAnimationFinished(const FrameAnimation_DESC& _Info);
@@ -57,7 +63,9 @@ private:
 	void OnAttack1AnimationFrameChanged(const FrameAnimation_DESC& _Info);
 	void OnAttack2AnimationFrameChanged(const FrameAnimation_DESC& _Info);
 	void OnMountAnimationFrameChanged(const FrameAnimation_DESC& _Info);
-
+	void OnIdleAnimationFrameChanged(const FrameAnimation_DESC& _Info);
+	
+	void OnBulldogIdleAnimationFinished(const FrameAnimation_DESC& _Info);
 	void OnBulldogMountAnimationFinished(const FrameAnimation_DESC& _Info);
 
 private:
@@ -74,4 +82,5 @@ private:
 	int OnceAttack1FrameChanged;
 	int OnceAttack2FrameChanged;
 	BulldogPlane* Plane;
+	float PlayerPosX;
 };
