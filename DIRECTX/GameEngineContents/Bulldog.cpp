@@ -140,7 +140,7 @@ void Bulldog::UpdateState()
 	{
 		Die();
 	}
-
+	
 	if (true == Collision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::PC_BULLET, CollisionType::CT_AABB2D,
 		std::bind(&Bulldog::OnTakeDamage, this, std::placeholders::_1, std::placeholders::_2)))
 	{
@@ -311,6 +311,11 @@ void Bulldog::OnAttackFinishAnimationFinished(const FrameAnimation_DESC& _Info)
 
 void Bulldog::OnAttack1AnimationFrameChanged(const FrameAnimation_DESC& _Info)
 {
+	//FrameAnimation_DESC& Info = const_cast<FrameAnimation_DESC&>(_Info);
+	//Info.Inter = 0.5;
+
+
+
 	if (OnceAttack1FrameChanged != _Info.CurFrame)
 	{
 		OnceAttack1FrameChanged = _Info.CurFrame;

@@ -17,16 +17,10 @@ public:
 	BulldogPlane& operator=(BulldogPlane&& _Other) noexcept = delete;
 
 public:
-	void SetRenderer(GameEngineTextureRenderer* _Renderer);
-	GameEngineTextureRenderer* GetRenderer() { return Renderer; }
 
 protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;
 	void End() override;
-
-
-private:
-	GameEngineTextureRenderer* Renderer;
 };
 

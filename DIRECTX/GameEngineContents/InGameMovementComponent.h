@@ -36,5 +36,6 @@ private:
 	float4 StartPos;
 	float4 EndPos;
 	float4 ImageDir;
+	InGameMonsterState State;
 };
 
