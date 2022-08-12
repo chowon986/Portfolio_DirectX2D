@@ -16,15 +16,6 @@ public:
 	InGameMovementComponent& operator=(const InGameMovementComponent& _Other) = delete;
 	InGameMovementComponent& operator=(InGameMovementComponent&& _Other) noexcept = delete;
 
-public:
-	void SetSpeed(float _Speed);
-	float GetSpeed();
-
-	void OnStateChanged(InGameMonsterState _State);
-
-	void Move(float4 _StartPos, float4 _EndPos);
-	void MoveBeforePos(float4 _EndPos);
-
 protected:
 	virtual void Start() override;
 	virtual void Update(float _DeltaTime) override;

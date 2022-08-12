@@ -25,6 +25,7 @@ void TitleLevel::Start()
 		GameEngineTextureRenderer* Renderer = Title->CreateComponent<GameEngineTextureRenderer>();
 		Renderer->GetTransform().SetLocalScale({ 1280,720,100 });
 		Renderer->SetTexture("TitleScreenBackground.png");
+		Renderer->GetTransform().SetLocalPosition({ 0,0,15 });
 	}
 
 	{
@@ -33,7 +34,7 @@ void TitleLevel::Start()
 		Renderer->GetTransform().SetLocalScale({ 300,476,100 });
 		Renderer->CreateFrameAnimationFolder("Chalice", FrameAnimation_DESC("Chalice", 0.07f));
 		Renderer->ChangeFrameAnimation("Chalice");
-		Renderer->GetTransform().SetLocalPosition({ -25,-50,0 });
+		Renderer->GetTransform().SetLocalPosition({ -25,-50,15 });
 	}
 
 	{
@@ -42,7 +43,7 @@ void TitleLevel::Start()
 		CupheadRenderer->GetTransform().SetLocalScale({ 313,544,100 });
 		CupheadRenderer->CreateFrameAnimationFolder("Cuphead", FrameAnimation_DESC("Cuphead", 0.07f));
 		CupheadRenderer->ChangeFrameAnimation("Cuphead");
-		CupheadRenderer->GetTransform().SetLocalPosition({ -320,-20,0 });
+		CupheadRenderer->GetTransform().SetLocalPosition({ -320,-20,20 });
 	}
 
 	{
@@ -50,7 +51,7 @@ void TitleLevel::Start()
 		GameEngineTextureRenderer* Renderer = Mugman->CreateComponent<GameEngineTextureRenderer>();
 		Renderer->GetTransform().SetLocalScale({ 315,560,100 });
 		Renderer->CreateFrameAnimationFolder("MugmanA", FrameAnimation_DESC("Mugman", 0.07f));
-		Renderer->GetTransform().SetLocalPosition({ 305,-24,0 });
+		Renderer->GetTransform().SetLocalPosition({ 305,-24,20 });
 		Renderer->ChangeFrameAnimation("MugmanA");
 
 	}
@@ -59,7 +60,7 @@ void TitleLevel::Start()
 		Background* Bottom = CreateActor<Background>(GameObjectGroup::UI);
 		GameEngineTextureRenderer* Renderer = Bottom->CreateComponent<GameEngineTextureRenderer>();
 		Renderer->GetTransform().SetLocalScale({ 1328,176,100 });
-		Renderer->GetTransform().SetLocalPosition({ 18,-300,0 });
+		Renderer->GetTransform().SetLocalPosition({ 18,-300,10 });
 		Renderer->SetTexture("TitleChipsLeft.png");
 	}
 
@@ -69,6 +70,7 @@ void TitleLevel::Start()
 		Renderer->GetTransform().SetLocalScale({363 ,49,100 });
 		Renderer->CreateFrameAnimationFolder("Press", FrameAnimation_DESC("PressAnyKey", 0.8f));
 		Renderer->ChangeFrameAnimation("Press");
+		Renderer->ScaleToTexture();
 		Renderer->GetTransform().SetLocalPosition({ 0,-293,0 });
 	}
 

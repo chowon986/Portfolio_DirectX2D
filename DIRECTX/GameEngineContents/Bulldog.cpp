@@ -4,6 +4,7 @@
 #include "InGameMovementComponent.h"
 #include "YarnballShooter.h"
 #include "TattooShooter.h"
+#include "BulldogPlane.h"
 
 Bulldog::Bulldog()
 	: Collision(nullptr)
@@ -11,7 +12,7 @@ Bulldog::Bulldog()
 	, Movement(nullptr)
 	, Animation(nullptr)
 	, ElapsedTime(3.0f)
-	, AttackIntervalTime(10.0f)
+	, AttackIntervalTime(1000.0f)
 	, BeforePosition(float4::ZERO)
 	, CountTimeOnOff(true)
 	, DirecitonChangeOn(true)
@@ -78,6 +79,7 @@ void Bulldog::Start()
 
 		Renderer->AnimationBindEnd("BulldogMount", std::bind(&Bulldog::OnBulldogMountAnimationFinished, this, std::placeholders::_1));
 
+		Renderer->AnimationBindFrame("BulldogMount", std::bind(&Bulldog::OnMountAnimationFrameChanged, this, std::placeholders::_1));
 		Renderer->AnimationBindFrame("BulldogAttack1", std::bind(&Bulldog::OnAttack1AnimationFrameChanged, this, std::placeholders::_1));
 		Renderer->AnimationBindFrame("BulldogAttack2", std::bind(&Bulldog::OnAttack2AnimationFrameChanged, this, std::placeholders::_1));
 
@@ -88,7 +90,7 @@ void Bulldog::Start()
 		Renderer->SetPivot(PIVOTMODE::BOT);
 		SetRenderer(Renderer);
 	}
-	
+
 	Prepare();
 
 	// 컴포넌트 생성
@@ -103,9 +105,9 @@ void Bulldog::Start()
 		Collision->GetTransform().SetLocalScale({ 100.0f, 100.0f, 1.0f });
 		Collision->ChangeOrder(ObjectOrder::MONSTER);
 	}
-	
+
 	srand(time(NULL));
-	
+
 	SetHP(5);
 
 	// 총 생성
@@ -117,21 +119,42 @@ void Bulldog::Start()
 		TattooGun->SetParent(this);
 	}
 
+	// 비행기 생성
+
 	// 시작 위치 세팅
-	SetBeforePosition({ 640, 50, (int)ZOrder::NPC });
+	SetBeforePosition({ 640, 100});
 	SetAttackState(InGameMonsterAttackState::None);
 }
 
 void Bulldog::Update(float _DeltaTime)
 {
+	if (nullptr != GetParent<BulldogPlane>())
+	{
+		Plane = GetParent<BulldogPlane>();
+	}
+
 	if (CountTimeOnOff == true)
 	{
 		ElapsedTime += _DeltaTime;
 	}
 
-	GameEngineDebug::DrawBox(Collision->GetTransform(), {1.0f, 0.0f,0.0f, 0.5f});
+	GameEngineDebug::DrawBox(Collision->GetTransform(), { 1.0f, 0.0f,0.0f, 0.5f });
 	Renderer->ScaleToTexture();
 	UpdateState();
+	if (false == MoveDirection.CompareInt2D(float4::ZERO))
+	{
+		if (false == IsEndPosArrived())
+		{
+			if (Plane == nullptr)
+			{
+				GetTransform().SetWorldMove(MoveDirection * MoveSpeed * GameEngineTime::GetDeltaTime());
+			}
+			else
+			{
+				Plane->GetTransform().SetWorldMove(MoveDirection * MoveSpeed * GameEngineTime::GetDeltaTime());
+			}
+		}
+	}
 }
 
 void Bulldog::UpdateState()
@@ -140,7 +163,7 @@ void Bulldog::UpdateState()
 	{
 		Die();
 	}
-	
+
 	if (true == Collision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::PC_BULLET, CollisionType::CT_AABB2D,
 		std::bind(&Bulldog::OnTakeDamage, this, std::placeholders::_1, std::placeholders::_2)))
 	{
@@ -222,7 +245,7 @@ void Bulldog::PrepareAttack2()
 	else
 	{
 		Renderer->GetTransform().PixLocalPositiveX();
-		GetTransform().SetLocalPosition(float4{ 100, 0});
+		GetTransform().SetLocalPosition(float4{ 100, 0 });
 		SetState(InGameMonsterState::PrepareAttack2);
 	}
 }
@@ -235,7 +258,7 @@ void Bulldog::Unmount()
 
 void Bulldog::Mount()
 {
-	GetTransform().SetLocalPosition({GetBeforePosition().x, 50});
+	GetTransform().SetLocalPosition({ GetBeforePosition().x, 100 }); // 탈때는 위로
 	SetState(InGameMonsterState::Mount);
 }
 
@@ -276,7 +299,7 @@ void Bulldog::OnUnmountAnimationFinished(const FrameAnimation_DESC& _Info)
 		Renderer->SetPivot(PIVOTMODE::LEFTCENTER);
 		PrepareAttack1();
 	}
-	else if(Attack1On == false)
+	else if (Attack1On == false)
 	{
 		Renderer->SetPivot(PIVOTMODE::BOT);
 		PrepareAttack2();
@@ -342,37 +365,48 @@ void Bulldog::OnAttack2AnimationFrameChanged(const FrameAnimation_DESC& _Info)
 {
 	if (_Info.CurFrame == 2)
 	{
-		int RandomTatto = (rand() % 2);
-		++RandomTatto;
-		if (RandomTatto == 1)
+		int RandomTattoo = (rand() % 2);
+		++RandomTattoo;
+		if (RandomTattoo == 1)
 		{
-		SetAttackState(InGameMonsterAttackState::Tatto1);
+			SetAttackState(InGameMonsterAttackState::Tattoo1);
 		}
 		else
 		{
-			SetAttackState(InGameMonsterAttackState::Tatto3);
+			SetAttackState(InGameMonsterAttackState::Tattoo3);
 		}
 	}
 	else if (_Info.CurFrame == 11)
 	{
-		SetAttackState(InGameMonsterAttackState::Tatto2);
+		SetAttackState(InGameMonsterAttackState::Tattoo2);
 	}
 	else if (_Info.CurFrame == 29)
 	{
-		int RandomTatto = (rand() % 2);
-		++RandomTatto;
-		if (RandomTatto == 1)
+		int RandomTattoo = (rand() % 2);
+		++RandomTattoo;
+		if (RandomTattoo == 1)
 		{
-			SetAttackState(InGameMonsterAttackState::Tatto1);
+			SetAttackState(InGameMonsterAttackState::Tattoo1);
 		}
 		else
 		{
-			SetAttackState(InGameMonsterAttackState::Tatto3);
+			SetAttackState(InGameMonsterAttackState::Tattoo3);
 		}
 	}
 	else
 	{
 		SetAttackState(InGameMonsterAttackState::None);
+	}
+}
+
+void Bulldog::OnMountAnimationFrameChanged(const FrameAnimation_DESC& _Info)
+{
+	if (_Info.CurFrame == 3)
+	{
+		StartPos = Plane->GetTransform().GetLocalPosition();
+		EndPos = float4(Plane->GetTransform().GetLocalPosition().x, Plane->GetTransform().GetLocalPosition().y - 400);
+		MoveSpeed = 100.0f;
+		MoveToEndPos(StartPos, EndPos, Plane);
 	}
 }
 

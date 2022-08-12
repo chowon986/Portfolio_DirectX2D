@@ -34,7 +34,7 @@ void TattooShooter::Update(float _DeltaTime)
 
 			switch (AttackState)
 			{
-			case InGameMonsterAttackState::Tatto1:
+			case InGameMonsterAttackState::Tattoo1:
 			{
 				ElapsedTime = 0.0f;
 				TattooBullet* Bullet = GetLevel()->CreateActor<TattooBullet>();
@@ -43,21 +43,21 @@ void TattooShooter::Update(float _DeltaTime)
 				Bullet->SetDirection(GetDirection());
 				break;
 			}
-			case InGameMonsterAttackState::Tatto2:
+			case InGameMonsterAttackState::Tattoo2:
 			{
 				ElapsedTime = 0.0f;
 				TattooBullet* Bullet = GetLevel()->CreateActor<TattooBullet>();
-				Bullet->GetRenderer()->ChangeFrameAnimation("BulldogTattoB");
+				Bullet->GetRenderer()->ChangeFrameAnimation("BulldogTattooB");
 				Bullet->SetColMapImage(GetColMapImage());
 				Bullet->GetTransform().SetWorldPosition(GetTransform().GetWorldPosition());
 				Bullet->SetDirection(GetDirection());
 				break;
 			}
-			case InGameMonsterAttackState::Tatto3:
+			case InGameMonsterAttackState::Tattoo3:
 			{
 				ElapsedTime = 0.0f;
 				TattooBullet* Bullet = GetLevel()->CreateActor<TattooBullet>();
-				Bullet->GetRenderer()->ChangeFrameAnimation("BulldogTattoPink");
+				Bullet->GetRenderer()->ChangeFrameAnimation("BulldogTattooPink");
 				Bullet->SetColMapImage(GetColMapImage());
 				Bullet->GetTransform().SetWorldPosition(GetTransform().GetWorldPosition());
 				Bullet->SetDirection(GetDirection());

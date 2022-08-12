@@ -16,7 +16,7 @@ enum class GameObjectGroup
 	Monster,
 };
 
-enum class ZOrder:int
+enum class ZOrder :int
 {
 	Background = 1000,
 	Foreground = 900,
@@ -24,5 +24,6 @@ enum class ZOrder:int
 	NPC = 700,
 	Player = 600,
 	NPCB = 500,
-	UI = 400,	
+	UI = 400,
+	TEST = 100
 };

@@ -118,10 +118,10 @@ void MonsterWeaponBase::OnMonsterAttackStateChanged(InGameMonsterAttackState _At
 	case InGameMonsterAttackState::YarnBall3:
 		ElapsedTime = 0.0f;
 		break;
-	case InGameMonsterAttackState::Tatto1:
+	case InGameMonsterAttackState::Tattoo1:
 		ElapsedTime = 0.0f;
 		break;
-	case InGameMonsterAttackState::Tatto2:
+	case InGameMonsterAttackState::Tattoo2:
 		ElapsedTime = 0.0f;
 		break;
 	}

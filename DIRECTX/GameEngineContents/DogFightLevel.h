@@ -2,6 +2,7 @@
 #include <GameEngineCore/GameEngineLevel.h>
 
 // Ό³Έν :
+class BulldogPlane;
 class GameEngineTextureRenderer;
 class BackgroundHills;
 class BackgroundObject;
@@ -56,5 +57,6 @@ private:
 
 	Bulldog* PH1BullDog;
 
+	BulldogPlane* PH1BulldogPlane;
 };
 

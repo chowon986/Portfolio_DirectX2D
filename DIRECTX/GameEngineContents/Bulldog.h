@@ -3,6 +3,7 @@
 
 enum class InGameMonsterState;
 enum class InGameMonsterAttackState;
+class BulldogPlane;
 class GameEngineCollision;
 class InGameMovementComponent;
 class InGameMonsterAnimationControllerComponent;
@@ -55,6 +56,7 @@ private:
 
 	void OnAttack1AnimationFrameChanged(const FrameAnimation_DESC& _Info);
 	void OnAttack2AnimationFrameChanged(const FrameAnimation_DESC& _Info);
+	void OnMountAnimationFrameChanged(const FrameAnimation_DESC& _Info);
 
 	void OnBulldogMountAnimationFinished(const FrameAnimation_DESC& _Info);
 
@@ -71,4 +73,5 @@ private:
 	bool Attack1On;
 	int OnceAttack1FrameChanged;
 	int OnceAttack2FrameChanged;
+	BulldogPlane* Plane;
 };
