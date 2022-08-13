@@ -37,6 +37,11 @@ void MonsterWeaponBase::UpdateDirection()
 		Direction = Character->GetRenderer()->GetTransform().GetLocalScale().x > 0 ? float4::RIGHT : float4::LEFT;
 	}
 
+	if (State == InGameMonsterState::Attack3 || State == InGameMonsterState::Attack4)
+	{
+		Direction = float4::DOWN;
+	}
+
 	UpdatePivot();
 }
 
@@ -67,7 +72,9 @@ void MonsterWeaponBase::UpdatePivot()
 {
 
 	if (State != InGameMonsterState::Attack1 &&
-		State != InGameMonsterState::Attack2)
+		State != InGameMonsterState::Attack2 &&
+		State != InGameMonsterState::Attack3 &&
+		State != InGameMonsterState::Attack4)
 	{
 		return;
 	}
@@ -94,6 +101,11 @@ void MonsterWeaponBase::UpdatePivot()
 		{
 			GetTransform().SetLocalPosition({ -80.0f, 220.0f });
 		}
+	}
+
+	else if (State == InGameMonsterState::Attack3 || State == InGameMonsterState::Attack4)
+	{
+		GetTransform().SetLocalPosition({ 0.0f, 10.0f });
 	}
 }
 
@@ -122,6 +134,9 @@ void MonsterWeaponBase::OnMonsterAttackStateChanged(InGameMonsterAttackState _At
 		ElapsedTime = 0.0f;
 		break;
 	case InGameMonsterAttackState::Tattoo2:
+		ElapsedTime = 0.0f;
+		break;
+	case InGameMonsterAttackState::TennisBall:
 		ElapsedTime = 0.0f;
 		break;
 	}

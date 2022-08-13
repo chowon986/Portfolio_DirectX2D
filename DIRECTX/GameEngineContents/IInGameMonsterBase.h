@@ -17,6 +17,8 @@ enum class InGameMonsterState
 	Die,
 	Attack1,
 	Attack2,
+	Attack3,
+	Attack4,
 	PrepareAttack1,
 	PrepareAttack2,
 	AttackFinish1,
@@ -34,6 +36,7 @@ enum class InGameMonsterAttackState
 	Tattoo1,
 	Tattoo2,
 	Tattoo3, // Pink
+	TennisBall,
 };
 
 class BulldogPlane;

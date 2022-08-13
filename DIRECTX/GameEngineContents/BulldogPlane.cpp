@@ -1,8 +1,10 @@
 #include "PreCompile.h"
 #include "BulldogPlane.h"
 #include "Bulldog.h"
+#include "Ph1Dog.h"
 
 BulldogPlane::BulldogPlane()
+	:Player(nullptr)
 {
 }
 
@@ -175,14 +177,18 @@ void BulldogPlane::Start()
 	{
 		Bulldog* BossBulldog = GetLevel()->CreateActor<Bulldog>();
 		BossBulldog->SetParent(this);
-		BossBulldog->GetTransform().SetLocalPosition({ 640, 0, (int)ZOrder::NPC - 2});
+		BossBulldog->GetTransform().SetLocalPosition({ 640, 0, (int)ZOrder::NPC - 2 });
 	}
 
+	{
+		Ph1Dog* DogFightPh1Dog = GetLevel()->CreateActor<Ph1Dog>();
+		DogFightPh1Dog->SetParent(this);
+		DogFightPh1Dog->GetTransform().SetLocalPosition({ 640, 0, (int)ZOrder::NPC - 2 });
+	}
 }
 
 void BulldogPlane::Update(float _DeltaTime)
 {
-	int a = 0;
 }
 
 void BulldogPlane::End()

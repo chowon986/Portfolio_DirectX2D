@@ -12,13 +12,11 @@ Bulldog::Bulldog()
 	, Renderer(nullptr)
 	, Movement(nullptr)
 	, Animation(nullptr)
-	, ElapsedTime(3.0f)
-	, AttackIntervalTime(10.0f)
 	, BeforePosition(float4::ZERO)
-	, CountTimeOnOff(true)
 	, DirecitonChangeOn(true)
 	, OnceAttack1FrameChanged(-1)
 	, OnceAttack2FrameChanged(-1)
+	, MoveWithPlaneOn(false)
 {
 }
 
@@ -59,6 +57,7 @@ void Bulldog::LookLeft()
 
 void Bulldog::Start()
 {
+	IInGameMonsterBase::Start();
 	// 局聪皋捞记 积己
 	{
 		Renderer = CreateComponent<GameEngineTextureRenderer>();
@@ -102,6 +101,9 @@ void Bulldog::Start()
 		Renderer->AnimationBindFrame("BulldogIdle", std::bind(&Bulldog::OnIdleAnimationFrameChanged, this, std::placeholders::_1));
 		Renderer->AnimationBindFrame("BulldogAttack1", std::bind(&Bulldog::OnAttack1AnimationFrameChanged, this, std::placeholders::_1));
 		Renderer->AnimationBindFrame("BulldogAttack2", std::bind(&Bulldog::OnAttack2AnimationFrameChanged, this, std::placeholders::_1));
+		Renderer->AnimationBindFrame("BulldogAttackFinish2", std::bind(&Bulldog::OnAttackFinish2AnimationFrameChanged, this, std::placeholders::_1));
+
+		Renderer->AnimationBindFrame("BulldogPrepareAttack2", std::bind(&Bulldog::OnPrePareAttack2AnimationFrameChanged, this, std::placeholders::_1));
 
 		Renderer->CreateFrameAnimationFolder("BulldogDie", FrameAnimation_DESC("BulldogDie", 0.1f));
 		Renderer->AnimationBindEnd("BulldogDie", std::bind(&Bulldog::BulldogDieCheck, this, std::placeholders::_1));
@@ -148,14 +150,13 @@ void Bulldog::Start()
 
 void Bulldog::Update(float _DeltaTime)
 {
-	if (nullptr != GetParent<BulldogPlane>())
+	if (MoveWithPlaneOn == false)
 	{
-		Plane = GetParent<BulldogPlane>();
-	}
-
-	if (CountTimeOnOff == true)
-	{
-		ElapsedTime += _DeltaTime;
+		if (nullptr != GetParent<BulldogPlane>())
+		{
+			Plane = GetParent<BulldogPlane>();
+			MoveWithPlaneOn = true;
+		}
 	}
 
 	GameEngineDebug::DrawBox(Collision->GetTransform(), { 1.0f, 0.0f,0.0f, 0.5f });
@@ -186,13 +187,6 @@ void Bulldog::UpdateState()
 		TakeDamage();
 	}
 
-	//if (ElapsedTime >= AttackIntervalTime)
-	//{
-	//	ElapsedTime = 0.0f;
-	//	CountTimeOnOff = false;
-	//	Unmount();
-	//}
-
 	GetState();
 }
 
@@ -208,8 +202,6 @@ void Bulldog::Prepare()
 
 void Bulldog::Idle()
 {
-	CountTimeOnOff = true;
-
 	SetState(InGameMonsterState::Idle);
 }
 
@@ -236,13 +228,13 @@ void Bulldog::PrepareAttack1()
 	if (DirecitonChangeOn == true)
 	{
 		Renderer->GetTransform().PixLocalNegativeX();
-		GetTransform().SetWorldPosition(float4{ 0,-500 });
+		GetTransform().SetLocalPosition(float4{ 50,-500 });
 		SetState(InGameMonsterState::PrepareAttack1);
 	}
 	else
 	{
 		Renderer->GetTransform().PixLocalPositiveX();
-		GetTransform().SetWorldPosition(float4{ 1280,-500 });
+		GetTransform().SetLocalPosition(float4{ 1230,-500 });
 		SetState(InGameMonsterState::PrepareAttack1);
 	}
 
@@ -254,13 +246,13 @@ void Bulldog::PrepareAttack2()
 	if (DirecitonChangeOn == false)
 	{
 		Renderer->GetTransform().PixLocalNegativeX();
-		GetTransform().SetLocalPosition(float4{ 1180, 0 });
+		GetTransform().SetLocalPosition(float4{ 1180, 250 });
 		SetState(InGameMonsterState::PrepareAttack2);
 	}
 	else
 	{
 		Renderer->GetTransform().PixLocalPositiveX();
-		GetTransform().SetLocalPosition(float4{ 100, 0 });
+		GetTransform().SetLocalPosition(float4{ 100, 250 });
 		SetState(InGameMonsterState::PrepareAttack2);
 	}
 }
@@ -349,7 +341,6 @@ void Bulldog::OnAttackFinishAnimationFinished(const FrameAnimation_DESC& _Info)
 {
 	Renderer->SetPivot(PIVOTMODE::BOT);
 	Mount();
-	ElapsedTime = 0.0f;
 }
 
 void Bulldog::OnAttack1AnimationFrameChanged(const FrameAnimation_DESC& _Info)
@@ -421,6 +412,10 @@ void Bulldog::OnAttack2AnimationFrameChanged(const FrameAnimation_DESC& _Info)
 
 void Bulldog::OnMountAnimationFrameChanged(const FrameAnimation_DESC& _Info)
 {
+	if (Plane == nullptr)
+	{
+	Plane = GetParent<BulldogPlane>();
+	}
 	if (_Info.CurFrame == 3)
 	{
 		StartPos = Plane->GetTransform().GetLocalPosition();
@@ -452,6 +447,18 @@ void Bulldog::OnIdleAnimationFrameChanged(const FrameAnimation_DESC& _Info)
 	}
 }
 
+void Bulldog::OnPrePareAttack2AnimationFrameChanged(const FrameAnimation_DESC& _Info)
+{
+	if (_Info.CurFrame == 1)
+	{
+		StartPos = GetTransform().GetLocalPosition();
+		EndPos = float4(GetTransform().GetLocalPosition().x, GetTransform().GetLocalPosition().y - 820);
+		MoveSpeed = 110.0f;
+		Plane = nullptr;
+		MoveToEndPos(StartPos, EndPos, Plane);
+	}
+}
+
 void Bulldog::OnBulldogIdleAnimationFinished(const FrameAnimation_DESC& _Info)
 {
 	if (GetHP() <= 0)
@@ -475,4 +482,16 @@ void Bulldog::OnBulldogIdleAnimationFinished(const FrameAnimation_DESC& _Info)
 void Bulldog::OnBulldogMountAnimationFinished(const FrameAnimation_DESC& _Info)
 {
 	Idle();
+}
+
+void Bulldog::OnAttackFinish2AnimationFrameChanged(const FrameAnimation_DESC& _Info)
+{
+	if (_Info.CurFrame == 1)
+	{
+		StartPos = GetTransform().GetLocalPosition();
+		EndPos = float4(GetTransform().GetLocalPosition().x, 100);
+		MoveSpeed = 1000.0f;
+		Plane = nullptr;
+		MoveToEndPos(StartPos, EndPos, Plane);
+	}
 }

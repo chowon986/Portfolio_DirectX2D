@@ -30,7 +30,7 @@ void TattooBullet::Start()
 	Collision->ChangeOrder(ObjectOrder::MONSTER_BULLET);
 
 	MovementComponent = CreateComponent<BulletMovementComponent>();
-	MovementComponent->SetSpeed(20.0f);
+	MovementComponent->SetSpeed(10.0f);
 }
 
 void TattooBullet::Update(float _DeltaTime)

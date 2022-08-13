@@ -10,6 +10,9 @@ IInGameMonsterBase::IInGameMonsterBase()
 	, StartPos(float4::ZERO)
 	, EndPos(float4::ZERO)
 	, MoveSpeed(0.0f)
+	, ColMapImage(nullptr)
+	, HP(0.0f)
+	, Plane(nullptr)
 {
 }
 
@@ -44,28 +47,35 @@ bool IInGameMonsterBase::IsEndPosArrived()
 {
 	if (Plane == nullptr)
 	{
-		if (true == GetTransform().GetWorldPosition().CompareInt2D(EndPos))
+		if (true == GetTransform().GetLocalPosition().CompareInt2D(EndPos))
 		{
 			return true;
 		}
 
-		if (Direction.CompareInt2D(float4::RIGHT) &&
-			GetTransform().GetWorldPosition().x >= EndPos.x)
+		if (MoveDirection.CompareInt2D(float4::RIGHT) &&
+			GetTransform().GetLocalPosition().x >= EndPos.x)
 		{
 			return true;
 		}
 
-		if (Direction.CompareInt2D(float4::LEFT) &&
-			GetTransform().GetWorldPosition().x <= EndPos.x)
+		if (MoveDirection.CompareInt2D(float4::LEFT) &&
+			GetTransform().GetLocalPosition().x <= EndPos.x)
 		{
 			return true;
 		}
 
-		if (Direction.CompareInt2D(float4::DOWN) &&
-			GetTransform().GetWorldPosition().y <= EndPos.y)
+		if (MoveDirection.CompareInt2D(float4::DOWN) &&
+			GetTransform().GetLocalPosition().y <= EndPos.y)
 		{
 			return true;
 		}
+
+		if (MoveDirection.CompareInt2D(float4::UP) &&
+			GetTransform().GetLocalPosition().y >= EndPos.y)
+		{
+			return true;
+		}
+
 		else
 		{
 			return false;
@@ -78,19 +88,19 @@ bool IInGameMonsterBase::IsEndPosArrived()
 			return true;
 		}
 
-		if (Direction.CompareInt2D(float4::RIGHT) &&
+		if (MoveDirection.CompareInt2D(float4::RIGHT) &&
 			Plane->GetTransform().GetWorldPosition().x >= EndPos.x)
 		{
 			return true;
 		}
 
-		if (Direction.CompareInt2D(float4::LEFT) &&
+		if (MoveDirection.CompareInt2D(float4::LEFT) &&
 			Plane->GetTransform().GetWorldPosition().x <= EndPos.x)
 		{
 			return true;
 		}
 
-		if (Direction.CompareInt2D(float4::DOWN) &&
+		if (MoveDirection.CompareInt2D(float4::DOWN) &&
 			Plane->GetTransform().GetWorldPosition().y <= EndPos.y)
 		{
 			return true;

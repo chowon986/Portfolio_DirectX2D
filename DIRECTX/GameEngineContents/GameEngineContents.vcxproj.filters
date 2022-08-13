@@ -414,6 +414,18 @@
     <ClInclude Include="MonsterWeaponBase.h">
       <Filter>Actor\Weapon\Base\Monster</Filter>
     </ClInclude>
+    <ClInclude Include="Ph1Dog.h">
+      <Filter>Actor\Play\InGame\NPC</Filter>
+    </ClInclude>
+    <ClInclude Include="TennisballShooter.h">
+      <Filter>Actor\Weapon\Shooter\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="TennisballBullet.h">
+      <Filter>Actor\Weapon\Bullet\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="DogCopter.h">
+      <Filter>Actor\Play\InGame\NPC</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp">
@@ -697,6 +709,18 @@
     </ClCompile>
     <ClCompile Include="MonsterWeaponBase.cpp">
       <Filter>Actor\Weapon\Base\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="Ph1Dog.cpp">
+      <Filter>Actor\Play\InGame\NPC</Filter>
+    </ClCompile>
+    <ClCompile Include="TennisballShooter.cpp">
+      <Filter>Actor\Weapon\Shooter\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="TennisballBullet.cpp">
+      <Filter>Actor\Weapon\Bullet\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="DogCopter.cpp">
+      <Filter>Actor\Play\InGame\NPC</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

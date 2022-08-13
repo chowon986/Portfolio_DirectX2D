@@ -29,7 +29,6 @@ public:
 	void LookRight();
 	void LookLeft();
 
-
 protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;
@@ -51,34 +50,30 @@ private:
 	bool OnTakeDamage(GameEngineCollision* _This, GameEngineCollision* _Other);
 	void BulldogDieCheck(const FrameAnimation_DESC& _Info);
 	void OnUnmountAnimationFinished(const FrameAnimation_DESC& _Info);
-
 	void OnBulldogLookAnimationFinished(const FrameAnimation_DESC& _Info);
-
 	void OnPrepareAttackAnimationFinished(const FrameAnimation_DESC& _Info);
-
 	void OnAttackAnimationFinished(const FrameAnimation_DESC& _Info);
-
 	void OnAttackFinishAnimationFinished(const FrameAnimation_DESC& _Info);
 
 	void OnAttack1AnimationFrameChanged(const FrameAnimation_DESC& _Info);
 	void OnAttack2AnimationFrameChanged(const FrameAnimation_DESC& _Info);
 	void OnMountAnimationFrameChanged(const FrameAnimation_DESC& _Info);
 	void OnIdleAnimationFrameChanged(const FrameAnimation_DESC& _Info);
+	void OnPrePareAttack2AnimationFrameChanged(const FrameAnimation_DESC& _Info);
 	
 	void OnBulldogIdleAnimationFinished(const FrameAnimation_DESC& _Info);
 	void OnBulldogMountAnimationFinished(const FrameAnimation_DESC& _Info);
+	void OnAttackFinish2AnimationFrameChanged(const FrameAnimation_DESC& _Info);
 
 private:
 	GameEngineCollision* Collision;
 	GameEngineTextureRenderer* Renderer;
 	InGameMovementComponent* Movement;
 	InGameMonsterAnimationControllerComponent* Animation;
-	float ElapsedTime;
-	float AttackIntervalTime;
 	float4 BeforePosition;
-	bool CountTimeOnOff;
 	bool DirecitonChangeOn;
 	bool Attack1On;
+	bool MoveWithPlaneOn;
 	int OnceAttack1FrameChanged;
 	int OnceAttack2FrameChanged;
 	BulldogPlane* Plane;

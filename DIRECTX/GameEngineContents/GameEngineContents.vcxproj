@@ -185,6 +185,7 @@
     <ClInclude Include="ConvergeShooter.h" />
     <ClInclude Include="Cowgirl.h" />
     <ClInclude Include="Delegates.h" />
+    <ClInclude Include="DogCopter.h" />
     <ClInclude Include="Dogfight.h" />
     <ClInclude Include="DogFightLevel.h" />
     <ClInclude Include="Enums.h" />
@@ -225,6 +226,7 @@
     <ClInclude Include="Omm.h" />
     <ClInclude Include="PeaBullet.h" />
     <ClInclude Include="PeaShooter.h" />
+    <ClInclude Include="Ph1Dog.h" />
     <ClInclude Include="PhysicsComponent.h" />
     <ClInclude Include="Pickaxe.h" />
     <ClInclude Include="Pig.h" />
@@ -248,6 +250,8 @@
     <ClInclude Include="SpreadShooter.h" />
     <ClInclude Include="TattooBullet.h" />
     <ClInclude Include="TattooShooter.h" />
+    <ClInclude Include="TennisballBullet.h" />
+    <ClInclude Include="TennisballShooter.h" />
     <ClInclude Include="TitleLevel.h">
       <SubType>
       </SubType>
@@ -294,6 +298,7 @@
     <ClCompile Include="ConvergeBullet.cpp" />
     <ClCompile Include="ConvergeShooter.cpp" />
     <ClCompile Include="Cowgirl.cpp" />
+    <ClCompile Include="DogCopter.cpp" />
     <ClCompile Include="Dogfight.cpp" />
     <ClCompile Include="DogFightLevel.cpp" />
     <ClCompile Include="Ghost.cpp" />
@@ -333,6 +338,7 @@
     <ClCompile Include="Omm.cpp" />
     <ClCompile Include="PeaBullet.cpp" />
     <ClCompile Include="PeaShooter.cpp" />
+    <ClCompile Include="Ph1Dog.cpp" />
     <ClCompile Include="PhysicsComponent.cpp" />
     <ClCompile Include="Pickaxe.cpp" />
     <ClCompile Include="Pig.cpp" />
@@ -358,6 +364,8 @@
     <ClCompile Include="SpreadShooter.cpp" />
     <ClCompile Include="TattooBullet.cpp" />
     <ClCompile Include="TattooShooter.cpp" />
+    <ClCompile Include="TennisballBullet.cpp" />
+    <ClCompile Include="TennisballShooter.cpp" />
     <ClCompile Include="TitleLevel.cpp">
       <SubType>
       </SubType>
