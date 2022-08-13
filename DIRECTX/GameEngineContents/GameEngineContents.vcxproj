@@ -169,6 +169,8 @@
     <ClInclude Include="BoomerangBulletBase.h" />
     <ClInclude Include="BoomerangBulletMovementComponent.h" />
     <ClInclude Include="BoomerangShooter.h" />
+    <ClInclude Include="BowWowBullet.h" />
+    <ClInclude Include="BowWowShooter.h" />
     <ClInclude Include="Bulldog.h" />
     <ClInclude Include="BulldogPlane.h" />
     <ClInclude Include="BulletBase.h" />
@@ -227,6 +229,7 @@
     <ClInclude Include="PeaBullet.h" />
     <ClInclude Include="PeaShooter.h" />
     <ClInclude Include="Ph1Dog.h" />
+    <ClInclude Include="Ph2Dog.h" />
     <ClInclude Include="PhysicsComponent.h" />
     <ClInclude Include="Pickaxe.h" />
     <ClInclude Include="Pig.h" />
@@ -283,6 +286,8 @@
     <ClCompile Include="BoomerangBulletBase.cpp" />
     <ClCompile Include="BoomerangBulletMovementComponent.cpp" />
     <ClCompile Include="BoomerangShooter.cpp" />
+    <ClCompile Include="BowWowBullet.cpp" />
+    <ClCompile Include="BowWowShooter.cpp" />
     <ClCompile Include="Bulldog.cpp" />
     <ClCompile Include="BulldogPlane.cpp" />
     <ClCompile Include="BulletBase.cpp" />
@@ -339,6 +344,7 @@
     <ClCompile Include="PeaBullet.cpp" />
     <ClCompile Include="PeaShooter.cpp" />
     <ClCompile Include="Ph1Dog.cpp" />
+    <ClCompile Include="Ph2Dog.cpp" />
     <ClCompile Include="PhysicsComponent.cpp" />
     <ClCompile Include="Pickaxe.cpp" />
     <ClCompile Include="Pig.cpp" />

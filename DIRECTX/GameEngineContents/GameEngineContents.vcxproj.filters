@@ -426,6 +426,15 @@
     <ClInclude Include="DogCopter.h">
       <Filter>Actor\Play\InGame\NPC</Filter>
     </ClInclude>
+    <ClInclude Include="Ph2Dog.h">
+      <Filter>Actor\Play\InGame\NPC</Filter>
+    </ClInclude>
+    <ClInclude Include="BowWowShooter.h">
+      <Filter>Actor\Weapon\Shooter\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="BowWowBullet.h">
+      <Filter>Actor\Weapon\Bullet\Monster</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp">
@@ -721,6 +730,15 @@
     </ClCompile>
     <ClCompile Include="DogCopter.cpp">
       <Filter>Actor\Play\InGame\NPC</Filter>
+    </ClCompile>
+    <ClCompile Include="Ph2Dog.cpp">
+      <Filter>Actor\Play\InGame\NPC</Filter>
+    </ClCompile>
+    <ClCompile Include="BowWowShooter.cpp">
+      <Filter>Actor\Weapon\Shooter\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="BowWowBullet.cpp">
+      <Filter>Actor\Weapon\Bullet\Monster</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

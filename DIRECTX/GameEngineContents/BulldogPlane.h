@@ -4,6 +4,7 @@
 // Ό³Έν :
 class GameEngineTextureRenderer;
 class IInGameCharacterBase;
+class Bulldog;
 class BulldogPlane : public GameEngineActor
 {
 public:
@@ -28,5 +29,6 @@ protected:
 
 private:
 	IInGameCharacterBase* Player;
+	Bulldog* BossBulldog;
 };
 

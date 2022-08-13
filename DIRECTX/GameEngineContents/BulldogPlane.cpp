@@ -175,7 +175,7 @@ void BulldogPlane::Start()
 	}
 
 	{
-		Bulldog* BossBulldog = GetLevel()->CreateActor<Bulldog>();
+		BossBulldog = GetLevel()->CreateActor<Bulldog>();
 		BossBulldog->SetParent(this);
 		BossBulldog->GetTransform().SetLocalPosition({ 640, 0, (int)ZOrder::NPC - 2 });
 	}
