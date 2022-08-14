@@ -1,6 +1,7 @@
 #include "PreCompile.h"
 #include "MonsterWeaponBase.h"
 #include "IInGameMonsterBase.h"
+#include "Ph2Dog.h"
 
 MonsterWeaponBase::MonsterWeaponBase()
 	: IntervalTime(0.1f)
@@ -40,6 +41,15 @@ void MonsterWeaponBase::UpdateDirection()
 	if (State == InGameMonsterState::Attack3 || State == InGameMonsterState::Attack4)
 	{
 		Direction = float4::DOWN;
+	}
+
+	if (State == InGameMonsterState::Attack5)
+	{
+		Ph2Dog* BowWowDog = dynamic_cast<Ph2Dog*>(GetParent());
+		if(BowWowDog != nullptr)
+		{
+			Direction = BowWowDog->GetBowWowDirection();
+		}
 	}
 
 	UpdatePivot();
@@ -107,6 +117,11 @@ void MonsterWeaponBase::UpdatePivot()
 	{
 		GetTransform().SetLocalPosition({ 0.0f, 10.0f });
 	}
+
+	else if (State == InGameMonsterState::Attack5)
+	{
+		GetTransform().SetLocalPosition({ 0.0f, 0.0f });
+	}
 }
 
 void MonsterWeaponBase::OnMonsterStateChanged(InGameMonsterState _State)
@@ -139,6 +154,10 @@ void MonsterWeaponBase::OnMonsterAttackStateChanged(InGameMonsterAttackState _At
 	case InGameMonsterAttackState::TennisBall:
 		ElapsedTime = 0.0f;
 		break;
+	case InGameMonsterAttackState::BowWow:
+		ElapsedTime = 0.0f;
+		break;
+		
 	}
 	UpdateDirection();
 }

@@ -15,10 +15,12 @@ enum class InGameMonsterState
 	Unmount,
 	Mount,
 	Die,
+	Enter,
 	Attack1,
 	Attack2,
 	Attack3,
 	Attack4,
+	Attack5,
 	PrepareAttack1,
 	PrepareAttack2,
 	AttackFinish1,
@@ -37,8 +39,10 @@ enum class InGameMonsterAttackState
 	Tattoo2,
 	Tattoo3, // Pink
 	TennisBall,
+	BowWow,
 };
 
+enum class Phase;
 class BulldogPlane;
 class IInGameMonsterBase : public GameEngineActor, public IDamageable, public IDieable, public IPreparable, public IIdleable, public IShootable
 {
@@ -65,6 +69,8 @@ public:
 
 	MulticastDelegate<InGameMonsterState>& GetStateChangedDelegate() { return StateChangedDelegate; }
 	MulticastDelegate<InGameMonsterAttackState>& GetAttackStateChangedDelegate() { return AttackStateChangedDelegate; }
+
+	virtual void OnPhaseChanged(Phase _Phase);
 	
 	float GetHP() { return HP; }
 	void SetHP(float _HP) { HP = _HP; }
@@ -79,6 +85,7 @@ public:
 	float4 GetEndPos() { return EndPos; }
 
 protected:
+	void Start() override;
 	virtual void MoveToEndPos(float4 _StartPos, float4 _EndPos, BulldogPlane* _Plane = nullptr);
 	virtual bool IsEndPosArrived();
 

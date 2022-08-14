@@ -1,6 +1,7 @@
 #include "PreCompile.h"
 #include "BulldogPlane.h"
 #include "IInGameMonsterBase.h"
+#include "InGameLevelBase.h"
 
 IInGameMonsterBase::IInGameMonsterBase()
 	: Renderer(nullptr)
@@ -32,6 +33,20 @@ void IInGameMonsterBase::SetAttackState(InGameMonsterAttackState _State)
 void IInGameMonsterBase::SetRenderer(GameEngineTextureRenderer* _Renderer)
 {
 	Renderer = _Renderer;
+}
+
+void IInGameMonsterBase::OnPhaseChanged(Phase _Phase)
+{
+	// 페이즈가 바꼈을 때 할 게 있으면 여기서
+
+}
+
+void IInGameMonsterBase::Start()
+{
+	if (InGameLevelBase* LevelBase = dynamic_cast<InGameLevelBase*>(GetLevel()))
+	{
+		LevelBase->GetPhaseChangedDelegate().Add(std::bind(&IInGameMonsterBase::OnPhaseChanged, this, std::placeholders::_1));
+	}
 }
 
 void IInGameMonsterBase::MoveToEndPos(float4 _StartPos, float4 _EndPos, BulldogPlane* _Plane)

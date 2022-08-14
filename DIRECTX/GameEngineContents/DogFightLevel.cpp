@@ -6,10 +6,28 @@
 #include "BackgroundObject.h"
 #include "Bulldog.h"
 #include "BulldogPlane.h"
+#include "Ph2Dog.h"
 #include "WorldMapCuphead.h"
 
 DogFightLevel::DogFightLevel()
 	: ColMapRenderer(nullptr)
+	, Hills(nullptr)
+	, BackgroundSkyRenderer(nullptr)
+	, CloudA1(nullptr)
+	, CloudA2(nullptr)
+	, CloudB2(nullptr)
+	, CloudC1(nullptr)
+	, CloudC2(nullptr)
+	, CloudD1(nullptr)
+	, CloudD2(nullptr)
+	, PlanePuffRight(nullptr)
+	, PlanePuffLeft(nullptr)
+	, PatchLeftA(nullptr)
+	, PH1BullDog(nullptr)
+	, PH1BulldogPlane(nullptr)
+	, Cuphead(nullptr)
+	, DogFightPh2Dog(nullptr)
+
 {
 }
 
@@ -271,14 +289,7 @@ void DogFightLevel::Start()
 	Cuphead->GetTransform().SetLocalPosition({ 100, -40, -100 });
 	Cuphead->SetColMapImage(ColMapRenderer);
 
-	{
-		PH1BulldogPlane = CreateActor<BulldogPlane>(GameObjectGroup::Monster);
-		PH1BulldogPlane->GetTransform().SetWorldPosition({ 0, 100 });
-		PH1BulldogPlane->SetPlayer(Cuphead);
-	}
-	
-
-
+	SetPhase(Phase::Phase2);
 	//WorldMapCuphead* Cuphead = CreateActor<WorldMapCuphead>(GameObjectGroup::Player);
 	//Cuphead->SetColMapImage(ColMapRenderer);
 	//Cuphead->GetTransform().SetLocalPosition({ 100, -40, -100 });
@@ -337,6 +348,40 @@ void DogFightLevel::ResetPositionPlanePuffLeft(const FrameAnimation_DESC& _Info)
 void DogFightLevel::Update(float _DeltaTime)
 {
 	ColMapOnOffSwitch();
+
+
+	if (GetPhase() == Phase::Phase1)
+	{
+		if (PH1BullDog == nullptr)
+		{
+		PH1BulldogPlane = CreateActor<BulldogPlane>(GameObjectGroup::Monster);
+		PH1BulldogPlane->GetTransform().SetWorldPosition({ 0, 100 });
+		PH1BulldogPlane->SetPlayer(Cuphead);
+
+		}
+	}
+
+	else if (GetPhase() == Phase::Phase2)
+	{
+		if (PH1BulldogPlane != nullptr)
+		{
+			PH1BulldogPlane->Death();
+			PH1BulldogPlane = nullptr;
+		}
+
+		if (DogFightPh2Dog == nullptr)
+		{
+			DogFightPh2Dog = CreateActor<Ph2Dog>();
+			DogFightPh2Dog->GetTransform().SetLocalPosition({ 640.0f,-360.0f });
+			DogFightPh2Dog->SetPlayer(Cuphead);
+
+		}
+	}
+
+	else if (GetPhase() == Phase::Phase3)
+	{
+
+	}
 }
 
 void DogFightLevel::End()

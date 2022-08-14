@@ -35,32 +35,32 @@ void BowWowShooter::Update(float _DeltaTime)
 
 			switch (MonsterAttackState)
 			{
-			//case InGameMonsterAttackState::BowWow1:
-			//{
-			//	BowWowBullet* Bullet = GetLevel()->CreateActor<BowWowBullet>();
-			//	Bullet->SetColMapImage(GetColMapImage());
-			//	Bullet->GetTransform().SetWorldPosition(GetTransform().GetWorldPosition());
-			//	Bullet->SetDirection(GetDirection());
-			//	break;
-			//}
-			//case InGameMonsterAttackState::BowWow2:
-			//{
-			//	BowWowBullet* Bullet = GetLevel()->CreateActor<BowWowBullet>();
-			//	Bullet->GetRenderer()->ChangeFrameAnimation("BowWow2");
-			//	Bullet->SetColMapImage(GetColMapImage());
-			//	Bullet->GetTransform().SetWorldPosition(GetTransform().GetWorldPosition());
-			//	Bullet->SetDirection(GetDirection());
-			//	break;
-			//}
-			//case InGameMonsterAttackState::BowWow3:
-			//{
-			//	BowWowBullet* Bullet = GetLevel()->CreateActor<BowWowBullet>();
-			//	Bullet->GetRenderer()->ChangeFrameAnimation("BowWow3");
-			//	Bullet->SetColMapImage(GetColMapImage());
-			//	Bullet->GetTransform().SetWorldPosition(GetTransform().GetWorldPosition());
-			//	Bullet->SetDirection(GetDirection());
-			//	break;
-			//}
+			case InGameMonsterAttackState::BowWow:
+			{
+				int RandomAttack = rand() % 4;
+				++RandomAttack;
+				BowWowBullet* Bullet = GetLevel()->CreateActor<BowWowBullet>();
+				if (RandomAttack == 1)
+				{
+				Bullet->GetRenderer()->ChangeFrameAnimation("Bow1");
+				}
+				else if (RandomAttack == 2)
+				{
+					Bullet->GetRenderer()->ChangeFrameAnimation("Bow2");
+				}
+				else if (RandomAttack == 3)
+				{
+					Bullet->GetRenderer()->ChangeFrameAnimation("Wow1");
+				}
+				else
+				{
+					Bullet->GetRenderer()->ChangeFrameAnimation("Wow2");
+				}
+				Bullet->SetColMapImage(GetColMapImage());
+				Bullet->GetTransform().SetWorldPosition(GetTransform().GetWorldPosition());
+				Bullet->SetDirection(GetDirection());
+				break;
+			}
 			}
 		}
 	}

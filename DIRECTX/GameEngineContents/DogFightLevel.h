@@ -1,5 +1,5 @@
 #pragma once
-#include <GameEngineCore/GameEngineLevel.h>
+#include "InGameLevelBase.h"
 
 // Ό³Έν :
 class BulldogPlane;
@@ -7,8 +7,9 @@ class GameEngineTextureRenderer;
 class BackgroundHills;
 class BackgroundObject;
 class Bulldog;
+class Ph2Dog;
 class InGameCuphead;
-class DogFightLevel : public GameEngineLevel
+class DogFightLevel : public InGameLevelBase
 {
 public:
 	// constrcuter destructer
@@ -57,7 +58,7 @@ private:
 	BackgroundObject* PatchLeftA;
 
 	Bulldog* PH1BullDog;
-
+	Ph2Dog* DogFightPh2Dog;
 	BulldogPlane* PH1BulldogPlane;
 
 	InGameCuphead* Cuphead;

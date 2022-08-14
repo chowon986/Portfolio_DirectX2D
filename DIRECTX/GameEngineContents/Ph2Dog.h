@@ -7,6 +7,7 @@ class InGameCharacter;
 class BulldogPlane;
 class GameEngineCollision;
 class GameEngineTextureRenderer;
+class IInGameCharacterBase;
 class InGameMovementComponent;
 class InGameMonsterAnimationControllerComponent;
 class Ph2Dog : public IInGameMonsterBase
@@ -34,8 +35,18 @@ protected:
 public:
 	void OnEnterAnimationFinished(const FrameAnimation_DESC& _Info);
 	void OnPrepareAnimationFinished(const FrameAnimation_DESC& _Info);
+	void OnIdleAnimationFinished(const FrameAnimation_DESC& _Info);
+	void OnAttackAnimationFinished(const FrameAnimation_DESC& _Info);
+
 	void OnEnterAnimationFrameChanged(const FrameAnimation_DESC& _Info);
 	void OnPreapareAnimationFrameChanged(const FrameAnimation_DESC& _Info);
+	void OnAttackAnimationFrameChanged(const FrameAnimation_DESC& _Info);
+
+	void SetPlayer(IInGameCharacterBase* _Player) { Player = _Player; }
+	IInGameCharacterBase* GetPlayer() { return Player; }
+
+	void SetBowWowDirection(float4 _Direction) { BowWowDirection = _Direction; }
+	float4 GetBowWowDirection() { return BowWowDirection; }
 
 private:
 	GameEngineTextureRenderer* Renderer;
@@ -43,7 +54,6 @@ private:
 	InGameMonsterAttackState AttackState;
 	InGameMonsterAnimationControllerComponent* Animation;
 	GameEngineCollision* Collision;
-	float ElapsedTime;
-	float AttackIntervalTime;
-	bool CountTimeOnOff;
+	IInGameCharacterBase* Player;
+	float4 BowWowDirection;
 };

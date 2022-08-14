@@ -86,6 +86,11 @@ void InGameMonsterAnimationControllerComponent::UpdateAnimation()
 		Renderer->ChangeFrameAnimation(Name + "Attack4");
 	}
 
+	else if (State == InGameMonsterState::Attack5)
+	{
+		Renderer->ChangeFrameAnimation(Name + "Attack5");
+	}
+
 	else if (State == InGameMonsterState::AttackFinish1)
 	{
 		Renderer->ChangeFrameAnimation(Name + "AttackFinish1");
