@@ -7,6 +7,8 @@
 #include "Bulldog.h"
 #include "BulldogPlane.h"
 #include "Ph2Dog.h"
+#include "CanteenPlane.h"
+#include "DogCopter.h"
 #include "WorldMapCuphead.h"
 
 DogFightLevel::DogFightLevel()
@@ -27,6 +29,7 @@ DogFightLevel::DogFightLevel()
 	, PH1BulldogPlane(nullptr)
 	, Cuphead(nullptr)
 	, DogFightPh2Dog(nullptr)
+	, CaptainCanteenPlane(nullptr)
 
 {
 }
@@ -285,11 +288,7 @@ void DogFightLevel::Start()
 		}
 	}
 
-	Cuphead = CreateActor<InGameCuphead>(GameObjectGroup::Player);
-	Cuphead->GetTransform().SetLocalPosition({ 100, -40, -100 });
-	Cuphead->SetColMapImage(ColMapRenderer);
-
-	SetPhase(Phase::Phase2);
+	SetPhase(Phase::Phase1);
 	//WorldMapCuphead* Cuphead = CreateActor<WorldMapCuphead>(GameObjectGroup::Player);
 	//Cuphead->SetColMapImage(ColMapRenderer);
 	//Cuphead->GetTransform().SetLocalPosition({ 100, -40, -100 });
@@ -352,12 +351,19 @@ void DogFightLevel::Update(float _DeltaTime)
 
 	if (GetPhase() == Phase::Phase1)
 	{
-		if (PH1BullDog == nullptr)
+		if (CaptainCanteenPlane == nullptr)
 		{
-		PH1BulldogPlane = CreateActor<BulldogPlane>(GameObjectGroup::Monster);
-		PH1BulldogPlane->GetTransform().SetWorldPosition({ 0, 100 });
-		PH1BulldogPlane->SetPlayer(Cuphead);
+			Cuphead = CreateActor<InGameCuphead>(GameObjectGroup::Player);
+			Cuphead->GetTransform().SetLocalPosition({ 100, -40, -100 });
+			Cuphead->SetColMapImage(ColMapRenderer);
 
+			CaptainCanteenPlane = CreateActor<CanteenPlane>(GameObjectGroup::Monster);
+			CaptainCanteenPlane->GetTransform().SetWorldPosition({ 0, 0 });
+			CaptainCanteenPlane->SetPlayer(Cuphead);
+
+			//PH1BulldogPlane = CreateActor<BulldogPlane>(GameObjectGroup::Monster);
+			//PH1BulldogPlane->GetTransform().SetWorldPosition({ 0, 100 });
+			//PH1BulldogPlane->SetPlayer(Cuphead);
 		}
 	}
 
@@ -380,7 +386,12 @@ void DogFightLevel::Update(float _DeltaTime)
 
 	else if (GetPhase() == Phase::Phase3)
 	{
+		if (LeaderCopter == nullptr)
+		{
+			LeaderCopter = CreateActor<DogCopter>();
+			LeaderCopter->GetTransform().SetLocalPosition({ 640.0f,-360.0f });
 
+		}
 	}
 }
 

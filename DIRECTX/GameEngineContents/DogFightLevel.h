@@ -8,6 +8,8 @@ class BackgroundHills;
 class BackgroundObject;
 class Bulldog;
 class Ph2Dog;
+class CanteenPlane;
+class DogCopter;
 class InGameCuphead;
 class DogFightLevel : public InGameLevelBase
 {
@@ -60,7 +62,8 @@ private:
 	Bulldog* PH1BullDog;
 	Ph2Dog* DogFightPh2Dog;
 	BulldogPlane* PH1BulldogPlane;
-
+	CanteenPlane* CaptainCanteenPlane;
+	DogCopter* LeaderCopter;
 	InGameCuphead* Cuphead;
 };
 

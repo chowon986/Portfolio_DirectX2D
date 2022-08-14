@@ -56,4 +56,5 @@ private:
 	GameEngineCollision* Collision;
 	IInGameCharacterBase* Player;
 	float4 BowWowDirection;
+	float RotationAngle;
 };

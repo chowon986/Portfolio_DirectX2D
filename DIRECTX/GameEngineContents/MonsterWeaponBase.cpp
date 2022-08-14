@@ -84,7 +84,8 @@ void MonsterWeaponBase::UpdatePivot()
 	if (State != InGameMonsterState::Attack1 &&
 		State != InGameMonsterState::Attack2 &&
 		State != InGameMonsterState::Attack3 &&
-		State != InGameMonsterState::Attack4)
+		State != InGameMonsterState::Attack4 &&
+		State != InGameMonsterState::Attack5)
 	{
 		return;
 	}
@@ -120,7 +121,11 @@ void MonsterWeaponBase::UpdatePivot()
 
 	else if (State == InGameMonsterState::Attack5)
 	{
-		GetTransform().SetLocalPosition({ 0.0f, 0.0f });
+		Ph2Dog* BowWowDog = dynamic_cast<Ph2Dog*>(GetParent());
+		if (BowWowDog != nullptr)
+		{
+			GetTransform().SetLocalPosition( BowWowDog->GetRenderer()->GetTransform().GetLocalPosition());
+		}
 	}
 }
 

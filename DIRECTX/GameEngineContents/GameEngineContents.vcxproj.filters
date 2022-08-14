@@ -423,9 +423,6 @@
     <ClInclude Include="TennisballBullet.h">
       <Filter>Actor\Weapon\Bullet\Monster</Filter>
     </ClInclude>
-    <ClInclude Include="DogCopter.h">
-      <Filter>Actor\Play\InGame\NPC</Filter>
-    </ClInclude>
     <ClInclude Include="Ph2Dog.h">
       <Filter>Actor\Play\InGame\NPC</Filter>
     </ClInclude>
@@ -437,6 +434,15 @@
     </ClInclude>
     <ClInclude Include="InGameLevelBase.h">
       <Filter>Actor\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="DogCopter.h">
+      <Filter>Actor\Play\InGame\Object\DogFight</Filter>
+    </ClInclude>
+    <ClInclude Include="CanteenPlane.h">
+      <Filter>Actor\Play\InGame\Object\DogFight</Filter>
+    </ClInclude>
+    <ClInclude Include="Canteen.h">
+      <Filter>Actor\Play\InGame\NPC</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -731,9 +737,6 @@
     <ClCompile Include="TennisballBullet.cpp">
       <Filter>Actor\Weapon\Bullet\Monster</Filter>
     </ClCompile>
-    <ClCompile Include="DogCopter.cpp">
-      <Filter>Actor\Play\InGame\NPC</Filter>
-    </ClCompile>
     <ClCompile Include="Ph2Dog.cpp">
       <Filter>Actor\Play\InGame\NPC</Filter>
     </ClCompile>
@@ -745,6 +748,15 @@
     </ClCompile>
     <ClCompile Include="InGameLevelBase.cpp">
       <Filter>Actor\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="DogCopter.cpp">
+      <Filter>Actor\Play\InGame\Object\DogFight</Filter>
+    </ClCompile>
+    <ClCompile Include="CanteenPlane.cpp">
+      <Filter>Actor\Play\InGame\Object\DogFight</Filter>
+    </ClCompile>
+    <ClCompile Include="Canteen.cpp">
+      <Filter>Actor\Play\InGame\NPC</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

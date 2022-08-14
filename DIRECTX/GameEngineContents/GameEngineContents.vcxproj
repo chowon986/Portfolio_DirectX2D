@@ -175,6 +175,8 @@
     <ClInclude Include="BulldogPlane.h" />
     <ClInclude Include="BulletBase.h" />
     <ClInclude Include="BulletMovementComponent.h" />
+    <ClInclude Include="Canteen.h" />
+    <ClInclude Include="CanteenPlane.h" />
     <ClInclude Include="Cart.h" />
     <ClInclude Include="Catus.h" />
     <ClInclude Include="ChargerBullet.h" />
@@ -293,6 +295,8 @@
     <ClCompile Include="BulldogPlane.cpp" />
     <ClCompile Include="BulletBase.cpp" />
     <ClCompile Include="BulletMovementComponent.cpp" />
+    <ClCompile Include="Canteen.cpp" />
+    <ClCompile Include="CanteenPlane.cpp" />
     <ClCompile Include="Cart.cpp" />
     <ClCompile Include="Catus.cpp" />
     <ClCompile Include="ChargerBullet.cpp" />

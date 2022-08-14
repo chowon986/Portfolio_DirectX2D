@@ -12,6 +12,7 @@ Ph2Dog::Ph2Dog()
 	, AttackState(InGameMonsterAttackState::None)
 	, Animation(nullptr)
 	, Collision(nullptr)
+	, RotationAngle(0.0f)
 {
 }
 
@@ -39,6 +40,9 @@ void Ph2Dog::Start()
 		Renderer->AnimationBindFrame("Ph2DogAttack5", std::bind(&Ph2Dog::OnAttackAnimationFrameChanged, this, std::placeholders::_1));
 
 		Renderer->ChangeFrameAnimation("Ph2DogEnter");
+
+		Renderer->GetTransform().SetLocalPosition({ 300, 0, (int)ZOrder::NPC });
+
 		SetRenderer(Renderer);
 	}
 
@@ -65,11 +69,16 @@ void Ph2Dog::Start()
 void Ph2Dog::Update(float _DeltaTime)
 {
 	Renderer->ScaleToTexture();
+	RotationAngle += _DeltaTime;
 
 	if (GetState() != InGameMonsterState::Prepare &&
 		GetState() != InGameMonsterState::Enter)
 	{
-		// °øÀü
+		GetTransform().SetLocalRotate({ 0, 0, 30 * _DeltaTime});
+	}
+	else
+	{
+		RotationAngle = 0.0f;
 	}
 }
 
