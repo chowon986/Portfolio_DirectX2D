@@ -76,6 +76,9 @@ public:
 	void SetRenderer(GameEngineTextureRenderer* _Renderer);
 	GameEngineTextureRenderer* GetRenderer() { return Renderer; }
 
+	void SetMainCollision(GameEngineCollision* _MainCollision);
+	GameEngineCollision* GetMainCollision() { return MainCollision; }
+
 	void SetPhysicsComponent(PhysicsComponent* _Physics);
 	PhysicsComponent* GetPhysicsComponent() { return Physics; }
 
@@ -91,6 +94,8 @@ public:
 	void SetIsOnGround(bool _IsOnGround);
 	bool GetIsOnGround() { return IsOnGround; }
 
+protected:
+	GameEngineCollision* MainCollision;
 private:
 	GameEngineTextureRenderer* ColMapImage;
 	GameEngineTextureRenderer* Renderer;

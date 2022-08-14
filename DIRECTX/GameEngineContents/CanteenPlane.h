@@ -21,13 +21,24 @@ public:
 public:
 	void SetPlayer(IInGameCharacterBase* _Player) { Player = _Player; }
 	IInGameCharacterBase* GetPlayer() { return Player; }
+	bool CanMove(GameEngineCollision* _This, GameEngineCollision* _Other);
+	void SetColMapImage(GameEngineTextureRenderer* _ColMapImage) { ColMapImage = _ColMapImage; }
+	GameEngineTextureRenderer* GetColMapImage() { return ColMapImage; }
 
 protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;
 	void End() override;
-
+	
 private:
+	GameEngineCollision* LeftCollision;
+	GameEngineCollision* RightCollision;
+	GameEngineCollision* GroundCollision;
+
+	GameEngineTextureRenderer* ColMapImage;
+	GameEngineTexture* ColMapTexture;
+	float4 MoveDirection;
+
 	IInGameCharacterBase* Player;
 	Canteen* CaptainCanteen;
 };

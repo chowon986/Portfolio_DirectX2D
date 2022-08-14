@@ -56,6 +56,11 @@ void IInGameCharacterBase::SetRenderer(GameEngineTextureRenderer* _Renderer)
 	Renderer = _Renderer;
 }
 
+void IInGameCharacterBase::SetMainCollision(GameEngineCollision* _MainCollision)
+{
+	MainCollision = _MainCollision;
+}
+
 void IInGameCharacterBase::SetPhysicsComponent(PhysicsComponent* _Physics)
 {
 	Physics = _Physics;

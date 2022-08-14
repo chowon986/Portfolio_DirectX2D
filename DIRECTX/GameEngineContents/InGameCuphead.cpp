@@ -86,10 +86,10 @@ void InGameCuphead::Start()
 
 	{
 		// Collision
-		Collision = CreateComponent<GameEngineCollision>();
-		Collision->ChangeOrder(ObjectOrder::PC);
-		Collision->SetParent(this);
-		Collision->GetTransform().SetLocalScale({ 100.0f, 100.0f, 1.0f });
+		MainCollision = CreateComponent<GameEngineCollision>();
+		MainCollision->ChangeOrder(ObjectOrder::PC);
+		MainCollision->GetTransform().SetLocalScale({ 100.0f, 100.0f, 1.0f });
+		MainCollision->GetTransform().SetLocalPosition({ 0.0f, 60.0f });
 	}
 
 	SetState(InGameCharacterState::Prepare);
@@ -317,7 +317,7 @@ void InGameCuphead::UpdateDirection()
 
 void InGameCuphead::CheckCollision()
 {
-	if (true == Collision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::MONSTER_BULLET, CollisionType::CT_AABB2D,
+	if (true == MainCollision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::MONSTER_BULLET, CollisionType::CT_AABB2D,
 		std::bind(&InGameCuphead::OnTakeDamage, this, std::placeholders::_1, std::placeholders::_2)))
 	{
 		SetHP(GetHP() - 1);
@@ -325,7 +325,7 @@ void InGameCuphead::CheckCollision()
 		Die();
 	}
 
-	if (true == Collision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::MONSTER, CollisionType::CT_AABB2D,
+	if (true == MainCollision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::MONSTER, CollisionType::CT_AABB2D,
 		std::bind(&InGameCuphead::OnTakeDamage, this, std::placeholders::_1, std::placeholders::_2)))
 	{
 		SetHP(GetHP() - 1);
@@ -346,7 +346,7 @@ bool InGameCuphead::OnTakeDamage(GameEngineCollision* _This, GameEngineCollision
 
 void InGameCuphead::OnCollisionDebug()
 {
-	GameEngineDebug::DrawBox(Collision->GetTransform(), { 1.0f, 0.0f,0.0f, 0.5f });
+	GameEngineDebug::DrawBox(MainCollision->GetTransform(), { 1.0f, 0.0f,0.0f, 0.5f });
 }
 
 void InGameCuphead::OpenScoreBoard()

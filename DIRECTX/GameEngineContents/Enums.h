@@ -7,6 +7,9 @@ enum class ObjectOrder
 	MONSTER,
 	PC_BULLET,
 	MONSTER_BULLET,
+	MOVEPLANELEFT,
+	MOVEPLANERIGHT,
+	GROUND,
 };
 
 enum class GameObjectGroup 

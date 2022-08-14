@@ -46,8 +46,9 @@ void PhysicsComponent::Update(float _DeltaTime)
 	Speed += Acceleration * _DeltaTime;
 	Actor->GetTransform().SetWorldMove({ 0, Speed, 0 });
 
-
-	while (true == ColMapTexture->GetPixelToFloat4(Actor->GetTransform().GetWorldPosition().x, -Actor->GetTransform().GetWorldPosition().y).CompareInt4D(float4::BLACK))
+	while (true == ColMapTexture->GetPixelToFloat4(Actor->GetTransform().GetWorldPosition().x, -Actor->GetTransform().GetWorldPosition().y).CompareInt4D(float4::BLACK) ||
+		Actor->GetMainCollision()->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::GROUND, CollisionType::CT_AABB2D,
+			std::bind(&PhysicsComponent::GroundCheck, this, std::placeholders::_1, std::placeholders::_2)))
 	{
 		Actor->GetTransform().SetWorldMove(float4::UP * _DeltaTime);
 		Reset();
@@ -75,4 +76,9 @@ void PhysicsComponent::End()
 void PhysicsComponent::AddForce(float _Power)
 {
 	Power += _Power;
+}
+
+bool PhysicsComponent::GroundCheck(GameEngineCollision* _This, GameEngineCollision* _Other)
+{
+	return true;
 }

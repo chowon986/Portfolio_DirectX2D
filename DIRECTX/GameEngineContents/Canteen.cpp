@@ -24,22 +24,27 @@ void Canteen::Start()
 {
 	// 局聪皋捞记 积己
 	{
-		//Renderer = CreateComponent<GameEngineTextureRenderer>();
-		//Renderer->CreateFrameAnimationFolder("CanteenEnter", FrameAnimation_DESC("CanteenEnter", 0.1f)); // Intro
-		//Renderer->CreateFrameAnimationFolder("CanteenIntro", FrameAnimation_DESC("CanteenIntro", 0.1f)); // Prepare
-		//Renderer->CreateFrameAnimationFolder("CanteenIdle", FrameAnimation_DESC("CanteenIdle", 0.1f)); // Idle
-		//Renderer->CreateFrameAnimationFolder("CanteenAttack5", FrameAnimation_DESC("CanteenAttack5", 0.1f)); // Idle
+		Renderer = CreateComponent<GameEngineTextureRenderer>();
+		Renderer->CreateFrameAnimationFolder("CanteenIntro", FrameAnimation_DESC("CanteenIntro", 0.1f)); // Prepare
+		Renderer->CreateFrameAnimationFolder("CanteenIdle", FrameAnimation_DESC("CanteenIdle", 0.1f)); // Idle
+		Renderer->CreateFrameAnimationFolder("CanteenBlink", FrameAnimation_DESC("CanteenBlink", 0.1f)); // Idle
+		Renderer->CreateFrameAnimationFolder("CanteenCheer", FrameAnimation_DESC("CanteenCheer", 0.1f)); // Idle
+		Renderer->CreateFrameAnimationFolder("CanteenLookAround", FrameAnimation_DESC("CanteenLookAround", 0.1f)); // Idle
+		Renderer->CreateFrameAnimationFolder("CanteenLookDown", FrameAnimation_DESC("CanteenLookDown", 0.1f)); // Idle
+		Renderer->CreateFrameAnimationFolder("CanteenLookDownLeft", FrameAnimation_DESC("CanteenLookDownLeft", 0.1f)); // Idle
+		Renderer->CreateFrameAnimationFolder("CanteenLookDownRight", FrameAnimation_DESC("CanteenLookDownRight", 0.1f)); // Idle
+		Renderer->CreateFrameAnimationFolder("CanteenLookUp", FrameAnimation_DESC("CanteenLookUp", 0.1f)); // Idle
+		Renderer->CreateFrameAnimationFolder("CanteenLookUpLeft", FrameAnimation_DESC("CanteenLookUpLeft", 0.1f)); // Idle
+		Renderer->CreateFrameAnimationFolder("CanteenLookUpLeftArchUp", FrameAnimation_DESC("CanteenLookUpLeftArchUp", 0.1f)); // Idle
+		Renderer->CreateFrameAnimationFolder("CanteenLookUpRight", FrameAnimation_DESC("CanteenLookUpRight", 0.1f)); // Idle
+		Renderer->CreateFrameAnimationFolder("CanteenLookUpRightArchUp", FrameAnimation_DESC("CanteenLookUpRightArchUp", 0.1f)); // Idle
+		Renderer->CreateFrameAnimationFolder("CanteenPlane", FrameAnimation_DESC("CanteenPlane", 0.1f)); // Idle
+		Renderer->CreateFrameAnimationFolder("CanteenTakeDamage", FrameAnimation_DESC("CanteenTakeDamage", 0.1f)); // Idle
+		Renderer->CreateFrameAnimationFolder("CanteenWin", FrameAnimation_DESC("CanteenWin", 0.1f)); // Idle
 
-		//Renderer->AnimationBindEnd("CanteenEnter", std::bind(&Canteen::OnEnterAnimationFinished, this, std::placeholders::_1));
-		//Renderer->AnimationBindEnd("CanteenIntro", std::bind(&Canteen::OnPrepareAnimationFinished, this, std::placeholders::_1));
-		//Renderer->AnimationBindEnd("CanteenIdle", std::bind(&Canteen::OnIdleAnimationFinished, this, std::placeholders::_1));
-		//Renderer->AnimationBindEnd("CanteenAttack5", std::bind(&Canteen::OnAttackAnimationFinished, this, std::placeholders::_1));
+		Renderer->ChangeFrameAnimation("CanteenIntro");
 
-		//Renderer->AnimationBindFrame("CanteenEnter", std::bind(&Canteen::OnEnterAnimationFrameChanged, this, std::placeholders::_1));
-		//Renderer->AnimationBindFrame("CanteenIntro", std::bind(&Canteen::OnPreapareAnimationFrameChanged, this, std::placeholders::_1));
-		//Renderer->AnimationBindFrame("CanteenAttack5", std::bind(&Canteen::OnAttackAnimationFrameChanged, this, std::placeholders::_1));
-
-		//Renderer->ChangeFrameAnimation("CanteenEnter");
+		//Renderer->SetPivot(PIVOTMODE::BOT);
 
 		//Renderer->GetTransform().SetLocalPosition({ 300, 0, (int)ZOrder::NPC });
 
@@ -68,7 +73,7 @@ void Canteen::Start()
 
 void Canteen::Update(float _DeltaTime)
 {
-	
+	Renderer->ScaleToTexture();
 }
 
 void Canteen::TakeDamage()

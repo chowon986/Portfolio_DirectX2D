@@ -38,6 +38,9 @@ public:
 
 	void Reset() { Power = 0.0f, Acceleration = 0.0f, Speed = 0.0f; }
 
+	bool GroundCheck(GameEngineCollision* _This, GameEngineCollision* _Other);
+
+
 private:
 	float Power;
 	float Gravity; // ม฿ทย
