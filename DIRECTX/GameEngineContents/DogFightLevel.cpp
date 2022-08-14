@@ -353,13 +353,14 @@ void DogFightLevel::Update(float _DeltaTime)
 	{
 		if (CaptainCanteenPlane == nullptr)
 		{
-			Cuphead = CreateActor<InGameCuphead>(GameObjectGroup::Player);
-			Cuphead->GetTransform().SetLocalPosition({ 100, -40, -100 });
-			Cuphead->SetColMapImage(ColMapRenderer);
-
 			CaptainCanteenPlane = CreateActor<CanteenPlane>(GameObjectGroup::Monster);
 			CaptainCanteenPlane->GetTransform().SetWorldPosition({ 0, 0 });
 			CaptainCanteenPlane->SetPlayer(Cuphead);
+
+			Cuphead = CreateActor<InGameCuphead>(GameObjectGroup::Player);
+			Cuphead->GetTransform().SetLocalPosition({ 100, -300, -100 });
+			Cuphead->SetParent(CaptainCanteenPlane);
+			Cuphead->SetColMapImage(ColMapRenderer);
 
 			//PH1BulldogPlane = CreateActor<BulldogPlane>(GameObjectGroup::Monster);
 			//PH1BulldogPlane->GetTransform().SetWorldPosition({ 0, 100 });

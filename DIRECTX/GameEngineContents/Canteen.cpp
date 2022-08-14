@@ -24,26 +24,26 @@ void Canteen::Start()
 {
 	// 局聪皋捞记 积己
 	{
-		Renderer = CreateComponent<GameEngineTextureRenderer>();
-		Renderer->CreateFrameAnimationFolder("CanteenEnter", FrameAnimation_DESC("CanteenEnter", 0.1f)); // Intro
-		Renderer->CreateFrameAnimationFolder("CanteenIntro", FrameAnimation_DESC("CanteenIntro", 0.1f)); // Prepare
-		Renderer->CreateFrameAnimationFolder("CanteenIdle", FrameAnimation_DESC("CanteenIdle", 0.1f)); // Idle
-		Renderer->CreateFrameAnimationFolder("CanteenAttack5", FrameAnimation_DESC("CanteenAttack5", 0.1f)); // Idle
+		//Renderer = CreateComponent<GameEngineTextureRenderer>();
+		//Renderer->CreateFrameAnimationFolder("CanteenEnter", FrameAnimation_DESC("CanteenEnter", 0.1f)); // Intro
+		//Renderer->CreateFrameAnimationFolder("CanteenIntro", FrameAnimation_DESC("CanteenIntro", 0.1f)); // Prepare
+		//Renderer->CreateFrameAnimationFolder("CanteenIdle", FrameAnimation_DESC("CanteenIdle", 0.1f)); // Idle
+		//Renderer->CreateFrameAnimationFolder("CanteenAttack5", FrameAnimation_DESC("CanteenAttack5", 0.1f)); // Idle
 
-		Renderer->AnimationBindEnd("CanteenEnter", std::bind(&Canteen::OnEnterAnimationFinished, this, std::placeholders::_1));
-		Renderer->AnimationBindEnd("CanteenIntro", std::bind(&Canteen::OnPrepareAnimationFinished, this, std::placeholders::_1));
-		Renderer->AnimationBindEnd("CanteenIdle", std::bind(&Canteen::OnIdleAnimationFinished, this, std::placeholders::_1));
-		Renderer->AnimationBindEnd("CanteenAttack5", std::bind(&Canteen::OnAttackAnimationFinished, this, std::placeholders::_1));
+		//Renderer->AnimationBindEnd("CanteenEnter", std::bind(&Canteen::OnEnterAnimationFinished, this, std::placeholders::_1));
+		//Renderer->AnimationBindEnd("CanteenIntro", std::bind(&Canteen::OnPrepareAnimationFinished, this, std::placeholders::_1));
+		//Renderer->AnimationBindEnd("CanteenIdle", std::bind(&Canteen::OnIdleAnimationFinished, this, std::placeholders::_1));
+		//Renderer->AnimationBindEnd("CanteenAttack5", std::bind(&Canteen::OnAttackAnimationFinished, this, std::placeholders::_1));
 
-		Renderer->AnimationBindFrame("CanteenEnter", std::bind(&Canteen::OnEnterAnimationFrameChanged, this, std::placeholders::_1));
-		Renderer->AnimationBindFrame("CanteenIntro", std::bind(&Canteen::OnPreapareAnimationFrameChanged, this, std::placeholders::_1));
-		Renderer->AnimationBindFrame("CanteenAttack5", std::bind(&Canteen::OnAttackAnimationFrameChanged, this, std::placeholders::_1));
+		//Renderer->AnimationBindFrame("CanteenEnter", std::bind(&Canteen::OnEnterAnimationFrameChanged, this, std::placeholders::_1));
+		//Renderer->AnimationBindFrame("CanteenIntro", std::bind(&Canteen::OnPreapareAnimationFrameChanged, this, std::placeholders::_1));
+		//Renderer->AnimationBindFrame("CanteenAttack5", std::bind(&Canteen::OnAttackAnimationFrameChanged, this, std::placeholders::_1));
 
-		Renderer->ChangeFrameAnimation("CanteenEnter");
+		//Renderer->ChangeFrameAnimation("CanteenEnter");
 
-		Renderer->GetTransform().SetLocalPosition({ 300, 0, (int)ZOrder::NPC });
+		//Renderer->GetTransform().SetLocalPosition({ 300, 0, (int)ZOrder::NPC });
 
-		SetRenderer(Renderer);
+		//SetRenderer(Renderer);
 	}
 
 
@@ -68,18 +68,7 @@ void Canteen::Start()
 
 void Canteen::Update(float _DeltaTime)
 {
-	Renderer->ScaleToTexture();
-	RotationAngle += _DeltaTime;
-
-	if (GetState() != InGameMonsterState::Prepare &&
-		GetState() != InGameMonsterState::Enter)
-	{
-		GetTransform().SetLocalRotate({ 0, 0, 30 * _DeltaTime });
-	}
-	else
-	{
-		RotationAngle = 0.0f;
-	}
+	
 }
 
 void Canteen::TakeDamage()
