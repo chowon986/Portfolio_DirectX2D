@@ -444,6 +444,9 @@
     <ClInclude Include="Canteen.h">
       <Filter>Actor\Play\InGame\NPC</Filter>
     </ClInclude>
+    <ClInclude Include="DogCopterArms.h">
+      <Filter>Actor\Play\InGame\Object\DogFight</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp">
@@ -757,6 +760,9 @@
     </ClCompile>
     <ClCompile Include="Canteen.cpp">
       <Filter>Actor\Play\InGame\NPC</Filter>
+    </ClCompile>
+    <ClCompile Include="DogCopterArms.cpp">
+      <Filter>Actor\Play\InGame\Object\DogFight</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

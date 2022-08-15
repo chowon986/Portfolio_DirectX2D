@@ -7,6 +7,11 @@ CanteenPlane::CanteenPlane()
 	: Player(nullptr)
 	, CaptainCanteen(nullptr)
 	, MoveDirection(float4::ZERO)
+	, RightCollision(nullptr)
+	, LeftCollision(nullptr)
+	, GroundCollision(nullptr)
+	, ColMapImage(nullptr)
+	, ColMapTexture(nullptr)
 {
 }
 
@@ -131,13 +136,13 @@ void CanteenPlane::Update(float _DeltaTime)
 		ColMapTexture = ColMapImage->GetCurTexture();
 	}
 
-	while (ColMapTexture->GetPixelToFloat4(GetTransform().GetWorldPosition().x + 230, -GetTransform().GetWorldPosition().y).CompareInt4D(float4::BLACK))
+	while (ColMapTexture->GetPixelToFloat4(GetTransform().GetWorldPosition().x + 230.0f, -GetTransform().GetWorldPosition().y).CompareInt4D(float4::BLACK))
 	{
 		MoveDirection = float4::ZERO;
 		GetTransform().SetWorldMove(float4::LEFT * _DeltaTime);
 	} 
 	
-	while (ColMapTexture->GetPixelToFloat4(GetTransform().GetWorldPosition().x - 230, -GetTransform().GetWorldPosition().y).CompareInt4D(float4::BLACK))
+	while (ColMapTexture->GetPixelToFloat4(GetTransform().GetWorldPosition().x - 230.0f, -GetTransform().GetWorldPosition().y).CompareInt4D(float4::BLACK))
 	{
 		MoveDirection = float4::ZERO;
 		GetTransform().SetWorldMove(float4::RIGHT * _DeltaTime);

@@ -4,7 +4,8 @@
 #include "Ph1Dog.h"
 
 BulldogPlane::BulldogPlane()
-	:Player(nullptr)
+	: Player(nullptr)
+	, BossBulldog(nullptr)
 {
 }
 

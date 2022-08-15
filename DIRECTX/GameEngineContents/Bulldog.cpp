@@ -17,6 +17,8 @@ Bulldog::Bulldog()
 	, OnceAttack1FrameChanged(-1)
 	, OnceAttack2FrameChanged(-1)
 	, MoveWithPlaneOn(false)
+	, Plane(nullptr)
+	, PlayerPosX(0)
 {
 }
 

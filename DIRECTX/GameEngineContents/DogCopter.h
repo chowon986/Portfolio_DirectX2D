@@ -1,11 +1,12 @@
 #pragma once
-#include <GameEngineCore/GameEngineActor.h>
+#include "IInGameMonsterBase.h"
 
-// Ό³Έν :
+enum class InGameMonsterState;
+enum class InGameMonsterAttackState;
 class GameEngineTextureRenderer;
-class IInGameCharacterBase;
-class Bulldog;
-class DogCopter : public GameEngineActor
+class DogCopterArms;
+class InGameMonsterAnimationControllerComponent;
+class DogCopter : public IInGameMonsterBase
 {
 public:
 	// constrcuter destructer
@@ -19,16 +20,22 @@ public:
 	DogCopter& operator=(DogCopter&& _Other) noexcept = delete;
 
 public:
-	void SetPlayer(IInGameCharacterBase* _Player) { Player = _Player; }
-	IInGameCharacterBase* GetPlayer() { return Player; }
+	void OnTestAnimationFrameChanged(const FrameAnimation_DESC& _Info);
+	void OnTestAnimationFrameEnd(const FrameAnimation_DESC& _Info);
 
 protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;
 	void End() override;
+	void Prepare() override;
+	void Idle() override;
+	void TakeDamage() override;
+	void Shoot() override;
+	void Die() override;
 
 private:
-	IInGameCharacterBase* Player;
-	Bulldog* BossBulldog;
+	GameEngineTextureRenderer* Renderer;
+	DogCopterArms* CopterArms;
+	InGameMonsterAnimationControllerComponent* Animation;
 };
 

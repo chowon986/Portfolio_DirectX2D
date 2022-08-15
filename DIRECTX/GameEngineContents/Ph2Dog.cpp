@@ -13,6 +13,8 @@ Ph2Dog::Ph2Dog()
 	, Animation(nullptr)
 	, Collision(nullptr)
 	, RotationAngle(0.0f)
+	, State(InGameMonsterState::Idle)
+	, Player(nullptr)
 {
 }
 
@@ -62,8 +64,6 @@ void Ph2Dog::Start()
 
 	srand(time(NULL));
 	SetHP(5);
-	SetState(InGameMonsterState::Idle);
-	SetAttackState(InGameMonsterAttackState::None);
 }
 
 void Ph2Dog::Update(float _DeltaTime)

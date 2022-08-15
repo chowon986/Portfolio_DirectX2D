@@ -17,6 +17,10 @@ Ph1Dog::Ph1Dog()
 	, CountTimeOnOff(true)
 	, IsAnimationDiretionRight(true)
 	, Plane(nullptr)
+	, Animation(nullptr)
+	,AttackState(InGameMonsterAttackState::None)
+	, Movement(nullptr)
+	, State(InGameMonsterState::Idle)
 {
 }
 
@@ -65,8 +69,6 @@ void Ph1Dog::Start()
 
 	srand(time(NULL));
 	SetHP(5);
-	SetState(InGameMonsterState::Idle);
-	SetAttackState(InGameMonsterAttackState::None);
 }
 
 void Ph1Dog::Update(float _DeltaTime)
