@@ -1,15 +1,10 @@
+#include <functional>
 #include "PreCompile.h"
 #include "TitleLevel.h"
-#include <functional>
 #include "Background.h"
-#include "Enums.h"
-#include <GameEngineCore/GEngine.h>
-#include <GameEngineBase/GameEngineInput.h>
-#include <GameEngineCore/GameEngineTextureRenderer.h>
 
 TitleLevel::TitleLevel()
 	: IrisRenderer(nullptr)
-	, CupheadRenderer(nullptr)
 {
 }
 
@@ -20,75 +15,56 @@ TitleLevel::~TitleLevel()
 void TitleLevel::Start()
 {
 	{
-		// Background
 		Background* Title = CreateActor<Background>(GameObjectGroup::UI);
-		GameEngineTextureRenderer* Renderer = Title->CreateComponent<GameEngineTextureRenderer>();
-		Renderer->GetTransform().SetLocalScale({ 1280,720,100 });
-		Renderer->SetTexture("TitleScreenBackground.png");
-		Renderer->GetTransform().SetLocalPosition({ 0,0,15 });
-	}
+		GameEngineTextureRenderer* TitleRenderer = Title->CreateComponent<GameEngineTextureRenderer>();
+		TitleRenderer->GetTransform().SetLocalScale({ 1280.0f, 720.0f, 1.0f });
+		TitleRenderer->SetTexture("TitleScreenBackground.png");
+		TitleRenderer->GetTransform().SetLocalPosition({ 0.0f, 0.0f, (int)ZOrder::Background }); 
 
-	{
-		Background* Chalice = CreateActor<Background>(GameObjectGroup::UI);
-		GameEngineTextureRenderer* Renderer = Chalice->CreateComponent<GameEngineTextureRenderer>();
-		Renderer->GetTransform().SetLocalScale({ 300,476,100 });
-		Renderer->CreateFrameAnimationFolder("Chalice", FrameAnimation_DESC("Chalice", 0.07f));
-		Renderer->ChangeFrameAnimation("Chalice");
-		Renderer->GetTransform().SetLocalPosition({ -25,-50,15 });
-	}
-
-	{
-		Background* Cuphead = CreateActor<Background>(GameObjectGroup::UI);
-		CupheadRenderer = Cuphead->CreateComponent<GameEngineTextureRenderer>();
-		CupheadRenderer->GetTransform().SetLocalScale({ 313,544,100 });
-		CupheadRenderer->CreateFrameAnimationFolder("Cuphead", FrameAnimation_DESC("Cuphead", 0.07f));
-		CupheadRenderer->ChangeFrameAnimation("Cuphead");
-		CupheadRenderer->GetTransform().SetLocalPosition({ -320,-20,20 });
-	}
-
-	{
-		Background* Mugman = CreateActor<Background>(GameObjectGroup::UI);
-		GameEngineTextureRenderer* Renderer = Mugman->CreateComponent<GameEngineTextureRenderer>();
-		Renderer->GetTransform().SetLocalScale({ 315,560,100 });
-		Renderer->CreateFrameAnimationFolder("MugmanA", FrameAnimation_DESC("Mugman", 0.07f));
-		Renderer->GetTransform().SetLocalPosition({ 305,-24,20 });
-		Renderer->ChangeFrameAnimation("MugmanA");
-
-	}
-
-	{
 		Background* Bottom = CreateActor<Background>(GameObjectGroup::UI);
-		GameEngineTextureRenderer* Renderer = Bottom->CreateComponent<GameEngineTextureRenderer>();
-		Renderer->GetTransform().SetLocalScale({ 1328,176,100 });
-		Renderer->GetTransform().SetLocalPosition({ 18,-300,10 });
-		Renderer->SetTexture("TitleChipsLeft.png");
-	}
+		GameEngineTextureRenderer* BottomRenderer = Bottom->CreateComponent<GameEngineTextureRenderer>();
+		BottomRenderer->GetTransform().SetLocalScale({ 1328.0f, 176.0f, 1.0f });
+		BottomRenderer->GetTransform().SetLocalPosition({ 18.0f, -300.0f, (int)ZOrder::Player - 2 });
+		BottomRenderer->SetTexture("TitleChipsLeft.png");
 
-	{
 		Background* Button = CreateActor<Background>(GameObjectGroup::UI);
-		GameEngineTextureRenderer* Renderer = Button->CreateComponent<GameEngineTextureRenderer>();
-		Renderer->GetTransform().SetLocalScale({363 ,49,100 });
-		Renderer->CreateFrameAnimationFolder("Press", FrameAnimation_DESC("PressAnyKey", 0.8f));
-		Renderer->ChangeFrameAnimation("Press");
-		Renderer->ScaleToTexture();
-		Renderer->GetTransform().SetLocalPosition({ 0,-293,0 });
-	}
+		GameEngineTextureRenderer* ButtonRenderer = Button->CreateComponent<GameEngineTextureRenderer>();
+		ButtonRenderer->CreateFrameAnimationFolder("Press", FrameAnimation_DESC("PressAnyKey", 0.5f));
+		ButtonRenderer->ChangeFrameAnimation("Press");
+		ButtonRenderer->GetTransform().SetLocalScale({ 363.0f, 49.0f, 1.0f });
+		ButtonRenderer->GetTransform().SetLocalPosition({ 0.0f, -293.0f,  (int)ZOrder::Player - 3 });
 
-	{		
 		Background* Iris = CreateActor<Background>(GameObjectGroup::UI);
 		IrisRenderer = Iris->CreateComponent<GameEngineTextureRenderer>();
-		IrisRenderer->GetTransform().SetLocalScale({ 1280,720,100 });
-		IrisRenderer->CreateFrameAnimationFolder("IrisBStart", FrameAnimation_DESC("IrisB", 0.1f, false));
-		IrisRenderer->AnimationBindEnd("IrisBStart", std::bind(&TitleLevel::EndIrisAnimation, this, std::placeholders::_1));
-		IrisRenderer->CreateFrameAnimationFolder("IrisB", FrameAnimation_DESC("IrisB",0,0, 0.1f,true));
+		IrisRenderer->GetTransform().SetLocalScale({ 1280.0f, 720.0f, 1.0f });
+		IrisRenderer->CreateFrameAnimationFolder("IrisBStart", FrameAnimation_DESC("IrisB", 0.07f, false));
+		IrisRenderer->CreateFrameAnimationFolder("IrisB", FrameAnimation_DESC("IrisB", 0, 0, 0.07f, true));
+		IrisRenderer->AnimationBindEnd("IrisBStart", std::bind(&TitleLevel::OnIrisAnimationFrameEnd, this, std::placeholders::_1));
 		IrisRenderer->ChangeFrameAnimation("IrisB");
 	}
 
-}
+	{
+		Background* Chalice = CreateActor<Background>(GameObjectGroup::Player);
+		GameEngineTextureRenderer* ChaliceRenderer = Chalice->CreateComponent<GameEngineTextureRenderer>();
+		ChaliceRenderer->CreateFrameAnimationFolder("Chalice", FrameAnimation_DESC("Chalice", 0.055f));
+		ChaliceRenderer->ChangeFrameAnimation("Chalice");
+		ChaliceRenderer->SetScaleModeImage();
+		ChaliceRenderer->GetTransform().SetLocalPosition({ -25.0f, -50.0f, (int)ZOrder::Player });
 
-void TitleLevel::EndIrisAnimation(const FrameAnimation_DESC& _Info)
-{
-	GEngine::ChangeLevel("Select");
+		Background* Cuphead = CreateActor<Background>(GameObjectGroup::Player);
+		GameEngineTextureRenderer* CupheadRenderer = Cuphead->CreateComponent<GameEngineTextureRenderer>();
+		CupheadRenderer->CreateFrameAnimationFolder("Cuphead", FrameAnimation_DESC("Cuphead", 0.055f));
+		CupheadRenderer->ChangeFrameAnimation("Cuphead");
+		CupheadRenderer->SetScaleModeImage();
+		CupheadRenderer->GetTransform().SetLocalPosition({ -320.0f, -20.0f, (int)ZOrder::Player - 1 });
+
+		Background* Mugman = CreateActor<Background>(GameObjectGroup::Player);
+		GameEngineTextureRenderer* MugmanRenderer = Mugman->CreateComponent<GameEngineTextureRenderer>();
+		MugmanRenderer->CreateFrameAnimationFolder("MugmanA", FrameAnimation_DESC("Mugman", 0.055f));
+		MugmanRenderer->ChangeFrameAnimation("MugmanA");
+		MugmanRenderer->SetScaleModeImage();
+		MugmanRenderer->GetTransform().SetLocalPosition({ 305.0f, -24.0f, (int)ZOrder::Player - 1 });
+	}
 }
 
 void TitleLevel::Update(float _DeltaTime)
@@ -99,8 +75,11 @@ void TitleLevel::Update(float _DeltaTime)
 	}
 }
 
-
 void TitleLevel::End() 
 {
-	int a = 0;
+}
+
+void TitleLevel::OnIrisAnimationFrameEnd(const FrameAnimation_DESC& _Info)
+{
+	GEngine::ChangeLevel("Select");
 }

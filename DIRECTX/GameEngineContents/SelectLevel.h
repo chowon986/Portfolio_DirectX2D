@@ -2,16 +2,22 @@
 #include <GameEngineCore/GameEngineLevel.h>
 #include <string>
 
-// Ό³Έν :
+enum class SelectLevelPhase
+{
+	SelectOption,
+	SelectRecord,
+	SelectPlayer,
+	SelectOk,
+};
+
+class Background;
 class GameEngineTextureRenderer;
 class SelectLevel : public GameEngineLevel
 {
 public:
-	// constrcuter destructer
 	SelectLevel();
 	~SelectLevel();
 
-	// delete Function
 	SelectLevel(const SelectLevel& _Other) = delete;
 	SelectLevel(SelectLevel&& _Other) noexcept = delete;
 	SelectLevel& operator=(const SelectLevel& _Other) = delete;
@@ -23,8 +29,22 @@ protected:
 	void End() override;
 
 private:
-	GameEngineTextureRenderer* OptionRenderer;
+	SelectLevelPhase GetPhase();
+	void SetPhase(SelectLevelPhase _Phase);
+	void CreateSelectRecordPhaseRenderer();
+	void CreateSelectPlayerPhaseRenderer();
+	void EndAnimation(const FrameAnimation_DESC& _Info);
+
+private:
+	int RecordNum;
+	int OptionImageNum;
+	bool CanSelectCharacter;
+	bool CupheadOnOffSwitch;
+	float SelectCharacterElapsedTime;
+	SelectLevelPhase Phase;
+	std::string OptionNumber;
 	GameEngineTextureRenderer* SelectScreenRenderer;
+	GameEngineTextureRenderer* OptionRenderer;
 	GameEngineTextureRenderer* RedSelectBoxRenderer;
 	GameEngineTextureRenderer* SelectOutlineRenderer1;
 	GameEngineTextureRenderer* SelectOutlineRenderer2;
@@ -35,18 +55,5 @@ private:
 	GameEngineTextureRenderer* SelectPlayerRenderer;
 	GameEngineTextureRenderer* PlayerARenderer;
 	GameEngineTextureRenderer* PlayerBRenderer;
-	std::string OptionNumber;
-	int Num;
-	int SelectBlockNum;
-	bool SelectOptionOn;
-	bool SelectDataOn;
-	bool SelectCharacterOn;
-	bool OnceCheck;
-	bool CupheadOn;
-	bool MugmanOn;
-	float DeltaTime;
-
-private:
-	void EndAnimation(const FrameAnimation_DESC& _Info);
 };
 

@@ -1,16 +1,13 @@
 #pragma once
 #include <GameEngineCore/GameEngineLevel.h>
 
-// Ό³Έν :
 class GameEngineTextureRenderer;
 class TitleLevel : public GameEngineLevel
 {
 public:
-	// constrcuter destructer
 	TitleLevel();
 	~TitleLevel();
 
-	// delete Function
 	TitleLevel(const TitleLevel& _Other) = delete;
 	TitleLevel(TitleLevel&& _Other) noexcept = delete;
 	TitleLevel& operator=(const TitleLevel& _Other) = delete;
@@ -22,10 +19,9 @@ protected:
 	void End() override;
 
 private:
-	void EndIrisAnimation(const FrameAnimation_DESC& _Info);
+	void OnIrisAnimationFrameEnd(const FrameAnimation_DESC& _Info);
 
 private:
 	GameEngineTextureRenderer* IrisRenderer;
-	GameEngineTextureRenderer* CupheadRenderer;
 };
 
