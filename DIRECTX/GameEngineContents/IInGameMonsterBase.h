@@ -27,6 +27,8 @@ enum class InGameMonsterState
 	AttackFinish2,
 	LookRight,
 	LookLeft,
+	Blink,
+	Look,
 };
 
 enum class InGameMonsterAttackState

@@ -98,7 +98,7 @@ void CanteenPlane::Start()
 	{
 		CaptainCanteen = GetLevel()->CreateActor<Canteen>();
 		CaptainCanteen->SetParent(this);
-		CaptainCanteen->GetTransform().SetLocalPosition({ 10, 120, (int)ZOrder::NPC });
+		CaptainCanteen->GetTransform().SetLocalPosition({ 5, 110, (int)ZOrder::NPC });
 	}
 }
 

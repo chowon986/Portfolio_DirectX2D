@@ -81,6 +81,49 @@ void InGameMonsterAnimationControllerComponent::UpdateAnimation()
 		Renderer->ChangeFrameAnimation(Name + "Attack3");
 	}
 
+	else if (State == InGameMonsterState::Blink)
+	{
+		Renderer->ChangeFrameAnimation(Name + "Blink");
+	}
+
+	else if (State == InGameMonsterState::Look)
+	{
+		int RandomAction = rand() % 14;
+		++RandomAction;
+		switch (RandomAction)
+		{
+		case 1:
+			Renderer->ChangeFrameAnimation(Name + "LookAround");
+			break;
+		case 2:
+			Renderer->ChangeFrameAnimation(Name + "LookUp");
+			break;
+		case 3:
+			Renderer->ChangeFrameAnimation(Name + "LookUpLeft");
+			break;
+		case 4:
+			Renderer->ChangeFrameAnimation(Name + "LookUpLeftArchUp");
+			break;
+		case 5:
+			Renderer->ChangeFrameAnimation(Name + "LookUpRight");
+			break;
+		case 6:
+			Renderer->ChangeFrameAnimation(Name + "LookUpRightArchUp");
+			break;
+		case 7:
+			Renderer->ChangeFrameAnimation(Name + "LookDown");
+			break;
+		case 8:
+			Renderer->ChangeFrameAnimation(Name + "LookDownLeft");
+			break;
+		case 9:
+			Renderer->ChangeFrameAnimation(Name + "LookDownRight");
+			break;
+		default: Renderer->ChangeFrameAnimation(Name + "Idle");
+
+		}
+	}
+
 	else if (State == InGameMonsterState::Attack4)
 	{
 		Renderer->ChangeFrameAnimation(Name + "Attack4");

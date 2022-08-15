@@ -31,22 +31,19 @@ protected:
 	void Idle() override;
 	void Shoot() override;
 	void Die() override;
+	void Blink();
+	void Look();
 
 public:
-	void OnEnterAnimationFinished(const FrameAnimation_DESC& _Info);
+	void OnBlinkAnimationFinished(const FrameAnimation_DESC& _Info);
 	void OnPrepareAnimationFinished(const FrameAnimation_DESC& _Info);
 	void OnIdleAnimationFinished(const FrameAnimation_DESC& _Info);
-	void OnAttackAnimationFinished(const FrameAnimation_DESC& _Info);
+	void OnLookAnimationFinished(const FrameAnimation_DESC& _Info);
 
-	void OnEnterAnimationFrameChanged(const FrameAnimation_DESC& _Info);
-	void OnPreapareAnimationFrameChanged(const FrameAnimation_DESC& _Info);
-	void OnAttackAnimationFrameChanged(const FrameAnimation_DESC& _Info);
 
 	void SetPlayer(IInGameCharacterBase* _Player) { Player = _Player; }
 	IInGameCharacterBase* GetPlayer() { return Player; }
 
-	void SetBowWowDirection(float4 _Direction) { BowWowDirection = _Direction; }
-	float4 GetBowWowDirection() { return BowWowDirection; }
 
 private:
 	GameEngineTextureRenderer* Renderer;
@@ -55,6 +52,4 @@ private:
 	InGameMonsterAnimationControllerComponent* Animation;
 	GameEngineCollision* Collision;
 	IInGameCharacterBase* Player;
-	float4 BowWowDirection;
-	float RotationAngle;
 };
