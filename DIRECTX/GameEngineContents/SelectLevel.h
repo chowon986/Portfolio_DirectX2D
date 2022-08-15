@@ -7,7 +7,6 @@ enum class SelectLevelPhase
 	SelectOption,
 	SelectRecord,
 	SelectPlayer,
-	SelectOk,
 };
 
 class Background;
@@ -43,17 +42,17 @@ private:
 	float SelectCharacterElapsedTime;
 	SelectLevelPhase Phase;
 	std::string OptionNumber;
-	GameEngineTextureRenderer* SelectScreenRenderer;
-	GameEngineTextureRenderer* OptionRenderer;
-	GameEngineTextureRenderer* RedSelectBoxRenderer;
-	GameEngineTextureRenderer* SelectOutlineRenderer1;
-	GameEngineTextureRenderer* SelectOutlineRenderer2;
-	GameEngineTextureRenderer* SelectOutlineRenderer3;
 	GameEngineTextureRenderer* LetterRenderer;
+	GameEngineTextureRenderer* OptionRenderer;
+	GameEngineTextureRenderer* PlayerARenderer;
+	GameEngineTextureRenderer* PlayerBRenderer;
+	GameEngineTextureRenderer* SelectScreenRenderer;
+	GameEngineTextureRenderer* RedSelectBoxRenderer;
 	GameEngineTextureRenderer* BlackLetterRenderer1;
 	GameEngineTextureRenderer* BlackLetterRenderer2;
 	GameEngineTextureRenderer* SelectPlayerRenderer;
-	GameEngineTextureRenderer* PlayerARenderer;
-	GameEngineTextureRenderer* PlayerBRenderer;
+	GameEngineTextureRenderer* SelectOutlineRenderer1;
+	GameEngineTextureRenderer* SelectOutlineRenderer2;
+	GameEngineTextureRenderer* SelectOutlineRenderer3;
 };
 
