@@ -288,7 +288,7 @@ void DogFightLevel::Start()
 		}
 	}
 
-	SetPhase(Phase::Phase3);
+	SetPhase(Phase::Phase2);
 	//WorldMapCuphead* Cuphead = CreateActor<WorldMapCuphead>(GameObjectGroup::Player);
 	//Cuphead->SetColMapImage(ColMapRenderer);
 	//Cuphead->GetTransform().SetLocalPosition({ 100, -40, -100 });
@@ -380,8 +380,22 @@ void DogFightLevel::Update(float _DeltaTime)
 		if (DogFightPh2Dog == nullptr)
 		{
 			DogFightPh2Dog = CreateActor<Ph2Dog>(GameObjectGroup::Monster);
-			DogFightPh2Dog->GetTransform().SetLocalPosition({ 640.0f,-360.0f });
+			//DogFightPh2Dog->GetTransform().SetLocalPosition({ 640.0f,-360.0f });
 			DogFightPh2Dog->SetPlayer(Cuphead);
+		}
+		
+		if (CaptainCanteenPlane == nullptr)
+		{
+			CaptainCanteenPlane = CreateActor<CanteenPlane>(GameObjectGroup::Monster);
+			CaptainCanteenPlane->GetTransform().SetWorldPosition({ 640, -600 });
+
+			Cuphead = CreateActor<InGameCuphead>(GameObjectGroup::Player);
+			Cuphead->GetTransform().SetLocalPosition({ 0, 300, -100 });
+			Cuphead->SetParent(CaptainCanteenPlane);
+			Cuphead->SetColMapImage(ColMapRenderer);
+
+			CaptainCanteenPlane->SetPlayer(Cuphead);
+			CaptainCanteenPlane->SetColMapImage(ColMapRenderer);
 		}
 	}
 

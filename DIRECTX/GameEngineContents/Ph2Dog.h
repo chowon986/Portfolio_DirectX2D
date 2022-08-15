@@ -31,6 +31,8 @@ protected:
 	void Idle() override;
 	void Shoot() override;
 	void Die() override;
+	double GetXFromAngle(double Angle);
+	double GetYFromAngle(double Angle);
 
 public:
 	void OnEnterAnimationFinished(const FrameAnimation_DESC& _Info);
@@ -57,4 +59,5 @@ private:
 	IInGameCharacterBase* Player;
 	float4 BowWowDirection;
 	float RotationAngle;
+	float Angle;
 };

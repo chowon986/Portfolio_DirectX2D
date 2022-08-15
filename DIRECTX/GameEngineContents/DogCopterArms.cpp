@@ -33,10 +33,10 @@ void DogCopterArms::Start()
 		LowPadRenderer = CreateComponent<GameEngineTextureRenderer>();
 		MidPadRenderer = CreateComponent<GameEngineTextureRenderer>();
 		TopPadRenderer = CreateComponent<GameEngineTextureRenderer>();
+		PawMergeRenderer = CreateComponent<GameEngineTextureRenderer>();
 
 		Renderer->CreateFrameAnimationFolder("DogCopterIdleArms", FrameAnimation_DESC("DogCopterIdleArms", 0.1f)); // Idle Arms
 		WristRenderer->CreateFrameAnimationFolder("DogCopterIdleWrist", FrameAnimation_DESC("DogCopterIdleWrist", 0.1f)); // Idle Wrist
-
 
 		LowPadRenderer->CreateFrameAnimationFolder("LowPad", FrameAnimation_DESC("LowPad",0,0, 0.1f, false));
 		MidPadRenderer->CreateFrameAnimationFolder("MidPad", FrameAnimation_DESC("MidPad",0, 0, 0.1f, false));

@@ -34,6 +34,7 @@ private:
 	GameEngineTextureRenderer* LowPadRenderer;
 	GameEngineTextureRenderer* MidPadRenderer;
 	GameEngineTextureRenderer* TopPadRenderer;
+	GameEngineTextureRenderer* PawMergeRenderer;
 
 	InGameMonsterState State;
 	InGameMonsterState LeaderState;

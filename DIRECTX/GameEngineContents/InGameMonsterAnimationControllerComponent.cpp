@@ -120,7 +120,6 @@ void InGameMonsterAnimationControllerComponent::UpdateAnimation()
 			Renderer->ChangeFrameAnimation(Name + "LookDownRight");
 			break;
 		default: Renderer->ChangeFrameAnimation(Name + "Idle");
-
 		}
 	}
 

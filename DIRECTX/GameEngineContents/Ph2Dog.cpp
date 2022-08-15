@@ -6,6 +6,7 @@
 #include "TattooShooter.h"
 #include "IInGameCharacterBase.h"
 #include "BowWowShooter.h"
+#include <math.h>
 
 Ph2Dog::Ph2Dog()
 	: Renderer(nullptr)
@@ -15,6 +16,7 @@ Ph2Dog::Ph2Dog()
 	, RotationAngle(0.0f)
 	, State(InGameMonsterState::Idle)
 	, Player(nullptr)
+	, Angle(0.0f)
 {
 }
 
@@ -43,7 +45,7 @@ void Ph2Dog::Start()
 
 		Renderer->ChangeFrameAnimation("Ph2DogEnter");
 
-		Renderer->GetTransform().SetLocalPosition({ 300, 0, (int)ZOrder::NPC });
+		Renderer->GetTransform().SetLocalPosition({ 0, 0, (int)ZOrder::NPC });
 
 		SetRenderer(Renderer);
 	}
@@ -68,18 +70,27 @@ void Ph2Dog::Start()
 
 void Ph2Dog::Update(float _DeltaTime)
 {
-	Renderer->ScaleToTexture();
-	RotationAngle += _DeltaTime;
+	//Renderer->ScaleToTexture();
 
-	if (GetState() != InGameMonsterState::Prepare &&
-		GetState() != InGameMonsterState::Enter)
+	//if (GetState() != InGameMonsterState::Prepare &&
+	//	GetState() != InGameMonsterState::Enter)
+	//{
+	//	GetTransform().SetLocalRotate({ 0, 0, 30 * _DeltaTime});
+	//}
+	//else
+	//{
+	//	RotationAngle = 0.0f;
+	//}
+	Angle += _DeltaTime;
+
+	if (Angle >= 360.0f)
 	{
-		GetTransform().SetLocalRotate({ 0, 0, 30 * _DeltaTime});
+		Angle = 0.0f;
 	}
-	else
-	{
-		RotationAngle = 0.0f;
-	}
+	
+	double TestX = GetXFromAngle(Angle);
+	double TestY = GetYFromAngle(Angle);
+	GetTransform().SetWorldPosition({ static_cast<float>(TestX + 640.0f), static_cast<float>(TestY -360.0f) });
 }
 
 void Ph2Dog::TakeDamage()
@@ -99,35 +110,22 @@ void Ph2Dog::Idle()
 void Ph2Dog::Shoot()
 {
 	float4 PlayerPos = Player->GetTransform().GetLocalPosition();
-	if (GetTransform().GetLocalPosition().x > PlayerPos.x) // 몬스터가 플레이어보다 오른쪽
-	{
-		if (GetTransform().GetLocalPosition().y > PlayerPos.y) // 몬스터가 플레이어보다 위쪽
-		{
-			SetBowWowDirection(float4::LEFT + float4::DOWN);
-		}
-		else
-		{
-			SetBowWowDirection(float4::LEFT + float4::UP);
-		}
-	}
-
-	else // 몬스터가 플레이어보다 왼쪽
-	{
-		if (GetTransform().GetLocalPosition().y > PlayerPos.y) // 몬스터가 플레이어보다 위쪽
-		{
-			SetBowWowDirection(float4::RIGHT + float4::DOWN);
-		}
-		else
-		{
-			SetBowWowDirection(float4::RIGHT + float4::UP);
-		}
-	}
-	SetState(InGameMonsterState::Attack5);
+	//SetState(InGameMonsterState::Attack5);
 }
 
 void Ph2Dog::Die()
 {
 	SetState(InGameMonsterState::Die);
+}
+
+double Ph2Dog::GetXFromAngle(double Angle)
+{
+	return cosf(Angle) * 500;
+}
+
+double Ph2Dog::GetYFromAngle(double Angle)
+{
+	return sinf(Angle) * 300;
 }
 
 
@@ -178,7 +176,7 @@ void Ph2Dog::OnPrepareAnimationFinished(const FrameAnimation_DESC& _Info)
 
 void Ph2Dog::OnIdleAnimationFinished(const FrameAnimation_DESC& _Info)
 {
-	Shoot();
+	//Shoot();
 }
 
 void Ph2Dog::OnAttackAnimationFinished(const FrameAnimation_DESC& _Info)
