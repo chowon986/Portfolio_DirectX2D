@@ -96,7 +96,7 @@ void ContentsCore::Start()
 	CreateLevel<TutorialLevel>("Tutorial");
 	CreateLevel<PlayLevel>("Play");
 	CreateLevel<DogFightLevel>("DogFight");
-	ChangeLevel("Select");
+	ChangeLevel("DogFight");
 
 	GameEngineFont::Load("±Ã¼­");
 
