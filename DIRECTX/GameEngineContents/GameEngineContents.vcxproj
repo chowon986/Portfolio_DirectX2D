@@ -215,6 +215,7 @@
     <ClInclude Include="InGameMonsterAnimationControllerComponent.h" />
     <ClInclude Include="InGameMovementComponent.h" />
     <ClInclude Include="InGameMugman.h" />
+    <ClInclude Include="InGamePh2DogAnimationControllerComponent.h" />
     <ClInclude Include="INonPlayerCharacterBase.h" />
     <ClInclude Include="IParriable.h" />
     <ClInclude Include="IPreparable.h" />
@@ -334,6 +335,7 @@
     <ClCompile Include="InGameMonsterAnimationControllerComponent.cpp" />
     <ClCompile Include="InGameMovementComponent.cpp" />
     <ClCompile Include="InGameMugman.cpp" />
+    <ClCompile Include="InGamePh2DogAnimationControllerComponent.cpp" />
     <ClCompile Include="INonPlayerCharacterBase.cpp" />
     <ClCompile Include="IParriable.cpp" />
     <ClCompile Include="IPreparable.cpp" />

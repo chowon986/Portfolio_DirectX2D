@@ -7,6 +7,19 @@
 #include "IShootable.h"
 #include "GameEngineCore/GameEngineActor.h"
 
+enum class InGamePh2DogState
+{
+	Prepare1,
+	Prepare2,
+	Prepare3,
+	Prepare4,
+	Idle,
+	Attack,
+	TakeDamage,
+	Die,
+	None,
+};
+
 enum class InGameMonsterState
 {
 	Prepare, // ¿Ï·á
@@ -63,6 +76,9 @@ public:
 	void SetState(InGameMonsterState _State);
 	InGameMonsterState GetState() { return  State; }
 
+	void SetPh2DogState(InGamePh2DogState _State);
+	InGamePh2DogState GetPh2DogState() { return  Ph2DogState; }
+
 	virtual void SetAttackState(InGameMonsterAttackState _State);
 	InGameMonsterAttackState GetAttackState() { return  AttackState; }
 
@@ -70,6 +86,7 @@ public:
 	GameEngineTextureRenderer* GetRenderer() { return Renderer; }
 
 	MulticastDelegate<InGameMonsterState>& GetStateChangedDelegate() { return StateChangedDelegate; }
+	MulticastDelegate<InGamePh2DogState>& GetPh2DogStateChangedDelegate() { return Ph2DogStateChangedDelegate; }
 	MulticastDelegate<InGameMonsterAttackState>& GetAttackStateChangedDelegate() { return AttackStateChangedDelegate; }
 
 	virtual void OnPhaseChanged(Phase _Phase);
@@ -86,6 +103,14 @@ public:
 	void SetEndPos(float4 _EndPos) { EndPos = _EndPos; }
 	float4 GetEndPos() { return EndPos; }
 
+	bool GetIsAnimatedOrderPositive() { return IsAnimatedOrderPositive; }
+	std::string GetStringNumber() { Number = std::to_string(AnimationNum); return Number; }
+	int GetAnimationNum() { return AnimationNum; }
+
+	void SetIsAnimatedOrderPositive(bool _IsAnimatedOrderPositive) { IsAnimatedOrderPositive = _IsAnimatedOrderPositive; }
+	void SetStringNumber(std::string _Number) {Number = _Number; }
+	void SetAnimationNum(int _AnimationNum) { AnimationNum = _AnimationNum; }
+
 protected:
 	void Start() override;
 	virtual void MoveToEndPos(float4 _StartPos, float4 _EndPos, BulldogPlane* _Plane = nullptr);
@@ -97,11 +122,17 @@ protected:
 	float4 MoveDirection;
 	float4 MoveSpeed;
 
+	bool IsAnimatedOrderPositive;
+	std::string Number;
+	int AnimationNum;
+
 private:
 	GameEngineTextureRenderer* Renderer;
 	InGameMonsterState State;
+	InGamePh2DogState Ph2DogState;
 	InGameMonsterAttackState AttackState;
 	MulticastDelegate<InGameMonsterState> StateChangedDelegate;
+	MulticastDelegate<InGamePh2DogState> Ph2DogStateChangedDelegate;
 	MulticastDelegate<InGameMonsterAttackState> AttackStateChangedDelegate;
 	GameEngineTextureRenderer* ColMapImage;
 	float HP;

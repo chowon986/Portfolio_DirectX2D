@@ -377,13 +377,6 @@ void DogFightLevel::Update(float _DeltaTime)
 			PH1BulldogPlane = nullptr;
 		}
 
-		if (DogFightPh2Dog == nullptr)
-		{
-			DogFightPh2Dog = CreateActor<Ph2Dog>(GameObjectGroup::Monster);
-			//DogFightPh2Dog->GetTransform().SetLocalPosition({ 640.0f,-360.0f });
-			DogFightPh2Dog->SetPlayer(Cuphead);
-		}
-		
 		if (CaptainCanteenPlane == nullptr)
 		{
 			CaptainCanteenPlane = CreateActor<CanteenPlane>(GameObjectGroup::Monster);
@@ -397,6 +390,13 @@ void DogFightLevel::Update(float _DeltaTime)
 			CaptainCanteenPlane->SetPlayer(Cuphead);
 			CaptainCanteenPlane->SetColMapImage(ColMapRenderer);
 		}
+
+		if (DogFightPh2Dog == nullptr)
+		{
+			DogFightPh2Dog = CreateActor<Ph2Dog>(GameObjectGroup::Monster);
+			DogFightPh2Dog->SetPlayer(Cuphead);
+		}
+		
 	}
 
 	else if (GetPhase() == Phase::Phase3)

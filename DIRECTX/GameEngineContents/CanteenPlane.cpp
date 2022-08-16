@@ -2,6 +2,7 @@
 #include "CanteenPlane.h"
 #include "Canteen.h"
 #include "Ph1Dog.h"
+#include "IInGameCharacterBase.h"
 
 CanteenPlane::CanteenPlane()
 	: Player(nullptr)
@@ -31,55 +32,46 @@ void CanteenPlane::Start()
 		Renderer->CreateFrameAnimationFolder("CanteenPlaneBody", FrameAnimation_DESC("CanteenPlaneBody", 0.1f, true));
 		Renderer->ChangeFrameAnimation("CanteenPlaneBody");
 		Renderer->ScaleToTexture();
-		//Renderer->GetTransform().SetLocalPosition({ 640, -360, (int)ZOrder::NPC });
 		Renderer->GetTransform().SetLocalPosition({ 0, 0, (int)ZOrder::NPC });
 	}
+
 	{
 		GameEngineTextureRenderer* Renderer = CreateComponent<GameEngineTextureRenderer>();
 		Renderer->CreateFrameAnimationFolder("CanteenPlanePropeller", FrameAnimation_DESC("CanteenPlanePropeller", 0.1f, true));
 		Renderer->ChangeFrameAnimation("CanteenPlanePropeller");
 		Renderer->ScaleToTexture();
-		//Renderer->GetTransform().SetLocalPosition({ 640, -400, (int)ZOrder::Player - 1 });
 		Renderer->GetTransform().SetLocalPosition({ 0, -40, (int)ZOrder::Player - 1 });
 	}
 
 	{
 		GameEngineTextureRenderer* Renderer = CreateComponent<GameEngineTextureRenderer>();
-
 		Renderer->CreateFrameAnimationFolder("CanteenPlaneTail", FrameAnimation_DESC("CanteenPlaneTail", 0.1f, true));
 		Renderer->ChangeFrameAnimation("CanteenPlaneTail");
 		Renderer->ScaleToTexture();
-		//Renderer->GetTransform().SetLocalPosition({ 640, -310, (int)ZOrder::NPC + 3 });
 		Renderer->GetTransform().SetLocalPosition({ 0, +50, (int)ZOrder::NPC + 3 });
 	}
 
 	{
 		GameEngineTextureRenderer* Renderer = CreateComponent<GameEngineTextureRenderer>();
-
 		Renderer->CreateFrameAnimationFolder("CanteenPlaneTopWing", FrameAnimation_DESC("CanteenPlaneTopWing", 0.1f, true));
 		Renderer->ChangeFrameAnimation("CanteenPlaneTopWing");
 		Renderer->ScaleToTexture();
-		//Renderer->GetTransform().SetLocalPosition({ 640, -320, (int)ZOrder::NPC - 1 });
 		Renderer->GetTransform().SetLocalPosition({ 0, +40, (int)ZOrder::NPC - 1 });
 	}
 
 	{
 		GameEngineTextureRenderer* Renderer = CreateComponent<GameEngineTextureRenderer>();
-
 		Renderer->CreateFrameAnimationFolder("CanteenPlaneWheels", FrameAnimation_DESC("CanteenPlaneWheels", 0.1f, true));
 		Renderer->ChangeFrameAnimation("CanteenPlaneWheels");
 		Renderer->ScaleToTexture();
-		//Renderer->GetTransform().SetLocalPosition({ 640, -430, (int)ZOrder::NPC + 2 });
 		Renderer->GetTransform().SetLocalPosition({ 0, -70, (int)ZOrder::NPC + 2 });
 	}
 
 	{
 		GameEngineTextureRenderer* Renderer = CreateComponent<GameEngineTextureRenderer>();
-
 		Renderer->CreateFrameAnimationFolder("CanteenPlaneWing", FrameAnimation_DESC("CanteenPlaneWing", 0.1f, true));
 		Renderer->ChangeFrameAnimation("CanteenPlaneWing");
 		Renderer->ScaleToTexture();
-		//Renderer->GetTransform().SetLocalPosition({ 640, -360, (int)ZOrder::NPC + 2 });
 		Renderer->GetTransform().SetLocalPosition({ 0, 0, (int)ZOrder::NPC + 2 });
 	}
 
@@ -109,12 +101,9 @@ void CanteenPlane::Start()
 
 void CanteenPlane::Update(float _DeltaTime)
 {
-	//DebugCollisionOnOffSwitch();
 	GameEngineDebug::DrawBox(LeftCollision->GetTransform(), { 1.0f, 0.0f,0.0f, 0.5f });
 	GameEngineDebug::DrawBox(RightCollision->GetTransform(), { 1.0f, 0.0f,0.0f, 0.5f });
-	//GameEngineDebug::DrawBox(GroundCollision->GetTransform(), { 1.0f, 0.0f,0.0f, 0.5f });
-
-	//UpdateMove();
+	GameEngineDebug::DrawBox(GroundCollision->GetTransform(), { 1.0f, 0.0f,0.0f, 0.5f });
 
 	if (LeftCollision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::PC, CollisionType::CT_AABB2D,
 		std::bind(&CanteenPlane::CanMove, this, std::placeholders::_1, std::placeholders::_2)))
@@ -124,6 +113,7 @@ void CanteenPlane::Update(float _DeltaTime)
 	else if (RightCollision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::PC, CollisionType::CT_AABB2D,
 		std::bind(&CanteenPlane::CanMove, this, std::placeholders::_1, std::placeholders::_2)))
 	{
+		
 		MoveDirection = float4::RIGHT;
 	}
 	else

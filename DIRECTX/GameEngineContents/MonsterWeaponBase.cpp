@@ -43,10 +43,10 @@ void MonsterWeaponBase::UpdateDirection()
 		Direction = float4::DOWN;
 	}
 
-	if (State == InGameMonsterState::Attack5)
+	if (Ph2DogState == InGamePh2DogState::Attack)
 	{
 		Ph2Dog* BowWowDog = dynamic_cast<Ph2Dog*>(GetParent());
-		if(BowWowDog != nullptr)
+		if (BowWowDog != nullptr)
 		{
 			Direction = BowWowDog->GetBowWowDirection();
 		}
@@ -84,8 +84,7 @@ void MonsterWeaponBase::UpdatePivot()
 	if (State != InGameMonsterState::Attack1 &&
 		State != InGameMonsterState::Attack2 &&
 		State != InGameMonsterState::Attack3 &&
-		State != InGameMonsterState::Attack4 &&
-		State != InGameMonsterState::Attack5)
+		State != InGameMonsterState::Attack4)
 	{
 		return;
 	}
@@ -118,18 +117,14 @@ void MonsterWeaponBase::UpdatePivot()
 	{
 		GetTransform().SetLocalPosition({ 0.0f, 10.0f });
 	}
-
-	else if (State == InGameMonsterState::Attack5)
-	{
-		Ph2Dog* BowWowDog = dynamic_cast<Ph2Dog*>(GetParent());
-		if (BowWowDog != nullptr)
-		{
-			GetTransform().SetLocalPosition( BowWowDog->GetRenderer()->GetTransform().GetLocalPosition());
-		}
-	}
 }
 
 void MonsterWeaponBase::OnMonsterStateChanged(InGameMonsterState _State)
+{
+	UpdateDirection();
+}
+
+void MonsterWeaponBase::OnPh2DogStateChanged(InGamePh2DogState _State)
 {
 	UpdateDirection();
 }
@@ -177,6 +172,7 @@ void MonsterWeaponBase::SetParent(GameEngineUpdateObject* _Parent)
 	{
 		Monster->GetAttackStateChangedDelegate().Add(std::bind(&MonsterWeaponBase::OnMonsterAttackStateChanged, this, std::placeholders::_1));
 		Monster->GetStateChangedDelegate().Add(std::bind(&MonsterWeaponBase::OnMonsterStateChanged, this, std::placeholders::_1));
+		Monster->GetPh2DogStateChangedDelegate().Add(std::bind(&MonsterWeaponBase::OnPh2DogStateChanged, this, std::placeholders::_1));
 		UpdateDirection();
 		SetColMapImage(Monster->GetColMapImage());
 	}

@@ -447,6 +447,9 @@
     <ClInclude Include="DogCopterArms.h">
       <Filter>Actor\Play\InGame\Object\DogFight</Filter>
     </ClInclude>
+    <ClInclude Include="InGamePh2DogAnimationControllerComponent.h">
+      <Filter>Components\Monster</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp">
@@ -763,6 +766,9 @@
     </ClCompile>
     <ClCompile Include="DogCopterArms.cpp">
       <Filter>Actor\Play\InGame\Object\DogFight</Filter>
+    </ClCompile>
+    <ClCompile Include="InGamePh2DogAnimationControllerComponent.cpp">
+      <Filter>Components\Monster</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

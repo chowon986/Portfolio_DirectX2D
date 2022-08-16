@@ -4,6 +4,7 @@
 
 class GameEngineTextureRenderer;
 enum class InGameMonsterAttackState;
+enum class InGamePh2DogState;
 enum class InGameMonsterState;
 class IInGameMonsterBase;
 class MonsterWeaponBase : public GameEngineActor
@@ -17,6 +18,7 @@ public:
 	MonsterWeaponBase& operator=(MonsterWeaponBase&& _Other) noexcept = delete;
 
 	void OnMonsterStateChanged(InGameMonsterState _State);
+	void OnPh2DogStateChanged(InGamePh2DogState _State);
 	void OnMonsterAttackStateChanged(InGameMonsterAttackState _AttackState);
 
 	void SetParent(GameEngineUpdateObject* _Parent) override;
@@ -37,6 +39,7 @@ protected:
 	float IntervalTime;
 	IInGameMonsterBase* Character;
 	InGameMonsterState State;
+	InGamePh2DogState Ph2DogState;
 	InGameMonsterAttackState AttackState;
 	float4 Direction;
 

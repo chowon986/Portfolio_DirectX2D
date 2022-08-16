@@ -6,6 +6,7 @@
 IInGameMonsterBase::IInGameMonsterBase()
 	: Renderer(nullptr)
 	, State(InGameMonsterState::Idle)
+	, Ph2DogState(InGamePh2DogState::None)
 	, AttackState(InGameMonsterAttackState::None)
 	, MoveDirection(float4::ZERO)
 	, StartPos(float4::ZERO)
@@ -14,6 +15,9 @@ IInGameMonsterBase::IInGameMonsterBase()
 	, ColMapImage(nullptr)
 	, HP(0.0f)
 	, Plane(nullptr)
+	, IsAnimatedOrderPositive(true)
+	, AnimationNum(0)
+	, Number(std::to_string(AnimationNum))
 {
 }
 
@@ -134,5 +138,14 @@ void IInGameMonsterBase::SetState(InGameMonsterState _State)
 	{
 		State = _State;
 		StateChangedDelegate.Invoke(State);
+	}
+}
+
+void IInGameMonsterBase::SetPh2DogState(InGamePh2DogState _State)
+{
+	if (Ph2DogState != _State)
+	{
+		Ph2DogState = _State;
+		Ph2DogStateChangedDelegate.Invoke(Ph2DogState);
 	}
 }

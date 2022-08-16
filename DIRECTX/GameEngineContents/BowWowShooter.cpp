@@ -42,7 +42,7 @@ void BowWowShooter::Update(float _DeltaTime)
 				BowWowBullet* Bullet = GetLevel()->CreateActor<BowWowBullet>();
 				if (RandomAttack == 1)
 				{
-				Bullet->GetRenderer()->ChangeFrameAnimation("Bow1");
+					Bullet->GetRenderer()->ChangeFrameAnimation("Bow1");
 				}
 				else if (RandomAttack == 2)
 				{
