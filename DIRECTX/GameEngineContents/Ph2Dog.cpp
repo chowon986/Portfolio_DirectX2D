@@ -26,7 +26,12 @@ Ph2Dog::~Ph2Dog()
 
 void Ph2Dog::Start()
 {
-	// 애니메이션 생성
+	// 애니메이션 순서
+	// IntroTop : 위 -> 오른쪽 -> 아래 -> 왼쪽
+	// IntroRight : 오른쪽 -> 아래 -> 왼쪽 -> 위
+	// IntroBottom : 아래 -> 왼쪽 -> 위 -> 오른쪽
+	// IntroLeft : 왼쪽 -> 위쪽 -> 오른쪽 -> 아래2
+
 	{
 		Renderer = CreateComponent<GameEngineTextureRenderer>();
 		Renderer->CreateFrameAnimationFolder("Ph2DogEnter", FrameAnimation_DESC("Ph2DogEnter", 0.1f)); // Intro
