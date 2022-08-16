@@ -2,6 +2,7 @@
 #include "BowWowShooter.h"
 #include "IInGameMonsterBase.h"
 #include "BowWowBullet.h"
+#include "Ph2Dog.h"
 
 BowWowShooter::BowWowShooter()
 	:MonsterAttackState(InGameMonsterAttackState::None)
@@ -56,9 +57,14 @@ void BowWowShooter::Update(float _DeltaTime)
 				{
 					Bullet->GetRenderer()->ChangeFrameAnimation("Wow2");
 				}
+
 				Bullet->SetColMapImage(GetColMapImage());
 				Bullet->GetTransform().SetWorldPosition(GetTransform().GetWorldPosition());
-				Bullet->SetDirection(GetDirection());
+				Ph2Dog* Dog = dynamic_cast<Ph2Dog*>(GetParent());
+				if (Dog != nullptr)
+				{
+					Bullet->SetDirection(Dog->GetBowWowDirection());
+				}
 				break;
 			}
 			}

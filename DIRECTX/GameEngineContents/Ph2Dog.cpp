@@ -285,18 +285,17 @@ void Ph2Dog::OnAttackAnimationFinished(const FrameAnimation_DESC& _Info)
 
 void Ph2Dog::OnIdleAnimaitionFinished(const FrameAnimation_DESC& _Info)
 {
-	//int RandomAction = rand() % 5;
-	//++RandomAction;
+	int RandomAction = rand() % 5;
+	++RandomAction;
 
-	//if (RandomAction == 1)
-	//{
-	//	Shoot();
-	//}
-	//else
-	//{
-	None();
+	if (RandomAction == 1)
+	{
+		Shoot();
+	}
+	else
+	{
 	Idle();
-	//}
+	}
 }
 
 void Ph2Dog::OnIdleAnimaitionFrameChanged(const FrameAnimation_DESC& _Info)
@@ -310,11 +309,11 @@ void Ph2Dog::OnAttackAnimationFrameChanged(const FrameAnimation_DESC& _Info)
 	{
 		if (Player != nullptr)
 		{
-			float4 PlayerPos = Player->GetTransform().GetLocalPosition();
-			float4 Direction = PlayerPos - GetTransform().GetLocalPosition();
-			Direction.Normalize();
-			SetBowWowDirection(Direction);
-			SetAttackState(InGameMonsterAttackState::BowWow);
+			//float4 PlayerPos = Player->GetRenderer()->GetTransform().GetWorldPosition();
+			//float4 MyPos = GetRenderer()->GetTransform().GetWorldPosition();
+			//float4 Direction = float4({ (PlayerPos - MyPos)/(PlayerPos - MyPos)});
+			//SetBowWowDirection(Direction);
+			//SetAttackState(InGameMonsterAttackState::BowWow);
 		}
 	}
 	else

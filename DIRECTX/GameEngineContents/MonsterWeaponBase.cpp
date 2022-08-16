@@ -24,7 +24,7 @@ void MonsterWeaponBase::UpdateDirection()
 	{
 		return;
 	}
-
+	Ph2DogState = Character->GetPh2DogState();
 	State = Character->GetState();
 	AttackState = Character->GetAttackState();
 
