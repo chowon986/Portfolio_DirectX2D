@@ -18,6 +18,8 @@ IInGameMonsterBase::IInGameMonsterBase()
 	, IsAnimatedOrderPositive(true)
 	, AnimationNum(0)
 	, Number(std::to_string(AnimationNum))
+	, Angle(0.0f)
+	, StartAngle(0.0f)
 {
 }
 
@@ -147,5 +149,14 @@ void IInGameMonsterBase::SetPh2DogState(InGamePh2DogState _State)
 	{
 		Ph2DogState = _State;
 		Ph2DogStateChangedDelegate.Invoke(Ph2DogState);
+	}
+}
+
+void IInGameMonsterBase::SetDogCopterState(InGameDogCopterState _State)
+{
+	if (DogCopterState != _State)
+	{
+		DogCopterState = _State;
+		DogCopterStateChangedDelegate.Invoke(DogCopterState);
 	}
 }

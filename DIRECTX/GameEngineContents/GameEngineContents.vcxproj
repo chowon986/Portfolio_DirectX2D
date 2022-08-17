@@ -211,6 +211,7 @@
     <ClInclude Include="InGameCharacterMovementCompmonent.h" />
     <ClInclude Include="InGameCuphead.h" />
     <ClInclude Include="IInGameMonsterBase.h" />
+    <ClInclude Include="InGameDogCopterAnimationControllerComponent.h" />
     <ClInclude Include="InGameLevelBase.h" />
     <ClInclude Include="InGameMonsterAnimationControllerComponent.h" />
     <ClInclude Include="InGameMovementComponent.h" />
@@ -331,6 +332,7 @@
     <ClCompile Include="InGameCharacterMovementCompmonent.cpp" />
     <ClCompile Include="InGameCuphead.cpp" />
     <ClCompile Include="IInGameMonsterBase.cpp" />
+    <ClCompile Include="InGameDogCopterAnimationControllerComponent.cpp" />
     <ClCompile Include="InGameLevelBase.cpp" />
     <ClCompile Include="InGameMonsterAnimationControllerComponent.cpp" />
     <ClCompile Include="InGameMovementComponent.cpp" />

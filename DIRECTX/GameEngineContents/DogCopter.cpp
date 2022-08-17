@@ -17,7 +17,7 @@ void DogCopter::Start()
 	IInGameMonsterBase::Start();
 	{
 		Renderer = CreateComponent<GameEngineTextureRenderer>();
-		Renderer->CreateFrameAnimationFolder("DogCopterIntro", FrameAnimation_DESC("DogCopterIntro", 0.1f, false));
+		Renderer->CreateFrameAnimationFolder("DogCopterIntro", FrameAnimation_DESC("DogCopterIntro", 0.1f));
 		Renderer->CreateFrameAnimationFolder("DogCopterIdle", FrameAnimation_DESC("DogCopterIdle", 0.1f));
 
 		// Test
@@ -82,5 +82,5 @@ void DogCopter::OnTestAnimationFrameChanged(const FrameAnimation_DESC& _Info)
 void DogCopter::OnTestAnimationFrameEnd(const FrameAnimation_DESC& _Info)
 {
 	//Renderer->GetTransform().SetLocalPosition({ Renderer->GetTransform().GetLocalPosition().x, Renderer->GetTransform().GetLocalPosition().y + 100 });
-	//Idle();
+	Idle();
 }

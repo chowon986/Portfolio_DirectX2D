@@ -31,6 +31,7 @@ protected:
 	virtual void End() override;
 
 private:
-	std::string Name;
+	std::string Name; 
+	float Angle;
 };
 

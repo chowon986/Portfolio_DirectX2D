@@ -16,7 +16,7 @@ Ph2Dog::Ph2Dog()
 	, RotationAngle(0.0f)
 	, State(InGamePh2DogState::None)
 	, Player(nullptr)
-	, Angle(90.0f)
+	, OnceCheck(false)
 {
 }
 
@@ -38,10 +38,15 @@ void Ph2Dog::Start()
 		Renderer->CreateFrameAnimationFolder("Ph2DogIntroBottom", FrameAnimation_DESC("Ph2DogIntroBottom", 0.1f));
 		Renderer->CreateFrameAnimationFolder("Ph2DogIntroLeft", FrameAnimation_DESC("Ph2DogIntroLeft", 0.1f));
 
-		Renderer->AnimationBindEnd("Ph2DogIntroTop", std::bind(&Ph2Dog::OnPrepare1AnimaitionFinished, this, std::placeholders::_1));
-		Renderer->AnimationBindEnd("Ph2DogIntroRight", std::bind(&Ph2Dog::OnPrepare2AnimaitionFinished, this, std::placeholders::_1));
-		Renderer->AnimationBindEnd("Ph2DogIntroBottom", std::bind(&Ph2Dog::OnPrepare3AnimaitionFinished, this, std::placeholders::_1));
-		Renderer->AnimationBindEnd("Ph2DogIntroLeft", std::bind(&Ph2Dog::OnPrepare4AnimaitionFinished, this, std::placeholders::_1));
+		Renderer->CreateFrameAnimationFolder("Ph2DogIdle1", FrameAnimation_DESC("Ph2DogIdle1", 0.06f));
+		Renderer->CreateFrameAnimationFolder("Ph2DogIdle2", FrameAnimation_DESC("Ph2DogIdle2", 0.06f));
+		Renderer->CreateFrameAnimationFolder("Ph2DogIdle3", FrameAnimation_DESC("Ph2DogIdle3", 0.06f));
+		Renderer->CreateFrameAnimationFolder("Ph2DogIdle4", FrameAnimation_DESC("Ph2DogIdle4", 0.06f));
+		Renderer->CreateFrameAnimationFolder("Ph2DogIdle5", FrameAnimation_DESC("Ph2DogIdle5", 0.06f));
+		Renderer->CreateFrameAnimationFolder("Ph2DogIdle6", FrameAnimation_DESC("Ph2DogIdle6", 0.06f));
+		Renderer->CreateFrameAnimationFolder("Ph2DogIdle7", FrameAnimation_DESC("Ph2DogIdle7", 0.06f));
+		Renderer->CreateFrameAnimationFolder("Ph2DogIdle8", FrameAnimation_DESC("Ph2DogIdle8", 0.06f));
+		Renderer->CreateFrameAnimationFolder("Ph2DogIdle9", FrameAnimation_DESC("Ph2DogIdle9", 0.06f));
 
 		Renderer->CreateFrameAnimationFolder("Ph2DogPain1", FrameAnimation_DESC("Ph2DogPain1", 0.1f));
 		Renderer->CreateFrameAnimationFolder("Ph2DogPain2", FrameAnimation_DESC("Ph2DogPain2", 0.1f));
@@ -73,47 +78,6 @@ void Ph2Dog::Start()
 		Renderer->AnimationBindFrame("Ph2DogAttack8", std::bind(&Ph2Dog::OnAttackAnimationFrameChanged, this, std::placeholders::_1));
 		Renderer->AnimationBindFrame("Ph2DogAttack9", std::bind(&Ph2Dog::OnAttackAnimationFrameChanged, this, std::placeholders::_1));
 
-		Renderer->AnimationBindEnd("Ph2DogAttack1", std::bind(&Ph2Dog::OnAttackAnimationFinished, this, std::placeholders::_1));
-		Renderer->AnimationBindEnd("Ph2DogAttack2", std::bind(&Ph2Dog::OnAttackAnimationFinished, this, std::placeholders::_1));
-		Renderer->AnimationBindEnd("Ph2DogAttack3", std::bind(&Ph2Dog::OnAttackAnimationFinished, this, std::placeholders::_1));
-		Renderer->AnimationBindEnd("Ph2DogAttack4", std::bind(&Ph2Dog::OnAttackAnimationFinished, this, std::placeholders::_1));
-		Renderer->AnimationBindEnd("Ph2DogAttack5", std::bind(&Ph2Dog::OnAttackAnimationFinished, this, std::placeholders::_1));
-		Renderer->AnimationBindEnd("Ph2DogAttack6", std::bind(&Ph2Dog::OnAttackAnimationFinished, this, std::placeholders::_1));
-		Renderer->AnimationBindEnd("Ph2DogAttack7", std::bind(&Ph2Dog::OnAttackAnimationFinished, this, std::placeholders::_1));
-		Renderer->AnimationBindEnd("Ph2DogAttack8", std::bind(&Ph2Dog::OnAttackAnimationFinished, this, std::placeholders::_1));
-		Renderer->AnimationBindEnd("Ph2DogAttack9", std::bind(&Ph2Dog::OnAttackAnimationFinished, this, std::placeholders::_1));
-
-		Renderer->AnimationBindEnd("Ph2DogPain1", std::bind(&Ph2Dog::OnAttackAnimationFinished, this, std::placeholders::_1));
-		Renderer->AnimationBindEnd("Ph2DogPain2", std::bind(&Ph2Dog::OnAttackAnimationFinished, this, std::placeholders::_1));
-		Renderer->AnimationBindEnd("Ph2DogPain3", std::bind(&Ph2Dog::OnAttackAnimationFinished, this, std::placeholders::_1));
-		Renderer->AnimationBindEnd("Ph2DogPain4", std::bind(&Ph2Dog::OnAttackAnimationFinished, this, std::placeholders::_1));
-		Renderer->AnimationBindEnd("Ph2DogPain5", std::bind(&Ph2Dog::OnAttackAnimationFinished, this, std::placeholders::_1));
-		Renderer->AnimationBindEnd("Ph2DogPain6", std::bind(&Ph2Dog::OnAttackAnimationFinished, this, std::placeholders::_1));
-		Renderer->AnimationBindEnd("Ph2DogPain7", std::bind(&Ph2Dog::OnAttackAnimationFinished, this, std::placeholders::_1));
-		Renderer->AnimationBindEnd("Ph2DogPain8", std::bind(&Ph2Dog::OnAttackAnimationFinished, this, std::placeholders::_1));
-		Renderer->AnimationBindEnd("Ph2DogPain9", std::bind(&Ph2Dog::OnAttackAnimationFinished, this, std::placeholders::_1));
-		
-		Renderer->CreateFrameAnimationFolder("Ph2DogIdle1", FrameAnimation_DESC("Ph2DogIdle1", 0.06f));
-		Renderer->CreateFrameAnimationFolder("Ph2DogIdle2", FrameAnimation_DESC("Ph2DogIdle2", 0.06f));
-		Renderer->CreateFrameAnimationFolder("Ph2DogIdle3", FrameAnimation_DESC("Ph2DogIdle3", 0.06f));
-		Renderer->CreateFrameAnimationFolder("Ph2DogIdle4", FrameAnimation_DESC("Ph2DogIdle4", 0.06f));
-		Renderer->CreateFrameAnimationFolder("Ph2DogIdle5", FrameAnimation_DESC("Ph2DogIdle5", 0.06f));
-		Renderer->CreateFrameAnimationFolder("Ph2DogIdle6", FrameAnimation_DESC("Ph2DogIdle6", 0.06f));
-		Renderer->CreateFrameAnimationFolder("Ph2DogIdle7", FrameAnimation_DESC("Ph2DogIdle7", 0.06f));
-		Renderer->CreateFrameAnimationFolder("Ph2DogIdle8", FrameAnimation_DESC("Ph2DogIdle8", 0.06f));
-		Renderer->CreateFrameAnimationFolder("Ph2DogIdle9", FrameAnimation_DESC("Ph2DogIdle9", 0.06f));
-
-		Renderer->AnimationBindEnd("Ph2DogIntroTop", std::bind(&Ph2Dog::OnPrepare1AnimaitionFinished, this, std::placeholders::_1));
-		Renderer->AnimationBindEnd("Ph2DogIdle1", std::bind(&Ph2Dog::OnIdleAnimaitionFinished, this, std::placeholders::_1));
-		Renderer->AnimationBindEnd("Ph2DogIdle2", std::bind(&Ph2Dog::OnIdleAnimaitionFinished, this, std::placeholders::_1));
-		Renderer->AnimationBindEnd("Ph2DogIdle3", std::bind(&Ph2Dog::OnIdleAnimaitionFinished, this, std::placeholders::_1));
-		Renderer->AnimationBindEnd("Ph2DogIdle4", std::bind(&Ph2Dog::OnIdleAnimaitionFinished, this, std::placeholders::_1));
-		Renderer->AnimationBindEnd("Ph2DogIdle5", std::bind(&Ph2Dog::OnIdleAnimaitionFinished, this, std::placeholders::_1));
-		Renderer->AnimationBindEnd("Ph2DogIdle6", std::bind(&Ph2Dog::OnIdleAnimaitionFinished, this, std::placeholders::_1));
-		Renderer->AnimationBindEnd("Ph2DogIdle7", std::bind(&Ph2Dog::OnIdleAnimaitionFinished, this, std::placeholders::_1));
-		Renderer->AnimationBindEnd("Ph2DogIdle8", std::bind(&Ph2Dog::OnIdleAnimaitionFinished, this, std::placeholders::_1));
-		Renderer->AnimationBindEnd("Ph2DogIdle9", std::bind(&Ph2Dog::OnIdleAnimaitionFinished, this, std::placeholders::_1));
-
 		Renderer->AnimationBindFrame("Ph2DogIdle1", std::bind(&Ph2Dog::OnIdleAnimaitionFrameChanged, this, std::placeholders::_1));
 		Renderer->AnimationBindFrame("Ph2DogIdle2", std::bind(&Ph2Dog::OnIdleAnimaitionFrameChanged, this, std::placeholders::_1));
 		Renderer->AnimationBindFrame("Ph2DogIdle3", std::bind(&Ph2Dog::OnIdleAnimaitionFrameChanged, this, std::placeholders::_1));
@@ -124,9 +88,45 @@ void Ph2Dog::Start()
 		Renderer->AnimationBindFrame("Ph2DogIdle8", std::bind(&Ph2Dog::OnIdleAnimaitionFrameChanged, this, std::placeholders::_1));
 		Renderer->AnimationBindFrame("Ph2DogIdle9", std::bind(&Ph2Dog::OnIdleAnimaitionFrameChanged, this, std::placeholders::_1));
 
-		Renderer->ChangeFrameAnimation("Ph2DogIntroTop");
-		Renderer->GetTransform().SetLocalPosition({ 0, 0, (int)ZOrder::UI + 1 });
 
+		Renderer->AnimationBindEnd("Ph2DogIntroTop", std::bind(&Ph2Dog::OnAnimaitionFinished, this, std::placeholders::_1));
+		Renderer->AnimationBindEnd("Ph2DogIntroRight", std::bind(&Ph2Dog::OnAnimaitionFinished, this, std::placeholders::_1));
+		Renderer->AnimationBindEnd("Ph2DogIntroBottom", std::bind(&Ph2Dog::OnAnimaitionFinished, this, std::placeholders::_1));
+		Renderer->AnimationBindEnd("Ph2DogIntroLeft", std::bind(&Ph2Dog::OnAnimaitionFinished, this, std::placeholders::_1));
+
+		Renderer->AnimationBindEnd("Ph2DogAttack1", std::bind(&Ph2Dog::OnAnimaitionFinished, this, std::placeholders::_1));
+		Renderer->AnimationBindEnd("Ph2DogAttack2", std::bind(&Ph2Dog::OnAnimaitionFinished, this, std::placeholders::_1));
+		Renderer->AnimationBindEnd("Ph2DogAttack3", std::bind(&Ph2Dog::OnAnimaitionFinished, this, std::placeholders::_1));
+		Renderer->AnimationBindEnd("Ph2DogAttack4", std::bind(&Ph2Dog::OnAnimaitionFinished, this, std::placeholders::_1));
+		Renderer->AnimationBindEnd("Ph2DogAttack5", std::bind(&Ph2Dog::OnAnimaitionFinished, this, std::placeholders::_1));
+		Renderer->AnimationBindEnd("Ph2DogAttack6", std::bind(&Ph2Dog::OnAnimaitionFinished, this, std::placeholders::_1));
+		Renderer->AnimationBindEnd("Ph2DogAttack7", std::bind(&Ph2Dog::OnAnimaitionFinished, this, std::placeholders::_1));
+		Renderer->AnimationBindEnd("Ph2DogAttack8", std::bind(&Ph2Dog::OnAnimaitionFinished, this, std::placeholders::_1));
+		Renderer->AnimationBindEnd("Ph2DogAttack9", std::bind(&Ph2Dog::OnAnimaitionFinished, this, std::placeholders::_1));
+
+		Renderer->AnimationBindEnd("Ph2DogPain1", std::bind(&Ph2Dog::OnAnimaitionFinished, this, std::placeholders::_1));
+		Renderer->AnimationBindEnd("Ph2DogPain2", std::bind(&Ph2Dog::OnAnimaitionFinished, this, std::placeholders::_1));
+		Renderer->AnimationBindEnd("Ph2DogPain3", std::bind(&Ph2Dog::OnAnimaitionFinished, this, std::placeholders::_1));
+		Renderer->AnimationBindEnd("Ph2DogPain4", std::bind(&Ph2Dog::OnAnimaitionFinished, this, std::placeholders::_1));
+		Renderer->AnimationBindEnd("Ph2DogPain5", std::bind(&Ph2Dog::OnAnimaitionFinished, this, std::placeholders::_1));
+		Renderer->AnimationBindEnd("Ph2DogPain6", std::bind(&Ph2Dog::OnAnimaitionFinished, this, std::placeholders::_1));
+		Renderer->AnimationBindEnd("Ph2DogPain7", std::bind(&Ph2Dog::OnAnimaitionFinished, this, std::placeholders::_1));
+		Renderer->AnimationBindEnd("Ph2DogPain8", std::bind(&Ph2Dog::OnAnimaitionFinished, this, std::placeholders::_1));
+		Renderer->AnimationBindEnd("Ph2DogPain9", std::bind(&Ph2Dog::OnAnimaitionFinished, this, std::placeholders::_1));
+		
+		Renderer->AnimationBindEnd("Ph2DogIdle1", std::bind(&Ph2Dog::OnIdleAnimaitionFinished, this, std::placeholders::_1));
+		Renderer->AnimationBindEnd("Ph2DogIdle2", std::bind(&Ph2Dog::OnIdleAnimaitionFinished, this, std::placeholders::_1));
+		Renderer->AnimationBindEnd("Ph2DogIdle3", std::bind(&Ph2Dog::OnIdleAnimaitionFinished, this, std::placeholders::_1));
+		Renderer->AnimationBindEnd("Ph2DogIdle4", std::bind(&Ph2Dog::OnIdleAnimaitionFinished, this, std::placeholders::_1));
+		Renderer->AnimationBindEnd("Ph2DogIdle5", std::bind(&Ph2Dog::OnIdleAnimaitionFinished, this, std::placeholders::_1));
+		Renderer->AnimationBindEnd("Ph2DogIdle6", std::bind(&Ph2Dog::OnIdleAnimaitionFinished, this, std::placeholders::_1));
+		Renderer->AnimationBindEnd("Ph2DogIdle7", std::bind(&Ph2Dog::OnIdleAnimaitionFinished, this, std::placeholders::_1));
+		Renderer->AnimationBindEnd("Ph2DogIdle8", std::bind(&Ph2Dog::OnIdleAnimaitionFinished, this, std::placeholders::_1));
+		Renderer->AnimationBindEnd("Ph2DogIdle9", std::bind(&Ph2Dog::OnIdleAnimaitionFinished, this, std::placeholders::_1));
+
+		Renderer->ChangeFrameAnimation("Ph2DogIntroTop");
+		//Renderer->GetTransform().SetLocalPosition({ 0, 0, (int)ZOrder::UI + 1 });
+		Renderer->SetScaleModeImage();
 		SetRenderer(Renderer);
 		SetPh2DogState(InGamePh2DogState::Prepare1);
 	}
@@ -157,26 +157,60 @@ void Ph2Dog::Start()
 
 void Ph2Dog::Update(float _DeltaTime)
 {
-	if (GetPh2DogState() != InGamePh2DogState::Prepare1)
+	if (OnceCheck == false)
 	{
-		Angle += _DeltaTime;
+		if (GetPh2DogState() == InGamePh2DogState::Prepare1)
+		{
+			SetStartAngle(0.0f);
+			double TestX = GetXFromAngle(GetStartAngle());
+			double TestY = GetYFromAngle(GetStartAngle());
+			GetTransform().SetWorldPosition({ static_cast<float>(TestX + 640.0f), static_cast<float>(TestY - 360.0f) });
+		}
+		else if (GetPh2DogState() == InGamePh2DogState::Prepare2)
+		{
+			SetStartAngle(0.0f);
+			double TestX = GetXFromAngle(GetStartAngle());
+			double TestY = GetYFromAngle(GetStartAngle());
+			GetTransform().SetWorldPosition({ static_cast<float>(TestX + 640.0f), static_cast<float>(TestY - 360.0f) });
+		}
+		else if (GetPh2DogState() == InGamePh2DogState::Prepare3)
+		{
+			SetStartAngle(3.0f);
+			double TestX = GetXFromAngle(GetStartAngle());
+			double TestY = GetYFromAngle(GetStartAngle());
+			GetTransform().SetWorldPosition({ static_cast<float>(TestX + 640.0f), static_cast<float>(TestY - 360.0f) });
+		}
+		else if (GetPh2DogState() == InGamePh2DogState::Prepare4)
+		{
+			SetStartAngle(3.0f);
+			double TestX = GetXFromAngle(GetStartAngle());
+			double TestY = GetYFromAngle(GetStartAngle());
+			GetTransform().SetWorldPosition({ static_cast<float>(TestX + 640.0f), static_cast<float>(TestY - 360.0f) });
+		}
 	}
 
-	if (Angle >= 360.0f)
+	if (GetPh2DogState() == InGamePh2DogState::Idle ||
+		GetPh2DogState() == InGamePh2DogState::Attack)
 	{
-		Angle = 0.0f;
+		SetAngle(GetAngle() + _DeltaTime);
+
+		double TestX = GetXFromAngle(Angle + GetStartAngle());
+		double TestY = GetYFromAngle(Angle + GetStartAngle());
+
+		GetTransform().SetWorldPosition({ static_cast<float>(TestX + 640.0f), static_cast<float>(TestY - 360.0f) });
 	}
-
-	double TestX = GetXFromAngle(Angle);
-	double TestY = GetYFromAngle(Angle);
-	GetTransform().SetWorldPosition({ static_cast<float>(TestX + 640.0f), static_cast<float>(TestY - 360.0f) });
-
 	if (true == Collision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::PC_BULLET, CollisionType::CT_AABB2D,
 		std::bind(&Ph2Dog::OnTakeDamage, this, std::placeholders::_1, std::placeholders::_2)))
 	{
 		SetHP(GetHP() - 1);
 		TakeDamage();
 	}
+}
+
+bool Ph2Dog::SetStartPos()
+{
+	OnceCheck = true;
+	return OnceCheck;
 }
 
 bool Ph2Dog::OnTakeDamage(GameEngineCollision* _This, GameEngineCollision* _Other)
@@ -196,27 +230,6 @@ void Ph2Dog::Prepare()
 
 void Ph2Dog::Idle()
 {
-	if (AnimationNum == 1)
-	{
-		IsAnimatedOrderPositive = true;
-	}
-
-	if (IsAnimatedOrderPositive == true)
-	{
-		++AnimationNum;
-	}
-
-	if (AnimationNum == 10)
-	{
-		IsAnimatedOrderPositive = false;
-		AnimationNum = 9;
-	}
-
-	if (IsAnimatedOrderPositive == false)
-	{
-		--AnimationNum;
-	}
-
 	SetPh2DogState(InGamePh2DogState::Idle);
 }
 
@@ -250,57 +263,30 @@ void Ph2Dog::SetPlayer(IInGameCharacterBase* _Player)
 	Player = _Player; 
 }
 
-void Ph2Dog::OnPrepare1AnimaitionFinished(const FrameAnimation_DESC& _Info) 
+void Ph2Dog::OnAnimaitionFinished(const FrameAnimation_DESC& _Info) 
 {
-	SetAnimationNum(0);
-	SetIsAnimatedOrderPositive(true);
-	Idle();
-}
-
-void Ph2Dog::OnPrepare2AnimaitionFinished(const FrameAnimation_DESC& _Info) 
-{
-	SetAnimationNum(4);
-	SetIsAnimatedOrderPositive(false);
-	Idle();
-}
-
-void Ph2Dog::OnPrepare3AnimaitionFinished(const FrameAnimation_DESC& _Info) 
-{
-	SetAnimationNum(10);
-	SetIsAnimatedOrderPositive(true);
-	Idle();
-}
-
-void Ph2Dog::OnPrepare4AnimaitionFinished(const FrameAnimation_DESC& _Info) 
-{
-	SetAnimationNum(5);
-	SetIsAnimatedOrderPositive(true);
-	Idle();
-}
-
-void Ph2Dog::OnAttackAnimationFinished(const FrameAnimation_DESC& _Info)
-{
-	Idle();
+	//Idle();
 }
 
 void Ph2Dog::OnIdleAnimaitionFinished(const FrameAnimation_DESC& _Info)
 {
-	int RandomAction = rand() % 5;
-	++RandomAction;
+	//int RandomAction = rand() % 5;
+	//++RandomAction;
 
-	if (RandomAction == 1)
-	{
-		Shoot();
-	}
-	else
-	{
-	Idle();
-	}
+	//if (RandomAction == 1)
+	//{
+	//	Shoot();
+	//}
+	//else
+	//{
+		SetPh2DogState(InGamePh2DogState::None);
+		Idle();
+	//}
 }
 
 void Ph2Dog::OnIdleAnimaitionFrameChanged(const FrameAnimation_DESC& _Info)
 {
-	SetPh2DogState(InGamePh2DogState::None);
+
 }
 
 void Ph2Dog::OnAttackAnimationFrameChanged(const FrameAnimation_DESC& _Info)
@@ -309,11 +295,11 @@ void Ph2Dog::OnAttackAnimationFrameChanged(const FrameAnimation_DESC& _Info)
 	{
 		if (Player != nullptr)
 		{
-			//float4 PlayerPos = Player->GetRenderer()->GetTransform().GetWorldPosition();
-			//float4 MyPos = GetRenderer()->GetTransform().GetWorldPosition();
-			//float4 Direction = float4({ (PlayerPos - MyPos)/(PlayerPos - MyPos)});
-			//SetBowWowDirection(Direction);
-			//SetAttackState(InGameMonsterAttackState::BowWow);
+			float4 PlayerPos = Player->GetRenderer()->GetTransform().GetWorldPosition();
+			float4 MyPos = GetRenderer()->GetTransform().GetWorldPosition();
+			float4 Direction = float4({ (PlayerPos - MyPos)/(PlayerPos - MyPos)});
+			SetBowWowDirection(Direction);
+			SetAttackState(InGameMonsterAttackState::BowWow);
 		}
 	}
 	else

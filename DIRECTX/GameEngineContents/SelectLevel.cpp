@@ -8,11 +8,13 @@ SelectLevel::SelectLevel()
 	, LetterRenderer(nullptr)
 	, PlayerARenderer(nullptr)
 	, PlayerBRenderer(nullptr)
+	, ScreenLightRenderer(nullptr)
 	, SelectScreenRenderer(nullptr)
 	, RedSelectBoxRenderer(nullptr)
 	, BlackLetterRenderer1(nullptr)
 	, BlackLetterRenderer2(nullptr)
 	, SelectPlayerRenderer(nullptr)
+	, SlotSelectionRenderer(nullptr)
 	, SelectOutlineRenderer1(nullptr)
 	, SelectOutlineRenderer2(nullptr)
 	, SelectOutlineRenderer3(nullptr)
@@ -205,10 +207,7 @@ void SelectLevel::Update(float _DeltaTime)
 	{
 		if (CanSelectCharacter == true)
 		{
-			if (SelectPlayerRenderer == nullptr)
-			{
-				CreateSelectPlayerPhaseRenderer();
-			}
+			CreateSelectPlayerPhaseRenderer();
 
 			if (true == GameEngineInput::GetInst()->IsDown("MoveRight") || true == GameEngineInput::GetInst()->IsDown("MoveLeft"))
 			{
@@ -218,7 +217,6 @@ void SelectLevel::Update(float _DeltaTime)
 			if (CupheadOnOffSwitch == true)
 			{
 				RedSelectBoxRenderer->SetTexture("slot_selection_box_b.png");
-				SelectPlayerRenderer->SetTexture("SelectPlayerA.png");
 				if (RecordNum == 1)
 				{
 					SelectPlayerRenderer->GetTransform().SetLocalPosition({ -100.0f, 180.0f, (int)ZOrder::Background - 7 });
@@ -236,8 +234,10 @@ void SelectLevel::Update(float _DeltaTime)
 					SelectPlayerRenderer->GetTransform().SetLocalPosition({ -100.0f, -130.0f, (int)ZOrder::Background - 7 });
 					PlayerARenderer->GetTransform().SetLocalPosition({ 80.0f, -130.0f, (int)ZOrder::Background - 8 });
 					PlayerBRenderer->GetTransform().SetLocalPosition({ 200.0f, -130.0f, (int)ZOrder::Background - 8 });
-
 				}
+
+				SelectPlayerRenderer->SetTexture("SelectPlayerA.png");
+				SlotSelectionRenderer->SetTexture("slot_selection_bg_bottom_CH.png");
 				PlayerARenderer->ChangeFrameAnimation("SelectCuphead");
 				PlayerBRenderer->ChangeFrameAnimation("SelectPlayerBLine");
 			}
@@ -245,21 +245,29 @@ void SelectLevel::Update(float _DeltaTime)
 			else if (CupheadOnOffSwitch == false)
 			{
 				RedSelectBoxRenderer->SetTexture("slot_selection_box_b_MM.png");
-				SelectPlayerRenderer->SetTexture("SelectPlayer.png");
-				PlayerARenderer->ChangeFrameAnimation("SelectPlayerALine");
-				PlayerBRenderer->ChangeFrameAnimation("SelectMugman");
 				if (RecordNum == 1)
 				{
 					SelectPlayerRenderer->GetTransform().SetLocalPosition({ -100.0f, 180.0f, (int)ZOrder::Background - 7 });
+					PlayerARenderer->GetTransform().SetLocalPosition({ 80.0f, 180.0f, (int)ZOrder::Player });
+					PlayerBRenderer->GetTransform().SetLocalPosition({ 200.0f, 180.0f, (int)ZOrder::Background - 8 });
 				}
 				else if (RecordNum == 2)
 				{
 					SelectPlayerRenderer->GetTransform().SetLocalPosition({ -100.0f, 25.0f, (int)ZOrder::Background - 7 });
+					PlayerARenderer->GetTransform().SetLocalPosition({ 80.0f, 25.0f, (int)ZOrder::Background - 8 });
+					PlayerBRenderer->GetTransform().SetLocalPosition({ 200.0f, 25.0f, (int)ZOrder::Background - 8 });
 				}
 				else
 				{
 					SelectPlayerRenderer->GetTransform().SetLocalPosition({ -100.0f, -130.0f, (int)ZOrder::Background - 7 });
+					PlayerARenderer->GetTransform().SetLocalPosition({ 80.0f, -130.0f, (int)ZOrder::Background - 8 });
+					PlayerBRenderer->GetTransform().SetLocalPosition({ 200.0f, -130.0f, (int)ZOrder::Background - 8 });
 				}
+
+				SelectPlayerRenderer->SetTexture("SelectPlayer.png");
+				PlayerARenderer->ChangeFrameAnimation("SelectPlayerALine");
+				PlayerBRenderer->ChangeFrameAnimation("SelectMugman");
+				SlotSelectionRenderer->SetTexture("slot_selection_bg_bottom_MM.png");
 			}
 
 			if (true == GameEngineInput::GetInst()->IsDown("Select"))
@@ -283,6 +291,8 @@ void SelectLevel::Update(float _DeltaTime)
 			if (true == GameEngineInput::GetInst()->IsDown("ESC"))
 			{
 				RedSelectBoxRenderer->SetTexture("slot_selection_box_b.png");
+				SlotSelectionRenderer->Death();
+				SlotSelectionRenderer = nullptr;
 				SelectPlayerRenderer->Death();
 				SelectPlayerRenderer = nullptr;
 				PlayerARenderer->Death();
@@ -395,11 +405,14 @@ void SelectLevel::CreateSelectRecordPhaseRenderer()
 
 void SelectLevel::CreateSelectPlayerPhaseRenderer()
 {
-	Background* SelectPlayer = CreateActor<Background>(GameObjectGroup::UI);
-	SelectPlayerRenderer = SelectPlayer->CreateComponent<GameEngineTextureRenderer>();
-	SelectPlayerRenderer->SetTexture("SelectPlayerA.png");
-	SelectPlayerRenderer->ScaleToTexture();
-	SelectPlayerRenderer->GetTransform().SetLocalPosition({ 0.0f, 0.0f, (int)ZOrder::Background - 7 });
+	if (SelectPlayerRenderer == nullptr)
+	{
+		Background* SelectPlayer = CreateActor<Background>(GameObjectGroup::UI);
+		SelectPlayerRenderer = SelectPlayer->CreateComponent<GameEngineTextureRenderer>();
+		SelectPlayerRenderer->SetTexture("SelectPlayerA.png");
+		SelectPlayerRenderer->ScaleToTexture();
+		SelectPlayerRenderer->GetTransform().SetLocalPosition({ 0.0f, 0.0f, (int)ZOrder::Background - 7 });
+	}
 
 	if (PlayerARenderer == nullptr)
 	{
@@ -431,7 +444,16 @@ void SelectLevel::CreateSelectPlayerPhaseRenderer()
 		ScreenLightRenderer = ScreenLight->CreateComponent <GameEngineTextureRenderer>();
 		ScreenLightRenderer->CreateFrameAnimationFolder("LightDown", FrameAnimation_DESC("IrisB", 0, 0, 0.1f));
 		ScreenLightRenderer->ChangeFrameAnimation("LightDown");
-		ScreenLightRenderer->GetTransform().SetLocalScale({ 1280.0f,720.0f,(int)ZOrder::UI });
+		ScreenLightRenderer->GetTransform().SetLocalScale({ 1280.0f, 720.0f, (int)ZOrder::UI + 1 });
 		ScreenLightRenderer->GetColorData().PlusColor.a = 0.5f;
+	}
+
+	if (SlotSelectionRenderer == nullptr)
+	{
+		Background* SlotSelection = CreateActor<Background>(GameObjectGroup::UI);
+		SlotSelectionRenderer = SlotSelection->CreateComponent <GameEngineTextureRenderer>();
+		SlotSelectionRenderer->SetTexture("slot_selection_bg_bottom_CH.png");
+		SlotSelectionRenderer->ScaleToTexture();
+		SlotSelectionRenderer->GetTransform().SetLocalPosition({ -1.5f, -242.0f, (int)ZOrder::Background - 3 });
 	}
 }

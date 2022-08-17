@@ -2,6 +2,7 @@
 #include "PlayLevel.h"
 #include <GameEngineCore/GameEngineCameraActor.h>
 #include <GameEngineBase/GameEngineInput.h>
+#include "Background.h"
 
 PlayLevel::PlayLevel() 
 {
@@ -11,7 +12,7 @@ PlayLevel::~PlayLevel()
 {
 }
 
-void PlayLevel::Start() 
+void PlayLevel::Start()
 {
 	if (false == GameEngineInput::GetInst()->IsKey("CamLeft"))
 	{
@@ -26,14 +27,13 @@ void PlayLevel::Start()
 		GameEngineInput::GetInst()->CreateKey("CamRotY-", 'T');
 
 	}
-
-
-
 	{
-		GameEngineCameraActor* actor = CreateActor<GameEngineCameraActor>();
-		actor->GetCameraComponent()->SetProjectionMode(CAMERAPROJECTIONMODE::Orthographic);
-		actor->GetTransform().SetLocalPosition({ 0.0f, 0.0f, -500.0f });
+	Background* TestBackground = CreateActor<Background>();
+	GameEngineTextureRenderer* TestRenderer = TestBackground->CreateComponent<GameEngineTextureRenderer>();
+	TestRenderer->SetTexture("123.png");
+	TestRenderer->GetTransform().SetLocalScale({ 1280.0f,720.0f,1.0f });
 	}
+
 
 
 

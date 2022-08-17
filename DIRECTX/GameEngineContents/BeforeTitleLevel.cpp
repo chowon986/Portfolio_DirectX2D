@@ -30,6 +30,17 @@ void BeforeTitleLevel::Start()
 	MDHRLogoRenderer->CreateFrameAnimationFolder("BeforeTitle", FrameAnimation_DESC("10BeforeTitleLevel", 0.05f));
 	MDHRLogoRenderer->SetTexture("Loading_background.png");
 	MDHRLogoRenderer->AnimationBindEnd("BeforeTitle", std::bind(&BeforeTitleLevel::OnHDMRAnimationFrameEnd, this, std::placeholders::_1));
+
+	{
+		Background* TestBackground = CreateActor<Background>();
+		GameEngineTextureRenderer* TestRenderer = TestBackground->CreateComponent<GameEngineTextureRenderer>();
+		TestRenderer->SetTexture("cuphead_screen_fx_0000.png");
+		TestRenderer->GetTransform().SetLocalScale({ 640.0f,360.0f,1.0f });
+		TestRenderer->Option.IsMask = 1;
+
+
+		//TestRenderer->GetColorData().PlusColor.r = -1;
+	}
 }
 
 void BeforeTitleLevel::Update(float _DeltaTime)

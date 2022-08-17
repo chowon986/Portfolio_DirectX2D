@@ -42,10 +42,10 @@ cbuffer AtlasData : register(b1)
 Output TextureAtlas_VS(Input _Input)
 {
     Output NewOutPut = (Output)0;
-    NewOutPut.Pos = mul(_Input.Pos, WorldViewProjection);
-    NewOutPut.PosLocal = _Input.Pos;
+	NewOutPut.Pos = mul(_Input.Pos, WorldViewProjection);
+	NewOutPut.PosLocal = _Input.Pos;
 
-    // 버텍스가 몇번째 버텍스 인지 알수가 없다.
+	// 버텍스가 몇번째 버텍스 인지 알수가 없다.
     // NewOutPut.Tex
     // 00    10
 
@@ -72,5 +72,15 @@ Texture2D Tex : register(t0);
 SamplerState Smp : register(s0);
 float4 TextureAtlas_PS(Output _Input) : SV_Target0
 {
+	if (1 == IsMask)
+	{
+        float4 MaskColor = Tex.Sample(Smp, _Input.Tex.xy);
+
+        if (MaskColor.r < 0.5)
+        {
+            clip(-1);
+        }
+	}
+
     return (Tex.Sample(Smp, _Input.Tex.xy) * MulColor) + PlusColor;
 }

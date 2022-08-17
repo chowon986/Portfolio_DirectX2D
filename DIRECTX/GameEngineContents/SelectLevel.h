@@ -55,5 +55,6 @@ private:
 	GameEngineTextureRenderer* SelectOutlineRenderer2;
 	GameEngineTextureRenderer* SelectOutlineRenderer3;
 	GameEngineTextureRenderer* ScreenLightRenderer;
+	GameEngineTextureRenderer* SlotSelectionRenderer;
 };
 

@@ -450,6 +450,9 @@
     <ClInclude Include="InGamePh2DogAnimationControllerComponent.h">
       <Filter>Components\Monster</Filter>
     </ClInclude>
+    <ClInclude Include="InGameDogCopterAnimationControllerComponent.h">
+      <Filter>Components\Monster</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp">
@@ -768,6 +771,9 @@
       <Filter>Actor\Play\InGame\Object\DogFight</Filter>
     </ClCompile>
     <ClCompile Include="InGamePh2DogAnimationControllerComponent.cpp">
+      <Filter>Components\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="InGameDogCopterAnimationControllerComponent.cpp">
       <Filter>Components\Monster</Filter>
     </ClCompile>
   </ItemGroup>

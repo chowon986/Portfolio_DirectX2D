@@ -391,6 +391,7 @@ void DogFightLevel::Update(float _DeltaTime)
 		if (DogFightPh2Dog == nullptr)
 		{
 			DogFightPh2Dog = CreateActor<Ph2Dog>(GameObjectGroup::Monster);
+			DogFightPh2Dog->GetTransform().SetLocalPosition({ 0, 0, -700 });
 			DogFightPh2Dog->SetPlayer(Cuphead);
 		}
 		

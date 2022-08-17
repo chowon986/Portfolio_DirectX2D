@@ -42,15 +42,12 @@ public:
 	void SetBowWowDirection(float4 _Direction) { BowWowDirection = _Direction; }
 	float4 GetBowWowDirection() { return BowWowDirection; }
 
-	void OnPrepare1AnimaitionFinished(const FrameAnimation_DESC& _Info);
-	void OnPrepare2AnimaitionFinished(const FrameAnimation_DESC& _Info);
-	void OnPrepare3AnimaitionFinished(const FrameAnimation_DESC& _Info);
-	void OnPrepare4AnimaitionFinished(const FrameAnimation_DESC& _Info);
-	void OnAttackAnimationFinished(const FrameAnimation_DESC& _Info);
+	void OnAnimaitionFinished(const FrameAnimation_DESC& _Info);
 	void OnIdleAnimaitionFinished(const FrameAnimation_DESC& _Info);
 	void OnIdleAnimaitionFrameChanged(const FrameAnimation_DESC& _Info);
 	void OnAttackAnimationFrameChanged(const FrameAnimation_DESC& _Info);
 
+	bool SetStartPos();
 	bool OnTakeDamage(GameEngineCollision* _This, GameEngineCollision* _Other);
 private:
 	InGamePh2DogState State;
@@ -60,6 +57,6 @@ private:
 	InGameMonsterAttackState AttackState;
 	InGamePh2DogAnimationControllerComponent* Animation;
 	float4 BowWowDirection;
-	float Angle;
 	float RotationAngle;
+	bool OnceCheck;
 };
