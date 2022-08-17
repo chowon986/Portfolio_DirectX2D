@@ -20,8 +20,7 @@ public:
 	DogCopter& operator=(DogCopter&& _Other) noexcept = delete;
 
 public:
-	void OnTestAnimationFrameChanged(const FrameAnimation_DESC& _Info);
-	void OnTestAnimationFrameEnd(const FrameAnimation_DESC& _Info);
+	void OnIntroAnimationFrameFinished(const FrameAnimation_DESC& _Info);
 
 protected:
 	void Start() override;

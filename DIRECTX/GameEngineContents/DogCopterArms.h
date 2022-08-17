@@ -31,10 +31,15 @@ protected:
 private:
 	GameEngineTextureRenderer* Renderer;
 	GameEngineTextureRenderer* WristRenderer;
-	GameEngineTextureRenderer* LowPadRenderer;
-	GameEngineTextureRenderer* MidPadRenderer;
-	GameEngineTextureRenderer* TopPadRenderer;
+	GameEngineTextureRenderer* LeftLowPadRenderer;
+	GameEngineTextureRenderer* LeftMidPadRenderer;
+	GameEngineTextureRenderer* LeftTopPadRenderer;
+	GameEngineTextureRenderer* RightLowPadRenderer;
+	GameEngineTextureRenderer* RightMidPadRenderer;
+	GameEngineTextureRenderer* RightTopPadRenderer;
 	GameEngineTextureRenderer* PawMergeRenderer;
+	GameEngineTextureRenderer* LeftHandRenderer;
+	GameEngineTextureRenderer* RightHandRenderer;
 
 	InGameMonsterState State;
 	InGameMonsterState LeaderState;

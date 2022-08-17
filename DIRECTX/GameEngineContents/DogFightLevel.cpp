@@ -288,7 +288,7 @@ void DogFightLevel::Start()
 		}
 	}
 
-	SetPhase(Phase::Phase2);
+	SetPhase(Phase::Phase3);
 }
 
 void DogFightLevel::ResetPositionCloudLeftA(const FrameAnimation_DESC& _Info)

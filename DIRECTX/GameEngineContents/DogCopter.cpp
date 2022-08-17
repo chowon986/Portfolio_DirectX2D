@@ -5,6 +5,7 @@
 
 DogCopter::DogCopter()
 	:Renderer(nullptr)
+	, CopterArms(nullptr)
 {
 }
 
@@ -17,16 +18,18 @@ void DogCopter::Start()
 	IInGameMonsterBase::Start();
 	{
 		Renderer = CreateComponent<GameEngineTextureRenderer>();
-		Renderer->CreateFrameAnimationFolder("DogCopterIntro", FrameAnimation_DESC("DogCopterIntro", 0.1f));
+		Renderer->CreateFrameAnimationFolder("DogCopterIntro", FrameAnimation_DESC("DogCopterIntro",0,29, 0.1f, false));
 		Renderer->CreateFrameAnimationFolder("DogCopterIdle", FrameAnimation_DESC("DogCopterIdle", 0.1f));
+		Renderer->CreateFrameAnimationFolder("DogCopterRotateCamera", FrameAnimation_DESC("DogCopterRotateCamera", 0.1f));
+		Renderer->CreateFrameAnimationFolder("DogCopterRotatedIdle", FrameAnimation_DESC("DogCopterRotatedIdle", 0.1f));
+		Renderer->CreateFrameAnimationFolder("DogCopterRotateCameraOut", FrameAnimation_DESC("DogCopterRotateCameraOut", 0.1f));
 
 		// Test
-		Renderer->AnimationBindEnd("DogCopterIntro", std::bind(&DogCopter::OnTestAnimationFrameEnd, this, std::placeholders::_1));
-		Renderer->AnimationBindFrame("DogCopterIdle", std::bind(&DogCopter::OnTestAnimationFrameChanged, this, std::placeholders::_1));
+		Renderer->AnimationBindEnd("DogCopterIntro", std::bind(&DogCopter::OnIntroAnimationFrameFinished, this, std::placeholders::_1));
 
 		Renderer->ChangeFrameAnimation("DogCopterIntro");
-		Renderer->GetTransform().SetLocalPosition({ 640, -360, (int)ZOrder::NPC - 1 });
 		Renderer->SetScaleModeImage();
+		Renderer->GetTransform().SetLocalPosition({ 640, -360, (int)ZOrder::NPC - 1 });
 
 		SetState(InGameMonsterState::Prepare);
 		SetRenderer(Renderer);
@@ -38,9 +41,12 @@ void DogCopter::Start()
 
 void DogCopter::Update(float _DeltaTime)
 {
-	if (CopterArms == nullptr)
+	if (false == MoveDirection.CompareInt2D(float4::ZERO))
 	{
-		CopterArms = GetLevel()->CreateActor<DogCopterArms>();
+		if (false == IsEndPosArrived())
+		{
+			GetTransform().SetWorldMove(MoveDirection * MoveSpeed * GameEngineTime::GetDeltaTime());
+		}
 	}
 }
 
@@ -55,7 +61,12 @@ void DogCopter::Prepare()
 
 void DogCopter::Idle()
 {
-	SetState(InGameMonsterState::Idle);
+	SetDogCopterState(InGameDogCopterState::Idle);
+	if (CopterArms == nullptr && GetDogCopterState() == InGameDogCopterState::Idle)
+	{
+		CopterArms = GetLevel()->CreateActor<DogCopterArms>();
+	}
+
 }
 
 void DogCopter::TakeDamage()
@@ -70,17 +81,7 @@ void DogCopter::Die()
 {
 }
 
-void DogCopter::OnTestAnimationFrameChanged(const FrameAnimation_DESC& _Info)
+void DogCopter::OnIntroAnimationFrameFinished(const FrameAnimation_DESC& _Info)
 {
-	// Test
-	if (_Info.CurFrame == 4)
-	{
-
-	}
-}
-
-void DogCopter::OnTestAnimationFrameEnd(const FrameAnimation_DESC& _Info)
-{
-	//Renderer->GetTransform().SetLocalPosition({ Renderer->GetTransform().GetLocalPosition().x, Renderer->GetTransform().GetLocalPosition().y + 100 });
 	Idle();
 }

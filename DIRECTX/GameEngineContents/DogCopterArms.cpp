@@ -30,37 +30,70 @@ void DogCopterArms::Start()
 	{
 		Renderer = CreateComponent<GameEngineTextureRenderer>();
 		WristRenderer = CreateComponent<GameEngineTextureRenderer>();
-		LowPadRenderer = CreateComponent<GameEngineTextureRenderer>();
-		MidPadRenderer = CreateComponent<GameEngineTextureRenderer>();
-		TopPadRenderer = CreateComponent<GameEngineTextureRenderer>();
+		LeftLowPadRenderer = CreateComponent<GameEngineTextureRenderer>();
+		LeftMidPadRenderer = CreateComponent<GameEngineTextureRenderer>();
+		LeftTopPadRenderer = CreateComponent<GameEngineTextureRenderer>();
+		RightLowPadRenderer = CreateComponent<GameEngineTextureRenderer>();
+		RightMidPadRenderer = CreateComponent<GameEngineTextureRenderer>();
+		RightTopPadRenderer = CreateComponent<GameEngineTextureRenderer>();
 		PawMergeRenderer = CreateComponent<GameEngineTextureRenderer>();
+		LeftHandRenderer = CreateComponent<GameEngineTextureRenderer>();
+		RightHandRenderer = CreateComponent<GameEngineTextureRenderer>();
 
 		Renderer->CreateFrameAnimationFolder("DogCopterIdleArms", FrameAnimation_DESC("DogCopterIdleArms", 0.1f)); // Idle Arms
 		WristRenderer->CreateFrameAnimationFolder("DogCopterIdleWrist", FrameAnimation_DESC("DogCopterIdleWrist", 0.1f)); // Idle Wrist
 
-		LowPadRenderer->CreateFrameAnimationFolder("LowPad", FrameAnimation_DESC("LowPad",0,0, 0.1f, false));
-		MidPadRenderer->CreateFrameAnimationFolder("MidPad", FrameAnimation_DESC("MidPad",0, 0, 0.1f, false));
-		TopPadRenderer->CreateFrameAnimationFolder("TopPad", FrameAnimation_DESC("TopPad",0,0, 0.1f, false));
+		LeftLowPadRenderer->CreateFrameAnimationFolder("LowPad", FrameAnimation_DESC("LowPad",0,0, 0.1f, false));
+		LeftMidPadRenderer->CreateFrameAnimationFolder("MidPad", FrameAnimation_DESC("MidPad",0, 0, 0.1f, false));
+		LeftTopPadRenderer->CreateFrameAnimationFolder("TopPad", FrameAnimation_DESC("TopPad",0,0, 0.1f, false));
+		RightLowPadRenderer->CreateFrameAnimationFolder("LowPad", FrameAnimation_DESC("LowPad", 0, 0, 0.1f, false));
+		RightMidPadRenderer->CreateFrameAnimationFolder("MidPad", FrameAnimation_DESC("MidPad", 0, 0, 0.1f, false));
+		RightTopPadRenderer->CreateFrameAnimationFolder("TopPad", FrameAnimation_DESC("TopPad", 0, 0, 0.1f, false));
+		LeftHandRenderer->CreateFrameAnimationFolder("PawMerge", FrameAnimation_DESC("PawMerge", 0, 0, 0.1f, false));
+		RightHandRenderer->CreateFrameAnimationFolder("PawMerge", FrameAnimation_DESC("PawMerge", 0, 0, 0.1f, false));
+
 
 		Renderer->ChangeFrameAnimation("DogCopterIdleArms");
-		//WristRenderer->ChangeFrameAnimation("DogCopterIdleWrist");
-		LowPadRenderer->ChangeFrameAnimation("LowPad");
-		MidPadRenderer->ChangeFrameAnimation("MidPad");
-		TopPadRenderer->ChangeFrameAnimation("TopPad");
+		WristRenderer->ChangeFrameAnimation("DogCopterIdleWrist");
+		LeftLowPadRenderer->ChangeFrameAnimation("LowPad");
+		LeftMidPadRenderer->ChangeFrameAnimation("MidPad");
+		LeftTopPadRenderer->ChangeFrameAnimation("TopPad");
+		RightLowPadRenderer->ChangeFrameAnimation("LowPad");
+		RightMidPadRenderer->ChangeFrameAnimation("MidPad");
+		RightTopPadRenderer->ChangeFrameAnimation("TopPad");
+		LeftHandRenderer->ChangeFrameAnimation("PawMerge");
+		RightHandRenderer->ChangeFrameAnimation("PawMerge");
 
-		Renderer->GetTransform().SetLocalPosition({ 660, -360, (int)ZOrder::NPC - 1 });
+		Renderer->GetTransform().SetLocalPosition({ 650, -360, (int)ZOrder::NPC });
 		WristRenderer->GetTransform().SetLocalPosition({ 650, -360, (int)ZOrder::NPC - 1 });
 
-		MidPadRenderer->GetTransform().SetLocalPosition({ 125, -350, (int)ZOrder::NPC - 1 });
-		LowPadRenderer->GetTransform().SetLocalPosition({ 177, -560, (int)ZOrder::NPC - 1 });
-		TopPadRenderer->GetTransform().SetLocalPosition({ 125, -180, (int)ZOrder::NPC - 1 });
+		LeftTopPadRenderer->GetTransform().SetLocalPosition({ 195, -145, (int)ZOrder::NPC - 3 });
+		LeftMidPadRenderer->GetTransform().SetLocalPosition({ 125, -350, (int)ZOrder::NPC - 3 });
+		LeftLowPadRenderer->GetTransform().SetLocalPosition({ 176, -559, (int)ZOrder::NPC - 3 });
+
+		RightTopPadRenderer->GetTransform().SetLocalPosition({ 1110, -129, (int)ZOrder::NPC - 3 });
+		RightMidPadRenderer->GetTransform().SetLocalPosition({ 1180, -338, (int)ZOrder::NPC - 3 });
+		RightLowPadRenderer->GetTransform().SetLocalPosition({ 1125, -540, (int)ZOrder::NPC - 3 });
+		
+		LeftHandRenderer->GetTransform().SetLocalPosition({ 125, -360, (int)ZOrder::NPC - 2 });
+		RightHandRenderer->GetTransform().SetLocalPosition({ 1180, -340, (int)ZOrder::NPC - 2 });
 
 
 		Renderer->SetScaleModeImage();
 		WristRenderer->SetScaleModeImage();
-		LowPadRenderer->SetScaleModeImage();
-		MidPadRenderer->SetScaleModeImage();
-		TopPadRenderer->SetScaleModeImage();
+		LeftLowPadRenderer->SetScaleModeImage();
+		LeftMidPadRenderer->SetScaleModeImage();
+		LeftTopPadRenderer->SetScaleModeImage();
+		RightLowPadRenderer->SetScaleModeImage();
+		RightMidPadRenderer->SetScaleModeImage();
+		RightTopPadRenderer->SetScaleModeImage();
+		LeftHandRenderer->SetScaleModeImage();
+		RightHandRenderer->SetScaleModeImage();
+
+		RightLowPadRenderer->GetTransform().PixLocalNegativeX();
+		RightMidPadRenderer->GetTransform().PixLocalNegativeX();
+		RightTopPadRenderer->GetTransform().PixLocalNegativeX();
+		RightHandRenderer->GetTransform().PixLocalNegativeX();
 
 		SetRenderer(Renderer);
 	}
@@ -74,36 +107,12 @@ void DogCopterArms::Start()
 
 	srand(static_cast<unsigned int>(time(NULL)));
 	SetHP(5);
-	SetState(InGameMonsterState::Idle);
-	SetAttackState(InGameMonsterAttackState::None);
+	//SetState(InGameMonsterState::Idle);
+	//SetAttackState(InGameMonsterAttackState::None);
 }
 
 void DogCopterArms::Update(float _DeltaTime)
 {
-
-	//if (CountTimeOnOff == true)
-	//{
-	//	ElapsedTime += _DeltaTime;
-	//}
-
-	//if (ElapsedTime >= AttackIntervalTime)
-	//{
-	//	ElapsedTime = 0.0f;
-	//	CountTimeOnOff = false;
-	//	Shoot();
-	//}
-
-	if (GetParent() != nullptr)
-	{
-		IInGameMonsterBase* LeaderCopterBase = dynamic_cast<IInGameMonsterBase*>(GetParent());
-		LeaderState = LeaderCopterBase->GetState();
-
-		if (LeaderState == InGameMonsterState::Idle)
-		{
-			Idle();
-		}
-		//else if(LeaderState == InGameMonsterState::)
-	}
 }
 
 void DogCopterArms::TakeDamage()
