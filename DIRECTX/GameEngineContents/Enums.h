@@ -28,5 +28,4 @@ enum class ZOrder : int
 	Player = 600,
 	NPCB = 500,
 	UI = 400,
-	TEST = 100
 };

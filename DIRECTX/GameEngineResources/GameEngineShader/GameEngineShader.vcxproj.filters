@@ -7,5 +7,6 @@
     <FxCompile Include="TextureAtlas.hlsl" />
     <FxCompile Include="Debug3D.hlsl" />
     <FxCompile Include="DebugTexture.hlsl" />
+    <FxCompile Include="..\..\..\..\..\t\AR40\DIRECTX\GameEngineResources\GameEngineShader\RenderOption.fx" />
   </ItemGroup>
 </Project>

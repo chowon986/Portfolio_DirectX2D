@@ -226,8 +226,6 @@ public:
 		return Rot;
 	}
 
-
-
 	static float4 Lerp(const float4& p1, const float4& p2, float Time)
 	{
 		return p1 * (1.0f - Time) + p2 * Time;
@@ -606,7 +604,7 @@ public:
 
 
 	float4(float _x, float _y)
-		: x(_x), y(_y), z(1.0f), w(1.0f)
+		: x(_x), y(_y), z(0.0f), w(1.0f)
 	{
 
 	}

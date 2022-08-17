@@ -222,7 +222,7 @@ void SelectLevel::Update(float _DeltaTime)
 				if (RecordNum == 1)
 				{
 					SelectPlayerRenderer->GetTransform().SetLocalPosition({ -100.0f, 180.0f, (int)ZOrder::Background - 7 });
-					PlayerARenderer->GetTransform().SetLocalPosition({ 80.0f, 180.0f, (int)ZOrder::Background - 8 });
+					PlayerARenderer->GetTransform().SetLocalPosition({ 80.0f, 180.0f, (int)ZOrder::Player });
 					PlayerBRenderer->GetTransform().SetLocalPosition({ 200.0f, 180.0f, (int)ZOrder::Background - 8 });
 				}
 				else if (RecordNum == 2)
@@ -282,6 +282,7 @@ void SelectLevel::Update(float _DeltaTime)
 
 			if (true == GameEngineInput::GetInst()->IsDown("ESC"))
 			{
+				RedSelectBoxRenderer->SetTexture("slot_selection_box_b.png");
 				SelectPlayerRenderer->Death();
 				SelectPlayerRenderer = nullptr;
 				PlayerARenderer->Death();
@@ -409,6 +410,7 @@ void SelectLevel::CreateSelectPlayerPhaseRenderer()
 		PlayerARenderer->AnimationBindEnd("SelectCupheadOk", std::bind(&SelectLevel::EndAnimation, this, std::placeholders::_1));
 		PlayerARenderer->CreateFrameAnimationFolder("SelectPlayerALine", FrameAnimation_DESC("SelectPlayerALine", 0.1f));
 		PlayerARenderer->ChangeFrameAnimation("SelectCuphead");
+		PlayerARenderer->SetScaleModeImage();
 	}
 
 	if (PlayerBRenderer == nullptr)
@@ -420,6 +422,7 @@ void SelectLevel::CreateSelectPlayerPhaseRenderer()
 		PlayerBRenderer->CreateFrameAnimationFolder("SelectPlayerBLine", FrameAnimation_DESC("SelectPlayerBLine", 0.1f));
 		PlayerBRenderer->AnimationBindEnd("SelectMugmanOK", std::bind(&SelectLevel::EndAnimation, this, std::placeholders::_1));
 		PlayerBRenderer->ChangeFrameAnimation("SelectPlayerBLine");
+		PlayerBRenderer->SetScaleModeImage();
 	}
 
 	if (ScreenLightRenderer == nullptr)
@@ -428,6 +431,7 @@ void SelectLevel::CreateSelectPlayerPhaseRenderer()
 		ScreenLightRenderer = ScreenLight->CreateComponent <GameEngineTextureRenderer>();
 		ScreenLightRenderer->CreateFrameAnimationFolder("LightDown", FrameAnimation_DESC("IrisB", 0, 0, 0.1f));
 		ScreenLightRenderer->ChangeFrameAnimation("LightDown");
+		ScreenLightRenderer->GetTransform().SetLocalScale({ 1280.0f,720.0f,(int)ZOrder::UI });
 		ScreenLightRenderer->GetColorData().PlusColor.a = 0.5f;
 	}
 }
