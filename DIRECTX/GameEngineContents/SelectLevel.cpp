@@ -288,6 +288,8 @@ void SelectLevel::Update(float _DeltaTime)
 				PlayerARenderer = nullptr;
 				PlayerBRenderer->Death();
 				PlayerBRenderer = nullptr;
+				ScreenLightRenderer->Death();
+				ScreenLightRenderer = nullptr;
 				SetPhase(SelectLevelPhase::SelectRecord);
 			}
 		}
@@ -418,5 +420,14 @@ void SelectLevel::CreateSelectPlayerPhaseRenderer()
 		PlayerBRenderer->CreateFrameAnimationFolder("SelectPlayerBLine", FrameAnimation_DESC("SelectPlayerBLine", 0.1f));
 		PlayerBRenderer->AnimationBindEnd("SelectMugmanOK", std::bind(&SelectLevel::EndAnimation, this, std::placeholders::_1));
 		PlayerBRenderer->ChangeFrameAnimation("SelectPlayerBLine");
+	}
+
+	if (ScreenLightRenderer == nullptr)
+	{
+		Background* ScreenLight = CreateActor<Background>(GameObjectGroup::UI);
+		ScreenLightRenderer = ScreenLight->CreateComponent <GameEngineTextureRenderer>();
+		ScreenLightRenderer->CreateFrameAnimationFolder("LightDown", FrameAnimation_DESC("IrisB", 0, 0, 0.1f));
+		ScreenLightRenderer->ChangeFrameAnimation("LightDown");
+		ScreenLightRenderer->GetColorData().PlusColor.a = 0.5f;
 	}
 }

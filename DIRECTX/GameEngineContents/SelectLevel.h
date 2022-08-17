@@ -54,5 +54,6 @@ private:
 	GameEngineTextureRenderer* SelectOutlineRenderer1;
 	GameEngineTextureRenderer* SelectOutlineRenderer2;
 	GameEngineTextureRenderer* SelectOutlineRenderer3;
+	GameEngineTextureRenderer* ScreenLightRenderer;
 };
 

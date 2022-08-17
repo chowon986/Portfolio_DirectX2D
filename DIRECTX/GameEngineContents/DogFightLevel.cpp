@@ -289,9 +289,6 @@ void DogFightLevel::Start()
 	}
 
 	SetPhase(Phase::Phase2);
-	//WorldMapCuphead* Cuphead = CreateActor<WorldMapCuphead>(GameObjectGroup::Player);
-	//Cuphead->SetColMapImage(ColMapRenderer);
-	//Cuphead->GetTransform().SetLocalPosition({ 100, -40, -100 });
 }
 
 void DogFightLevel::ResetPositionCloudLeftA(const FrameAnimation_DESC& _Info)

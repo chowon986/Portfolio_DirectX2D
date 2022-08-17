@@ -2,6 +2,7 @@
 #include "TutorialBackground.h"
 
 TutorialBackground::TutorialBackground()
+	:Renderer(nullptr)
 {
 }
 
@@ -16,7 +17,7 @@ void TutorialBackground::Start()
 	Renderer->CreateFrameAnimationFolder("TutorialBackground", FrameAnimation_DESC("TutorialBackground", 0.1f, false));
 	Renderer->AnimationBindEnd("TutorialStartBackground", std::bind(&TutorialBackground::EndTutorialStartAnimation, this, std::placeholders::_1));
 	Renderer->ChangeFrameAnimation("TutorialStartBackground");
-	Renderer->ScaleToTexture();
+	Renderer->SetScaleModeImage();
 	Renderer->SetPivot(PIVOTMODE::LEFTTOP);
 }
 

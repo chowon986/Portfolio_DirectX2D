@@ -14,6 +14,8 @@ InGameCuphead::InGameCuphead()
 	, Animation(nullptr)
 	, Movement(nullptr)
 	, IsOpenScoreBoard(false)
+	, Collision(nullptr)
+	, Renderer(nullptr)
 {
 }
 

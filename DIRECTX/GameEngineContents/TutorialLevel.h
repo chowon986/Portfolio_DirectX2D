@@ -3,11 +3,9 @@
 
 // Ό³Έν :
 class GameEngineTextureRenderer;
-class InGameCuphead;
 class TutorialLevel : public GameEngineLevel
 {
 public:
-	// constrcuter destructer
 	TutorialLevel();
 	~TutorialLevel();
 
@@ -17,9 +15,6 @@ public:
 	TutorialLevel& operator=(const TutorialLevel& _Other) = delete;
 	TutorialLevel& operator=(TutorialLevel&& _Other) noexcept = delete;
 
-public:
-	void EndTutorialStartAnimation(const FrameAnimation_DESC& _Info);
-
 protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;
@@ -28,6 +23,5 @@ protected:
 private:
 	GameEngineTextureRenderer* BackgroundRenderer;
 	GameEngineTextureRenderer* ColMapRenderer;
-	InGameCuphead* Cuphead;
 };
 

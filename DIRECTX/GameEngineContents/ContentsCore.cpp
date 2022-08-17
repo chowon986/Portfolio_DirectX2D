@@ -96,7 +96,7 @@ void ContentsCore::Start()
 	CreateLevel<TutorialLevel>("Tutorial");
 	CreateLevel<PlayLevel>("Play");
 	CreateLevel<DogFightLevel>("DogFight");
-	ChangeLevel("DogFight");
+	ChangeLevel("Select");
 
 	GameEngineFont::Load("±Ã¼­");
 
@@ -110,5 +110,4 @@ void ContentsCore::Update(float _DeltaTime)
 
 void ContentsCore::End()
 {
-	int a = 0;
 }
