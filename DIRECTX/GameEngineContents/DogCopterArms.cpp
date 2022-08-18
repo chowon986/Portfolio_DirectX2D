@@ -44,16 +44,15 @@ void DogCopterArms::Start()
 		Renderer->CreateFrameAnimationFolder("DogCopterIdleArms", FrameAnimation_DESC("DogCopterIdleArms", 0.1f)); // Idle Arms
 		WristRenderer->CreateFrameAnimationFolder("DogCopterIdleWrist", FrameAnimation_DESC("DogCopterIdleWrist", 0.1f)); // Idle Wrist
 
-		LeftLowPadRenderer->CreateFrameAnimationFolder("LowPad", FrameAnimation_DESC("LowPad", 0.1f, false));
-		LeftMidPadRenderer->CreateFrameAnimationFolder("MidPad", FrameAnimation_DESC("MidPad", 0.1f, false));
-		LeftTopPadRenderer->CreateFrameAnimationFolder("TopPad", FrameAnimation_DESC("TopPad", 0.1f, false));
-		RightLowPadRenderer->CreateFrameAnimationFolder("LowPad", FrameAnimation_DESC("LowPad", 0.1f, false));
-		RightMidPadRenderer->CreateFrameAnimationFolder("MidPad", FrameAnimation_DESC("MidPad", 0.1f, false));
-		RightTopPadRenderer->CreateFrameAnimationFolder("TopPad", FrameAnimation_DESC("TopPad", 0.1f, false));
+		LeftLowPadRenderer->CreateFrameAnimationFolder("LowPadOpen", FrameAnimation_DESC("LowPad", 0.1f, false));
+		LeftMidPadRenderer->CreateFrameAnimationFolder("MidPadOPen", FrameAnimation_DESC("MidPad", 0.1f, false));
+		LeftTopPadRenderer->CreateFrameAnimationFolder("TopPadOpen", FrameAnimation_DESC("TopPad", 0.1f, false));
+		RightLowPadRenderer->CreateFrameAnimationFolder("LowPadOpen", FrameAnimation_DESC("LowPad", 0.1f, false));
+		RightMidPadRenderer->CreateFrameAnimationFolder("MidPadOPen", FrameAnimation_DESC("MidPad", 0.1f, false));
+		RightTopPadRenderer->CreateFrameAnimationFolder("TopPadOpen", FrameAnimation_DESC("TopPad", 0.1f, false));
 		LeftHandRenderer->CreateFrameAnimationFolder("PawMerge", FrameAnimation_DESC("PawMerge", 0.1f, false));
 		RightHandRenderer->CreateFrameAnimationFolder("PawMerge", FrameAnimation_DESC("PawMerge", 0.1f, false));
 		LaserTopRenderer->CreateFrameAnimationFolder("LaserTop", FrameAnimation_DESC("LaserTop", 0.1f, false));
-
 
 		Renderer->ChangeFrameAnimation("DogCopterIdleArms");
 		WristRenderer->ChangeFrameAnimation("DogCopterIdleWrist");
@@ -74,13 +73,14 @@ void DogCopterArms::Start()
 		LeftMidPadRenderer->GetTransform().SetLocalPosition({ 125, -350, (int)ZOrder::NPC - 3 });
 		LeftLowPadRenderer->GetTransform().SetLocalPosition({ 176, -559, (int)ZOrder::NPC - 3 });
 
-		RightTopPadRenderer->GetTransform().SetLocalPosition({ 1110, -129, (int)ZOrder::NPC - 3 });
-		RightMidPadRenderer->GetTransform().SetLocalPosition({ 1180, -338, (int)ZOrder::NPC - 3 });
-		RightLowPadRenderer->GetTransform().SetLocalPosition({ 1125, -540, (int)ZOrder::NPC - 3 });
+		RightTopPadRenderer->GetTransform().SetLocalPosition({ 1110, -129, (int)ZOrder::NPC - 4 });
+		RightMidPadRenderer->GetTransform().SetLocalPosition({ 1180, -338, (int)ZOrder::NPC - 4 });
+		RightLowPadRenderer->GetTransform().SetLocalPosition({ 1125, -540, (int)ZOrder::NPC - 4 });
 		
 		LeftHandRenderer->GetTransform().SetLocalPosition({ 125, -360, (int)ZOrder::NPC - 2 });
 		RightHandRenderer->GetTransform().SetLocalPosition({ 1180, -340, (int)ZOrder::NPC - 2 });
-		LaserTopRenderer->GetTransform().SetLocalPosition({ 640, -360, (int)ZOrder::NPC - 2 });
+
+		LaserTopRenderer->GetTransform().SetLocalPosition({ 195, -145, (int)ZOrder::NPC - 3 });
 
 		Renderer->SetScaleModeImage();
 		WristRenderer->SetScaleModeImage();

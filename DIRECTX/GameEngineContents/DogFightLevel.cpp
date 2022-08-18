@@ -49,6 +49,7 @@ void DogFightLevel::ColMapOnOffSwitch()
 
 void DogFightLevel::Start()
 {
+
 	{
 		Background* ColMapImage = CreateActor<Background>(GameObjectGroup::UI);
 		ColMapRenderer = ColMapImage->CreateComponent<GameEngineTextureRenderer>();
@@ -416,6 +417,7 @@ void DogFightLevel::Update(float _DeltaTime)
 
 			CaptainCanteenPlane->SetPlayer(Cuphead);
 			CaptainCanteenPlane->SetColMapImage(ColMapRenderer);
+			CaptainCanteenPlane->SetDogCopter(LeaderCopter);
 		}
 	}
 }

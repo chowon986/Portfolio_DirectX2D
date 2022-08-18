@@ -229,6 +229,8 @@
     <ClInclude Include="IWorldMapCharacterBase.h" />
     <ClInclude Include="Ladder.h" />
     <ClInclude Include="Lantern.h" />
+    <ClInclude Include="Laser.h" />
+    <ClInclude Include="LaserShooter.h" />
     <ClInclude Include="MonsterWeaponBase.h" />
     <ClInclude Include="NewsCat.h" />
     <ClInclude Include="Omm.h" />
@@ -350,6 +352,8 @@
     <ClCompile Include="IWorldMapCharacterBase.cpp" />
     <ClCompile Include="Ladder.cpp" />
     <ClCompile Include="Lantern.cpp" />
+    <ClCompile Include="Laser.cpp" />
+    <ClCompile Include="LaserShooter.cpp" />
     <ClCompile Include="MonsterWeaponBase.cpp" />
     <ClCompile Include="NewsCat.cpp" />
     <ClCompile Include="Omm.cpp" />

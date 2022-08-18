@@ -2,6 +2,7 @@
 #include "CanteenPlane.h"
 #include "Canteen.h"
 #include "Ph1Dog.h"
+#include "DogCopter.h"
 #include "IInGameCharacterBase.h"
 
 CanteenPlane::CanteenPlane()
@@ -13,6 +14,7 @@ CanteenPlane::CanteenPlane()
 	, GroundCollision(nullptr)
 	, ColMapImage(nullptr)
 	, ColMapTexture(nullptr)
+	, LeaderState(InGameDogCopterState::Prepare)
 {
 }
 
@@ -25,8 +27,28 @@ bool CanteenPlane::CanMove(GameEngineCollision* _This, GameEngineCollision* _Oth
 	return true;
 }
 
+bool CanteenPlane::RotateLeaderCopter()
+{
+	if (LeaderState != LeaderCopter->GetDogCopterState())
+	{
+		LeaderState = LeaderCopter->GetDogCopterState();
+
+		if (LeaderState == InGameDogCopterState::RotateCameraIn || LeaderState == InGameDogCopterState::RotateCameraOut)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	return false;
+}
+
 void CanteenPlane::Start()
 {
+	//GetLevel()->GetUICamera()->SetCameraOrder(this, CAMERAORDER::UICAMERA);
+
 	{
 		GameEngineTextureRenderer* Renderer = CreateComponent<GameEngineTextureRenderer>();
 		Renderer->CreateFrameAnimationFolder("CanteenPlaneBody", FrameAnimation_DESC("CanteenPlaneBody", 0.1f, true));
@@ -105,17 +127,27 @@ void CanteenPlane::Update(float _DeltaTime)
 	GameEngineDebug::DrawBox(RightCollision->GetTransform(), { 1.0f, 0.0f,0.0f, 0.5f });
 	GameEngineDebug::DrawBox(GroundCollision->GetTransform(), { 1.0f, 0.0f,0.0f, 0.5f });
 
+	if (LeaderCopter != nullptr)
+	{
+		if (true == RotateLeaderCopter())
+		{
+			GetLevel()->GetUICameraActor()->GetTransform().SetLocalRotate({ 0.0, 0.0, 90.0f });
+		}
+	}
+
 	if (LeftCollision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::PC, CollisionType::CT_AABB2D,
 		std::bind(&CanteenPlane::CanMove, this, std::placeholders::_1, std::placeholders::_2)))
 	{
 		MoveDirection = float4::LEFT;
 	}
+
 	else if (RightCollision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::PC, CollisionType::CT_AABB2D,
 		std::bind(&CanteenPlane::CanMove, this, std::placeholders::_1, std::placeholders::_2)))
 	{
 		
 		MoveDirection = float4::RIGHT;
 	}
+
 	else
 	{
 		MoveDirection = float4::ZERO;

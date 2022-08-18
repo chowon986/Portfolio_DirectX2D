@@ -2,6 +2,7 @@
 #include "MonsterWeaponBase.h"
 #include "IInGameMonsterBase.h"
 #include "Ph2Dog.h"
+#include "DogCopter.h"
 
 MonsterWeaponBase::MonsterWeaponBase()
 	: IntervalTime(0.1f)
@@ -25,6 +26,7 @@ void MonsterWeaponBase::UpdateDirection()
 		return;
 	}
 	Ph2DogState = Character->GetPh2DogState();
+	DogCopterState = Character->GetDogCopterState();
 	State = Character->GetState();
 	AttackState = Character->GetAttackState();
 
@@ -50,6 +52,20 @@ void MonsterWeaponBase::UpdateDirection()
 		{
 			Direction = BowWowDog->GetBowWowDirection();
 		}
+	}
+
+	if (Ph2DogState == InGamePh2DogState::Attack)
+	{
+		Ph2Dog* BowWowDog = dynamic_cast<Ph2Dog*>(GetParent());
+		if (BowWowDog != nullptr)
+		{
+			Direction = BowWowDog->GetBowWowDirection();
+		}
+	}
+
+	if (DogCopterState == InGameDogCopterState::Attack1)
+	{
+		Direction = Character->GetRenderer()->GetTransform().GetLocalScale().x > 0 ? float4::RIGHT : float4::LEFT;
 	}
 
 	UpdatePivot();
@@ -84,7 +100,8 @@ void MonsterWeaponBase::UpdatePivot()
 	if (State != InGameMonsterState::Attack1 &&
 		State != InGameMonsterState::Attack2 &&
 		State != InGameMonsterState::Attack3 &&
-		State != InGameMonsterState::Attack4)
+		State != InGameMonsterState::Attack4 &&
+		DogCopterState != InGameDogCopterState::Attack1)
 	{
 		return;
 	}
@@ -116,6 +133,20 @@ void MonsterWeaponBase::UpdatePivot()
 	else if (State == InGameMonsterState::Attack3 || State == InGameMonsterState::Attack4)
 	{
 		GetTransform().SetLocalPosition({ 0.0f, 10.0f });
+	}
+
+	else if (DogCopterState == InGameDogCopterState::Attack1)
+	{
+		if (Character->GetRenderer()->GetTransform().GetLocalScale().x > 0)
+		{
+			if (Character->GetAttackState() == InGameMonsterAttackState::LaserPattern1)
+			{
+				GetTransform().SetLocalPosition({ 0.0f, 0.0f });
+			}
+		}
+		else
+		{
+		}
 	}
 }
 
@@ -157,7 +188,9 @@ void MonsterWeaponBase::OnMonsterAttackStateChanged(InGameMonsterAttackState _At
 	case InGameMonsterAttackState::BowWow:
 		ElapsedTime = 0.0f;
 		break;
-		
+	case InGameMonsterAttackState::LaserPattern1:
+		ElapsedTime = 0.0f;
+		break;
 	}
 	UpdateDirection();
 }

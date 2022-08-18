@@ -37,22 +37,33 @@ void InGameDogCopterAnimationControllerComponent::UpdateAnimation()
 		Renderer->ChangeFrameAnimation(Name + "Idle");
 	}
 
-	else if (State == InGameDogCopterState::Attack)
+	else if (State == InGameDogCopterState::Attack1)
 	{
-		Renderer->ChangeFrameAnimation(Name + "Attack");
+		Renderer->ChangeFrameAnimation(Name + "Attack1");
+	}
+
+	else if (State == InGameDogCopterState::RotateCameraIn)
+	{
+		Renderer->ChangeFrameAnimation(Name + "RotateCamera");
+	}
+
+	else if (State == InGameDogCopterState::RotateCameraIdle)
+	{
+		Renderer->ChangeFrameAnimation(Name + "RotatedIdle");
+	}
+
+	else if (State == InGameDogCopterState::Attack2)
+	{
+		Renderer->ChangeFrameAnimation(Name + "Attack2");
+	}
+
+	else if (State == InGameDogCopterState::RotateCameraOut)
+	{
+		Renderer->ChangeFrameAnimation(Name + "RotateCameraOut");
 	}
 
 	else if (State == InGameDogCopterState::TakeDamage)
 	{
-		Renderer->ChangeFrameAnimation(Name + "Pain" + AnimationNumber);
-		if (true == InGameMonster->GetIsAnimatedOrderPositive())
-		{
-			Renderer->GetTransform().PixLocalPositiveX();
-		}
-		else
-		{
-			Renderer->GetTransform().PixLocalNegativeX();
-		}
 	}
 }
 

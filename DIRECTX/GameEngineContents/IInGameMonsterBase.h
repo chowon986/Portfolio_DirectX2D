@@ -12,11 +12,13 @@ enum class InGameDogCopterState
 	Prepare,
 	RotatedIdle,
 	Idle,
-	Attack,
+	RotateCameraIdle,
+	Attack1,
+	Attack2,
 	TakeDamage,
-	RotateCamera,
+	RotateCameraIn,
 	RotateCameraOut,
-	Die
+	Die,
 };
 
 enum class InGamePh2DogState
@@ -67,6 +69,9 @@ enum class InGameMonsterAttackState
 	Tattoo3, // Pink
 	TennisBall,
 	BowWow,
+	LaserPattern1,
+	LaserPattern2,
+	LaserPattern3,
 };
 
 enum class Phase;

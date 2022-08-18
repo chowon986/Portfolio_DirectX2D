@@ -5,7 +5,7 @@ enum class InGameMonsterState;
 enum class InGameMonsterAttackState;
 class GameEngineTextureRenderer;
 class DogCopterArms;
-class InGameMonsterAnimationControllerComponent;
+class InGameDogCopterAnimationControllerComponent;
 class DogCopter : public IInGameMonsterBase
 {
 public:
@@ -21,6 +21,13 @@ public:
 
 public:
 	void OnIntroAnimationFrameFinished(const FrameAnimation_DESC& _Info);
+	void OnIdleAnimationFrameFinished(const FrameAnimation_DESC& _Info);
+	void OnAttack1AnimationFrameFinished(const FrameAnimation_DESC& _Info);
+	void OnAttack2AnimationFrameFinished(const FrameAnimation_DESC& _Info);
+	void OnRotateCameraAnimationFrameFinished(const FrameAnimation_DESC& _Info);
+	void OnRotatedIdleAnimationFrameFinished(const FrameAnimation_DESC& _Info);
+	void OnRotateCameraOutAnimationFrameFinished(const FrameAnimation_DESC& _Info);
+	void OnAttack1AnimationFrameChanged(const FrameAnimation_DESC& _Info);
 
 protected:
 	void Start() override;
@@ -31,10 +38,15 @@ protected:
 	void TakeDamage() override;
 	void Shoot() override;
 	void Die() override;
+	void Attack1();
+	void Attack2();
+	void RotateCameraIn();
+	void RotateCameraOut();
+	void RotateCameraIdle();
 
 private:
 	GameEngineTextureRenderer* Renderer;
 	DogCopterArms* CopterArms;
-	InGameMonsterAnimationControllerComponent* Animation;
+	InGameDogCopterAnimationControllerComponent* Animation;
 };
 

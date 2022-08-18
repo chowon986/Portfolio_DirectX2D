@@ -6,6 +6,7 @@ class GameEngineTextureRenderer;
 enum class InGameMonsterAttackState;
 enum class InGamePh2DogState;
 enum class InGameMonsterState;
+enum class InGameDogCopterState;
 class IInGameMonsterBase;
 class MonsterWeaponBase : public GameEngineActor
 {
@@ -40,6 +41,7 @@ protected:
 	IInGameMonsterBase* Character;
 	InGameMonsterState State;
 	InGamePh2DogState Ph2DogState;
+	InGameDogCopterState DogCopterState;
 	InGameMonsterAttackState AttackState;
 	float4 Direction;
 
