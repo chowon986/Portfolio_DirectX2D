@@ -37,7 +37,6 @@ private:
 	GameEngineTextureRenderer* RightLowPadRenderer;
 	GameEngineTextureRenderer* RightMidPadRenderer;
 	GameEngineTextureRenderer* RightTopPadRenderer;
-	GameEngineTextureRenderer* PawMergeRenderer;
 	GameEngineTextureRenderer* LeftHandRenderer;
 	GameEngineTextureRenderer* RightHandRenderer;
 	GameEngineTextureRenderer* LaserTopRenderer;

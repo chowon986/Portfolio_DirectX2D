@@ -453,12 +453,6 @@
     <ClInclude Include="InGameDogCopterAnimationControllerComponent.h">
       <Filter>Components\Monster</Filter>
     </ClInclude>
-    <ClInclude Include="Laser.h">
-      <Filter>Actor\Weapon\Bullet\Monster</Filter>
-    </ClInclude>
-    <ClInclude Include="LaserShooter.h">
-      <Filter>Actor\Weapon\Shooter\Monster</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp">
@@ -781,12 +775,6 @@
     </ClCompile>
     <ClCompile Include="InGameDogCopterAnimationControllerComponent.cpp">
       <Filter>Components\Monster</Filter>
-    </ClCompile>
-    <ClCompile Include="Laser.cpp">
-      <Filter>Actor\Weapon\Bullet\Monster</Filter>
-    </ClCompile>
-    <ClCompile Include="LaserShooter.cpp">
-      <Filter>Actor\Weapon\Shooter\Monster</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
