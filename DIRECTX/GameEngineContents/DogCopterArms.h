@@ -40,6 +40,7 @@ private:
 	GameEngineTextureRenderer* PawMergeRenderer;
 	GameEngineTextureRenderer* LeftHandRenderer;
 	GameEngineTextureRenderer* RightHandRenderer;
+	GameEngineTextureRenderer* LaserTopRenderer;
 
 	InGameMonsterState State;
 	InGameMonsterState LeaderState;

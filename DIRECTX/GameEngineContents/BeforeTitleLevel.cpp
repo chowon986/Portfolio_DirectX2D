@@ -31,16 +31,14 @@ void BeforeTitleLevel::Start()
 	MDHRLogoRenderer->SetTexture("Loading_background.png");
 	MDHRLogoRenderer->AnimationBindEnd("BeforeTitle", std::bind(&BeforeTitleLevel::OnHDMRAnimationFrameEnd, this, std::placeholders::_1));
 
-	{
-		Background* TestBackground = CreateActor<Background>();
-		GameEngineTextureRenderer* TestRenderer = TestBackground->CreateComponent<GameEngineTextureRenderer>();
-		TestRenderer->SetTexture("cuphead_screen_fx_0000.png");
-		TestRenderer->GetTransform().SetLocalScale({ 640.0f,360.0f,1.0f });
-		TestRenderer->Option.IsMask = 1;
-
-
-		//TestRenderer->GetColorData().PlusColor.r = -1;
-	}
+	//{
+	//	Background* TestBackground = CreateActor<Background>();
+	//	GameEngineTextureRenderer* TestRenderer = TestBackground->CreateComponent<GameEngineTextureRenderer>();
+	//	TestRenderer->SetTexture("cuphead_screen_fx_0000.png");
+	//	TestRenderer->GetTransform().SetLocalScale({ 640.0f,360.0f,1.0f });
+	//	TestRenderer->GetColorData().PlusColor = -1;
+	//	TestRenderer->Option.IsMask = 1;
+	//}
 }
 
 void BeforeTitleLevel::Update(float _DeltaTime)
@@ -48,7 +46,7 @@ void BeforeTitleLevel::Update(float _DeltaTime)
 	ElapsedTime += _DeltaTime;
 	if (ElapsedTime > BlackScreenToAnimationIntervalTime)
 	{
-		MDHRLogoRenderer->ChangeFrameAnimation("BeforeTitle");
+		//MDHRLogoRenderer->ChangeFrameAnimation("BeforeTitle");
 	}
 
 	if (true == GameEngineInput::GetInst()->IsDown("LevelChange"))

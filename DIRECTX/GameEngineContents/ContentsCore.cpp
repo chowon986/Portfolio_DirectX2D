@@ -98,7 +98,7 @@ void ContentsCore::Start()
 	CreateLevel<DogFightLevel>("DogFight");
 	ChangeLevel("Select");
 
-	GameEngineFont::Load("±Ã¼­");
+	GameEngineFont::Load("Title");
 
 	GameEngineGUI::CreateGUIWindow<GameEngineStatusWindow>("EngineStatus", nullptr);
 

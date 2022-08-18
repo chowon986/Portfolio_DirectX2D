@@ -41,13 +41,13 @@ void DogCopter::Start()
 
 void DogCopter::Update(float _DeltaTime)
 {
-	if (false == MoveDirection.CompareInt2D(float4::ZERO))
-	{
-		if (false == IsEndPosArrived())
-		{
-			GetTransform().SetWorldMove(MoveDirection * MoveSpeed * GameEngineTime::GetDeltaTime());
-		}
-	}
+	//if (false == MoveDirection.CompareInt2D(float4::ZERO))
+	//{
+	//	if (false == IsEndPosArrived())
+	//	{
+	//		GetTransform().SetWorldMove(MoveDirection * MoveSpeed * GameEngineTime::GetDeltaTime());
+	//	}
+	//}
 }
 
 void DogCopter::End()
