@@ -5,12 +5,10 @@ enum class PIVOTMODE
 {
 	CENTER,
 	LEFTTOP,
-	LEFTCENTER,
 	BOT,
 	CUSTOM,
-	RIGHTTOP,
+	LEFTCENTER,
 	RIGHTCENTER,
-	TOP,
 };
 
 enum class SCALEMODE
@@ -105,12 +103,15 @@ class FrameAnimation : public GameEngineNameObject
 	GameEngineTexture* Texture;
 	GameEngineFolderTexture* FolderTexture;
 
+	bool Pause;
 	bool bOnceStart;
 	bool bOnceEnd;
 	std::function<void(const FrameAnimation_DESC&)> Frame;
 	std::function<void(const FrameAnimation_DESC&)> End;
 	std::function<void(const FrameAnimation_DESC&)> Start;
 	std::function<void(const FrameAnimation_DESC&, float)> Time;
+
+	void PauseSwtich();
 
 	void Reset();
 
@@ -120,6 +121,7 @@ public:
 	FrameAnimation()
 		: bOnceStart(true)
 		, bOnceEnd(false)
+		, Pause(false)
 	{
 
 	}
@@ -185,6 +187,8 @@ public:
 	void ScaleToTexture();
 
 	void ScaleToCutTexture(int _Index);
+
+	void CurAnimationPauseSwitch();
 
 	void CurAnimationReset();
 

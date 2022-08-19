@@ -7,7 +7,7 @@
 enum class CAMERAORDER
 {
 	MAINCAMERA,
-	ROTATECAMERA,
+	USER0,
 	USER1,
 	USER2,
 	USER3,
@@ -142,9 +142,9 @@ protected:
 private:
 	void PushActor(GameEngineActor* _Actor, int _ObjectGroupIndex);
 
-	void ActorOnEvent();
+	void ActorLevelStartEvent();
 
-	void ActorOffEvent();
+	void ActorLevelEndEvent();
 
 	void ActorUpdate(float _DelataTime);
 
