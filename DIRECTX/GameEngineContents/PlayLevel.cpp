@@ -30,22 +30,8 @@ void PlayLevel::Start()
 	{
 	Background* TestBackground = CreateActor<Background>();
 	GameEngineTextureRenderer* TestRenderer = TestBackground->CreateComponent<GameEngineTextureRenderer>();
-	TestRenderer->SetTexture("123.png");
+	TestRenderer->SetTexture("NSet.png");
 	TestRenderer->GetTransform().SetLocalScale({ 1280.0f,720.0f,1.0f });
-	}
-
-
-
-
-	{
-		//NewPlayer = CreateActor<Player>(OBJECTORDER::Player);
-	}
-
-	{
-		//Monster* actor = CreateActor<Monster>(OBJECTORDER::Monster);
-		//actor->GetTransform().SetLocalPosition({ 300.0f, 0.0f, 0.0f });
-		//actor->GetTransform().SetWorldScale(float4(50.0f, 50.f, 50.0f));
-		//actor->SetParent(NewPlayer);
 	}
 }
 void PlayLevel::Update(float _DeltaTime) 
@@ -82,14 +68,14 @@ void PlayLevel::Update(float _DeltaTime)
 	static float4 Rot = { 0.0f, 0.0f, 0.0f };
 	if (true == GameEngineInput::GetInst()->IsPress("CamRotY+"))
 	{
-		Rot.y += 360.0f * _DeltaTime;
+		Rot.z += 360.0f * _DeltaTime;
 	}
 	if (true == GameEngineInput::GetInst()->IsPress("CamRotY-"))
 	{
-		Rot.y -= 360.0f * _DeltaTime;
+		Rot.z -= 360.0f * _DeltaTime;
 	}
 
-	// GetMainCameraActorTransform().SetLocalRotation(Rot);
+	GetMainCameraActorTransform().SetLocalRotation(Rot);
 
 }
 void PlayLevel::End() {}

@@ -301,9 +301,19 @@ void DogCopter::Die()
 {
 }
 
+void DogCopter::Attack1Start()
+{
+	SetDogCopterState(InGameDogCopterState::Attack1Start);
+}
+
 void DogCopter::Attack1()
 {
 	SetDogCopterState(InGameDogCopterState::Attack1);
+}
+
+void DogCopter::Attack2Start()
+{
+	SetDogCopterState(InGameDogCopterState::Attack2Start);
 }
 
 void DogCopter::Attack2()
@@ -342,13 +352,13 @@ void DogCopter::OnIntroAnimationFrameFinished(const FrameAnimation_DESC& _Info)
 
 void DogCopter::OnIdleAnimationFrameFinished(const FrameAnimation_DESC& _Info)
 {
-	Attack1();
+	Attack1Start();
 }
 
 void DogCopter::OnAttack1AnimationFrameFinished(const FrameAnimation_DESC& _Info)
 {
-	ArmsRenderer->Off();
-	WristRenderer->Off();
+	//ArmsRenderer->Off();
+	//WristRenderer->Off();
 	//RotateCameraIn();
 }
 
@@ -370,59 +380,59 @@ void DogCopter::OnAttack2AnimationFrameFinished(const FrameAnimation_DESC& _Info
 void DogCopter::OnRotateCameraOutAnimationFrameFinished(const FrameAnimation_DESC& _Info)
 {
 	Renderer->GetTransform().SetLocalRotate({ 0,0,180 });
-	ArmsRenderer->On();
-	WristRenderer->On();
+	//ArmsRenderer->On();
+	//WristRenderer->On();
 	Idle();
 }
 
 void DogCopter::OnAttack1AnimationFrameChanged(const FrameAnimation_DESC& _Info)
 {
-	if (_Info.CurFrame == 6)
-	{
-		//int RandomAttack = rand() % 3;
-		//++RandomAttack;
-		//if (RandomAttack == 1)
-		//{
-			LeftTopPadBackRenderer->On();
-			LeftTopPadRenderer->On();
-			LaserBeamTopRenderer->On();
-		//}
-		//else if(RandomAttack == 2)
-		//{
+	//if (_Info.CurFrame == 6)
+	//{
+	//	//int RandomAttack = rand() % 3;
+	//	//++RandomAttack;
+	//	//if (RandomAttack == 1)
+	//	//{
+	//		LeftTopPadBackRenderer->On();
+	//		LeftTopPadRenderer->On();
+	//		LaserBeamTopRenderer->On();
+	//	//}
+	//	//else if(RandomAttack == 2)
+	//	//{
 
-		//}
-	}
+	//	//}
+	//}
 }
 
 void DogCopter::OnRotateCameraAnimationFrameChanged(const FrameAnimation_DESC& _Info)
 {
-	if (_Info.CurFrame == 11)
-	{
-		LeftHandRenderer->Off();
-		RightHandRenderer->Off();
-	}
+	//if (_Info.CurFrame == 11)
+	//{
+	//	LeftHandRenderer->Off();
+	//	RightHandRenderer->Off();
+	//}
 }
 
 void DogCopter::OnRotateCameraOutAnimationFrameChanged(const FrameAnimation_DESC& _Info)
 {
-	if (_Info.CurFrame == 8)
-	{
-		LeftHandRenderer->On();
-		RightHandRenderer->On();
-	}
+	//if (_Info.CurFrame == 8)
+	//{
+	//	LeftHandRenderer->On();
+	//	RightHandRenderer->On();
+	//}
 }
 
 void DogCopter::OnTopPadOpenAnimationFrameFinished(const FrameAnimation_DESC& _Info)
 {
-	LeftTopPadRenderer->ChangeFrameAnimation("TopPadOpenIdle");
+	//LeftTopPadRenderer->ChangeFrameAnimation("TopPadOpenIdle");
 }
 
 void DogCopter::OnTopPadCloseAnimationFrameFinished(const FrameAnimation_DESC& _Info)
 {
-	LeftTopPadRenderer->ChangeFrameAnimation("LeftTopPadRendererNothing");
-	LeftTopPadRenderer->Off();
-	LeftTopPadBackRenderer->ChangeFrameAnimation("LeftTopPadBackRendererNothing");
-	LeftTopPadBackRenderer->Off();
+	//LeftTopPadRenderer->ChangeFrameAnimation("LeftTopPadRendererNothing");
+	//LeftTopPadRenderer->Off();
+	//LeftTopPadBackRenderer->ChangeFrameAnimation("LeftTopPadBackRendererNothing");
+	//LeftTopPadBackRenderer->Off();
 }
 
 void DogCopter::OnMidPadOpenAnimationFrameFinished(const FrameAnimation_DESC& _Info)
@@ -432,44 +442,44 @@ void DogCopter::OnMidPadOpenAnimationFrameFinished(const FrameAnimation_DESC& _I
 
 void DogCopter::OnMidPadCloseAnimationFrameFinished(const FrameAnimation_DESC& _Info)
 {
-	LeftMidPadRenderer->ChangeFrameAnimation("LeftMidPadRendererNothing");
-	LeftMidPadRenderer->Off();
+	//LeftMidPadRenderer->ChangeFrameAnimation("LeftMidPadRendererNothing");
+	//LeftMidPadRenderer->Off();
 	//LeftMidPadBackRenderer->ChangeFrameAnimation("LeftMidPadBackRendererNothing");
 	//LeftMidPadBackRenderer->Off();
 }
 
 void DogCopter::OnLowPadOpenAnimationFrameFinished(const FrameAnimation_DESC& _Info)
 {
-	LeftLowPadRenderer->ChangeFrameAnimation("LowPadOpenIdle");
+	//LeftLowPadRenderer->ChangeFrameAnimation("LowPadOpenIdle");
 }
 
 void DogCopter::OnLowPadCloseAnimationFrameFinished(const FrameAnimation_DESC& _Info)
 {
-	LeftLowPadRenderer->ChangeFrameAnimation("LeftLowPadRendererNothing");
-	LeftLowPadRenderer->Off();
+	//LeftLowPadRenderer->ChangeFrameAnimation("LeftLowPadRendererNothing");
+	//LeftLowPadRenderer->Off();
 	//LeftLowPadBackRenderer->ChangeFrameAnimation("LeftLowPadBackRendererNothing");
 	//LeftLowPadBackRenderer->Off();
 }
 
 void DogCopter::OnLaserTopAnimationFrameFinished(const FrameAnimation_DESC& _Info)
 {
-	LaserBeamTopRenderer->ChangeFrameAnimation("LaserTopWarning");
+	//LaserBeamTopRenderer->ChangeFrameAnimation("LaserTopWarning");
 }
 
 void DogCopter::OnLaserTopWarningAnimationFrameFinished(const FrameAnimation_DESC& _Info)
 {
-	LaserBeamTopRenderer->ChangeFrameAnimation("LaserTopShooting");
+	//LaserBeamTopRenderer->ChangeFrameAnimation("LaserTopShooting");
 }
 
 void DogCopter::OnLaserTopShootingAnimationFrameFinished(const FrameAnimation_DESC& _Info)
 {
-	LaserBeamTopRenderer->ChangeFrameAnimation("LaserTopClose");
+	//LaserBeamTopRenderer->ChangeFrameAnimation("LaserTopClose");
 }
 
 void DogCopter::OnLaserToCloseAnimationFrameFinished(const FrameAnimation_DESC& _Info)
 {
-	LaserBeamTopRenderer->ChangeFrameAnimation("LaserBeamTopRendererNothing");
-	LaserBeamTopRenderer->Off();
+	//LaserBeamTopRenderer->ChangeFrameAnimation("LaserBeamTopRendererNothing");
+	//LaserBeamTopRenderer->Off();
 }
 
 void DogCopter::OnLaserMidAnimationFrameFinished(const FrameAnimation_DESC& _Info)
@@ -498,16 +508,16 @@ void DogCopter::OnLaserLowShootingAnimationFrameFinished(const FrameAnimation_DE
 
 void DogCopter::OnLaserToCloseAnimationFrameChanged(const FrameAnimation_DESC& _Info)
 {
-	if (_Info.CurFrame == 10)
-	{
-		// 다음 공격 생성
-		//LeftMidPadBackRenderer->On();
-		LeftMidPadRenderer->On();
-		//LaserBeamMidRenderer->On();
-	}
+	//if (_Info.CurFrame == 10)
+	//{
+	//	// 다음 공격 생성
+	//	//LeftMidPadBackRenderer->On();
+	//	LeftMidPadRenderer->On();
+	//	//LaserBeamMidRenderer->On();
+	//}
 
-	if (_Info.CurFrame == 13)
-	{
-		LeftTopPadRenderer->ChangeFrameAnimation("TopPadClose");
-	}
+	//if (_Info.CurFrame == 13)
+	//{
+	//	LeftTopPadRenderer->ChangeFrameAnimation("TopPadClose");
+	//}
 }

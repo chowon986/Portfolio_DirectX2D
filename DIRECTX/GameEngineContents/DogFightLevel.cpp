@@ -289,7 +289,7 @@ void DogFightLevel::Start()
 		}
 	}
 
-	SetPhase(Phase::Phase2);
+	SetPhase(Phase::Phase3);
 }
 
 void DogFightLevel::ResetPositionCloudLeftA(const FrameAnimation_DESC& _Info)
@@ -340,6 +340,22 @@ void DogFightLevel::ResetPositionPlanePuffRight(const FrameAnimation_DESC& _Info
 void DogFightLevel::ResetPositionPlanePuffLeft(const FrameAnimation_DESC& _Info)
 {
 	PlanePuffLeft->GetTransform().SetLocalPosition({ 380, -200, (int)ZOrder::NPC + 4 });
+}
+
+void DogFightLevel::PushToRotateCamera(GameEngineActor* _Actor)
+{
+	for (auto* Child : _Actor->GetChilds())
+	{
+		if (GameEngineActor* Actor = dynamic_cast<GameEngineActor*>(Child))
+		{
+			PushToRotateCamera(Actor);
+		}
+
+		if (GameEngineRenderer* Renderer = dynamic_cast<GameEngineRenderer*>(Child))
+		{
+			PushRendererToRotateCamera(Renderer);
+		}
+	}
 }
 
 void DogFightLevel::Update(float _DeltaTime)
@@ -433,8 +449,14 @@ void DogFightLevel::Update(float _DeltaTime)
 			CaptainCanteenPlane->SetPlayer(Cuphead);
 			CaptainCanteenPlane->SetColMapImage(ColMapRenderer);
 			CaptainCanteenPlane->SetDogCopter(LeaderCopter);
+			PushToRotateCamera(CaptainCanteenPlane);
 		}
 	}
+
+	static float4 Rot = { 0.0f, 0.0f, 0.0f };
+
+	Rot.z = 180;
+	GetRotateCameraActorTransform().SetLocalRotation(Rot);
 }
 
 void DogFightLevel::End()

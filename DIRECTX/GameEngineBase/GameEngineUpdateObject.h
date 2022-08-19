@@ -18,6 +18,7 @@ public:
 	GameEngineUpdateObject& operator=(const GameEngineUpdateObject& _Other) = delete;
 	GameEngineUpdateObject& operator=(GameEngineUpdateObject&& _Other) noexcept = delete;
 
+	std::list<GameEngineUpdateObject*>& GetChilds() { return Childs; }
 
 	inline bool& IsUpdateRef()
 	{

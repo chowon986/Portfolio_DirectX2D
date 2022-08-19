@@ -19,6 +19,13 @@ GameEngineLevel::GameEngineLevel()
 		CameraActor->GetCameraComponent()->SetProjectionMode(CAMERAPROJECTIONMODE::Orthographic);
 		CameraActor->GetCameraComponent()->SetCameraOrder(CAMERAORDER::MAINCAMERA);
 	}
+	
+	{
+		GameEngineCameraActor* CameraActor = CreateActor<GameEngineCameraActor>();
+		CameraActor->GetTransform().SetLocalPosition({ 0.0f, 0.0f, -100.0f });
+		CameraActor->GetCameraComponent()->SetProjectionMode(CAMERAPROJECTIONMODE::Orthographic);
+		CameraActor->GetCameraComponent()->SetCameraOrder(CAMERAORDER::ROTATECAMERA);
+	}
 
 	{
 		GameEngineCameraActor* CameraActor = CreateActor<GameEngineCameraActor>();
@@ -116,6 +123,16 @@ void GameEngineLevel::PushCamera(GameEngineCamera* _Camera, int _CameraOrder)
 GameEngineTransform& GameEngineLevel::GetMainCameraActorTransform()
 {
 	return Cameras[static_cast<int>(CAMERAORDER::MAINCAMERA)]->GetActor()->GetTransform();
+}
+
+GameEngineCameraActor* GameEngineLevel::GetRotateCameraActor()
+{
+	return Cameras[static_cast<int>(CAMERAORDER::ROTATECAMERA)]->GetActor<GameEngineCameraActor>();
+}
+
+GameEngineTransform& GameEngineLevel::GetRotateCameraActorTransform()
+{
+	return Cameras[static_cast<int>(CAMERAORDER::ROTATECAMERA)]->GetActor()->GetTransform();
 }
 
 

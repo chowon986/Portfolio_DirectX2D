@@ -37,7 +37,8 @@ void InGameDogCopterAnimationControllerComponent::UpdateAnimation()
 		Renderer->ChangeFrameAnimation(Name + "Idle");
 	}
 
-	else if (State == InGameDogCopterState::Attack1)
+	else if (State == InGameDogCopterState::Attack1Start ||
+		State == InGameDogCopterState::Attack1)
 	{
 		Renderer->ChangeFrameAnimation(Name + "Attack1");
 	}

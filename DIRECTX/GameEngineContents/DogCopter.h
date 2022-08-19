@@ -66,7 +66,9 @@ protected:
 	void Shoot() override;
 	void Die() override;
 	void Attack1();
+	void Attack1Start();
 	void Attack2();
+	void Attack2Start();
 	void RotateCameraIn();
 	void RotateCameraOut();
 	void RotateCameraIdle();

@@ -191,6 +191,8 @@
     <ClInclude Include="Delegates.h" />
     <ClInclude Include="DogCopter.h" />
     <ClInclude Include="DogCopterArms.h" />
+    <ClInclude Include="DogCopterBullet.h" />
+    <ClInclude Include="DogCopterShooter.h" />
     <ClInclude Include="Dogfight.h" />
     <ClInclude Include="DogFightLevel.h" />
     <ClInclude Include="Enums.h" />
@@ -313,6 +315,8 @@
     <ClCompile Include="Cowgirl.cpp" />
     <ClCompile Include="DogCopter.cpp" />
     <ClCompile Include="DogCopterArms.cpp" />
+    <ClCompile Include="DogCopterBullet.cpp" />
+    <ClCompile Include="DogCopterShooter.cpp" />
     <ClCompile Include="Dogfight.cpp" />
     <ClCompile Include="DogFightLevel.cpp" />
     <ClCompile Include="Ghost.cpp" />

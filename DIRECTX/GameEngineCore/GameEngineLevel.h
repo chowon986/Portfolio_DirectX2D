@@ -7,7 +7,7 @@
 enum class CAMERAORDER
 {
 	MAINCAMERA,
-	USER0,
+	ROTATECAMERA,
 	USER1,
 	USER2,
 	USER3,
@@ -53,6 +53,11 @@ public:
 		return Cameras[static_cast<int>(CAMERAORDER::MAINCAMERA)];
 	}
 
+	GameEngineCamera* GetRotateCamera()
+	{
+		return Cameras[static_cast<int>(CAMERAORDER::ROTATECAMERA)];
+	}
+
 	GameEngineCamera* GetUICamera()
 	{
 		return Cameras[static_cast<int>(CAMERAORDER::UICAMERA)];
@@ -61,6 +66,10 @@ public:
 	GameEngineCameraActor* GetMainCameraActor();
 
 	GameEngineTransform& GetMainCameraActorTransform();
+
+	GameEngineCameraActor* GetRotateCameraActor();
+
+	GameEngineTransform& GetRotateCameraActorTransform();
 
 	GameEngineCameraActor* GetUICameraActor();
 
@@ -135,9 +144,10 @@ public:
 	void AllClear();
 
 protected:
-
-
-
+	void PushRendererToRotateCamera(GameEngineRenderer* _Renderer)
+	{
+		PushRenderer(_Renderer, static_cast<int>(CAMERAORDER::ROTATECAMERA));
+	}
 
 private:
 	void PushActor(GameEngineActor* _Actor, int _ObjectGroupIndex);
@@ -168,7 +178,6 @@ private:
 	{
 		PushRenderer(_Renderer, static_cast<int>(CAMERAORDER::UICAMERA));
 	}
-
 	void PushRenderer(GameEngineRenderer* _Renderer, CAMERAORDER _Order)
 	{
 		PushRenderer(_Renderer, static_cast<int>(_Order));
