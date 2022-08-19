@@ -54,15 +54,6 @@ void MonsterWeaponBase::UpdateDirection()
 		}
 	}
 
-	if (Ph2DogState == InGamePh2DogState::Attack)
-	{
-		Ph2Dog* BowWowDog = dynamic_cast<Ph2Dog*>(GetParent());
-		if (BowWowDog != nullptr)
-		{
-			Direction = BowWowDog->GetBowWowDirection();
-		}
-	}
-
 	if (DogCopterState == InGameDogCopterState::Attack1)
 	{
 		Direction = Character->GetRenderer()->GetTransform().GetLocalScale().x > 0 ? float4::RIGHT : float4::LEFT;

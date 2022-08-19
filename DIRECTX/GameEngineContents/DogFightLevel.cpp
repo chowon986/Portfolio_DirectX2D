@@ -397,11 +397,6 @@ void DogFightLevel::Update(float _DeltaTime)
 				Ph2Dog* DogFightPh2DogA = CreateActor<Ph2Dog>(GameObjectGroup::Monster);
 				Ph2Dog* DogFightPh2DogC = CreateActor<Ph2Dog>(GameObjectGroup::Monster);
 
-				DogFightPh2DogA->GetTransform().SetLocalPosition({ 0, 0, -700 });
-				DogFightPh2DogB->GetTransform().SetLocalPosition({ 0, 0, -700 });
-				DogFightPh2DogC->GetTransform().SetLocalPosition({ 0, 0, -700 });
-				DogFightPh2DogD->GetTransform().SetLocalPosition({ 0, 0, -700 });
-
 				DogFightPh2DogA->SetPlayer(Cuphead);
 				DogFightPh2DogB->SetPlayer(Cuphead);
 				DogFightPh2DogC->SetPlayer(Cuphead);

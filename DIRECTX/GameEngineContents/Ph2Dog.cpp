@@ -125,7 +125,7 @@ void Ph2Dog::Start()
 		Renderer->AnimationBindEnd("Ph2DogIdle9", std::bind(&Ph2Dog::OnIdleAnimaitionFinished, this, std::placeholders::_1));
 
 		Renderer->ChangeFrameAnimation("Ph2DogIntroTop");
-		//Renderer->GetTransform().SetLocalPosition({ 0, 0, (int)ZOrder::UI + 1 });
+		Renderer->GetTransform().SetLocalPosition({ 0, 0, (int)ZOrder::UI + 1 });
 		Renderer->SetScaleModeImage();
 		SetRenderer(Renderer);
 	}
@@ -277,18 +277,22 @@ void Ph2Dog::OnAnimaitionFinished(const FrameAnimation_DESC& _Info)
 
 void Ph2Dog::OnIdleAnimaitionFinished(const FrameAnimation_DESC& _Info)
 {
-	//int RandomAction = rand() % 5;
-	//++RandomAction;
+	int RandomAction = rand() % 5;
+	++RandomAction;
 
-	//if (RandomAction == 1)
-	//{
-	//	Shoot();
-	//}
-	//else
-	//{
+	if (RandomAction == 1)
+	{
+		float4 PlayerPos = Player->GetRenderer()->GetTransform().GetWorldPosition();
+		float4 MyPos = GetRenderer()->GetTransform().GetWorldPosition();
+		float4 Direction = float4({ (PlayerPos - MyPos) / (PlayerPos - MyPos) });
+		SetBowWowDirection(Direction);
+		Shoot();
+	}
+	else
+	{
 		SetPh2DogState(InGamePh2DogState::None);
 		Idle();
-	//}
+	}
 }
 
 void Ph2Dog::OnIdleAnimaitionFrameChanged(const FrameAnimation_DESC& _Info)
@@ -301,11 +305,9 @@ void Ph2Dog::OnAttackAnimationFrameChanged(const FrameAnimation_DESC& _Info)
 	{
 		if (Player != nullptr)
 		{
-			float4 PlayerPos = Player->GetRenderer()->GetTransform().GetWorldPosition();
-			float4 MyPos = GetRenderer()->GetTransform().GetWorldPosition();
-			float4 Direction = float4({ (PlayerPos - MyPos)/(PlayerPos - MyPos)});
-			SetBowWowDirection(Direction);
-			SetAttackState(InGameMonsterAttackState::BowWow);
+
+		SetAttackState(InGameMonsterAttackState::BowWow);
+
 		}
 	}
 	else

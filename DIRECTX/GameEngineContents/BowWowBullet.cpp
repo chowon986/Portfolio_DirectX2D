@@ -24,7 +24,7 @@ void BowWowBullet::Start()
 	Renderer->CreateFrameAnimationFolder("Wow1", FrameAnimation_DESC("Wow1", 0.1f));
 	Renderer->CreateFrameAnimationFolder("Wow2", FrameAnimation_DESC("Wow2", 0.1f)); // Pink
 	Renderer->ChangeFrameAnimation("Bow1");
-	Renderer->ScaleToTexture();
+	Renderer->SetScaleModeImage();
 	SetRenderer(Renderer);
 	Collision = CreateComponent<GameEngineCollision>();
 	Collision->GetTransform().SetLocalScale({ 80.0f, 80.0f, 1.0f });
@@ -36,7 +36,6 @@ void BowWowBullet::Start()
 
 void BowWowBullet::Update(float _DeltaTime)
 {
-	Renderer->ScaleToTexture();
 	GameEngineDebug::DrawBox(Collision->GetTransform(), { 1.0f, 0.0f,0.0f, 0.5f });
 }
 

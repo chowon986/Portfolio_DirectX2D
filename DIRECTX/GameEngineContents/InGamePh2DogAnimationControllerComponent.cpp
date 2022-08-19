@@ -35,6 +35,7 @@ void InGamePh2DogAnimationControllerComponent::UpdateAnimation()
 
 	else if (State == InGamePh2DogState::Prepare2)
 	{
+		Renderer->GetTransform().PixLocalNegativeX();
 		Renderer->ChangeFrameAnimation(Name + "IntroRight");
 	}
 
