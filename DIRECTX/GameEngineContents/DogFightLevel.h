@@ -7,7 +7,6 @@ class GameEngineTextureRenderer;
 class BackgroundHills;
 class BackgroundObject;
 class Bulldog;
-class Ph2Dog;
 class CanteenPlane;
 class DogCopter;
 class InGameCuphead;
@@ -60,10 +59,10 @@ private:
 	BackgroundObject* PatchLeftA;
 
 	Bulldog* PH1BullDog;
-	Ph2Dog* DogFightPh2Dog;
 	BulldogPlane* PH1BulldogPlane;
 	CanteenPlane* CaptainCanteenPlane;
 	DogCopter* LeaderCopter;
 	InGameCuphead* Cuphead;
+	bool OnceCheck;
 };
 

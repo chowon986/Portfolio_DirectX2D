@@ -28,9 +28,9 @@ DogFightLevel::DogFightLevel()
 	, PH1BullDog(nullptr)
 	, PH1BulldogPlane(nullptr)
 	, Cuphead(nullptr)
-	, DogFightPh2Dog(nullptr)
 	, CaptainCanteenPlane(nullptr)
 	, LeaderCopter(nullptr)
+	, OnceCheck(false)
 {
 }
 
@@ -289,7 +289,7 @@ void DogFightLevel::Start()
 		}
 	}
 
-	SetPhase(Phase::Phase3);
+	SetPhase(Phase::Phase2);
 }
 
 void DogFightLevel::ResetPositionCloudLeftA(const FrameAnimation_DESC& _Info)
@@ -389,11 +389,31 @@ void DogFightLevel::Update(float _DeltaTime)
 			CaptainCanteenPlane->SetColMapImage(ColMapRenderer);
 		}
 
-		if (DogFightPh2Dog == nullptr)
+		if (OnceCheck == false)
 		{
-			DogFightPh2Dog = CreateActor<Ph2Dog>(GameObjectGroup::Monster);
-			DogFightPh2Dog->GetTransform().SetLocalPosition({ 0, 0, -700 });
-			DogFightPh2Dog->SetPlayer(Cuphead);
+			{
+				Ph2Dog* DogFightPh2DogB = CreateActor<Ph2Dog>(GameObjectGroup::Monster);
+				Ph2Dog* DogFightPh2DogD = CreateActor<Ph2Dog>(GameObjectGroup::Monster);
+				Ph2Dog* DogFightPh2DogA = CreateActor<Ph2Dog>(GameObjectGroup::Monster);
+				Ph2Dog* DogFightPh2DogC = CreateActor<Ph2Dog>(GameObjectGroup::Monster);
+
+				DogFightPh2DogA->GetTransform().SetLocalPosition({ 0, 0, -700 });
+				DogFightPh2DogB->GetTransform().SetLocalPosition({ 0, 0, -700 });
+				DogFightPh2DogC->GetTransform().SetLocalPosition({ 0, 0, -700 });
+				DogFightPh2DogD->GetTransform().SetLocalPosition({ 0, 0, -700 });
+
+				DogFightPh2DogA->SetPlayer(Cuphead);
+				DogFightPh2DogB->SetPlayer(Cuphead);
+				DogFightPh2DogC->SetPlayer(Cuphead);
+				DogFightPh2DogD->SetPlayer(Cuphead);
+
+				DogFightPh2DogB->SetPh2DogState(InGamePh2DogState::Prepare2);
+				DogFightPh2DogA->SetPh2DogState(InGamePh2DogState::Prepare1);
+				DogFightPh2DogD->SetPh2DogState(InGamePh2DogState::Prepare4);
+				DogFightPh2DogC->SetPh2DogState(InGamePh2DogState::Prepare3);
+			}
+
+			OnceCheck = true;
 		}
 		
 	}

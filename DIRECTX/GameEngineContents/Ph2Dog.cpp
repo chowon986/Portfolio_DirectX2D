@@ -128,7 +128,6 @@ void Ph2Dog::Start()
 		//Renderer->GetTransform().SetLocalPosition({ 0, 0, (int)ZOrder::UI + 1 });
 		Renderer->SetScaleModeImage();
 		SetRenderer(Renderer);
-		SetPh2DogState(InGamePh2DogState::Prepare1);
 	}
 
 
@@ -160,39 +159,47 @@ void Ph2Dog::Update(float _DeltaTime)
 	if (OnceCheck == false)
 	{
 		if (GetPh2DogState() == InGamePh2DogState::Prepare1)
-		{
-			SetStartAngle(0.0f);
+		{			
+			SetStartAngle(90.0f * GameEngineMath::DegreeToRadian);
 			double TestX = GetXFromAngle(GetStartAngle());
 			double TestY = GetYFromAngle(GetStartAngle());
 			GetTransform().SetWorldPosition({ static_cast<float>(TestX + 640.0f), static_cast<float>(TestY - 360.0f) });
 		}
 		else if (GetPh2DogState() == InGamePh2DogState::Prepare2)
 		{
-			SetStartAngle(0.0f);
+			SetStartAngle(0.0f * GameEngineMath::DegreeToRadian);
 			double TestX = GetXFromAngle(GetStartAngle());
 			double TestY = GetYFromAngle(GetStartAngle());
 			GetTransform().SetWorldPosition({ static_cast<float>(TestX + 640.0f), static_cast<float>(TestY - 360.0f) });
 		}
 		else if (GetPh2DogState() == InGamePh2DogState::Prepare3)
 		{
-			SetStartAngle(3.0f);
+			SetStartAngle(270.0f * GameEngineMath::DegreeToRadian);
 			double TestX = GetXFromAngle(GetStartAngle());
 			double TestY = GetYFromAngle(GetStartAngle());
 			GetTransform().SetWorldPosition({ static_cast<float>(TestX + 640.0f), static_cast<float>(TestY - 360.0f) });
 		}
 		else if (GetPh2DogState() == InGamePh2DogState::Prepare4)
 		{
-			SetStartAngle(3.0f);
+			SetStartAngle(180.0f * GameEngineMath::DegreeToRadian);
 			double TestX = GetXFromAngle(GetStartAngle());
 			double TestY = GetYFromAngle(GetStartAngle());
 			GetTransform().SetWorldPosition({ static_cast<float>(TestX + 640.0f), static_cast<float>(TestY - 360.0f) });
 		}
+
+		OnceCheck = true;
 	}
+
 
 	if (GetPh2DogState() == InGamePh2DogState::Idle ||
 		GetPh2DogState() == InGamePh2DogState::Attack)
 	{
-		SetAngle(GetAngle() + _DeltaTime);
+
+		if (Angle >= 6.28319f)
+		{
+			Angle = 0.0f;
+		}
+		Angle += _DeltaTime;
 
 		double TestX = GetXFromAngle(Angle + GetStartAngle());
 		double TestY = GetYFromAngle(Angle + GetStartAngle());
@@ -250,7 +257,7 @@ void Ph2Dog::None()
 
 double Ph2Dog::GetXFromAngle(double Angle)
 {
-	return cosf(Angle) * 500;
+	return cosf(Angle) * 550;
 }
 
 double Ph2Dog::GetYFromAngle(double Angle)
@@ -265,7 +272,7 @@ void Ph2Dog::SetPlayer(IInGameCharacterBase* _Player)
 
 void Ph2Dog::OnAnimaitionFinished(const FrameAnimation_DESC& _Info) 
 {
-	//Idle();
+	Idle();
 }
 
 void Ph2Dog::OnIdleAnimaitionFinished(const FrameAnimation_DESC& _Info)
@@ -286,7 +293,6 @@ void Ph2Dog::OnIdleAnimaitionFinished(const FrameAnimation_DESC& _Info)
 
 void Ph2Dog::OnIdleAnimaitionFrameChanged(const FrameAnimation_DESC& _Info)
 {
-
 }
 
 void Ph2Dog::OnAttackAnimationFrameChanged(const FrameAnimation_DESC& _Info)
