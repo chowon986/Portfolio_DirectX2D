@@ -9,6 +9,7 @@ enum class SelectLevelPhase
 	SelectPlayer,
 };
 
+class CharacterState;
 class Background;
 class GameEngineTextureRenderer;
 class SelectLevel : public GameEngineLevel
@@ -40,6 +41,7 @@ private:
 	bool CanSelectCharacter;
 	bool CupheadOnOffSwitch;
 	float SelectCharacterElapsedTime;
+	CharacterState* State;
 	SelectLevelPhase Phase;
 	std::string OptionNumber;
 	GameEngineTextureRenderer* LetterRenderer;

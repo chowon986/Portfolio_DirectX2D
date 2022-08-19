@@ -2,6 +2,7 @@
 #include <GameEngineCore/GameEngineLevel.h>
 
 // Ό³Έν :
+class CharacterState;
 class GameEngineTextureRenderer;
 class WorldMapLevel : public GameEngineLevel
 {
@@ -20,6 +21,7 @@ public:
 	void ColMapOnOffSwitch();
 
 protected:
+	void LevelStartEvent() override;
 	void Start() override;
 	void Update(float _DeltaTime) override;
 	void End() override;
@@ -31,5 +33,6 @@ private:
 	GameEngineTextureRenderer* UnderWaterLandRenderer;
 	GameEngineTextureRenderer* OutsideOfMainLandLeftRenderer;
 	GameEngineTextureRenderer* OutsideOfMainLandRightRenderer;
+	CharacterState* State;
 };
 

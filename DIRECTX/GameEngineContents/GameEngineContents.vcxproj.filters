@@ -124,6 +124,9 @@
     <Filter Include="Actor\Weapon\Base\Monster">
       <UniqueIdentifier>{abe89387-e015-48e0-afd2-29f4757d8925}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Actor\State">
+      <UniqueIdentifier>{3add17ca-0b59-41c7-85ca-1d57bea560da}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ContentsCore.h">
@@ -457,6 +460,9 @@
       <Filter>Actor\Weapon\Bullet\Monster</Filter>
     </ClInclude>
     <ClInclude Include="DogCopterShooter.h" />
+    <ClInclude Include="CharacterState.h">
+      <Filter>Actor\State</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp">
@@ -784,5 +790,8 @@
       <Filter>Actor\Weapon\Bullet\Monster</Filter>
     </ClCompile>
     <ClCompile Include="DogCopterShooter.cpp" />
+    <ClCompile Include="CharacterState.cpp">
+      <Filter>Actor\State</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

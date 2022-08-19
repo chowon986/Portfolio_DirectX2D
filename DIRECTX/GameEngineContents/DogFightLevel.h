@@ -35,7 +35,7 @@ public:
 	void ResetPositionPatchMiddleA(const FrameAnimation_DESC& _Info);
 	void ResetPositionPlanePuffRight(const FrameAnimation_DESC& _Info);
 	void ResetPositionPlanePuffLeft(const FrameAnimation_DESC& _Info);
-	void PushToRotateCamera(GameEngineActor* _Actor);
+	void PushToRotateCamera(GameEngineUpdateObject* _Object);
 
 protected:
 	void Start() override;

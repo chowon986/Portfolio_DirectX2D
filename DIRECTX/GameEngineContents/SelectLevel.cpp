@@ -2,6 +2,7 @@
 #include "SelectLevel.h"
 #include "Background.h"
 #include <functional>
+#include "CharacterState.h"
 
 SelectLevel::SelectLevel()
 	: OptionRenderer(nullptr)
@@ -34,6 +35,10 @@ SelectLevel::~SelectLevel()
 
 void SelectLevel::Start()
 {
+	State = CreateActor<CharacterState>(GameObjectGroup::CharacterState);
+	State->SetLevelOverOn();
+
+
 	if (false == GameEngineInput::GetInst()->IsKey("MoveDown"))
 	{
 		GameEngineInput::GetInst()->CreateKey("MoveDown", VK_DOWN);
@@ -276,12 +281,14 @@ void SelectLevel::Update(float _DeltaTime)
 				{
 					if (CupheadOnOffSwitch == true)
 					{
+						State->Type = CharacterType::Cuphead;
 						CanSelectCharacter = false;
 						PlayerARenderer->ChangeFrameAnimation("SelectCupheadOk");
 					}
 
-					else if (CupheadOnOffSwitch == false)
+					else
 					{
+						State->Type = CharacterType::Mugman;
 						CanSelectCharacter = false;
 						PlayerBRenderer->ChangeFrameAnimation("SelectMugmanOk");
 					}

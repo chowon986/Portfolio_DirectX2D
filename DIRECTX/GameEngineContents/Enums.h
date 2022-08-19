@@ -1,5 +1,12 @@
 #pragma once
 
+enum class CharacterType
+{
+	Cuphead,
+	Mugman,
+	Chalice,
+};
+
 enum class ObjectOrder
 {
 	PC,
@@ -17,6 +24,7 @@ enum class GameObjectGroup
 	UI,
 	Player,
 	Monster,
+	CharacterState,
 };
 
 enum class ZOrder : int

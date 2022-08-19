@@ -179,6 +179,7 @@
     <ClInclude Include="CanteenPlane.h" />
     <ClInclude Include="Cart.h" />
     <ClInclude Include="Catus.h" />
+    <ClInclude Include="CharacterState.h" />
     <ClInclude Include="ChargerBullet.h" />
     <ClInclude Include="ChargerShooter.h" />
     <ClInclude Include="ContentsCore.h">
@@ -304,6 +305,7 @@
     <ClCompile Include="CanteenPlane.cpp" />
     <ClCompile Include="Cart.cpp" />
     <ClCompile Include="Catus.cpp" />
+    <ClCompile Include="CharacterState.cpp" />
     <ClCompile Include="ChargerBullet.cpp" />
     <ClCompile Include="ChargerShooter.cpp" />
     <ClCompile Include="ContentsCore.cpp">

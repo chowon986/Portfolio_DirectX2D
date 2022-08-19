@@ -82,12 +82,17 @@ public:
 		return CurWheelValue;
 	}
 
+	bool GetIsAnyKeyPressed();
+	void SetIsAnyKeyPressed(bool _IsAnyKeyPressed);
+
 protected:
 	
 
 private:
 	int WheelValue;
 	int CurWheelValue;
+
+	bool IsAnyKeyPressed;
 
 	std::map<std::string, GameEngineKey> AllInputKey_;
 

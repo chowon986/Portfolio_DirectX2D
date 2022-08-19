@@ -40,11 +40,11 @@ DogFightLevel::~DogFightLevel()
 
 void DogFightLevel::ColMapOnOffSwitch()
 {
-	if (true == GameEngineInput::GetInst()->IsDown("ColMapOnOffSwitch"))
-	{
-		BackgroundSkyRenderer->OnOffSwitch();
-		Hills->OnOffSwitch();
-	}
+	//if (true == GameEngineInput::GetInst()->IsDown("ColMapOnOffSwitch"))
+	//{
+	//	BackgroundSkyRenderer->OnOffSwitch();
+	//	Hills->OnOffSwitch();
+	//}
 }
 
 void DogFightLevel::Start()
@@ -342,13 +342,13 @@ void DogFightLevel::ResetPositionPlanePuffLeft(const FrameAnimation_DESC& _Info)
 	PlanePuffLeft->GetTransform().SetLocalPosition({ 380, -200, (int)ZOrder::NPC + 4 });
 }
 
-void DogFightLevel::PushToRotateCamera(GameEngineActor* _Actor)
+void DogFightLevel::PushToRotateCamera(GameEngineUpdateObject* _Object)
 {
-	for (auto* Child : _Actor->GetChilds())
+	for (auto* Child : _Object->GetChilds())
 	{
-		if (GameEngineActor* Actor = dynamic_cast<GameEngineActor*>(Child))
+		if (GameEngineUpdateObject* Object = dynamic_cast<GameEngineUpdateObject*>(Child))
 		{
-			PushToRotateCamera(Actor);
+			PushToRotateCamera(Object);
 		}
 
 		if (GameEngineRenderer* Renderer = dynamic_cast<GameEngineRenderer*>(Child))

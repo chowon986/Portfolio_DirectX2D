@@ -3,17 +3,16 @@
 #include "Background.h"
 #include "WorldMapCuphead.h"
 #include "Enums.h"
-#include <GameEngineCore/GEngine.h>
-#include <GameEngineBase/GameEngineInput.h>
-#include <GameEngineCore/GameEngineTextureRenderer.h>
-#include "Boatman.h"
 #include "Bakery.h"
+#include "Omm.h"
+#include "Boatman.h"
 #include "NewsCat.h"
 #include "Lantern.h"
 #include "Pickaxe.h"
 #include "Shovel.h"
 #include "Shop.h"
 #include "Catus.h"
+#include "CharacterState.h"
 #include "Ladder.h"
 #include "Dogfight.h"
 #include "Ghost.h"
@@ -21,13 +20,15 @@
 #include "Boat.h"
 #include "BoatRipples.h"
 #include "Cart.h"
-#include "Omm.h"
+#include "Snow.h"
 #include "Waterfall.h"
 #include "WaterfallBase.h"
 #include "Rumrunners.h"
 #include "Cowgirl.h"
-#include "Snow.h"
-#include <GameEngineContents/WorldMapMugman.h>
+#include "WorldMapMugman.h"
+#include <GameEngineCore/GEngine.h>
+#include <GameEngineCore/GameEngineTextureRenderer.h>
+#include <GameEngineBase/GameEngineInput.h>
 
 WorldMapLevel::WorldMapLevel()
 	: IrisRenderer(nullptr)
@@ -36,6 +37,7 @@ WorldMapLevel::WorldMapLevel()
 	, UnderWaterLandRenderer(nullptr)
 	, OutsideOfMainLandLeftRenderer(nullptr)
 	, OutsideOfMainLandRightRenderer(nullptr)
+	, State(nullptr)
 {
 }
 
@@ -55,8 +57,17 @@ void WorldMapLevel::ColMapOnOffSwitch()
 }
 
 
-void WorldMapLevel::Start()
+void WorldMapLevel::LevelStartEvent()
 {
+	std::list<GameEngineActor*> Actors = GetGroup(GameObjectGroup::CharacterState);
+	for (GameEngineActor* Actor : Actors)
+	{
+		if (CharacterState* _State = dynamic_cast<CharacterState*>(Actor))
+		{
+			State = _State;
+		}
+	}
+
 	if (false == GameEngineInput::GetInst()->IsKey("ColMapOnOffSwitch"))
 	{
 		GameEngineInput::GetInst()->CreateKey("ColMapOnOffSwitch", 'O');
@@ -383,13 +394,22 @@ void WorldMapLevel::Start()
 		MainLandColMapRenderer->GetTransform().SetLocalPosition({ 1855.0f, -1105.0f, (int)ZOrder::Background+1 });
 
 		// PC
-		WorldMapCuphead* Cuphead = CreateActor<WorldMapCuphead>(GameObjectGroup::Player);
-		Cuphead->GetTransform().SetLocalPosition({ 382, -1450, (int)ZOrder::Player });
-		Cuphead->SetColMapImage(MainLandColMapRenderer);
+		if (State != nullptr)
+		{
+			if (State->Type == CharacterType::Cuphead)
+			{
+				WorldMapCuphead* Cuphead = CreateActor<WorldMapCuphead>(GameObjectGroup::Player);
+				Cuphead->GetTransform().SetLocalPosition({ 382, -1450, (int)ZOrder::Player });
+				Cuphead->SetColMapImage(MainLandColMapRenderer);
+			}
+			else
+			{
+				WorldMapMugman* Mugman = CreateActor<WorldMapMugman>(GameObjectGroup::Player);
+				Mugman->GetTransform().SetLocalPosition({ 382, -1450, (int)ZOrder::Player });
+				Mugman->SetColMapImage(MainLandColMapRenderer);
+			}
+		}
 
-		//WorldMapMugman* Mugman = CreateActor<WorldMapMugman>(GameObjectGroup::Player);
-		//Mugman->GetTransform().SetLocalPosition({ 382, -1450, (int)ZOrder::Player });
-		//Mugman->SetColMapImage(MainLandColMapRenderer);
 	}
 
 	{
@@ -437,6 +457,10 @@ void WorldMapLevel::Start()
 		Renderer->GetTransform().SetLocalPosition({ 1860.0f, -1085.0f, (int)ZOrder::NPCB });
 	}
 
+}
+
+void WorldMapLevel::Start()
+{
 }
 
 void WorldMapLevel::Update(float _DeltaTime)

@@ -24,6 +24,16 @@ LRESULT CALLBACK GameEngineWindow::MessageProcess(HWND hWnd, UINT message, WPARA
 
     switch (message)
     {
+    case WM_KEYDOWN:
+    {
+        GameEngineInput::GetInst()->SetIsAnyKeyPressed(true);
+        break;
+    }
+    case WM_KEYUP:
+    {
+        GameEngineInput::GetInst()->SetIsAnyKeyPressed(false);
+        break;
+    }
     case WM_DESTROY:
     {
         GameEngineWindow::GetInst()->Off();

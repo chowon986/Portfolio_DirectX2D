@@ -52,8 +52,9 @@ void GameEngineInput::GameEngineKey::Update(float _DeltaTime)
 GameEngineInput* GameEngineInput::Inst_ = new GameEngineInput();
 
 GameEngineInput::GameEngineInput()
-	: WheelValue(),
-	CurWheelValue()
+	: WheelValue()
+	, CurWheelValue()
+	, IsAnyKeyPressed(false)
 {
 }
 
@@ -72,6 +73,16 @@ bool GameEngineInput::IsKey(const std::string& _Name)
 	}
 
 	return false;
+}
+
+bool GameEngineInput::GetIsAnyKeyPressed()
+{
+	return IsAnyKeyPressed;
+}
+
+void GameEngineInput::SetIsAnyKeyPressed(bool _IsAnyKeyPressed)
+{
+	IsAnyKeyPressed = _IsAnyKeyPressed;
 }
 
 void GameEngineInput::CreateKey(const std::string& _Name, int _Key)

@@ -69,7 +69,7 @@ void TitleLevel::Start()
 
 void TitleLevel::Update(float _DeltaTime)
 {
-	if (true == GameEngineInput::GetInst()->IsDown("LevelChange"))
+	if (true == GameEngineInput::GetInst()->GetIsAnyKeyPressed()) // 아무키가 눌리면
 	{
 		IrisRenderer->ChangeFrameAnimation("IrisBStart");
 	}
