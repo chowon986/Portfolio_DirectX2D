@@ -7,7 +7,7 @@
 #include <GameEngineCore/GameEngineTextureRenderer.h>
 
 BeforeTitleLevel::BeforeTitleLevel()
-	: BlackScreenToAnimationIntervalTime(4.0f)
+	: BlackScreenToAnimationIntervalTime(1.0f)
 	, ElapsedTime(0.0f)
 	, MDHRLogoRenderer(nullptr)
 {
@@ -31,13 +31,22 @@ void BeforeTitleLevel::Start()
 	MDHRLogoRenderer->SetTexture("Loading_background.png");
 	MDHRLogoRenderer->AnimationBindEnd("BeforeTitle", std::bind(&BeforeTitleLevel::OnHDMRAnimationFrameEnd, this, std::placeholders::_1));
 
+	{
+		Background* TestBackground = CreateActor<Background>();
+		GameEngineTextureRenderer* TestRenderer = TestBackground->CreateComponent<GameEngineTextureRenderer>();
+		TestRenderer->CreateFrameAnimationFolder("03ScreenFX", FrameAnimation_DESC("03ScreenFX", 0.1f));
+		TestRenderer->ChangeFrameAnimation("03ScreenFX");
+		TestRenderer->GetTransform().SetLocalScale({ 1280.0f,720.0f,1.0f });
+		TestRenderer->GetPipeLine()->SetOutputMergerBlend("TransparentBlend");
+	}
+
 	//{
 	//	Background* TestBackground = CreateActor<Background>();
 	//	GameEngineTextureRenderer* TestRenderer = TestBackground->CreateComponent<GameEngineTextureRenderer>();
-	//	TestRenderer->SetTexture("cuphead_screen_fx_0000.png");
-	//	TestRenderer->GetTransform().SetLocalScale({ 640.0f,360.0f,1.0f });
-	//	TestRenderer->GetColorData().PlusColor = -1;
-	//	TestRenderer->Option.IsMask = 1;
+	//	TestRenderer->CreateFrameAnimationFolder("03ScreenFX", FrameAnimation_DESC("03ScreenFX", 0.1f));
+	//	TestRenderer->ChangeFrameAnimation("03ScreenFX");
+	//	TestRenderer->GetTransform().SetLocalScale({ 1280.0f,720.0f,1.0f });
+	//	TestRenderer->GetColorData().PlusColor.a = -0.9;
 	//}
 }
 
@@ -46,12 +55,12 @@ void BeforeTitleLevel::Update(float _DeltaTime)
 	ElapsedTime += _DeltaTime;
 	if (ElapsedTime > BlackScreenToAnimationIntervalTime)
 	{
-		//MDHRLogoRenderer->ChangeFrameAnimation("BeforeTitle");
+		MDHRLogoRenderer->ChangeFrameAnimation("BeforeTitle");
 	}
 
 	if (true == GameEngineInput::GetInst()->IsDown("LevelChange"))
 	{
-		GEngine::ChangeLevel("Title");
+		//GEngine::ChangeLevel("Title");
 	}
 }
 

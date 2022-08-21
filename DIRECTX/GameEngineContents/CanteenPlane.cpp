@@ -14,7 +14,6 @@ CanteenPlane::CanteenPlane()
 	, GroundCollision(nullptr)
 	, ColMapImage(nullptr)
 	, ColMapTexture(nullptr)
-	, LeaderState(InGameDogCopterState::Prepare)
 {
 }
 
@@ -29,19 +28,19 @@ bool CanteenPlane::CanMove(GameEngineCollision* _This, GameEngineCollision* _Oth
 
 bool CanteenPlane::RotateLeaderCopter()
 {
-	if (LeaderState != LeaderCopter->GetDogCopterState())
-	{
-		LeaderState = LeaderCopter->GetDogCopterState();
+	//if (LeaderState != LeaderCopter->GetDogCopterState())
+	//{
+	//	LeaderState = LeaderCopter->GetDogCopterState();
 
-		if (LeaderState == InGameDogCopterState::RotateCameraIn || LeaderState == InGameDogCopterState::RotateCameraOut)
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-	}
+	//	if (LeaderState == InGameDogCopterState::RotateCameraIn || LeaderState == InGameDogCopterState::RotateCameraOut)
+	//	{
+	//		return true;
+	//	}
+	//	else
+	//	{
+	//		return false;
+	//	}
+	//}
 	return false;
 }
 

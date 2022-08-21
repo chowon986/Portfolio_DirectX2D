@@ -16,7 +16,7 @@ public:
 	InGameDogCopterAnimationControllerComponent& operator=(const InGameDogCopterAnimationControllerComponent& _Other) = delete;
 	InGameDogCopterAnimationControllerComponent& operator=(InGameDogCopterAnimationControllerComponent&& _Other) noexcept = delete;
 
-	virtual void OnDogCopterStateChanged(InGameDogCopterState _State);
+	virtual void OnStateChanged(InGameDogCopterState _State);
 	virtual void OnAttackStateChanged(InGameMonsterAttackState _AttackState);
 
 	virtual void SetMonsterName(std::string _MonsterName);

@@ -152,11 +152,4 @@ void IInGameMonsterBase::SetPh2DogState(InGamePh2DogState _State)
 	}
 }
 
-void IInGameMonsterBase::SetDogCopterState(InGameDogCopterState _State)
-{
-	if (DogCopterState != _State)
-	{
-		DogCopterState = _State;
-		DogCopterStateChangedDelegate.Invoke(DogCopterState);
-	}
-}
+

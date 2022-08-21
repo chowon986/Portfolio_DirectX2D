@@ -377,9 +377,9 @@ void DogFightLevel::Update(float _DeltaTime)
 			CaptainCanteenPlane->SetPlayer(Cuphead);
 			CaptainCanteenPlane->SetColMapImage(ColMapRenderer);
 
-			//PH1BulldogPlane = CreateActor<BulldogPlane>(GameObjectGroup::Monster);
-			//PH1BulldogPlane->GetTransform().SetWorldPosition({ 0, 100 });
-			//PH1BulldogPlane->SetPlayer(Cuphead);
+			PH1BulldogPlane = CreateActor<BulldogPlane>(GameObjectGroup::Monster);
+			PH1BulldogPlane->GetTransform().SetWorldPosition({ 0, 100 });
+			PH1BulldogPlane->SetPlayer(Cuphead);
 		}
 	}
 
@@ -434,6 +434,7 @@ void DogFightLevel::Update(float _DeltaTime)
 		if (LeaderCopter == nullptr)
 		{
 			LeaderCopter = CreateActor<DogCopter>(GameObjectGroup::Monster);
+			LeaderCopter->GetTransform().SetWorldPosition({ 0, 0 });
 		}
 
 		if (CaptainCanteenPlane == nullptr)

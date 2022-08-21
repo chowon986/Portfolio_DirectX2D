@@ -5,7 +5,7 @@
 #include "DogCopter.h"
 
 MonsterWeaponBase::MonsterWeaponBase()
-	: IntervalTime(0.1f)
+	: IntervalTime(0.01f)
 	, ElapsedTime(0.0f)
 	, Character(nullptr)
 	, State(InGameMonsterState::Prepare)
@@ -26,7 +26,6 @@ void MonsterWeaponBase::UpdateDirection()
 		return;
 	}
 	Ph2DogState = Character->GetPh2DogState();
-	DogCopterState = Character->GetDogCopterState();
 	State = Character->GetState();
 	AttackState = Character->GetAttackState();
 
@@ -52,11 +51,6 @@ void MonsterWeaponBase::UpdateDirection()
 		{
 			Direction = BowWowDog->GetBowWowDirection();
 		}
-	}
-
-	if (DogCopterState == InGameDogCopterState::Attack1)
-	{
-		Direction = Character->GetRenderer()->GetTransform().GetLocalScale().x > 0 ? float4::RIGHT : float4::LEFT;
 	}
 
 	UpdatePivot();
@@ -91,8 +85,7 @@ void MonsterWeaponBase::UpdatePivot()
 	if (State != InGameMonsterState::Attack1 &&
 		State != InGameMonsterState::Attack2 &&
 		State != InGameMonsterState::Attack3 &&
-		State != InGameMonsterState::Attack4 &&
-		DogCopterState != InGameDogCopterState::Attack1)
+		State != InGameMonsterState::Attack4)
 	{
 		return;
 	}
@@ -124,20 +117,6 @@ void MonsterWeaponBase::UpdatePivot()
 	else if (State == InGameMonsterState::Attack3 || State == InGameMonsterState::Attack4)
 	{
 		GetTransform().SetLocalPosition({ 0.0f, 10.0f });
-	}
-
-	else if (DogCopterState == InGameDogCopterState::Attack1)
-	{
-		if (Character->GetRenderer()->GetTransform().GetLocalScale().x > 0)
-		{
-			if (Character->GetAttackState() == InGameMonsterAttackState::LaserPattern1)
-			{
-				GetTransform().SetLocalPosition({ 0.0f, 0.0f });
-			}
-		}
-		else
-		{
-		}
 	}
 }
 

@@ -18,9 +18,9 @@ public:
 	MonsterWeaponBase& operator=(const MonsterWeaponBase& _Other) = delete;
 	MonsterWeaponBase& operator=(MonsterWeaponBase&& _Other) noexcept = delete;
 
-	void OnMonsterStateChanged(InGameMonsterState _State);
+	virtual void OnMonsterStateChanged(InGameMonsterState _State);
 	void OnPh2DogStateChanged(InGamePh2DogState _State);
-	void OnMonsterAttackStateChanged(InGameMonsterAttackState _AttackState);
+	virtual void OnMonsterAttackStateChanged(InGameMonsterAttackState _AttackState);
 
 	void SetParent(GameEngineUpdateObject* _Parent) override;
 

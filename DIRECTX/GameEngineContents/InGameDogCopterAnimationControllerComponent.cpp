@@ -23,47 +23,42 @@ void InGameDogCopterAnimationControllerComponent::UpdateAnimation()
 		return;
 	}
 	std::string AnimationNumber = InGameMonster->GetStringNumber();
-	InGameDogCopterState State = InGameMonster->GetDogCopterState();
+	InGameMonsterState State = InGameMonster->GetState();
 	InGameMonsterAttackState AttackState = InGameMonster->GetAttackState();
 	Name = GetMonsterName();
 
-	if (State == InGameDogCopterState::Prepare)
+	if (State == InGameMonsterState::Prepare)
 	{
 		Renderer->ChangeFrameAnimation(Name + "Intro");
 	}
 
-	else if (State == InGameDogCopterState::Idle)
+	else if (State == InGameMonsterState::Idle ||
+		State == InGameMonsterState::Attack1)
 	{
 		Renderer->ChangeFrameAnimation(Name + "Idle");
 	}
 
-	else if (State == InGameDogCopterState::Attack1Start ||
-		State == InGameDogCopterState::Attack1)
-	{
-		Renderer->ChangeFrameAnimation(Name + "Attack1");
-	}
-
-	else if (State == InGameDogCopterState::RotateCameraIn)
+	else if (State == InGameMonsterState::RotateCameraIn)
 	{
 		Renderer->ChangeFrameAnimation(Name + "RotateCamera");
 	}
 
-	else if (State == InGameDogCopterState::RotateCameraIdle)
+	else if (State == InGameMonsterState::RotateCameraIdle)
 	{
 		Renderer->ChangeFrameAnimation(Name + "RotatedIdle");
 	}
 
-	else if (State == InGameDogCopterState::Attack2)
+	else if (State == InGameMonsterState::Attack2)
 	{
 		Renderer->ChangeFrameAnimation(Name + "Attack2");
 	}
 
-	else if (State == InGameDogCopterState::RotateCameraOut)
+	else if (State == InGameMonsterState::RotateCameraOut)
 	{
 		Renderer->ChangeFrameAnimation(Name + "RotateCameraOut");
 	}
 
-	else if (State == InGameDogCopterState::TakeDamage)
+	else if (State == InGameMonsterState::TakeDamage)
 	{
 	}
 }
@@ -73,7 +68,7 @@ void InGameDogCopterAnimationControllerComponent::Start()
 	IInGameMonsterBase* InGameMonster = GetParent<IInGameMonsterBase>();
 	if (InGameMonster != nullptr)
 	{
-		InGameMonster->GetDogCopterStateChangedDelegate().Add(std::bind(&InGameDogCopterAnimationControllerComponent::OnDogCopterStateChanged, this, std::placeholders::_1));
+		InGameMonster->GetStateChangedDelegate().Add(std::bind(&InGameMonsterAnimationControllerComponent::OnStateChanged, this, std::placeholders::_1));
 		InGameMonster->GetAttackStateChangedDelegate().Add(std::bind(&InGameDogCopterAnimationControllerComponent::OnAttackStateChanged, this, std::placeholders::_1));
 	}
 }
@@ -87,7 +82,7 @@ void InGameDogCopterAnimationControllerComponent::End()
 {
 }
 
-void InGameDogCopterAnimationControllerComponent::OnDogCopterStateChanged(InGameDogCopterState _State)
+void InGameDogCopterAnimationControllerComponent::OnStateChanged(InGameDogCopterState _State)
 {
 	UpdateAnimation();
 }

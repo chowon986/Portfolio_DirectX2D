@@ -7,22 +7,6 @@
 #include "IShootable.h"
 #include "GameEngineCore/GameEngineActor.h"
 
-enum class InGameDogCopterState
-{
-	Prepare,
-	RotatedIdle,
-	Idle,
-	RotateCameraIdle,
-	Attack1Start,
-	Attack1,
-	Attack2Start,
-	Attack2,
-	TakeDamage,
-	RotateCameraIn,
-	RotateCameraOut,
-	Die,
-};
-
 enum class InGamePh2DogState
 {
 	Prepare1,
@@ -58,6 +42,11 @@ enum class InGameMonsterState
 	LookLeft,
 	Blink,
 	Look,
+	RotatedIdle,
+	RotateCameraIdle,
+	BeforeRotateCameraIn,
+	RotateCameraIn,
+	RotateCameraOut,
 };
 
 enum class InGameMonsterAttackState
@@ -98,9 +87,6 @@ public:
 	void SetPh2DogState(InGamePh2DogState _State);
 	InGamePh2DogState GetPh2DogState() { return  Ph2DogState; }
 
-	void SetDogCopterState(InGameDogCopterState _State);
-	InGameDogCopterState GetDogCopterState() { return  DogCopterState; }
-
 	virtual void SetAttackState(InGameMonsterAttackState _State);
 	InGameMonsterAttackState GetAttackState() { return  AttackState; }
 
@@ -108,7 +94,6 @@ public:
 	GameEngineTextureRenderer* GetRenderer() { return Renderer; }
 
 	MulticastDelegate<InGameMonsterState>& GetStateChangedDelegate() { return StateChangedDelegate; }
-	MulticastDelegate<InGameDogCopterState>& GetDogCopterStateChangedDelegate() { return DogCopterStateChangedDelegate; }
 	MulticastDelegate<InGamePh2DogState>& GetPh2DogStateChangedDelegate() { return Ph2DogStateChangedDelegate; }
 	MulticastDelegate<InGameMonsterAttackState>& GetAttackStateChangedDelegate() { return AttackStateChangedDelegate; }
 
@@ -164,13 +149,11 @@ private:
 	BulldogPlane* Plane;
 	InGameMonsterState State;
 	InGamePh2DogState Ph2DogState;
-	InGameDogCopterState DogCopterState;
 	InGameMonsterAttackState AttackState;
 	GameEngineTextureRenderer* Renderer;
 	GameEngineTextureRenderer* ColMapImage;
 	MulticastDelegate<InGameMonsterState> StateChangedDelegate;
 	MulticastDelegate<InGamePh2DogState> Ph2DogStateChangedDelegate;
-	MulticastDelegate<InGameDogCopterState> DogCopterStateChangedDelegate;
 	MulticastDelegate<InGameMonsterAttackState> AttackStateChangedDelegate;
 };
 
