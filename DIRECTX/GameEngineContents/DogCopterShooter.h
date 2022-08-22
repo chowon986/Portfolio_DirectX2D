@@ -33,13 +33,16 @@ private:
 	void End() override;
 	virtual void OnMonsterStateChanged(InGameMonsterState _State) override;
 	virtual void OnMonsterAttackStateChanged(InGameMonsterAttackState _AttackState) override;
+	virtual void UpdatePivot() override;
 
 private:
 	std::vector<GameEngineTextureRenderer*> PadRenderers;
 	std::vector<GameEngineTextureRenderer*> LaserMachineRenderers;
 	std::vector<GameEngineTextureRenderer*> PadBackRenderers;
 	std::vector<GameEngineTextureRenderer*> LaserRenderers;
+
 	int AttackCount;
 	int RandomAttackPattern;
+	InGameMonsterAttackState MonsterAttackState;
 };
 

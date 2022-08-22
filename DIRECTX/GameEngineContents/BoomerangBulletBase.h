@@ -17,6 +17,11 @@ public:
 	float4 GetDirection() { return Direction; }
 	void SetDirection(float4 _Direction);
 
+protected:
+	void Start() override;
+	void Update(float _DeltaTime) override;
+	void End() override;
+
 private:
 	float4 Direction;
 

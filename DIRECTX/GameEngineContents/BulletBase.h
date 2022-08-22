@@ -1,4 +1,5 @@
 #pragma once
+#include "Delegates.h"
 #include "GameEngineCore/GameEngineActor.h"
 
 class GameEngineTextureRenderer;
@@ -14,8 +15,8 @@ public:
 	BulletBase& operator=(BulletBase&& _Other) noexcept = delete;
 
 public:
-	float4 GetDirection() { return Direction; }
-	void SetDirection(float4 _Direction);
+	virtual float4 GetDirection() { return Direction; }
+	virtual void SetDirection(float4 _Direction);
 
 	void SetColMapImage(GameEngineTextureRenderer* _ColMapImage)
 	{
@@ -37,6 +38,9 @@ public:
 		return Collision;
 	}
 
+	void SetIsOnGround(bool _IsOnGround);
+	MulticastDelegate<bool>& GetIsOnGroundChangedDelegate() { return IsOnGroundChangedDelegate; }
+
 	void Death();
 
 protected:
@@ -45,12 +49,14 @@ protected:
 	void End() override;
 
 private:
-	float4 Direction;
 	bool CollisionCheck(GameEngineCollision* _This, GameEngineCollision* _Other);
 
 protected:
+	float4 Direction;
 	GameEngineTextureRenderer* Renderer;
 	BulletMovementComponent* MovementComponent;
 	GameEngineTextureRenderer* ColMapImage;
 	GameEngineCollision* Collision;
+	MulticastDelegate<bool> IsOnGroundChangedDelegate;
+	bool IsOnGround;
 };

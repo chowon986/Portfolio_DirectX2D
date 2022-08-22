@@ -26,6 +26,7 @@ class GameEngineRenderer;
 class GameEngineTransform;
 class GameEngineCollision;
 class GameEngineCameraActor;
+class GameEngineTextureRenderer;
 class GameEngineLevel :
 	public GameEngineNameObject,
 	public GameEngineUpdateObject
@@ -80,6 +81,9 @@ public:
 	//{
 	//	return CreateActor<ActorType>(static_cast<int>(_ObjectGroupIndex));
 	//}
+
+	GameEngineTextureRenderer* GetMainColMapImage() { return MainColMapImage; }
+	void SetMainColMapImage(GameEngineTextureRenderer* _MainColMapImage) { MainColMapImage = _MainColMapImage; }
 
 	template<typename ActorType, typename GroupIndexType>
 	ActorType* CreateActor(GroupIndexType _ObjectGroupIndex)
@@ -201,5 +205,7 @@ private:
 	std::vector<GameEngineCamera*> Cameras;
 
 	std::map<int, std::list<GameEngineCollision*>> AllCollisions;
+
+	GameEngineTextureRenderer* MainColMapImage;
 };
 

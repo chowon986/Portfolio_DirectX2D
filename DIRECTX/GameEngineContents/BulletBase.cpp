@@ -14,6 +14,15 @@ BulletBase::~BulletBase()
 {
 }
 
+void BulletBase::SetIsOnGround(bool _IsOnGround)
+{
+	if (IsOnGround != _IsOnGround)
+	{
+		IsOnGround = _IsOnGround;
+		IsOnGroundChangedDelegate.Invoke(IsOnGround);
+	}
+}
+
 void BulletBase::SetDirection(float4 _Direction)
 {
 	Direction = _Direction;

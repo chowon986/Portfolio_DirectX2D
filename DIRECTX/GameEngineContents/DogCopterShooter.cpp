@@ -1,8 +1,8 @@
 #include "PreCompile.h"
 #include "DogCopterShooter.h"
 #include "IInGameMonsterBase.h"
-#include "DogCopterBullet.h"
 #include "DogCopter.h"
+#include "DogBowlBullet.h"
 
 DogCopterShooter::DogCopterShooter()
 	: PadRenderers()
@@ -347,21 +347,27 @@ void DogCopterShooter::End()
 
 void DogCopterShooter::OnMonsterStateChanged(InGameMonsterState _State)
 {
-	MonsterWeaponBase::OnMonsterStateChanged(_State);
+	//MonsterWeaponBase::OnMonsterStateChanged(_State);
 
 	if (_State == InGameMonsterState::Attack1)
 	{
-
 		if (DogCopter* Parent = dynamic_cast<DogCopter*>(GetParent()))
 		{
 			Parent->SetAttackState(InGameMonsterAttackState::LaserPattern1);
+		}
+	}
+	else if (_State == InGameMonsterState::Attack2)
+	{
+		if (DogCopter* Parent = dynamic_cast<DogCopter*>(GetParent()))
+		{
+			Parent->SetAttackState(InGameMonsterAttackState::DogBowl);
 		}
 	}
 }
 
 void DogCopterShooter::OnMonsterAttackStateChanged(InGameMonsterAttackState _AttackState)
 {
-	MonsterWeaponBase::OnMonsterAttackStateChanged(_AttackState);
+	//MonsterWeaponBase::OnMonsterAttackStateChanged(_AttackState);
 
 	if (_AttackState == InGameMonsterAttackState::LaserPattern1)
 	{
@@ -407,10 +413,15 @@ void DogCopterShooter::OnMonsterAttackStateChanged(InGameMonsterAttackState _Att
 	}
 }
 
+void DogCopterShooter::UpdatePivot()
+{
+
+}
+
 
 void DogCopterShooter::Update(float _DeltaTime)
 {
-
+	
 }
 
 void DogCopterShooter::OnPadOpenAnimationFrameFinished(const FrameAnimation_DESC& _Info)

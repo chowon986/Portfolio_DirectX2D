@@ -62,3 +62,15 @@ void BoomerangBulletBase::SetDirection(float4 _Direction)
 		}
 	}
 }
+
+void BoomerangBulletBase::Start()
+{
+}
+
+void BoomerangBulletBase::Update(float _DeltaTime)
+{
+}
+
+void BoomerangBulletBase::End()
+{
+}

@@ -190,8 +190,10 @@
     <ClInclude Include="ConvergeShooter.h" />
     <ClInclude Include="Cowgirl.h" />
     <ClInclude Include="Delegates.h" />
+    <ClInclude Include="DogBowlBullet.h" />
+    <ClInclude Include="DogBowlBulletMovementComponent.h" />
+    <ClInclude Include="DogBowlShooter.h" />
     <ClInclude Include="DogCopter.h" />
-    <ClInclude Include="DogCopterBullet.h" />
     <ClInclude Include="DogCopterShooter.h" />
     <ClInclude Include="Dogfight.h" />
     <ClInclude Include="DogFightLevel.h" />
@@ -231,7 +233,7 @@
     <ClInclude Include="IWorldMapCharacterBase.h" />
     <ClInclude Include="Ladder.h" />
     <ClInclude Include="Lantern.h" />
-    <ClInclude Include="LaserBullet.h" />
+    <ClInclude Include="MonsterPhysicsComponent.h" />
     <ClInclude Include="MonsterWeaponBase.h" />
     <ClInclude Include="NewsCat.h" />
     <ClInclude Include="Omm.h" />
@@ -315,8 +317,10 @@
     <ClCompile Include="ConvergeBullet.cpp" />
     <ClCompile Include="ConvergeShooter.cpp" />
     <ClCompile Include="Cowgirl.cpp" />
+    <ClCompile Include="DogBowlBullet.cpp" />
+    <ClCompile Include="DogBowlBulletMovementComponent.cpp" />
+    <ClCompile Include="DogBowlShooter.cpp" />
     <ClCompile Include="DogCopter.cpp" />
-    <ClCompile Include="DogCopterBullet.cpp" />
     <ClCompile Include="DogCopterShooter.cpp" />
     <ClCompile Include="Dogfight.cpp" />
     <ClCompile Include="DogFightLevel.cpp" />
@@ -355,7 +359,7 @@
     <ClCompile Include="IWorldMapCharacterBase.cpp" />
     <ClCompile Include="Ladder.cpp" />
     <ClCompile Include="Lantern.cpp" />
-    <ClCompile Include="LaserBullet.cpp" />
+    <ClCompile Include="MonsterPhysicsComponent.cpp" />
     <ClCompile Include="MonsterWeaponBase.cpp" />
     <ClCompile Include="NewsCat.cpp" />
     <ClCompile Include="Omm.cpp" />

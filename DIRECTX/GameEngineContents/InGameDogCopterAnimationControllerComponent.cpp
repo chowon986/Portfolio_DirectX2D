@@ -43,14 +43,10 @@ void InGameDogCopterAnimationControllerComponent::UpdateAnimation()
 		Renderer->ChangeFrameAnimation(Name + "RotateCamera");
 	}
 
-	else if (State == InGameMonsterState::RotateCameraIdle)
+	else if (State == InGameMonsterState::RotateCameraIdle ||
+		State == InGameMonsterState::Attack2)
 	{
 		Renderer->ChangeFrameAnimation(Name + "RotatedIdle");
-	}
-
-	else if (State == InGameMonsterState::Attack2)
-	{
-		Renderer->ChangeFrameAnimation(Name + "Attack2");
 	}
 
 	else if (State == InGameMonsterState::RotateCameraOut)

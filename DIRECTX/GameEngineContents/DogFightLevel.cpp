@@ -62,6 +62,7 @@ void DogFightLevel::Start()
 		ColMapRenderer->ScaleToTexture();
 		ColMapRenderer->SetPivot(PIVOTMODE::LEFTTOP);
 		ColMapRenderer->GetTransform().SetLocalPosition({ ColMapRenderer->GetTransform().GetLocalPosition().x, ColMapRenderer->GetTransform().GetLocalPosition().y, (int)ZOrder::Background + 1 });
+		SetMainColMapImage(ColMapRenderer);
 	}
 
 	{
@@ -435,6 +436,7 @@ void DogFightLevel::Update(float _DeltaTime)
 		{
 			LeaderCopter = CreateActor<DogCopter>(GameObjectGroup::Monster);
 			LeaderCopter->GetTransform().SetWorldPosition({ 0, 0 });
+			LeaderCopter->SetColMapImage(ColMapRenderer);
 		}
 
 		if (CaptainCanteenPlane == nullptr)

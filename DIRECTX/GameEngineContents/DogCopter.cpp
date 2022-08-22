@@ -2,6 +2,7 @@
 #include "DogCopter.h"
 #include "InGameDogCopterAnimationControllerComponent.h"
 #include "DogCopterShooter.h"
+#include "DogBowlShooter.h"
 
 DogCopter::DogCopter()
 	: Renderer(nullptr)
@@ -28,7 +29,6 @@ void DogCopter::Start()
 		Renderer->AnimationBindEnd("DogCopterIntro", std::bind(&DogCopter::OnIntroAnimationFrameFinished, this, std::placeholders::_1));
 		Renderer->AnimationBindEnd("DogCopterRotateCamera", std::bind(&DogCopter::OnRotateCameraAnimationFrameFinished, this, std::placeholders::_1));
 		Renderer->AnimationBindEnd("DogCopterRotatedIdle", std::bind(&DogCopter::OnRotatedIdleAnimationFrameFinished, this, std::placeholders::_1));
-		Renderer->AnimationBindEnd("DogCopterAttack2", std::bind(&DogCopter::OnAttack2AnimationFrameFinished, this, std::placeholders::_1));
 		Renderer->AnimationBindEnd("DogCopterRotateCameraOut", std::bind(&DogCopter::OnRotateCameraOutAnimationFrameFinished, this, std::placeholders::_1));
 	
 		Renderer->AnimationBindFrame("DogCopterIdle", std::bind(&DogCopter::OnIdleAnimationFrameChanged, this, std::placeholders::_1));
@@ -88,6 +88,9 @@ void DogCopter::Start()
 
 		DogCopterShooter* LaserShooter = GetLevel()->CreateActor<DogCopterShooter>();
 		LaserShooter->SetParent(this);
+
+		DogBowlShooter* BowlShooter = GetLevel()->CreateActor<DogBowlShooter>();
+		BowlShooter->SetParent(this);
 	}
 
 	srand(time(NULL));
@@ -199,11 +202,6 @@ void DogCopter::OnRotatedIdleAnimationFrameFinished(const FrameAnimation_DESC& _
 	Attack2();
 }
 
-void DogCopter::OnAttack2AnimationFrameFinished(const FrameAnimation_DESC& _Info)
-{
-	RotateCameraOut();
-}
-
 void DogCopter::OnRotateCameraOutAnimationFrameFinished(const FrameAnimation_DESC& _Info)
 {
 	Renderer->GetTransform().SetLocalRotate({ 0,0,180 });
@@ -213,7 +211,6 @@ void DogCopter::OnRotateCameraOutAnimationFrameFinished(const FrameAnimation_DES
 	WristRenderer->On();
 	Idle();
 }
-
 
 void DogCopter::OnRotateCameraAnimationFrameChanged(const FrameAnimation_DESC& _Info)
 {

@@ -63,9 +63,11 @@ enum class InGameMonsterAttackState
 	LaserPattern1,
 	LaserPattern2,
 	LaserPattern3,
+	DogBowl,
 };
 
 enum class Phase;
+class MonsterPhysicsComponent;
 class BulldogPlane;
 class IInGameMonsterBase : public GameEngineActor, public IDamageable, public IDieable, public IPreparable, public IIdleable, public IShootable
 {
@@ -92,6 +94,7 @@ public:
 
 	void SetRenderer(GameEngineTextureRenderer* _Renderer);
 	GameEngineTextureRenderer* GetRenderer() { return Renderer; }
+
 
 	MulticastDelegate<InGameMonsterState>& GetStateChangedDelegate() { return StateChangedDelegate; }
 	MulticastDelegate<InGamePh2DogState>& GetPh2DogStateChangedDelegate() { return Ph2DogStateChangedDelegate; }

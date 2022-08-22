@@ -21,7 +21,6 @@ public:
 public:
 	void OnIntroAnimationFrameFinished(const FrameAnimation_DESC& _Info);
 	void OnIdleAnimationFrameChanged(const FrameAnimation_DESC& _Info);
-	void OnAttack2AnimationFrameFinished(const FrameAnimation_DESC& _Info);
 	void OnRotateCameraAnimationFrameFinished(const FrameAnimation_DESC& _Info);
 	void OnRotatedIdleAnimationFrameFinished(const FrameAnimation_DESC& _Info);
 	void OnRotateCameraOutAnimationFrameFinished(const FrameAnimation_DESC& _Info);

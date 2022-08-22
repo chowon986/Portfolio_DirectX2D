@@ -450,17 +450,25 @@
     <ClInclude Include="InGamePh2DogAnimationControllerComponent.h">
       <Filter>Components\Monster</Filter>
     </ClInclude>
-    <ClInclude Include="DogCopterBullet.h">
-      <Filter>Actor\Weapon\Bullet\Monster</Filter>
-    </ClInclude>
     <ClInclude Include="CharacterState.h">
       <Filter>Actor\State</Filter>
     </ClInclude>
     <ClInclude Include="DogCopterShooter.h">
       <Filter>Actor\Weapon\Shooter\Monster</Filter>
     </ClInclude>
-    <ClInclude Include="LaserBullet.h" />
     <ClInclude Include="InGameDogCopterAnimationControllerComponent.h">
+      <Filter>Components\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="DogBowlBullet.h">
+      <Filter>Actor\Weapon\Bullet\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="DogBowlBulletMovementComponent.h">
+      <Filter>Components\Character\InGame\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="DogBowlShooter.h">
+      <Filter>Actor\Weapon\Shooter\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="MonsterPhysicsComponent.h">
       <Filter>Components\Monster</Filter>
     </ClInclude>
   </ItemGroup>
@@ -780,17 +788,25 @@
     <ClCompile Include="InGamePh2DogAnimationControllerComponent.cpp">
       <Filter>Components\Monster</Filter>
     </ClCompile>
-    <ClCompile Include="DogCopterBullet.cpp">
-      <Filter>Actor\Weapon\Bullet\Monster</Filter>
-    </ClCompile>
     <ClCompile Include="CharacterState.cpp">
       <Filter>Actor\State</Filter>
     </ClCompile>
     <ClCompile Include="DogCopterShooter.cpp">
       <Filter>Actor\Weapon\Shooter\Monster</Filter>
     </ClCompile>
-    <ClCompile Include="LaserBullet.cpp" />
     <ClCompile Include="InGameDogCopterAnimationControllerComponent.cpp">
+      <Filter>Components\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="DogBowlBullet.cpp">
+      <Filter>Actor\Weapon\Bullet\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="DogBowlBulletMovementComponent.cpp">
+      <Filter>Components\Character\InGame\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="DogBowlShooter.cpp">
+      <Filter>Actor\Weapon\Shooter\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="MonsterPhysicsComponent.cpp">
       <Filter>Components\Monster</Filter>
     </ClCompile>
   </ItemGroup>
