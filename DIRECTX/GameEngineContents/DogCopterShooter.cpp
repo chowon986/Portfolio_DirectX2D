@@ -205,8 +205,8 @@ void DogCopterShooter::Start()
 		LeftTopPadBackRenderer->Off();
 
 		GameEngineTextureRenderer* LeftMidPadBackRenderer = CreateComponent<GameEngineTextureRenderer>();
-		LeftMidPadBackRenderer->CreateFrameAnimationFolder("PadBackHole", FrameAnimation_DESC("LeftPawHoleMid", 0.1f, false)); 
-		LeftMidPadBackRenderer->CreateFrameAnimationFolder("Nothing", FrameAnimation_DESC("Nothing", 0.1f, false)); 
+		LeftMidPadBackRenderer->CreateFrameAnimationFolder("PadBackHole", FrameAnimation_DESC("LeftPawHoleMid", 0.1f, false));
+		LeftMidPadBackRenderer->CreateFrameAnimationFolder("Nothing", FrameAnimation_DESC("Nothing", 0.1f, false));
 		LeftMidPadBackRenderer->ChangeFrameAnimation("PadBackHole");
 		LeftMidPadBackRenderer->SetScaleModeImage();
 		LeftMidPadBackRenderer->GetTransform().SetLocalPosition({ 299, -585, (int)ZOrder::NPC - 3 });
@@ -234,7 +234,7 @@ void DogCopterShooter::Start()
 		RightMidPadBackRenderer->CreateFrameAnimationFolder("Nothing", FrameAnimation_DESC("Nothing", 0.1f, false));
 		RightMidPadBackRenderer->ChangeFrameAnimation("PadBackHole");
 		RightMidPadBackRenderer->SetScaleModeImage();
-		RightMidPadBackRenderer->GetTransform().SetLocalPosition({ 1167, -567, (int)ZOrder::NPC - 3 });		
+		RightMidPadBackRenderer->GetTransform().SetLocalPosition({ 1167, -567, (int)ZOrder::NPC - 3 });
 		RightMidPadBackRenderer->GetTransform().PixLocalNegativeX();
 		RightMidPadBackRenderer->Off();
 
@@ -265,17 +265,19 @@ void DogCopterShooter::Start()
 		LeftTopLaserRenderer->ChangeFrameAnimation("LaserWarning");
 		LeftTopLaserRenderer->SetScaleModeImage();
 		LeftTopLaserRenderer->GetTransform().SetLocalPosition({ 400, -500, (int)ZOrder::NPC - 5 });
+		LeftTopLaserRenderer->SetPivot(PIVOTMODE::LEFTTOP);
 		LeftTopLaserRenderer->Off();
 
 		GameEngineTextureRenderer* LeftMidLaserRenderer = CreateComponent<GameEngineTextureRenderer>();
-		LeftMidLaserRenderer->CreateFrameAnimationFolder("LaserWarning", FrameAnimation_DESC("LaserWarningB", 0.1f, false)); 
-		LeftMidLaserRenderer->CreateFrameAnimationFolder("LaserBeam", FrameAnimation_DESC("LaserBeamMid", 0.1f, false)); 
-		LeftMidLaserRenderer->CreateFrameAnimationFolder("Nothing", FrameAnimation_DESC("Nothing", 0.1f, false)); 
+		LeftMidLaserRenderer->CreateFrameAnimationFolder("LaserWarning", FrameAnimation_DESC("LaserWarningB", 0.1f, false));
+		LeftMidLaserRenderer->CreateFrameAnimationFolder("LaserBeam", FrameAnimation_DESC("LaserBeamMid", 0.1f, false));
+		LeftMidLaserRenderer->CreateFrameAnimationFolder("Nothing", FrameAnimation_DESC("Nothing", 0.1f, false));
 		LeftMidLaserRenderer->AnimationBindEnd("LaserWarning", std::bind(&DogCopterShooter::OnLaserWarningAnimationFrameFinished, this, std::placeholders::_1));
 		LeftMidLaserRenderer->AnimationBindEnd("LaserBeam", std::bind(&DogCopterShooter::OnLaserShootingAnimationFrameFinished, this, std::placeholders::_1));
 		LeftMidLaserRenderer->ChangeFrameAnimation("LaserWarning");
 		LeftMidLaserRenderer->SetScaleModeImage();
 		LeftMidLaserRenderer->GetTransform().SetLocalPosition({ 400, -600, (int)ZOrder::NPC - 3 });
+		LeftMidLaserRenderer->SetPivot(PIVOTMODE::LEFTTOP);
 		LeftMidLaserRenderer->Off();
 
 		GameEngineTextureRenderer* LeftLowLaserRenderer = CreateComponent<GameEngineTextureRenderer>();
@@ -287,6 +289,7 @@ void DogCopterShooter::Start()
 		LeftLowLaserRenderer->ChangeFrameAnimation("LaserWarning");
 		LeftLowLaserRenderer->SetScaleModeImage();
 		LeftLowLaserRenderer->GetTransform().SetLocalPosition({ 400, -600, (int)ZOrder::NPC - 3 });
+		LeftLowLaserRenderer->SetPivot(PIVOTMODE::LEFTTOP);
 		LeftLowLaserRenderer->Off();
 
 		GameEngineTextureRenderer* RightTopLaserRenderer = CreateComponent<GameEngineTextureRenderer>();
@@ -299,6 +302,7 @@ void DogCopterShooter::Start()
 		RightTopLaserRenderer->SetScaleModeImage();
 		RightTopLaserRenderer->GetTransform().SetLocalPosition({ 880, -500, (int)ZOrder::NPC - 5 });
 		RightTopLaserRenderer->GetTransform().PixLocalNegativeX();
+		RightTopLaserRenderer->SetPivot(PIVOTMODE::RIGHTTOP);
 		RightTopLaserRenderer->Off();
 
 		GameEngineTextureRenderer* RightMidLaserRenderer = CreateComponent<GameEngineTextureRenderer>();
@@ -311,6 +315,7 @@ void DogCopterShooter::Start()
 		RightMidLaserRenderer->SetScaleModeImage();
 		RightMidLaserRenderer->GetTransform().SetLocalPosition({ 880, -600, (int)ZOrder::NPC - 3 });
 		RightMidLaserRenderer->GetTransform().PixLocalNegativeX();
+		RightMidLaserRenderer->SetPivot(PIVOTMODE::RIGHTTOP);
 		RightMidLaserRenderer->Off();
 
 		GameEngineTextureRenderer* RightLowLaserRenderer = CreateComponent<GameEngineTextureRenderer>();
@@ -322,6 +327,7 @@ void DogCopterShooter::Start()
 		RightLowLaserRenderer->ChangeFrameAnimation("LaserWarning");
 		RightLowLaserRenderer->SetScaleModeImage();
 		RightLowLaserRenderer->GetTransform().SetLocalPosition({ 400, -600, (int)ZOrder::NPC - 3 });
+		RightLowLaserRenderer->SetPivot(PIVOTMODE::RIGHTTOP);
 		RightLowLaserRenderer->Off();
 
 		LaserRenderers.push_back(LeftTopLaserRenderer);
@@ -361,30 +367,15 @@ void DogCopterShooter::OnMonsterAttackStateChanged(InGameMonsterAttackState _Att
 	{
 		int RandomAttackPattern = rand() % 4;
 		int RandomAttackCount = rand() % 2;
-		
+
 		//if (RandomAttackCount == 1)
 		//{
-			PadRenderers[RandomAttackPattern]->On();
-			PadRenderers[RandomAttackPattern]->ChangeFrameAnimation("PadOpen");
-			LaserMachineRenderers[RandomAttackPattern]->On();
-			LaserMachineRenderers[RandomAttackPattern]->ChangeFrameAnimation("LaserPrepare");
-			PadBackRenderers[RandomAttackPattern]->On();
-		//}
-		//else
-		//{
+		PadRenderers[0]->On();
+		PadRenderers[0]->ChangeFrameAnimation("PadOpen");
+		LaserMachineRenderers[0]->On();
+		LaserMachineRenderers[0]->ChangeFrameAnimation("LaserPrepare");
+		PadBackRenderers[0]->On();
 
-		//	PadRenderers[RandomAttackPattern]->On();
-		//	PadRenderers[RandomAttackPattern]->ChangeFrameAnimation("PadOpen");
-		//	LaserMachineRenderers[RandomAttackPattern]->On();
-		//	LaserMachineRenderers[RandomAttackPattern]->ChangeFrameAnimation("LaserPrepare");
-		//	PadBackRenderers[RandomAttackPattern]->On();
-
-		//	PadRenderers[RandomAttackPattern]->On();
-		//	PadRenderers[RandomAttackPattern]->ChangeFrameAnimation("PadOpen");
-		//	LaserMachineRenderers[RandomAttackPattern]->On();
-		//	LaserMachineRenderers[RandomAttackPattern]->ChangeFrameAnimation("LaserPrepare");
-		//	PadBackRenderers[RandomAttackPattern]->On();
-		//}
 	}
 	else if (_AttackState == InGameMonsterAttackState::LaserPattern2)
 	{
@@ -393,11 +384,11 @@ void DogCopterShooter::OnMonsterAttackStateChanged(InGameMonsterAttackState _Att
 
 		//if (RandomAttackCount == 1)
 		//{
-			PadRenderers[RandomAttackPattern]->On();
-			PadRenderers[RandomAttackPattern]->ChangeFrameAnimation("PadOpen");
-			LaserMachineRenderers[RandomAttackPattern]->On();
-			LaserMachineRenderers[RandomAttackPattern]->ChangeFrameAnimation("LaserPrepare");
-			PadBackRenderers[RandomAttackPattern]->On();
+		PadRenderers[0]->On();
+		PadRenderers[0]->ChangeFrameAnimation("PadOpen");
+		LaserMachineRenderers[0]->On();
+		LaserMachineRenderers[0]->ChangeFrameAnimation("LaserPrepare");
+		PadBackRenderers[0]->On();
 		//}
 	}
 	else if (_AttackState == InGameMonsterAttackState::LaserPattern3)
@@ -424,44 +415,126 @@ void DogCopterShooter::Update(float _DeltaTime)
 
 void DogCopterShooter::OnPadOpenAnimationFrameFinished(const FrameAnimation_DESC& _Info)
 {
-	PadRenderers[RandomAttackPattern]->ChangeFrameAnimation("PadOpenIdle");
+	if (DogCopter* Parent = dynamic_cast<DogCopter*>(GetParent()))
+	{
+		if (Parent->GetAttackState() == InGameMonsterAttackState::LaserPattern3)
+		{
+			PadRenderers[4]->ChangeFrameAnimation("PadOpenIdle");
+			PadRenderers[5]->ChangeFrameAnimation("PadOpenIdle");
+		}
+		else
+		{
+			PadRenderers[0]->ChangeFrameAnimation("PadOpenIdle");
+		}
+	}
 }
 
 void DogCopterShooter::OnPadCloseAnimationFrameFinished(const FrameAnimation_DESC& _Info)
 {
-	PadRenderers[RandomAttackPattern]->ChangeFrameAnimation("PadRendererNothing");
-	PadBackRenderers[RandomAttackPattern]->Off();
+	if (DogCopter* Parent = dynamic_cast<DogCopter*>(GetParent()))
+	{
+		if (Parent->GetAttackState() == InGameMonsterAttackState::LaserPattern3)
+		{
+			PadRenderers[4]->ChangeFrameAnimation("PadRendererNothing");
+			PadBackRenderers[4]->Off();
+			PadRenderers[5]->ChangeFrameAnimation("PadRendererNothing");
+			PadBackRenderers[5]->Off();
+		}
+		else
+		{
+			PadRenderers[0]->ChangeFrameAnimation("PadRendererNothing");
+			PadBackRenderers[0]->Off();
+		}
+	}
 }
 
 void DogCopterShooter::OnLaserAnimationFrameFinished(const FrameAnimation_DESC& _Info)
 {
-	LaserMachineRenderers[RandomAttackPattern]->ChangeFrameAnimation("LaserWarning");
-	LaserRenderers[RandomAttackPattern]->ChangeFrameAnimation("LaserWarning");
-	LaserRenderers[RandomAttackPattern]->On();
+	if (DogCopter* Parent = dynamic_cast<DogCopter*>(GetParent()))
+	{
+		if (Parent->GetAttackState() == InGameMonsterAttackState::LaserPattern3)
+		{
+			LaserMachineRenderers[4]->ChangeFrameAnimation("LaserWarning");
+			LaserRenderers[4]->ChangeFrameAnimation("LaserWarning");
+			LaserRenderers[4]->On();
+			LaserMachineRenderers[5]->ChangeFrameAnimation("LaserWarning");
+			LaserRenderers[5]->ChangeFrameAnimation("LaserWarning");
+			LaserRenderers[5]->On();
+		}
+		else
+		{
+			LaserMachineRenderers[0]->ChangeFrameAnimation("LaserWarning");
+			LaserRenderers[0]->ChangeFrameAnimation("LaserWarning");
+			LaserRenderers[0]->On();
+		}
+	}
 }
 
 void DogCopterShooter::OnLaserWarningAnimationFrameFinished(const FrameAnimation_DESC& _Info)
 {
-	LaserMachineRenderers[RandomAttackPattern]->ChangeFrameAnimation("LaserShooting");
-	LaserRenderers[RandomAttackPattern]->ChangeFrameAnimation("LaserBeam");
+	if (DogCopter* Parent = dynamic_cast<DogCopter*>(GetParent()))
+	{
+		if (Parent->GetAttackState() == InGameMonsterAttackState::LaserPattern3)
+		{
+			LaserMachineRenderers[4]->ChangeFrameAnimation("LaserShooting");
+			LaserRenderers[4]->ChangeFrameAnimation("LaserBeam");
+			LaserMachineRenderers[5]->ChangeFrameAnimation("LaserShooting");
+			LaserRenderers[5]->ChangeFrameAnimation("LaserBeam");
+		}
+		else
+		{
+
+			LaserMachineRenderers[0]->ChangeFrameAnimation("LaserShooting");
+			LaserRenderers[0]->ChangeFrameAnimation("LaserBeam");
+		}
+	}
 }
 
 void DogCopterShooter::OnLaserShootingAnimationFrameFinished(const FrameAnimation_DESC& _Info)
 {
-	LaserMachineRenderers[RandomAttackPattern]->ChangeFrameAnimation("LaserClose");
-	LaserRenderers[RandomAttackPattern]->ChangeFrameAnimation("Nothing");
-	LaserRenderers[RandomAttackPattern]->Off();
-	PadRenderers[RandomAttackPattern]->ChangeFrameAnimation("PadClose");
+	if (DogCopter* Parent = dynamic_cast<DogCopter*>(GetParent()))
+	{
+		if (Parent->GetAttackState() == InGameMonsterAttackState::LaserPattern3)
+		{
+			LaserMachineRenderers[4]->ChangeFrameAnimation("LaserClose");
+			LaserRenderers[4]->ChangeFrameAnimation("Nothing");
+			LaserRenderers[4]->Off();
+			PadRenderers[4]->ChangeFrameAnimation("PadClose");
+			LaserMachineRenderers[5]->ChangeFrameAnimation("LaserClose");
+			LaserRenderers[5]->ChangeFrameAnimation("Nothing");
+			LaserRenderers[5]->Off();
+			PadRenderers[5]->ChangeFrameAnimation("PadClose");
+		}
+		else
+		{
+			LaserMachineRenderers[0]->ChangeFrameAnimation("LaserClose");
+			LaserRenderers[0]->ChangeFrameAnimation("Nothing");
+			LaserRenderers[0]->Off();
+			PadRenderers[0]->ChangeFrameAnimation("PadClose");
+		}
+	}
 }
 
 void DogCopterShooter::OnLaserCloseAnimationFrameFinished(const FrameAnimation_DESC& _Info)
 {
-	//LaserMachineRenderers[0]->ChangeFrameAnimation("LaserNothing");
-	//LaserMachineRenderers[0]->Off();
-	//PadBackRenderers[0]->Off();
-	LaserMachineRenderers[RandomAttackPattern]->ChangeFrameAnimation("LaserNothing");
-	LaserMachineRenderers[RandomAttackPattern]->Off();
-	PadBackRenderers[RandomAttackPattern]->Off();
+	if (DogCopter* Parent = dynamic_cast<DogCopter*>(GetParent()))
+	{
+		if (Parent->GetAttackState() == InGameMonsterAttackState::LaserPattern3)
+		{
+			LaserMachineRenderers[4]->ChangeFrameAnimation("LaserNothing");
+			LaserMachineRenderers[4]->Off();
+			PadBackRenderers[4]->Off();
+			LaserMachineRenderers[5]->ChangeFrameAnimation("LaserNothing");
+			LaserMachineRenderers[5]->Off();
+			PadBackRenderers[5]->Off();
+		}
+		else
+		{
+			LaserMachineRenderers[0]->ChangeFrameAnimation("LaserNothing");
+			LaserMachineRenderers[0]->Off();
+			PadBackRenderers[0]->Off();
+		}
+	}
 
 	if (DogCopter* Parent = dynamic_cast<DogCopter*>(GetParent()))
 	{
