@@ -36,7 +36,7 @@ public:
 	void ResetPositionPlanePuffRight(const FrameAnimation_DESC& _Info);
 	void ResetPositionPlanePuffLeft(const FrameAnimation_DESC& _Info);
 	void PushToRotateCamera(GameEngineUpdateObject* _Object) override;
-
+	void LightUpAnimaitonFrameFinished(const FrameAnimation_DESC& _Info);
 protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;
@@ -65,5 +65,6 @@ private:
 	DogCopter* LeaderCopter;
 	InGameCuphead* Cuphead;
 	bool OnceCheck;
+	GameEngineTextureRenderer* ScreenLightRenderer;
 };
 

@@ -4,6 +4,7 @@
 
 enum class Phase
 {
+	Ready,
 	Phase1,
 	Phase2,
 	Phase3,

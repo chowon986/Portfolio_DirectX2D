@@ -49,7 +49,15 @@ void DogFightLevel::ColMapOnOffSwitch()
 
 void DogFightLevel::Start()
 {
-
+	{
+		Background* ScreenLight = CreateActor<Background>(GameObjectGroup::UI);
+		ScreenLightRenderer = ScreenLight->CreateComponent <GameEngineTextureRenderer>();
+		ScreenLightRenderer->ChangeCamera(CAMERAORDER::BACKGROUND);
+		ScreenLightRenderer->CreateFrameAnimationFolder("LightUp", FrameAnimation_DESC("IrisA", 0, 0, 0.1f));
+		ScreenLightRenderer->ChangeFrameAnimation("LightUp");
+		ScreenLightRenderer->GetTransform().SetLocalScale({ 1280.0f, 720.0f, (int)ZOrder::UI + 1 });
+		ScreenLightRenderer->AnimationBindEnd("LightUp", std::bind(&DogFightLevel::LightUpAnimaitonFrameFinished, this, std::placeholders::_1));
+	}
 	{
 		Background* ColMapImage = CreateActor<Background>(GameObjectGroup::UI);
 		ColMapRenderer = ColMapImage->CreateComponent<GameEngineTextureRenderer>();
@@ -63,6 +71,7 @@ void DogFightLevel::Start()
 		ColMapRenderer->SetPivot(PIVOTMODE::LEFTTOP);
 		ColMapRenderer->GetTransform().SetLocalPosition({ ColMapRenderer->GetTransform().GetLocalPosition().x, ColMapRenderer->GetTransform().GetLocalPosition().y, (int)ZOrder::Background + 1 });
 		SetMainColMapImage(ColMapRenderer);
+		ColMapRenderer->ChangeCamera(CAMERAORDER::BACKGROUND);
 	}
 
 	{
@@ -76,6 +85,8 @@ void DogFightLevel::Start()
 		BackgroundSkyRenderer->ScaleToTexture();
 		BackgroundSkyRenderer->SetPivot(PIVOTMODE::LEFTTOP);
 		BackgroundSkyRenderer->GetTransform().SetLocalPosition({ BackgroundSkyRenderer->GetTransform().GetLocalPosition().x, BackgroundSkyRenderer->GetTransform().GetLocalPosition().y + 250, (int)ZOrder::Background });
+		BackgroundSkyRenderer->ChangeCamera(CAMERAORDER::BACKGROUND);
+
 	}
 
 	{
@@ -85,6 +96,7 @@ void DogFightLevel::Start()
 			return;
 		}
 		Hills->GetTransform().SetLocalPosition({ -50, -420, (int)ZOrder::Background - 2 });
+
 	}
 
 	//Cloud
@@ -291,9 +303,9 @@ void DogFightLevel::Start()
 	}
 
 	SetPhase(Phase::Phase3);
-	// 카메라 내 오브젝트 크기 조정 GetMainCamera()->SetProjectionSize({ 1536.0f, 864.0f });
+	//카메라 내 오브젝트 크기 조정 
+	GetMainCamera()->SetProjectionSize({ 1408.0f, 792.0f });
 }
-
 void DogFightLevel::ResetPositionCloudLeftA(const FrameAnimation_DESC& _Info)
 {
 	CloudA1->GetTransform().SetLocalPosition({ -150, -250, (int)ZOrder::Background - 1 });
@@ -360,11 +372,21 @@ void DogFightLevel::PushToRotateCamera(GameEngineUpdateObject* _Object)
 	}
 }
 
+void DogFightLevel::LightUpAnimaitonFrameFinished(const FrameAnimation_DESC& _Info)
+{
+	SetPhase(Phase::Ready);
+}
+
 void DogFightLevel::Update(float _DeltaTime)
 {
 	ColMapOnOffSwitch();
 
-	if (GetPhase() == Phase::Phase1)
+	if (GetPhase() == Phase::Ready)
+	{
+
+	}
+
+	else if (GetPhase() == Phase::Phase1)
 	{
 		if (CaptainCanteenPlane == nullptr)
 		{
@@ -428,7 +450,7 @@ void DogFightLevel::Update(float _DeltaTime)
 
 			OnceCheck = true;
 		}
-		
+
 	}
 
 	else if (GetPhase() == Phase::Phase3)
@@ -466,3 +488,4 @@ void DogFightLevel::Update(float _DeltaTime)
 void DogFightLevel::End()
 {
 }
+

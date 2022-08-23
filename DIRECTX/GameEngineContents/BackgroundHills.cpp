@@ -16,6 +16,7 @@ void BackgroundHills::Start()
 	Renderer->ChangeFrameAnimation("BackgroundHills");
 	Renderer->ScaleToTexture();
 	Renderer->SetPivot(PIVOTMODE::LEFTTOP);
+	Renderer->ChangeCamera(CAMERAORDER::BACKGROUND);
 }
 
 void BackgroundHills::Update(float _DeltaTime)
