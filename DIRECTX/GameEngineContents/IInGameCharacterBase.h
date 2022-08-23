@@ -40,7 +40,7 @@ enum class InGameCharacterAttackState
 	SuperAttack,
 };
 
-
+class GameEngineCollision;
 class PhysicsComponent;
 class IInGameCharacterBase : public GameEngineActor, public IAimable, public IDamageable, public IDashable, public IDieable, public IDuckable,
 							 public IJumpable, public IParriable, public IPreparable, public IRunable, public IShootable, public ISpecialAttackable,
@@ -56,6 +56,10 @@ public:
 	IInGameCharacterBase(IInGameCharacterBase&& _Other) noexcept = delete;
 	IInGameCharacterBase& operator=(const IInGameCharacterBase& _Other) = delete;
 	IInGameCharacterBase& operator=(IInGameCharacterBase&& _Other) noexcept = delete;
+
+protected:
+	virtual void Start() override;
+	virtual void Update(float _Delta) override;
 
 public:
 	void SetState(InGameCharacterState _State);
@@ -111,5 +115,7 @@ private:
 	MulticastDelegate<bool> IsOnGroundChangedDelegate;
 	bool IsOnGround;
 	float HP;
+	GameEngineCollision* RedDogBowlCollsion;
+	GameEngineCollision* YellowDogBowlCollsion;
 };
 

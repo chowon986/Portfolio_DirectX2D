@@ -184,7 +184,7 @@ void Bulldog::UpdateState()
 {
 	if (true == Collision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::PC_BULLET, CollisionType::CT_AABB2D,
 		std::bind(&Bulldog::OnTakeDamage, this, std::placeholders::_1, std::placeholders::_2)))
-	{
+	{					
 		SetHP(GetHP() - 1);
 		TakeDamage();
 	}

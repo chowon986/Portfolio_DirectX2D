@@ -147,6 +147,10 @@ public:
 
 	void AllClear();
 
+	virtual void PushToRotateCamera(GameEngineUpdateObject* _Object)
+	{
+
+	}
 protected:
 	void PushRendererToRotateCamera(GameEngineRenderer* _Renderer)
 	{

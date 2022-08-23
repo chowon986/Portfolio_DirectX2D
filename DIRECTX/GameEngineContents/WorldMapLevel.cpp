@@ -68,11 +68,6 @@ void WorldMapLevel::LevelStartEvent()
 		}
 	}
 
-	if (false == GameEngineInput::GetInst()->IsKey("ColMapOnOffSwitch"))
-	{
-		GameEngineInput::GetInst()->CreateKey("ColMapOnOffSwitch", 'O');
-	}
-
 	{
 		// 바다 배경 왼쪽
 		Background* OutsideOfMainLandLeft = CreateActor<Background>(GameObjectGroup::UI);

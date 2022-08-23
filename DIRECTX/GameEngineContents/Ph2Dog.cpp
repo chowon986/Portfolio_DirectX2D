@@ -26,11 +26,6 @@ Ph2Dog::~Ph2Dog()
 
 void Ph2Dog::Start()
 {
-	// IntroTop : 위 -> 오른쪽 -> 아래 -> 왼쪽
-	// IntroRight : 오른쪽 -> 아래 -> 왼쪽 -> 위
-	// IntroBottom : 아래 -> 왼쪽 -> 위 -> 오른쪽
-	// IntroLeft : 왼쪽 -> 위쪽 -> 오른쪽 -> 아래
-
 	{
 		Renderer = CreateComponent<GameEngineTextureRenderer>();
 		Renderer->CreateFrameAnimationFolder("Ph2DogIntroTop", FrameAnimation_DESC("Ph2DogIntroTop", 0.1f));
@@ -284,8 +279,35 @@ void Ph2Dog::OnIdleAnimaitionFinished(const FrameAnimation_DESC& _Info)
 	{
 		float4 PlayerPos = Player->GetRenderer()->GetTransform().GetWorldPosition();
 		float4 MyPos = GetRenderer()->GetTransform().GetWorldPosition();
-		float4 Direction = float4({ (PlayerPos - MyPos) / (PlayerPos - MyPos) });
-		SetBowWowDirection(Direction);
+		//PlayerPos - MyPos;
+		ShootPos = PlayerPos - MyPos;
+		
+		if (ShootPos.x > 0)
+		{
+			ShootPos.x = 1;
+		}
+		else if(ShootPos.x < 0)
+		{
+			ShootPos.x = -1;
+		}
+		else
+		{
+			ShootPos.x = 0;
+		}
+		if (ShootPos.y > 0)
+		{
+			ShootPos.y = 1;
+		}
+		else if(ShootPos.y < 0)
+		{
+			ShootPos.y = -1;
+		}
+		else
+		{
+			ShootPos.y = 0;
+		}
+
+		SetBowWowDirection(ShootPos);
 		Shoot();
 	}
 	else
@@ -305,9 +327,7 @@ void Ph2Dog::OnAttackAnimationFrameChanged(const FrameAnimation_DESC& _Info)
 	{
 		if (Player != nullptr)
 		{
-
-		SetAttackState(InGameMonsterAttackState::BowWow);
-
+			SetAttackState(InGameMonsterAttackState::BowWow);
 		}
 	}
 	else

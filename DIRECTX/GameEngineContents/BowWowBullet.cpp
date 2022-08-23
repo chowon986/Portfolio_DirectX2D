@@ -27,11 +27,11 @@ void BowWowBullet::Start()
 	Renderer->SetScaleModeImage();
 	SetRenderer(Renderer);
 	Collision = CreateComponent<GameEngineCollision>();
-	Collision->GetTransform().SetLocalScale({ 80.0f, 80.0f, 1.0f });
+	Collision->GetTransform().SetLocalScale({ 60.0f, 60.0f, 1.0f });
 	Collision->ChangeOrder(ObjectOrder::MONSTER_BULLET);
 
 	MovementComponent = CreateComponent<BulletMovementComponent>();
-	MovementComponent->SetSpeed(5.0f);
+	MovementComponent->SetSpeed(2.0f);
 }
 
 void BowWowBullet::Update(float _DeltaTime)

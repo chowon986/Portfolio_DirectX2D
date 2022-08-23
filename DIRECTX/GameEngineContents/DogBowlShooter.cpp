@@ -40,19 +40,19 @@ void DogBowlShooter::Update(float _DeltaTime)
 
 				DogBowlBullet* Bullet = GetLevel()->CreateActor<DogBowlBullet>();
 				Bullet->SetColMapImage(GetColMapImage());
-				Bullet->GetRenderer()->GetTransform().SetLocalPosition(Bullet->TopDogBowl[RandomKey]);
+				Bullet->GetTransform().SetWorldPosition({ 500.0f, 70.0f }); /* { Bullet->TopDogBowl[RandomKey]}); */
+				Bullet->GetLevel()->PushToRotateCamera(Bullet);
 				if (RandomKey == 0)
 				{
 					Bullet->GetRenderer()->ChangeFrameAnimation("RedDogBowlDrop");
 					Bullet->GetMonsterPhysicsComponent()->Reset();
-					Bullet->GetMonsterPhysicsComponent()->AddForce(55);
-					//Bullet->SetDirection(float4::DOWN);
+					Bullet->GetMonsterPhysicsComponent()->AddForce(30);
 				}
 				else
 				{
 					Bullet->GetRenderer()->ChangeFrameAnimation("YellowDogBowlDrop");
 					Bullet->GetMonsterPhysicsComponent()->Reset();
-					Bullet->GetMonsterPhysicsComponent()->AddForce(55);
+					Bullet->GetMonsterPhysicsComponent()->AddForce(30);
 				}
 				break;
 			}

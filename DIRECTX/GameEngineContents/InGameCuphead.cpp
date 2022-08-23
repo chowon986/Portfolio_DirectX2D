@@ -25,6 +25,7 @@ InGameCuphead::~InGameCuphead()
 
 void InGameCuphead::Start()
 {
+	IInGameCharacterBase::Start();
 	if (false == GameEngineInput::GetInst()->IsKey("Aim"))
 	{
 		GameEngineInput::GetInst()->CreateKey("Aim", 'A');
@@ -126,6 +127,7 @@ void InGameCuphead::Start()
 
 void InGameCuphead::Update(float _DeltaTime)
 {
+	IInGameCharacterBase::Update(_DeltaTime);
 	OnCollisionDebug();
 	CheckCollision();
 

@@ -29,7 +29,7 @@ private:
 	virtual void Start() override;
 	virtual void Update(float _DeltaTime) override;
 	virtual void End() override;
-
+	bool CanCollision(GameEngineCollision* _This, GameEngineCollision* _Other);
 private:
 	DogCopterShooter* Weapon;
 	GameEngineTextureRenderer* Renderer;
@@ -37,6 +37,7 @@ private:
 	DogBowlBulletMovementComponent* DogBowlMovementComponent;
 	float RotateAngle;
 	bool IsOnGround;
-	GameEngineCollision* MainCollision;
+	GameEngineCollision* TrackCollision;
+	float4 Direction;
 };
 

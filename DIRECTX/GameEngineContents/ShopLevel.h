@@ -1,6 +1,13 @@
 #pragma once
 #include <GameEngineCore/GameEngineLevel.h>
 
+enum class ShopPhase
+{
+	None,
+	Open,
+	Select,
+
+};
 // Ό³Έν :
 class GameEngineTextureRenderer;
 class Pig;
@@ -31,5 +38,12 @@ private:
 	float Time;
 	bool IsLeftDrawerOpen;
 	Pig* ShopPig;
+	bool IsLeftDrawerOpened;
+	float4 StartLerpValueX;
+	float4 EndLerpValueX;
+	float4 EndPosition;
+	bool OnceCheck;
+	float ElapsedTime;
+	ShopPhase Phase;
 };
 

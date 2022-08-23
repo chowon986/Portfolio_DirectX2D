@@ -10,6 +10,8 @@
 ShopLevel::ShopLevel()
 	: IrisRenderer(nullptr)
 	, IsLeftDrawerOpen(false)
+	, IsLeftDrawerOpened(false)
+	, OnceCheck(false)
 {
 }
 
@@ -73,14 +75,47 @@ void ShopLevel::Start()
 		IrisRenderer->AnimationBindEnd("IrisAStart", std::bind(&ShopLevel::EndIrisAnimation, this, std::placeholders::_1));
 		IrisRenderer->ChangeFrameAnimation("IrisAStart");
 	}
+	StartLerpValueX = { -320.0f, -850.0f };
+	EndLerpValueX = { -850.0f, -780.0f };
+	Phase = ShopPhase::None;
+
+
 }
 
 void ShopLevel::Update(float _DeltaTime)
 {
-	Time += _DeltaTime;
-	if (Time > 1.0f && Time < 3.5f)
+	if (OnceCheck == true)
 	{
-		LeftDrawerRenderer->GetTransform().SetWorldMove(LeftDrawerRenderer->GetTransform().GetLeftVector() * 200 * GameEngineTime::GetDeltaTime());
+		ElapsedTime += _DeltaTime;
+		ElapsedTime = ElapsedTime / 1.0f;
+		float LeftDrawerPosX = LeftDrawerRenderer->GetTransform().GetLocalPosition().x;
+
+		if (IsLeftDrawerOpened == false)
+		{
+			if (StartLerpValueX.y == LeftDrawerPosX)
+			{
+				IsLeftDrawerOpened = true;
+				ElapsedTime = 0.0f;
+			}
+
+			EndPosition = float4::LerpLimit(StartLerpValueX.x, StartLerpValueX.y, ElapsedTime);
+		}
+		else
+		{
+			if (EndLerpValueX.y == LeftDrawerPosX)
+			{
+				OnceCheck = false;
+				Phase = ShopPhase::Open;
+			}
+			EndPosition = float4::LerpLimit(EndLerpValueX.x, EndLerpValueX.y, ElapsedTime);
+		}
+
+		LeftDrawerRenderer->GetTransform().SetLocalPosition({ EndPosition.x, -210, (int)ZOrder::Background - 2 });
+	}
+
+	if (Phase == ShopPhase::Open)
+	{
+
 	}
 }
 
@@ -91,4 +126,5 @@ void ShopLevel::End()
 void ShopLevel::EndIrisAnimation(const FrameAnimation_DESC& _Info)
 {
 	ShopPig->GetRenderer()->ChangeFrameAnimation("Welcome");
+	OnceCheck = true;
 }

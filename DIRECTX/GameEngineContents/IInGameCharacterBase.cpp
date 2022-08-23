@@ -24,6 +24,23 @@ void IInGameCharacterBase::SetAttackState(InGameCharacterAttackState _State)
 	}
 }
 
+void IInGameCharacterBase::Start()
+{
+	RedDogBowlCollsion = CreateComponent<GameEngineCollision>();
+	RedDogBowlCollsion->GetTransform().SetLocalScale({ 7200.0f, 100.0f, 1.0f });
+	RedDogBowlCollsion->ChangeOrder((int)ObjectOrder::TRACKING1);
+
+	YellowDogBowlCollsion = CreateComponent<GameEngineCollision>();
+	YellowDogBowlCollsion ->GetTransform().SetLocalScale({ 7200.0f, 100.0f, 1.0f });
+	YellowDogBowlCollsion ->ChangeOrder((int)ObjectOrder::TRACKING2);
+}
+
+void IInGameCharacterBase::Update(float _Delta)
+{
+	GameEngineDebug::DrawBox(RedDogBowlCollsion->GetTransform(), { 1.0f, 0.0f,0.0f, 0.5f });
+	GameEngineDebug::DrawBox(YellowDogBowlCollsion->GetTransform(), { 1.0f, 0.0f,0.0f, 0.5f });
+}
+
 void IInGameCharacterBase::SetState(InGameCharacterState _State)
 {
 	if (State != _State)

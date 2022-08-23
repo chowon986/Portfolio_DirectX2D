@@ -29,6 +29,11 @@ void ContentsCore::Start()
 		GameEngineInput::GetInst()->CreateKey("LevelChange", 'P');
 	}
 
+	if (false == GameEngineInput::GetInst()->IsKey("ColMapOnOffSwitch"))
+	{
+		GameEngineInput::GetInst()->CreateKey("ColMapOnOffSwitch", 'O');
+	}
+
 	GameEngineDirectory Dir;
 	Dir.MoveParentToExitsChildDirectory("ConstantResources");
 	Dir.Move("ConstantResources");

@@ -17,6 +17,8 @@ enum class ObjectOrder
 	MOVEPLANELEFT,
 	MOVEPLANERIGHT,
 	GROUND,
+	TRACKING1,
+	TRACKING2,
 };
 
 enum class GameObjectGroup 

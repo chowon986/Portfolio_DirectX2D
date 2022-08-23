@@ -59,4 +59,5 @@ private:
 	float4 BowWowDirection;
 	float RotationAngle;
 	bool OnceCheck;
+	float4 ShootPos;
 };

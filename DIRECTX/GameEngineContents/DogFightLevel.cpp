@@ -40,11 +40,11 @@ DogFightLevel::~DogFightLevel()
 
 void DogFightLevel::ColMapOnOffSwitch()
 {
-	//if (true == GameEngineInput::GetInst()->IsDown("ColMapOnOffSwitch"))
-	//{
-	//	BackgroundSkyRenderer->OnOffSwitch();
-	//	Hills->OnOffSwitch();
-	//}
+	if (true == GameEngineInput::GetInst()->IsDown("ColMapOnOffSwitch"))
+	{
+		BackgroundSkyRenderer->OnOffSwitch();
+		Hills->OnOffSwitch();
+	}
 }
 
 void DogFightLevel::Start()
@@ -436,7 +436,7 @@ void DogFightLevel::Update(float _DeltaTime)
 		{
 			LeaderCopter = CreateActor<DogCopter>(GameObjectGroup::Monster);
 			LeaderCopter->GetTransform().SetWorldPosition({ 0, 0 });
-			LeaderCopter->SetColMapImage(ColMapRenderer);
+			//LeaderCopter->SetColMapImage(ColMapRenderer);
 		}
 
 		if (CaptainCanteenPlane == nullptr)
@@ -458,7 +458,7 @@ void DogFightLevel::Update(float _DeltaTime)
 
 	static float4 Rot = { 0.0f, 0.0f, 0.0f };
 
-	Rot.z = 180;
+	Rot.z = -90;
 	GetRotateCameraActorTransform().SetLocalRotation(Rot);
 }
 

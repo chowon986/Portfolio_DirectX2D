@@ -44,14 +44,9 @@ void MonsterPhysicsComponent::Update(float _DeltaTime)
 	Acceleration = Power / Mass;
 	Speed += Acceleration * _DeltaTime;
 	Bullet->GetTransform().SetWorldMove({ 0, Speed, 0 });
+	// 여기서 x값을 조정해주면 좌, 우로 이동하면서 내려갈 것 같음
 
-	while (true == ColMapTexture->GetPixelToFloat4(Bullet->GetTransform().GetWorldPosition().x, -Bullet->GetTransform().GetWorldPosition().y).CompareInt4D(float4::BLACK))
-	{
-		Bullet->GetTransform().SetWorldMove(float4::UP * _DeltaTime);
-		Reset();
-	}
-
-	Bullet->SetIsOnGround(Speed == 0);
+	//Bullet->SetIsOnGround(Speed == 0);
 }
 
 void MonsterPhysicsComponent::End()
