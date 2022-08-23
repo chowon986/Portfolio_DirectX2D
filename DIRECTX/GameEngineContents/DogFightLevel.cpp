@@ -291,6 +291,7 @@ void DogFightLevel::Start()
 	}
 
 	SetPhase(Phase::Phase3);
+	// 카메라 내 오브젝트 크기 조정 GetMainCamera()->SetProjectionSize({ 1536.0f, 864.0f });
 }
 
 void DogFightLevel::ResetPositionCloudLeftA(const FrameAnimation_DESC& _Info)
