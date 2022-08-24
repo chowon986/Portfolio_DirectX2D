@@ -37,7 +37,10 @@ public:
 	void ResetPositionPlanePuffLeft(const FrameAnimation_DESC& _Info);
 	void PushToRotateCamera(GameEngineUpdateObject* _Object) override;
 	void PushToBackgroundCamera(GameEngineUpdateObject* _Object) override;
-	void LightUpAnimaitonFrameFinished(const FrameAnimation_DESC& _Info);
+	void LightOnAnimaitonFrameFinished(const FrameAnimation_DESC& _Info);
+	void BulldogIntroAnimationFrameFinished(const FrameAnimation_DESC& _Info);
+	void DogCopterIntroPhase1IntroAnimationFrameFinished(const FrameAnimation_DESC& _Info);
+	void DogCopterIntroPhase1IntroAnimationFrameChanged(const FrameAnimation_DESC& _Info);
 protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;
@@ -57,6 +60,8 @@ private:
 	BackgroundObject* CloudD2;
 	BackgroundObject* PlanePuffRight;
 	BackgroundObject* PlanePuffLeft;
+	GameEngineTextureRenderer* BulldogIntroRenderer;
+	GameEngineTextureRenderer* DogCopterIntroRenderer;
 	// 
 	BackgroundObject* PatchLeftA;
 

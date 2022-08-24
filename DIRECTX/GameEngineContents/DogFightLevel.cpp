@@ -31,6 +31,8 @@ DogFightLevel::DogFightLevel()
 	, CaptainCanteenPlane(nullptr)
 	, LeaderCopter(nullptr)
 	, OnceCheck(false)
+	, BulldogIntroRenderer(nullptr)
+	, DogCopterIntroRenderer(nullptr)
 {
 }
 
@@ -52,11 +54,12 @@ void DogFightLevel::Start()
 	{
 		Background* ScreenLight = CreateActor<Background>(GameObjectGroup::UI);
 		ScreenLightRenderer = ScreenLight->CreateComponent <GameEngineTextureRenderer>();
-		ScreenLightRenderer->CreateFrameAnimationFolder("LightUp", FrameAnimation_DESC("IrisA", 0, 0, 0.1f));
-		ScreenLightRenderer->ChangeFrameAnimation("LightUp");
+		ScreenLightRenderer->CreateFrameAnimationFolder("LightOn", FrameAnimation_DESC("IrisA", 0.1f,false));
+		ScreenLightRenderer->CreateFrameAnimationFolder("LightOff", FrameAnimation_DESC("IrisA", 16, 16, 0.1f));
+		ScreenLightRenderer->ChangeFrameAnimation("LightOff");
 		ScreenLightRenderer->GetTransform().SetLocalScale({ 1280.0f, 720.0f, (int)ZOrder::UI + 1 });
 		ScreenLightRenderer->SetPivot(PIVOTMODE::LEFTTOP);
-		ScreenLightRenderer->AnimationBindEnd("LightUp", std::bind(&DogFightLevel::LightUpAnimaitonFrameFinished, this, std::placeholders::_1));
+		ScreenLightRenderer->AnimationBindEnd("LightOn", std::bind(&DogFightLevel::LightOnAnimaitonFrameFinished, this, std::placeholders::_1));
 		//ScreenLightRenderer->ChangeCamera(CAMERAORDER::BACKGROUND);
 	}
 	{
@@ -297,11 +300,14 @@ void DogFightLevel::Start()
 		}
 	}
 
-	SetPhase(Phase::Phase3);
+	SetPhase(Phase::Ready);
 	//카메라 내 오브젝트 크기 조정 
 	GetMainCamera()->SetProjectionSize({ 1280.0f, 720.0f });
 	GetRotateCamera()->SetProjectionSize({ 1408.0f,792.0f });
 	GetBackgroundCamera()->SetProjectionSize({ 1408.0f,792.0f });
+
+	GetMainCameraActorTransform().SetLocalPosition({ 640, -360 });
+	GetBackgroundCameraActorTransform().SetLocalPosition({ 640, -360 });
 
 }
 void DogFightLevel::ResetPositionCloudLeftA(const FrameAnimation_DESC& _Info)
@@ -386,10 +392,65 @@ void DogFightLevel::PushToBackgroundCamera(GameEngineUpdateObject* _Object)
 	}
 }
 
-void DogFightLevel::LightUpAnimaitonFrameFinished(const FrameAnimation_DESC& _Info)
+void DogFightLevel::LightOnAnimaitonFrameFinished(const FrameAnimation_DESC& _Info)
 {
-	ScreenLightRenderer->Off();
-	SetPhase(Phase::Ready);
+	// 몬스터 시작 이미지 넣기
+	{
+		Background* Bulldog = CreateActor<Background>(GameObjectGroup::UI);
+		BulldogIntroRenderer = Bulldog->CreateComponent<GameEngineTextureRenderer>();
+		BulldogIntroRenderer->CreateFrameAnimationFolder("BulldogIntro", FrameAnimation_DESC("BulldogIntro", 0.05f, false));
+		BulldogIntroRenderer->CreateFrameAnimationFolder("Nothing", FrameAnimation_DESC("Nothing", true));
+		BulldogIntroRenderer->ChangeFrameAnimation("Nothing");
+		BulldogIntroRenderer->AnimationBindEnd("BulldogIntro", std::bind(&DogFightLevel::BulldogIntroAnimationFrameFinished, this, std::placeholders::_1));
+		BulldogIntroRenderer->SetScaleModeImage();
+		BulldogIntroRenderer->ChangeCamera(CAMERAORDER::BACKGROUND);
+		BulldogIntroRenderer->GetTransform().SetLocalPosition({ 640.0f, -360.0f, (int)ZOrder::Background - 2 });
+	}
+
+	{
+		Background* Bulldog = CreateActor<Background>(GameObjectGroup::UI);
+		DogCopterIntroRenderer = Bulldog->CreateComponent<GameEngineTextureRenderer>();
+		DogCopterIntroRenderer->CreateFrameAnimationFolder("DogCopterIntroPhase1", FrameAnimation_DESC("DogCopterIntroPhase1", 0.05f, false));
+		DogCopterIntroRenderer->CreateFrameAnimationFolder("Nothing", FrameAnimation_DESC("Nothing", true));
+		DogCopterIntroRenderer->ChangeFrameAnimation("DogCopterIntroPhase1");
+		DogCopterIntroRenderer->AnimationBindEnd("DogCopterIntroPhase1", std::bind(&DogFightLevel::DogCopterIntroPhase1IntroAnimationFrameFinished, this, std::placeholders::_1));
+		DogCopterIntroRenderer->AnimationBindFrame("DogCopterIntroPhase1", std::bind(&DogFightLevel::DogCopterIntroPhase1IntroAnimationFrameChanged, this, std::placeholders::_1));
+		DogCopterIntroRenderer->SetScaleModeImage();
+		DogCopterIntroRenderer->GetTransform().SetLocalPosition({ 640.0f, -360.0f, (int)ZOrder::Background - 2 });
+	}
+	if (CaptainCanteenPlane == nullptr)
+	{
+		CaptainCanteenPlane = CreateActor<CanteenPlane>(GameObjectGroup::Monster);
+		CaptainCanteenPlane->GetTransform().SetWorldPosition({ 280, -620 });
+
+		Cuphead = CreateActor<InGameCuphead>(GameObjectGroup::Player);
+		Cuphead->GetTransform().SetLocalPosition({ -150, 0, -100 });
+		Cuphead->SetParent(CaptainCanteenPlane);
+		Cuphead->SetColMapImage(ColMapRenderer);
+
+		CaptainCanteenPlane->SetPlayer(Cuphead);
+		CaptainCanteenPlane->SetColMapImage(ColMapRenderer);
+	}
+
+}
+
+void DogFightLevel::BulldogIntroAnimationFrameFinished(const FrameAnimation_DESC& _Info)
+{
+	BulldogIntroRenderer->ChangeFrameAnimation("Nothing");
+	SetPhase(Phase::Phase1);
+}
+
+void DogFightLevel::DogCopterIntroPhase1IntroAnimationFrameFinished(const FrameAnimation_DESC& _Info)
+{
+	DogCopterIntroRenderer->ChangeFrameAnimation("Nothing");
+}
+
+void DogFightLevel::DogCopterIntroPhase1IntroAnimationFrameChanged(const FrameAnimation_DESC& _Info)
+{
+	if (_Info.CurFrame == 7)
+	{
+		BulldogIntroRenderer->ChangeFrameAnimation("BulldogIntro");
+	}
 }
 
 void DogFightLevel::Update(float _DeltaTime)
@@ -398,27 +459,18 @@ void DogFightLevel::Update(float _DeltaTime)
 
 	if (GetPhase() == Phase::Ready)
 	{
-
+		ScreenLightRenderer->ChangeFrameAnimation("LightOn");
 	}
 
 	else if (GetPhase() == Phase::Phase1)
 	{
-		if (CaptainCanteenPlane == nullptr)
+		if (PH1BulldogPlane == nullptr)
 		{
-			CaptainCanteenPlane = CreateActor<CanteenPlane>(GameObjectGroup::Monster);
-			CaptainCanteenPlane->GetTransform().SetWorldPosition({ 640, -600 });
-
-			Cuphead = CreateActor<InGameCuphead>(GameObjectGroup::Player);
-			Cuphead->GetTransform().SetLocalPosition({ 0, 300, -100 });
-			Cuphead->SetParent(CaptainCanteenPlane);
-			Cuphead->SetColMapImage(ColMapRenderer);
-
-			CaptainCanteenPlane->SetPlayer(Cuphead);
-			CaptainCanteenPlane->SetColMapImage(ColMapRenderer);
-
 			PH1BulldogPlane = CreateActor<BulldogPlane>(GameObjectGroup::Monster);
 			PH1BulldogPlane->GetTransform().SetWorldPosition({ 0, 100 });
 			PH1BulldogPlane->SetPlayer(Cuphead);
+			PushToBackgroundCamera(CaptainCanteenPlane);
+			PushToBackgroundCamera(PH1BulldogPlane);
 		}
 	}
 

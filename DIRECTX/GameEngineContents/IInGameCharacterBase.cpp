@@ -37,8 +37,8 @@ void IInGameCharacterBase::Start()
 
 void IInGameCharacterBase::Update(float _Delta)
 {
-	GameEngineDebug::DrawBox(RedDogBowlCollsion->GetTransform(), { 1.0f, 0.0f,0.0f, 0.5f });
-	GameEngineDebug::DrawBox(YellowDogBowlCollsion->GetTransform(), { 1.0f, 0.0f,0.0f, 0.5f });
+	//GameEngineDebug::DrawBox(RedDogBowlCollsion->GetTransform(), { 1.0f, 0.0f,0.0f, 0.5f });
+	//GameEngineDebug::DrawBox(YellowDogBowlCollsion->GetTransform(), { 1.0f, 0.0f,0.0f, 0.5f });
 }
 
 void IInGameCharacterBase::SetState(InGameCharacterState _State)

@@ -138,9 +138,7 @@ void InGameCuphead::Update(float _DeltaTime)
 		return;
 	}
 
-	GetLevel()->GetMainCameraActorTransform().SetLocalPosition({ 640, -360 });
 	GetLevel()->GetRotateCameraActorTransform().SetLocalPosition({ Renderer->GetTransform().GetWorldPosition().x,Renderer->GetTransform().GetWorldPosition().y });
-	GetLevel()->GetBackgroundCameraActorTransform().SetLocalPosition({ 640, -360 });
 
 	if (IsInputEnabled == false)
 	{
@@ -354,7 +352,7 @@ bool InGameCuphead::OnTakeDamage(GameEngineCollision* _This, GameEngineCollision
 
 void InGameCuphead::OnCollisionDebug()
 {
-	GameEngineDebug::DrawBox(MainCollision->GetTransform(), { 1.0f, 0.0f,0.0f, 0.5f });
+	//GameEngineDebug::DrawBox(MainCollision->GetTransform(), { 1.0f, 0.0f,0.0f, 0.5f });
 }
 
 void InGameCuphead::OpenScoreBoard()
