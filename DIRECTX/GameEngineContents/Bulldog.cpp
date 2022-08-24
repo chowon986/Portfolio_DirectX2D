@@ -109,8 +109,7 @@ void Bulldog::Start()
 
 		Renderer->CreateFrameAnimationFolder("BulldogDie", FrameAnimation_DESC("BulldogDie", 0.1f));
 		Renderer->AnimationBindEnd("BulldogDie", std::bind(&Bulldog::BulldogDieCheck, this, std::placeholders::_1));
-		Renderer->ChangeFrameAnimation("BulldogIntro");
-		Renderer->ScaleToTexture();
+		Renderer->SetScaleModeImage();
 		Renderer->SetPivot(PIVOTMODE::BOT);
 		SetRenderer(Renderer);
 	}
@@ -147,6 +146,7 @@ void Bulldog::Start()
 
 	// 시작 위치 세팅
 	SetBeforePosition({ 640, 100});
+	SetState(InGameMonsterState::Mount);
 	SetAttackState(InGameMonsterAttackState::None);
 }
 
@@ -416,7 +416,7 @@ void Bulldog::OnMountAnimationFrameChanged(const FrameAnimation_DESC& _Info)
 {
 	if (Plane == nullptr)
 	{
-	Plane = GetParent<BulldogPlane>();
+		Plane = GetParent<BulldogPlane>();
 	}
 	if (_Info.CurFrame == 3)
 	{

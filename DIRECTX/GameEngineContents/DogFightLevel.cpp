@@ -421,7 +421,7 @@ void DogFightLevel::LightOnAnimaitonFrameFinished(const FrameAnimation_DESC& _In
 	if (CaptainCanteenPlane == nullptr)
 	{
 		CaptainCanteenPlane = CreateActor<CanteenPlane>(GameObjectGroup::Monster);
-		CaptainCanteenPlane->GetTransform().SetWorldPosition({ 280, -620 });
+		CaptainCanteenPlane->GetTransform().SetWorldPosition({ 280, -650 });
 
 		Cuphead = CreateActor<InGameCuphead>(GameObjectGroup::Player);
 		Cuphead->GetTransform().SetLocalPosition({ -150, 0, -100 });
