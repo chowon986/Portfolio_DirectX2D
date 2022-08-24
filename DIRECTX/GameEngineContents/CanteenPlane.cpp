@@ -130,7 +130,7 @@ void CanteenPlane::Update(float _DeltaTime)
 	{
 		if (true == RotateLeaderCopter())
 		{
-			GetLevel()->GetUICameraActor()->GetTransform().SetLocalRotate({ 0.0, 0.0, 90.0f });
+			//GetLevel()->GetUICameraActor()->GetTransform().SetLocalRotate({ 0.0, 0.0, 90.0f });
 		}
 	}
 

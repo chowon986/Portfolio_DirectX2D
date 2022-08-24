@@ -52,11 +52,12 @@ void DogFightLevel::Start()
 	{
 		Background* ScreenLight = CreateActor<Background>(GameObjectGroup::UI);
 		ScreenLightRenderer = ScreenLight->CreateComponent <GameEngineTextureRenderer>();
-		ScreenLightRenderer->ChangeCamera(CAMERAORDER::BACKGROUND);
 		ScreenLightRenderer->CreateFrameAnimationFolder("LightUp", FrameAnimation_DESC("IrisA", 0, 0, 0.1f));
 		ScreenLightRenderer->ChangeFrameAnimation("LightUp");
 		ScreenLightRenderer->GetTransform().SetLocalScale({ 1280.0f, 720.0f, (int)ZOrder::UI + 1 });
+		ScreenLightRenderer->SetPivot(PIVOTMODE::LEFTTOP);
 		ScreenLightRenderer->AnimationBindEnd("LightUp", std::bind(&DogFightLevel::LightUpAnimaitonFrameFinished, this, std::placeholders::_1));
+		//ScreenLightRenderer->ChangeCamera(CAMERAORDER::BACKGROUND);
 	}
 	{
 		Background* ColMapImage = CreateActor<Background>(GameObjectGroup::UI);
@@ -71,7 +72,7 @@ void DogFightLevel::Start()
 		ColMapRenderer->SetPivot(PIVOTMODE::LEFTTOP);
 		ColMapRenderer->GetTransform().SetLocalPosition({ ColMapRenderer->GetTransform().GetLocalPosition().x, ColMapRenderer->GetTransform().GetLocalPosition().y, (int)ZOrder::Background + 1 });
 		SetMainColMapImage(ColMapRenderer);
-		ColMapRenderer->ChangeCamera(CAMERAORDER::BACKGROUND);
+		//ColMapRenderer->ChangeCamera(CAMERAORDER::BACKGROUND);
 	}
 
 	{
@@ -85,7 +86,7 @@ void DogFightLevel::Start()
 		BackgroundSkyRenderer->ScaleToTexture();
 		BackgroundSkyRenderer->SetPivot(PIVOTMODE::LEFTTOP);
 		BackgroundSkyRenderer->GetTransform().SetLocalPosition({ BackgroundSkyRenderer->GetTransform().GetLocalPosition().x, BackgroundSkyRenderer->GetTransform().GetLocalPosition().y + 250, (int)ZOrder::Background });
-		BackgroundSkyRenderer->ChangeCamera(CAMERAORDER::BACKGROUND);
+		//BackgroundSkyRenderer->ChangeCamera(CAMERAORDER::BACKGROUND);
 
 	}
 
@@ -115,7 +116,7 @@ void DogFightLevel::Start()
 			Renderer->CreateFrameAnimationFolder("CloudA1", FrameAnimation_DESC("CloudA1", 0.06f, true));
 			Renderer->AnimationBindEnd("CloudA1", std::bind(&DogFightLevel::ResetPositionCloudLeftA, this, std::placeholders::_1));
 			Renderer->ChangeFrameAnimation("CloudA1");
-			Renderer->SetPivot(PIVOTMODE::LEFTCENTER);
+			Renderer->SetPivot(PIVOTMODE::LEFT);
 			CloudA1->GetTransform().SetLocalPosition({ -150, -250, (int)ZOrder::Background - 1 });
 			CloudA1->SetDirection((float4::RIGHT * 2) + (float4::DOWN * 0.5));
 			CloudA1->SetMoveSpeed(250.0f);
@@ -135,7 +136,7 @@ void DogFightLevel::Start()
 			Renderer->CreateFrameAnimationFolder("CloudA1", FrameAnimation_DESC("CloudA1", 0.06f, true));
 			Renderer->AnimationBindEnd("CloudA1", std::bind(&DogFightLevel::ResetPositionCloudLeftA2, this, std::placeholders::_1));
 			Renderer->ChangeFrameAnimation("CloudA1");
-			Renderer->SetPivot(PIVOTMODE::RIGHTCENTER);
+			Renderer->SetPivot(PIVOTMODE::RIGHT);
 			Renderer->GetTransform().PixLocalNegativeX();
 			CloudA2->GetTransform().SetLocalPosition({ 1430, -250, (int)ZOrder::Background - 1 });
 			CloudA2->SetDirection((float4::LEFT * 2) + (float4::DOWN * 0.5));
@@ -156,7 +157,7 @@ void DogFightLevel::Start()
 			Renderer->CreateFrameAnimationFolder("CloudB2", FrameAnimation_DESC("CloudB2", 0.06f, true));
 			Renderer->AnimationBindEnd("CloudB2", std::bind(&DogFightLevel::ResetPositionCloudLeftB, this, std::placeholders::_1));
 			Renderer->ChangeFrameAnimation("CloudB2");
-			Renderer->SetPivot(PIVOTMODE::LEFTCENTER);
+			Renderer->SetPivot(PIVOTMODE::LEFT);
 			CloudB2->GetTransform().SetLocalPosition({ -150, -20, (int)ZOrder::Background - 1 });
 			CloudB2->SetDirection((float4::RIGHT * 2) + float4::DOWN);
 			CloudB2->SetMoveSpeed(250.0f);
@@ -177,7 +178,7 @@ void DogFightLevel::Start()
 			Renderer->AnimationBindEnd("CloudC1", std::bind(&DogFightLevel::ResetPositionCloudLeftC, this, std::placeholders::_1));
 			Renderer->ChangeFrameAnimation("CloudC1");
 			Renderer->GetTransform().PixLocalNegativeX();
-			Renderer->SetPivot(PIVOTMODE::RIGHTCENTER);
+			Renderer->SetPivot(PIVOTMODE::RIGHT);
 			CloudC1->GetTransform().SetLocalPosition({ 1200, -20, (int)ZOrder::Background - 1 });
 			CloudC1->SetDirection((float4::LEFT * 2) + (float4::DOWN * 1.5));
 			CloudC1->SetMoveSpeed(250.0f);
@@ -197,7 +198,7 @@ void DogFightLevel::Start()
 			Renderer->CreateFrameAnimationFolder("CloudC2", FrameAnimation_DESC("CloudC2", 0.05f, true));
 			Renderer->AnimationBindEnd("CloudC2", std::bind(&DogFightLevel::ResetPositionCloudLeftC2, this, std::placeholders::_1));
 			Renderer->ChangeFrameAnimation("CloudC2");
-			Renderer->SetPivot(PIVOTMODE::LEFTCENTER);
+			Renderer->SetPivot(PIVOTMODE::LEFT);
 			CloudC2->GetTransform().SetLocalPosition({ 150, -20, (int)ZOrder::Background - 1 });
 			CloudC2->SetDirection((float4::RIGHT * 1.5) + (float4::DOWN * 1.5));
 			CloudC2->SetMoveSpeed(250.0f);
@@ -305,6 +306,9 @@ void DogFightLevel::Start()
 	SetPhase(Phase::Phase3);
 	//카메라 내 오브젝트 크기 조정 
 	GetMainCamera()->SetProjectionSize({ 1408.0f, 792.0f });
+	GetRotateCamera()->SetProjectionSize({ 1408.0f,792.0f });
+	//GetBackgroundCamera()->SetProjectionSize({ 1280.0f,720.0f });
+
 }
 void DogFightLevel::ResetPositionCloudLeftA(const FrameAnimation_DESC& _Info)
 {
@@ -374,6 +378,7 @@ void DogFightLevel::PushToRotateCamera(GameEngineUpdateObject* _Object)
 
 void DogFightLevel::LightUpAnimaitonFrameFinished(const FrameAnimation_DESC& _Info)
 {
+	ScreenLightRenderer->Off();
 	SetPhase(Phase::Ready);
 }
 
@@ -483,6 +488,7 @@ void DogFightLevel::Update(float _DeltaTime)
 
 	Rot.z = -90;
 	GetRotateCameraActorTransform().SetLocalRotation(Rot);
+
 }
 
 void DogFightLevel::End()

@@ -3,6 +3,7 @@
 #include "GameEngineActor.h"
 #include "GameEngineRenderer.h"
 #include "GameEngineCamera.h"
+#include "GameEngineRenderTarget.h"
 #include "GameEngineCameraActor.h"
 #include "GameEngineCollision.h"
 #include "GameEngineGUI.h"
@@ -19,7 +20,7 @@ GameEngineLevel::GameEngineLevel()
 		CameraActor->GetCameraComponent()->SetProjectionMode(CAMERAPROJECTIONMODE::Orthographic);
 		CameraActor->GetCameraComponent()->SetCameraOrder(CAMERAORDER::MAINCAMERA);
 	}
-	
+
 	{
 		GameEngineCameraActor* CameraActor = CreateActor<GameEngineCameraActor>();
 		CameraActor->GetTransform().SetLocalPosition({ 0.0f, 0.0f, -100.0f });
@@ -27,12 +28,12 @@ GameEngineLevel::GameEngineLevel()
 		CameraActor->GetCameraComponent()->SetCameraOrder(CAMERAORDER::ROTATECAMERA);
 	}
 
-	{
-		GameEngineCameraActor* CameraActor = CreateActor<GameEngineCameraActor>();
-		CameraActor->GetTransform().SetLocalPosition({ 0.0f, 0.0f, -100.0f });
-		CameraActor->GetCameraComponent()->SetProjectionMode(CAMERAPROJECTIONMODE::Orthographic);
-		CameraActor->GetCameraComponent()->SetCameraOrder(CAMERAORDER::BACKGROUND);
-	}
+	//{
+	//	GameEngineCameraActor* CameraActor = CreateActor<GameEngineCameraActor>();
+	//	CameraActor->GetTransform().SetLocalPosition({ 0.0f, 0.0f, -100.0f });
+	//	CameraActor->GetCameraComponent()->SetProjectionMode(CAMERAPROJECTIONMODE::Orthographic);
+	//	CameraActor->GetCameraComponent()->SetCameraOrder(CAMERAORDER::BACKGROUND);
+	//}
 
 	{
 		GameEngineCameraActor* CameraActor = CreateActor<GameEngineCameraActor>();
@@ -142,6 +143,17 @@ GameEngineTransform& GameEngineLevel::GetRotateCameraActorTransform()
 	return Cameras[static_cast<int>(CAMERAORDER::ROTATECAMERA)]->GetActor()->GetTransform();
 }
 
+GameEngineCameraActor* GameEngineLevel::GetBackgroundCameraActor()
+{
+	return Cameras[static_cast<int>(CAMERAORDER::BACKGROUND)]->GetActor<GameEngineCameraActor>();
+}
+
+GameEngineTransform& GameEngineLevel::GetBackgroundCameraActorTransform()
+{
+	return Cameras[static_cast<int>(CAMERAORDER::BACKGROUND)]->GetActor()->GetTransform();
+}
+
+
 
 GameEngineCameraActor* GameEngineLevel::GetMainCameraActor()
 {
@@ -195,6 +207,16 @@ void GameEngineLevel::Render(float _DelataTime)
 		}
 
 		Cameras[i]->Render(_DelataTime);
+	}
+
+	for (size_t i = 0; i < Cameras.size(); i++)
+	{
+		if (nullptr == Cameras[i])
+		{
+			continue;
+		}
+
+		GameEngineDevice::GetBackBuffer()->Merge(Cameras[i]->CameraRenderTarget, 0);
 	}
 
 	// 여기서 그려져야 합니다.

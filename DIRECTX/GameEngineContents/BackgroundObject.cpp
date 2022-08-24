@@ -31,7 +31,7 @@ void BackgroundObject::Start()
 {
 	GameEngineTextureRenderer* Renderer = CreateComponent<GameEngineTextureRenderer>();
 	SetRenderer(Renderer);
-	Renderer->ChangeCamera(CAMERAORDER::BACKGROUND);
+	//Renderer->ChangeCamera(CAMERAORDER::BACKGROUND);
 }
 
 void BackgroundObject::Update(float _DeltaTime)

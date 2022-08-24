@@ -8,5 +8,6 @@
     <FxCompile Include="Debug3D.hlsl" />
     <FxCompile Include="DebugTexture.hlsl" />
     <FxCompile Include="..\..\..\..\..\t\AR40\DIRECTX\GameEngineResources\GameEngineShader\RenderOption.fx" />
+    <FxCompile Include="TargetMerge.hlsl" />
   </ItemGroup>
 </Project>

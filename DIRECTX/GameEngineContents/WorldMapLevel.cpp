@@ -74,7 +74,6 @@ void WorldMapLevel::LevelStartEvent()
 		OutsideOfMainLandLeftRenderer = OutsideOfMainLandLeft->CreateComponent<GameEngineTextureRenderer>();
 		OutsideOfMainLandLeftRenderer->SetTexture("dlc_water_multiply.png");
 		OutsideOfMainLandLeftRenderer->ScaleToTexture();
-		OutsideOfMainLandLeftRenderer->SetPivot(PIVOTMODE::LEFTTOP);
 		OutsideOfMainLandLeftRenderer->GetTransform().SetLocalPosition({ -2164, -1500, (int)ZOrder::Background });
 	}
 
@@ -84,7 +83,6 @@ void WorldMapLevel::LevelStartEvent()
 		OutsideOfMainLandRightRenderer= OutsideOfMainLandRight->CreateComponent<GameEngineTextureRenderer>();
 		OutsideOfMainLandRightRenderer->SetTexture("dlc_water_multiply.png");
 		OutsideOfMainLandRightRenderer->ScaleToTexture();
-		OutsideOfMainLandRightRenderer->SetPivot(PIVOTMODE::LEFTTOP);
 		OutsideOfMainLandRightRenderer->GetTransform().SetLocalPosition({ 2164, -1500, (int)ZOrder::Background });
 	}
 

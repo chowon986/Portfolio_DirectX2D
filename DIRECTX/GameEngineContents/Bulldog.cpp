@@ -305,7 +305,7 @@ void Bulldog::OnUnmountAnimationFinished(const FrameAnimation_DESC& _Info)
 	AttackChangeOnOffSwitch();
 	if (Attack1On == true)
 	{
-		Renderer->SetPivot(PIVOTMODE::LEFTCENTER);
+		Renderer->SetPivot(PIVOTMODE::LEFT);
 		PrepareAttack1();
 	}
 	else if (Attack1On == false)

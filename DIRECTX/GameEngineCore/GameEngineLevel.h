@@ -7,8 +7,8 @@
 enum class CAMERAORDER
 {
 	MAINCAMERA,
-	ROTATECAMERA,
 	BACKGROUND,
+	ROTATECAMERA,
 	USER2,
 	USER3,
 	USER4,
@@ -53,10 +53,14 @@ public:
 	{
 		return Cameras[static_cast<int>(CAMERAORDER::MAINCAMERA)];
 	}
-
 	GameEngineCamera* GetRotateCamera()
 	{
 		return Cameras[static_cast<int>(CAMERAORDER::ROTATECAMERA)];
+	}
+
+	GameEngineCamera* GetBackgroundCamera()
+	{
+		return Cameras[static_cast<int>(CAMERAORDER::BACKGROUND)];
 	}
 
 	GameEngineCamera* GetUICamera()
@@ -72,6 +76,10 @@ public:
 
 	GameEngineTransform& GetRotateCameraActorTransform();
 
+	GameEngineCameraActor* GetBackgroundCameraActor();
+
+	GameEngineTransform& GetBackgroundCameraActorTransform();
+
 	GameEngineCameraActor* GetUICameraActor();
 
 	GameEngineTransform& GetUICameraActorTransform();
@@ -81,7 +89,6 @@ public:
 	//{
 	//	return CreateActor<ActorType>(static_cast<int>(_ObjectGroupIndex));
 	//}
-
 	GameEngineTextureRenderer* GetMainColMapImage() { return MainColMapImage; }
 	void SetMainColMapImage(GameEngineTextureRenderer* _MainColMapImage) { MainColMapImage = _MainColMapImage; }
 
@@ -146,16 +153,40 @@ public:
 	}
 
 	void AllClear();
-
 	virtual void PushToRotateCamera(GameEngineUpdateObject* _Object)
 	{
 
 	}
+
+	void PushRendererToMainCamera(GameEngineRenderer* _Renderer)
+	{
+		PushRenderer(_Renderer, static_cast<int>(CAMERAORDER::MAINCAMERA));
+	}
+
+	void PushRendererToUICamera(GameEngineRenderer* _Renderer)
+	{
+		PushRenderer(_Renderer, static_cast<int>(CAMERAORDER::UICAMERA));
+	}
+
+	void PushRendererToBackgroundCamera(GameEngineRenderer* _Renderer)
+	{
+		PushRenderer(_Renderer, static_cast<int>(CAMERAORDER::BACKGROUND));
+	}
+
+	void PushRenderer(GameEngineRenderer* _Renderer, CAMERAORDER _Order)
+	{
+		PushRenderer(_Renderer, static_cast<int>(_Order));
+	}
+
+	void PushRenderer(GameEngineRenderer* _Renderer, int _CameraOrder);
+
 protected:
+
 	void PushRendererToRotateCamera(GameEngineRenderer* _Renderer)
 	{
 		PushRenderer(_Renderer, static_cast<int>(CAMERAORDER::ROTATECAMERA));
 	}
+
 
 private:
 	void PushActor(GameEngineActor* _Actor, int _ObjectGroupIndex);
@@ -177,23 +208,8 @@ private:
 		PushCamera(_Camera, static_cast<int>(_Order));
 	}
 
-	void PushRendererToMainCamera(GameEngineRenderer* _Renderer)
-	{
-		PushRenderer(_Renderer, static_cast<int>(CAMERAORDER::MAINCAMERA));
-	}
-
-	void PushRendererToUICamera(GameEngineRenderer* _Renderer)
-	{
-		PushRenderer(_Renderer, static_cast<int>(CAMERAORDER::UICAMERA));
-	}
-	void PushRenderer(GameEngineRenderer* _Renderer, CAMERAORDER _Order)
-	{
-		PushRenderer(_Renderer, static_cast<int>(_Order));
-	}
-
 	void PushCamera(GameEngineCamera* _Camera, int _CameraOrder);
 
-	void PushRenderer(GameEngineRenderer* _Renderer, int _CameraOrder);
 
 	void PushCollision(GameEngineCollision* _Collision, int _Order);
 
@@ -209,7 +225,6 @@ private:
 	std::vector<GameEngineCamera*> Cameras;
 
 	std::map<int, std::list<GameEngineCollision*>> AllCollisions;
-
 	GameEngineTextureRenderer* MainColMapImage;
 };
 

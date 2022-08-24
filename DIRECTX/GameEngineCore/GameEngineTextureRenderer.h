@@ -4,12 +4,15 @@
 enum class PIVOTMODE
 {
 	CENTER,
-	LEFTTOP,
 	BOT,
-	CUSTOM,
-	LEFTCENTER,
-	RIGHTCENTER,
+	TOP,
+	LEFT,
+	RIGHT,
+	LEFTTOP,
 	RIGHTTOP,
+	LEFTBOT,
+	RIGHTBOT,
+	CUSTOM,
 };
 
 enum class SCALEMODE
@@ -30,6 +33,14 @@ struct ColorData
 
 	}
 };
+
+struct AtlasData
+{
+public:
+	float4 FrameData;
+	float4 PivotPos;
+};
+
 
 class FrameAnimation_DESC
 {
@@ -182,6 +193,8 @@ public:
 
 	void SetTexture(GameEngineTexture* _Texture, UINT _Index);
 
+	void SetFolderTextureToIndex(const std::string& _Text, UINT _Index);
+
 	void CreateFrameAnimationFolder(const std::string& _AnimationName, const FrameAnimation_DESC& _Desc);
 
 	void CreateFrameAnimationCutTexture(const std::string& _AnimationName, const FrameAnimation_DESC& _Desc);
@@ -270,9 +283,9 @@ private:
 	float ScaleRatio;
 
 	GameEngineTexture* CurTex;
-	float4 FrameData;
 
 	ColorData ColorData;
+	AtlasData AtlasDataInst;
 
 	std::map<std::string, FrameAnimation> FrameAni;
 	FrameAnimation* CurAni;

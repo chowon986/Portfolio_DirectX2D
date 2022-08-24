@@ -223,7 +223,7 @@ void GameEngineDevice::CreateSwapChain()
 void GameEngineDevice::Initialize()
 {
 	DeviceCreate();
-	CreateSwapChain();
+	// CreateSwapChain();
 }
 
 void GameEngineDevice::RenderStart()
