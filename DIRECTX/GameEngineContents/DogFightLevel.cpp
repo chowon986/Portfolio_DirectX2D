@@ -78,16 +78,10 @@ void DogFightLevel::Start()
 	{
 		Background* BackgroundSky = CreateActor<Background>(GameObjectGroup::UI);
 		BackgroundSkyRenderer = BackgroundSky->CreateComponent<GameEngineTextureRenderer>();
-		if (BackgroundSky == nullptr)
-		{
-			return;
-		}
 		BackgroundSkyRenderer->SetTexture("background_sky_0001.png");
 		BackgroundSkyRenderer->ScaleToTexture();
 		BackgroundSkyRenderer->SetPivot(PIVOTMODE::LEFTTOP);
 		BackgroundSkyRenderer->GetTransform().SetLocalPosition({ BackgroundSkyRenderer->GetTransform().GetLocalPosition().x, BackgroundSkyRenderer->GetTransform().GetLocalPosition().y + 250, (int)ZOrder::Background });
-		//BackgroundSkyRenderer->ChangeCamera(CAMERAORDER::BACKGROUND);
-
 	}
 
 	{
@@ -305,9 +299,9 @@ void DogFightLevel::Start()
 
 	SetPhase(Phase::Phase3);
 	//카메라 내 오브젝트 크기 조정 
-	GetMainCamera()->SetProjectionSize({ 1408.0f, 792.0f });
+	GetMainCamera()->SetProjectionSize({ 1280.0f, 720.0f });
 	GetRotateCamera()->SetProjectionSize({ 1408.0f,792.0f });
-	//GetBackgroundCamera()->SetProjectionSize({ 1280.0f,720.0f });
+	GetBackgroundCamera()->SetProjectionSize({ 1408.0f,792.0f });
 
 }
 void DogFightLevel::ResetPositionCloudLeftA(const FrameAnimation_DESC& _Info)
@@ -372,6 +366,22 @@ void DogFightLevel::PushToRotateCamera(GameEngineUpdateObject* _Object)
 		if (GameEngineRenderer* Renderer = dynamic_cast<GameEngineRenderer*>(Child))
 		{
 			PushRendererToRotateCamera(Renderer);
+		}
+	}
+}
+
+void DogFightLevel::PushToBackgroundCamera(GameEngineUpdateObject* _Object)
+{
+	for (auto* Child : _Object->GetChilds())
+	{
+		if (GameEngineUpdateObject* Object = dynamic_cast<GameEngineUpdateObject*>(Child))
+		{
+			PushToBackgroundCamera(Object);
+		}
+
+		if (GameEngineRenderer* Renderer = dynamic_cast<GameEngineRenderer*>(Child))
+		{
+			PushRendererToBackgroundCamera(Renderer);
 		}
 	}
 }
@@ -465,6 +475,7 @@ void DogFightLevel::Update(float _DeltaTime)
 			LeaderCopter = CreateActor<DogCopter>(GameObjectGroup::Monster);
 			LeaderCopter->GetTransform().SetWorldPosition({ 0, 0 });
 			//LeaderCopter->SetColMapImage(ColMapRenderer);
+			PushToBackgroundCamera(LeaderCopter);
 		}
 
 		if (CaptainCanteenPlane == nullptr)

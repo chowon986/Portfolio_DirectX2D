@@ -4,7 +4,7 @@
 #include <list>
 #include <map>
 
-enum class CAMERAORDER
+enum class CAMERAORDER : int
 {
 	MAINCAMERA,
 	BACKGROUND,
@@ -154,6 +154,11 @@ public:
 
 	void AllClear();
 	virtual void PushToRotateCamera(GameEngineUpdateObject* _Object)
+	{
+
+	}
+
+	virtual void PushToBackgroundCamera(GameEngineUpdateObject* _Object)
 	{
 
 	}
