@@ -396,8 +396,8 @@ void DogFightLevel::LightOnAnimaitonFrameFinished(const FrameAnimation_DESC& _In
 {
 	// 몬스터 시작 이미지 넣기
 	{
-		Background* Bulldog = CreateActor<Background>(GameObjectGroup::UI);
-		BulldogIntroRenderer = Bulldog->CreateComponent<GameEngineTextureRenderer>();
+		Background* Intro = CreateActor<Background>(GameObjectGroup::UI);
+		BulldogIntroRenderer = Intro->CreateComponent<GameEngineTextureRenderer>();
 		BulldogIntroRenderer->CreateFrameAnimationFolder("BulldogIntro", FrameAnimation_DESC("BulldogIntro", 0.05f, false));
 		BulldogIntroRenderer->CreateFrameAnimationFolder("Nothing", FrameAnimation_DESC("Nothing", true));
 		BulldogIntroRenderer->ChangeFrameAnimation("Nothing");
@@ -408,8 +408,8 @@ void DogFightLevel::LightOnAnimaitonFrameFinished(const FrameAnimation_DESC& _In
 	}
 
 	{
-		Background* Bulldog = CreateActor<Background>(GameObjectGroup::UI);
-		DogCopterIntroRenderer = Bulldog->CreateComponent<GameEngineTextureRenderer>();
+		Background* Intro = CreateActor<Background>(GameObjectGroup::UI);
+		DogCopterIntroRenderer = Intro->CreateComponent<GameEngineTextureRenderer>();
 		DogCopterIntroRenderer->CreateFrameAnimationFolder("DogCopterIntroPhase1", FrameAnimation_DESC("DogCopterIntroPhase1", 0.05f, false));
 		DogCopterIntroRenderer->CreateFrameAnimationFolder("Nothing", FrameAnimation_DESC("Nothing", true));
 		DogCopterIntroRenderer->ChangeFrameAnimation("DogCopterIntroPhase1");
@@ -467,7 +467,7 @@ void DogFightLevel::Update(float _DeltaTime)
 		if (PH1BulldogPlane == nullptr)
 		{
 			PH1BulldogPlane = CreateActor<BulldogPlane>(GameObjectGroup::Monster);
-			PH1BulldogPlane->GetTransform().SetWorldPosition({ 0, 100 });
+			PH1BulldogPlane->GetTransform().SetWorldPosition({ 0, 150 });
 			PH1BulldogPlane->SetPlayer(Cuphead);
 			PushToBackgroundCamera(CaptainCanteenPlane);
 			PushToBackgroundCamera(PH1BulldogPlane);

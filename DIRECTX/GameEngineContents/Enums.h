@@ -11,6 +11,7 @@ enum class ObjectOrder
 {
 	PC,
 	NPC,
+	DOGFIGHT,
 	MONSTER,
 	PC_BULLET,
 	MONSTER_BULLET,

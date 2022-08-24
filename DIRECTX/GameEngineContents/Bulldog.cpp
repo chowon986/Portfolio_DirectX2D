@@ -114,8 +114,6 @@ void Bulldog::Start()
 		SetRenderer(Renderer);
 	}
 
-	Prepare();
-
 	// 컴포넌트 생성
 	{
 		Movement = CreateComponent<InGameMovementComponent>();
@@ -429,7 +427,7 @@ void Bulldog::OnMountAnimationFrameChanged(const FrameAnimation_DESC& _Info)
 		{
 			EndPos = float4(Plane->GetTransform().GetLocalPosition().x, Plane->GetTransform().GetLocalPosition().y - 50);
 		}
-		MoveSpeed = 100.0f;
+		MoveSpeed = 150.0f;
 		MoveToEndPos(StartPos, EndPos, Plane);
 	}
 }

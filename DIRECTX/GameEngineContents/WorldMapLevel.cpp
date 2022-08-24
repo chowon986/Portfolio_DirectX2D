@@ -59,6 +59,11 @@ void WorldMapLevel::ColMapOnOffSwitch()
 
 void WorldMapLevel::LevelStartEvent()
 {
+	if (false == GameEngineInput::GetInst()->IsKey("EnterMap"))
+	{
+		GameEngineInput::GetInst()->CreateKey("EnterMap", 'B');
+	}
+
 	std::list<GameEngineActor*> Actors = GetGroup(GameObjectGroup::CharacterState);
 	for (GameEngineActor* Actor : Actors)
 	{
@@ -291,6 +296,22 @@ void WorldMapLevel::LevelStartEvent()
 	}
 
 	{
+		Background* Hanger = CreateActor<Background>(GameObjectGroup::UI);
+		GameEngineTextureRenderer* Renderer = Hanger->CreateComponent<GameEngineTextureRenderer>();
+		Renderer->SetTexture("hangar_18.png");
+		Renderer->ScaleToTexture();
+		Renderer->GetTransform().SetLocalPosition({ 3010, -1435.0f, (int)ZOrder::NPC });
+	}
+
+	{
+		Background* LightHouse = CreateActor<Background>(GameObjectGroup::UI);
+		GameEngineTextureRenderer* Renderer = LightHouse->CreateComponent<GameEngineTextureRenderer>();
+		Renderer->SetTexture("LightHouse.png");
+		Renderer->ScaleToTexture();
+		Renderer->GetTransform().SetLocalPosition({ 3119, -1300.0f, (int)ZOrder::NPC });
+	}
+
+	{
 		// 연결 통로 그림자
 		Background* StoneBridgeShadow = CreateActor<Background>(GameObjectGroup::UI);
 		GameEngineTextureRenderer* Renderer = StoneBridgeShadow->CreateComponent<GameEngineTextureRenderer>();
@@ -401,6 +422,12 @@ void WorldMapLevel::LevelStartEvent()
 				Mugman->GetTransform().SetLocalPosition({ 382, -1450, (int)ZOrder::Player });
 				Mugman->SetColMapImage(MainLandColMapRenderer);
 			}
+		}
+		else
+		{
+			WorldMapCuphead* Cuphead = CreateActor<WorldMapCuphead>(GameObjectGroup::Player);
+			Cuphead->GetTransform().SetLocalPosition({ 382, -1450, (int)ZOrder::Player });
+			Cuphead->SetColMapImage(MainLandColMapRenderer);
 		}
 
 	}
