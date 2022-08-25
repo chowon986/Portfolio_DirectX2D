@@ -153,6 +153,9 @@
     <ClInclude Include="GameEngineRenderSet.h">
       <Filter>Object\Component\Rendering</Filter>
     </ClInclude>
+    <ClInclude Include="..\GameEngineBase\GameEngineUpdateObject.h">
+      <Filter>Object\Component</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameEngineActor.cpp">
@@ -299,6 +302,9 @@
     </ClCompile>
     <ClCompile Include="GameEngineRenderSet.cpp">
       <Filter>Object\Component\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GameEngineBase\GameEngineUpdateObject.cpp">
+      <Filter>Object\Component</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -2,13 +2,38 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <FxCompile Include="TransformHeader.fx" />
-    <FxCompile Include="Color.hlsl" />
-    <FxCompile Include="Texture.hlsl" />
-    <FxCompile Include="TextureAtlas.hlsl" />
-    <FxCompile Include="Debug3D.hlsl" />
-    <FxCompile Include="DebugTexture.hlsl" />
     <FxCompile Include="..\..\..\..\..\t\AR40\DIRECTX\GameEngineResources\GameEngineShader\RenderOption.fx" />
-    <FxCompile Include="TargetMerge.hlsl" />
-    <FxCompile Include="Blur.hlsl" />
+    <FxCompile Include="Debug3D.hlsl">
+      <Filter>Debug</Filter>
+    </FxCompile>
+    <FxCompile Include="DebugTexture.hlsl">
+      <Filter>Debug</Filter>
+    </FxCompile>
+    <FxCompile Include="Color.hlsl">
+      <Filter>Object</Filter>
+    </FxCompile>
+    <FxCompile Include="Texture.hlsl">
+      <Filter>Object</Filter>
+    </FxCompile>
+    <FxCompile Include="TextureAtlas.hlsl">
+      <Filter>Object</Filter>
+    </FxCompile>
+    <FxCompile Include="Blur.hlsl">
+      <Filter>TargetEffect</Filter>
+    </FxCompile>
+    <FxCompile Include="TargetMerge.hlsl">
+      <Filter>TargetEffect</Filter>
+    </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Debug">
+      <UniqueIdentifier>{332baaff-80f1-4956-803e-085cc06f1bf9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object">
+      <UniqueIdentifier>{8fcad069-5b25-4ef1-b670-2dea63b3e7aa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TargetEffect">
+      <UniqueIdentifier>{a503da04-207c-456c-b424-22a87bc44c03}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

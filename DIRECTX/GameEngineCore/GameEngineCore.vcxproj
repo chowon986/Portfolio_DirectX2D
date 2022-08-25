@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\GameEngineBase\GameEngineUpdateObject.h" />
     <ClInclude Include="CoreMinimal.h" />
     <ClInclude Include="GameEngineActor.h">
       <SubType>
@@ -172,6 +173,7 @@
     <ClInclude Include="ThirdParty\inc\DirectXTex.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\GameEngineBase\GameEngineUpdateObject.cpp" />
     <ClCompile Include="GameEngineActor.cpp">
       <SubType>
       </SubType>
