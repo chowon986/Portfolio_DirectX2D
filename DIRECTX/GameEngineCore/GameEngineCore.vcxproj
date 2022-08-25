@@ -28,6 +28,7 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="GameEngineBlur.h" />
     <ClInclude Include="GameEngineCamera.h">
       <SubType>
       </SubType>
@@ -100,6 +101,7 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="GameEngineRenderSet.h" />
     <ClInclude Include="GameEngineRenderTarget.h">
       <SubType>
       </SubType>
@@ -141,6 +143,7 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="GameEngineUIRenderer.h" />
     <ClInclude Include="GameEngineVertexBuffer.h">
       <SubType>
       </SubType>
@@ -177,6 +180,7 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="GameEngineBlur.cpp" />
     <ClCompile Include="GameEngineCamera.cpp">
       <SubType>
       </SubType>
@@ -250,6 +254,7 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="GameEngineRenderSet.cpp" />
     <ClCompile Include="GameEngineRenderTarget.cpp">
       <SubType>
       </SubType>
@@ -291,6 +296,7 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="GameEngineUIRenderer.cpp" />
     <ClCompile Include="GameEngineVertexBuffer.cpp">
       <SubType>
       </SubType>

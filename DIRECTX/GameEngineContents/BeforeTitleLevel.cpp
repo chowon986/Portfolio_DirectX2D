@@ -31,22 +31,13 @@ void BeforeTitleLevel::Start()
 	MDHRLogoRenderer->SetTexture("Loading_background.png");
 	MDHRLogoRenderer->AnimationBindEnd("BeforeTitle", std::bind(&BeforeTitleLevel::OnHDMRAnimationFrameEnd, this, std::placeholders::_1));
 
-	{
-		Background* TestBackground = CreateActor<Background>();
-		GameEngineTextureRenderer* TestRenderer = TestBackground->CreateComponent<GameEngineTextureRenderer>();
-		TestRenderer->CreateFrameAnimationFolder("03ScreenFX", FrameAnimation_DESC("03ScreenFX", 0.1f));
-		TestRenderer->ChangeFrameAnimation("03ScreenFX");
-		TestRenderer->GetTransform().SetLocalScale({ 1280.0f,720.0f,1.0f });
-		TestRenderer->GetPipeLine()->SetOutputMergerBlend("TransparentBlend");
-	}
-
 	//{
 	//	Background* TestBackground = CreateActor<Background>();
 	//	GameEngineTextureRenderer* TestRenderer = TestBackground->CreateComponent<GameEngineTextureRenderer>();
 	//	TestRenderer->CreateFrameAnimationFolder("03ScreenFX", FrameAnimation_DESC("03ScreenFX", 0.1f));
 	//	TestRenderer->ChangeFrameAnimation("03ScreenFX");
 	//	TestRenderer->GetTransform().SetLocalScale({ 1280.0f,720.0f,1.0f });
-	//	TestRenderer->GetColorData().PlusColor.a = -0.9;
+	//	TestRenderer->GetPipeLine()->SetOutputMergerBlend("TransparentBlend");
 	//}
 }
 
@@ -60,7 +51,7 @@ void BeforeTitleLevel::Update(float _DeltaTime)
 
 	if (true == GameEngineInput::GetInst()->IsDown("LevelChange"))
 	{
-		//GEngine::ChangeLevel("Title");
+		GEngine::ChangeLevel("Title");
 	}
 }
 

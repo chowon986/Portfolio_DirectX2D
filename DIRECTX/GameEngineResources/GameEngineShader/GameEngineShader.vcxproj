@@ -128,6 +128,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <FxCompile Include="..\..\..\..\..\t\AR40\DIRECTX\GameEngineResources\GameEngineShader\RenderOption.fx" />
+    <FxCompile Include="Blur.hlsl" />
     <FxCompile Include="Color.hlsl" />
     <FxCompile Include="Debug3D.hlsl" />
     <FxCompile Include="DebugTexture.hlsl" />

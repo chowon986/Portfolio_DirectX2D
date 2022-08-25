@@ -54,10 +54,10 @@ void DogFightLevel::Start()
 	{
 		Background* ScreenLight = CreateActor<Background>(GameObjectGroup::UI);
 		ScreenLightRenderer = ScreenLight->CreateComponent <GameEngineTextureRenderer>();
-		ScreenLightRenderer->CreateFrameAnimationFolder("LightOn", FrameAnimation_DESC("IrisA", 0.1f,false));
+		ScreenLightRenderer->CreateFrameAnimationFolder("LightOn", FrameAnimation_DESC("IrisA", 0.05f,false));
 		ScreenLightRenderer->CreateFrameAnimationFolder("LightOff", FrameAnimation_DESC("IrisA", 16, 16, 0.1f));
 		ScreenLightRenderer->ChangeFrameAnimation("LightOff");
-		ScreenLightRenderer->GetTransform().SetLocalScale({ 1280.0f, 720.0f, (int)ZOrder::UI + 1 });
+		ScreenLightRenderer->GetTransform().SetLocalScale({ 1280.0f, 720.0f, 0 });
 		ScreenLightRenderer->SetPivot(PIVOTMODE::LEFTTOP);
 		ScreenLightRenderer->AnimationBindEnd("LightOn", std::bind(&DogFightLevel::LightOnAnimaitonFrameFinished, this, std::placeholders::_1));
 		//ScreenLightRenderer->ChangeCamera(CAMERAORDER::BACKGROUND);
@@ -418,19 +418,6 @@ void DogFightLevel::LightOnAnimaitonFrameFinished(const FrameAnimation_DESC& _In
 		DogCopterIntroRenderer->SetScaleModeImage();
 		DogCopterIntroRenderer->GetTransform().SetLocalPosition({ 640.0f, -360.0f, (int)ZOrder::Background - 2 });
 	}
-	if (CaptainCanteenPlane == nullptr)
-	{
-		CaptainCanteenPlane = CreateActor<CanteenPlane>(GameObjectGroup::Monster);
-		CaptainCanteenPlane->GetTransform().SetWorldPosition({ 280, -650 });
-
-		Cuphead = CreateActor<InGameCuphead>(GameObjectGroup::Player);
-		Cuphead->GetTransform().SetLocalPosition({ -150, 0, -100 });
-		Cuphead->SetParent(CaptainCanteenPlane);
-		Cuphead->SetColMapImage(ColMapRenderer);
-
-		CaptainCanteenPlane->SetPlayer(Cuphead);
-		CaptainCanteenPlane->SetColMapImage(ColMapRenderer);
-	}
 
 }
 
@@ -457,9 +444,28 @@ void DogFightLevel::Update(float _DeltaTime)
 {
 	ColMapOnOffSwitch();
 
-	if (GetPhase() == Phase::Ready)
+	if (GetPhase() == Phase::Ready && IrisOnceCheck == false)
 	{
 		ScreenLightRenderer->ChangeFrameAnimation("LightOn");
+
+		if (CaptainCanteenPlane == nullptr)
+		{
+			CaptainCanteenPlane = CreateActor<CanteenPlane>(GameObjectGroup::Monster);
+			CaptainCanteenPlane->GetTransform().SetWorldPosition({ 270, -650 });
+
+			Cuphead = CreateActor<InGameCuphead>(GameObjectGroup::Player);
+			Cuphead->SetParent(CaptainCanteenPlane);
+
+			Cuphead->GetTransform().SetLocalPosition({ -120, 50, (int)ZOrder::Player});
+			Cuphead->SetColMapImage(ColMapRenderer);
+
+			CaptainCanteenPlane->SetPlayer(Cuphead);
+			CaptainCanteenPlane->SetColMapImage(ColMapRenderer);
+		}
+
+		//PushToBackgroundCamera(CaptainCanteenPlane);
+		//PushToBackgroundCamera(PH1BulldogPlane);
+
 	}
 
 	else if (GetPhase() == Phase::Phase1)
@@ -480,20 +486,6 @@ void DogFightLevel::Update(float _DeltaTime)
 		{
 			PH1BulldogPlane->Death();
 			PH1BulldogPlane = nullptr;
-		}
-
-		if (CaptainCanteenPlane == nullptr)
-		{
-			CaptainCanteenPlane = CreateActor<CanteenPlane>(GameObjectGroup::Monster);
-			CaptainCanteenPlane->GetTransform().SetWorldPosition({ 640, -600 });
-
-			Cuphead = CreateActor<InGameCuphead>(GameObjectGroup::Player);
-			Cuphead->GetTransform().SetLocalPosition({ 0, 300, -100 });
-			Cuphead->SetParent(CaptainCanteenPlane);
-			Cuphead->SetColMapImage(ColMapRenderer);
-
-			CaptainCanteenPlane->SetPlayer(Cuphead);
-			CaptainCanteenPlane->SetColMapImage(ColMapRenderer);
 		}
 
 		if (OnceCheck == false)
@@ -547,10 +539,10 @@ void DogFightLevel::Update(float _DeltaTime)
 		}
 	}
 
-	static float4 Rot = { 0.0f, 0.0f, 0.0f };
+	//static float4 Rot = { 0.0f, 0.0f, 0.0f };
 
-	Rot.z = -90;
-	GetRotateCameraActorTransform().SetLocalRotation(Rot);
+	//Rot.z = -90;
+	//GetRotateCameraActorTransform().SetLocalRotation(Rot);
 
 }
 

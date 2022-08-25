@@ -72,5 +72,6 @@ private:
 	InGameCuphead* Cuphead;
 	bool OnceCheck;
 	GameEngineTextureRenderer* ScreenLightRenderer;
+	bool IrisOnceCheck;
 };
 

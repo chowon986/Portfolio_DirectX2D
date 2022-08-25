@@ -9,5 +9,6 @@
     <FxCompile Include="DebugTexture.hlsl" />
     <FxCompile Include="..\..\..\..\..\t\AR40\DIRECTX\GameEngineResources\GameEngineShader\RenderOption.fx" />
     <FxCompile Include="TargetMerge.hlsl" />
+    <FxCompile Include="Blur.hlsl" />
   </ItemGroup>
 </Project>
