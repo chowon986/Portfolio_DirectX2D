@@ -236,6 +236,7 @@
     <ClInclude Include="MonsterPhysicsComponent.h" />
     <ClInclude Include="MonsterWeaponBase.h" />
     <ClInclude Include="NewsCat.h" />
+    <ClInclude Include="OldFilm.h" />
     <ClInclude Include="Omm.h" />
     <ClInclude Include="PeaBullet.h" />
     <ClInclude Include="PeaShooter.h" />
@@ -324,6 +325,7 @@
     <ClCompile Include="DogCopterShooter.cpp" />
     <ClCompile Include="Dogfight.cpp" />
     <ClCompile Include="DogFightLevel.cpp" />
+    <ClCompile Include="GameEngineCore_ContentsResources.cpp" />
     <ClCompile Include="Ghost.cpp" />
     <ClCompile Include="HourglassLevel.cpp" />
     <ClCompile Include="IAimable.cpp" />
@@ -362,6 +364,7 @@
     <ClCompile Include="MonsterPhysicsComponent.cpp" />
     <ClCompile Include="MonsterWeaponBase.cpp" />
     <ClCompile Include="NewsCat.cpp" />
+    <ClCompile Include="OldFilm.cpp" />
     <ClCompile Include="Omm.cpp" />
     <ClCompile Include="PeaBullet.cpp" />
     <ClCompile Include="PeaShooter.cpp" />

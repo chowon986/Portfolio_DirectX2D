@@ -1,8 +1,10 @@
 #include "PreCompile.h"
 #include "BeforeTitleLevel.h"
 #include "Background.h"
+#include "OldFilm.h"
 #include "Enums.h"
 #include <GameEngineCore/GEngine.h>
+#include <GameEngineCore/GameEngineBlur.h>
 #include <GameEngineBase/GameEngineInput.h>
 #include <GameEngineCore/GameEngineTextureRenderer.h>
 
@@ -24,6 +26,8 @@ void BeforeTitleLevel::OnEvent()
 
 void BeforeTitleLevel::Start()
 {
+	GetMainCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
+
 	Background* MDHRLogo = CreateActor<Background>(GameObjectGroup::UI);
 	MDHRLogoRenderer = MDHRLogo->CreateComponent<GameEngineTextureRenderer>();
 	MDHRLogoRenderer->GetTransform().SetLocalScale({ 1280,720,100 });
@@ -31,14 +35,7 @@ void BeforeTitleLevel::Start()
 	MDHRLogoRenderer->SetTexture("Loading_background.png");
 	MDHRLogoRenderer->AnimationBindEnd("BeforeTitle", std::bind(&BeforeTitleLevel::OnHDMRAnimationFrameEnd, this, std::placeholders::_1));
 
-	//{
-	//	Background* TestBackground = CreateActor<Background>();
-	//	GameEngineTextureRenderer* TestRenderer = TestBackground->CreateComponent<GameEngineTextureRenderer>();
-	//	TestRenderer->CreateFrameAnimationFolder("03ScreenFX", FrameAnimation_DESC("03ScreenFX", 0.1f));
-	//	TestRenderer->ChangeFrameAnimation("03ScreenFX");
-	//	TestRenderer->GetTransform().SetLocalScale({ 1280.0f,720.0f,1.0f });
-	//	TestRenderer->GetPipeLine()->SetOutputMergerBlend("TransparentBlend");
-	//}
+	OldFilm* PostEffect = CreateActor<OldFilm>(GameObjectGroup::UI);
 }
 
 void BeforeTitleLevel::Update(float _DeltaTime)

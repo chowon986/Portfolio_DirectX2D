@@ -471,6 +471,9 @@
     <ClInclude Include="MonsterPhysicsComponent.h">
       <Filter>Components\Monster</Filter>
     </ClInclude>
+    <ClInclude Include="OldFilm.h">
+      <Filter>Global</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp">
@@ -808,6 +811,12 @@
     </ClCompile>
     <ClCompile Include="MonsterPhysicsComponent.cpp">
       <Filter>Components\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="OldFilm.cpp">
+      <Filter>Global</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEngineCore_ContentsResources.cpp">
+      <Filter>Global</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

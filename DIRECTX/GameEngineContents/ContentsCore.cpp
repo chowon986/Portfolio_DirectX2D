@@ -106,7 +106,6 @@ void ContentsCore::Start()
 	GameEngineFont::Load("Title");
 
 	GameEngineGUI::CreateGUIWindow<GameEngineStatusWindow>("EngineStatus", nullptr);
-
 }
 
 void ContentsCore::Update(float _DeltaTime)
