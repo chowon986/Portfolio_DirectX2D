@@ -50,6 +50,14 @@ void DogCopterShooter::Start()
 		LeftTopAuraRenderer->SetScaleModeImage();
 		LeftTopAuraRenderer->GetTransform().SetLocalPosition({  395, -140, (int)ZOrder::NPC - 8 });
 		LeftTopAuraRenderer->Off();
+
+		GameEngineTextureRenderer* RightTopAuraRenderer = CreateComponent<GameEngineTextureRenderer>();
+		RightTopAuraRenderer->CreateFrameAnimationFolder("LaserAura", FrameAnimation_DESC("LaserWarningAuraA", 0.1f, true));
+		RightTopAuraRenderer->CreateFrameAnimationFolder("Nothing", FrameAnimation_DESC("Nothing", 0.1f, false));
+		RightTopAuraRenderer->ChangeFrameAnimation("LaserAura");
+		RightTopAuraRenderer->SetScaleModeImage();
+		RightTopAuraRenderer->GetTransform().SetLocalPosition({ 395, -140, (int)ZOrder::NPC - 8 });
+		RightTopAuraRenderer->Off();
 		
 		AuraRenderers.push_back(LeftTopAuraRenderer);
 	}
@@ -512,7 +520,6 @@ void DogCopterShooter::Start()
 		RightLowLaserRenderer->SetScaleModeImage();
 		RightLowLaserRenderer->GetTransform().SetLocalPosition({ 400, -600, (int)ZOrder::NPC - 8 });
 		RightLowLaserRenderer->SetPivot(PIVOTMODE::RIGHTTOP);
-		RightLowLaserRenderer->GetTransform().PixLocalNegativeX();
 		RightLowLaserRenderer->Off();
 
 		LaserRenderers.push_back(LeftTopLaserRenderer);
