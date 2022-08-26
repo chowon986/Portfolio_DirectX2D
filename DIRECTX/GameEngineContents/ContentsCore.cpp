@@ -1,7 +1,6 @@
 #include "PreCompile.h"
 #include "ContentsCore.h"
 
-#include "PlayLevel.h"
 #include "ShopLevel.h"
 #include "TitleLevel.h"
 #include "SelectLevel.h"
@@ -99,7 +98,6 @@ void ContentsCore::Start()
 	CreateLevel<WorldMapLevel>("WorldMap");
 	CreateLevel<ShopLevel>("Shop");
 	CreateLevel<TutorialLevel>("Tutorial");
-	CreateLevel<PlayLevel>("Play");
 	CreateLevel<DogFightLevel>("DogFight");
 	ChangeLevel("BeforeTitle");
 

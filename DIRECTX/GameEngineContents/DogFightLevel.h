@@ -73,5 +73,6 @@ private:
 	bool OnceCheck;
 	GameEngineTextureRenderer* ScreenLightRenderer;
 	bool IrisOnceCheck;
+	float ElapsedTime;
 };
 

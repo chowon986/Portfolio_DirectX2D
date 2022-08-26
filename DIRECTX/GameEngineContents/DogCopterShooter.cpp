@@ -20,6 +20,251 @@ DogCopterShooter::~DogCopterShooter()
 void DogCopterShooter::Start()
 {
 	GetTransform().SetWorldPosition({ 0.0f,0.0f });
+
+	{
+		GameEngineTextureRenderer* LeftTeethRenderer = CreateComponent<GameEngineTextureRenderer>();
+		LeftTeethRenderer->CreateFrameAnimationFolder("LaserTeeth", FrameAnimation_DESC("LaserTopShootingTeeth", 0.1f, true));
+		LeftTeethRenderer->CreateFrameAnimationFolder("Nothing", FrameAnimation_DESC("Nothing", 0.1f, false));
+		LeftTeethRenderer->ChangeFrameAnimation("LaserTeeth");
+		LeftTeethRenderer->SetScaleModeImage();
+		LeftTeethRenderer->GetTransform().SetLocalPosition({ 395, -135, (int)ZOrder::NPC - 9 });
+		LeftTeethRenderer->Off();
+
+		GameEngineTextureRenderer* RightTeethRenderer = CreateComponent<GameEngineTextureRenderer>();
+		RightTeethRenderer->CreateFrameAnimationFolder("LaserTeeth", FrameAnimation_DESC("LaserMidShootingTeeth", 0.1f, true));
+		RightTeethRenderer->CreateFrameAnimationFolder("Nothing", FrameAnimation_DESC("Nothing", 0.1f, false));
+		RightTeethRenderer->ChangeFrameAnimation("LaserTeeth");
+		RightTeethRenderer->SetScaleModeImage();
+		RightTeethRenderer->GetTransform().SetLocalPosition({ 500, -135, (int)ZOrder::NPC - 9 });
+		RightTeethRenderer->GetTransform().PixLocalNegativeX();
+		RightTeethRenderer->Off();
+
+		MachineTeethRenderers.push_back(LeftTeethRenderer);
+	}
+
+	{
+		GameEngineTextureRenderer* LeftTopAuraRenderer = CreateComponent<GameEngineTextureRenderer>();
+		LeftTopAuraRenderer->CreateFrameAnimationFolder("LaserAura", FrameAnimation_DESC("LaserWarningAuraA", 0.1f, true));
+		LeftTopAuraRenderer->CreateFrameAnimationFolder("Nothing", FrameAnimation_DESC("Nothing", 0.1f, false));
+		LeftTopAuraRenderer->ChangeFrameAnimation("LaserAura");
+		LeftTopAuraRenderer->SetScaleModeImage();
+		LeftTopAuraRenderer->GetTransform().SetLocalPosition({  395, -140, (int)ZOrder::NPC - 8 });
+		LeftTopAuraRenderer->Off();
+		
+		AuraRenderers.push_back(LeftTopAuraRenderer);
+	}
+
+	{
+		GameEngineTextureRenderer* LeftTopPadBackBackerRenderer = CreateComponent<GameEngineTextureRenderer>();
+		LeftTopPadBackBackerRenderer->CreateFrameAnimationFolder("PadBackHole", FrameAnimation_DESC("LeftPawHoleTopBacker", 0.1f, false));
+		LeftTopPadBackBackerRenderer->CreateFrameAnimationFolder("Nothing", FrameAnimation_DESC("Nothing", 0.1f, false));
+		LeftTopPadBackBackerRenderer->ChangeFrameAnimation("PadBackHole");
+		LeftTopPadBackBackerRenderer->SetScaleModeImage();
+		LeftTopPadBackBackerRenderer->GetTransform().SetLocalPosition({ 194, -154, (int)ZOrder::NPC - 3 });
+		LeftTopPadBackBackerRenderer->Off();
+
+		GameEngineTextureRenderer* LeftMidPadBackBackerRenderer = CreateComponent<GameEngineTextureRenderer>();
+		LeftMidPadBackBackerRenderer->CreateFrameAnimationFolder("PadBackHole", FrameAnimation_DESC("LeftPawHoleMidBacker", 0.1f, false));
+		LeftMidPadBackBackerRenderer->CreateFrameAnimationFolder("Nothing", FrameAnimation_DESC("Nothing", 0.1f, false));
+		LeftMidPadBackBackerRenderer->ChangeFrameAnimation("PadBackHole");
+		LeftMidPadBackBackerRenderer->SetScaleModeImage();
+		LeftMidPadBackBackerRenderer->GetTransform().SetLocalPosition({ 208, -564, (int)ZOrder::NPC - 3 });
+		LeftMidPadBackBackerRenderer->Off();
+
+		GameEngineTextureRenderer* LeftLowPadBackBackerRenderer = CreateComponent<GameEngineTextureRenderer>();
+		LeftLowPadBackBackerRenderer->CreateFrameAnimationFolder("PadBackHole", FrameAnimation_DESC("LeftPawHoleLowBacker", 0.1f, false));
+		LeftLowPadBackBackerRenderer->CreateFrameAnimationFolder("Nothing", FrameAnimation_DESC("Nothing", 0.1f, false));
+		LeftLowPadBackBackerRenderer->ChangeFrameAnimation("PadBackHole");
+		LeftLowPadBackBackerRenderer->SetScaleModeImage();
+		LeftLowPadBackBackerRenderer->GetTransform().SetLocalPosition({ 260, -784, (int)ZOrder::NPC - 3 });
+		LeftLowPadBackBackerRenderer->Off();
+
+		GameEngineTextureRenderer* RightTopPadBackBackerRenderer = CreateComponent<GameEngineTextureRenderer>();
+		RightTopPadBackBackerRenderer->CreateFrameAnimationFolder("PadBackHole", FrameAnimation_DESC("LeftPawHoleTopBacker", 0.1f, false));
+		RightTopPadBackBackerRenderer->CreateFrameAnimationFolder("Nothing", FrameAnimation_DESC("Nothing", 0.1f, false));
+		RightTopPadBackBackerRenderer->ChangeFrameAnimation("PadBackHole");
+		RightTopPadBackBackerRenderer->SetScaleModeImage();
+		RightTopPadBackBackerRenderer->GetTransform().SetLocalPosition({ 1190, -351, (int)ZOrder::NPC - 3 });
+		RightTopPadBackBackerRenderer->GetTransform().PixLocalNegativeX();
+		RightTopPadBackBackerRenderer->Off();
+
+		GameEngineTextureRenderer* RightMidPadBackBackerRenderer = CreateComponent<GameEngineTextureRenderer>();
+		RightMidPadBackBackerRenderer->CreateFrameAnimationFolder("PadBackHole", FrameAnimation_DESC("LeftPawHoleMidBacker", 0.1f, false));
+		RightMidPadBackBackerRenderer->CreateFrameAnimationFolder("Nothing", FrameAnimation_DESC("Nothing", 0.1f, false));
+		RightMidPadBackBackerRenderer->ChangeFrameAnimation("PadBackHole");
+		RightMidPadBackBackerRenderer->SetScaleModeImage();
+		RightMidPadBackBackerRenderer->GetTransform().SetLocalPosition({ 194, -154, (int)ZOrder::NPC - 3 });
+		RightMidPadBackBackerRenderer->GetTransform().PixLocalNegativeX();
+		RightMidPadBackBackerRenderer->Off();
+
+		GameEngineTextureRenderer* RightLowPadBackBackerRenderer = CreateComponent<GameEngineTextureRenderer>();
+		RightLowPadBackBackerRenderer->CreateFrameAnimationFolder("PadBackHole", FrameAnimation_DESC("LeftPawHoleLowBacker", 0.1f, false));
+		RightLowPadBackBackerRenderer->CreateFrameAnimationFolder("Nothing", FrameAnimation_DESC("Nothing", 0.1f, false));
+		RightLowPadBackBackerRenderer->ChangeFrameAnimation("PadBackHole");
+		RightLowPadBackBackerRenderer->SetScaleModeImage();
+		RightLowPadBackBackerRenderer->GetTransform().SetLocalPosition({ 194, -154, (int)ZOrder::NPC - 3 });
+		RightLowPadBackBackerRenderer->GetTransform().PixLocalNegativeX();
+		RightLowPadBackBackerRenderer->Off();
+
+		PadBackBackerRenderers.push_back(LeftTopPadBackBackerRenderer);
+		PadBackBackerRenderers.push_back(RightTopPadBackBackerRenderer);
+		PadBackBackerRenderers.push_back(LeftMidPadBackBackerRenderer);
+		PadBackBackerRenderers.push_back(RightMidPadBackBackerRenderer);
+		PadBackBackerRenderers.push_back(LeftLowPadBackBackerRenderer);
+		PadBackBackerRenderers.push_back(RightLowPadBackBackerRenderer);
+	}
+
+	{
+		GameEngineTextureRenderer* LeftTopLaserMachineBackerRenderer = CreateComponent<GameEngineTextureRenderer>();
+		LeftTopLaserMachineBackerRenderer->CreateFrameAnimationFolder("LaserBackerStart", FrameAnimation_DESC("LaserTopBackerStart", 0.1f, false));
+		LeftTopLaserMachineBackerRenderer->CreateFrameAnimationFolder("LaserShootingBacker", FrameAnimation_DESC("LaserTopShootingBacker", 0.1f, false));
+		LeftTopLaserMachineBackerRenderer->CreateFrameAnimationFolder("LaserBackerEnd", FrameAnimation_DESC("LaserTopBackerEnd", 0.1f, false));
+		LeftTopLaserMachineBackerRenderer->CreateFrameAnimationFolder("Nothing", FrameAnimation_DESC("Nothing", 0.1f, false)); 
+		LeftTopLaserMachineBackerRenderer->AnimationBindFrame("LaserBackerEnd", std::bind(&DogCopterShooter::Test, this, std::placeholders::_1));
+		LeftTopLaserMachineBackerRenderer->AnimationBindFrame("LaserBackerStart", std::bind(&DogCopterShooter::OnLaserBackerAnimationFrameChanged, this, std::placeholders::_1));
+		LeftTopLaserMachineBackerRenderer->AnimationBindEnd("LaserBackerEnd", std::bind(&DogCopterShooter::OnLaserBackerAnimationFrameFinished, this, std::placeholders::_1));
+		LeftTopLaserMachineBackerRenderer->ChangeFrameAnimation("Nothing");
+		LeftTopLaserMachineBackerRenderer->SetScaleModeImage();
+		LeftTopLaserMachineBackerRenderer->GetTransform().SetLocalPosition({ 260, -90, (int)ZOrder::NPC - 4 });
+		LeftTopLaserMachineBackerRenderer->Off();
+
+		GameEngineTextureRenderer* LeftMidLaserMachineBackerRenderer = CreateComponent<GameEngineTextureRenderer>();
+		LeftMidLaserMachineBackerRenderer->CreateFrameAnimationFolder("LaserBackerStart", FrameAnimation_DESC("LaserMidBackerStart", 0.1f, false));
+		LeftMidLaserMachineBackerRenderer->CreateFrameAnimationFolder("LaserShootingBacker", FrameAnimation_DESC("LaserMidShootingBacker", 0.1f, false));
+		LeftMidLaserMachineBackerRenderer->CreateFrameAnimationFolder("LaserBackerEnd", FrameAnimation_DESC("LaserMidBackerEnd", 0.1f, false));
+		LeftMidLaserMachineBackerRenderer->CreateFrameAnimationFolder("Nothing", FrameAnimation_DESC("Nothing", 0.1f, false));
+		LeftMidLaserMachineBackerRenderer->AnimationBindFrame("LaserBackerEnd", std::bind(&DogCopterShooter::Test, this, std::placeholders::_1));
+		LeftMidLaserMachineBackerRenderer->AnimationBindFrame("LaserBackerStart", std::bind(&DogCopterShooter::OnLaserBackerAnimationFrameChanged, this, std::placeholders::_1));
+		LeftMidLaserMachineBackerRenderer->AnimationBindEnd("LaserBackerEnd", std::bind(&DogCopterShooter::OnLaserBackerAnimationFrameFinished, this, std::placeholders::_1));
+		LeftMidLaserMachineBackerRenderer->ChangeFrameAnimation("Nothing");
+		LeftMidLaserMachineBackerRenderer->SetScaleModeImage();
+		LeftMidLaserMachineBackerRenderer->GetTransform().SetLocalPosition({ 260, -90, (int)ZOrder::NPC - 4 });
+		LeftMidLaserMachineBackerRenderer->Off();
+
+		GameEngineTextureRenderer* LeftLowLaserMachineBackerRenderer = CreateComponent<GameEngineTextureRenderer>();
+		LeftLowLaserMachineBackerRenderer->CreateFrameAnimationFolder("LaserBackerStart", FrameAnimation_DESC("LaserLowBackerStart", 0.1f, false));
+		LeftLowLaserMachineBackerRenderer->CreateFrameAnimationFolder("LaserShootingBacker", FrameAnimation_DESC("LaserLowShootingBacker", 0.1f, false));
+		LeftLowLaserMachineBackerRenderer->CreateFrameAnimationFolder("LaserBackerEnd", FrameAnimation_DESC("LaserLowBackerEnd", 0.1f, false));
+		LeftLowLaserMachineBackerRenderer->CreateFrameAnimationFolder("Nothing", FrameAnimation_DESC("Nothing", 0.1f, false));
+		LeftLowLaserMachineBackerRenderer->AnimationBindFrame("LaserBackerEnd", std::bind(&DogCopterShooter::Test, this, std::placeholders::_1));
+		LeftLowLaserMachineBackerRenderer->AnimationBindFrame("LaserBackerStart", std::bind(&DogCopterShooter::OnLaserBackerAnimationFrameChanged, this, std::placeholders::_1));
+		LeftLowLaserMachineBackerRenderer->AnimationBindEnd("LaserBackerEnd", std::bind(&DogCopterShooter::OnLaserBackerAnimationFrameFinished, this, std::placeholders::_1));
+		LeftLowLaserMachineBackerRenderer->ChangeFrameAnimation("Nothing");
+		LeftLowLaserMachineBackerRenderer->SetScaleModeImage();
+		LeftLowLaserMachineBackerRenderer->GetTransform().SetLocalPosition({ 260, -90, (int)ZOrder::NPC - 4 });
+		LeftLowLaserMachineBackerRenderer->Off();
+
+		GameEngineTextureRenderer* RightTopLaserMachineBackerRenderer = CreateComponent<GameEngineTextureRenderer>();
+		RightTopLaserMachineBackerRenderer->CreateFrameAnimationFolder("LaserBackerStart", FrameAnimation_DESC("LaserTopBackerStart", 0.1f, false));
+		RightTopLaserMachineBackerRenderer->CreateFrameAnimationFolder("LaserShootingBacker", FrameAnimation_DESC("LaserTopShootingBacker", 0.1f, false));
+		RightTopLaserMachineBackerRenderer->CreateFrameAnimationFolder("LaserBackerEnd", FrameAnimation_DESC("LaserTopBackerEnd", 0.1f, false));
+		RightTopLaserMachineBackerRenderer->CreateFrameAnimationFolder("Nothing", FrameAnimation_DESC("Nothing", 0.1f, false));
+		RightTopLaserMachineBackerRenderer->AnimationBindFrame("LaserBackerEnd", std::bind(&DogCopterShooter::Test, this, std::placeholders::_1));
+		RightTopLaserMachineBackerRenderer->AnimationBindFrame("LaserBackerStart", std::bind(&DogCopterShooter::OnLaserBackerAnimationFrameChanged, this, std::placeholders::_1));
+		RightTopLaserMachineBackerRenderer->AnimationBindEnd("LaserBackerEnd", std::bind(&DogCopterShooter::OnLaserBackerAnimationFrameFinished, this, std::placeholders::_1));
+		RightTopLaserMachineBackerRenderer->ChangeFrameAnimation("Nothing");
+		RightTopLaserMachineBackerRenderer->SetScaleModeImage();
+		RightTopLaserMachineBackerRenderer->GetTransform().SetLocalPosition({ 260, -90, (int)ZOrder::NPC - 4 });
+		RightTopLaserMachineBackerRenderer->GetTransform().PixLocalNegativeX();
+		RightTopLaserMachineBackerRenderer->Off();
+
+		GameEngineTextureRenderer* RightMidLaserMachineBackerRenderer = CreateComponent<GameEngineTextureRenderer>();
+		RightMidLaserMachineBackerRenderer->CreateFrameAnimationFolder("LaserBackerStart", FrameAnimation_DESC("LaserMidBackerStart", 0.1f, false));
+		RightMidLaserMachineBackerRenderer->CreateFrameAnimationFolder("LaserShootingBacker", FrameAnimation_DESC("LaserMidShootingBacker", 0.1f, false));
+		RightMidLaserMachineBackerRenderer->CreateFrameAnimationFolder("LaserBackerEnd", FrameAnimation_DESC("LaserMidBackerEnd", 0.1f, false));
+		RightMidLaserMachineBackerRenderer->CreateFrameAnimationFolder("Nothing", FrameAnimation_DESC("Nothing", 0.1f, false));
+		RightMidLaserMachineBackerRenderer->AnimationBindFrame("LaserBackerEnd", std::bind(&DogCopterShooter::Test, this, std::placeholders::_1));
+		RightMidLaserMachineBackerRenderer->AnimationBindFrame("LaserBackerStart", std::bind(&DogCopterShooter::OnLaserBackerAnimationFrameChanged, this, std::placeholders::_1));
+		RightMidLaserMachineBackerRenderer->AnimationBindEnd("LaserBackerEnd", std::bind(&DogCopterShooter::OnLaserBackerAnimationFrameFinished, this, std::placeholders::_1));
+		RightMidLaserMachineBackerRenderer->ChangeFrameAnimation("Nothing");
+		RightMidLaserMachineBackerRenderer->SetScaleModeImage();
+		RightMidLaserMachineBackerRenderer->GetTransform().SetLocalPosition({ 260, -90, (int)ZOrder::NPC - 4 });
+		RightMidLaserMachineBackerRenderer->GetTransform().PixLocalNegativeX();
+		RightMidLaserMachineBackerRenderer->Off();
+
+		GameEngineTextureRenderer* RightLowLaserMachineBackerRenderer = CreateComponent<GameEngineTextureRenderer>();
+		RightLowLaserMachineBackerRenderer->CreateFrameAnimationFolder("LaserBackerStart", FrameAnimation_DESC("LaserLowBackerStart", 0.1f, false));
+		RightLowLaserMachineBackerRenderer->CreateFrameAnimationFolder("LaserShootingBacker", FrameAnimation_DESC("LaserLowShootingBacker", 0.1f, false));
+		RightLowLaserMachineBackerRenderer->CreateFrameAnimationFolder("LaserBackerEnd", FrameAnimation_DESC("LaserLowBackerEnd", 0.1f, false));
+		RightLowLaserMachineBackerRenderer->CreateFrameAnimationFolder("Nothing", FrameAnimation_DESC("Nothing", 0.1f, false));
+		RightLowLaserMachineBackerRenderer->AnimationBindFrame("LaserBackerEnd", std::bind(&DogCopterShooter::Test, this, std::placeholders::_1));
+		RightLowLaserMachineBackerRenderer->AnimationBindFrame("LaserBackerStart", std::bind(&DogCopterShooter::OnLaserBackerAnimationFrameChanged, this, std::placeholders::_1));
+		RightLowLaserMachineBackerRenderer->AnimationBindEnd("LaserBackerEnd", std::bind(&DogCopterShooter::OnLaserBackerAnimationFrameFinished, this, std::placeholders::_1));
+		RightLowLaserMachineBackerRenderer->ChangeFrameAnimation("Nothing");
+		RightLowLaserMachineBackerRenderer->SetScaleModeImage();
+		RightLowLaserMachineBackerRenderer->GetTransform().SetLocalPosition({ 260, -90, (int)ZOrder::NPC - 4 });
+		RightLowLaserMachineBackerRenderer->GetTransform().PixLocalNegativeX();
+		RightLowLaserMachineBackerRenderer->Off();
+
+		LaserMachineBackerRenderers.push_back(LeftTopLaserMachineBackerRenderer);
+		LaserMachineBackerRenderers.push_back(RightTopLaserMachineBackerRenderer);
+		LaserMachineBackerRenderers.push_back(LeftMidLaserMachineBackerRenderer);
+		LaserMachineBackerRenderers.push_back(RightMidLaserMachineBackerRenderer);
+		LaserMachineBackerRenderers.push_back(LeftLowLaserMachineBackerRenderer);
+		LaserMachineBackerRenderers.push_back(RightLowLaserMachineBackerRenderer);
+	}
+
+	{
+		GameEngineTextureRenderer* LeftTopPadBackRenderer = CreateComponent<GameEngineTextureRenderer>();
+		LeftTopPadBackRenderer->CreateFrameAnimationFolder("PadBackHole", FrameAnimation_DESC("LeftPawHoleTop", 0.1f, false));
+		LeftTopPadBackRenderer->CreateFrameAnimationFolder("Nothing", FrameAnimation_DESC("Nothing", 0.1f, false));
+		LeftTopPadBackRenderer->ChangeFrameAnimation("PadBackHole");
+		LeftTopPadBackRenderer->SetScaleModeImage();
+		LeftTopPadBackRenderer->GetTransform().SetLocalPosition({ 125, -360, (int)ZOrder::NPC - 5 });
+		LeftTopPadBackRenderer->Off();
+
+		GameEngineTextureRenderer* LeftMidPadBackRenderer = CreateComponent<GameEngineTextureRenderer>();
+		LeftMidPadBackRenderer->CreateFrameAnimationFolder("PadBackHole", FrameAnimation_DESC("LeftPawHoleMid", 0.1f, false));
+		LeftMidPadBackRenderer->CreateFrameAnimationFolder("Nothing", FrameAnimation_DESC("Nothing", 0.1f, false));
+		LeftMidPadBackRenderer->ChangeFrameAnimation("PadBackHole");
+		LeftMidPadBackRenderer->SetScaleModeImage();
+		LeftMidPadBackRenderer->GetTransform().SetLocalPosition({ 299, -585, (int)ZOrder::NPC - 5 });
+		LeftMidPadBackRenderer->Off();
+
+		GameEngineTextureRenderer* LeftLowPadBackRenderer = CreateComponent<GameEngineTextureRenderer>();
+		LeftLowPadBackRenderer->CreateFrameAnimationFolder("PadBackHole", FrameAnimation_DESC("LeftPawHoleLow", 0.1f, false));
+		LeftLowPadBackRenderer->CreateFrameAnimationFolder("Nothing", FrameAnimation_DESC("Nothing", 0.1f, false));
+		LeftLowPadBackRenderer->ChangeFrameAnimation("PadBackHole");
+		LeftLowPadBackRenderer->SetScaleModeImage();
+		LeftLowPadBackRenderer->GetTransform().SetLocalPosition({ 457, -827, (int)ZOrder::NPC - 5 });
+		LeftLowPadBackRenderer->Off();
+
+		GameEngineTextureRenderer* RightTopPadBackRenderer = CreateComponent<GameEngineTextureRenderer>();
+		RightTopPadBackRenderer->CreateFrameAnimationFolder("PadBackHole", FrameAnimation_DESC("LeftPawHoleTop", 0.1f, false));
+		RightTopPadBackRenderer->CreateFrameAnimationFolder("Nothing", FrameAnimation_DESC("Nothing", 0.1f, false));
+		RightTopPadBackRenderer->ChangeFrameAnimation("PadBackHole");
+		RightTopPadBackRenderer->SetScaleModeImage();
+		RightTopPadBackRenderer->GetTransform().SetLocalPosition({ 1191, -355, (int)ZOrder::NPC - 5 });
+		RightTopPadBackRenderer->GetTransform().PixLocalNegativeX();
+		RightTopPadBackRenderer->Off();
+
+		GameEngineTextureRenderer* RightMidPadBackRenderer = CreateComponent<GameEngineTextureRenderer>();
+		RightMidPadBackRenderer->CreateFrameAnimationFolder("PadBackHole", FrameAnimation_DESC("LeftPawHoleMid", 0.1f, false));
+		RightMidPadBackRenderer->CreateFrameAnimationFolder("Nothing", FrameAnimation_DESC("Nothing", 0.1f, false));
+		RightMidPadBackRenderer->ChangeFrameAnimation("PadBackHole");
+		RightMidPadBackRenderer->SetScaleModeImage();
+		RightMidPadBackRenderer->GetTransform().SetLocalPosition({ 1167, -567, (int)ZOrder::NPC - 5 });
+		RightMidPadBackRenderer->GetTransform().PixLocalNegativeX();
+		RightMidPadBackRenderer->Off();
+
+		GameEngineTextureRenderer* RightLowPadBackRenderer = CreateComponent<GameEngineTextureRenderer>();
+		RightLowPadBackRenderer->CreateFrameAnimationFolder("PadBackHole", FrameAnimation_DESC("LeftPawHoleLow", 0.1f, false));
+		RightLowPadBackRenderer->CreateFrameAnimationFolder("Nothing", FrameAnimation_DESC("Nothing", 0.1f, false));
+		RightLowPadBackRenderer->ChangeFrameAnimation("PadBackHole");
+		RightLowPadBackRenderer->SetScaleModeImage();
+		RightLowPadBackRenderer->GetTransform().SetLocalPosition({ 1007, -806, (int)ZOrder::NPC - 5 });
+		RightLowPadBackRenderer->GetTransform().PixLocalNegativeX();
+		RightLowPadBackRenderer->Off();
+
+		PadBackRenderers.push_back(LeftTopPadBackRenderer);
+		PadBackRenderers.push_back(RightTopPadBackRenderer);
+		PadBackRenderers.push_back(LeftMidPadBackRenderer);
+		PadBackRenderers.push_back(RightMidPadBackRenderer);
+		PadBackRenderers.push_back(LeftLowPadBackRenderer);
+		PadBackRenderers.push_back(RightLowPadBackRenderer);
+	}
+
+
 	{
 		GameEngineTextureRenderer* LeftTopPadRenderer = CreateComponent<GameEngineTextureRenderer>();
 		LeftTopPadRenderer->CreateFrameAnimationFolder("PadOpen", FrameAnimation_DESC("TopPadOpen", 0.1f, true)); // 패드 열리기
@@ -30,7 +275,7 @@ void DogCopterShooter::Start()
 		LeftTopPadRenderer->AnimationBindEnd("PadClose", std::bind(&DogCopterShooter::OnPadCloseAnimationFrameFinished, this, std::placeholders::_1));
 		LeftTopPadRenderer->ChangeFrameAnimation("PadOpen");
 		LeftTopPadRenderer->SetScaleModeImage();
-		LeftTopPadRenderer->GetTransform().SetLocalPosition({ 272, -365, (int)ZOrder::NPC - 4 });
+		LeftTopPadRenderer->GetTransform().SetLocalPosition({ 194, -148, (int)ZOrder::NPC - 6 });
 		LeftTopPadRenderer->Off();
 
 		GameEngineTextureRenderer* LeftMidPadRenderer = CreateComponent<GameEngineTextureRenderer>();
@@ -41,7 +286,7 @@ void DogCopterShooter::Start()
 		LeftMidPadRenderer->AnimationBindEnd("PadOpen", std::bind(&DogCopterShooter::OnPadOpenAnimationFrameFinished, this, std::placeholders::_1));
 		LeftMidPadRenderer->AnimationBindEnd("PadClose", std::bind(&DogCopterShooter::OnPadCloseAnimationFrameFinished, this, std::placeholders::_1));
 		LeftMidPadRenderer->ChangeFrameAnimation("PadOpen");
-		LeftMidPadRenderer->GetTransform().SetLocalPosition({ 208, -565, (int)ZOrder::NPC - 4 });
+		LeftMidPadRenderer->GetTransform().SetLocalPosition({ 208, -565, (int)ZOrder::NPC - 6 });
 		LeftMidPadRenderer->SetScaleModeImage();
 		LeftMidPadRenderer->Off();
 
@@ -53,7 +298,7 @@ void DogCopterShooter::Start()
 		LeftLowPadRenderer->AnimationBindEnd("PadOpen", std::bind(&DogCopterShooter::OnPadOpenAnimationFrameFinished, this, std::placeholders::_1));
 		LeftLowPadRenderer->AnimationBindEnd("PadClose", std::bind(&DogCopterShooter::OnPadCloseAnimationFrameFinished, this, std::placeholders::_1));
 		LeftLowPadRenderer->ChangeFrameAnimation("PadOpen");
-		LeftLowPadRenderer->GetTransform().SetLocalPosition({ 260, -780, (int)ZOrder::NPC - 4 });
+		LeftLowPadRenderer->GetTransform().SetLocalPosition({ 260, -780, (int)ZOrder::NPC - 6 });
 		LeftLowPadRenderer->SetScaleModeImage();
 		LeftLowPadRenderer->Off();
 
@@ -66,7 +311,7 @@ void DogCopterShooter::Start()
 		RightTopPadRenderer->AnimationBindEnd("PadClose", std::bind(&DogCopterShooter::OnPadCloseAnimationFrameFinished, this, std::placeholders::_1));
 		RightTopPadRenderer->ChangeFrameAnimation("PadOpen");
 		RightTopPadRenderer->SetScaleModeImage();
-		RightTopPadRenderer->GetTransform().SetLocalPosition({ 1190, -347, (int)ZOrder::NPC - 4 });
+		RightTopPadRenderer->GetTransform().SetLocalPosition({ 1050, -374, (int)ZOrder::NPC - 6 });
 		RightTopPadRenderer->GetTransform().PixLocalNegativeX();
 		RightTopPadRenderer->Off();
 
@@ -79,7 +324,7 @@ void DogCopterShooter::Start()
 		RightMidPadRenderer->AnimationBindEnd("PadClose", std::bind(&DogCopterShooter::OnPadCloseAnimationFrameFinished, this, std::placeholders::_1));
 		RightMidPadRenderer->ChangeFrameAnimation("PadOpen");
 		RightMidPadRenderer->SetScaleModeImage();
-		RightMidPadRenderer->GetTransform().SetLocalPosition({ 1260, -554, (int)ZOrder::NPC - 4 });
+		RightMidPadRenderer->GetTransform().SetLocalPosition({ 1190, -504, (int)ZOrder::NPC - 6 });
 		RightMidPadRenderer->GetTransform().PixLocalNegativeX();
 		RightMidPadRenderer->Off();
 
@@ -91,7 +336,7 @@ void DogCopterShooter::Start()
 		RightLowPadRenderer->AnimationBindEnd("PadOpen", std::bind(&DogCopterShooter::OnPadOpenAnimationFrameFinished, this, std::placeholders::_1));
 		RightLowPadRenderer->AnimationBindEnd("PadClose", std::bind(&DogCopterShooter::OnPadCloseAnimationFrameFinished, this, std::placeholders::_1));
 		RightLowPadRenderer->ChangeFrameAnimation("PadOpen");
-		RightLowPadRenderer->GetTransform().SetLocalPosition({ 1209, -765, (int)ZOrder::NPC - 4 });
+		RightLowPadRenderer->GetTransform().SetLocalPosition({ 1190, -824, (int)ZOrder::NPC - 6 });
 		RightLowPadRenderer->SetScaleModeImage();
 		RightLowPadRenderer->GetTransform().PixLocalNegativeX();
 		RightLowPadRenderer->Off();
@@ -115,7 +360,7 @@ void DogCopterShooter::Start()
 		LeftTopLaserMachineRenderer->AnimationBindEnd("LaserClose", std::bind(&DogCopterShooter::OnLaserCloseAnimationFrameFinished, this, std::placeholders::_1));
 		LeftTopLaserMachineRenderer->ChangeFrameAnimation("LaserPrepare");
 		LeftTopLaserMachineRenderer->SetScaleModeImage();
-		LeftTopLaserMachineRenderer->GetTransform().SetLocalPosition({ 410, -370, (int)ZOrder::NPC - 5 });
+		LeftTopLaserMachineRenderer->GetTransform().SetLocalPosition({ 260, -90, (int)ZOrder::NPC - 7 });
 		LeftTopLaserMachineRenderer->Off();
 
 		GameEngineTextureRenderer* LeftMidLaserMachineRenderer = CreateComponent<GameEngineTextureRenderer>();
@@ -128,7 +373,7 @@ void DogCopterShooter::Start()
 		LeftMidLaserMachineRenderer->AnimationBindEnd("LaserClose", std::bind(&DogCopterShooter::OnLaserCloseAnimationFrameFinished, this, std::placeholders::_1));
 		LeftMidLaserMachineRenderer->ChangeFrameAnimation("LaserPrepare");
 		LeftMidLaserMachineRenderer->SetScaleModeImage();
-		LeftMidLaserMachineRenderer->GetTransform().SetLocalPosition({ 270, -500, (int)ZOrder::NPC - 5 });
+		LeftMidLaserMachineRenderer->GetTransform().SetLocalPosition({ 270, -500, (int)ZOrder::NPC - 7 });
 		LeftMidLaserMachineRenderer->Off();
 
 		GameEngineTextureRenderer* LeftLowLaserMachineRenderer = CreateComponent<GameEngineTextureRenderer>();
@@ -141,7 +386,7 @@ void DogCopterShooter::Start()
 		LeftLowLaserMachineRenderer->AnimationBindEnd("LaserClose", std::bind(&DogCopterShooter::OnLaserCloseAnimationFrameFinished, this, std::placeholders::_1));
 		LeftLowLaserMachineRenderer->ChangeFrameAnimation("LaserPrepare");
 		LeftLowLaserMachineRenderer->SetScaleModeImage();
-		LeftLowLaserMachineRenderer->GetTransform().SetLocalPosition({ 270, -820, (int)ZOrder::NPC - 5 });
+		LeftLowLaserMachineRenderer->GetTransform().SetLocalPosition({ 270, -820, (int)ZOrder::NPC - 7 });
 		LeftLowLaserMachineRenderer->Off();
 
 		GameEngineTextureRenderer* RightTopLaserMachineRenderer = CreateComponent<GameEngineTextureRenderer>();
@@ -154,7 +399,7 @@ void DogCopterShooter::Start()
 		RightTopLaserMachineRenderer->AnimationBindEnd("LaserClose", std::bind(&DogCopterShooter::OnLaserCloseAnimationFrameFinished, this, std::placeholders::_1));
 		RightTopLaserMachineRenderer->ChangeFrameAnimation("LaserPrepare");
 		RightTopLaserMachineRenderer->SetScaleModeImage();
-		RightTopLaserMachineRenderer->GetTransform().SetLocalPosition({ 1050, -370, (int)ZOrder::NPC - 5 });
+		RightTopLaserMachineRenderer->GetTransform().SetLocalPosition({ 1050, -370, (int)ZOrder::NPC -7 });
 		RightTopLaserMachineRenderer->GetTransform().PixLocalNegativeX();
 		RightTopLaserMachineRenderer->Off();
 
@@ -168,7 +413,7 @@ void DogCopterShooter::Start()
 		RightMidLaserMachineRenderer->AnimationBindEnd("LaserClose", std::bind(&DogCopterShooter::OnLaserCloseAnimationFrameFinished, this, std::placeholders::_1));
 		RightMidLaserMachineRenderer->ChangeFrameAnimation("LaserPrepare");
 		RightMidLaserMachineRenderer->SetScaleModeImage();
-		RightMidLaserMachineRenderer->GetTransform().SetLocalPosition({ 1190, -500, (int)ZOrder::NPC - 5 });
+		RightMidLaserMachineRenderer->GetTransform().SetLocalPosition({ 1190, -500, (int)ZOrder::NPC - 7 });
 		RightMidLaserMachineRenderer->GetTransform().PixLocalNegativeX();
 		RightMidLaserMachineRenderer->Off();
 
@@ -182,7 +427,7 @@ void DogCopterShooter::Start()
 		RightLowLaserMachineRenderer->AnimationBindEnd("LaserClose", std::bind(&DogCopterShooter::OnLaserCloseAnimationFrameFinished, this, std::placeholders::_1));
 		RightLowLaserMachineRenderer->ChangeFrameAnimation("LaserPrepare");
 		RightLowLaserMachineRenderer->SetScaleModeImage();
-		RightLowLaserMachineRenderer->GetTransform().SetLocalPosition({ 1190, -820, (int)ZOrder::NPC - 5 });
+		RightLowLaserMachineRenderer->GetTransform().SetLocalPosition({ 1190, -820, (int)ZOrder::NPC - 7 });
 		RightLowLaserMachineRenderer->GetTransform().PixLocalNegativeX();
 		RightLowLaserMachineRenderer->Off();
 
@@ -194,67 +439,6 @@ void DogCopterShooter::Start()
 		LaserMachineRenderers.push_back(RightLowLaserMachineRenderer);
 	}
 
-
-	{
-		GameEngineTextureRenderer* LeftTopPadBackRenderer = CreateComponent<GameEngineTextureRenderer>();
-		LeftTopPadBackRenderer->CreateFrameAnimationFolder("PadBackHole", FrameAnimation_DESC("LeftPawHoleTop", 0.1f, false));
-		LeftTopPadBackRenderer->CreateFrameAnimationFolder("Nothing", FrameAnimation_DESC("Nothing", 0.1f, false));
-		LeftTopPadBackRenderer->ChangeFrameAnimation("PadBackHole");
-		LeftTopPadBackRenderer->SetScaleModeImage();
-		LeftTopPadBackRenderer->GetTransform().SetLocalPosition({ 273, -374, (int)ZOrder::NPC - 3 });
-		LeftTopPadBackRenderer->Off();
-
-		GameEngineTextureRenderer* LeftMidPadBackRenderer = CreateComponent<GameEngineTextureRenderer>();
-		LeftMidPadBackRenderer->CreateFrameAnimationFolder("PadBackHole", FrameAnimation_DESC("LeftPawHoleMid", 0.1f, false));
-		LeftMidPadBackRenderer->CreateFrameAnimationFolder("Nothing", FrameAnimation_DESC("Nothing", 0.1f, false));
-		LeftMidPadBackRenderer->ChangeFrameAnimation("PadBackHole");
-		LeftMidPadBackRenderer->SetScaleModeImage();
-		LeftMidPadBackRenderer->GetTransform().SetLocalPosition({ 299, -585, (int)ZOrder::NPC - 3 });
-		LeftMidPadBackRenderer->Off();
-
-		GameEngineTextureRenderer* LeftLowPadBackRenderer = CreateComponent<GameEngineTextureRenderer>();
-		LeftLowPadBackRenderer->CreateFrameAnimationFolder("PadBackHole", FrameAnimation_DESC("LeftPawHoleLow", 0.1f, false));
-		LeftLowPadBackRenderer->CreateFrameAnimationFolder("Nothing", FrameAnimation_DESC("Nothing", 0.1f, false));
-		LeftLowPadBackRenderer->ChangeFrameAnimation("PadBackHole");
-		LeftLowPadBackRenderer->SetScaleModeImage();
-		LeftLowPadBackRenderer->GetTransform().SetLocalPosition({ 457, -827, (int)ZOrder::NPC - 3 });
-		LeftLowPadBackRenderer->Off();
-
-		GameEngineTextureRenderer* RightTopPadBackRenderer = CreateComponent<GameEngineTextureRenderer>();
-		RightTopPadBackRenderer->CreateFrameAnimationFolder("PadBackHole", FrameAnimation_DESC("LeftPawHoleTop", 0.1f, false));
-		RightTopPadBackRenderer->CreateFrameAnimationFolder("Nothing", FrameAnimation_DESC("Nothing", 0.1f, false));
-		RightTopPadBackRenderer->ChangeFrameAnimation("PadBackHole");
-		RightTopPadBackRenderer->SetScaleModeImage();
-		RightTopPadBackRenderer->GetTransform().SetLocalPosition({ 1191, -355, (int)ZOrder::NPC - 3 });
-		RightTopPadBackRenderer->GetTransform().PixLocalNegativeX();
-		RightTopPadBackRenderer->Off();
-
-		GameEngineTextureRenderer* RightMidPadBackRenderer = CreateComponent<GameEngineTextureRenderer>();
-		RightMidPadBackRenderer->CreateFrameAnimationFolder("PadBackHole", FrameAnimation_DESC("LeftPawHoleMid", 0.1f, false));
-		RightMidPadBackRenderer->CreateFrameAnimationFolder("Nothing", FrameAnimation_DESC("Nothing", 0.1f, false));
-		RightMidPadBackRenderer->ChangeFrameAnimation("PadBackHole");
-		RightMidPadBackRenderer->SetScaleModeImage();
-		RightMidPadBackRenderer->GetTransform().SetLocalPosition({ 1167, -567, (int)ZOrder::NPC - 3 });
-		RightMidPadBackRenderer->GetTransform().PixLocalNegativeX();
-		RightMidPadBackRenderer->Off();
-
-		GameEngineTextureRenderer* RightLowPadBackRenderer = CreateComponent<GameEngineTextureRenderer>();
-		RightLowPadBackRenderer->CreateFrameAnimationFolder("PadBackHole", FrameAnimation_DESC("LeftPawHoleLow", 0.1f, false));
-		RightLowPadBackRenderer->CreateFrameAnimationFolder("Nothing", FrameAnimation_DESC("Nothing", 0.1f, false));
-		RightLowPadBackRenderer->ChangeFrameAnimation("PadBackHole");
-		RightLowPadBackRenderer->SetScaleModeImage();
-		RightLowPadBackRenderer->GetTransform().SetLocalPosition({ 1007, -806, (int)ZOrder::NPC - 3 });
-		RightLowPadBackRenderer->GetTransform().PixLocalNegativeX();
-		RightLowPadBackRenderer->Off();
-
-		PadBackRenderers.push_back(LeftTopPadBackRenderer);
-		PadBackRenderers.push_back(RightTopPadBackRenderer);
-		PadBackRenderers.push_back(LeftMidPadBackRenderer);
-		PadBackRenderers.push_back(RightMidPadBackRenderer);
-		PadBackRenderers.push_back(LeftLowPadBackRenderer);
-		PadBackRenderers.push_back(RightLowPadBackRenderer);
-	}
-
 	{
 		GameEngineTextureRenderer* LeftTopLaserRenderer = CreateComponent<GameEngineTextureRenderer>();
 		LeftTopLaserRenderer->CreateFrameAnimationFolder("LaserWarning", FrameAnimation_DESC("LaserWarningA", 0.1f, true));
@@ -264,7 +448,7 @@ void DogCopterShooter::Start()
 		LeftTopLaserRenderer->AnimationBindEnd("LaserBeam", std::bind(&DogCopterShooter::OnLaserShootingAnimationFrameFinished, this, std::placeholders::_1));
 		LeftTopLaserRenderer->ChangeFrameAnimation("LaserWarning");
 		LeftTopLaserRenderer->SetScaleModeImage();
-		LeftTopLaserRenderer->GetTransform().SetLocalPosition({ 400, -500, (int)ZOrder::NPC - 5 });
+		LeftTopLaserRenderer->GetTransform().SetLocalPosition({ 390, -135, (int)ZOrder::NPC - 8 });
 		LeftTopLaserRenderer->SetPivot(PIVOTMODE::LEFTTOP);
 		LeftTopLaserRenderer->Off();
 
@@ -276,7 +460,7 @@ void DogCopterShooter::Start()
 		LeftMidLaserRenderer->AnimationBindEnd("LaserBeam", std::bind(&DogCopterShooter::OnLaserShootingAnimationFrameFinished, this, std::placeholders::_1));
 		LeftMidLaserRenderer->ChangeFrameAnimation("LaserWarning");
 		LeftMidLaserRenderer->SetScaleModeImage();
-		LeftMidLaserRenderer->GetTransform().SetLocalPosition({ 400, -600, (int)ZOrder::NPC - 3 });
+		LeftMidLaserRenderer->GetTransform().SetLocalPosition({ 400, -600, (int)ZOrder::NPC - 8 });
 		LeftMidLaserRenderer->SetPivot(PIVOTMODE::LEFTTOP);
 		LeftMidLaserRenderer->Off();
 
@@ -288,7 +472,7 @@ void DogCopterShooter::Start()
 		LeftLowLaserRenderer->AnimationBindEnd("LaserBeam", std::bind(&DogCopterShooter::OnLaserShootingAnimationFrameFinished, this, std::placeholders::_1));
 		LeftLowLaserRenderer->ChangeFrameAnimation("LaserWarning");
 		LeftLowLaserRenderer->SetScaleModeImage();
-		LeftLowLaserRenderer->GetTransform().SetLocalPosition({ 400, -600, (int)ZOrder::NPC - 3 });
+		LeftLowLaserRenderer->GetTransform().SetLocalPosition({ 400, -600, (int)ZOrder::NPC - 8 });
 		LeftLowLaserRenderer->SetPivot(PIVOTMODE::LEFTTOP);
 		LeftLowLaserRenderer->Off();
 
@@ -300,7 +484,7 @@ void DogCopterShooter::Start()
 		RightTopLaserRenderer->AnimationBindEnd("LaserBeam", std::bind(&DogCopterShooter::OnLaserShootingAnimationFrameFinished, this, std::placeholders::_1));
 		RightTopLaserRenderer->ChangeFrameAnimation("LaserWarning");
 		RightTopLaserRenderer->SetScaleModeImage();
-		RightTopLaserRenderer->GetTransform().SetLocalPosition({ 880, -500, (int)ZOrder::NPC - 5 });
+		RightTopLaserRenderer->GetTransform().SetLocalPosition({ 880, -500, (int)ZOrder::NPC - 8 });
 		RightTopLaserRenderer->GetTransform().PixLocalNegativeX();
 		RightTopLaserRenderer->SetPivot(PIVOTMODE::RIGHTTOP);
 		RightTopLaserRenderer->Off();
@@ -313,7 +497,7 @@ void DogCopterShooter::Start()
 		RightMidLaserRenderer->AnimationBindEnd("LaserBeam", std::bind(&DogCopterShooter::OnLaserShootingAnimationFrameFinished, this, std::placeholders::_1));
 		RightMidLaserRenderer->ChangeFrameAnimation("LaserWarning");
 		RightMidLaserRenderer->SetScaleModeImage();
-		RightMidLaserRenderer->GetTransform().SetLocalPosition({ 880, -600, (int)ZOrder::NPC - 3 });
+		RightMidLaserRenderer->GetTransform().SetLocalPosition({ 880, -600, (int)ZOrder::NPC - 8 });
 		RightMidLaserRenderer->GetTransform().PixLocalNegativeX();
 		RightMidLaserRenderer->SetPivot(PIVOTMODE::RIGHTTOP);
 		RightMidLaserRenderer->Off();
@@ -326,8 +510,9 @@ void DogCopterShooter::Start()
 		RightLowLaserRenderer->AnimationBindEnd("LaserBeam", std::bind(&DogCopterShooter::OnLaserShootingAnimationFrameFinished, this, std::placeholders::_1));
 		RightLowLaserRenderer->ChangeFrameAnimation("LaserWarning");
 		RightLowLaserRenderer->SetScaleModeImage();
-		RightLowLaserRenderer->GetTransform().SetLocalPosition({ 400, -600, (int)ZOrder::NPC - 3 });
+		RightLowLaserRenderer->GetTransform().SetLocalPosition({ 400, -600, (int)ZOrder::NPC - 8 });
 		RightLowLaserRenderer->SetPivot(PIVOTMODE::RIGHTTOP);
+		RightLowLaserRenderer->GetTransform().PixLocalNegativeX();
 		RightLowLaserRenderer->Off();
 
 		LaserRenderers.push_back(LeftTopLaserRenderer);
@@ -373,14 +558,15 @@ void DogCopterShooter::OnMonsterAttackStateChanged(InGameMonsterAttackState _Att
 	{
 		int RandomAttackPattern = rand() % 4;
 		int RandomAttackCount = rand() % 2;
+		LaserMachineBackerRenderers[1]->On();
+		LaserMachineBackerRenderers[1]->ChangeFrameAnimation("LaserBackerStart");
 
 		//if (RandomAttackCount == 1)
 		//{
-		PadRenderers[0]->On();
-		PadRenderers[0]->ChangeFrameAnimation("PadOpen");
-		LaserMachineRenderers[0]->On();
-		LaserMachineRenderers[0]->ChangeFrameAnimation("LaserPrepare");
-		PadBackRenderers[0]->On();
+		PadRenderers[1]->On();
+		PadRenderers[1]->ChangeFrameAnimation("PadOpen");
+		PadBackRenderers[1]->On();
+		PadBackBackerRenderers[1]->On();
 
 	}
 	else if (_AttackState == InGameMonsterAttackState::LaserPattern2)
@@ -390,11 +576,12 @@ void DogCopterShooter::OnMonsterAttackStateChanged(InGameMonsterAttackState _Att
 
 		//if (RandomAttackCount == 1)
 		//{
-		PadRenderers[0]->On();
-		PadRenderers[0]->ChangeFrameAnimation("PadOpen");
-		LaserMachineRenderers[0]->On();
-		LaserMachineRenderers[0]->ChangeFrameAnimation("LaserPrepare");
-		PadBackRenderers[0]->On();
+		PadRenderers[1]->On();
+		PadRenderers[1]->ChangeFrameAnimation("PadOpen");
+		LaserMachineRenderers[1]->On();
+		LaserMachineRenderers[1]->ChangeFrameAnimation("LaserPrepare");
+		PadBackRenderers[1]->On();
+		PadBackBackerRenderers[1]->On();
 		//}
 	}
 	else if (_AttackState == InGameMonsterAttackState::LaserPattern3)
@@ -435,7 +622,7 @@ void DogCopterShooter::OnPadOpenAnimationFrameFinished(const FrameAnimation_DESC
 		}
 		else
 		{
-			PadRenderers[0]->ChangeFrameAnimation("PadOpenIdle");
+			PadRenderers[1]->ChangeFrameAnimation("PadOpenIdle");
 		}
 	}
 }
@@ -453,9 +640,25 @@ void DogCopterShooter::OnPadCloseAnimationFrameFinished(const FrameAnimation_DES
 		}
 		else
 		{
-			PadRenderers[0]->ChangeFrameAnimation("PadRendererNothing");
-			PadBackRenderers[0]->Off();
+			PadRenderers[1]->ChangeFrameAnimation("PadRendererNothing");
+			PadBackRenderers[1]->Off();
+			PadBackBackerRenderers[1]->Off();
 		}
+	}
+}
+
+void DogCopterShooter::OnLaserBackerAnimationFrameFinished(const FrameAnimation_DESC& _Info)
+{
+	LaserMachineBackerRenderers[1]->ChangeFrameAnimation("Nothing");
+}
+
+void DogCopterShooter::OnLaserBackerAnimationFrameChanged(const FrameAnimation_DESC& _Info)
+{
+	int a = 0;
+	if (_Info.CurFrame == 2)
+	{
+		LaserMachineRenderers[1]->On();
+		LaserMachineRenderers[1]->ChangeFrameAnimation("LaserPrepare");
 	}
 }
 
@@ -474,9 +677,13 @@ void DogCopterShooter::OnLaserAnimationFrameFinished(const FrameAnimation_DESC& 
 		}
 		else
 		{
-			LaserMachineRenderers[0]->ChangeFrameAnimation("LaserWarning");
-			LaserRenderers[0]->ChangeFrameAnimation("LaserWarning");
-			LaserRenderers[0]->On();
+			LaserMachineRenderers[1]->ChangeFrameAnimation("LaserWarning");
+			LaserRenderers[1]->ChangeFrameAnimation("LaserWarning");
+			AuraRenderers[1]->ChangeFrameAnimation("LaserAura");
+			MachineTeethRenderers[1]->ChangeFrameAnimation("LaserTeeth");
+			LaserRenderers[1]->On();
+			AuraRenderers[1]->On();
+			MachineTeethRenderers[1]->On();
 		}
 	}
 }
@@ -495,10 +702,17 @@ void DogCopterShooter::OnLaserWarningAnimationFrameFinished(const FrameAnimation
 		else
 		{
 
-			LaserMachineRenderers[0]->ChangeFrameAnimation("LaserShooting");
-			LaserRenderers[0]->ChangeFrameAnimation("LaserBeam");
+			LaserMachineRenderers[1]->ChangeFrameAnimation("LaserShooting");
+			LaserMachineBackerRenderers[1]->ChangeFrameAnimation("LaserShootingBacker");
+			LaserRenderers[1]->ChangeFrameAnimation("LaserBeam");
+			AuraRenderers[1]->ChangeFrameAnimation("Nothing");
 		}
 	}
+}
+
+void DogCopterShooter::Test(const FrameAnimation_DESC& _Info)
+{
+	int a = 0;
 }
 
 void DogCopterShooter::OnLaserShootingAnimationFrameFinished(const FrameAnimation_DESC& _Info)
@@ -510,59 +724,66 @@ void DogCopterShooter::OnLaserShootingAnimationFrameFinished(const FrameAnimatio
 			LaserMachineRenderers[4]->ChangeFrameAnimation("LaserClose");
 			LaserRenderers[4]->ChangeFrameAnimation("Nothing");
 			LaserRenderers[4]->Off();
-			PadRenderers[4]->ChangeFrameAnimation("PadClose");
+			//PadRenderers[4]->ChangeFrameAnimation("PadClose");
 			LaserMachineRenderers[5]->ChangeFrameAnimation("LaserClose");
 			LaserRenderers[5]->ChangeFrameAnimation("Nothing");
 			LaserRenderers[5]->Off();
-			PadRenderers[5]->ChangeFrameAnimation("PadClose");
+			//PadRenderers[5]->ChangeFrameAnimation("PadClose");
 		}
 		else
 		{
-			LaserMachineRenderers[0]->ChangeFrameAnimation("LaserClose");
-			LaserRenderers[0]->ChangeFrameAnimation("Nothing");
-			LaserRenderers[0]->Off();
-			PadRenderers[0]->ChangeFrameAnimation("PadClose");
+			LaserMachineRenderers[1]->ChangeFrameAnimation("LaserClose");
+			LaserRenderers[1]->ChangeFrameAnimation("Nothing");
+			LaserMachineBackerRenderers[1]->ChangeFrameAnimation("LaserBackerEnd");
+			LaserRenderers[1]->Off();
+			MachineTeethRenderers[1]->ChangeFrameAnimation("Nothing");
+			//PadRenderers[1]->ChangeFrameAnimation("PadClose");
 		}
 	}
 }
 
 void DogCopterShooter::OnLaserCloseAnimationFrameFinished(const FrameAnimation_DESC& _Info)
 {
-	if (DogCopter* Parent = dynamic_cast<DogCopter*>(GetParent()))
-	{
-		if (Parent->GetAttackState() == InGameMonsterAttackState::LaserPattern3)
-		{
-			LaserMachineRenderers[4]->ChangeFrameAnimation("LaserNothing");
-			LaserMachineRenderers[4]->Off();
-			PadBackRenderers[4]->Off();
-			LaserMachineRenderers[5]->ChangeFrameAnimation("LaserNothing");
-			LaserMachineRenderers[5]->Off();
-			PadBackRenderers[5]->Off();
-		}
-		else
-		{
-			LaserMachineRenderers[0]->ChangeFrameAnimation("LaserNothing");
-			LaserMachineRenderers[0]->Off();
-			PadBackRenderers[0]->Off();
-		}
-	}
+	LaserMachineRenderers[1]->ChangeFrameAnimation("LaserNothing");
+	PadRenderers[4]->ChangeFrameAnimation("PadClose");
+	PadRenderers[1]->ChangeFrameAnimation("PadClose");
+	PadRenderers[5]->ChangeFrameAnimation("PadClose");
 
-	if (DogCopter* Parent = dynamic_cast<DogCopter*>(GetParent()))
-	{
-		if (Parent->GetAttackState() == InGameMonsterAttackState::LaserPattern3)
-		{
-			Parent->SetState(InGameMonsterState::BeforeRotateCameraIn);
-		}
-		else
-		{
-			if (Parent->GetAttackState() == InGameMonsterAttackState::LaserPattern1)
-			{
-				Parent->SetAttackState(InGameMonsterAttackState::LaserPattern2);
-			}
-			else if (Parent->GetAttackState() == InGameMonsterAttackState::LaserPattern2)
-			{
-				Parent->SetAttackState(InGameMonsterAttackState::LaserPattern3);
-			}
-		}
-	}
+	//if (DogCopter* Parent = dynamic_cast<DogCopter*>(GetParent()))
+	//{
+	//	if (Parent->GetAttackState() == InGameMonsterAttackState::LaserPattern3)
+	//	{
+	//		LaserMachineRenderers[4]->ChangeFrameAnimation("LaserNothing");
+	//		LaserMachineRenderers[4]->Off();
+	//		PadBackRenderers[4]->Off();
+	//		LaserMachineRenderers[5]->ChangeFrameAnimation("LaserNothing");
+	//		LaserMachineRenderers[5]->Off();
+	//		PadBackRenderers[5]->Off();
+	//	}
+	//	else
+	//	{
+	//		LaserMachineRenderers[1]->ChangeFrameAnimation("LaserNothing");
+	//		LaserMachineRenderers[1]->Off();
+	//		PadBackRenderers[1]->Off();
+	//	}
+	//}
+
+	//if (DogCopter* Parent = dynamic_cast<DogCopter*>(GetParent()))
+	//{
+	//	//if (Parent->GetAttackState() == InGameMonsterAttackState::LaserPattern3)
+	//	//{
+	//	//	Parent->SetState(InGameMonsterState::BeforeRotateCameraIn);
+	//	//}
+	//	//else
+	//	//{
+	//	//	if (Parent->GetAttackState() == InGameMonsterAttackState::LaserPattern1)
+	//	//	{
+	//	//		Parent->SetAttackState(InGameMonsterAttackState::LaserPattern2);
+	//	//	}
+	//	//	else if (Parent->GetAttackState() == InGameMonsterAttackState::LaserPattern2)
+	//	//	{
+	//	//		Parent->SetAttackState(InGameMonsterAttackState::LaserPattern3);
+	//	//	}
+	//	//}
+	//}
 }

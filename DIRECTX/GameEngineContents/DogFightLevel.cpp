@@ -300,7 +300,7 @@ void DogFightLevel::Start()
 		}
 	}
 
-	SetPhase(Phase::Ready);
+	SetPhase(Phase::Phase3);
 	//카메라 내 오브젝트 크기 조정 
 	GetMainCamera()->SetProjectionSize({ 1280.0f, 720.0f });
 	GetRotateCamera()->SetProjectionSize({ 1408.0f,792.0f });
@@ -473,7 +473,7 @@ void DogFightLevel::Update(float _DeltaTime)
 		if (PH1BulldogPlane == nullptr)
 		{
 			PH1BulldogPlane = CreateActor<BulldogPlane>(GameObjectGroup::Monster);
-			PH1BulldogPlane->GetTransform().SetWorldPosition({ 0, 150 });
+			PH1BulldogPlane->GetTransform().SetWorldPosition({ 0, 100 });
 			PH1BulldogPlane->SetPlayer(Cuphead);
 			PushToBackgroundCamera(CaptainCanteenPlane);
 			PushToBackgroundCamera(PH1BulldogPlane);
@@ -482,6 +482,9 @@ void DogFightLevel::Update(float _DeltaTime)
 
 	else if (GetPhase() == Phase::Phase2)
 	{
+		ElapsedTime += _DeltaTime;
+		ElapsedTime = ElapsedTime / 1.0f;
+
 		if (PH1BulldogPlane != nullptr)
 		{
 			PH1BulldogPlane->Death();
@@ -509,8 +512,9 @@ void DogFightLevel::Update(float _DeltaTime)
 
 			OnceCheck = true;
 		}
-
 	}
+
+
 
 	else if (GetPhase() == Phase::Phase3)
 	{

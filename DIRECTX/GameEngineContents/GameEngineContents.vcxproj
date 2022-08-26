@@ -245,10 +245,6 @@
     <ClInclude Include="PhysicsComponent.h" />
     <ClInclude Include="Pickaxe.h" />
     <ClInclude Include="Pig.h" />
-    <ClInclude Include="PlayLevel.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
     <ClInclude Include="PortalBase.h" />
     <ClInclude Include="PreCompile.h">
       <SubType>
@@ -373,10 +369,6 @@
     <ClCompile Include="PhysicsComponent.cpp" />
     <ClCompile Include="Pickaxe.cpp" />
     <ClCompile Include="Pig.cpp" />
-    <ClCompile Include="PlayLevel.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
     <ClCompile Include="PortalBase.cpp" />
     <ClCompile Include="PreCompile.cpp">
       <SubType>

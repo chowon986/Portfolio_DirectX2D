@@ -30,7 +30,7 @@ void YarnballBullet::Start()
 	Collision->ChangeOrder(ObjectOrder::MONSTER_BULLET);
 
 	MovementComponent = CreateComponent<BulletMovementComponent>();
-	MovementComponent->SetSpeed(5.0f);
+	MovementComponent->SetSpeed(8.0f);
 }
 
 void YarnballBullet::Update(float _DeltaTime)

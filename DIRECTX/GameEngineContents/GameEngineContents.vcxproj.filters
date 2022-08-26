@@ -153,9 +153,6 @@
     <ClInclude Include="WorldMapLevel.h">
       <Filter>Level\01 Play</Filter>
     </ClInclude>
-    <ClInclude Include="PlayLevel.h">
-      <Filter>Level\01 Play</Filter>
-    </ClInclude>
     <ClInclude Include="IWalkable.h">
       <Filter>Actor\Interface</Filter>
     </ClInclude>
@@ -493,9 +490,6 @@
     </ClCompile>
     <ClCompile Include="SelectLevel.cpp">
       <Filter>Level\00 Title</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayLevel.cpp">
-      <Filter>Level\01 Play</Filter>
     </ClCompile>
     <ClCompile Include="WorldMapLevel.cpp">
       <Filter>Level\01 Play</Filter>

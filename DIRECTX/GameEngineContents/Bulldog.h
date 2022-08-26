@@ -68,6 +68,7 @@ private:
 private:
 	GameEngineCollision* Collision;
 	GameEngineTextureRenderer* Renderer;
+	GameEngineTextureRenderer* LegRenderer;
 	InGameMovementComponent* Movement;
 	InGameMonsterAnimationControllerComponent* Animation;
 	float4 BeforePosition;

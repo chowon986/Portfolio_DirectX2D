@@ -19,10 +19,11 @@ public:
 public:
 	void OnPadOpenAnimationFrameFinished(const FrameAnimation_DESC& _Info);
 	void OnPadCloseAnimationFrameFinished(const FrameAnimation_DESC& _Info);
-
+	void OnLaserBackerAnimationFrameFinished(const FrameAnimation_DESC& _Info);
+	void OnLaserBackerAnimationFrameChanged(const FrameAnimation_DESC& _Info);
 	void OnLaserAnimationFrameFinished(const FrameAnimation_DESC& _Info);
 	void OnLaserWarningAnimationFrameFinished(const FrameAnimation_DESC& _Info);
-
+	void Test(const FrameAnimation_DESC& _Info);
 	void OnLaserShootingAnimationFrameFinished(const FrameAnimation_DESC& _Info);
 	void OnLaserCloseAnimationFrameFinished(const FrameAnimation_DESC& _Info);
 
@@ -38,8 +39,12 @@ private:
 private:
 	std::vector<GameEngineTextureRenderer*> PadRenderers;
 	std::vector<GameEngineTextureRenderer*> LaserMachineRenderers;
+	std::vector<GameEngineTextureRenderer*> LaserMachineBackerRenderers;
 	std::vector<GameEngineTextureRenderer*> PadBackRenderers;
+	std::vector<GameEngineTextureRenderer*> PadBackBackerRenderers;
 	std::vector<GameEngineTextureRenderer*> LaserRenderers;
+	std::vector<GameEngineTextureRenderer*> AuraRenderers;
+	std::vector<GameEngineTextureRenderer*> MachineTeethRenderers;
 
 	int AttackCount;
 	int RandomAttackPattern;

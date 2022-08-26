@@ -94,11 +94,11 @@ void MonsterWeaponBase::UpdatePivot()
 	{
 		if (Character->GetRenderer()->GetTransform().GetLocalScale().x > 0)
 		{
-			GetTransform().SetLocalPosition({ -80.0f, 220.0f });
+			GetTransform().SetLocalPosition({ -80.0f, 50.0f });
 		}
 		else
 		{
-			GetTransform().SetLocalPosition({ 80.0f, 220.0f });
+			GetTransform().SetLocalPosition({ 80.0f, 50.0f });
 		}
 	}
 
