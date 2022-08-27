@@ -2,6 +2,7 @@
 #include <GameEngineContents/Enums.h>
 #include <GameEngineCore/GameEngineActor.h>
 
+class ItemBase;
 class CharacterState : public GameEngineActor
 {
 public:
@@ -15,6 +16,8 @@ public:
 	CharacterState& operator=(const CharacterState& _Other) = delete;
 	CharacterState& operator=(CharacterState&& _Other) noexcept = delete;
 
+	void OnLevelChanged();
+
 protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;
@@ -22,6 +25,8 @@ protected:
 
 public:
 	CharacterType Type;
-	int HP;
+	int MaxHP;
+	int Coin;
+	std::map<ItemType, ItemBase*> Items;
 };
 

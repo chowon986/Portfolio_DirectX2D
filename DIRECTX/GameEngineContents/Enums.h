@@ -1,5 +1,29 @@
 #pragma once
 
+//enum class CharmType
+//{
+//	SmokeBomb,
+//	TwinHeart,
+//	CursedRelic,
+//	AstalCookie,
+//};
+//
+//enum class WeaponType
+//{
+//	PeaShooter,
+//	SpreadShooter,
+//	ConvergeShooter,
+//	BoomerangShooter
+//};
+
+enum class ItemType
+{
+	ShotA,
+	ShotB,
+	Super,
+	Charm,
+};
+
 enum class CharacterType
 {
 	Cuphead,

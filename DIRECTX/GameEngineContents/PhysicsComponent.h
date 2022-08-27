@@ -22,6 +22,8 @@ protected:
 	virtual void End() override;
 
 public:
+	void FixedUpdate(float _DeltaTime);
+
 	// Y 방향만
 	void AddForce(float _Power);
 
@@ -47,5 +49,7 @@ private:
 	float Mass;	   // 질량
 	float Speed;   // 속도
 	float Acceleration; // 가속도
+	double FixedUpdateInterval;
+	double ElapsedTime;
 };
 

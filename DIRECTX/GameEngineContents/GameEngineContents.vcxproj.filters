@@ -127,6 +127,9 @@
     <Filter Include="Actor\State">
       <UniqueIdentifier>{3add17ca-0b59-41c7-85ca-1d57bea560da}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Actor\Item">
+      <UniqueIdentifier>{977cc643-8cc2-4566-a6e1-9fea997d4efe}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ContentsCore.h">
@@ -471,6 +474,18 @@
     <ClInclude Include="OldFilm.h">
       <Filter>Global</Filter>
     </ClInclude>
+    <ClInclude Include="ItemBase.h">
+      <Filter>Actor\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="CharmItemBase.h">
+      <Filter>Actor\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="WeaponItemBase.h">
+      <Filter>Actor\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="SuperItemBase.h">
+      <Filter>Actor\Item</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp">
@@ -811,6 +826,18 @@
     </ClCompile>
     <ClCompile Include="GameEngineCore_ContentsResources.cpp">
       <Filter>Global</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemBase.cpp">
+      <Filter>Actor\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="CharmItemBase.cpp">
+      <Filter>Actor\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="WeaponItemBase.cpp">
+      <Filter>Actor\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="SuperItemBase.cpp">
+      <Filter>Actor\Item</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

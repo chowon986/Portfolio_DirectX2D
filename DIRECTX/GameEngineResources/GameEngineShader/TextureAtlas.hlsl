@@ -77,5 +77,13 @@ Texture2D Tex : register(t0);
 SamplerState Smp : register(s0);
 float4 TextureAtlas_PS(Output _Input) : SV_Target0
 {
-    return (Tex.Sample(Smp, _Input.Tex.xy) * MulColor) + PlusColor;
+    float4 TexColor = Tex.Sample(Smp, _Input.Tex.xy);
+    /*if (1 == ColorInversion)
+    {   
+       float4 Test = (float4(1.0 - TexColor.rgb, 1.0) * MulColor) + PlusColor;
+
+        return Test;
+    }*/
+
+    return (TexColor * MulColor) + PlusColor;
 }

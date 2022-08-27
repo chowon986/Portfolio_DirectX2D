@@ -27,7 +27,7 @@ private:
 	D3D11_BLEND_DESC Desc;
 	float4 Factor;
 	unsigned int Mask;
-
+		
 	void Create(const D3D11_BLEND_DESC& _Info);
 
 };

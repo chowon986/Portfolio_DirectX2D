@@ -30,17 +30,17 @@ void TutorialLevel::Start()
 		ColMapRenderer->SetPivot(PIVOTMODE::LEFTTOP);
 	}
 
-	{
-		WorldMapCuphead* Cuphead = CreateActor<WorldMapCuphead>(GameObjectGroup::Player);
-		Cuphead->GetTransform().SetLocalPosition({ 100, 300, -100 });
-		Cuphead->SetColMapImage(ColMapRenderer);
-	}
-
 	//{
-	//	InGameCuphead* Cuphead = CreateActor<InGameCuphead>(GameObjectGroup::Player);
+	//	WorldMapCuphead* Cuphead = CreateActor<WorldMapCuphead>(GameObjectGroup::Player);
 	//	Cuphead->GetTransform().SetLocalPosition({ 100, 300, -100 });
 	//	Cuphead->SetColMapImage(ColMapRenderer);
 	//}
+
+	{
+		InGameCuphead* Cuphead = CreateActor<InGameCuphead>(GameObjectGroup::Player);
+		Cuphead->GetTransform().SetLocalPosition({ 100, 300, -100 });
+		Cuphead->SetColMapImage(ColMapRenderer);
+	}
 }
 
 void TutorialLevel::Update(float _DeltaTime)

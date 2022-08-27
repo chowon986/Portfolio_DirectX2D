@@ -2,7 +2,6 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <FxCompile Include="TransformHeader.fx" />
-    <FxCompile Include="..\..\..\..\..\t\AR40\DIRECTX\GameEngineResources\GameEngineShader\RenderOption.fx" />
     <FxCompile Include="Debug3D.hlsl">
       <Filter>Debug</Filter>
     </FxCompile>
@@ -24,6 +23,7 @@
     <FxCompile Include="TargetMerge.hlsl">
       <Filter>TargetEffect</Filter>
     </FxCompile>
+    <FxCompile Include="RenderOption.fx" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Debug">

@@ -7,7 +7,7 @@ struct RenderOption
     float DeltaTime;
     int IsMask;
     int IsJump;
-    int Option00;
+    int ColorInversion;
     int Option01;
     int Option02;
     int Option03;
