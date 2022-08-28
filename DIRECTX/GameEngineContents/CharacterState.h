@@ -28,5 +28,7 @@ public:
 	int MaxHP;
 	int Coin;
 	std::map<ItemType, ItemBase*> Items;
+	std::map<ItemType, std::vector<ItemBase*>> EquippedItems;
+
 };
 

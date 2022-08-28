@@ -29,6 +29,7 @@
 #include <GameEngineCore/GEngine.h>
 #include <GameEngineCore/GameEngineTextureRenderer.h>
 #include <GameEngineBase/GameEngineInput.h>
+#include "ItemInventory.h"
 
 WorldMapLevel::WorldMapLevel()
 	: IrisRenderer(nullptr)
@@ -59,11 +60,6 @@ void WorldMapLevel::ColMapOnOffSwitch()
 
 void WorldMapLevel::LevelStartEvent()
 {
-	if (false == GameEngineInput::GetInst()->IsKey("EnterMap"))
-	{
-		GameEngineInput::GetInst()->CreateKey("EnterMap", 'B');
-	}
-
 	std::list<GameEngineActor*> Actors = GetGroup(GameObjectGroup::CharacterState);
 	for (GameEngineActor* Actor : Actors)
 	{
@@ -71,6 +67,18 @@ void WorldMapLevel::LevelStartEvent()
 		{
 			State = _State;
 		}
+	}
+}
+
+void WorldMapLevel::Start()
+{
+	Inventory = CreateActor<ItemInventory>(GameObjectGroup::INVENTORY);
+	Inventory->SetLevelOverOn();
+	Inventory->Off();
+
+	if (false == GameEngineInput::GetInst()->IsKey("EnterMap"))
+	{
+		GameEngineInput::GetInst()->CreateKey("EnterMap", 'B');
 	}
 
 	{
@@ -85,7 +93,7 @@ void WorldMapLevel::LevelStartEvent()
 	{
 		// 바다 배경 오른쪽
 		Background* OutsideOfMainLandRight = CreateActor<Background>(GameObjectGroup::UI);
-		OutsideOfMainLandRightRenderer= OutsideOfMainLandRight->CreateComponent<GameEngineTextureRenderer>();
+		OutsideOfMainLandRightRenderer = OutsideOfMainLandRight->CreateComponent<GameEngineTextureRenderer>();
 		OutsideOfMainLandRightRenderer->SetTexture("dlc_water_multiply.png");
 		OutsideOfMainLandRightRenderer->ScaleToTexture();
 		OutsideOfMainLandRightRenderer->GetTransform().SetLocalPosition({ 2164, -1500, (int)ZOrder::Background });
@@ -98,7 +106,7 @@ void WorldMapLevel::LevelStartEvent()
 		UnderWaterLandRenderer->SetTexture("dlc_underwater_land.png");
 		UnderWaterLandRenderer->ScaleToTexture();
 		UnderWaterLandRenderer->SetPivot(PIVOTMODE::LEFTTOP);
-		UnderWaterLandRenderer->GetTransform().SetLocalPosition({ 1853, -1318, (int)ZOrder::Background-1 });
+		UnderWaterLandRenderer->GetTransform().SetLocalPosition({ 1853, -1318, (int)ZOrder::Background - 1 });
 	}
 
 	{
@@ -119,7 +127,7 @@ void WorldMapLevel::LevelStartEvent()
 	{
 		// 보트맨, 보트, 보트 물결
 		Boatman* BoatMan = CreateActor<Boatman>(GameObjectGroup::UI);
-		BoatMan->GetTransform().SetLocalPosition({ 240, -1450.0f, (int)ZOrder::NPCB});
+		BoatMan->GetTransform().SetLocalPosition({ 240, -1450.0f, (int)ZOrder::NPCB });
 	}
 	{
 		Boat* BoatManBoat = CreateActor<Boat>(GameObjectGroup::UI);
@@ -287,7 +295,7 @@ void WorldMapLevel::LevelStartEvent()
 		Ghost* GhostDetective = CreateActor<Ghost>(GameObjectGroup::UI);
 		GhostDetective->GetTransform().SetLocalPosition({ 2691.0f, -1143.0f, (int)ZOrder::NPC });
 
-		Background* GhostHand = CreateActor<Background>(GameObjectGroup::UI); 
+		Background* GhostHand = CreateActor<Background>(GameObjectGroup::UI);
 		GameEngineTextureRenderer* HandRenderer = GhostHand->CreateComponent<GameEngineTextureRenderer>();
 		HandRenderer->CreateFrameAnimationFolder("GhostHand", FrameAnimation_DESC("GhostHand", 0.1f));
 		HandRenderer->ChangeFrameAnimation("GhostHand");
@@ -341,7 +349,7 @@ void WorldMapLevel::LevelStartEvent()
 		GameEngineTextureRenderer* Renderer = snowbank_b->CreateComponent<GameEngineTextureRenderer>();
 		Renderer->SetTexture("snowbank_b.png");
 		Renderer->ScaleToTexture();
-		Renderer->GetTransform().SetLocalPosition({ 3340.0f, -780.0f, (int)ZOrder::NPC -1 });
+		Renderer->GetTransform().SetLocalPosition({ 3340.0f, -780.0f, (int)ZOrder::NPC - 1 });
 	}
 
 	{
@@ -401,11 +409,11 @@ void WorldMapLevel::LevelStartEvent()
 	{
 		//ColMap
 		Background* ColMap = CreateActor<Background>(GameObjectGroup::UI);
-		GameEngineTextureRenderer* MainLandColMapRenderer = ColMap->CreateComponent<GameEngineTextureRenderer>(); 
+		GameEngineTextureRenderer* MainLandColMapRenderer = ColMap->CreateComponent<GameEngineTextureRenderer>();
 		MainLandColMapRenderer->SetTexture("dlc_main_land_ColMap.png");
 		MainLandColMapRenderer->ScaleToTexture();
 		MainLandColMapRenderer->SetPivot(PIVOTMODE::LEFTTOP);
-		MainLandColMapRenderer->GetTransform().SetLocalPosition({ 1855.0f, -1105.0f, (int)ZOrder::Background+1 });
+		MainLandColMapRenderer->GetTransform().SetLocalPosition({ 1855.0f, -1105.0f, (int)ZOrder::Background + 1 });
 
 		// PC
 		if (State != nullptr)
@@ -415,6 +423,7 @@ void WorldMapLevel::LevelStartEvent()
 				WorldMapCuphead* Cuphead = CreateActor<WorldMapCuphead>(GameObjectGroup::Player);
 				Cuphead->GetTransform().SetLocalPosition({ 382, -1450, (int)ZOrder::Player });
 				Cuphead->SetColMapImage(MainLandColMapRenderer);
+				Cuphead->SetInventory(Inventory);
 			}
 			else
 			{
@@ -428,6 +437,8 @@ void WorldMapLevel::LevelStartEvent()
 			WorldMapCuphead* Cuphead = CreateActor<WorldMapCuphead>(GameObjectGroup::Player);
 			Cuphead->GetTransform().SetLocalPosition({ 382, -1450, (int)ZOrder::Player });
 			Cuphead->SetColMapImage(MainLandColMapRenderer);
+			Cuphead->SetInventory(Inventory);
+
 		}
 
 	}
@@ -450,15 +461,15 @@ void WorldMapLevel::LevelStartEvent()
 		Renderer->GetTransform().SetLocalPosition({ 488.0f, -1220.0f,(int)ZOrder::NPCB });
 	}
 
-	{		
+	{
 		// 가로등 아래
 		Background* lower_flower_light = CreateActor<Background>(GameObjectGroup::UI);
 		GameEngineTextureRenderer* Renderer = lower_flower_light->CreateComponent<GameEngineTextureRenderer>();
 		Renderer->SetTexture("lower_flower_light.png");
 		Renderer->ScaleToTexture();
-		Renderer->GetTransform().SetLocalPosition({ 1235.0f, -1340.0f, (int)ZOrder::NPC -1 });
+		Renderer->GetTransform().SetLocalPosition({ 1235.0f, -1340.0f, (int)ZOrder::NPC - 1 });
 	}
-	
+
 	{
 		// 가로등 위
 		Background* top_flower_light = CreateActor<Background>(GameObjectGroup::UI);
@@ -476,11 +487,6 @@ void WorldMapLevel::LevelStartEvent()
 		Renderer->ScaleToTexture();
 		Renderer->GetTransform().SetLocalPosition({ 1860.0f, -1085.0f, (int)ZOrder::NPCB });
 	}
-
-}
-
-void WorldMapLevel::Start()
-{
 }
 
 void WorldMapLevel::Update(float _DeltaTime)
@@ -496,5 +502,5 @@ void WorldMapLevel::Update(float _DeltaTime)
 
 void WorldMapLevel::End()
 {
-	int a = 0;
+	Inventory->Off();
 }

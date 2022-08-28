@@ -4,6 +4,7 @@
 #include <string>
 
 class MovementComponent;
+class ItemInventory;
 class GameEngineCollision;
 class GameEngineTextureRenderer;
 class WorldMapCharacterAnimationControllerComponent;
@@ -20,12 +21,16 @@ public:
 	WorldMapCuphead& operator=(const WorldMapCuphead& _Other) = delete;
 	WorldMapCuphead& operator=(WorldMapCuphead&& _Other) noexcept = delete;
 
+public:
+	void SetInventory(ItemInventory* _Inventory) { Inventory = _Inventory; }
+
 protected:
 	void Start() override;
 	void Update(float _DeltaTime);
 	void End() {}
 	void Walk() override;
 	void Idle() override;
+	bool InventoryOnOffSwitch() { InventoryOn = !InventoryOn; return InventoryOn; }
 
 private:
 	bool CanPortalCollision(GameEngineCollision* _This, GameEngineCollision* _Other);
@@ -34,7 +39,9 @@ private:
 	MovementComponent* Movement;
 	GameEngineCollision* Collision;
 	GameEngineTextureRenderer* EnterRenderer;
+	ItemInventory* Inventory;
 	WorldMapCharacterAnimationControllerComponent* Animation;
 	float WalkCheckInterval;
 	float WalkCheckElapsedTime;
+	bool InventoryOn;
 };

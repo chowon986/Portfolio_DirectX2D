@@ -5,23 +5,41 @@
 #include "Pig.h"
 #include <functional>
 #include <GameEngineCore/GameEngineTextureRenderer.h>
-
+#include "SpreadShooterItem.h"
+#include "ItemInventory.h"
 
 ShopLevel::ShopLevel()
 	: IrisRenderer(nullptr)
 	, IsLeftDrawerOpen(false)
 	, IsLeftDrawerOpened(false)
 	, OnceCheck(false)
+	, ItemPosX(-500)
+	, ItemPosY(0)
+	, IsOddNumber(true)
+	, ElapsedTime(0.0f)
+	, Inventory(nullptr)
+	, LeftDrawerRenderer(nullptr)
+	, Phase(ShopPhase::None)
+	, SelectItemNum(0)
+	, ShopPig(nullptr)
+	, Time(0.0f)
 {
 }
 
 ShopLevel::~ShopLevel()
 {
+	for (ItemBase* Item : ItemNames)
+	{
+		if (Item != nullptr)
+		{
+			delete Item;
+			Item = nullptr;
+		}
+	}
 }
 
 void ShopLevel::Start()
 {
-
 	{
 		Background* ShopBackground = CreateActor<Background>(GameObjectGroup::UI);
 		GameEngineTextureRenderer* Renderer = ShopBackground->CreateComponent<GameEngineTextureRenderer>();
@@ -80,6 +98,60 @@ void ShopLevel::Start()
 	Phase = ShopPhase::None;
 
 
+	{
+		SpreadShooterItem* SpreadShooterIcon = new SpreadShooterItem();
+		SpreadShooterItem* TestIcon = new SpreadShooterItem();
+		SpreadShooterItem* TestTestIcon = new SpreadShooterItem();
+		SpreadShooterItem* TestTestIcon1 = new SpreadShooterItem();
+		SpreadShooterItem* TestTestIcon2 = new SpreadShooterItem();
+		SpreadShooterItem* TestTestIcon3 = new SpreadShooterItem();
+		ItemNames.push_back(SpreadShooterIcon);
+		ItemNames.push_back(TestIcon);
+		ItemNames.push_back(TestTestIcon);
+		ItemNames.push_back(TestTestIcon1);
+		ItemNames.push_back(TestTestIcon2);
+		ItemNames.push_back(TestTestIcon3);
+	}
+
+	for (ItemBase* Item : ItemNames)
+	{
+		GameEngineActor* ItemIcon = CreateActor<GameEngineActor>(GameObjectGroup::UI);
+		GameEngineTextureRenderer* ItemIconRenderer = ItemIcon->CreateComponent<GameEngineTextureRenderer>();
+		ItemIconRenderer->CreateFrameAnimationFolder(Item->ItemName, FrameAnimation_DESC(Item->ItemName, 0.1f, false));
+		ItemIconRenderer->CreateFrameAnimationFolder(Item->ItemName + "Select", FrameAnimation_DESC(Item->ItemName + "Select", 0.1f, true));
+		ItemIconRenderer->CreateFrameAnimationFolder(Item->ItemName + "SelectOK", FrameAnimation_DESC(Item->ItemName + "SelectOK", 0.1f, true));
+		ItemIconRenderer->AnimationBindEnd(Item->ItemName + "SelectOK", std::bind(&ShopLevel::BuyItemEnd, this, std::placeholders::_1));
+		ItemIconRenderer->ChangeFrameAnimation(Item->ItemName);
+		if (IsOddNumber == true) // È¦¼öÀÎ°¡
+		{
+			ItemPosY = 0.0f;
+			ItemIconRenderer->SetScaleModeImage();
+			ItemIconRenderer->GetTransform().SetWorldPosition({ ItemPosX, ItemPosY, (int)ZOrder::UI - 100 });
+		}
+		else // Â¦¼öÀÎ°¡
+		{
+			ItemPosY = 40.0f;
+			ItemIconRenderer->SetScaleModeImage();
+			ItemIconRenderer->GetTransform().SetWorldPosition({ ItemPosX, ItemPosY, (int)ZOrder::UI - 50 });
+		}
+		OddEvenSwitch();
+		ItemPosX += 80.0f;
+		ItemRenderers.push_back(ItemIconRenderer);
+		ItemName.push_back(Item->ItemName);
+	}
+}
+
+void ShopLevel::LevelStartEvent()
+{
+	std::list<GameEngineActor*> Actors = GetGroup(GameObjectGroup::INVENTORY);
+	for (GameEngineActor* Actor : Actors)
+	{
+		if (ItemInventory* _Inventory = dynamic_cast<ItemInventory*>(Actor))
+		{
+			Inventory = _Inventory;
+		}
+	}
+
 }
 
 void ShopLevel::Update(float _DeltaTime)
@@ -105,7 +177,7 @@ void ShopLevel::Update(float _DeltaTime)
 			if (EndLerpValueX.y == LeftDrawerPosX)
 			{
 				OnceCheck = false;
-				Phase = ShopPhase::Open;
+				Phase = ShopPhase::Select;
 			}
 			EndPosition = float4::LerpLimit(EndLerpValueX.x, EndLerpValueX.y, ElapsedTime);
 		}
@@ -113,9 +185,43 @@ void ShopLevel::Update(float _DeltaTime)
 		LeftDrawerRenderer->GetTransform().SetLocalPosition({ EndPosition.x, -210, (int)ZOrder::Background - 2 });
 	}
 
-	if (Phase == ShopPhase::Open)
+	if (Phase == ShopPhase::Select)
 	{
+		if (true == GameEngineInput::GetInst()->IsDown("Select"))
+		{
+			Phase = ShopPhase::Buy;
+		}
 
+		if (true == GameEngineInput::GetInst()->IsDown("MoveRight"))
+		{
+			ItemRenderers[SelectItemNum]->ChangeFrameAnimation(ItemName[SelectItemNum]);
+			++SelectItemNum;
+
+			if (SelectItemNum >= 6)
+			{
+				SelectItemNum = 5;
+			}
+
+			ItemRenderers[SelectItemNum]->ChangeFrameAnimation(ItemName[SelectItemNum] + "Select");
+		}
+
+		else if (true == GameEngineInput::GetInst()->IsDown("MoveLeft"))
+		{
+			ItemRenderers[SelectItemNum]->ChangeFrameAnimation(ItemName[SelectItemNum]);
+			--SelectItemNum;
+
+			if (SelectItemNum < 0)
+			{
+				SelectItemNum = 0;
+			}
+
+			ItemRenderers[SelectItemNum]->ChangeFrameAnimation(ItemName[SelectItemNum] + "Select");
+		}
+	}
+
+	if (Phase == ShopPhase::Buy)
+	{
+		ItemRenderers[SelectItemNum]->ChangeFrameAnimation(ItemName[SelectItemNum] + "SelectOK");
 	}
 }
 
@@ -126,5 +232,16 @@ void ShopLevel::End()
 void ShopLevel::EndIrisAnimation(const FrameAnimation_DESC& _Info)
 {
 	ShopPig->GetRenderer()->ChangeFrameAnimation("Welcome");
+	ItemRenderers[SelectItemNum]->ChangeFrameAnimation(ItemName[SelectItemNum] + "Select");
 	OnceCheck = true;
+}
+
+void ShopLevel::BuyItemEnd(const FrameAnimation_DESC& _Info)
+{
+	ItemRenderers[SelectItemNum]->GetActor()->Off();
+	if (Inventory != nullptr)
+	{
+		Inventory->PurchasedItem.push_back(ItemName[SelectItemNum]);
+	}
+	Phase = ShopPhase::Select;
 }

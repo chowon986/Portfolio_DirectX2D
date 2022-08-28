@@ -1,16 +1,20 @@
 #pragma once
 #include <GameEngineCore/GameEngineLevel.h>
+#include <string>
 
 enum class ShopPhase
 {
 	None,
-	Open,
 	Select,
+	Buy,
 
 };
 // Ό³Έν :
+enum class ShopPhase;
+class ItemInventory;
 class GameEngineTextureRenderer;
 class Pig;
+class ItemBase;
 class ShopLevel : public GameEngineLevel
 {
 public:
@@ -26,11 +30,13 @@ public:
 
 protected:
 	void Start() override;
+	void LevelStartEvent() override;
 	void Update(float _DeltaTime) override;
 	void End() override;
 
 public:
 	void EndIrisAnimation(const FrameAnimation_DESC& _Info);
+	void BuyItemEnd(const FrameAnimation_DESC& _Info);
 
 private:
 	GameEngineTextureRenderer* IrisRenderer;
@@ -45,5 +51,16 @@ private:
 	bool OnceCheck;
 	float ElapsedTime;
 	ShopPhase Phase;
+	bool OddEvenSwitch() { IsOddNumber = !IsOddNumber; return IsOddNumber; }
+	ItemInventory* Inventory;
+
+public:
+	std::vector<ItemBase*> ItemNames;
+	std::vector<GameEngineTextureRenderer*> ItemRenderers;
+	std::vector<std::string> ItemName;
+	float ItemPosX;
+	float ItemPosY;
+	bool IsOddNumber;
+	int SelectItemNum;
 };
 

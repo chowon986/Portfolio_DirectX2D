@@ -3,6 +3,7 @@
 
 // Ό³Έν :
 class CharacterState;
+class ItemInventory;
 class GameEngineTextureRenderer;
 class WorldMapLevel : public GameEngineLevel
 {
@@ -34,5 +35,6 @@ private:
 	GameEngineTextureRenderer* OutsideOfMainLandLeftRenderer;
 	GameEngineTextureRenderer* OutsideOfMainLandRightRenderer;
 	CharacterState* State;
+	ItemInventory* Inventory;
 };
 

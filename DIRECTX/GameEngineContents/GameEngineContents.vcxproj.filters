@@ -130,6 +130,15 @@
     <Filter Include="Actor\Item">
       <UniqueIdentifier>{977cc643-8cc2-4566-a6e1-9fea997d4efe}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Actor\Item\Charm">
+      <UniqueIdentifier>{d3cd75aa-15dc-40c9-b19f-6e3f4e881210}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\Item\Weapon">
+      <UniqueIdentifier>{1246c8e8-6a60-47e4-9d11-3931c2da2a4d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\Item\Super">
+      <UniqueIdentifier>{ee8ebaaa-1554-4e74-a4ae-9e971ab58b73}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ContentsCore.h">
@@ -474,16 +483,40 @@
     <ClInclude Include="OldFilm.h">
       <Filter>Global</Filter>
     </ClInclude>
+    <ClInclude Include="WeaponItemBase.h">
+      <Filter>Actor\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="SuperItemBase.h">
+      <Filter>Actor\Item</Filter>
+    </ClInclude>
     <ClInclude Include="ItemBase.h">
       <Filter>Actor\Item</Filter>
     </ClInclude>
     <ClInclude Include="CharmItemBase.h">
       <Filter>Actor\Item</Filter>
     </ClInclude>
-    <ClInclude Include="WeaponItemBase.h">
-      <Filter>Actor\Item</Filter>
+    <ClInclude Include="ConvergeShooterItem.h">
+      <Filter>Actor\Item\Weapon</Filter>
     </ClInclude>
-    <ClInclude Include="SuperItemBase.h">
+    <ClInclude Include="SpreadShooterItem.h">
+      <Filter>Actor\Item\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="BoomerangShooterItem.h">
+      <Filter>Actor\Item\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="SmokeBombItem.h">
+      <Filter>Actor\Item\Charm</Filter>
+    </ClInclude>
+    <ClInclude Include="TwinHeartItem.h">
+      <Filter>Actor\Item\Charm</Filter>
+    </ClInclude>
+    <ClInclude Include="AstalCookieItem.h">
+      <Filter>Actor\Item\Charm</Filter>
+    </ClInclude>
+    <ClInclude Include="CursedRelicItem.h">
+      <Filter>Actor\Item\Charm</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemInventory.h">
       <Filter>Actor\Item</Filter>
     </ClInclude>
   </ItemGroup>
@@ -827,16 +860,40 @@
     <ClCompile Include="GameEngineCore_ContentsResources.cpp">
       <Filter>Global</Filter>
     </ClCompile>
-    <ClCompile Include="ItemBase.cpp">
+    <ClCompile Include="WeaponItemBase.cpp">
+      <Filter>Actor\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="SuperItemBase.cpp">
       <Filter>Actor\Item</Filter>
     </ClCompile>
     <ClCompile Include="CharmItemBase.cpp">
       <Filter>Actor\Item</Filter>
     </ClCompile>
-    <ClCompile Include="WeaponItemBase.cpp">
+    <ClCompile Include="ItemBase.cpp">
       <Filter>Actor\Item</Filter>
     </ClCompile>
-    <ClCompile Include="SuperItemBase.cpp">
+    <ClCompile Include="ConvergeShooterItem.cpp">
+      <Filter>Actor\Item\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="SpreadShooterItem.cpp">
+      <Filter>Actor\Item\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="BoomerangShooterItem.cpp">
+      <Filter>Actor\Item\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="SmokeBombItem.cpp">
+      <Filter>Actor\Item\Charm</Filter>
+    </ClCompile>
+    <ClCompile Include="TwinHeartItem.cpp">
+      <Filter>Actor\Item\Charm</Filter>
+    </ClCompile>
+    <ClCompile Include="AstalCookieItem.cpp">
+      <Filter>Actor\Item\Charm</Filter>
+    </ClCompile>
+    <ClCompile Include="CursedRelicItem.cpp">
+      <Filter>Actor\Item\Charm</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemInventory.cpp">
       <Filter>Actor\Item</Filter>
     </ClCompile>
   </ItemGroup>

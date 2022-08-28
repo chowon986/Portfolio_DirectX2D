@@ -1,5 +1,4 @@
 #pragma once
-#include "GameEngineCore/GameEngineActor.h"
 #include "Delegates.h"
 
 class ItemBase
@@ -11,5 +10,8 @@ public:
 	ItemBase(ItemBase&& _Other) noexcept = delete;
 	ItemBase& operator=(const ItemBase& _Other) = delete;
 	ItemBase& operator=(ItemBase&& _Other) noexcept = delete;
+
+public:
+	std::string ItemName;
 };
 

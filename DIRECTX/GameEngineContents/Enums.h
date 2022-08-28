@@ -52,6 +52,7 @@ enum class GameObjectGroup
 	Player,
 	Monster,
 	CharacterState,
+	INVENTORY,
 };
 
 enum class ZOrder : int

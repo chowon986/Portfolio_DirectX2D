@@ -157,6 +157,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="AstalCookieItem.h" />
     <ClInclude Include="Background.h" />
     <ClInclude Include="BackgroundHills.h" />
     <ClInclude Include="BackgroundObject.h" />
@@ -169,6 +170,7 @@
     <ClInclude Include="BoomerangBulletBase.h" />
     <ClInclude Include="BoomerangBulletMovementComponent.h" />
     <ClInclude Include="BoomerangShooter.h" />
+    <ClInclude Include="BoomerangShooterItem.h" />
     <ClInclude Include="BowWowBullet.h" />
     <ClInclude Include="BowWowShooter.h" />
     <ClInclude Include="Bulldog.h" />
@@ -189,7 +191,9 @@
     </ClInclude>
     <ClInclude Include="ConvergeBullet.h" />
     <ClInclude Include="ConvergeShooter.h" />
+    <ClInclude Include="ConvergeShooterItem.h" />
     <ClInclude Include="Cowgirl.h" />
+    <ClInclude Include="CursedRelicItem.h" />
     <ClInclude Include="Delegates.h" />
     <ClInclude Include="DogBowlBullet.h" />
     <ClInclude Include="DogBowlBulletMovementComponent.h" />
@@ -231,6 +235,7 @@
     <ClInclude Include="ISuperAttackable.h" />
     <ClInclude Include="ITalkable.h" />
     <ClInclude Include="ItemBase.h" />
+    <ClInclude Include="ItemInventory.h" />
     <ClInclude Include="IWalkable.h" />
     <ClInclude Include="IWorldMapCharacterBase.h" />
     <ClInclude Include="Ladder.h" />
@@ -258,9 +263,11 @@
     <ClInclude Include="Shop.h" />
     <ClInclude Include="ShopLevel.h" />
     <ClInclude Include="Shovel.h" />
+    <ClInclude Include="SmokeBombItem.h" />
     <ClInclude Include="Snow.h" />
     <ClInclude Include="SpreadBullet.h" />
     <ClInclude Include="SpreadShooter.h" />
+    <ClInclude Include="SpreadShooterItem.h" />
     <ClInclude Include="SuperItemBase.h" />
     <ClInclude Include="TattooBullet.h" />
     <ClInclude Include="TattooShooter.h" />
@@ -272,6 +279,7 @@
     </ClInclude>
     <ClInclude Include="TutorialBackground.h" />
     <ClInclude Include="TutorialLevel.h" />
+    <ClInclude Include="TwinHeartItem.h" />
     <ClInclude Include="Waterfall.h" />
     <ClInclude Include="WaterfallBase.h" />
     <ClInclude Include="WaterLine.h" />
@@ -286,6 +294,7 @@
     <ClInclude Include="YarnballShooter.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AstalCookieItem.cpp" />
     <ClCompile Include="Background.cpp" />
     <ClCompile Include="BackgroundHills.cpp" />
     <ClCompile Include="BackgroundObject.cpp" />
@@ -298,6 +307,7 @@
     <ClCompile Include="BoomerangBulletBase.cpp" />
     <ClCompile Include="BoomerangBulletMovementComponent.cpp" />
     <ClCompile Include="BoomerangShooter.cpp" />
+    <ClCompile Include="BoomerangShooterItem.cpp" />
     <ClCompile Include="BowWowBullet.cpp" />
     <ClCompile Include="BowWowShooter.cpp" />
     <ClCompile Include="Bulldog.cpp" />
@@ -318,7 +328,9 @@
     </ClCompile>
     <ClCompile Include="ConvergeBullet.cpp" />
     <ClCompile Include="ConvergeShooter.cpp" />
+    <ClCompile Include="ConvergeShooterItem.cpp" />
     <ClCompile Include="Cowgirl.cpp" />
+    <ClCompile Include="CursedRelicItem.cpp" />
     <ClCompile Include="DogBowlBullet.cpp" />
     <ClCompile Include="DogBowlBulletMovementComponent.cpp" />
     <ClCompile Include="DogBowlShooter.cpp" />
@@ -359,6 +371,7 @@
     <ClCompile Include="ISuperAttackable.cpp" />
     <ClCompile Include="ITalkable.cpp" />
     <ClCompile Include="ItemBase.cpp" />
+    <ClCompile Include="ItemInventory.cpp" />
     <ClCompile Include="IWalkable.cpp" />
     <ClCompile Include="IWorldMapCharacterBase.cpp" />
     <ClCompile Include="Ladder.cpp" />
@@ -388,9 +401,11 @@
     <ClCompile Include="Shop.cpp" />
     <ClCompile Include="ShopLevel.cpp" />
     <ClCompile Include="Shovel.cpp" />
+    <ClCompile Include="SmokeBombItem.cpp" />
     <ClCompile Include="Snow.cpp" />
     <ClCompile Include="SpreadBullet.cpp" />
     <ClCompile Include="SpreadShooter.cpp" />
+    <ClCompile Include="SpreadShooterItem.cpp" />
     <ClCompile Include="SuperItemBase.cpp" />
     <ClCompile Include="TattooBullet.cpp" />
     <ClCompile Include="TattooShooter.cpp" />
@@ -402,6 +417,7 @@
     </ClCompile>
     <ClCompile Include="TutorialBackground.cpp" />
     <ClCompile Include="TutorialLevel.cpp" />
+    <ClCompile Include="TwinHeartItem.cpp" />
     <ClCompile Include="Waterfall.cpp" />
     <ClCompile Include="WaterfallBase.cpp" />
     <ClCompile Include="WaterLine.cpp" />

@@ -1,5 +1,4 @@
 #pragma once
-#include "GameEngineCore/GameEngineActor.h"
 #include "Delegates.h"
 #include "ItemBase.h"
 
@@ -18,6 +17,5 @@ public:
 	CharacterType Type;
 	int MaxHP;
 	std::vector<WeaponBase*> Weapons;
-	
 };
 
