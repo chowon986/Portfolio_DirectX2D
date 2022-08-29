@@ -3,7 +3,7 @@
 
 BoomerangShooterItem::BoomerangShooterItem()
 {
-	ItemName = "SpreadTest";
+	ItemName = "BoomerangShooter";
 }
 
 BoomerangShooterItem::~BoomerangShooterItem()

@@ -3,7 +3,7 @@
 
 CursedRelicItem::CursedRelicItem()
 {
-	ItemName = "SpreadTest";
+	ItemName = "CursedRelic";
 }
 
 CursedRelicItem::~CursedRelicItem()

@@ -34,7 +34,9 @@ private:
 	GameEngineTextureRenderer* UnderWaterLandRenderer;
 	GameEngineTextureRenderer* OutsideOfMainLandLeftRenderer;
 	GameEngineTextureRenderer* OutsideOfMainLandRightRenderer;
+	GameEngineTextureRenderer* CoinCountRenderer;
 	CharacterState* State;
 	ItemInventory* Inventory;
+	int CurCoin;
 };
 

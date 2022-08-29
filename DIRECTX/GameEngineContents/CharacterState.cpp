@@ -10,6 +10,14 @@ CharacterState::CharacterState()
 
 CharacterState::~CharacterState()
 {
+	if (Items.size() > 0)
+	{
+		for (std::map<ItemType, ItemBase*>::iterator it = Items.begin(); it != Items.end(); it++)
+		{
+			delete it->second;
+		}
+		Items.clear();
+	}
 }
 
 void CharacterState::Start()
@@ -18,6 +26,12 @@ void CharacterState::Start()
 	Items.insert(std::make_pair<ItemType, ItemBase*>(ItemType::ShotB, new WeaponItemBase()));
 	Items.insert(std::make_pair<ItemType, ItemBase*>(ItemType::Charm, new CharmItemBase()));
 	Items.insert(std::make_pair<ItemType, ItemBase*>(ItemType::Super, new SuperItemBase()));
+
+	if (false == GameEngineInput::GetInst()->IsKey("AddCoin"))
+	{
+		GameEngineInput::GetInst()->CreateKey("AddCoin", VK_OEM_PLUS);
+		GameEngineInput::GetInst()->CreateKey("MinusCoin", VK_OEM_MINUS);
+	}
 }
 
 void CharacterState::OnLevelChanged()
@@ -57,6 +71,14 @@ void CharacterState::OnLevelChanged()
 
 void CharacterState::Update(float _DeltaTime)
 {
+	if (true == GameEngineInput::GetInst()->IsDown("AddCoin"))
+	{
+		++Coin;
+	}
+	else if(true == GameEngineInput::GetInst()->IsDown("MinusCoin"))
+	{
+		--Coin;
+	}
 }
 
 void CharacterState::End()

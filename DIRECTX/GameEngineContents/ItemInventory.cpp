@@ -31,8 +31,8 @@ void ItemInventory::Update(float _DeltaTime)
 				if (ItemName != "")
 				{
 					GameEngineTextureRenderer* Test = CreateComponent<GameEngineTextureRenderer>();
-					Test->CreateFrameAnimationFolder(PurchasedItem[0], FrameAnimation_DESC(PurchasedItem[0], 0.1f, false));
-					Test->ChangeFrameAnimation(PurchasedItem[0]);
+					Test->CreateFrameAnimationFolder(PurchasedItem[0]+"Equip", FrameAnimation_DESC(PurchasedItem[0], 0.1f, false));
+					Test->ChangeFrameAnimation(PurchasedItem[0] + "Equip");
 					Test->SetScaleModeImage();
 					Test->GetTransform().SetWorldPosition({ Test->GetTransform().GetWorldPosition().x, Test->GetTransform().GetWorldPosition().y, -50 });
 					Test->ChangeCamera(CAMERAORDER::UICAMERA);

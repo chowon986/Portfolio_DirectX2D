@@ -3,7 +3,7 @@
 
 AstalCookieItem::AstalCookieItem()
 {
-	ItemName = "SpreadTest";
+	ItemName = "AstalCookie";
 }
 
 AstalCookieItem::~AstalCookieItem()

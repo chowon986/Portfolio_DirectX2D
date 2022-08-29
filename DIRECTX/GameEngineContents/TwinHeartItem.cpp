@@ -3,7 +3,7 @@
 
 TwinHeartItem::TwinHeartItem()
 {
-	ItemName = "SpreadTest";
+	ItemName = "TwinHeart";
 }
 
 TwinHeartItem::~TwinHeartItem()

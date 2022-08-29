@@ -3,7 +3,7 @@
 
 SmokeBombItem::SmokeBombItem()
 {
-	ItemName = "SpreadTest";
+	ItemName = "SmokeBomb";
 }
 
 SmokeBombItem::~SmokeBombItem()

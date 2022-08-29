@@ -3,7 +3,7 @@
 
 SpreadShooterItem::SpreadShooterItem()
 {
-	ItemName = "SpreadTest";
+	ItemName = "SpreadShooter";
 }
 
 SpreadShooterItem::~SpreadShooterItem()

@@ -6,6 +6,11 @@
 #include <functional>
 #include <GameEngineCore/GameEngineTextureRenderer.h>
 #include "SpreadShooterItem.h"
+#include "CursedRelicItem.h"
+#include "SmokeBombItem.h"
+#include "TwinHeartItem.h"
+#include "BoomerangShooterItem.h"
+#include "ConvergeShooterItem.h"
 #include "ItemInventory.h"
 
 ShopLevel::ShopLevel()
@@ -13,9 +18,9 @@ ShopLevel::ShopLevel()
 	, IsLeftDrawerOpen(false)
 	, IsLeftDrawerOpened(false)
 	, OnceCheck(false)
-	, ItemPosX(-500)
+	, ItemPosX(-580)
 	, ItemPosY(0)
-	, IsOddNumber(true)
+	, IsOddNumber(false)
 	, ElapsedTime(0.0f)
 	, Inventory(nullptr)
 	, LeftDrawerRenderer(nullptr)
@@ -99,18 +104,18 @@ void ShopLevel::Start()
 
 
 	{
+		TwinHeartItem* TwinHeartIcon = new TwinHeartItem();
+		CursedRelicItem* CursedRelicIcon = new CursedRelicItem();
+		SmokeBombItem* SmokeBombIcon = new SmokeBombItem();
 		SpreadShooterItem* SpreadShooterIcon = new SpreadShooterItem();
-		SpreadShooterItem* TestIcon = new SpreadShooterItem();
-		SpreadShooterItem* TestTestIcon = new SpreadShooterItem();
-		SpreadShooterItem* TestTestIcon1 = new SpreadShooterItem();
-		SpreadShooterItem* TestTestIcon2 = new SpreadShooterItem();
-		SpreadShooterItem* TestTestIcon3 = new SpreadShooterItem();
+		BoomerangShooterItem* BoomerangShooterIcon = new BoomerangShooterItem();
+		ConvergeShooterItem* ConvergeShooterIcon = new ConvergeShooterItem();
 		ItemNames.push_back(SpreadShooterIcon);
-		ItemNames.push_back(TestIcon);
-		ItemNames.push_back(TestTestIcon);
-		ItemNames.push_back(TestTestIcon1);
-		ItemNames.push_back(TestTestIcon2);
-		ItemNames.push_back(TestTestIcon3);
+		ItemNames.push_back(TwinHeartIcon);
+		ItemNames.push_back(BoomerangShooterIcon);
+		ItemNames.push_back(CursedRelicIcon);
+		ItemNames.push_back(ConvergeShooterIcon);
+		ItemNames.push_back(SmokeBombIcon);
 	}
 
 	for (ItemBase* Item : ItemNames)
@@ -119,18 +124,19 @@ void ShopLevel::Start()
 		GameEngineTextureRenderer* ItemIconRenderer = ItemIcon->CreateComponent<GameEngineTextureRenderer>();
 		ItemIconRenderer->CreateFrameAnimationFolder(Item->ItemName, FrameAnimation_DESC(Item->ItemName, 0.1f, false));
 		ItemIconRenderer->CreateFrameAnimationFolder(Item->ItemName + "Select", FrameAnimation_DESC(Item->ItemName + "Select", 0.1f, true));
-		ItemIconRenderer->CreateFrameAnimationFolder(Item->ItemName + "SelectOK", FrameAnimation_DESC(Item->ItemName + "SelectOK", 0.1f, true));
-		ItemIconRenderer->AnimationBindEnd(Item->ItemName + "SelectOK", std::bind(&ShopLevel::BuyItemEnd, this, std::placeholders::_1));
+		ItemIconRenderer->CreateFrameAnimationFolder("ItemSelectOK", FrameAnimation_DESC("ItemSelectOK", 0.05f, true));
+		ItemIconRenderer->AnimationBindEnd("ItemSelectOK", std::bind(&ShopLevel::BuyItemEnd, this, std::placeholders::_1));
 		ItemIconRenderer->ChangeFrameAnimation(Item->ItemName);
+		ItemIconRenderer->SetPivot(PIVOTMODE::BOT);
 		if (IsOddNumber == true) // È¦¼öÀÎ°¡
 		{
-			ItemPosY = 0.0f;
+			ItemPosY = -70.0f;
 			ItemIconRenderer->SetScaleModeImage();
 			ItemIconRenderer->GetTransform().SetWorldPosition({ ItemPosX, ItemPosY, (int)ZOrder::UI - 100 });
 		}
 		else // Â¦¼öÀÎ°¡
 		{
-			ItemPosY = 40.0f;
+			ItemPosY = -20.0f;
 			ItemIconRenderer->SetScaleModeImage();
 			ItemIconRenderer->GetTransform().SetWorldPosition({ ItemPosX, ItemPosY, (int)ZOrder::UI - 50 });
 		}
@@ -221,7 +227,7 @@ void ShopLevel::Update(float _DeltaTime)
 
 	if (Phase == ShopPhase::Buy)
 	{
-		ItemRenderers[SelectItemNum]->ChangeFrameAnimation(ItemName[SelectItemNum] + "SelectOK");
+		ItemRenderers[SelectItemNum]->ChangeFrameAnimation("ItemSelectOK");
 	}
 }
 

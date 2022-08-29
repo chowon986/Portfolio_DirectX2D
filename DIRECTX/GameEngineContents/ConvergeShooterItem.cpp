@@ -3,7 +3,7 @@
 
 ConvergeShooterItem::ConvergeShooterItem()
 {
-	ItemName = "SpreadTest";
+	ItemName = "ConvergeShooter";
 }
 
 ConvergeShooterItem::~ConvergeShooterItem()

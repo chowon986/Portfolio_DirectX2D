@@ -39,11 +39,17 @@ WorldMapLevel::WorldMapLevel()
 	, OutsideOfMainLandLeftRenderer(nullptr)
 	, OutsideOfMainLandRightRenderer(nullptr)
 	, State(nullptr)
+	, CurCoin(0)
 {
 }
 
 WorldMapLevel::~WorldMapLevel()
 {
+	if (State != nullptr)
+	{
+		delete State;
+		State = nullptr;
+	}
 }
 
 void WorldMapLevel::ColMapOnOffSwitch()
@@ -66,6 +72,7 @@ void WorldMapLevel::LevelStartEvent()
 		if (CharacterState* _State = dynamic_cast<CharacterState*>(Actor))
 		{
 			State = _State;
+			CurCoin = State->Coin;
 		}
 	}
 }
@@ -79,6 +86,26 @@ void WorldMapLevel::Start()
 	if (false == GameEngineInput::GetInst()->IsKey("EnterMap"))
 	{
 		GameEngineInput::GetInst()->CreateKey("EnterMap", 'B');
+	}
+
+	{
+		GameEngineActor* CurCoin = CreateActor<GameEngineActor>(GameObjectGroup::UI);
+		GameEngineTextureRenderer* CoinRenderer = CurCoin->CreateComponent<GameEngineTextureRenderer>();
+		CoinRenderer->SetTexture("WorldMapCoin.png");
+		CoinRenderer->ScaleToTexture();
+		CoinRenderer->GetTransform().SetWorldScale({ CoinRenderer->GetTransform().GetWorldScale().x * 0.75f, CoinRenderer->GetTransform().GetWorldScale().y * 0.72f, 1 });
+		CoinRenderer->GetTransform().PixLocalNegativeX();
+		CoinRenderer->GetTransform().SetWorldPosition({ -580.0f, 320.0f,(int)ZOrder::UI - 100 });
+		CoinRenderer->ChangeCamera(CAMERAORDER::UICAMERA);
+	}
+
+	{
+		GameEngineActor* CoinCount = CreateActor<GameEngineActor>(GameObjectGroup::UI);
+		CoinCountRenderer = CoinCount->CreateComponent<GameEngineTextureRenderer>();
+		CoinCountRenderer->SetTexture("CoinCount0.png");
+		CoinCountRenderer->ScaleToTexture();
+		CoinCountRenderer->GetTransform().SetWorldPosition({ -535.0f, 330.0f,(int)ZOrder::UI - 100 });
+		CoinCountRenderer->ChangeCamera(CAMERAORDER::UICAMERA);
 	}
 
 	{
@@ -487,6 +514,7 @@ void WorldMapLevel::Start()
 		Renderer->ScaleToTexture();
 		Renderer->GetTransform().SetLocalPosition({ 1860.0f, -1085.0f, (int)ZOrder::NPCB });
 	}
+
 }
 
 void WorldMapLevel::Update(float _DeltaTime)
@@ -495,8 +523,26 @@ void WorldMapLevel::Update(float _DeltaTime)
 	{
 		GEngine::ChangeLevel("Tutorial");
 	}
-
+	
 	ColMapOnOffSwitch();
+
+	if (State != nullptr)
+	{
+		if (CurCoin == State->Coin)
+		{
+			return;
+		}
+
+		else
+		{
+			CurCoin = State->Coin;
+			if (CurCoin < 0 || CurCoin > 25)
+			{
+				return;
+			}
+			CoinCountRenderer->SetTexture("CoinCount" + std::to_string(CurCoin)+".png");
+		}
+	}
 }
 
 
