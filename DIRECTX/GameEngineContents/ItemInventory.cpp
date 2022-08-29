@@ -16,30 +16,28 @@ void ItemInventory::Start()
 	InventoryScreen->SetTexture("slot_selection_bg.png");
 	InventoryScreen->ScaleToTexture();
 	InventoryScreen->ChangeCamera(CAMERAORDER::UICAMERA);
-
-
 }
 
 void ItemInventory::Update(float _DeltaTime)
 {
 	if (true == IsUpdate())
 	{
-		if (OnceCheck == true)
-		{
+		//if (OnceCheck == true)
+		//{
 			for (std::string ItemName : PurchasedItem)
 			{
 				if (ItemName != "")
 				{
 					GameEngineTextureRenderer* Test = CreateComponent<GameEngineTextureRenderer>();
-					Test->CreateFrameAnimationFolder(PurchasedItem[0]+"Equip", FrameAnimation_DESC(PurchasedItem[0], 0.1f, false));
+					Test->CreateFrameAnimationFolder(PurchasedItem[0]+"Equip", FrameAnimation_DESC(PurchasedItem[0] + "Equip", 0.1f, false));
 					Test->ChangeFrameAnimation(PurchasedItem[0] + "Equip");
-					Test->SetScaleModeImage();
+					Test->SetScaleModeImage();			
 					Test->GetTransform().SetWorldPosition({ Test->GetTransform().GetWorldPosition().x, Test->GetTransform().GetWorldPosition().y, -50 });
-					Test->ChangeCamera(CAMERAORDER::UICAMERA);
+;					Test->ChangeCamera(CAMERAORDER::UICAMERA);
 					OnceCheck = false;
 				}
 			}
-		}
+		/*}*/
 	}
 }
 
