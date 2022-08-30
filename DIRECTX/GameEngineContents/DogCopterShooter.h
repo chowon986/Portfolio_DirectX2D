@@ -24,6 +24,7 @@ public:
 	void OnLaserAnimationFrameFinished(const FrameAnimation_DESC& _Info);
 	void OnLaserWarningAnimationFrameFinished(const FrameAnimation_DESC& _Info);
 	void Test(const FrameAnimation_DESC& _Info);
+	void Test2(const FrameAnimation_DESC& _Info);
 	void OnLaserShootingAnimationFrameFinished(const FrameAnimation_DESC& _Info);
 	void OnLaserCloseAnimationFrameFinished(const FrameAnimation_DESC& _Info);
 
