@@ -29,6 +29,8 @@ void DogCopter::Start()
 		Renderer->AnimationBindEnd("DogCopterIntro", std::bind(&DogCopter::OnIntroAnimationFrameFinished, this, std::placeholders::_1));
 		Renderer->AnimationBindEnd("DogCopterRotateCamera", std::bind(&DogCopter::OnRotateCameraAnimationFrameFinished, this, std::placeholders::_1));
 		Renderer->AnimationBindEnd("DogCopterRotatedIdle", std::bind(&DogCopter::OnRotatedIdleAnimationFrameFinished, this, std::placeholders::_1));
+		Renderer->AnimationBindFrame("DogCopterRotatedIdle", std::bind(&DogCopter::Test, this, std::placeholders::_1));
+		//Renderer->AnimationBindFrame("DogCopterRotateCamera", std::bind(&DogCopter::Test, this, std::placeholders::_1));
 		Renderer->AnimationBindEnd("DogCopterRotateCameraOut", std::bind(&DogCopter::OnRotateCameraOutAnimationFrameFinished, this, std::placeholders::_1));
 	
 		Renderer->AnimationBindFrame("DogCopterIdle", std::bind(&DogCopter::OnIdleAnimationFrameChanged, this, std::placeholders::_1));
@@ -195,6 +197,10 @@ void DogCopter::OnIdleAnimationFrameChanged(const FrameAnimation_DESC& _Info)
 void DogCopter::OnRotateCameraAnimationFrameFinished(const FrameAnimation_DESC& _Info)
 {
 	RotateCameraIdle();
+	if (Leader == nullptr)
+	{
+
+	}
 }
 
 void DogCopter::OnRotatedIdleAnimationFrameFinished(const FrameAnimation_DESC& _Info)
@@ -214,6 +220,7 @@ void DogCopter::OnRotateCameraOutAnimationFrameFinished(const FrameAnimation_DES
 
 void DogCopter::OnRotateCameraAnimationFrameChanged(const FrameAnimation_DESC& _Info)
 {
+	int a = 0;
 	if (_Info.CurFrame == 11)
 	{
 		LeftHandRenderer->ChangeFrameAnimation("Nothing");
@@ -232,4 +239,9 @@ void DogCopter::OnRotateCameraOutAnimationFrameChanged(const FrameAnimation_DESC
 		RightHandRenderer->ChangeFrameAnimation("PawMerge");
 		RightHandRenderer->On();
 	}
+}
+
+void DogCopter::Test(const FrameAnimation_DESC& _Info)
+{
+	int a = 0;
 }

@@ -3,6 +3,7 @@
 
 enum class InGameMonsterState;
 enum class InGameMonsterAttackState;
+class SecretLeader;
 class GameEngineTextureRenderer;
 class InGameDogCopterAnimationControllerComponent;
 class DogCopter : public IInGameMonsterBase
@@ -26,6 +27,7 @@ public:
 	void OnRotateCameraOutAnimationFrameFinished(const FrameAnimation_DESC& _Info);
 	void OnRotateCameraAnimationFrameChanged(const FrameAnimation_DESC& _Info);
 	void OnRotateCameraOutAnimationFrameChanged(const FrameAnimation_DESC& _Info);
+	void Test(const FrameAnimation_DESC& _Info);
 
 protected:
 	void Start() override;
@@ -49,5 +51,6 @@ private:
 	GameEngineTextureRenderer* WristRenderer;
 	GameEngineTextureRenderer* LeftHandRenderer;
 	GameEngineTextureRenderer* RightHandRenderer;
+	SecretLeader* Leader;
 };
 

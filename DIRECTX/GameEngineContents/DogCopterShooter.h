@@ -51,4 +51,3 @@ private:
 	int RandomAttackPattern;
 	InGameMonsterAttackState MonsterAttackState;
 };
-

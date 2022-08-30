@@ -519,6 +519,9 @@
     <ClInclude Include="ItemInventory.h">
       <Filter>Actor\Item</Filter>
     </ClInclude>
+    <ClInclude Include="SecretLeader.h">
+      <Filter>Actor\Play\InGame\NPC</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp">
@@ -895,6 +898,9 @@
     </ClCompile>
     <ClCompile Include="ItemInventory.cpp">
       <Filter>Actor\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="SecretLeader.cpp">
+      <Filter>Actor\Play\InGame\NPC</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

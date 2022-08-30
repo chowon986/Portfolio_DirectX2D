@@ -772,10 +772,13 @@ void DogCopterShooter::OnLaserShootingAnimationFrameFinished(const FrameAnimatio
 
 void DogCopterShooter::OnLaserCloseAnimationFrameFinished(const FrameAnimation_DESC& _Info)
 {
-	LaserMachineRenderers[5]->ChangeFrameAnimation("LaserNothing");
-	PadRenderers[4]->ChangeFrameAnimation("PadClose");
-	PadRenderers[4]->ChangeFrameAnimation("PadClose");
-	PadRenderers[5]->ChangeFrameAnimation("PadClose");
+	//LaserMachineRenderers[5]->ChangeFrameAnimation("LaserNothing");
+	//PadRenderers[4]->ChangeFrameAnimation("PadClose");
+	//PadRenderers[4]->ChangeFrameAnimation("PadClose");
+	//PadRenderers[5]->ChangeFrameAnimation("PadClose");
+	LaserMachineRenderers[5]->Off();
+	PadBackRenderers[5]->Off();
+	PadBackBackerRenderers[5]->Off();
 
 	//if (DogCopter* Parent = dynamic_cast<DogCopter*>(GetParent()))
 	//{
@@ -796,12 +799,13 @@ void DogCopterShooter::OnLaserCloseAnimationFrameFinished(const FrameAnimation_D
 	//	}
 	//}
 
-	//if (DogCopter* Parent = dynamic_cast<DogCopter*>(GetParent()))
-	//{
-	//	//if (Parent->GetAttackState() == InGameMonsterAttackState::LaserPattern3)
-	//	//{
-	//	//	Parent->SetState(InGameMonsterState::BeforeRotateCameraIn);
-	//	//}
+	if (DogCopter* Parent = dynamic_cast<DogCopter*>(GetParent()))
+	{
+		//if (Parent->GetAttackState() == InGameMonsterAttackState::LaserPattern3)
+		//{
+			Parent->SetState(InGameMonsterState::BeforeRotateCameraIn);
+		//}
+	}
 	//	//else
 	//	//{
 	//	//	if (Parent->GetAttackState() == InGameMonsterAttackState::LaserPattern1)
