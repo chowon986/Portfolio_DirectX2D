@@ -300,7 +300,7 @@ void DogFightLevel::Start()
 		}
 	}
 
-	SetPhase(Phase::Phase3);
+	SetPhase(Phase::Phase2);
 	//카메라 내 오브젝트 크기 조정 
 	GetMainCamera()->SetProjectionSize({ 1280.0f, 720.0f });
 	GetRotateCamera()->SetProjectionSize({ 1408.0f,792.0f });
@@ -491,6 +491,21 @@ void DogFightLevel::Update(float _DeltaTime)
 			PH1BulldogPlane = nullptr;
 		}
 
+		if (CaptainCanteenPlane == nullptr)
+		{
+			CaptainCanteenPlane = CreateActor<CanteenPlane>(GameObjectGroup::Monster);
+			CaptainCanteenPlane->GetTransform().SetWorldPosition({ 270, -650 });
+
+			Cuphead = CreateActor<InGameCuphead>(GameObjectGroup::Player);
+			Cuphead->SetParent(CaptainCanteenPlane);
+
+			Cuphead->GetTransform().SetLocalPosition({ -120, 50, (int)ZOrder::Player });
+			Cuphead->SetColMapImage(ColMapRenderer);
+
+			CaptainCanteenPlane->SetPlayer(Cuphead);
+			CaptainCanteenPlane->SetColMapImage(ColMapRenderer);
+		}
+
 		if (OnceCheck == false)
 		{
 			{
@@ -512,6 +527,8 @@ void DogFightLevel::Update(float _DeltaTime)
 
 			OnceCheck = true;
 		}
+
+
 	}
 
 
