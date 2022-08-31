@@ -259,7 +259,6 @@
     </ClInclude>
     <ClInclude Include="Rumrunners.h" />
     <ClInclude Include="ScoreBoard.h" />
-    <ClInclude Include="SecretLeader.h" />
     <ClInclude Include="SelectLevel.h" />
     <ClInclude Include="Shop.h" />
     <ClInclude Include="ShopLevel.h" />
@@ -398,7 +397,6 @@
     </ClCompile>
     <ClCompile Include="Rumrunners.cpp" />
     <ClCompile Include="ScoreBoard.cpp" />
-    <ClCompile Include="SecretLeader.cpp" />
     <ClCompile Include="SelectLevel.cpp" />
     <ClCompile Include="Shop.cpp" />
     <ClCompile Include="ShopLevel.cpp" />

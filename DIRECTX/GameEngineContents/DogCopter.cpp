@@ -6,6 +6,7 @@
 
 DogCopter::DogCopter()
 	: Renderer(nullptr)
+	, Leader(nullptr)
 {
 }
 
@@ -18,7 +19,7 @@ void DogCopter::Start()
 	IInGameMonsterBase::Start();
 	{
 		Renderer = CreateComponent<GameEngineTextureRenderer>();
-		Renderer->CreateFrameAnimationFolder("DogCopterIntro", FrameAnimation_DESC("DogCopterIntro",0,29, 0.1f, false));
+		Renderer->CreateFrameAnimationFolder("DogCopterIntro", FrameAnimation_DESC("DogCopterIntro",0, 29, 0.1f, false));
 		Renderer->CreateFrameAnimationFolder("DogCopterIdle", FrameAnimation_DESC("DogCopterIdle", 0.1f));
 		Renderer->CreateFrameAnimationFolder("DogCopterAttack1", FrameAnimation_DESC("DogCopterIdle", 0.1f));
 		Renderer->CreateFrameAnimationFolder("DogCopterRotateCamera", FrameAnimation_DESC("DogCopterRotateCamera", 0.1f));
@@ -51,7 +52,7 @@ void DogCopter::Start()
 		ArmsRenderer->CreateFrameAnimationFolder("Nothing", FrameAnimation_DESC("Nothing", 0.1f));
 		ArmsRenderer->ChangeFrameAnimation("DogCopterIdleArms");
 		ArmsRenderer->SetScaleModeImage();
-		ArmsRenderer->GetTransform().SetLocalPosition({ 650, -360, (int)ZOrder::NPC });
+		ArmsRenderer->GetTransform().SetLocalPosition({ 650, -410, (int)ZOrder::NPC });
 		ArmsRenderer->Off();
 	}
 
@@ -197,15 +198,12 @@ void DogCopter::OnIdleAnimationFrameChanged(const FrameAnimation_DESC& _Info)
 void DogCopter::OnRotateCameraAnimationFrameFinished(const FrameAnimation_DESC& _Info)
 {
 	RotateCameraIdle();
-	if (Leader == nullptr)
-	{
-
-	}
 }
 
 void DogCopter::OnRotatedIdleAnimationFrameFinished(const FrameAnimation_DESC& _Info)
 {
-	Attack2();
+	RotateCameraOut();
+	//Attack2();
 }
 
 void DogCopter::OnRotateCameraOutAnimationFrameFinished(const FrameAnimation_DESC& _Info)
@@ -220,7 +218,6 @@ void DogCopter::OnRotateCameraOutAnimationFrameFinished(const FrameAnimation_DES
 
 void DogCopter::OnRotateCameraAnimationFrameChanged(const FrameAnimation_DESC& _Info)
 {
-	int a = 0;
 	if (_Info.CurFrame == 11)
 	{
 		LeftHandRenderer->ChangeFrameAnimation("Nothing");
@@ -232,7 +229,8 @@ void DogCopter::OnRotateCameraAnimationFrameChanged(const FrameAnimation_DESC& _
 
 void DogCopter::OnRotateCameraOutAnimationFrameChanged(const FrameAnimation_DESC& _Info)
 {
-	if (_Info.CurFrame == 8)
+	int a = 0;
+	if (_Info.CurFrame == 14)
 	{
 		LeftHandRenderer->ChangeFrameAnimation("PawMerge");
 		LeftHandRenderer->On();
