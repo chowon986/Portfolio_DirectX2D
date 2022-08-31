@@ -9,7 +9,7 @@
 #include <GameEngineCore/GameEngineTextureRenderer.h>
 
 BeforeTitleLevel::BeforeTitleLevel()
-	: BlackScreenToAnimationIntervalTime(1.0f)
+	: BlackScreenToAnimationIntervalTime(5.0f)
 	, ElapsedTime(0.0f)
 	, MDHRLogoRenderer(nullptr)
 {
@@ -48,7 +48,7 @@ void BeforeTitleLevel::Update(float _DeltaTime)
 
 	if (true == GameEngineInput::GetInst()->IsDown("LevelChange"))
 	{
-		GEngine::ChangeLevel("Title");
+		//GEngine::ChangeLevel("Title");
 	}
 }
 
@@ -58,5 +58,5 @@ void BeforeTitleLevel::End()
 
 void BeforeTitleLevel::OnHDMRAnimationFrameEnd(const FrameAnimation_DESC& _Info)
 {
-	GEngine::ChangeLevel("Title");
+	//GEngine::ChangeLevel("Title");
 }

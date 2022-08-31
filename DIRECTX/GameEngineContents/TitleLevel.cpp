@@ -2,6 +2,7 @@
 #include "PreCompile.h"
 #include "TitleLevel.h"
 #include "Background.h"
+#include <GameEngineCore/GameEngineBlur.h>
 
 TitleLevel::TitleLevel()
 	: IrisRenderer(nullptr)
@@ -14,6 +15,7 @@ TitleLevel::~TitleLevel()
 
 void TitleLevel::Start()
 {
+	GetMainCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
 	{
 		Background* Title = CreateActor<Background>(GameObjectGroup::UI);
 		GameEngineTextureRenderer* TitleRenderer = Title->CreateComponent<GameEngineTextureRenderer>();

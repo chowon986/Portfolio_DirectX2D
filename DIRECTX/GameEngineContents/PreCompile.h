@@ -40,6 +40,5 @@
 #include <GameEngineCore/GameEngineFontRenderer.h>
 #include <GameEngineCore/GameEngineCoreDebug.h>
 
-
 #include <GameEngineContents/Enums.h>
 

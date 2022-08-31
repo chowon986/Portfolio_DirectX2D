@@ -452,7 +452,7 @@ void SelectLevel::CreateSelectPlayerPhaseRenderer()
 		ScreenLightRenderer->CreateFrameAnimationFolder("LightDown", FrameAnimation_DESC("IrisB", 0, 0, 0.1f));
 		ScreenLightRenderer->ChangeFrameAnimation("LightDown");
 		ScreenLightRenderer->GetTransform().SetLocalScale({ 1280.0f, 720.0f, (int)ZOrder::UI + 1 });
-		ScreenLightRenderer->GetColorData().PlusColor.a = 0.5f;
+		ScreenLightRenderer->GetPixelData().PlusColor.a = 0.5f;
 	}
 
 	if (SlotSelectionRenderer == nullptr)

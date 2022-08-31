@@ -519,6 +519,9 @@
     <ClInclude Include="ItemInventory.h">
       <Filter>Actor\Item</Filter>
     </ClInclude>
+    <ClInclude Include="ContentsOldFilm.h">
+      <Filter>Global</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp">
@@ -857,9 +860,6 @@
     <ClCompile Include="OldFilm.cpp">
       <Filter>Global</Filter>
     </ClCompile>
-    <ClCompile Include="GameEngineCore_ContentsResources.cpp">
-      <Filter>Global</Filter>
-    </ClCompile>
     <ClCompile Include="WeaponItemBase.cpp">
       <Filter>Actor\Item</Filter>
     </ClCompile>
@@ -895,6 +895,9 @@
     </ClCompile>
     <ClCompile Include="ItemInventory.cpp">
       <Filter>Actor\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="ContentsOldFilm.cpp">
+      <Filter>Global</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
