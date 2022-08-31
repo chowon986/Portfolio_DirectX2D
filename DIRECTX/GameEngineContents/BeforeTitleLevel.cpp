@@ -48,7 +48,7 @@ void BeforeTitleLevel::Update(float _DeltaTime)
 
 	if (true == GameEngineInput::GetInst()->IsDown("LevelChange"))
 	{
-		//GEngine::ChangeLevel("Title");
+		GEngine::ChangeLevel("Title");
 	}
 }
 
@@ -58,5 +58,5 @@ void BeforeTitleLevel::End()
 
 void BeforeTitleLevel::OnHDMRAnimationFrameEnd(const FrameAnimation_DESC& _Info)
 {
-	//GEngine::ChangeLevel("Title");
+	GEngine::ChangeLevel("Title");
 }

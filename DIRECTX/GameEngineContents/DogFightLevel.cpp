@@ -300,7 +300,7 @@ void DogFightLevel::Start()
 		}
 	}
 
-	SetPhase(Phase::Phase2);
+	SetPhase(Phase::Ready);
 	//카메라 내 오브젝트 크기 조정 
 	GetMainCamera()->SetProjectionSize({ 1280.0f, 720.0f });
 	GetRotateCamera()->SetProjectionSize({ 1408.0f,792.0f });

@@ -13,13 +13,13 @@ OldFilm::~OldFilm()
 
 void OldFilm::Start()
 {	
-	{
-		GameEngineTextureRenderer* Test = CreateComponent<GameEngineTextureRenderer>();
-		Test->CreateFrameAnimationFolder("LightDown", FrameAnimation_DESC("IrisB", 0, 0, 0.1f));
-		Test->ChangeFrameAnimation("LightDown");
-		Test->GetTransform().SetLocalScale({ 1280.0f, 720.0f, (int)ZOrder::UI + 1 });
-		Test->GetPixelData().PlusColor.a = 0.2f;
-	}
+	//{
+	//	GameEngineTextureRenderer* Test = CreateComponent<GameEngineTextureRenderer>();
+	//	Test->CreateFrameAnimationFolder("LightDown", FrameAnimation_DESC("IrisB", 0, 0, 0.1f));
+	//	Test->ChangeFrameAnimation("LightDown");
+	//	Test->GetTransform().SetLocalScale({ 1280.0f, 720.0f, (int)ZOrder::UI + 1 });
+	//	Test->GetPixelData().PlusColor.a = 0.2f;
+	//}
 
 
 	{
