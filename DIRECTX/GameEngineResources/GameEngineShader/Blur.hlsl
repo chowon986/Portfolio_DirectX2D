@@ -71,15 +71,12 @@ float4 Blur_PS(Output _Input) : SV_Target0
         CurUV.y += PixelUVSize.y;
     }
 
-    Result /= 256.0f;
+	Result /= 256.0f;
 
-    // Color
-    // 지금 이 색깔은?
-
-        if (Result.a <= 0.0f)
-        {
-            clip(-1);
-        }
+	if (Result.a <= 0.0f)
+	{
+		clip(-1);
+	}
 
     return Result;
 }

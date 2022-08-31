@@ -22,7 +22,7 @@ public:
 protected:
 	GameEngineRenderTarget* CopyTarget;
 	GameEngineRenderSet EffectSet;
-
+	GameEngineFolderTexture* OldFilmTexture;
 private:
 };
 
