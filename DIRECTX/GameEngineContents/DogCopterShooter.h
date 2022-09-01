@@ -47,7 +47,7 @@ private:
 	std::vector<GameEngineTextureRenderer*> AuraRenderers;
 	std::vector<GameEngineTextureRenderer*> MachineTeethRenderers;
 
-	int AttackCount;
-	int RandomAttackPattern;
+	int FirstIdx;
+	int SecondIdx;
 	InGameMonsterAttackState MonsterAttackState;
 };

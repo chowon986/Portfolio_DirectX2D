@@ -120,7 +120,7 @@ void Bulldog::Start()
 
 	srand(time(NULL));
 
-	SetHP(5);
+	SetHP(1);
 
 	// ÃÑ »ý¼º
 	{
@@ -151,7 +151,7 @@ void Bulldog::Update(float _DeltaTime)
 	}
 	CanTakeDamageTime += _DeltaTime;
 
-	GameEngineDebug::DrawBox(Collision->GetTransform(), { 1.0f, 0.0f,0.0f, 0.5f });
+	//GameEngineDebug::DrawBox(Collision->GetTransform(), { 1.0f, 0.0f,0.0f, 0.5f });
 	Renderer->ScaleToTexture();
 	UpdateState();
 

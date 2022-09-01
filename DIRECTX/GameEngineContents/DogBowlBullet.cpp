@@ -52,7 +52,7 @@ void DogBowlBullet::Start()
 
 void DogBowlBullet::Update(float _DeltaTime)
 {
-	GameEngineDebug::DrawBox(TrackCollision->GetTransform(), { 1.0f, 0.0f,0.0f, 0.5f });
+	//GameEngineDebug::DrawBox(TrackCollision->GetTransform(), { 1.0f, 0.0f,0.0f, 0.5f });
 
 	if (TrackCollision->IsCollision(CollisionType::CT_AABB2D, (int)ObjectOrder::TRACKING1, CollisionType::CT_AABB2D, std::bind(&DogBowlBullet::CanCollision, this, std::placeholders::_1, std::placeholders::_2)))
 	{

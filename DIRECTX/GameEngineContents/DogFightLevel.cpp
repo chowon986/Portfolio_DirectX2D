@@ -485,18 +485,6 @@ void DogFightLevel::Update(float _DeltaTime)
 		ElapsedTime += _DeltaTime;
 		ElapsedTime = ElapsedTime / 1.0f;
 
-		if (nullptr != DogFightPh2DogA &&
-			nullptr != DogFightPh2DogB &&
-			nullptr != DogFightPh2DogC &&
-			nullptr != DogFightPh2DogD &&
-			true == DogFightPh2DogA->IsDeath() &&
-			true == DogFightPh2DogB->IsDeath() &&
-			true == DogFightPh2DogC->IsDeath() &&
-			true == DogFightPh2DogD->IsDeath())
-		{
-			SetPhase(Phase::Phase3);
-		}
-
 		if (PH1BulldogPlane != nullptr)
 		{
 			PH1BulldogPlane->Death();
@@ -540,6 +528,13 @@ void DogFightLevel::Update(float _DeltaTime)
 			OnceCheck = true;
 		}
 
+		if ((nullptr == DogFightPh2DogA || 0 >= DogFightPh2DogA->GetHP()) &&
+			(nullptr == DogFightPh2DogB || 0 >= DogFightPh2DogB->GetHP()) &&
+			(nullptr == DogFightPh2DogC || 0 >= DogFightPh2DogC->GetHP()) &&
+			(nullptr == DogFightPh2DogD || 0 >= DogFightPh2DogD->GetHP()))
+		{
+			SetPhase(Phase::Phase3);
+		}
 
 	}
 

@@ -36,7 +36,7 @@ void BowWowBullet::Start()
 
 void BowWowBullet::Update(float _DeltaTime)
 {
-	GameEngineDebug::DrawBox(Collision->GetTransform(), { 1.0f, 0.0f,0.0f, 0.5f });
+	//GameEngineDebug::DrawBox(Collision->GetTransform(), { 1.0f, 0.0f,0.0f, 0.5f });
 }
 
 void BowWowBullet::End()

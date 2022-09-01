@@ -40,7 +40,7 @@ void ChargerBullet::Update(float _DeltaTime)
 {
 	BulletBase::Update(_DeltaTime);
 	Renderer->ScaleToTexture();
-	GameEngineDebug::DrawBox(GetCollision()->GetTransform(), { 1.0f, 0.0f,0.0f, 0.5f });
+	//GameEngineDebug::DrawBox(GetCollision()->GetTransform(), { 1.0f, 0.0f,0.0f, 0.5f });
 }
 
 void ChargerBullet::End()

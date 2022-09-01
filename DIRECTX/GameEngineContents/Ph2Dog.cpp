@@ -186,7 +186,11 @@ void Ph2Dog::Update(float _DeltaTime)
 	}
 
 
-	if (GetPh2DogState() != InGamePh2DogState::Die)
+	if (GetPh2DogState() != InGamePh2DogState::Die &&
+		GetPh2DogState() != InGamePh2DogState::Prepare1 &&
+		GetPh2DogState() != InGamePh2DogState::Prepare2 &&
+		GetPh2DogState() != InGamePh2DogState::Prepare3 &&
+		GetPh2DogState() != InGamePh2DogState::Prepare4)
 	{
 
 		if (Angle >= 6.28319f)
@@ -206,15 +210,14 @@ void Ph2Dog::Update(float _DeltaTime)
 	{
 		TakeDamage();
 		SetHP(GetHP() - 1);
+	}
 
-		// 체력이 0보다 작으면
-		if (GetHP() <= 0)
-		{
-			// Die 애니메이션을 켜준다.
-			// Die 애니메이션이 끝나면 Death() 를 호출해 준다.
-			//Die();
-			Death();
-		}
+	if (GetHP() <= 0)
+	{
+		// Die 애니메이션을 켜준다.
+		// Die 애니메이션이 끝나면 Death() 를 호출해 준다.
+		//Die();
+		Death();
 	}
 }
 

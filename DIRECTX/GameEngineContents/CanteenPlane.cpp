@@ -122,9 +122,9 @@ void CanteenPlane::Start()
 
 void CanteenPlane::Update(float _DeltaTime)
 {
-	GameEngineDebug::DrawBox(LeftCollision->GetTransform(), { 1.0f, 0.0f,0.0f, 0.5f });
-	GameEngineDebug::DrawBox(RightCollision->GetTransform(), { 1.0f, 0.0f,0.0f, 0.5f });
-	GameEngineDebug::DrawBox(GroundCollision->GetTransform(), { 1.0f, 0.0f,0.0f, 0.5f });
+	//GameEngineDebug::DrawBox(LeftCollision->GetTransform(), { 1.0f, 0.0f,0.0f, 0.5f });
+	//GameEngineDebug::DrawBox(RightCollision->GetTransform(), { 1.0f, 0.0f,0.0f, 0.5f });
+	//GameEngineDebug::DrawBox(GroundCollision->GetTransform(), { 1.0f, 0.0f,0.0f, 0.5f });
 
 	if (LeaderCopter != nullptr)
 	{
