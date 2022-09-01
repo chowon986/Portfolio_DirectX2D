@@ -12,7 +12,10 @@ public:
 	{
 		for (auto Delegate : Delegates)
 		{
-			Delegate(Value);
+			if (Delegate != nullptr)
+			{
+				Delegate(Value);
+			}
 		}
 	}
 

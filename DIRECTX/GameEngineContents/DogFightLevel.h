@@ -1,7 +1,7 @@
 #pragma once
 #include "InGameLevelBase.h"
 
-// Ό³Έν :
+class Ph2Dog;
 class BulldogPlane;
 class GameEngineTextureRenderer;
 class BackgroundHills;
@@ -74,5 +74,10 @@ private:
 	GameEngineTextureRenderer* ScreenLightRenderer;
 	bool IrisOnceCheck;
 	float ElapsedTime;
+
+	Ph2Dog* DogFightPh2DogB;
+	Ph2Dog* DogFightPh2DogD;
+	Ph2Dog* DogFightPh2DogA;
+	Ph2Dog* DogFightPh2DogC;
 };
 

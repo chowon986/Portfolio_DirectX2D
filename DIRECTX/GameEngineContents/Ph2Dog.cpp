@@ -146,7 +146,7 @@ void Ph2Dog::Start()
 	}
 
 	srand(time(NULL));
-	SetHP(5);
+	SetHP(1);
 }
 
 void Ph2Dog::Update(float _DeltaTime)
@@ -186,8 +186,7 @@ void Ph2Dog::Update(float _DeltaTime)
 	}
 
 
-	if (GetPh2DogState() == InGamePh2DogState::Idle ||
-		GetPh2DogState() == InGamePh2DogState::Attack)
+	if (GetPh2DogState() != InGamePh2DogState::Die)
 	{
 
 		if (Angle >= 6.28319f)
@@ -201,11 +200,21 @@ void Ph2Dog::Update(float _DeltaTime)
 
 		GetTransform().SetWorldPosition({ static_cast<float>(TestX + 640.0f), static_cast<float>(TestY - 360.0f) });
 	}
+
 	if (true == Collision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::PC_BULLET, CollisionType::CT_AABB2D,
 		std::bind(&Ph2Dog::OnTakeDamage, this, std::placeholders::_1, std::placeholders::_2)))
 	{
-		SetHP(GetHP() - 1);
 		TakeDamage();
+		SetHP(GetHP() - 1);
+
+		// 체력이 0보다 작으면
+		if (GetHP() <= 0)
+		{
+			// Die 애니메이션을 켜준다.
+			// Die 애니메이션이 끝나면 Death() 를 호출해 준다.
+			//Die();
+			Death();
+		}
 	}
 }
 

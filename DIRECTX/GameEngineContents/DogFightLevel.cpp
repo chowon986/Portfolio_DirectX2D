@@ -485,6 +485,18 @@ void DogFightLevel::Update(float _DeltaTime)
 		ElapsedTime += _DeltaTime;
 		ElapsedTime = ElapsedTime / 1.0f;
 
+		if (nullptr != DogFightPh2DogA &&
+			nullptr != DogFightPh2DogB &&
+			nullptr != DogFightPh2DogC &&
+			nullptr != DogFightPh2DogD &&
+			true == DogFightPh2DogA->IsDeath() &&
+			true == DogFightPh2DogB->IsDeath() &&
+			true == DogFightPh2DogC->IsDeath() &&
+			true == DogFightPh2DogD->IsDeath())
+		{
+			SetPhase(Phase::Phase3);
+		}
+
 		if (PH1BulldogPlane != nullptr)
 		{
 			PH1BulldogPlane->Death();
@@ -509,10 +521,10 @@ void DogFightLevel::Update(float _DeltaTime)
 		if (OnceCheck == false)
 		{
 			{
-				Ph2Dog* DogFightPh2DogB = CreateActor<Ph2Dog>(GameObjectGroup::Monster);
-				Ph2Dog* DogFightPh2DogD = CreateActor<Ph2Dog>(GameObjectGroup::Monster);
-				Ph2Dog* DogFightPh2DogA = CreateActor<Ph2Dog>(GameObjectGroup::Monster);
-				Ph2Dog* DogFightPh2DogC = CreateActor<Ph2Dog>(GameObjectGroup::Monster);
+				DogFightPh2DogB = CreateActor<Ph2Dog>(GameObjectGroup::Monster);
+				DogFightPh2DogD = CreateActor<Ph2Dog>(GameObjectGroup::Monster);
+				DogFightPh2DogA = CreateActor<Ph2Dog>(GameObjectGroup::Monster);
+				DogFightPh2DogC = CreateActor<Ph2Dog>(GameObjectGroup::Monster);
 
 				DogFightPh2DogA->SetPlayer(Cuphead);
 				DogFightPh2DogB->SetPlayer(Cuphead);

@@ -51,7 +51,7 @@ void IInGameMonsterBase::Start()
 {
 	if (InGameLevelBase* LevelBase = dynamic_cast<InGameLevelBase*>(GetLevel()))
 	{
-		LevelBase->GetPhaseChangedDelegate().Add(std::bind(&IInGameMonsterBase::OnPhaseChanged, this, std::placeholders::_1));
+		//LevelBase->GetPhaseChangedDelegate().Add(std::bind(&IInGameMonsterBase::OnPhaseChanged, this, std::placeholders::_1));
 	}
 }
 

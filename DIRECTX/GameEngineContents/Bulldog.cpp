@@ -2,6 +2,7 @@
 #include "Bulldog.h"
 #include "BulldogPlane.h"
 #include "TattooShooter.h"
+#include "InGameLevelBase.h"
 #include "DogCopterPhase1.h"
 #include "YarnballShooter.h"
 #include "IInGameCharacterBase.h"
@@ -154,7 +155,7 @@ void Bulldog::Update(float _DeltaTime)
 	Renderer->ScaleToTexture();
 	UpdateState();
 
-	/*if (false == MoveDirection.CompareInt2D(float4::ZERO))
+	if (false == MoveDirection.CompareInt2D(float4::ZERO))
 	{
 		if (false == IsEndPosArrived())
 		{
@@ -167,7 +168,7 @@ void Bulldog::Update(float _DeltaTime)
 				Plane->GetTransform().SetWorldMove(MoveDirection * MoveSpeed * GameEngineTime::GetDeltaTime());
 			}
 		}
-	}*/
+	}
 
 	if (GetState() == InGameMonsterState::Mount ||
 		GetState() == InGameMonsterState::Unmount ||
@@ -187,7 +188,18 @@ void Bulldog::UpdateState()
 		{
 			CanTakeDamageTime = 0.0f;
 			SetHP(GetHP() - 1);
-			TakeDamage();
+			if (GetHP() <= 0)
+			{
+				//Die();
+				if (InGameLevelBase* Level = dynamic_cast<InGameLevelBase*>(GetLevel()))
+				{
+					Level->SetPhase(Phase::Phase2);
+				}
+			}
+			else
+			{
+				TakeDamage();
+			}
 			if (GetHP() == 2)
 			{
 				if (DogCopter == nullptr)

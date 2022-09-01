@@ -45,11 +45,6 @@ WorldMapLevel::WorldMapLevel()
 
 WorldMapLevel::~WorldMapLevel()
 {
-	if (State != nullptr)
-	{
-		delete State;
-		State = nullptr;
-	}
 }
 
 void WorldMapLevel::ColMapOnOffSwitch()
