@@ -29,6 +29,7 @@ void DogCopter::Start()
 
 		Renderer->AnimationBindEnd("DogCopterIntro", std::bind(&DogCopter::OnIntroAnimationFrameFinished, this, std::placeholders::_1));
 		Renderer->AnimationBindFrame("DogCopterIntro", std::bind(&DogCopter::Test, this, std::placeholders::_1));
+		Renderer->AnimationBindFrame("DogCopterIntro", std::bind(&DogCopter::Test, this, std::placeholders::_1));
 		Renderer->AnimationBindEnd("DogCopterRotateCamera", std::bind(&DogCopter::OnRotateCameraAnimationFrameFinished, this, std::placeholders::_1));
 		Renderer->AnimationBindEnd("DogCopterRotatedIdle", std::bind(&DogCopter::OnRotatedIdleAnimationFrameFinished, this, std::placeholders::_1));
 		Renderer->AnimationBindFrame("DogCopterRotatedIdle", std::bind(&DogCopter::Test, this, std::placeholders::_1));

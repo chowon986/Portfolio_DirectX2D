@@ -522,6 +522,12 @@
     <ClInclude Include="ContentsOldFilm.h">
       <Filter>Global</Filter>
     </ClInclude>
+    <ClInclude Include="DogCopterPhase1.h">
+      <Filter>Actor\Play\InGame\Object\DogFight</Filter>
+    </ClInclude>
+    <ClInclude Include="HydrantBullet.h">
+      <Filter>Actor\Weapon\Bullet\Monster</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp">
@@ -898,6 +904,12 @@
     </ClCompile>
     <ClCompile Include="ContentsOldFilm.cpp">
       <Filter>Global</Filter>
+    </ClCompile>
+    <ClCompile Include="DogCopterPhase1.cpp">
+      <Filter>Actor\Play\InGame\Object\DogFight</Filter>
+    </ClCompile>
+    <ClCompile Include="HydrantBullet.cpp">
+      <Filter>Actor\Weapon\Bullet\Monster</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

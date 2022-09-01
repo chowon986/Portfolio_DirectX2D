@@ -20,6 +20,26 @@ void YarnballShooter::End()
 {
 }
 
+void YarnballShooter::UpdatePivot()
+{
+	if (State != InGameMonsterState::Attack1)
+	{
+		return;
+	}
+
+	else
+	{
+		if (Character->GetRenderer()->GetTransform().GetLocalScale().x > 0)
+		{
+			GetTransform().SetLocalPosition({ 350.0f, 350.0f });
+		}
+		else
+		{
+			GetTransform().SetLocalPosition({ -350.0f, 350.0f });
+		}
+	}
+}
+
 void YarnballShooter::Update(float _DeltaTime)
 {
 	MonsterWeaponBase::Update(_DeltaTime);

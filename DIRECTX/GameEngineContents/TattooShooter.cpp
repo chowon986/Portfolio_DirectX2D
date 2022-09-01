@@ -4,7 +4,8 @@
 #include "TattooBullet.h"
 
 TattooShooter::TattooShooter()
-	:MonsterAttackState(InGameMonsterAttackState::None)
+	: MonsterAttackState(InGameMonsterAttackState::None)
+	, TattooCount(0)
 {
 }
 
@@ -18,6 +19,65 @@ void TattooShooter::Start()
 
 void TattooShooter::End()
 {
+}
+
+void TattooShooter::UpdatePivot()
+{
+
+	if (State != InGameMonsterState::Attack2 ||
+		AttackState == InGameMonsterAttackState::None)
+	{
+		return;
+	}
+
+	else
+	{
+		if (Character->GetRenderer()->GetTransform().GetLocalScale().x > 0)
+		{
+			++TattooCount;
+
+			if (1 == TattooCount)
+			{
+				GetTransform().SetLocalPosition({ -350.0f, 500.0f,(int)ZOrder::NPC - 1 });
+			}
+			else if (2 == TattooCount)
+			{
+				GetTransform().SetLocalPosition({ -350.0f, 400.0f,(int)ZOrder::NPC - 1 });
+			}
+			else if(3 == TattooCount)
+			{
+				GetTransform().SetLocalPosition({ -350.0f, 240.0f,(int)ZOrder::NPC - 1 });
+				TattooCount = 0;
+			}
+			else
+			{
+				TattooCount = 0;
+			}
+		}
+		else
+		{
+			++TattooCount;
+
+			if (1 == TattooCount)
+			{
+				GetTransform().SetLocalPosition({ 350.0f, 500.0f,(int)ZOrder::NPC - 1 });
+			}
+			else if (2 == TattooCount)
+			{
+				GetTransform().SetLocalPosition({ 350.0f, 400.0f,(int)ZOrder::NPC - 1 });
+			}
+			else if(3 == TattooCount)
+			{
+				GetTransform().SetLocalPosition({ 350.0f, 240.0f,(int)ZOrder::NPC - 1 });
+				TattooCount = 0;
+			}
+			else
+			{
+				TattooCount = 0;
+			}
+		}
+	}
+
 }
 
 

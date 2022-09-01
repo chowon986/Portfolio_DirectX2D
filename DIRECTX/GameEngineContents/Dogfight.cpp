@@ -18,15 +18,19 @@ void Dogfight::Start()
 	Renderer->GetTransform().SetLocalScale({ 189,163,1 });
 	Renderer->SetPivot(PIVOTMODE::CENTER);
 
-	Collision->ChangeOrder(ObjectOrder::DOGFIGHT);
 	Collision->GetTransform().SetLocalScale({ 100.0f, 100.0f, 1.0f });
 
 }
 
 void Dogfight::Update(float _DeltaTime)
 {
-	PortalBase::Update(_DeltaTime);
-
+	if (Collision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::PC, CollisionType::CT_AABB2D, std::bind(&Dogfight::OnPortalCollision, this, std::placeholders::_1, std::placeholders::_2)))
+	{
+		if (true == GameEngineInput::GetInst()->IsDown("EnterMap"))
+		{
+			GEngine::ChangeLevel("DogFight");
+		}
+	}
 }
 
 void Dogfight::End()

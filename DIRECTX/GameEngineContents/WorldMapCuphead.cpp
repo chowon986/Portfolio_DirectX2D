@@ -113,7 +113,7 @@ void WorldMapCuphead::Update(float _DeltaTime)
 		}
 	}
 
-	if (false == Collision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::DOGFIGHT, CollisionType::CT_AABB2D,
+	if (false == Collision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::NPC, CollisionType::CT_AABB2D,
 		std::bind(&WorldMapCuphead::CanPortalCollision, this, std::placeholders::_1, std::placeholders::_2)))
 	{
 		EnterRenderer->Off();
@@ -121,10 +121,6 @@ void WorldMapCuphead::Update(float _DeltaTime)
 	else
 	{
 		EnterRenderer->On();
-		if (true == GameEngineInput::GetInst()->IsDown("EnterMap"))
-		{
-			GEngine::ChangeLevel("DogFight");
-		}
 	}
 
 	if (true == GameEngineInput::GetInst()->IsPress("MoveLeft") ||

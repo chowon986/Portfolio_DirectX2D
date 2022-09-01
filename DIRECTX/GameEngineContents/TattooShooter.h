@@ -19,9 +19,11 @@ private:
 	void Start() override;
 	void Update(float _DeltaTime) override;
 	void End() override;
+	void UpdatePivot() override;
 
 private:
 	InGameMonsterAttackState MonsterAttackState;
+	int TattooCount;
 
 };
 
