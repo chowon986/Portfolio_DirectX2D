@@ -16,11 +16,18 @@ CanteenPlane::CanteenPlane()
 	, ColMapImage(nullptr)
 	, ColMapTexture(nullptr)
 	, IsPhase2MoveCompleted(false)
+	, IsPhase3MoveCompleted(false)
 {
 }
 
 CanteenPlane::~CanteenPlane()
 {
+}
+
+void CanteenPlane::SetDogCopter(DogCopter* _LeaderCopter)
+{
+	LeaderCopter = _LeaderCopter;
+	LeaderState = LeaderCopter->GetState();
 }
 
 bool CanteenPlane::CanMove(GameEngineCollision* _This, GameEngineCollision* _Other)
@@ -126,25 +133,79 @@ void CanteenPlane::Update(float _DeltaTime)
 {
 	if (InGameLevelBase* Level = dynamic_cast<InGameLevelBase*>(GetLevel()))
 	{
+		if (Phase::Phase2 == Level->GetPhase() || 
+			Phase::Phase3 == Level->GetPhase())
+		{
+			ElapsedXTime += _DeltaTime;
+			float Time = ElapsedXTime / 30;
+			float4 CurPos = GetTransform().GetWorldPosition();
+
+			float DestPosX = CurPos.x;
+			if (CurPos.x > 0 &&
+				CurPos.x < 500)
+			{
+				DestPosX = 500.0f;
+			}
+
+			else if (CurPos.x > 780 &&
+				CurPos.x < 1280)
+			{
+				DestPosX = 780.0f;
+			}
+
+			DestPosX = GameEngineMath::LerpLimit(CurPos.x, DestPosX, Time);
+			GetTransform().SetLocalPosition(float4({ DestPosX, CurPos.y, CurPos.z }));
+		}
+
 		if (Phase::Phase2 == Level->GetPhase())
 		{
 			if (false == IsPhase2MoveCompleted)
 			{
-				ElapsedTime += _DeltaTime;
-				float Time = ElapsedTime / 30;
-
+				ElapsedYTime += _DeltaTime;
+				float Time = ElapsedYTime / 30;
 				float4 CurPos = GetTransform().GetWorldPosition();
-				float DestPosX = GameEngineMath::LerpLimit(CurPos.x, 640.0f, Time);
+
 				float DestPosY = GameEngineMath::LerpLimit(CurPos.y, -530.0f, Time);
 
-				if (abs(CurPos.x - 640.0f) <= 1 &&
-					abs(CurPos.y - (-530.0f) <= 1))
+				if (abs(CurPos.y - (-530.0f)) <= 1)
 				{
 					IsPhase2MoveCompleted = true;
+					ElapsedYTime = 0.0f;
 				}
 
-				GetTransform().SetLocalPosition(float4({ DestPosX, DestPosY, CurPos.z }));
+				GetTransform().SetLocalPosition(float4({ CurPos.x, DestPosY, CurPos.z }));
 			}
+		}
+
+		else if (Phase::Phase3 == Level->GetPhase())
+		{
+			if (nullptr != LeaderCopter)
+			{
+				InGameMonsterState BossState = LeaderCopter->GetState();
+				ElapsedYTime += _DeltaTime;
+				float Time = ElapsedYTime / 30;
+
+				float4 CurPos = GetTransform().GetWorldPosition();
+				float DestPosY = CurPos.y;
+				if (BossState == InGameMonsterState::RotateCameraIn)
+				{
+					DestPosY = -700.0f;
+				}
+				else
+				{
+					DestPosY = -680.0f;
+				}
+				float NewPosY = GameEngineMath::LerpLimit(CurPos.y, DestPosY, Time);
+
+				if (abs(CurPos.y - (DestPosY)) <= 0.1)
+				{
+					IsPhase3MoveCompleted = true;
+					ElapsedYTime = 0.0f;
+				}
+
+				GetTransform().SetLocalPosition(float4({ CurPos.x, NewPosY, CurPos.z }));
+			}
+
 		}
 	}
 	//GameEngineDebug::DrawBox(LeftCollision->GetTransform(), { 1.0f, 0.0f,0.0f, 0.5f });

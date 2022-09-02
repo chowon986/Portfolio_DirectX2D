@@ -2,10 +2,10 @@
 #include <GameEngineCore/GameEngineActor.h>
 
 // Ό³Έν :
-enum class InGameDogCopterState;
 class GameEngineTextureRenderer;
 class IInGameCharacterBase;
 class Canteen;
+enum class InGameMonsterState;
 class DogCopter;
 class CanteenPlane : public GameEngineActor
 {
@@ -24,7 +24,7 @@ public:
 	void SetPlayer(IInGameCharacterBase* _Player) { Player = _Player; }
 	IInGameCharacterBase* GetPlayer() { return Player; }
 
-	void SetDogCopter(DogCopter* _LeaderCopter) { LeaderCopter = _LeaderCopter; }
+	void SetDogCopter(DogCopter* _LeaderCopter);
 	DogCopter* GetDogCopter() { return LeaderCopter; }
 
 	bool CanMove(GameEngineCollision* _This, GameEngineCollision* _Other);
@@ -48,12 +48,15 @@ private:
 	GameEngineTexture* ColMapTexture;
 	float4 MoveDirection;
 
-	InGameDogCopterState LeaderState;
+	InGameMonsterState LeaderState;
 	IInGameCharacterBase* Player;
 	Canteen* CaptainCanteen;
 	DogCopter* LeaderCopter;
 
-	float ElapsedTime;
+	float ElapsedYTime;
+	float ElapsedXTime;
 	bool IsPhase2MoveCompleted;
+	bool IsPhase3MoveCompleted;
+
 };
 

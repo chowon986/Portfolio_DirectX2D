@@ -85,6 +85,9 @@ void DogCopter::Start()
 		RightHandRenderer->GetTransform().SetLocalPosition({ 1180, -340, (int)ZOrder::NPC - 2 });
 		RightHandRenderer->GetTransform().PixLocalNegativeX();
 		RightHandRenderer->Off();
+
+		GetLevel()->PushRendererToRotateCamera2(LeftHandRenderer);
+		GetLevel()->PushRendererToRotateCamera2(RightHandRenderer);
 	}
 
 	{

@@ -8,8 +8,8 @@ enum class CAMERAORDER : int
 {
 	MAINCAMERA,
 	BACKGROUND,
-	ROTATECAMERA,
-	USER2,
+	ROTATECAMERA, // SIZE 1.2
+	ROTATECAMERA2, // SIZE 1.1
 	USER3,
 	USER4,
 	USER5,
@@ -58,6 +58,11 @@ public:
 		return Cameras[static_cast<int>(CAMERAORDER::ROTATECAMERA)];
 	}
 
+	GameEngineCamera* GetRotateCamera2()
+	{
+		return Cameras[static_cast<int>(CAMERAORDER::ROTATECAMERA2)];
+	}
+
 	GameEngineCamera* GetBackgroundCamera()
 	{
 		return Cameras[static_cast<int>(CAMERAORDER::BACKGROUND)];
@@ -74,7 +79,11 @@ public:
 
 	GameEngineCameraActor* GetRotateCameraActor();
 
+	GameEngineCameraActor* GetRotateCamera2Actor();
+
 	GameEngineTransform& GetRotateCameraActorTransform();
+
+	GameEngineTransform& GetRotateCamera2ActorTransform();
 
 	GameEngineCameraActor* GetBackgroundCameraActor();
 
@@ -163,6 +172,16 @@ public:
 
 	}
 
+	virtual void PushToRotateCamera2(GameEngineUpdateObject* _Object)
+	{
+
+	}
+
+	virtual void PushToBackgroundCamera2(GameEngineUpdateObject* _Object)
+	{
+
+	}
+
 	void PushRendererToMainCamera(GameEngineRenderer* _Renderer)
 	{
 		PushRenderer(_Renderer, static_cast<int>(CAMERAORDER::MAINCAMERA));
@@ -185,12 +204,18 @@ public:
 
 	void PushRenderer(GameEngineRenderer* _Renderer, int _CameraOrder);
 
-protected:
-
 	void PushRendererToRotateCamera(GameEngineRenderer* _Renderer)
 	{
 		PushRenderer(_Renderer, static_cast<int>(CAMERAORDER::ROTATECAMERA));
 	}
+
+	void PushRendererToRotateCamera2(GameEngineRenderer* _Renderer)
+	{
+		PushRenderer(_Renderer, static_cast<int>(CAMERAORDER::ROTATECAMERA2));
+	}
+
+protected:
+
 
 
 private:

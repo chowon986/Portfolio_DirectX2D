@@ -33,6 +33,9 @@ DogFightLevel::DogFightLevel()
 	, OnceCheck(false)
 	, BulldogIntroRenderer(nullptr)
 	, DogCopterIntroRenderer(nullptr)
+	, OldState(InGameMonsterState::Idle)
+	, IsRotateCompleted(false)
+	, RotateElapsedTime(0.0f)
 {
 }
 
@@ -309,11 +312,14 @@ void DogFightLevel::Start()
 	SetPhase(Phase::Ready);
 	//카메라 내 오브젝트 크기 조정 
 	GetMainCamera()->SetProjectionSize({ 1280.0f, 720.0f });
-	GetRotateCamera()->SetProjectionSize({ 1408.0f,792.0f });
+	GetRotateCamera()->SetProjectionSize({ 1536.0f,864.0f });
+	GetRotateCamera2()->SetProjectionSize({ 1408.0f,792.0f });
 	GetBackgroundCamera()->SetProjectionSize({ 1408.0f,792.0f });
 
 	GetMainCameraActorTransform().SetLocalPosition({ 640, -360 });
 	GetBackgroundCameraActorTransform().SetLocalPosition({ 640, -360 });
+	GetRotateCameraActorTransform().SetLocalPosition({ 640, -360 });
+	GetRotateCamera2ActorTransform().SetLocalPosition({ 640, -360 });
 
 }
 void DogFightLevel::ResetPositionCloudLeftA(const FrameAnimation_DESC& _Info)
@@ -378,6 +384,22 @@ void DogFightLevel::PushToRotateCamera(GameEngineUpdateObject* _Object)
 		if (GameEngineRenderer* Renderer = dynamic_cast<GameEngineRenderer*>(Child))
 		{
 			PushRendererToRotateCamera(Renderer);
+		}
+	}
+}
+
+void DogFightLevel::PushToRotateCamera2(GameEngineUpdateObject* _Object)
+{
+	for (auto* Child : _Object->GetChilds())
+	{
+		if (GameEngineUpdateObject* Object = dynamic_cast<GameEngineUpdateObject*>(Child))
+		{
+			PushToRotateCamera2(Object);
+		}
+
+		if (GameEngineRenderer* Renderer = dynamic_cast<GameEngineRenderer*>(Child))
+		{
+			PushRendererToRotateCamera2(Renderer);
 		}
 	}
 }
@@ -477,7 +499,7 @@ void DogFightLevel::Update(float _DeltaTime)
 			Cuphead = CreateActor<InGameCuphead>(GameObjectGroup::Player);
 			Cuphead->SetParent(CaptainCanteenPlane);
 
-			Cuphead->GetTransform().SetLocalPosition({ -120, 50, (int)ZOrder::Player});
+			Cuphead->GetTransform().SetLocalPosition({ -120, 50, (int)ZOrder::Player });
 			Cuphead->SetColMapImage(ColMapRenderer);
 
 			CaptainCanteenPlane->SetPlayer(Cuphead);
@@ -496,7 +518,8 @@ void DogFightLevel::Update(float _DeltaTime)
 			PH1BulldogPlane = CreateActor<BulldogPlane>(GameObjectGroup::Monster);
 			PH1BulldogPlane->GetTransform().SetWorldPosition({ 0, 100 });
 			PH1BulldogPlane->SetPlayer(Cuphead);
-			PushToBackgroundCamera(CaptainCanteenPlane);
+			PushToRotateCamera(CaptainCanteenPlane);
+
 			PushToBackgroundCamera(PH1BulldogPlane);
 		}
 	}
@@ -566,7 +589,8 @@ void DogFightLevel::Update(float _DeltaTime)
 			LeaderCopter = CreateActor<DogCopter>(GameObjectGroup::Monster);
 			LeaderCopter->GetTransform().SetWorldPosition({ 0, 0 });
 			//LeaderCopter->SetColMapImage(ColMapRenderer);
-			PushToBackgroundCamera(LeaderCopter);
+			//PushToBackgroundCamera(LeaderCopter);
+			OldState = LeaderCopter->GetState();
 		}
 
 		if (CaptainCanteenPlane == nullptr)
@@ -581,18 +605,52 @@ void DogFightLevel::Update(float _DeltaTime)
 
 			CaptainCanteenPlane->SetPlayer(Cuphead);
 			CaptainCanteenPlane->SetColMapImage(ColMapRenderer);
-			CaptainCanteenPlane->SetDogCopter(LeaderCopter);
 			PushToRotateCamera(CaptainCanteenPlane);
+		}
+
+		if (LeaderCopter != nullptr)
+		{
+			CaptainCanteenPlane->SetDogCopter(LeaderCopter);
 		}
 	}
 
-	//static float4 Rot = { 0.0f, 0.0f, 0.0f };
+	if (nullptr != LeaderCopter)
+	{
+		float4 CameraRotation = GetRotateCameraActorTransform().GetLocalRotation();
+		
+		if (OldState != LeaderCopter->GetState())
+		{
+			OldState = LeaderCopter->GetState();
 
-	//Rot.z = -90;
-	//GetRotateCameraActorTransform().SetLocalRotation(Rot);
+			switch (LeaderCopter->GetState())
+			{
+			case InGameMonsterState::RotateCameraIn:
+			case InGameMonsterState::RotateCameraOut:
+			{
 
+				ZAngle = CameraRotation.z - 90; 
+				IsRotateCompleted = false;
+				break;
+			}
+			}
+		}
+
+		if (IsRotateCompleted == false)
+		{
+			RotateElapsedTime += _DeltaTime;
+			float Time = RotateElapsedTime / 30;
+			if (abs(CameraRotation.z - ZAngle) <= 0.1)
+			{
+				IsRotateCompleted = true;
+				RotateElapsedTime = 0.0f;
+			}
+			float NewZAngle = GameEngineMath::LerpLimit(CameraRotation.z, ZAngle, Time);
+			GetRotateCameraActorTransform().SetLocalRotation(float4({ CameraRotation.x ,CameraRotation.y, NewZAngle }));
+			GetRotateCamera2ActorTransform().SetLocalRotation(float4({ CameraRotation.x ,CameraRotation.y, NewZAngle }));
+
+		}
+	}
 }
-
 void DogFightLevel::End()
 {
 }

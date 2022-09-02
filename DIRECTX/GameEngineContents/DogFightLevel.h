@@ -10,6 +10,7 @@ class Bulldog;
 class CanteenPlane;
 class DogCopter;
 class InGameCuphead;
+enum class InGameMonsterState;
 class DogFightLevel : public InGameLevelBase
 {
 public:
@@ -36,6 +37,7 @@ public:
 	void ResetPositionPlanePuffRight(const FrameAnimation_DESC& _Info);
 	void ResetPositionPlanePuffLeft(const FrameAnimation_DESC& _Info);
 	void PushToRotateCamera(GameEngineUpdateObject* _Object) override;
+	void PushToRotateCamera2(GameEngineUpdateObject* _Object) override;
 	void PushToBackgroundCamera(GameEngineUpdateObject* _Object) override;
 	void LightOnAnimaitonFrameFinished(const FrameAnimation_DESC& _Info);
 	void BulldogIntroAnimationFrameFinished(const FrameAnimation_DESC& _Info);
@@ -79,5 +81,10 @@ private:
 	Ph2Dog* DogFightPh2DogD;
 	Ph2Dog* DogFightPh2DogA;
 	Ph2Dog* DogFightPh2DogC;
+	InGameMonsterState OldState;
+
+	float RotateElapsedTime;
+	bool IsRotateCompleted;
+	float ZAngle;
 };
 

@@ -544,6 +544,40 @@ void DogCopterShooter::Start()
 	}
 
 	srand(time(NULL));
+
+	for (GameEngineTextureRenderer* Renderer : PadRenderers)
+	{
+		GetLevel()->PushRendererToRotateCamera2(Renderer);
+	}
+	for (GameEngineTextureRenderer* Renderer : LaserMachineRenderers)
+	{
+		GetLevel()->PushRendererToRotateCamera2(Renderer);
+	}	
+	for (GameEngineTextureRenderer* Renderer : LaserMachineBackerRenderers)
+	{
+		GetLevel()->PushRendererToRotateCamera2(Renderer);
+	}	
+	for (GameEngineTextureRenderer* Renderer : PadBackRenderers)
+	{
+		GetLevel()->PushRendererToRotateCamera2(Renderer);
+	}	
+	for (GameEngineTextureRenderer* Renderer : PadBackBackerRenderers)
+	{
+		GetLevel()->PushRendererToRotateCamera2(Renderer);
+	}	
+	for (GameEngineTextureRenderer* Renderer : LaserRenderers)
+	{
+		GetLevel()->PushRendererToRotateCamera2(Renderer);
+	}	
+	for (GameEngineTextureRenderer* Renderer : AuraRenderers)
+	{
+		GetLevel()->PushRendererToRotateCamera2(Renderer);
+	}
+	for (GameEngineTextureRenderer* Renderer : MachineTeethRenderers)
+	{
+		GetLevel()->PushRendererToRotateCamera2(Renderer);
+	}
+
 }
 
 void DogCopterShooter::End()
