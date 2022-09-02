@@ -41,12 +41,9 @@ void Ph1Dog::Start()
 		Renderer->AnimationBindFrame("Ph1DogAttack3", std::bind(&Ph1Dog::OnAttack1AnimationFrameChanged, this, std::placeholders::_1));
 		Renderer->AnimationBindFrame("Ph1DogAttack4", std::bind(&Ph1Dog::OnAttack2AnimationFrameChanged, this, std::placeholders::_1));
 
-		Renderer->AnimationBindEnd("Ph1DogAttack3", std::bind(&Ph1Dog::OnAttackAnimationFrameFinished, this, std::placeholders::_1));
-		Renderer->AnimationBindEnd("Ph1DogAttack4", std::bind(&Ph1Dog::OnAttackAnimationFrameFinished, this, std::placeholders::_1));
-
 		Renderer->ChangeFrameAnimation("Ph1DogIdle");
 
-		Renderer->ScaleToTexture();
+		Renderer->SetScaleModeImage();
 
 		Renderer->SetPivot(PIVOTMODE::BOT);
 
@@ -73,7 +70,6 @@ void Ph1Dog::Start()
 
 void Ph1Dog::Update(float _DeltaTime)
 {
-	Renderer->ScaleToTexture();
 
 	if (MoveWithPlaneOn == false)
 	{
@@ -159,6 +155,10 @@ void Ph1Dog::OnAttack1AnimationFrameChanged(const FrameAnimation_DESC& _Info) //
 	{
 		SetAttackState(InGameMonsterAttackState::TennisBall);
 	}
+	else if (_Info.CurFrame == 11)
+	{
+		Idle();
+	}
 	else
 	{
 		SetAttackState(InGameMonsterAttackState::None);
@@ -171,15 +171,14 @@ void Ph1Dog::OnAttack2AnimationFrameChanged(const FrameAnimation_DESC& _Info) //
 	{
 		SetAttackState(InGameMonsterAttackState::TennisBall);
 	}
+	else if (_Info.CurFrame == 12)
+	{
+		Idle();
+	}
 	else
 	{
 		SetAttackState(InGameMonsterAttackState::None);
 	}
-}
-
-void Ph1Dog::OnAttackAnimationFrameFinished(const FrameAnimation_DESC& _Info)
-{
-	Idle();
 }
 
 bool Ph1Dog::AnimationDirectionSwtich()

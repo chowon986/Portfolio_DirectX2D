@@ -34,7 +34,6 @@ protected:
 private:
 	void OnAttack1AnimationFrameChanged(const FrameAnimation_DESC& _Info);
 	void OnAttack2AnimationFrameChanged(const FrameAnimation_DESC& _Info);
-	void OnAttackAnimationFrameFinished(const FrameAnimation_DESC& _Info);
 
 	bool AnimationDirectionSwtich();
 
