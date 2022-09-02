@@ -28,7 +28,13 @@ void Shop::Start()
 void Shop::Update(float _DeltaTime)
 {
 	PortalBase::Update(_DeltaTime);
-
+	if (Collision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::PC, CollisionType::CT_AABB2D, std::bind(&Shop::OnPortalCollision, this, std::placeholders::_1, std::placeholders::_2)))
+	{
+		if (true == GameEngineInput::GetInst()->IsDown("EnterMap"))
+		{
+			GEngine::ChangeLevel("Shop");
+		}
+	}
 }
 
 void Shop::End()

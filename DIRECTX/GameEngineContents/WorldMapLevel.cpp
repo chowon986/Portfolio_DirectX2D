@@ -284,8 +284,8 @@ void WorldMapLevel::Start()
 
 	{
 		// 사다리 입구
-		Ladder* RopeLadder = CreateActor<Ladder>(GameObjectGroup::UI);
-		RopeLadder->GetTransform().SetLocalPosition({ 1823.0, -1755.0f, 100.0f });
+		//Ladder* RopeLadder = CreateActor<Ladder>(GameObjectGroup::UI);
+		//RopeLadder->GetTransform().SetLocalPosition({ 1823.0, -1755.0f, 100.0f });
 	}
 
 	{

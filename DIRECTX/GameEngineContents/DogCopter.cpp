@@ -101,16 +101,16 @@ void DogCopter::Start()
 	srand(time(NULL));
 	
 	Collision = CreateComponent<GameEngineCollision>();
-	Collision->GetTransform().SetWorldScale({ 100.0f,100.0f,1.0f });
-
+	Collision->GetTransform().SetWorldScale({ 300.0f,300.0f,1.0f });
+	Collision->GetTransform().SetWorldPosition({ 640.0f, -360.0f });
 	SetHP(1);
 }
 
 void DogCopter::Update(float _DeltaTime)
 {
-	if (GetState() == InGameMonsterState::RotateCameraIdle)
+	if (GetState() != InGameMonsterState::Prepare)
 	{
-		if (Collision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::PC, CollisionType::CT_AABB2D, std::bind(&DogCopter::OnTakeDamage, this, std::placeholders::_1, std::placeholders::_2)))
+		if (Collision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::PC_BULLET, CollisionType::CT_AABB2D, std::bind(&DogCopter::OnTakeDamage, this, std::placeholders::_1, std::placeholders::_2)))
 		{
 			SetHP(GetHP() - 1);
 			if (GetHP() <= 0)
