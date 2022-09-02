@@ -449,6 +449,21 @@ void DogFightLevel::DogCopterIntroPhase1IntroAnimationFrameChanged(const FrameAn
 void DogFightLevel::Update(float _DeltaTime)
 {
 	ColMapOnOffSwitch();
+	if (GameEngineInput::GetInst()->IsDown("PhaseChangeKey"))
+	{
+		if (GetPhase() == Phase::Ready)
+		{
+			SetPhase(Phase::Phase1);
+		}
+		else if (GetPhase() == Phase::Phase1)
+		{
+			SetPhase(Phase::Phase2);
+		}
+		else if (GetPhase() == Phase::Phase2)
+		{
+			SetPhase(Phase::Phase3);
+		}
+	}
 
 	if (GetPhase() == Phase::Ready && IrisOnceCheck == false)
 	{
@@ -540,22 +555,6 @@ void DogFightLevel::Update(float _DeltaTime)
 			(nullptr == DogFightPh2DogD || 0 >= DogFightPh2DogD->GetHP()))
 		{
 			SetPhase(Phase::Phase3);
-		}
-
-		if (GameEngineInput::GetInst()->IsDown("PhaseChangeKey"))
-		{
-			if (GetPhase() == Phase::Ready)
-			{
-				GEngine::ChangeLevel("Phase1");
-			}
-			else if (GetPhase() == Phase::Phase1)
-			{
-				GEngine::ChangeLevel("Phase2");
-			}
-			else if (GetPhase() == Phase::Phase2)
-			{
-				GEngine::ChangeLevel("Phase3");
-			}
 		}
 
 	}
