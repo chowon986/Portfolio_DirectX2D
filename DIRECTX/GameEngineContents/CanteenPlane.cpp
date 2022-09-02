@@ -3,6 +3,7 @@
 #include "Canteen.h"
 #include "Ph1Dog.h"
 #include "DogCopter.h"
+#include "InGameLevelBase.h"
 #include "IInGameCharacterBase.h"
 
 CanteenPlane::CanteenPlane()
@@ -14,6 +15,7 @@ CanteenPlane::CanteenPlane()
 	, GroundCollision(nullptr)
 	, ColMapImage(nullptr)
 	, ColMapTexture(nullptr)
+	, IsPhase2MoveCompleted(false)
 {
 }
 
@@ -122,6 +124,29 @@ void CanteenPlane::Start()
 
 void CanteenPlane::Update(float _DeltaTime)
 {
+	if (InGameLevelBase* Level = dynamic_cast<InGameLevelBase*>(GetLevel()))
+	{
+		if (Phase::Phase2 == Level->GetPhase())
+		{
+			if (false == IsPhase2MoveCompleted)
+			{
+				ElapsedTime += _DeltaTime;
+				float Time = ElapsedTime / 30;
+
+				float4 CurPos = GetTransform().GetWorldPosition();
+				float DestPosX = GameEngineMath::LerpLimit(CurPos.x, 640.0f, Time);
+				float DestPosY = GameEngineMath::LerpLimit(CurPos.y, -530.0f, Time);
+
+				if (abs(CurPos.x - 640.0f) <= 1 &&
+					abs(CurPos.y - (-530.0f) <= 1))
+				{
+					IsPhase2MoveCompleted = true;
+				}
+
+				GetTransform().SetLocalPosition(float4({ DestPosX, DestPosY, CurPos.z }));
+			}
+		}
+	}
 	//GameEngineDebug::DrawBox(LeftCollision->GetTransform(), { 1.0f, 0.0f,0.0f, 0.5f });
 	//GameEngineDebug::DrawBox(RightCollision->GetTransform(), { 1.0f, 0.0f,0.0f, 0.5f });
 	//GameEngineDebug::DrawBox(GroundCollision->GetTransform(), { 1.0f, 0.0f,0.0f, 0.5f });

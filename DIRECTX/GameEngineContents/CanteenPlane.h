@@ -52,5 +52,8 @@ private:
 	IInGameCharacterBase* Player;
 	Canteen* CaptainCanteen;
 	DogCopter* LeaderCopter;
+
+	float ElapsedTime;
+	bool IsPhase2MoveCompleted;
 };
 
