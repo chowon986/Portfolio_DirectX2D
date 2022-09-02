@@ -99,11 +99,28 @@ void DogCopter::Start()
 	}
 
 	srand(time(NULL));
+	
+	Collision = CreateComponent<GameEngineCollision>();
+	Collision->GetTransform().SetWorldScale({ 100.0f,100.0f,1.0f });
 
+	SetHP(1);
 }
 
 void DogCopter::Update(float _DeltaTime)
 {
+	if (GetState() == InGameMonsterState::RotateCameraIdle)
+	{
+		if (Collision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::PC, CollisionType::CT_AABB2D, std::bind(&DogCopter::OnTakeDamage, this, std::placeholders::_1, std::placeholders::_2)))
+		{
+			SetHP(GetHP() - 1);
+			if (GetHP() <= 0)
+			{
+				//Death();
+				GEngine::ChangeLevel("WorldMap");
+			}
+		}
+	}
+
 	if (GetState() == InGameMonsterState::BeforeRotateCameraIn)
 	{
 		ArmsRenderer->ChangeFrameAnimation("Nothing");
@@ -171,6 +188,11 @@ void DogCopter::RotateCameraIdle()
 void DogCopter::BeforeRoateCameraIn()
 {
 	SetState(InGameMonsterState::BeforeRotateCameraIn);
+}
+
+bool DogCopter::OnTakeDamage(GameEngineCollision* _This, GameEngineCollision* _Other)
+{
+	return true;
 }
 
 

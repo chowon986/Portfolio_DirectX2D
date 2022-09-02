@@ -51,6 +51,12 @@ void DogFightLevel::ColMapOnOffSwitch()
 
 void DogFightLevel::Start()
 {
+	if (false == GameEngineInput::GetInst()->IsKey("PhaseChangeKey"))
+	{
+		GameEngineInput::GetInst()->CreateKey("PhaseChangeKey", 'L');
+	}
+		
+
 	{
 		Background* ScreenLight = CreateActor<Background>(GameObjectGroup::UI);
 		ScreenLightRenderer = ScreenLight->CreateComponent <GameEngineTextureRenderer>();
@@ -536,9 +542,23 @@ void DogFightLevel::Update(float _DeltaTime)
 			SetPhase(Phase::Phase3);
 		}
 
+		if (GameEngineInput::GetInst()->IsDown("PhaseChangeKey"))
+		{
+			if (GetPhase() == Phase::Ready)
+			{
+				GEngine::ChangeLevel("Phase1");
+			}
+			else if (GetPhase() == Phase::Phase1)
+			{
+				GEngine::ChangeLevel("Phase2");
+			}
+			else if (GetPhase() == Phase::Phase2)
+			{
+				GEngine::ChangeLevel("Phase3");
+			}
+		}
+
 	}
-
-
 
 	else if (GetPhase() == Phase::Phase3)
 	{
