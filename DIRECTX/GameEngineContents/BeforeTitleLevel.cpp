@@ -27,15 +27,28 @@ void BeforeTitleLevel::OnEvent()
 void BeforeTitleLevel::Start()
 {
 	GetMainCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
+	GetUICameraActorTransform().SetLocalPosition({ 0, 0 });
 
 	Background* MDHRLogo = CreateActor<Background>(GameObjectGroup::UI);
 	MDHRLogoRenderer = MDHRLogo->CreateComponent<GameEngineTextureRenderer>();
 	MDHRLogoRenderer->GetTransform().SetLocalScale({ 1280,720,100 });
 	MDHRLogoRenderer->CreateFrameAnimationFolder("BeforeTitle", FrameAnimation_DESC("10BeforeTitleLevel", 0.05f));
+	MDHRLogoRenderer->ChangeFrameAnimation("BeforeTitle");
 	MDHRLogoRenderer->SetTexture("Loading_background.png");
 	MDHRLogoRenderer->AnimationBindEnd("BeforeTitle", std::bind(&BeforeTitleLevel::OnHDMRAnimationFrameEnd, this, std::placeholders::_1));
+	
+	//{
+	//	GameEngineActor* Shade = CreateActor< GameEngineActor>();
+	//	GameEngineTextureRenderer* Renderer = Shade->CreateComponent<GameEngineTextureRenderer>();
+	//	Renderer->CreateFrameAnimationFolder("03ScreenFX", FrameAnimation_DESC("03ScreenFX",0,0, 0.05f));
+	//	Renderer->ChangeFrameAnimation("03ScreenFX");
+	//	Renderer->GetTransform().SetLocalScale({ 1280, 720, 1.0 });
+	//	Renderer->GetPipeLine()->SetOutputMergerBlend("OldFilm2");
+	//	Renderer->Option.ColorInversion = 1;
+	//}
 
 	OldFilm* PostEffect = CreateActor<OldFilm>(GameObjectGroup::UI);
+	PostEffect->SetLevelOverOn();
 }
 
 void BeforeTitleLevel::Update(float _DeltaTime)

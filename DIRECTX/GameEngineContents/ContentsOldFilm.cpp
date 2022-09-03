@@ -24,6 +24,7 @@ void ContentsOldFilm::EffectInit()
 
 	OldFilmTexture = GameEngineFolderTexture::Find("03ScreenFX");
 
+	//EffectSet.SetPipeLine("OldFilm");
 	EffectSet.SetPipeLine("OldFilm");
 	EffectSet.GetPipeLine()->SetOutputMergerBlend("OldFilm3");
 }
