@@ -40,6 +40,14 @@ enum class InGameCharacterAttackState
 	SuperAttack,
 };
 
+enum class InGameCharacterShooterState
+{
+	None,
+	BasicShot,
+	SpecialShot,
+	SuperShot,
+};
+
 class GameEngineCollision;
 class PhysicsComponent;
 class IInGameCharacterBase : public GameEngineActor, public IAimable, public IDamageable, public IDashable, public IDieable, public IDuckable,
@@ -67,6 +75,9 @@ public:
 	
 	void SetAttackState(InGameCharacterAttackState _State);
 	InGameCharacterAttackState GetAttackState() { return  AttackState; }
+
+	void SetShooterState(InGameCharacterShooterState _State);
+	InGameCharacterShooterState GetShooterState() { return  ShooterState; }
 
 	void SetVerticalDirection(std::string _Dir);
 	std::string GetVerticalDirection() { return VerticalDir; }
@@ -106,6 +117,7 @@ private:
 	PhysicsComponent* Physics;
 	InGameCharacterState State;
 	InGameCharacterAttackState AttackState;
+	InGameCharacterShooterState ShooterState;
 	std::string VerticalDir; // 수직 방향 (상하)
 	std::string HorizontalDir; // 수평 방향 (좌우)
 	MulticastDelegate<InGameCharacterState> StateChangedDelegate;

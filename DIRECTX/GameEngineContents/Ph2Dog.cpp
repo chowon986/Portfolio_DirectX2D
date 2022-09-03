@@ -6,6 +6,7 @@
 #include "TattooShooter.h"
 #include "IInGameCharacterBase.h"
 #include "BowWowShooter.h"
+#include "BulletBase.h"
 #include <math.h>
 
 Ph2Dog::Ph2Dog()

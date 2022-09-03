@@ -23,15 +23,28 @@ void PeaBullet::Start()
 	Renderer->AnimationBindEnd("PeashotIntro", std::bind(&PeaBullet::PeashotLoop, this, std::placeholders::_1));
 
 	Renderer->ChangeFrameAnimation("PeashotIntro");
-	Renderer->ScaleToTexture();
+	Renderer->SetScaleModeImage();
 
 	MovementComponent = CreateComponent<BulletMovementComponent>();
 	MovementComponent->SetSpeed(10.0f);
+
+	Collision = CreateComponent<GameEngineCollision>();
+	Collision->SetParent(this);
+	Collision->GetTransform().SetLocalScale({ 50.0f,50.0f });
+	Collision->ChangeOrder(ObjectOrder::PC_BULLET);
+	SetCollision(Collision);
 }
 
 void PeaBullet::Update(float _DeltaTime)
 {
-	Renderer->ScaleToTexture();
+	if (nullptr == ColMapImage)
+	{
+		SetColMapImage(GetLevel()->GetMainColMapImage());
+	}
+	else
+	{
+		BulletBase::Update(_DeltaTime);
+	}
 }
 
 void PeaBullet::End()

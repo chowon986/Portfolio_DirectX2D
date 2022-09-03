@@ -2,8 +2,7 @@
 #include "WeaponBase.h"
 #include "Delegates.h"
 
-enum class InGameCharacterState;
-enum class InGameCharacterAttackState;
+enum class InGameCharacterShooterState;
 class GameEngineUpdateObject;
 class PeaShooter : public WeaponBase
 {
@@ -19,5 +18,8 @@ private:
 	void Start() override;
 	void Update(float _DeltaTime) override;
 	void End() override;
+
+private:
+	InGameCharacterShooterState PlayerShooterState;
 };
 

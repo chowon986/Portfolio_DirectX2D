@@ -4,6 +4,7 @@
 
 class GameEngineTextureRenderer;
 class BulletMovementComponent;
+class GameEngineTexture;
 class BulletBase : public GameEngineActor
 {
 public:
@@ -41,15 +42,13 @@ public:
 	void SetIsOnGround(bool _IsOnGround);
 	MulticastDelegate<bool>& GetIsOnGroundChangedDelegate() { return IsOnGroundChangedDelegate; }
 
-	void Death();
-
 protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;
 	void End() override;
 
 private:
-	bool CollisionCheck(GameEngineCollision* _This, GameEngineCollision* _Other);
+	bool OnCollision(GameEngineCollision* _This, GameEngineCollision* _Other);
 
 protected:
 	float4 Direction;
@@ -59,4 +58,5 @@ protected:
 	GameEngineCollision* Collision;
 	MulticastDelegate<bool> IsOnGroundChangedDelegate;
 	bool IsOnGround;
+	GameEngineTexture* ColMapTexture;
 };

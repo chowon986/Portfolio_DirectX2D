@@ -27,6 +27,7 @@ public:
 	CharacterType Type;
 	int MaxHP;
 	int Coin;
+	float ShootSpeed;
 	std::map<ItemType, ItemBase*> Items;
 	std::map<ItemType, std::vector<ItemBase*>> EquippedItems;
 

@@ -32,24 +32,36 @@ void PeaShooter::Update(float _DeltaTime)
 	if (ElapsedTime > IntervalTime)
 	{
 		ElapsedTime -= IntervalTime;
-		switch (AttackState)
+		if (IInGameCharacterBase* Parent = dynamic_cast<IInGameCharacterBase*>(GetParent()))
 		{
-		case InGameCharacterAttackState::Shoot:
-		{
-			float4 Direction = GetVerticalDirection() + GetHorizontalDirection();
-
-			PeaBullet* Bullet = GetLevel()->CreateActor<PeaBullet>();
-			Bullet->SetColMapImage(GetColMapImage());
-			Bullet->GetTransform().SetWorldPosition(GetTransform().GetWorldPosition()); // Need to CHK
-			Bullet->SetDirection(Direction);
+			ShooterState = Parent->GetShooterState();
 		}
+		if (PlayerShooterState != ShooterState)
+		{
+			PlayerShooterState = ShooterState;
+
+			switch (AttackState)
+			{
+			case InGameCharacterAttackState::Shoot:
+			{
+				if (PlayerShooterState == InGameCharacterShooterState::BasicShot)
+				{
+					float4 Direction = GetVerticalDirection() + GetHorizontalDirection();
+
+					PeaBullet* Bullet = GetLevel()->CreateActor<PeaBullet>();
+					Bullet->SetColMapImage(GetColMapImage());
+					Bullet->GetTransform().SetWorldPosition(GetTransform().GetWorldPosition()); // Need to CHK
+					Bullet->SetDirection(Direction);
+				}
+			}
 			break;
-		case InGameCharacterAttackState::SpecialAttack:
-			// Å« ÃÑ¾ËÀ» ½ð´Ù.
-			break;
-		case InGameCharacterAttackState::SuperAttack:
-			// ÇÊ»ì±â¸¦ ½ð´Ù.
-			break;
+			case InGameCharacterAttackState::SpecialAttack:
+				// Å« ÃÑ¾ËÀ» ½ð´Ù.
+				break;
+			case InGameCharacterAttackState::SuperAttack:
+				// ÇÊ»ì±â¸¦ ½ð´Ù.
+				break;
+			}
 		}
 	}
 }

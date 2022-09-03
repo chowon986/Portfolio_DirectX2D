@@ -13,6 +13,7 @@ WeaponBase::WeaponBase()
 	, CharacterVerticalDirection("Center")
 	, AttackState(InGameCharacterAttackState::None)
 	, ColMapImage(nullptr)
+	, ShooterState(InGameCharacterShooterState::None)
 {
 }
 

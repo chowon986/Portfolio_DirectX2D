@@ -85,6 +85,25 @@ void InGameCuphead::Start()
 	Renderer->CreateFrameAnimationCutTexture("IngameCupheadIdleDown", FrameAnimation_DESC("Cup.png", 168, 172, 0.1f, true));
 	Renderer->CreateFrameAnimationCutTexture("IngameCupheadIdleDownTurn", FrameAnimation_DESC("Cup.png", 159, 159, 0.1f, true));
 
+	Renderer->AnimationBindStart("IngameCupheadRunShootStraight", std::bind(&InGameCuphead::OnShootAnimationFrameStarted, this, std::placeholders::_1));
+	Renderer->AnimationBindStart("IngameCupheadRunShootDiagUp", std::bind(&InGameCuphead::OnShootAnimationFrameStarted, this, std::placeholders::_1));
+	Renderer->AnimationBindStart("IngameCupheadShootStraight", std::bind(&InGameCuphead::OnShootAnimationFrameStarted, this, std::placeholders::_1));
+	Renderer->AnimationBindStart("IngameCupheadShootDiagDown", std::bind(&InGameCuphead::OnShootAnimationFrameStarted, this, std::placeholders::_1));
+	Renderer->AnimationBindStart("IngameCupheadShootDiagUp", std::bind(&InGameCuphead::OnShootAnimationFrameStarted, this, std::placeholders::_1));
+	Renderer->AnimationBindStart("IngameCupheadShootDown", std::bind(&InGameCuphead::OnShootAnimationFrameStarted, this, std::placeholders::_1));
+	Renderer->AnimationBindStart("IngameCupheadShootUp", std::bind(&InGameCuphead::OnShootAnimationFrameStarted, this, std::placeholders::_1));
+	Renderer->AnimationBindStart("IngameCupheadDuckShoot", std::bind(&InGameCuphead::OnShootAnimationFrameStarted, this, std::placeholders::_1));
+
+	Renderer->AnimationBindFrame("IngameCupheadRunShootStraight", std::bind(&InGameCuphead::OnShootAnimationFrameChanged, this, std::placeholders::_1));
+	Renderer->AnimationBindFrame("IngameCupheadRunShootDiagUp", std::bind(&InGameCuphead::OnShootAnimationFrameChanged, this, std::placeholders::_1));
+	Renderer->AnimationBindFrame("IngameCupheadShootStraight", std::bind(&InGameCuphead::OnShootAnimationFrameChanged, this, std::placeholders::_1));
+	Renderer->AnimationBindFrame("IngameCupheadShootDiagDown", std::bind(&InGameCuphead::OnShootAnimationFrameChanged, this, std::placeholders::_1));
+	Renderer->AnimationBindFrame("IngameCupheadShootDiagUp", std::bind(&InGameCuphead::OnShootAnimationFrameChanged, this, std::placeholders::_1));
+	Renderer->AnimationBindFrame("IngameCupheadShootDown", std::bind(&InGameCuphead::OnShootAnimationFrameChanged, this, std::placeholders::_1));
+	Renderer->AnimationBindFrame("IngameCupheadShootUp", std::bind(&InGameCuphead::OnShootAnimationFrameChanged, this, std::placeholders::_1));
+	Renderer->AnimationBindFrame("IngameCupheadDuckShoot", std::bind(&InGameCuphead::OnShootAnimationFrameChanged, this, std::placeholders::_1));
+
+
 	SetHP(5);
 
 	{
@@ -108,8 +127,8 @@ void InGameCuphead::Start()
 	{
 		// รั
 		
-		//PeaShooter* Shooter = GetLevel()->CreateActor<PeaShooter>();
-		//Shooter->SetParent(this);
+		PeaShooter* Shooter = GetLevel()->CreateActor<PeaShooter>();
+		Shooter->SetParent(this);
 
 		//SpreadShooter* Shooter = GetLevel()->CreateActor<SpreadShooter>();
 		//Shooter->SetParent(this);
@@ -120,8 +139,8 @@ void InGameCuphead::Start()
 		//BoomerangShooter* Shooter = GetLevel()->CreateActor<BoomerangShooter>();
 		//Shooter->SetParent(this);
 
-		ChargerShooter* Shooter = GetLevel()->CreateActor<ChargerShooter>();
-		Shooter->SetParent(this);
+		//ChargerShooter* Shooter = GetLevel()->CreateActor<ChargerShooter>();
+		//Shooter->SetParent(this);
 	}
 
 	//GetLevel()->PushRenderer(Renderer, CAMERAORDER::ROTATECAMERA);
@@ -190,6 +209,25 @@ void InGameCuphead::OnGhostAnimationEnded(const FrameAnimation_DESC& _Info)
 	}
 
 	OpenScoreBoard();
+}
+
+void InGameCuphead::OnShootAnimationFrameChanged(const FrameAnimation_DESC& _Info)
+{
+	FrameAnimation_DESC* Info = const_cast<FrameAnimation_DESC*>(&_Info);
+	Info->Inter = 0.2f;
+	if (Info->CurFrame == 2)
+	{
+		SetShooterState(InGameCharacterShooterState::BasicShot);
+	}
+	else
+	{
+		SetShooterState(InGameCharacterShooterState::None);
+	}
+}
+
+void InGameCuphead::OnShootAnimationFrameStarted(const FrameAnimation_DESC& _Info)
+{
+
 }
 
 

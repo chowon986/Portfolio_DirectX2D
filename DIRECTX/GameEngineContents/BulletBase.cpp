@@ -75,40 +75,54 @@ void BulletBase::SetDirection(float4 _Direction)
 	 }
 }
 
-void BulletBase::Death()
-{
-}
-
 void BulletBase::Start()
 {
+
 }
 
 void BulletBase::Update(float _DeltaTime)
 {
-	if (ColMapImage == nullptr)
+	if (nullptr == ColMapImage)
 	{
 		return;
 	}
 
-	GameEngineTexture* ColMapTexture = ColMapImage->GetCurTexture();
-	if (ColMapTexture == nullptr)
+	if (nullptr == ColMapTexture)
+	{
+		ColMapImage->SetPivot(PIVOTMODE::LEFTTOP);
+		ColMapTexture = ColMapImage->GetCurTexture();
+	}
+
+	if (nullptr == Collision)
 	{
 		return;
 	}
 
-	if (true == ColMapTexture->GetPixelToFloat4(GetTransform().GetWorldPosition().ix(), -GetTransform().GetWorldPosition().iy()).CompareInt4D(float4::BLACK) ||
-		true == Collision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::MONSTER, CollisionType::CT_AABB2D,
-			std::bind(&BulletBase::CollisionCheck, this, std::placeholders::_1, std::placeholders::_2)))
+	if (true == ColMapTexture->GetPixelToFloat4(100.0f,100.0f).CompareInt3D(float4::BLACK))
 	{
 		Death();
 	}
+
+
+	if (true == ColMapTexture->GetPixelToFloat4(Renderer->GetTransform().GetWorldPosition().ix(), -Renderer->GetTransform().GetWorldPosition().iy()).CompareInt3D(float4::BLACK))
+	{
+		Death();
+	} 
+
+	if (true == Collision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::MONSTER, CollisionType::CT_AABB2D,
+		std::bind(&BulletBase::OnCollision, this, std::placeholders::_1, std::placeholders::_2)))
+	{
+		Death();
+	}
+
 }
 
 void BulletBase::End()
 {
 }
 
-bool BulletBase::CollisionCheck(GameEngineCollision* _This, GameEngineCollision* _Other)
+bool BulletBase::OnCollision(GameEngineCollision* _This, GameEngineCollision* _Other)
 {
-	return false;
+	return true;
 }
+

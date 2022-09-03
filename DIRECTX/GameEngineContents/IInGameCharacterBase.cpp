@@ -24,6 +24,14 @@ void IInGameCharacterBase::SetAttackState(InGameCharacterAttackState _State)
 	}
 }
 
+void IInGameCharacterBase::SetShooterState(InGameCharacterShooterState _State)
+{
+	if (ShooterState != _State)
+	{
+		ShooterState = _State;
+	}
+}
+
 void IInGameCharacterBase::Start()
 {
 	RedDogBowlCollsion = CreateComponent<GameEngineCollision>();

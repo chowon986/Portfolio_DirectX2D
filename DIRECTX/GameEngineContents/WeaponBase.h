@@ -5,6 +5,7 @@
 class GameEngineTextureRenderer;
 enum class InGameCharacterAttackState;
 enum class InGameCharacterState;
+enum class InGameCharacterShooterState;
 class IInGameCharacterBase;
 class WeaponBase : public GameEngineActor
 {
@@ -53,6 +54,7 @@ protected:
 	std::string CharacterHorizontalDirection;
 	std::string CharacterVerticalDirection;
 	InGameCharacterAttackState AttackState;
+	InGameCharacterShooterState ShooterState;
 	GameEngineTextureRenderer* SparkRenderer;
 
 private:
