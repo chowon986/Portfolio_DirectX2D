@@ -26,5 +26,9 @@ private:
 private:
 	BulldogShooter* Weapon;
 	GameEngineCollision* Collision;
+	float4 LastDirection;
+	float ZeroDirectionElapsedTime;
+	bool TimeCheckOn;
+	bool ColorCheckOn;
 };
 
