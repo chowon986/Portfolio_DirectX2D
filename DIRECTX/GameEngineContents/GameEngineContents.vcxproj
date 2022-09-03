@@ -189,7 +189,6 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="ContentsOldFilm.h" />
     <ClInclude Include="ConvergeBullet.h" />
     <ClInclude Include="ConvergeShooter.h" />
     <ClInclude Include="ConvergeShooterItem.h" />
@@ -329,7 +328,6 @@
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="ContentsOldFilm.cpp" />
     <ClCompile Include="ConvergeBullet.cpp" />
     <ClCompile Include="ConvergeShooter.cpp" />
     <ClCompile Include="ConvergeShooterItem.cpp" />

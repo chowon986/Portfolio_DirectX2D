@@ -519,9 +519,6 @@
     <ClInclude Include="ItemInventory.h">
       <Filter>Actor\Item</Filter>
     </ClInclude>
-    <ClInclude Include="ContentsOldFilm.h">
-      <Filter>Global</Filter>
-    </ClInclude>
     <ClInclude Include="DogCopterPhase1.h">
       <Filter>Actor\Play\InGame\Object\DogFight</Filter>
     </ClInclude>
@@ -901,9 +898,6 @@
     </ClCompile>
     <ClCompile Include="ItemInventory.cpp">
       <Filter>Actor\Item</Filter>
-    </ClCompile>
-    <ClCompile Include="ContentsOldFilm.cpp">
-      <Filter>Global</Filter>
     </ClCompile>
     <ClCompile Include="DogCopterPhase1.cpp">
       <Filter>Actor\Play\InGame\Object\DogFight</Filter>

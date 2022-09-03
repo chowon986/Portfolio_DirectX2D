@@ -1,7 +1,6 @@
 #include "PreCompile.h"
 #include "OldFilm.h"
 #include <GameEngineCore/GameEngineBlur.h>
-#include "ContentsOldFilm.h"
 
 OldFilm::OldFilm()
 {
@@ -34,7 +33,7 @@ void OldFilm::Start()
 		//PostEffectRenderer->GetTransform().SetLocalScale({ 1280, 720, 1.0 });
 		PostEffectRenderer->GetTransform().SetLocalScale({ 1920, 1080, 1.0 });
 		GetLevel()->PushRendererToUICamera(PostEffectRenderer);
-		PostEffectRenderer->GetPipeLine()->SetOutputMergerBlend("OldFilm3");
+		PostEffectRenderer->GetPipeLine()->SetOutputMergerBlend("OldFilm");
 		PostEffectRenderer->Option.ColorInversion = 1;
 		PostEffectRenderer->AnimationBindFrame("04RevScreenFX", std::bind(&OldFilm::Test, this, std::placeholders::_1));
 		//GetLevel()->GetUICamera()->GetCameraRenderTarget()->AddEffect<ContentsOldFilm>();
