@@ -22,7 +22,7 @@ void TennisballBullet::Start()
 	Renderer->CreateFrameAnimationFolder("TennisBall", FrameAnimation_DESC("TennisBall", 0.1f));
 
 	Renderer->ChangeFrameAnimation("TennisBall");
-	Renderer->ScaleToTexture();
+	Renderer->SetScaleModeImage();
 	SetRenderer(Renderer);
 	Collision = CreateComponent<GameEngineCollision>();
 	Collision->GetTransform().SetLocalScale({ 50.0f, 50.0f, 1.0f });
@@ -34,8 +34,25 @@ void TennisballBullet::Start()
 
 void TennisballBullet::Update(float _DeltaTime)
 {
-	Renderer->ScaleToTexture();
-	GameEngineDebug::DrawBox(Collision->GetTransform(), { 1.0f, 0.0f,0.0f, 0.5f });
+	//GameEngineDebug::DrawBox(Collision->GetTransform(), { 1.0f, 0.0f,0.0f, 0.5f });
+
+	if (ColMapImage == nullptr)
+	{
+		ColMapImage = GetLevel()->GetMainColMapImage();
+		ColMapImage->SetPivot(PIVOTMODE::LEFTTOP);
+
+	}
+
+	if (ColMapTexture == nullptr)
+	{
+		ColMapTexture = ColMapImage->GetCurTexture();
+	}
+
+	if (Renderer->GetTransform().GetWorldPosition().iy() < - 770 &&
+		true == ColMapTexture->GetPixelToFloat4(Renderer->GetTransform().GetWorldPosition().ix(), -Renderer->GetTransform().GetWorldPosition().iy()).CompareInt3D(float4::BLACK))
+	{
+		Death();
+	}
 }
 
 void TennisballBullet::End()

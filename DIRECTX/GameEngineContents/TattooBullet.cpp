@@ -73,6 +73,12 @@ void TattooBullet::Update(float _DeltaTime)
 		TimeCheckOn = true;
 		ColorCheckOn = false;
 	}
+
+	if ((Renderer->GetTransform().GetWorldPosition().ix() < -50 || Renderer->GetTransform().GetWorldPosition().ix() > 1330) &&
+		true == ColMapTexture->GetPixelToFloat4(Renderer->GetTransform().GetWorldPosition().ix(), -Renderer->GetTransform().GetWorldPosition().iy()).CompareInt3D(float4::BLACK))
+	{
+		Death();
+	}
 }
 
 void TattooBullet::End()
