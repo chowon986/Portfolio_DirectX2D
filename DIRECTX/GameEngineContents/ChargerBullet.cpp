@@ -34,6 +34,8 @@ void ChargerBullet::Start()
 	Collision->ChangeOrder(ObjectOrder::PC_BULLET);
 	Collision->GetTransform().SetLocalScale({ 50.0f,50.0f });
 
+	Renderer->ChangeCamera(CAMERAORDER::IRISCAMERA);
+
 }
 
 void ChargerBullet::Update(float _DeltaTime)

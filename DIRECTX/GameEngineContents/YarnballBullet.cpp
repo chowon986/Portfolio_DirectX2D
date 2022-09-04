@@ -31,6 +31,9 @@ void YarnballBullet::Start()
 
 	MovementComponent = CreateComponent<BulletMovementComponent>();
 	MovementComponent->SetSpeed(8.0f);
+
+	Renderer->ChangeCamera(CAMERAORDER::IRISCAMERA);
+
 }
 
 void YarnballBullet::Update(float _DeltaTime)

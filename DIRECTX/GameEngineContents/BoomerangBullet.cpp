@@ -25,6 +25,9 @@ void BoomerangBullet::Start()
 
 	MovementComponent = CreateComponent<BoomerangBulletMovementComponent>();
 	MovementComponent->SetSpeed(10.0f);
+
+	Renderer->ChangeCamera(CAMERAORDER::IRISCAMERA);
+
 }
 
 void BoomerangBullet::Update(float _DeltaTime)

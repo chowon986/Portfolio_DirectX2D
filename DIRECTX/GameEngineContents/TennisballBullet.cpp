@@ -30,6 +30,9 @@ void TennisballBullet::Start()
 
 	MovementComponent = CreateComponent<BulletMovementComponent>();
 	MovementComponent->SetSpeed(5.0f);
+
+	Renderer->ChangeCamera(CAMERAORDER::IRISCAMERA);
+
 }
 
 void TennisballBullet::Update(float _DeltaTime)

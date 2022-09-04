@@ -31,7 +31,10 @@ void BowWowBullet::Start()
 	Collision->ChangeOrder(ObjectOrder::MONSTER_BULLET);
 
 	MovementComponent = CreateComponent<BulletMovementComponent>();
-	MovementComponent->SetSpeed(2.0f);
+	MovementComponent->SetSpeed(5.0f);
+
+	Renderer->ChangeCamera(CAMERAORDER::IRISCAMERA);
+
 }
 
 void BowWowBullet::Update(float _DeltaTime)

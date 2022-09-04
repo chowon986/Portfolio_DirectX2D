@@ -17,6 +17,7 @@ public:
 public:
 	GameEngineTextureRenderer* GetRenderer() { return Renderer; }
 	void SetRenderer(GameEngineTextureRenderer* _Renderer) { Renderer = _Renderer; }
+	bool AttackSuccess(GameEngineCollision* _This, GameEngineCollision* _Other);
 
 private:
 	virtual void Start() override;

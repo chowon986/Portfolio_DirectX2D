@@ -26,6 +26,9 @@ void ConvergeBullet::Start()
 
 	MovementComponent = CreateComponent<BulletMovementComponent>();
 	MovementComponent->SetSpeed(10.0f);
+
+	Renderer->ChangeCamera(CAMERAORDER::IRISCAMERA);
+
 }
 
 void ConvergeBullet::Update(float _DeltaTime)

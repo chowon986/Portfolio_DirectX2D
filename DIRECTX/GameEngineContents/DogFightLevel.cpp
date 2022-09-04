@@ -63,7 +63,6 @@ void DogFightLevel::Start()
 	{
 		GameEngineInput::GetInst()->CreateKey("PhaseChangeKey", 'L');
 	}
-		
 
 	{
 		Background* ScreenLight = CreateActor<Background>(GameObjectGroup::UI);
@@ -74,7 +73,7 @@ void DogFightLevel::Start()
 		ScreenLightRenderer->GetTransform().SetLocalScale({ 1280.0f, 720.0f, 0 });
 		ScreenLightRenderer->SetPivot(PIVOTMODE::LEFTTOP);
 		ScreenLightRenderer->AnimationBindEnd("LightOn", std::bind(&DogFightLevel::LightOnAnimaitonFrameFinished, this, std::placeholders::_1));
-		//ScreenLightRenderer->ChangeCamera(CAMERAORDER::BACKGROUND);
+		ScreenLightRenderer->ChangeCamera(CAMERAORDER::IRISCAMERA);
 	}
 	{
 		Background* ColMapImage = CreateActor<Background>(GameObjectGroup::UI);
@@ -319,13 +318,14 @@ void DogFightLevel::Start()
 	GetMainCamera()->SetProjectionSize({ 1280.0f, 720.0f });
 	GetRotateCamera()->SetProjectionSize({ 1536.0f,864.0f });
 	GetRotateCamera2()->SetProjectionSize({ 1408.0f,792.0f });
+	GetIrisCamera()->SetProjectionSize({ 1280.0f, 720.0f });
 	GetBackgroundCamera()->SetProjectionSize({ 1408.0f,792.0f });
 
 	GetMainCameraActorTransform().SetLocalPosition({ 640, -360 });
 	GetBackgroundCameraActorTransform().SetLocalPosition({ 640, -360 });
 	GetRotateCameraActorTransform().SetLocalPosition({ 640, -360 });
 	GetRotateCamera2ActorTransform().SetLocalPosition({ 640, -360 });
-
+	GetIrisCameraActorTransform().SetLocalPosition({ 640.0f, -360.0f });
 }
 void DogFightLevel::ResetPositionCloudLeftA(const FrameAnimation_DESC& _Info)
 {
@@ -525,6 +525,7 @@ void DogFightLevel::Update(float _DeltaTime)
 
 			CaptainCanteenPlane->SetPlayer(Cuphead);
 			CaptainCanteenPlane->SetColMapImage(ColMapRenderer);
+			PushToRotateCamera(CaptainCanteenPlane);
 			Player = Cuphead;
 		}
 
@@ -540,8 +541,6 @@ void DogFightLevel::Update(float _DeltaTime)
 			PH1BulldogPlane = CreateActor<BulldogPlane>(GameObjectGroup::Monster);
 			PH1BulldogPlane->GetTransform().SetWorldPosition({ 0, 100 });
 			PH1BulldogPlane->SetPlayer(Cuphead);
-			PushToRotateCamera(CaptainCanteenPlane);
-
 			PushToBackgroundCamera(PH1BulldogPlane);
 		}
 	}

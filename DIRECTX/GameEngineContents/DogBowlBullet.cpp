@@ -51,6 +51,8 @@ void DogBowlBullet::Start()
 	TrackCollision->ChangeOrder((int)ObjectOrder::MONSTER_BULLET);
 	TrackCollision->GetTransform().SetLocalScale({ 50.0f, 50.0f, 1 });
 	
+	Renderer->ChangeCamera(CAMERAORDER::IRISCAMERA);
+
 }
 
 void DogBowlBullet::Update(float _DeltaTime)

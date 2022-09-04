@@ -33,6 +33,9 @@ void PeaBullet::Start()
 	Collision->GetTransform().SetLocalScale({ 50.0f,50.0f });
 	Collision->ChangeOrder(ObjectOrder::PC_BULLET);
 	SetCollision(Collision);
+
+	Renderer->ChangeCamera(CAMERAORDER::IRISCAMERA);
+
 }
 
 void PeaBullet::Update(float _DeltaTime)

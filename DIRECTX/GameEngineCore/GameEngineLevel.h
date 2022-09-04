@@ -14,7 +14,7 @@ enum class CAMERAORDER : int
 	USER4,
 	USER5,
 	USER6,
-	USER7,
+	IRISCAMERA,
 	UICAMERA,
 };
 
@@ -63,6 +63,11 @@ public:
 		return Cameras[static_cast<int>(CAMERAORDER::ROTATECAMERA2)];
 	}
 
+	GameEngineCamera* GetIrisCamera()
+	{
+		return Cameras[static_cast<int>(CAMERAORDER::IRISCAMERA)];
+	}
+
 	GameEngineCamera* GetBackgroundCamera()
 	{
 		return Cameras[static_cast<int>(CAMERAORDER::BACKGROUND)];
@@ -84,6 +89,8 @@ public:
 	GameEngineTransform& GetRotateCameraActorTransform();
 
 	GameEngineTransform& GetRotateCamera2ActorTransform();
+
+	GameEngineTransform& GetIrisCameraActorTransform();
 
 	GameEngineCameraActor* GetBackgroundCameraActor();
 

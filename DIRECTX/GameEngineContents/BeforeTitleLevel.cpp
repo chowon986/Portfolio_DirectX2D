@@ -9,7 +9,7 @@
 #include <GameEngineCore/GameEngineTextureRenderer.h>
 
 BeforeTitleLevel::BeforeTitleLevel()
-	: BlackScreenToAnimationIntervalTime(5.0f)
+	: BlackScreenToAnimationIntervalTime(3.0f)
 	, ElapsedTime(0.0f)
 	, MDHRLogoRenderer(nullptr)
 {
