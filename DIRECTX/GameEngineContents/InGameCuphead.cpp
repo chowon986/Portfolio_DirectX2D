@@ -16,6 +16,10 @@ InGameCuphead::InGameCuphead()
 	, IsOpenScoreBoard(false)
 	, Collision(nullptr)
 	, Renderer(nullptr)
+	, OnParriable(false)
+	, AlphaOn(true)
+	, CanTakeDamageElapsedTime(0.0f)
+	, CanTakeDamageIntervalTime(1.0f)
 {
 }
 
@@ -56,7 +60,9 @@ void InGameCuphead::Start()
 	Renderer->CreateFrameAnimationCutTexture("IngameCupheadJump", FrameAnimation_DESC("Cup.png", 20, 27, 0.05f, true));
 
 	// Parry
-	Renderer->CreateFrameAnimationCutTexture("IngameCupheadParryHand", FrameAnimation_DESC("Cup.png", 120, 127, 0.1f, true));
+	Renderer->CreateFrameAnimationCutTexture("IngameCupheadParry", FrameAnimation_DESC("Cup.png", 120, 127, 0.05f, true));
+	Renderer->AnimationBindEnd("IngameCupheadParry", std::bind(&InGameCuphead::OnParryAnimationFrameEnd, this, std::placeholders::_1));
+	Renderer->AnimationBindStart("IngameCupheadParry", std::bind(&InGameCuphead::OnParryAnimationFrameStarted, this, std::placeholders::_1));
 
 	// Run
 	Renderer->CreateFrameAnimationCutTexture("IngameCupheadRun", FrameAnimation_DESC("Cup.png", 40, 55, 0.1f, true));
@@ -126,7 +132,7 @@ void InGameCuphead::Start()
 
 	{
 		// รั
-		
+
 		PeaShooter* Shooter = GetLevel()->CreateActor<PeaShooter>();
 		Shooter->SetParent(this);
 
@@ -152,6 +158,8 @@ void InGameCuphead::Update(float _DeltaTime)
 	OnCollisionDebug();
 	CheckCollision();
 
+	CanTakeDamageElapsedTime += _DeltaTime;
+
 	if (true == GetLevel()->GetMainCameraActor()->IsFreeCameraMode())
 	{
 		return;
@@ -160,6 +168,15 @@ void InGameCuphead::Update(float _DeltaTime)
 	if (IsInputEnabled == false)
 	{
 		return;
+	}
+
+	if (GetState() == InGameCharacterState::TakeDamage)
+	{
+		AlphaOnOffChangeSwitch();
+	}
+	else
+	{
+		Renderer->On();
 	}
 
 	UpdateDirection();
@@ -264,11 +281,12 @@ void InGameCuphead::Jump()
 {
 	SetState(InGameCharacterState::Jump);
 	GetPhysicsComponent()->Reset();
-	GetPhysicsComponent()->AddForce(55);
+	GetPhysicsComponent()->AddForce(50);
 }
 
 void InGameCuphead::Parry()
 {
+	SetState(InGameCharacterState::Parry);
 }
 
 void InGameCuphead::Prepare()
@@ -303,7 +321,19 @@ void InGameCuphead::UpdateState()
 
 	else if (true == GameEngineInput::GetInst()->IsDown("Jump"))
 	{
-		Jump();
+		if (GetIsOnGround() == true)
+		{
+			Jump();
+		}
+		else
+		{
+			Parry();
+		}
+	}
+
+	else if (OnParriable == true)
+	{
+		Parry();
 	}
 
 	else if (true == GameEngineInput::GetInst()->IsPress("Aim"))
@@ -324,7 +354,10 @@ void InGameCuphead::UpdateState()
 
 	else
 	{
-		Idle();
+		if (GetIsOnGround() == true)
+		{
+			Idle();
+		}
 	}
 }
 
@@ -359,21 +392,21 @@ void InGameCuphead::UpdateDirection()
 
 void InGameCuphead::CheckCollision()
 {
-	if (true == MainCollision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::MONSTER_BULLET, CollisionType::CT_AABB2D,
-		std::bind(&InGameCuphead::OnTakeDamage, this, std::placeholders::_1, std::placeholders::_2)))
+	if (OnParriable == true)
 	{
-		SetHP(GetHP() - 1);
-		TakeDamage();
-		Die();
+		MainCollision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::PARRIABLEOBJECT, CollisionType::CT_AABB2D,
+			std::bind(&InGameCuphead::OnParry, this, std::placeholders::_1, std::placeholders::_2));
+	}
+	else
+	{
+		MainCollision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::PARRIABLEOBJECT, CollisionType::CT_AABB2D,
+			std::bind(&InGameCuphead::OnTakeDamage, this, std::placeholders::_1, std::placeholders::_2));
 	}
 
-	if (true == MainCollision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::MONSTER, CollisionType::CT_AABB2D,
-		std::bind(&InGameCuphead::OnTakeDamage, this, std::placeholders::_1, std::placeholders::_2)))
-	{
-		SetHP(GetHP() - 1);
-		TakeDamage();
-		Die();
-	}
+	MainCollision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::MONSTER_BULLET, CollisionType::CT_AABB2D,
+		std::bind(&InGameCuphead::OnTakeDamage, this, std::placeholders::_1, std::placeholders::_2));
+	MainCollision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::MONSTER, CollisionType::CT_AABB2D,
+		std::bind(&InGameCuphead::OnTakeDamage, this, std::placeholders::_1, std::placeholders::_2));
 }
 
 bool InGameCuphead::GetIsOpenScoreBoard()
@@ -383,7 +416,42 @@ bool InGameCuphead::GetIsOpenScoreBoard()
 
 bool InGameCuphead::OnTakeDamage(GameEngineCollision* _This, GameEngineCollision* _Other)
 {
+	if (CanTakeDamageIntervalTime < CanTakeDamageElapsedTime)
+	{
+		CanTakeDamageElapsedTime = 0.0f;
+		TakeDamage();
+	}
 	return false;
+}
+
+bool InGameCuphead::OnParry(GameEngineCollision* _This, GameEngineCollision* _Other)
+{
+	int a = 0;
+	return false;
+}
+
+void InGameCuphead::AlphaOnOffChangeSwitch()
+{
+	AlphaOn = !AlphaOn;
+	if (AlphaOn == false)
+	{
+		Renderer->On();
+	}
+	else
+	{
+		Renderer->Off();
+	}
+}
+
+void InGameCuphead::OnParryAnimationFrameEnd(const FrameAnimation_DESC& _Info)
+{
+	OnParriable = false;
+	Idle();
+}
+
+void InGameCuphead::OnParryAnimationFrameStarted(const FrameAnimation_DESC& _Info)
+{
+	OnParriable = true;
 }
 
 void InGameCuphead::OnCollisionDebug()

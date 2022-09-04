@@ -31,6 +31,7 @@ void TattooBullet::Start()
 	Collision = CreateComponent<GameEngineCollision>();
 	Collision->GetTransform().SetLocalScale({ 80.0f, 80.0f, 1.0f });
 	Collision->ChangeOrder(ObjectOrder::MONSTER_BULLET);
+	SetCollision(Collision);
 
 	MovementComponent = CreateComponent<BulletMovementComponent>();
 	MovementComponent->SetSpeed(10.0f);
@@ -44,7 +45,6 @@ void TattooBullet::Update(float _DeltaTime)
 	{
 		ColMapImage = GetLevel()->GetMainColMapImage();
 		ColMapImage->SetPivot(PIVOTMODE::LEFTTOP);
-
 	}
 
 	if (ColMapTexture == nullptr)

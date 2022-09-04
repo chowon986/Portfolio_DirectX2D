@@ -53,6 +53,11 @@ protected:
 	
 	bool GetIsOpenScoreBoard();
 	bool OnTakeDamage(GameEngineCollision* _This, GameEngineCollision* _Other);
+	bool OnParry(GameEngineCollision* _This, GameEngineCollision* _Other);
+	void AlphaOnOffChangeSwitch();
+
+	void OnParryAnimationFrameEnd(const FrameAnimation_DESC& _Info);
+	void OnParryAnimationFrameStarted(const FrameAnimation_DESC& _Info);
 
 private:
 	GameEngineTextureRenderer* Renderer;
@@ -61,4 +66,8 @@ private:
 	GameEngineCollision* Collision;
 	InGameCharacterMovementCompmonent* Movement;
 	InGameCharacterAnimationControllerComponent* Animation;
+	bool OnParriable;
+	bool AlphaOn;
+	float CanTakeDamageIntervalTime;
+	float CanTakeDamageElapsedTime;
 };

@@ -9,6 +9,7 @@ InGameCharacterMovementCompmonent::InGameCharacterMovementCompmonent()
 	, Speed(400)
 	, DownDir(float4::DOWN)
 	, IsOnGround(false)
+	, InGameCharacter(nullptr)
 {
 }
 
@@ -32,6 +33,7 @@ void InGameCharacterMovementCompmonent::UpdateDirection()
 	if (InGameCharacter == nullptr ||
 		InGameCharacter->GetState() == InGameCharacterState::Idle ||
 		InGameCharacter->GetState() == InGameCharacterState::Aim ||
+		InGameCharacter->GetState() == InGameCharacterState::Duck ||
 		InGameCharacter->GetState() == InGameCharacterState::TakeDamage)
 	{
 		Direction = float4::ZERO;

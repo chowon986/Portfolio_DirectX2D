@@ -118,6 +118,10 @@ void TattooShooter::Update(float _DeltaTime)
 				//ElapsedTime = 0.0f;
 				TattooBullet* Bullet = GetLevel()->CreateActor<TattooBullet>();
 				Bullet->GetRenderer()->ChangeFrameAnimation("BulldogTattooPink");
+				if (nullptr != Bullet->GetCollision())
+				{
+					Bullet->GetCollision()->ChangeOrder(ObjectOrder::PARRIABLEOBJECT);
+				}
 				Bullet->SetColMapImage(GetColMapImage());
 				Bullet->GetTransform().SetWorldPosition(GetTransform().GetWorldPosition());
 				Bullet->SetDirection(GetDirection());

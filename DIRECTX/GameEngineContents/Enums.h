@@ -44,6 +44,7 @@ enum class ObjectOrder
 	GROUND,
 	TRACKING1,
 	TRACKING2,
+	PARRIABLEOBJECT,
 };
 
 enum class GameObjectGroup 

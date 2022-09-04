@@ -79,10 +79,13 @@ void InGameCharacterAnimationControllerComponent::UpdateAnimation()
 
 	bool IsOnGround = InGameCharacter->GetIsOnGround();
 
+	// 키를 떼는 순간 idle이 되는데 애니메이션은 jump가 나온다.
+	// 현재 애니메이션이 parry고, 애니메이션이 안 끝났으면 jump가 되면 안된다.
 	if (IsOnGround != true &&
 		State != InGameCharacterState::Dash &&
 		State != InGameCharacterState::TakeDamage &&
-		State != InGameCharacterState::Die)
+		State != InGameCharacterState::Die &&
+		State != InGameCharacterState::Parry)
 	{
 		Renderer->ChangeFrameAnimation("Ingame" + Name + "Jump");
 	}
@@ -102,6 +105,11 @@ void InGameCharacterAnimationControllerComponent::UpdateAnimation()
 		else if (State == InGameCharacterState::Prepare)
 		{
 			Renderer->ChangeFrameAnimation("Ingame" + Name + "Intro");
+		}
+
+		else if (State == InGameCharacterState::Parry)
+		{
+			Renderer->ChangeFrameAnimation("Ingame" + Name + "Parry");
 		}
 
 		else if (State == InGameCharacterState::Dash)
