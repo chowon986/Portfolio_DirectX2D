@@ -45,8 +45,6 @@ void Ph1Dog::Start()
 
 		Renderer->SetScaleModeImage();
 
-		Renderer->SetPivot(PIVOTMODE::BOT);
-
 		SetRenderer(Renderer);
 	}
 
@@ -109,20 +107,20 @@ void Ph1Dog::Idle()
 
 void Ph1Dog::Shoot()
 {
-	int RandomAttack = (rand() % 2);
-	++RandomAttack;
+	int RandomAttack = 2;/*(rand() % 2);
+	++RandomAttack;*/
 	AnimationDirectionSwtich();
 	if(RandomAttack == 1)
 	{
 		if (IsAnimationDiretionRight == true)
 		{
 			GetTransform().PixLocalPositiveX();
-			GetTransform().SetLocalPosition({ 863, 125 });
+			GetTransform().SetLocalPosition({ 858, 188 });
 		}
 		else
 		{
 			GetTransform().PixLocalNegativeX();
-			GetTransform().SetLocalPosition({ 417, 125 });
+			GetTransform().SetLocalPosition({ 431, 188 });
 		}
 
 		SetState(InGameMonsterState::Attack3);// 큰거
@@ -132,13 +130,13 @@ void Ph1Dog::Shoot()
 		if (IsAnimationDiretionRight == true)
 		{
 			GetTransform().PixLocalPositiveX();
-			GetTransform().SetLocalPosition({ 1162, 155 });
+			GetTransform().SetLocalPosition({ 1158, 260 });
 
 		}
 		else
 		{
 			GetTransform().PixLocalNegativeX();
-			GetTransform().SetLocalPosition({ 116, 155 });
+			GetTransform().SetLocalPosition({ 122, 260 });
 		}
 		SetState(InGameMonsterState::Attack4); // 작은S
 	}
@@ -155,7 +153,7 @@ void Ph1Dog::OnAttack1AnimationFrameChanged(const FrameAnimation_DESC& _Info) //
 	{
 		SetAttackState(InGameMonsterAttackState::TennisBall);
 	}
-	else if (_Info.CurFrame == 11)
+	else if (_Info.CurFrame == 10)
 	{
 		Idle();
 	}
@@ -167,11 +165,11 @@ void Ph1Dog::OnAttack1AnimationFrameChanged(const FrameAnimation_DESC& _Info) //
 
 void Ph1Dog::OnAttack2AnimationFrameChanged(const FrameAnimation_DESC& _Info) // 작은 칸
 {
-	if (_Info.CurFrame == 6)
+	if (_Info.CurFrame == 5)
 	{
 		SetAttackState(InGameMonsterAttackState::TennisBall);
 	}
-	else if (_Info.CurFrame == 12)
+	else if (_Info.CurFrame == 10)
 	{
 		Idle();
 	}

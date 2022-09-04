@@ -16,8 +16,7 @@ public:
 	DogBowlBullet& operator=(DogBowlBullet&& _Other) noexcept = delete;
 
 public:
-	std::map<int, float4> TopDogBowl;
-	std::map<int, float4> BottomDogBowl;
+	std::map<int, float4> DirectionMap;
 
 public:
 	GameEngineTextureRenderer* GetRenderer() { return Renderer; }

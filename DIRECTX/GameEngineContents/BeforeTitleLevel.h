@@ -14,7 +14,6 @@ public:
 	BeforeTitleLevel& operator=(BeforeTitleLevel&& _Other) noexcept = delete;
 
 protected:
-	void OnEvent() override;
 	void Start() override;
 	void Update(float _DeltaTime) override;
 	void End() override;

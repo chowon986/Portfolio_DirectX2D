@@ -6,6 +6,7 @@
 #include "DogCopterPhase1.h"
 #include "YarnballShooter.h"
 #include "IInGameCharacterBase.h"
+#include "Ph1Dog.h"
 #include "InGameMovementComponent.h"
 #include "InGameMonsterAnimationControllerComponent.h"
 
@@ -121,7 +122,7 @@ void Bulldog::Start()
 
 	srand(time(NULL));
 
-	SetHP(1);
+	SetHP(3);
 
 	// ÃÑ »ý¼º
 	{
@@ -191,11 +192,7 @@ void Bulldog::UpdateState()
 			SetHP(GetHP() - 1);
 			if (GetHP() <= 0)
 			{
-				//Die();
-				if (InGameLevelBase* Level = dynamic_cast<InGameLevelBase*>(GetLevel()))
-				{
-					Level->SetPhase(Phase::Phase2);
-				}
+				Die();
 			}
 			else
 			{
@@ -207,8 +204,6 @@ void Bulldog::UpdateState()
 				{
 					DogCopter = GetLevel()->CreateActor<DogCopterPhase1>();
 					DogCopter->SetState(InGameMonsterState::Prepare);
-					DogCopter->SetParent(this);
-					DogCopter->SetPlayer(Plane->GetPlayer());
 				}
 			}
 		}
@@ -318,6 +313,11 @@ bool Bulldog::OnTakeDamage(GameEngineCollision* _This, GameEngineCollision* _Oth
 void Bulldog::BulldogDieCheck(const FrameAnimation_DESC& _Info)
 {
 	Death();
+
+	if (InGameLevelBase* Level = dynamic_cast<InGameLevelBase*>(GetLevel()))
+	{
+		Level->SetPhase(Phase::Phase2);
+	}
 }
 
 
@@ -339,7 +339,14 @@ void Bulldog::OnUnmountAnimationFrameChanged(const FrameAnimation_DESC& _Info)
 
 void Bulldog::OnBulldogLookAnimationFinished(const FrameAnimation_DESC& _Info)
 {
-	Unmount();
+	if (GetHP() <= 0)
+	{
+		Idle();
+	}
+	else
+	{
+	 Unmount();
+	}
 }
 
 void Bulldog::OnPrepareAttackAnimationFinished(const FrameAnimation_DESC& _Info)
@@ -489,7 +496,8 @@ void Bulldog::OnIdleAnimationFrameChanged(const FrameAnimation_DESC& _Info)
 
 void Bulldog::OnBulldogIdleAnimationFinished(const FrameAnimation_DESC& _Info)
 {
-	if (GetHP() <= 0)
+	if (GetHP() <= 0 &&
+		Dog->IsUpdate() == false)
 	{
 		Die();
 	}

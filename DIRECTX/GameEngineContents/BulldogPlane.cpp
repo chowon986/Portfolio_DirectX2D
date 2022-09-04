@@ -176,16 +176,16 @@ void BulldogPlane::Start()
 	}
 
 	{
+		DogFightPh1Dog = GetLevel()->CreateActor<Ph1Dog>();
+		DogFightPh1Dog->SetParent(this);
+		DogFightPh1Dog->GetTransform().SetLocalPosition({ 640, 0, (int)ZOrder::NPC - 2 });
+
 		BossBulldog = GetLevel()->CreateActor<Bulldog>();
 		BossBulldog->SetParent(this);
 		BossBulldog->GetTransform().SetLocalPosition({ 640, 0, (int)ZOrder::NPC - 2 });
+		BossBulldog->SetPh1Dog(DogFightPh1Dog);
 	}
 
-	{
-		Ph1Dog* DogFightPh1Dog = GetLevel()->CreateActor<Ph1Dog>();
-		DogFightPh1Dog->SetParent(this);
-		DogFightPh1Dog->GetTransform().SetLocalPosition({ 640, 0, (int)ZOrder::NPC - 2 });
-	}
 }
 
 void BulldogPlane::Update(float _DeltaTime)

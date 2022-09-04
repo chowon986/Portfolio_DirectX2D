@@ -38,7 +38,6 @@ public:
 	IInGameCharacterBase* GetPlayer() { return Player; }
 
 private:
-	GameEngineTextureRenderer* Renderer;
 	float HydrantXPos;
 	std::map<int, float4> HydrantStartPosition;
 	Bulldog* ParentBullDog;

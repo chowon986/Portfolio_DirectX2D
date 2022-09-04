@@ -5,8 +5,9 @@
 #include "MonsterPhysicsComponent.h"
 
 DogBowlShooter::DogBowlShooter()
-	:MonsterAttackState(InGameMonsterAttackState::None)
 {
+	IntervalTime = 2.0f;
+	ShootCount = 0;
 }
 
 DogBowlShooter::~DogBowlShooter()
@@ -15,6 +16,7 @@ DogBowlShooter::~DogBowlShooter()
 
 void DogBowlShooter::Start()
 {
+	srand(time(NULL));
 }
 
 void DogBowlShooter::End()
@@ -28,19 +30,29 @@ void DogBowlShooter::Update(float _DeltaTime)
 	ElapsedTime += _DeltaTime;
 	if (ElapsedTime > IntervalTime)
 	{
-		if (MonsterAttackState != AttackState)
+		ElapsedTime -= IntervalTime;
+		switch (AttackState)
 		{
-			MonsterAttackState = AttackState;
+		case InGameMonsterAttackState::DogBowl:
+		{
+			if (ShootCount > 7)
+			{
+				if (Character != nullptr)
+				{
+					Character->SetState(InGameMonsterState::RotateCameraOut);
+					Character->SetAttackState(InGameMonsterAttackState::None);
+					ShootCount = 0;
+					return;
+				}
+			}
+			ShootCount++;
 
-			switch (AttackState)
+			if (ShootCount < 7)
 			{
-			case InGameMonsterAttackState::DogBowl:
-			{
-				int RandomKey = rand() % 1;
+				int RandomKey = rand() % 2;
 
 				DogBowlBullet* Bullet = GetLevel()->CreateActor<DogBowlBullet>();
 				Bullet->SetColMapImage(GetColMapImage());
-				Bullet->GetTransform().SetWorldPosition({ 500.0f, 70.0f }); /* { Bullet->TopDogBowl[RandomKey]}); */
 				Bullet->GetLevel()->PushToRotateCamera(Bullet);
 				if (RandomKey == 0)
 				{
@@ -54,10 +66,9 @@ void DogBowlShooter::Update(float _DeltaTime)
 					Bullet->GetMonsterPhysicsComponent()->Reset();
 					Bullet->GetMonsterPhysicsComponent()->AddForce(30);
 				}
-				break;
 			}
-			}
+			break;
 		}
-
+		}
 	}
 }

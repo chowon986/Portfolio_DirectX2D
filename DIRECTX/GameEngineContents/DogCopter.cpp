@@ -229,8 +229,7 @@ void DogCopter::OnRotateCameraAnimationFrameFinished(const FrameAnimation_DESC& 
 
 void DogCopter::OnRotatedIdleAnimationFrameFinished(const FrameAnimation_DESC& _Info)
 {
-	RotateCameraOut();
-	//Attack2();
+	Attack2();
 }
 
 void DogCopter::OnRotateCameraOutAnimationFrameFinished(const FrameAnimation_DESC& _Info)

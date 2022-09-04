@@ -19,11 +19,6 @@ BeforeTitleLevel::~BeforeTitleLevel()
 {
 }
 
-void BeforeTitleLevel::OnEvent()
-{
-
-}
-
 void BeforeTitleLevel::Start()
 {
 	GetMainCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
@@ -33,7 +28,6 @@ void BeforeTitleLevel::Start()
 	MDHRLogoRenderer = MDHRLogo->CreateComponent<GameEngineTextureRenderer>();
 	MDHRLogoRenderer->GetTransform().SetLocalScale({ 1280,720,100 });
 	MDHRLogoRenderer->CreateFrameAnimationFolder("BeforeTitle", FrameAnimation_DESC("10BeforeTitleLevel", 0.05f));
-	MDHRLogoRenderer->ChangeFrameAnimation("BeforeTitle");
 	MDHRLogoRenderer->SetTexture("Loading_background.png");
 	MDHRLogoRenderer->AnimationBindEnd("BeforeTitle", std::bind(&BeforeTitleLevel::OnHDMRAnimationFrameEnd, this, std::placeholders::_1));
 	

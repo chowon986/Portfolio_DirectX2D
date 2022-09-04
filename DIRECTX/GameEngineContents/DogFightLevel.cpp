@@ -52,6 +52,11 @@ void DogFightLevel::ColMapOnOffSwitch()
 	}
 }
 
+void DogFightLevel::LevelStartEvent()
+{
+
+}
+
 void DogFightLevel::Start()
 {
 	if (false == GameEngineInput::GetInst()->IsKey("PhaseChangeKey"))
@@ -457,7 +462,7 @@ void DogFightLevel::BulldogIntroAnimationFrameFinished(const FrameAnimation_DESC
 
 void DogFightLevel::DogCopterIntroPhase1IntroAnimationFrameFinished(const FrameAnimation_DESC& _Info)
 {
-	DogCopterIntroRenderer->ChangeFrameAnimation("Nothing");
+		DogCopterIntroRenderer->ChangeFrameAnimation("Nothing");
 }
 
 void DogFightLevel::DogCopterIntroPhase1IntroAnimationFrameChanged(const FrameAnimation_DESC& _Info)
@@ -466,6 +471,22 @@ void DogFightLevel::DogCopterIntroPhase1IntroAnimationFrameChanged(const FrameAn
 	{
 		BulldogIntroRenderer->ChangeFrameAnimation("BulldogIntro");
 	}
+
+	else if (_Info.CurFrame == 34)
+	{
+		GameEngineActor* ReadyWallop = CreateActor<GameEngineActor>(GameObjectGroup::UI);
+		ReadyWallopRenderer = ReadyWallop->CreateComponent<GameEngineTextureRenderer>();
+		ReadyWallopRenderer->CreateFrameAnimationFolder("Ready", FrameAnimation_DESC("06ReadyWallop", 0.05, false));
+		ReadyWallopRenderer->AnimationBindEnd("Ready", std::bind(&DogFightLevel::ReadyWallopAnimationFrameFinished, this, std::placeholders::_1));
+		ReadyWallopRenderer->GetTransform().SetWorldScale({ 1280.0f,720.0f,1.0f });
+		ReadyWallopRenderer->ChangeFrameAnimation("Ready");
+		PushRendererToUICamera(ReadyWallopRenderer);
+	}
+}
+
+void DogFightLevel::ReadyWallopAnimationFrameFinished(const FrameAnimation_DESC& _Info)
+{
+	ReadyWallopRenderer->Off();
 }
 
 void DogFightLevel::Update(float _DeltaTime)
@@ -504,6 +525,7 @@ void DogFightLevel::Update(float _DeltaTime)
 
 			CaptainCanteenPlane->SetPlayer(Cuphead);
 			CaptainCanteenPlane->SetColMapImage(ColMapRenderer);
+			Player = Cuphead;
 		}
 
 		//PushToBackgroundCamera(CaptainCanteenPlane);

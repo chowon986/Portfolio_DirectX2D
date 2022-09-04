@@ -40,6 +40,7 @@ public:
 
 	bool GroundCheck(GameEngineCollision* _This, GameEngineCollision* _Other);
 
+	void FixedUpdate(double _FixedUpdateInterval);
 
 private:
 	float Power;
@@ -47,5 +48,7 @@ private:
 	float Mass;	   // 질량
 	float Speed;   // 속도
 	float Acceleration; // 가속도
+	double FixedUpdateInterval;
+	double ElapsedTime;
 };
 

@@ -26,6 +26,9 @@ private:
 private:
 	GameEngineCollision* Collision;
 	DogCopterPhase1* Parent;
-	float4 MovePosition;
+	float4 DestPosition;
+	float ElapsedTime;
+	float UpdateDirectionInterval;
+	float4 CurDirection;
 };
 

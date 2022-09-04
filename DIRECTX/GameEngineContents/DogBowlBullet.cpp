@@ -29,18 +29,21 @@ void DogBowlBullet::SetMonsterPhysicsComponent(MonsterPhysicsComponent* _Physics
 
 void DogBowlBullet::Start()
 {
-	GetTransform().SetLocalPosition({ 0.0f, 0.0f, (int)ZOrder::Player + 1 });
+	DirectionMap.insert(std::make_pair<int, float4>(0, { 400, 300,(int)ZOrder::Player + 1 }));
+	DirectionMap.insert(std::make_pair<int, float4>(1, { 800, 300,(int)ZOrder::Player + 1 }));
+
+	srand(time(NULL));
+
+	int Index = rand() % DirectionMap.size();
+	GetTransform().SetLocalPosition(DirectionMap[Index]);
 	Renderer = CreateComponent<GameEngineTextureRenderer>();
-	Renderer->CreateFrameAnimationFolder("RedDogBowlDrop", FrameAnimation_DESC("RedDogBowlDrop", 0.1f, false));
-	Renderer->CreateFrameAnimationFolder("RedDogBowlShoot", FrameAnimation_DESC("RedDogBowlShoot", 0.1f, false));
-	Renderer->CreateFrameAnimationFolder("YellowDogBowlDrop", FrameAnimation_DESC("YellowDogBowlDrop", 0.1f, false));
-	Renderer->CreateFrameAnimationFolder("YellowDogBowlShoot", FrameAnimation_DESC("YellowDogBowlShoot", 0.1f, false));
+	Renderer->CreateFrameAnimationFolder("RedDogBowlDrop", FrameAnimation_DESC("RedDogBowlDrop", 0.1f, true));
+	Renderer->CreateFrameAnimationFolder("RedDogBowlShoot", FrameAnimation_DESC("RedDogBowlShoot", 0.1f, true));
+	Renderer->CreateFrameAnimationFolder("YellowDogBowlDrop", FrameAnimation_DESC("YellowDogBowlDrop", 0.1f, true));
+	Renderer->CreateFrameAnimationFolder("YellowDogBowlShoot", FrameAnimation_DESC("YellowDogBowlShoot", 0.1f, true));
 	Renderer->ChangeFrameAnimation("RedDogBowlDrop");
 	Renderer->SetScaleModeImage();
 
-	//TopDogBowl.insert(std::pair<int, float4>(0, { 100.0f, -500.0f,(int)ZOrder::Player + 1 }));
-	TopDogBowl.insert(std::pair<int, float4>(0, { 1100.0f, -500.0f,(int)ZOrder::Player + 1 }));
-	BottomDogBowl.insert(std::pair<int, float4>(1, { 100.0f, -700.0f,(int)ZOrder::Player + 1 }));
 
 	SetMonsterPhysicsComponent(CreateComponent<MonsterPhysicsComponent>());
 
@@ -65,7 +68,7 @@ void DogBowlBullet::Update(float _DeltaTime)
 
 	if (Direction.x != 0)
 	{
-		GetTransform().SetWorldMove(Direction * 10 * _DeltaTime);
+		GetTransform().SetWorldMove(Direction * 200 * _DeltaTime);
 	}
 	//RotateAngle += _DeltaTime;
 

@@ -4,6 +4,7 @@
 enum class InGameMonsterState;
 enum class InGameMonsterAttackState;
 class BulldogPlane;
+class Ph1Dog;
 class InGameCharacter;
 class DogCopterPhase1;
 class GameEngineCollision;
@@ -23,6 +24,9 @@ public:
 public:
 	float4 GetBeforePosition() { return BeforePosition; }
 	void SetBeforePosition(float4 _BeforePosition) { BeforePosition = _BeforePosition; }
+
+	void SetPh1Dog(Ph1Dog* _Dog) { Dog = _Dog; }
+	Ph1Dog* GetPh1Dog() { return Dog; }
 
 	void LookLeft();
 	void LookRight();
@@ -79,4 +83,5 @@ private:
 	int OnceAttack2FrameChanged;
 	float PlayerPosX;
 	float CanTakeDamageTime;
+	Ph1Dog* Dog;
 };
