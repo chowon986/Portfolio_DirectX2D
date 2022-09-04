@@ -249,14 +249,6 @@ void EngineRenderingPipeLine()
 		NewPipe->SetVertexShader("Blur.hlsl");
 		NewPipe->SetPixelShader("Blur.hlsl");
 	}
-
-	{
-		GameEngineRenderingPipeLine* NewPipe = GameEngineRenderingPipeLine::Create("OldFilm");
-		NewPipe->SetInputAssembler1VertexBuffer("FullRect");
-		NewPipe->SetInputAssembler2IndexBuffer("FullRect");
-		NewPipe->SetVertexShader("OldFilm.hlsl");
-		NewPipe->SetPixelShader("OldFilm.hlsl");
-	}
 }
 
 void EngineMesh()
