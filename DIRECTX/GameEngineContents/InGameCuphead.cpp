@@ -166,18 +166,23 @@ void InGameCuphead::Update(float _DeltaTime)
 		return;
 	}
 
-	if (IsInputEnabled == false)
-	{
-		return;
-	}
 
-	if (GetState() == InGameCharacterState::TakeDamage)
+	if (GetState() == InGameCharacterState::Duck)
 	{
-		AlphaOnOffChangeSwitch();
+		MainCollision->GetTransform().SetLocalScale({ 100.0f, 50.0f, 1.0f });
+	}
+	else if(GetState() == InGameCharacterState::Die)
+	{
+		MainCollision->GetTransform().SetLocalScale({ 0.0f, 0.0f, 1.0f });
 	}
 	else
 	{
-		Renderer->On();
+		MainCollision->GetTransform().SetLocalScale({ 100.0f, 100.0f, 1.0f });
+	}
+
+	if (IsInputEnabled == false)
+	{
+		return;
 	}
 
 	UpdateDirection();
@@ -431,11 +436,6 @@ bool InGameCuphead::OnParry(GameEngineCollision* _This, GameEngineCollision* _Ot
 {
 	int a = 0;
 	return false;
-}
-
-void InGameCuphead::AlphaOnOffChangeSwitch()
-{
-
 }
 
 void InGameCuphead::OnParryAnimationFrameEnd(const FrameAnimation_DESC& _Info)

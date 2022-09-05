@@ -519,7 +519,7 @@ void WorldMapLevel::Update(float _DeltaTime)
 {
 	if (true == GameEngineInput::GetInst()->IsDown("LevelChange"))
 	{
-		GEngine::ChangeLevel("Tutorial");
+		GEngine::ChangeLevel("DogFight");
 	}
 	
 	ColMapOnOffSwitch();
