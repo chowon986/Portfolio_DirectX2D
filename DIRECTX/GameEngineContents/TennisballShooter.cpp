@@ -39,7 +39,7 @@ void TennisballShooter::Update(float _DeltaTime)
 			{
 				{
 					TennisballBullet* Bullet = GetLevel()->CreateActor<TennisballBullet>();
-					Bullet->GetTransform().SetWorldPosition({ GetTransform().GetWorldPosition().x - 20, GetTransform().GetWorldPosition().y+100 });
+					Bullet->GetTransform().SetWorldPosition({ GetTransform().GetWorldPosition().x - 30, GetTransform().GetWorldPosition().y+100 });
 					float4 Dir = float4::VectorRotationToDegreeZAxis(GetDirection(), -15);
 					Bullet->SetDirection(Dir);
 					Bullet->SetColMapImage(GetColMapImage());
@@ -48,7 +48,7 @@ void TennisballShooter::Update(float _DeltaTime)
 
 				{
 					TennisballBullet* Bullet = GetLevel()->CreateActor<TennisballBullet>();
-					Bullet->GetTransform().SetWorldPosition({ GetTransform().GetWorldPosition().x + 20, GetTransform().GetWorldPosition().y+100 });
+					Bullet->GetTransform().SetWorldPosition({ GetTransform().GetWorldPosition().x + 30, GetTransform().GetWorldPosition().y+100 });
 					float4 Dir = float4::VectorRotationToDegreeZAxis(GetDirection(), 15);
 					Bullet->SetDirection(Dir);
 					Bullet->SetColMapImage(GetColMapImage());

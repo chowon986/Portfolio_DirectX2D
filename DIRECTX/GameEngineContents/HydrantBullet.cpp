@@ -58,7 +58,8 @@ void HydrantBullet::Start()
 	Collision = CreateComponent<GameEngineCollision>();
 	Collision->GetTransform().SetLocalScale({ 80.0f, 80.0f, 1.0f });
 	Collision->ChangeOrder(ObjectOrder::MONSTER_DAMAGEABLE_BULLET);
-	Renderer->ChangeCamera(CAMERAORDER::IRISCAMERA);
+	Renderer->ChangeCamera(CAMERAORDER::ROTATECAMERA);
+
 }
 
 void HydrantBullet::Update(float _DeltaTime)

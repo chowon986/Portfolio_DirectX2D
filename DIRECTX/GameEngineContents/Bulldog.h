@@ -68,6 +68,9 @@ private:
 	
 	bool OnTakeDamage(GameEngineCollision* _This, GameEngineCollision* _Other);
 
+	void SetEndPos(float4 _EndPos) { EndPos = _EndPos; }
+	float4 GetEndPos() { return EndPos; }
+
 private:
 	BulldogPlane* Plane;
 	DogCopterPhase1* DogCopter;
@@ -84,4 +87,7 @@ private:
 	float PlayerPosX;
 	float CanTakeDamageTime;
 	Ph1Dog* Dog;
+	float4 EndPos;
+	float MoveSpeed;
+	float MoveElapsedTime;
 };

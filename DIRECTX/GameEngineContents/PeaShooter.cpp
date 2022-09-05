@@ -15,11 +15,12 @@ PeaShooter::~PeaShooter()
 void PeaShooter::Start()
 {
 	SparkRenderer = CreateComponent<GameEngineTextureRenderer>();
-	SparkRenderer->CreateFrameAnimationFolder("PeashotSpark", FrameAnimation_DESC("PeashotSpark", 0.1f));
-	SparkRenderer->CreateFrameAnimationFolder("Nothing", FrameAnimation_DESC("Nothing", 0.1f));
+	SparkRenderer->CreateFrameAnimationFolder("PeashotSpark", FrameAnimation_DESC("PeashotSpark", 0.05f));
+	SparkRenderer->CreateFrameAnimationFolder("Nothing", FrameAnimation_DESC("Nothing",0.1f, false));
 	SparkRenderer->AnimationBindEnd("PeashotSpark", std::bind(&PeaShooter::PeashotSparkAnimationFrameFinished, this, std::placeholders::_1));
 	SparkRenderer->ChangeFrameAnimation("Nothing");
 	SparkRenderer->SetScaleModeImage();
+	IntervalTime = 0.05f;
 }
 
 void PeaShooter::End()

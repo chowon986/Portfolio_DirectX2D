@@ -25,13 +25,13 @@ void TennisballBullet::Start()
 	Renderer->SetScaleModeImage();
 	SetRenderer(Renderer);
 	Collision = CreateComponent<GameEngineCollision>();
-	Collision->GetTransform().SetLocalScale({ 50.0f, 50.0f, 1.0f });
+	Collision->GetTransform().SetLocalScale({ 40.0f, 40.0f, 1.0f });
 	Collision->ChangeOrder(ObjectOrder::MONSTER_BULLET);
 
 	MovementComponent = CreateComponent<BulletMovementComponent>();
-	MovementComponent->SetSpeed(5.0f);
+	MovementComponent->SetSpeed(10.0f);
 
-	Renderer->ChangeCamera(CAMERAORDER::IRISCAMERA);
+	Renderer->ChangeCamera(CAMERAORDER::ROTATECAMERA);
 
 }
 

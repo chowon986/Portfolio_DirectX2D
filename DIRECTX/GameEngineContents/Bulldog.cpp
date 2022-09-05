@@ -25,6 +25,8 @@ Bulldog::Bulldog()
 	, OnceAttack2FrameChanged(-1)
 	, PlayerPosX(0)
 	, CanTakeDamageTime(0.0f)
+	, EndPos(float4::ZERO)
+	, MoveSpeed(0.0f)
 {
 }
 
@@ -153,23 +155,24 @@ void Bulldog::Update(float _DeltaTime)
 	}
 	CanTakeDamageTime += _DeltaTime;
 
+	MoveElapsedTime += _DeltaTime;
+
 	//GameEngineDebug::DrawBox(Collision->GetTransform(), { 1.0f, 0.0f,0.0f, 0.5f });
 	Renderer->ScaleToTexture();
 	UpdateState();
 
-	if (false == MoveDirection.CompareInt2D(float4::ZERO))
+
+	if (Plane == nullptr)
 	{
-		if (false == IsEndPosArrived())
-		{
-			if (Plane == nullptr)
-			{
-				GetTransform().SetWorldMove(MoveDirection * MoveSpeed * GameEngineTime::GetDeltaTime());
-			}
-			else
-			{
-				Plane->GetTransform().SetWorldMove(MoveDirection * MoveSpeed * GameEngineTime::GetDeltaTime());
-			}
-		}
+		//GameEngineMath::LerpLimit()
+		//GetTransform().SetWorldMove(MoveDirection * MoveSpeed * GameEngineTime::GetDeltaTime());
+	}
+	else
+	{
+		float MovePosY = GameEngineMath::LerpLimit(Plane->GetTransform().GetWorldPosition().y, EndPos.y, MoveElapsedTime * MoveSpeed);
+		float4 CurPos = Plane->GetTransform().GetWorldPosition();
+		Plane->GetTransform().SetWorldPosition(float4{ CurPos.x, MovePosY, CurPos.z});
+		//Plane->GetTransform().SetWorldMove(MoveDirection * MoveSpeed * GameEngineTime::GetDeltaTime());
 	}
 
 	if (GetState() == InGameMonsterState::Mount ||
@@ -461,17 +464,8 @@ void Bulldog::OnMountAnimationFrameChanged(const FrameAnimation_DESC& _Info)
 
 	if (_Info.CurFrame == 3)
 	{
-		StartPos = Plane->GetTransform().GetLocalPosition();
-		if (Plane->GetTransform().GetLocalPosition().y > 0)
-		{
-			EndPos = float4(Plane->GetTransform().GetLocalPosition().x, Plane->GetTransform().GetLocalPosition().y - 400);
-		}
-		else
-		{
-			EndPos = float4(Plane->GetTransform().GetLocalPosition().x, Plane->GetTransform().GetLocalPosition().y - 50);
-		}
-		MoveSpeed = 150.0f;
-		MoveToEndPos(StartPos, EndPos, Plane);
+		EndPos = float4(Plane->GetTransform().GetLocalPosition().x, -300);
+		MoveSpeed = 0.01f;
 	}
 	else if (_Info.CurFrame == 7)
 	{
@@ -483,14 +477,9 @@ void Bulldog::OnIdleAnimationFrameChanged(const FrameAnimation_DESC& _Info)
 {
 	if (_Info.CurFrame == 4)
 	{
-		if (-345 > EndPos.y)
-		{
-			StartPos = Plane->GetTransform().GetLocalPosition();
-			EndPos = float4(Plane->GetTransform().GetLocalPosition().x, Plane->GetTransform().GetLocalPosition().y + 50);
-			MoveSpeed = 100.0f;
-			MoveToEndPos(StartPos, EndPos, Plane);
-			PlayerPosX = Plane->GetPlayer()->GetTransform().GetLocalPosition().x;
-		}
+		EndPos = float4(Plane->GetTransform().GetLocalPosition().x, -250);
+		MoveSpeed = 0.01;
+		PlayerPosX = Plane->GetPlayer()->GetTransform().GetLocalPosition().x;
 	}
 }
 

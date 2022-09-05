@@ -29,16 +29,14 @@ void PeaBullet::Start()
 	Renderer->SetScaleModeImage();
 
 	MovementComponent = CreateComponent<BulletMovementComponent>();
-	MovementComponent->SetSpeed(10.0f);
+	MovementComponent->SetSpeed(15.0f);
 
 	Collision = CreateComponent<GameEngineCollision>();
 	Collision->SetParent(this);
 	Collision->GetTransform().SetLocalScale({ 50.0f,50.0f });
 	Collision->ChangeOrder(ObjectOrder::PC_BULLET);
 	SetCollision(Collision);
-
 	Renderer->ChangeCamera(CAMERAORDER::ROTATECAMERA);
-
 }
 
 void PeaBullet::Update(float _DeltaTime)

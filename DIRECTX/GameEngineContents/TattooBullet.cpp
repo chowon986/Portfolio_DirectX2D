@@ -36,7 +36,7 @@ void TattooBullet::Start()
 	MovementComponent = CreateComponent<BulletMovementComponent>();
 	MovementComponent->SetSpeed(10.0f);
 
-	Renderer->ChangeCamera(CAMERAORDER::IRISCAMERA);
+	Renderer->ChangeCamera(CAMERAORDER::ROTATECAMERA);
 
 }
 
