@@ -18,9 +18,12 @@ void PeaBullet::Start()
 {
 
 	Renderer = CreateComponent<GameEngineTextureRenderer>();
-	Renderer->CreateFrameAnimationFolder("PeashotLoop", FrameAnimation_DESC("PeashotLoop", 0.1f));
+	Renderer->CreateFrameAnimationFolder("PeashotLoop", FrameAnimation_DESC("PeashotLoop", 0.05f));
 	Renderer->CreateFrameAnimationFolder("PeashotIntro", FrameAnimation_DESC("PeashotIntro", 0.05f));
+	Renderer->CreateFrameAnimationFolder("PeashotDeath", FrameAnimation_DESC("PeashotDeath", 0.05f, false));
 	Renderer->AnimationBindEnd("PeashotIntro", std::bind(&PeaBullet::PeashotLoop, this, std::placeholders::_1));
+	Renderer->AnimationBindEnd("PeashotDeath", std::bind(&PeaBullet::OnPeashotDeathAnimationFrameFinished, this, std::placeholders::_1));
+	Renderer->AnimationBindFrame("PeashotDeath", std::bind(&PeaBullet::Test, this, std::placeholders::_1));
 
 	Renderer->ChangeFrameAnimation("PeashotIntro");
 	Renderer->SetScaleModeImage();
@@ -34,12 +37,15 @@ void PeaBullet::Start()
 	Collision->ChangeOrder(ObjectOrder::PC_BULLET);
 	SetCollision(Collision);
 
-	Renderer->ChangeCamera(CAMERAORDER::IRISCAMERA);
+	Renderer->ChangeCamera(CAMERAORDER::ROTATECAMERA);
 
 }
 
 void PeaBullet::Update(float _DeltaTime)
 {
+	Collision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::MONSTER, CollisionType::CT_AABB2D, std::bind(&PeaBullet::AttackSuccess, this, std::placeholders::_1, std::placeholders::_2));
+	Collision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::MONSTER_DAMAGEABLE_BULLET, CollisionType::CT_AABB2D, std::bind(&PeaBullet::AttackSuccess, this, std::placeholders::_1, std::placeholders::_2));
+
 	if (nullptr == ColMapImage)
 	{
 		SetColMapImage(GetLevel()->GetMainColMapImage());
@@ -52,6 +58,23 @@ void PeaBullet::Update(float _DeltaTime)
 
 void PeaBullet::End()
 {
+}
+
+void PeaBullet::OnPeashotDeathAnimationFrameFinished(const FrameAnimation_DESC& _Info)
+{
+	Death();
+}
+
+void PeaBullet::Test(const FrameAnimation_DESC& _Info)
+{
+	int a = 0;
+}
+
+bool PeaBullet::AttackSuccess(GameEngineCollision* _This, GameEngineCollision* _Other)
+{
+	MovementComponent->SetSpeed(0.0f);
+	Renderer->ChangeFrameAnimation("PeashotDeath");
+	return true;
 }
 
 void PeaBullet::PeashotLoop(const FrameAnimation_DESC& _DESC)

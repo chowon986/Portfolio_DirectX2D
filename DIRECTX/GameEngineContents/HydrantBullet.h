@@ -17,7 +17,9 @@ public:
 public:
 	GameEngineTextureRenderer* GetRenderer() { return Renderer; }
 	void SetRenderer(GameEngineTextureRenderer* _Renderer) { Renderer = _Renderer; }
-	bool AttackSuccess(GameEngineCollision* _This, GameEngineCollision* _Other);
+	bool Attack(GameEngineCollision* _This, GameEngineCollision* _Other);
+	void OnDeathAnimationFrameFninished(const FrameAnimation_DESC& _Info);
+	void OnPuffAnimationFrameFninished(const FrameAnimation_DESC& _Info);
 
 private:
 	virtual void Start() override;
@@ -31,5 +33,7 @@ private:
 	float ElapsedTime;
 	float UpdateDirectionInterval;
 	float4 CurDirection;
+	GameEngineTextureRenderer* HydrantPuffRenderer;
+	bool OnDeath;
 };
 

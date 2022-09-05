@@ -85,12 +85,12 @@ void WeaponBase::UpdateDirection()
 void WeaponBase::Update(float _DeltaTime)
 {
 	Character = dynamic_cast<IInGameCharacterBase*>(GetParent());
+	UpdatePivot();
 
 	if (Character == nullptr)
 	{
 		return;
 	}
-
 	AttackState = Character->GetAttackState();
 	if (AttackState == InGameCharacterAttackState::None)
 	{
@@ -105,11 +105,6 @@ void WeaponBase::Update(float _DeltaTime)
 
 void WeaponBase::UpdatePivot()
 {
-	if (AttackState != InGameCharacterAttackState::Shoot)
-	{
-		return;
-	}
-
 	if (State == InGameCharacterState::Duck)
 	{
 		if (Character->GetRenderer()->GetTransform().GetLocalScale().x > 0)
@@ -169,17 +164,17 @@ void WeaponBase::UpdatePivot()
 		{
 			if (VerticalDirection.CompareInt2D(float4::UP))
 			{
-				GetTransform().SetLocalPosition({ 60.0f, 120.0f });
+				GetTransform().SetLocalPosition({ 70.0f, 120.0f });
 			}
 
 			else if (VerticalDirection.CompareInt2D(float4::DOWN))
 			{
-				GetTransform().SetLocalPosition({ 60.0f, 50.0f });
+				GetTransform().SetLocalPosition({ 70.0f, 50.0f });
 			}
 
 			else
 			{
-				GetTransform().SetLocalPosition({ 60.0f, 80.0f });
+				GetTransform().SetLocalPosition({ 80.0f, 90.0f });
 			}
 		}
 

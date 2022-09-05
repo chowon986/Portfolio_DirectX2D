@@ -61,7 +61,6 @@ void DogFightLevel::LevelStartEvent()
 void DogFightLevel::Start()
 {
 	GetMainCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
-	GetUICamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
 	GetBackgroundCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
 	GetRotateCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
 	GetRotateCamera2()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();

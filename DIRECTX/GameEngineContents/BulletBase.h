@@ -47,9 +47,6 @@ protected:
 	void Update(float _DeltaTime) override;
 	void End() override;
 
-private:
-	bool OnCollision(GameEngineCollision* _This, GameEngineCollision* _Other);
-
 protected:
 	float4 Direction;
 	GameEngineTextureRenderer* Renderer;

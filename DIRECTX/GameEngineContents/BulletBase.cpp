@@ -98,31 +98,13 @@ void BulletBase::Update(float _DeltaTime)
 		return;
 	}
 
-	if (true == ColMapTexture->GetPixelToFloat4(100.0f,100.0f).CompareInt3D(float4::BLACK))
-	{
-		Death();
-	}
-
-
 	if (true == ColMapTexture->GetPixelToFloat4(Renderer->GetTransform().GetWorldPosition().ix(), -Renderer->GetTransform().GetWorldPosition().iy()).CompareInt3D(float4::BLACK))
 	{
 		Death();
 	} 
-
-	if (true == Collision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::MONSTER, CollisionType::CT_AABB2D,
-		std::bind(&BulletBase::OnCollision, this, std::placeholders::_1, std::placeholders::_2)))
-	{
-		Death();
-	}
-
 }
 
 void BulletBase::End()
 {
-}
-
-bool BulletBase::OnCollision(GameEngineCollision* _This, GameEngineCollision* _Other)
-{
-	return true;
 }
 

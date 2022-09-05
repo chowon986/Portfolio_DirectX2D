@@ -19,6 +19,8 @@ private:
 	void Update(float _DeltaTime) override;
 	void End() override;
 
+	void PeashotSparkAnimationFrameFinished(const FrameAnimation_DESC& _Info);
+
 private:
 	InGameCharacterShooterState PlayerShooterState;
 };

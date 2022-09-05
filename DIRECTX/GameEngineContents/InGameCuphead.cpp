@@ -135,6 +135,7 @@ void InGameCuphead::Start()
 
 		PeaShooter* Shooter = GetLevel()->CreateActor<PeaShooter>();
 		Shooter->SetParent(this);
+		//Shooter->GetTransform().SetLocalPosition({ 70.0f, 90.0f });
 
 		//SpreadShooter* Shooter = GetLevel()->CreateActor<SpreadShooter>();
 		//Shooter->SetParent(this);
@@ -404,6 +405,8 @@ void InGameCuphead::CheckCollision()
 	}
 
 	MainCollision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::MONSTER_BULLET, CollisionType::CT_AABB2D,
+		std::bind(&InGameCuphead::OnTakeDamage, this, std::placeholders::_1, std::placeholders::_2));
+	MainCollision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::MONSTER_DAMAGEABLE_BULLET, CollisionType::CT_AABB2D,
 		std::bind(&InGameCuphead::OnTakeDamage, this, std::placeholders::_1, std::placeholders::_2));
 	MainCollision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::MONSTER, CollisionType::CT_AABB2D,
 		std::bind(&InGameCuphead::OnTakeDamage, this, std::placeholders::_1, std::placeholders::_2));

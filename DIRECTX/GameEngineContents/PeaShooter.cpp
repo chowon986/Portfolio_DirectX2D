@@ -4,6 +4,7 @@
 #include "PeaBullet.h"
 
 PeaShooter::PeaShooter()
+	: PlayerShooterState(InGameCharacterShooterState::None)
 {
 }
 
@@ -13,14 +14,21 @@ PeaShooter::~PeaShooter()
 
 void PeaShooter::Start()
 {
-	//SparkRenderer = CreateComponent<GameEngineTextureRenderer>();
-	//SparkRenderer->CreateFrameAnimationFolder("PeashotSpark", FrameAnimation_DESC("PeashotSpark", 0.1f));
-	//SparkRenderer->ChangeFrameAnimation("PeashotSpark");
-	//SparkRenderer->ScaleToTexture();
+	SparkRenderer = CreateComponent<GameEngineTextureRenderer>();
+	SparkRenderer->CreateFrameAnimationFolder("PeashotSpark", FrameAnimation_DESC("PeashotSpark", 0.1f));
+	SparkRenderer->CreateFrameAnimationFolder("Nothing", FrameAnimation_DESC("Nothing", 0.1f));
+	SparkRenderer->AnimationBindEnd("PeashotSpark", std::bind(&PeaShooter::PeashotSparkAnimationFrameFinished, this, std::placeholders::_1));
+	SparkRenderer->ChangeFrameAnimation("Nothing");
+	SparkRenderer->SetScaleModeImage();
 }
 
 void PeaShooter::End()
 {
+}
+
+void PeaShooter::PeashotSparkAnimationFrameFinished(const FrameAnimation_DESC& _Info)
+{
+	SparkRenderer->ChangeFrameAnimation("Nothing");
 }
 
 
@@ -46,6 +54,7 @@ void PeaShooter::Update(float _DeltaTime)
 			{
 				if (PlayerShooterState == InGameCharacterShooterState::BasicShot)
 				{
+					SparkRenderer->ChangeFrameAnimation("PeashotSpark");
 					float4 Direction = GetVerticalDirection() + GetHorizontalDirection();
 
 					PeaBullet* Bullet = GetLevel()->CreateActor<PeaBullet>();
@@ -61,6 +70,11 @@ void PeaShooter::Update(float _DeltaTime)
 			case InGameCharacterAttackState::SuperAttack:
 				// 필살기를 쏜다.
 				break;
+			case InGameCharacterAttackState::None:
+				SparkRenderer->ChangeFrameAnimation("Nothing");
+				break;
+			default:
+				SparkRenderer->ChangeFrameAnimation("Nothing");
 			}
 		}
 	}

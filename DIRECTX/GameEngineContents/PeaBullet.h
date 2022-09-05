@@ -18,6 +18,11 @@ private:
 	virtual void Update(float _DeltaTime) override;
 	virtual void End() override;
 
+	void OnPeashotDeathAnimationFrameFinished(const FrameAnimation_DESC& _Info);
+	void Test(const FrameAnimation_DESC& _Info);
+
+	bool AttackSuccess(GameEngineCollision* _This, GameEngineCollision* _Other);
+
 private:
 	PeaShooter* Weapon;
 	void PeashotLoop(const FrameAnimation_DESC& _DESC);
