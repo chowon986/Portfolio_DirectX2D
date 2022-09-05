@@ -46,7 +46,7 @@ void HydrantBullet::Start()
 
 	std::vector<float> RandomPosX = { 0.0f, 640.0f, 1280.0f };
 	int RandomPosXIndex = rand() % RandomPosX.size();
-	GetTransform().SetWorldPosition({ RandomPosX[RandomPosXIndex], 30, (int)ZOrder::UI });
+	GetTransform().SetWorldPosition({ RandomPosX[RandomPosXIndex], 100, (int)ZOrder::UI });
 
 	Renderer = CreateComponent<GameEngineTextureRenderer>();
 	Renderer->CreateFrameAnimationFolder("HydrantBullet", FrameAnimation_DESC("HydrantBullet", 0.05f, true));

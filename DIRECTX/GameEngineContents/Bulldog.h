@@ -65,6 +65,7 @@ private:
 	void OnMountAnimationFrameChanged(const FrameAnimation_DESC& _Info);
 	void OnAttack1AnimationFrameChanged(const FrameAnimation_DESC& _Info);
 	void OnAttack2AnimationFrameChanged(const FrameAnimation_DESC& _Info);
+	void Test(const FrameAnimation_DESC& _Info);
 	
 	bool OnTakeDamage(GameEngineCollision* _This, GameEngineCollision* _Other);
 

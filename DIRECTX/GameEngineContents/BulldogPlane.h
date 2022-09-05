@@ -1,5 +1,6 @@
 #pragma once
 #include <GameEngineCore/GameEngineActor.h>
+#include <vector>
 
 // Ό³Έν :
 class GameEngineTextureRenderer;
@@ -32,5 +33,25 @@ private:
 	IInGameCharacterBase* Player;
 	Bulldog* BossBulldog;
 	Ph1Dog* DogFightPh1Dog;
+	GameEngineTextureRenderer* BulldogPlaneFront;
+	GameEngineTextureRenderer* BulldogPlaneWingLeft;
+	GameEngineTextureRenderer* BulldogPlaneWingRight;
+	GameEngineTextureRenderer* BulldogPlaneBack;
+	GameEngineTextureRenderer* BulldogPlaneTail;
+	GameEngineTextureRenderer* BulldogPropellorRingCenter;
+	GameEngineTextureRenderer* BulldogPropellorTipCenter;
+	GameEngineTextureRenderer* BulldogPropellorSpinCenter;
+	GameEngineTextureRenderer* BulldogPropelloRingLeft;
+	GameEngineTextureRenderer* BulldogPropelloRingRight;
+	GameEngineTextureRenderer* BulldogPropellorTipLeft;
+	GameEngineTextureRenderer* BulldogPropellorSpinLeft;
+	GameEngineTextureRenderer* BulldogPropellorTipRight;
+	GameEngineTextureRenderer* BulldogPropellorSpinRight;
+	GameEngineTextureRenderer* BulldogPlaneFlapLeftA;
+	GameEngineTextureRenderer* BulldogPlaneFlapLeftB;
+	GameEngineTextureRenderer* BulldogPlaneFlapRightA;
+	GameEngineTextureRenderer* BulldogPlaneFlapRightB;
+
+	std::vector<GameEngineTextureRenderer*> AllBulldogPlaneRenderer;
 };
 

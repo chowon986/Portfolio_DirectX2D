@@ -104,6 +104,7 @@ void Bulldog::Start()
 
 		Renderer->CreateFrameAnimationFolder("BulldogDie", FrameAnimation_DESC("BulldogDie", 0.05f));
 		Renderer->AnimationBindEnd("BulldogDie", std::bind(&Bulldog::BulldogDieCheck, this, std::placeholders::_1));
+		Renderer->AnimationBindFrame("BulldogDie", std::bind(&Bulldog::Test, this, std::placeholders::_1));
 		Renderer->SetScaleModeImage();
 		Renderer->SetPivot(PIVOTMODE::BOT);
 		SetRenderer(Renderer);
@@ -157,23 +158,20 @@ void Bulldog::Update(float _DeltaTime)
 
 	MoveElapsedTime += _DeltaTime;
 
-	//GameEngineDebug::DrawBox(Collision->GetTransform(), { 1.0f, 0.0f,0.0f, 0.5f });
 	Renderer->ScaleToTexture();
 	UpdateState();
 
-
-	if (Plane == nullptr)
+	float MovePosY = GameEngineMath::LerpLimit(Plane->GetTransform().GetWorldPosition().y, EndPos.y, MoveElapsedTime * MoveSpeed);
+	float4 CurPos = Plane->GetTransform().GetWorldPosition();
+	if (GetState() == InGameMonsterState::Mount || GetState() == InGameMonsterState::Unmount)
 	{
-		//GameEngineMath::LerpLimit()
-		//GetTransform().SetWorldMove(MoveDirection * MoveSpeed * GameEngineTime::GetDeltaTime());
+		CurPos.z = (int)ZOrder::NPC;
 	}
 	else
 	{
-		float MovePosY = GameEngineMath::LerpLimit(Plane->GetTransform().GetWorldPosition().y, EndPos.y, MoveElapsedTime * MoveSpeed);
-		float4 CurPos = Plane->GetTransform().GetWorldPosition();
-		Plane->GetTransform().SetWorldPosition(float4{ CurPos.x, MovePosY, CurPos.z});
-		//Plane->GetTransform().SetWorldMove(MoveDirection * MoveSpeed * GameEngineTime::GetDeltaTime());
+		CurPos.z = (int)ZOrder::NPC - 2;
 	}
+	Plane->GetTransform().SetWorldPosition(float4{ CurPos.x, MovePosY, CurPos.z });
 
 	if (GetState() == InGameMonsterState::Mount ||
 		GetState() == InGameMonsterState::Unmount ||
@@ -245,6 +243,7 @@ void Bulldog::Shoot()
 void Bulldog::Die()
 {
 	SetState(InGameMonsterState::Die);
+	GetTransform().SetWorldPosition({640.0f,-760.0f,(int)ZOrder::NPC - 100});
 }
 
 void Bulldog::PrepareAttack1()
@@ -348,7 +347,7 @@ void Bulldog::OnBulldogLookAnimationFinished(const FrameAnimation_DESC& _Info)
 	}
 	else
 	{
-	 Unmount();
+		Unmount();
 	}
 }
 
@@ -455,6 +454,11 @@ void Bulldog::OnAttack2AnimationFrameChanged(const FrameAnimation_DESC& _Info)
 	}
 }
 
+void Bulldog::Test(const FrameAnimation_DESC& _Info)
+{
+	int a = 0;
+}
+
 void Bulldog::OnMountAnimationFrameChanged(const FrameAnimation_DESC& _Info)
 {
 	if (Plane == nullptr)
@@ -490,6 +494,7 @@ void Bulldog::OnBulldogIdleAnimationFinished(const FrameAnimation_DESC& _Info)
 	{
 		Die();
 	}
+
 
 	else
 	{
