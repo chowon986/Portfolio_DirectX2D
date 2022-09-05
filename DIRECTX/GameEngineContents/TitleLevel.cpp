@@ -16,6 +16,7 @@ TitleLevel::~TitleLevel()
 void TitleLevel::Start()
 {
 	GetMainCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
+
 	{
 		Background* Title = CreateActor<Background>(GameObjectGroup::UI);
 		GameEngineTextureRenderer* TitleRenderer = Title->CreateComponent<GameEngineTextureRenderer>();

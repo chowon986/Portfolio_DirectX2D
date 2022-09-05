@@ -432,15 +432,7 @@ bool InGameCuphead::OnParry(GameEngineCollision* _This, GameEngineCollision* _Ot
 
 void InGameCuphead::AlphaOnOffChangeSwitch()
 {
-	AlphaOn = !AlphaOn;
-	if (AlphaOn == false)
-	{
-		Renderer->On();
-	}
-	else
-	{
-		Renderer->Off();
-	}
+
 }
 
 void InGameCuphead::OnParryAnimationFrameEnd(const FrameAnimation_DESC& _Info)

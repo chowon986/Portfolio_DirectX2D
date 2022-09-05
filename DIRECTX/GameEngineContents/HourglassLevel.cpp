@@ -5,6 +5,7 @@
 #include <GameEngineCore/GEngine.h>
 #include <GameEngineContents/Enums.h>
 #include <functional>
+#include <GameEngineCore/GameEngineBlur.h>
 
 HourglassLevel::HourglassLevel()
 {
@@ -16,6 +17,7 @@ HourglassLevel::~HourglassLevel()
 
 void HourglassLevel::Start()
 {
+	GetMainCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
 
 	{
 		Background* HourglassBackground = CreateActor<Background>(GameObjectGroup::UI);

@@ -3,6 +3,7 @@
 #include "Background.h"
 #include <functional>
 #include "CharacterState.h"
+#include <GameEngineCore/GameEngineBlur.h>
 
 SelectLevel::SelectLevel()
 	: OptionRenderer(nullptr)
@@ -35,9 +36,9 @@ SelectLevel::~SelectLevel()
 
 void SelectLevel::Start()
 {
+	GetMainCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
 	State = CreateActor<CharacterState>(GameObjectGroup::CharacterState);
 	State->SetLevelOverOn();
-
 
 	if (false == GameEngineInput::GetInst()->IsKey("MoveDown"))
 	{
@@ -452,7 +453,7 @@ void SelectLevel::CreateSelectPlayerPhaseRenderer()
 		ScreenLightRenderer->CreateFrameAnimationFolder("LightDown", FrameAnimation_DESC("IrisB", 0, 0, 0.1f));
 		ScreenLightRenderer->ChangeFrameAnimation("LightDown");
 		ScreenLightRenderer->GetTransform().SetLocalScale({ 1280.0f, 720.0f, (int)ZOrder::UI + 1 });
-		ScreenLightRenderer->GetPixelData().PlusColor.a = 0.5f;
+		ScreenLightRenderer->GetPixelData().PlusColor.a = 0.3f;
 	}
 
 	if (SlotSelectionRenderer == nullptr)

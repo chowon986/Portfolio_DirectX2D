@@ -12,6 +12,7 @@
 #include "BoomerangShooterItem.h"
 #include "ConvergeShooterItem.h"
 #include "ItemInventory.h"
+#include <GameEngineCore/GameEngineBlur.h>
 
 ShopLevel::ShopLevel()
 	: IrisRenderer(nullptr)
@@ -45,6 +46,7 @@ ShopLevel::~ShopLevel()
 
 void ShopLevel::Start()
 {
+	GetMainCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
 	{
 		Background* ShopBackground = CreateActor<Background>(GameObjectGroup::UI);
 		GameEngineTextureRenderer* Renderer = ShopBackground->CreateComponent<GameEngineTextureRenderer>();

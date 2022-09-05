@@ -10,6 +10,7 @@
 #include "CanteenPlane.h"
 #include "DogCopter.h"
 #include "WorldMapCuphead.h"
+#include <GameEngineCore/GameEngineBlur.h>
 
 DogFightLevel::DogFightLevel()
 	: ColMapRenderer(nullptr)
@@ -59,6 +60,13 @@ void DogFightLevel::LevelStartEvent()
 
 void DogFightLevel::Start()
 {
+	GetMainCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
+	GetUICamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
+	GetBackgroundCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
+	GetRotateCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
+	GetRotateCamera2()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
+
+
 	if (false == GameEngineInput::GetInst()->IsKey("PhaseChangeKey"))
 	{
 		GameEngineInput::GetInst()->CreateKey("PhaseChangeKey", 'L');

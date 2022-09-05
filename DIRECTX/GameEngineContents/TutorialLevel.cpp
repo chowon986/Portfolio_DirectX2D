@@ -4,6 +4,7 @@
 #include "WorldMapCuphead.h"
 #include "InGameCuphead.h"
 #include "TutorialBackground.h"
+#include <GameEngineCore/GameEngineBlur.h>
 
 TutorialLevel::TutorialLevel()
 	: BackgroundRenderer(nullptr)
@@ -17,6 +18,8 @@ TutorialLevel::~TutorialLevel()
 
 void TutorialLevel::Start()
 {
+	GetMainCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
+
 	{
 		TutorialBackground* Background = CreateActor<TutorialBackground>(GameObjectGroup::UI);
 		Background->GetTransform().SetLocalPosition({ -150, 166 });

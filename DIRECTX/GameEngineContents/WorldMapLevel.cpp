@@ -30,6 +30,7 @@
 #include <GameEngineCore/GameEngineTextureRenderer.h>
 #include <GameEngineBase/GameEngineInput.h>
 #include "ItemInventory.h"
+#include <GameEngineCore/GameEngineBlur.h>
 
 WorldMapLevel::WorldMapLevel()
 	: IrisRenderer(nullptr)
@@ -74,6 +75,8 @@ void WorldMapLevel::LevelStartEvent()
 
 void WorldMapLevel::Start()
 {
+	GetMainCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
+
 	Inventory = CreateActor<ItemInventory>(GameObjectGroup::INVENTORY);
 	Inventory->SetLevelOverOn();
 	Inventory->Off();
