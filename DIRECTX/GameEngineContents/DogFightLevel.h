@@ -12,6 +12,7 @@ class DogCopter;
 class InGameCuphead;
 class IInGameCharacterBase;
 enum class InGameMonsterState;
+class CharacterState;
 class DogFightLevel : public InGameLevelBase
 {
 public:
@@ -94,6 +95,11 @@ private:
 	float ZAngle;
 
 	GameEngineTextureRenderer* ReadyWallopRenderer;
+	GameEngineTextureRenderer* HP;
+	int HPCount;
+	GameEngineTextureRenderer* SuperMeter;
 	IInGameCharacterBase* Player;
+	CharacterState* State;
+
 };
 

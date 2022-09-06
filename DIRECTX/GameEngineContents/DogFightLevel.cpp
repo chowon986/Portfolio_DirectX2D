@@ -10,6 +10,7 @@
 #include "CanteenPlane.h"
 #include "DogCopter.h"
 #include "WorldMapCuphead.h"
+#include "CharacterState.h"
 #include <GameEngineCore/GameEngineBlur.h>
 
 DogFightLevel::DogFightLevel()
@@ -55,7 +56,15 @@ void DogFightLevel::ColMapOnOffSwitch()
 
 void DogFightLevel::LevelStartEvent()
 {
-
+	std::list<GameEngineActor*> Actors = GetGroup(GameObjectGroup::CharacterState);
+	for (GameEngineActor* Actor : Actors)
+	{
+		if (CharacterState* _State = dynamic_cast<CharacterState*>(Actor))
+		{
+			State = _State;
+			HPCount = State->MaxHP;
+		}
+	}
 }
 
 void DogFightLevel::Start()
@@ -64,6 +73,11 @@ void DogFightLevel::Start()
 	GetBackgroundCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
 	GetRotateCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
 	GetRotateCamera2()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
+
+	{
+		GameEngineActor* PlayerHP = CreateActor<GameEngineActor>();
+		HP = PlayerHP->CreateComponent<GameEngineTextureRenderer>();
+	}
 
 
 	if (false == GameEngineInput::GetInst()->IsKey("PhaseChangeKey"))
@@ -320,7 +334,7 @@ void DogFightLevel::Start()
 		}
 	}
 
-	SetPhase(Phase::Ready);
+	SetPhase(Phase::Phase3/*Ready*/);
 	//카메라 내 오브젝트 크기 조정 
 	GetMainCamera()->SetProjectionSize({ 1280.0f, 720.0f });
 	GetRotateCamera()->SetProjectionSize({ 1536.0f,864.0f });
@@ -655,7 +669,6 @@ void DogFightLevel::Update(float _DeltaTime)
 			case InGameMonsterState::RotateCameraIn:
 			case InGameMonsterState::RotateCameraOut:
 			{
-
 				ZAngle = CameraRotation.z - 90; 
 				IsRotateCompleted = false;
 				break;

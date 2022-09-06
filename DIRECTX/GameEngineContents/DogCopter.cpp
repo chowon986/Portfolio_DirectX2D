@@ -255,18 +255,18 @@ void DogCopter::OnRotateCameraOutAnimationFrameFinished(const FrameAnimation_DES
 
 void DogCopter::OnRotateCameraAnimationFrameChanged(const FrameAnimation_DESC& _Info)
 {
+	LeftHandRenderer->ChangeFrameAnimation("Nothing");
+	RightHandRenderer->ChangeFrameAnimation("Nothing");
+
 	if (_Info.CurFrame == 11)
 	{
 		LeftHandRenderer->ChangeFrameAnimation("Nothing");
-		LeftHandRenderer->Off();
 		RightHandRenderer->ChangeFrameAnimation("Nothing");
-		RightHandRenderer->Off();
 	}
 }
 
 void DogCopter::OnRotateCameraOutAnimationFrameChanged(const FrameAnimation_DESC& _Info)
 {
-	int a = 0;
 	if (_Info.CurFrame == 14)
 	{
 		LeftHandRenderer->ChangeFrameAnimation("PawMerge");

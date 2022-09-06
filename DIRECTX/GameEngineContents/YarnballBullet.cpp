@@ -19,9 +19,9 @@ void YarnballBullet::Start()
 {
 
 	Renderer = CreateComponent<GameEngineTextureRenderer>();
-	Renderer->CreateFrameAnimationFolder("Yarnball1", FrameAnimation_DESC("Yarnball1", 0.1f));
-	Renderer->CreateFrameAnimationFolder("Yarnball2", FrameAnimation_DESC("Yarnball2", 0.1f));
-	Renderer->CreateFrameAnimationFolder("Yarnball3", FrameAnimation_DESC("Yarnball3", 0.1f));
+	Renderer->CreateFrameAnimationFolder("Yarnball1", FrameAnimation_DESC("Yarnball1", 0.05f));
+	Renderer->CreateFrameAnimationFolder("Yarnball2", FrameAnimation_DESC("Yarnball2", 0.05f));
+	Renderer->CreateFrameAnimationFolder("Yarnball3", FrameAnimation_DESC("Yarnball3", 0.05f));
 	Renderer->ChangeFrameAnimation("Yarnball1");
 	Renderer->SetScaleModeImage();
 	SetRenderer(Renderer);
