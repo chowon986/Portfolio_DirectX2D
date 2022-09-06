@@ -49,7 +49,7 @@ void InGameCuphead::Start()
 	Renderer->CreateFrameAnimationCutTexture("IngameCupheadAimUp", FrameAnimation_DESC("Cup.png", 206, 210, 0.1f, true));
 
 	// Dash
-	Renderer->CreateFrameAnimationCutTexture("IngameCupheadDash", FrameAnimation_DESC("Cup_Dash.png", 0, 7, 0.1f, true));
+	Renderer->CreateFrameAnimationCutTexture("IngameCupheadDash", FrameAnimation_DESC("Cup_Dash.png", 0, 7, 0.06f, true));
 	Renderer->AnimationBindEnd("IngameCupheadDash", std::bind(&InGameCuphead::OnDashAnimationEnded, this, std::placeholders::_1));
 
 	// Intro
@@ -88,7 +88,7 @@ void InGameCuphead::Start()
 	// Idle
 	Renderer->CreateFrameAnimationCutTexture("IngameCupheadIdle", FrameAnimation_DESC("Cup.png", 0, 7, 0.1f, true));
 	Renderer->CreateFrameAnimationCutTexture("IngameCupheadIdleDownStart", FrameAnimation_DESC("Cup.png", 160, 166, 0.1f, true));
-	Renderer->CreateFrameAnimationCutTexture("IngameCupheadIdleDown", FrameAnimation_DESC("Cup.png", 168, 172, 0.1f, true));
+	Renderer->CreateFrameAnimationCutTexture("IngameCupheadIdleDown", FrameAnimation_DESC("Cup.png", 168, 172, 0.05f, true));
 	Renderer->CreateFrameAnimationCutTexture("IngameCupheadIdleDownTurn", FrameAnimation_DESC("Cup.png", 159, 159, 0.1f, true));
 
 	Renderer->AnimationBindStart("IngameCupheadRunShootStraight", std::bind(&InGameCuphead::OnShootAnimationFrameStarted, this, std::placeholders::_1));

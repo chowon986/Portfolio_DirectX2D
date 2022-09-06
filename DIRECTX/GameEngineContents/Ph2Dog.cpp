@@ -29,10 +29,10 @@ void Ph2Dog::Start()
 {
 	{
 		Renderer = CreateComponent<GameEngineTextureRenderer>();
-		Renderer->CreateFrameAnimationFolder("Ph2DogIntroTop", FrameAnimation_DESC("Ph2DogIntroTop", 0.1f));
-		Renderer->CreateFrameAnimationFolder("Ph2DogIntroRight", FrameAnimation_DESC("Ph2DogIntroRight", 0.1f));
-		Renderer->CreateFrameAnimationFolder("Ph2DogIntroBottom", FrameAnimation_DESC("Ph2DogIntroBottom", 0.1f));
-		Renderer->CreateFrameAnimationFolder("Ph2DogIntroLeft", FrameAnimation_DESC("Ph2DogIntroLeft", 0.1f));
+		Renderer->CreateFrameAnimationFolder("Ph2DogIntroTop", FrameAnimation_DESC("Ph2DogIntroTop", 0.06f));
+		Renderer->CreateFrameAnimationFolder("Ph2DogIntroRight", FrameAnimation_DESC("Ph2DogIntroRight", 0.06f));
+		Renderer->CreateFrameAnimationFolder("Ph2DogIntroBottom", FrameAnimation_DESC("Ph2DogIntroBottom", 0.06f));
+		Renderer->CreateFrameAnimationFolder("Ph2DogIntroLeft", FrameAnimation_DESC("Ph2DogIntroLeft", 0.06f));
 
 		Renderer->CreateFrameAnimationFolder("Ph2DogIdle1", FrameAnimation_DESC("Ph2DogIdle1", 0.06f));
 		Renderer->CreateFrameAnimationFolder("Ph2DogIdle2", FrameAnimation_DESC("Ph2DogIdle2", 0.06f));
@@ -44,15 +44,15 @@ void Ph2Dog::Start()
 		Renderer->CreateFrameAnimationFolder("Ph2DogIdle8", FrameAnimation_DESC("Ph2DogIdle8", 0.06f));
 		Renderer->CreateFrameAnimationFolder("Ph2DogIdle9", FrameAnimation_DESC("Ph2DogIdle9", 0.06f));
 
-		Renderer->CreateFrameAnimationFolder("Ph2DogPain1", FrameAnimation_DESC("Ph2DogPain1", 0.1f));
-		Renderer->CreateFrameAnimationFolder("Ph2DogPain2", FrameAnimation_DESC("Ph2DogPain2", 0.1f));
-		Renderer->CreateFrameAnimationFolder("Ph2DogPain3", FrameAnimation_DESC("Ph2DogPain3", 0.1f));
-		Renderer->CreateFrameAnimationFolder("Ph2DogPain4", FrameAnimation_DESC("Ph2DogPain4", 0.1f));
-		Renderer->CreateFrameAnimationFolder("Ph2DogPain5", FrameAnimation_DESC("Ph2DogPain5", 0.1f));
-		Renderer->CreateFrameAnimationFolder("Ph2DogPain6", FrameAnimation_DESC("Ph2DogPain6", 0.1f));
-		Renderer->CreateFrameAnimationFolder("Ph2DogPain7", FrameAnimation_DESC("Ph2DogPain7", 0.1f));
-		Renderer->CreateFrameAnimationFolder("Ph2DogPain8", FrameAnimation_DESC("Ph2DogPain8", 0.1f));
-		Renderer->CreateFrameAnimationFolder("Ph2DogPain9", FrameAnimation_DESC("Ph2DogPain9", 0.1f));
+		Renderer->CreateFrameAnimationFolder("Ph2DogPain1", FrameAnimation_DESC("Ph2DogPain1", 0.06f));
+		Renderer->CreateFrameAnimationFolder("Ph2DogPain2", FrameAnimation_DESC("Ph2DogPain2", 0.06f));
+		Renderer->CreateFrameAnimationFolder("Ph2DogPain3", FrameAnimation_DESC("Ph2DogPain3", 0.06f));
+		Renderer->CreateFrameAnimationFolder("Ph2DogPain4", FrameAnimation_DESC("Ph2DogPain4", 0.06f));
+		Renderer->CreateFrameAnimationFolder("Ph2DogPain5", FrameAnimation_DESC("Ph2DogPain5", 0.06f));
+		Renderer->CreateFrameAnimationFolder("Ph2DogPain6", FrameAnimation_DESC("Ph2DogPain6", 0.06f));
+		Renderer->CreateFrameAnimationFolder("Ph2DogPain7", FrameAnimation_DESC("Ph2DogPain7", 0.06f));
+		Renderer->CreateFrameAnimationFolder("Ph2DogPain8", FrameAnimation_DESC("Ph2DogPain8", 0.06f));
+		Renderer->CreateFrameAnimationFolder("Ph2DogPain9", FrameAnimation_DESC("Ph2DogPain9", 0.06f));
 
 		Renderer->CreateFrameAnimationFolder("Ph2DogAttack1", FrameAnimation_DESC("Ph2DogAttack1", 0.06f));
 		Renderer->CreateFrameAnimationFolder("Ph2DogAttack2", FrameAnimation_DESC("Ph2DogAttack2", 0.06f));
@@ -63,6 +63,8 @@ void Ph2Dog::Start()
 		Renderer->CreateFrameAnimationFolder("Ph2DogAttack7", FrameAnimation_DESC("Ph2DogAttack7", 0.06f));
 		Renderer->CreateFrameAnimationFolder("Ph2DogAttack8", FrameAnimation_DESC("Ph2DogAttack8", 0.06f));
 		Renderer->CreateFrameAnimationFolder("Ph2DogAttack9", FrameAnimation_DESC("Ph2DogAttack9", 0.06f));
+
+		Renderer->CreateFrameAnimationFolder("Ph2DogDie", FrameAnimation_DESC("Ph2DogDie", 0.06f));
 
 		Renderer->AnimationBindFrame("Ph2DogAttack1", std::bind(&Ph2Dog::OnAttackAnimationFrameChanged, this, std::placeholders::_1));
 		Renderer->AnimationBindFrame("Ph2DogAttack2", std::bind(&Ph2Dog::OnAttackAnimationFrameChanged, this, std::placeholders::_1));
@@ -147,7 +149,7 @@ void Ph2Dog::Start()
 	}
 
 	srand(time(NULL));
-	SetHP(1);
+	SetHP(3);
 }
 
 void Ph2Dog::Update(float _DeltaTime)

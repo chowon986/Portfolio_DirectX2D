@@ -163,13 +163,11 @@ void Bulldog::Update(float _DeltaTime)
 
 	float MovePosY = GameEngineMath::LerpLimit(Plane->GetTransform().GetWorldPosition().y, EndPos.y, MoveElapsedTime * MoveSpeed);
 	float4 CurPos = Plane->GetTransform().GetWorldPosition();
-	if (GetState() == InGameMonsterState::Mount || GetState() == InGameMonsterState::Unmount)
+
+	if (GetState() != InGameMonsterState::Mount || GetState() != InGameMonsterState::Unmount)
 	{
-		CurPos.z = (int)ZOrder::NPC;
-	}
-	else
-	{
-		CurPos.z = (int)ZOrder::NPC - 2;
+		float4 BulldogCurPos = GetTransform().GetLocalPosition();
+		GetTransform().SetLocalPosition(float4{ BulldogCurPos.x, BulldogCurPos.y, (int)ZOrder::NPC - 2 });
 	}
 	Plane->GetTransform().SetWorldPosition(float4{ CurPos.x, MovePosY, CurPos.z });
 
@@ -325,6 +323,11 @@ void Bulldog::BulldogDieCheck(const FrameAnimation_DESC& _Info)
 
 void Bulldog::OnUnmountAnimationFrameChanged(const FrameAnimation_DESC& _Info)
 {
+	if (_Info.CurFrame == 1)
+	{
+		float4 BulldogCurPos = GetTransform().GetLocalPosition();
+		GetTransform().SetLocalPosition(float4{ BulldogCurPos.x, BulldogCurPos.y, (int)ZOrder::NPC + 1 });
+	}
 	if (_Info.CurFrame == 7)
 	{
 		AttackChangeOnOffSwitch();
@@ -461,6 +464,13 @@ void Bulldog::Test(const FrameAnimation_DESC& _Info)
 
 void Bulldog::OnMountAnimationFrameChanged(const FrameAnimation_DESC& _Info)
 {
+	if (_Info.CurFrame == 1)
+	{
+	float4 BulldogCurPos = GetTransform().GetLocalPosition();
+	GetTransform().SetLocalPosition(float4{ BulldogCurPos.x, BulldogCurPos.y, (int)ZOrder::NPC +1 });
+
+
+	}
 	if (Plane == nullptr)
 	{
 		Plane = GetParent<BulldogPlane>();

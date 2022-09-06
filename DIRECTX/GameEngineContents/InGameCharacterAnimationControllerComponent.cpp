@@ -85,7 +85,8 @@ void InGameCharacterAnimationControllerComponent::UpdateAnimation()
 		State != InGameCharacterState::Dash &&
 		State != InGameCharacterState::TakeDamage &&
 		State != InGameCharacterState::Die &&
-		State != InGameCharacterState::Parry)
+		State != InGameCharacterState::Parry &&
+		State != InGameCharacterState::Duck)
 	{
 		Renderer->ChangeFrameAnimation("Ingame" + Name + "Jump");
 	}
