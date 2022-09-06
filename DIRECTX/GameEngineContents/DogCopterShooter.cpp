@@ -276,7 +276,7 @@ void DogCopterShooter::Start()
 		LeftTopMidPadBackRenderer->CreateFrameAnimationFolder("Nothing", FrameAnimation_DESC("Nothing", 0.1f, false));
 		LeftTopMidPadBackRenderer->ChangeFrameAnimation("PadBackHole");
 		LeftTopMidPadBackRenderer->SetScaleModeImage();
-		LeftTopMidPadBackRenderer->GetTransform().SetLocalPosition({ 1180, -360, (int)ZOrder::NPC - 5 });
+		LeftTopMidPadBackRenderer->GetTransform().SetLocalPosition({ 125, -360, (int)ZOrder::NPC - 5 });
 		LeftTopMidPadBackRenderer->Off();
 
 		GameEngineTextureRenderer* RightTopMidPadBackRenderer = CreateComponent<GameEngineTextureRenderer>();
@@ -650,7 +650,7 @@ void DogCopterShooter::OnMonsterAttackStateChanged(InGameMonsterAttackState _Att
 			}
 			else
 			{
-			PadBackRenderers[Idx]->On();
+				PadBackRenderers[Idx]->On();
 			}
 
 			PadBackBackerRenderers[Idx]->ChangeFrameAnimation("PadBackHole");

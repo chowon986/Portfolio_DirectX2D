@@ -293,6 +293,7 @@ void InGameCuphead::Jump()
 void InGameCuphead::Parry()
 {
 	SetState(InGameCharacterState::Parry);
+	GetPhysicsComponent()->AddForce(10);
 }
 
 void InGameCuphead::Prepare()
@@ -333,13 +334,9 @@ void InGameCuphead::UpdateState()
 		}
 		else
 		{
+			IsInputEnabled = false;
 			Parry();
 		}
-	}
-
-	else if (OnParriable == true)
-	{
-		Parry();
 	}
 
 	else if (true == GameEngineInput::GetInst()->IsPress("Aim"))
@@ -362,6 +359,7 @@ void InGameCuphead::UpdateState()
 	{
 		if (GetIsOnGround() == true)
 		{
+			IsInputEnabled = true;
 			Idle();
 		}
 	}
@@ -441,6 +439,7 @@ bool InGameCuphead::OnParry(GameEngineCollision* _This, GameEngineCollision* _Ot
 void InGameCuphead::OnParryAnimationFrameEnd(const FrameAnimation_DESC& _Info)
 {
 	OnParriable = false;
+	IsInputEnabled = true;
 	Idle();
 }
 
