@@ -27,6 +27,7 @@ public:
 	void OnRotateCameraOutAnimationFrameFinished(const FrameAnimation_DESC& _Info);
 	void OnRotateCameraAnimationFrameChanged(const FrameAnimation_DESC& _Info);
 	void OnRotateCameraOutAnimationFrameChanged(const FrameAnimation_DESC& _Info);
+	void OnDeathAnimationFrameFinished(const FrameAnimation_DESC& _Info);
 	void Test(const FrameAnimation_DESC& _Info);
 
 protected:
@@ -54,5 +55,6 @@ private:
 	GameEngineTextureRenderer* RightHandRenderer;
 	SecretLeader* Leader;
 	GameEngineCollision* Collision;
+	bool OnceCheck;
 };
 

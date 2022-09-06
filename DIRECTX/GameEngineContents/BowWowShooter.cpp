@@ -38,10 +38,8 @@ void BowWowShooter::Update(float _DeltaTime)
 			{
 			case InGameMonsterAttackState::BowWow:
 			{
-				//int RandomAttack = rand() % 4;
-				//++RandomAttack;
-
-				//if (RandomAttack == 1)
+				int RandomAttack = (rand() % 4) + 1;
+				if (RandomAttack == 1)
 				{
 					BowWowBullet* Bullet = GetLevel()->CreateActor<BowWowBullet>();
 					Bullet->GetRenderer()->ChangeFrameAnimation("Bow1");
@@ -54,23 +52,45 @@ void BowWowShooter::Update(float _DeltaTime)
 					}
 					break;
 				}
-				//else if (RandomAttack == 2)
-				//{
-				//	Bullet = GetLevel()->CreateActor<BowWowBullet>();
-				//	Bullet->GetRenderer()->ChangeFrameAnimation("Bow2");
-				//}
-				//else if (RandomAttack == 3)
-				//{
-				//	Bullet = GetLevel()->CreateActor<BowWowBullet>();
-				//	Bullet->GetRenderer()->ChangeFrameAnimation("Wow1");
-				//}
-				//else
-				//{
-				//	Bullet = GetLevel()->CreateActor<BowWowBullet>();
-				//	Bullet->GetRenderer()->ChangeFrameAnimation("Wow2");
-				//}
-
-
+				else if (RandomAttack == 1)
+				{
+					BowWowBullet* Bullet = GetLevel()->CreateActor<BowWowBullet>();
+					Bullet->GetRenderer()->ChangeFrameAnimation("Bow2");
+					Bullet->SetColMapImage(GetColMapImage());
+					Bullet->GetTransform().SetWorldPosition(GetTransform().GetWorldPosition());
+					Ph2Dog* Dog = dynamic_cast<Ph2Dog*>(GetParent());
+					if (Dog != nullptr)
+					{
+						Bullet->SetDirection(Dog->GetBowWowDirection());
+					}
+					break;
+				}
+				else if (RandomAttack == 1)
+				{
+					BowWowBullet* Bullet = GetLevel()->CreateActor<BowWowBullet>();
+					Bullet->GetRenderer()->ChangeFrameAnimation("Wow1");
+					Bullet->SetColMapImage(GetColMapImage());
+					Bullet->GetTransform().SetWorldPosition(GetTransform().GetWorldPosition());
+					Ph2Dog* Dog = dynamic_cast<Ph2Dog*>(GetParent());
+					if (Dog != nullptr)
+					{
+						Bullet->SetDirection(Dog->GetBowWowDirection());
+					}
+					break;
+				}
+				else if (RandomAttack == 1)
+				{
+					BowWowBullet* Bullet = GetLevel()->CreateActor<BowWowBullet>();
+					Bullet->GetRenderer()->ChangeFrameAnimation("Wow2");
+					Bullet->SetColMapImage(GetColMapImage());
+					Bullet->GetTransform().SetWorldPosition(GetTransform().GetWorldPosition());
+					Ph2Dog* Dog = dynamic_cast<Ph2Dog*>(GetParent());
+					if (Dog != nullptr)
+					{
+						Bullet->SetDirection(Dog->GetBowWowDirection());
+					}
+					break;
+				}
 			}
 			}
 		}
