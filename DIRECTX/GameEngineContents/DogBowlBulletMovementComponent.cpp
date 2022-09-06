@@ -24,7 +24,7 @@ void DogBowlBulletMovementComponent::Update(float _DeltaTime)
 	BulletBase* Bullet = GetParent<BulletBase>();
 	if (Bullet != nullptr)
 	{
-		_Direction *= Speed;
+		_Direction = _Direction* Speed * _DeltaTime;
 		Bullet->GetTransform().SetWorldMove(_Direction);
 	}
 }

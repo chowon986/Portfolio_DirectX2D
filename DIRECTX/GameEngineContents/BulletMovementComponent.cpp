@@ -25,7 +25,7 @@ void BulletMovementComponent::Update(float _DeltaTime)
 	if (Bullet != nullptr)
 	{
 		_Direction *= Speed;
-		Bullet->GetTransform().SetWorldMove(_Direction);
+		Bullet->GetTransform().SetWorldMove(_Direction * _DeltaTime);
 	}
 }
 
