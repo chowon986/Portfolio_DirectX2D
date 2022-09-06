@@ -46,6 +46,7 @@ public:
 	void OnIdleAnimaitionFinished(const FrameAnimation_DESC& _Info);
 	void OnIdleAnimaitionFrameChanged(const FrameAnimation_DESC& _Info);
 	void OnAttackAnimationFrameChanged(const FrameAnimation_DESC& _Info);
+	void Ph2DogDieCheck(const FrameAnimation_DESC& _Info);
 
 	bool SetStartPos();
 	bool OnTakeDamage(GameEngineCollision* _This, GameEngineCollision* _Other);

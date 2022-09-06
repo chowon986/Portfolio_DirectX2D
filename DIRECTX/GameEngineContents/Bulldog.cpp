@@ -302,7 +302,7 @@ void Bulldog::FinishAttack()
 
 void Bulldog::OnPrepareAnimationFinished(const FrameAnimation_DESC& _Info)
 {
-	Mount();
+Mount();
 }
 
 bool Bulldog::OnTakeDamage(GameEngineCollision* _This, GameEngineCollision* _Other)

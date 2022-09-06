@@ -65,6 +65,7 @@ void Ph2Dog::Start()
 		Renderer->CreateFrameAnimationFolder("Ph2DogAttack9", FrameAnimation_DESC("Ph2DogAttack9", 0.06f));
 
 		Renderer->CreateFrameAnimationFolder("Ph2DogDie", FrameAnimation_DESC("Ph2DogDie", 0.06f));
+		Renderer->AnimationBindEnd("Ph2DogDie", std::bind(&Ph2Dog::Ph2DogDieCheck, this, std::placeholders::_1));
 
 		Renderer->AnimationBindFrame("Ph2DogAttack1", std::bind(&Ph2Dog::OnAttackAnimationFrameChanged, this, std::placeholders::_1));
 		Renderer->AnimationBindFrame("Ph2DogAttack2", std::bind(&Ph2Dog::OnAttackAnimationFrameChanged, this, std::placeholders::_1));
@@ -213,15 +214,12 @@ void Ph2Dog::Update(float _DeltaTime)
 	{
 		TakeDamage();
 		SetHP(GetHP() - 1);
+		if (GetHP() <= 0)
+		{
+			Renderer->ChangeFrameAnimation("Ph2DogDie");
+		}
 	}
 
-	if (GetHP() <= 0)
-	{
-		// Die 애니메이션을 켜준다.
-		// Die 애니메이션이 끝나면 Death() 를 호출해 준다.
-		//Die();
-		Death();
-	}
 }
 
 bool Ph2Dog::SetStartPos()
@@ -349,4 +347,9 @@ void Ph2Dog::OnAttackAnimationFrameChanged(const FrameAnimation_DESC& _Info)
 	{
 		SetAttackState(InGameMonsterAttackState::None);
 	}
+}
+
+void Ph2Dog::Ph2DogDieCheck(const FrameAnimation_DESC& _Info)
+{
+	Death();
 }
