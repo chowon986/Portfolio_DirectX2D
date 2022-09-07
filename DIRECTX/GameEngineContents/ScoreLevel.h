@@ -23,6 +23,7 @@ protected:
 	void End() override;
 private:
 	GameEngineTextureRenderer* BackgroundRenderer;
+	GameEngineTextureRenderer* IrisRenderer;
 	CharacterState* State;
 };
 
