@@ -9,6 +9,7 @@
 #include "WorldMapLevel.h"
 #include "HourglassLevel.h"
 #include "BeforeTitleLevel.h"
+#include "ScoreLevel.h"
 #include <GameEngineCore/GameEngineBlend.h>
 
 #pragma comment(lib, "GameEngineBase.lib")
@@ -139,6 +140,7 @@ void ContentsCore::Start()
 	CreateLevel<ShopLevel>("Shop");
 	CreateLevel<TutorialLevel>("Tutorial");
 	CreateLevel<DogFightLevel>("DogFight");
+	CreateLevel<ScoreLevel>("Score");
 	ChangeLevel("BeforeTitle");
 
 	GameEngineFont::Load("Title");

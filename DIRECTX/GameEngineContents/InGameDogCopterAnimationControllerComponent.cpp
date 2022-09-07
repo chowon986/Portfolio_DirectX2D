@@ -59,9 +59,19 @@ void InGameDogCopterAnimationControllerComponent::UpdateAnimation()
 		Renderer->ChangeFrameAnimation(Name + "RotateCameraOut");
 	}
 
+	else if (State == InGameMonsterState::Die)
+	{
+		Renderer->ChangeFrameAnimation(Name + "Die");
+	}
+
 	else if (State == InGameMonsterState::BeforeRoToateCameraOut)
 	{
 		Renderer->ChangeFrameAnimation(Name + "BeforeRotateCameraOut");
+	}
+
+	else if (State == InGameMonsterState::KnockOut)
+	{
+		Renderer->ChangeFrameAnimation(Name + "KnockOut");
 	}
 
 	else if (State == InGameMonsterState::TakeDamage)

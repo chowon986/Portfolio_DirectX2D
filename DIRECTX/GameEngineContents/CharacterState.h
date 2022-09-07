@@ -30,6 +30,5 @@ public:
 	float ShootSpeed;
 	std::map<ItemType, ItemBase*> Items;
 	std::map<ItemType, std::vector<ItemBase*>> EquippedItems;
-
 };
 

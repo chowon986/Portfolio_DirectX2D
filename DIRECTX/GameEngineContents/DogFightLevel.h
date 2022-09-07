@@ -45,8 +45,10 @@ public:
 	void BulldogIntroAnimationFrameFinished(const FrameAnimation_DESC& _Info);
 	void DogCopterIntroPhase1IntroAnimationFrameFinished(const FrameAnimation_DESC& _Info);
 	void DogCopterIntroPhase1IntroAnimationFrameChanged(const FrameAnimation_DESC& _Info);
+	void KnockOutAnimationFrameFinished(const FrameAnimation_DESC& _Info);
 	void ReadyWallopAnimationFrameFinished(const FrameAnimation_DESC& _Info);
 
+	CharacterState* GetCharacterState() { return State;}
 	IInGameCharacterBase* GetPlayer() { return Player; }
 
 protected:
@@ -100,7 +102,7 @@ private:
 	GameEngineTextureRenderer* SuperMeter;
 	IInGameCharacterBase* Player;
 	CharacterState* State;
-	float RoateTime;
+	float RotateTime;
 
 };
 

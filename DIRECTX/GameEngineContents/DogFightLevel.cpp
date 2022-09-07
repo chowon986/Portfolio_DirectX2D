@@ -38,6 +38,7 @@ DogFightLevel::DogFightLevel()
 	, OldState(InGameMonsterState::Idle)
 	, IsRotateCompleted(false)
 	, RotateElapsedTime(0.0f)
+	, RotateTime(10)
 {
 }
 
@@ -334,7 +335,7 @@ void DogFightLevel::Start()
 		}
 	}
 
-	SetPhase(Phase::Phase3/*Ready*/);
+	SetPhase(Phase::Ready);
 	//카메라 내 오브젝트 크기 조정 
 	GetMainCamera()->SetProjectionSize({ 1280.0f, 720.0f });
 	GetRotateCamera()->SetProjectionSize({ 1536.0f,864.0f });
@@ -498,11 +499,19 @@ void DogFightLevel::DogCopterIntroPhase1IntroAnimationFrameChanged(const FrameAn
 		GameEngineActor* ReadyWallop = CreateActor<GameEngineActor>(GameObjectGroup::UI);
 		ReadyWallopRenderer = ReadyWallop->CreateComponent<GameEngineTextureRenderer>();
 		ReadyWallopRenderer->CreateFrameAnimationFolder("Ready", FrameAnimation_DESC("06ReadyWallop", 0.05, false));
+		ReadyWallopRenderer->CreateFrameAnimationFolder("KnockOut", FrameAnimation_DESC("07KnockOut", 0.05, false));
 		ReadyWallopRenderer->AnimationBindEnd("Ready", std::bind(&DogFightLevel::ReadyWallopAnimationFrameFinished, this, std::placeholders::_1));
+		ReadyWallopRenderer->AnimationBindEnd("KnockOut", std::bind(&DogFightLevel::KnockOutAnimationFrameFinished, this, std::placeholders::_1));
 		ReadyWallopRenderer->GetTransform().SetWorldScale({ 1280.0f,720.0f,1.0f });
 		ReadyWallopRenderer->ChangeFrameAnimation("Ready");
 		PushRendererToUICamera(ReadyWallopRenderer);
 	}
+}
+
+void DogFightLevel::KnockOutAnimationFrameFinished(const FrameAnimation_DESC& _Info)
+{
+	ReadyWallopRenderer->Off();
+	LeaderCopter->SetState(InGameMonsterState::KnockOut);
 }
 
 void DogFightLevel::ReadyWallopAnimationFrameFinished(const FrameAnimation_DESC& _Info)
@@ -653,7 +662,17 @@ void DogFightLevel::Update(float _DeltaTime)
 		if (LeaderCopter != nullptr)
 		{
 			CaptainCanteenPlane->SetDogCopter(LeaderCopter);
+
+			if (LeaderCopter->GetState() == InGameMonsterState::Die)
+			{
+				if (ReadyWallopRenderer != nullptr)
+				{
+				ReadyWallopRenderer->ChangeFrameAnimation("KnockOut");
+				ReadyWallopRenderer->On();
+				}
+			}
 		}
+
 	}
 
 	if (nullptr != LeaderCopter)
@@ -683,17 +702,17 @@ void DogFightLevel::Update(float _DeltaTime)
 			{
 			case InGameMonsterState::RotateCameraIn:
 			{
-				RoateTime = 10;
+				RotateTime = 10;
 				break;
 			}
 			case InGameMonsterState::RotateCameraOut:
 			{
-				RoateTime = 5;
+				RotateTime = 5;
 				break;
 			}
 			}
 
-			float Time = RotateElapsedTime / RoateTime;
+			float Time = RotateElapsedTime / RotateTime;
 			if (abs(CameraRotation.z - ZAngle) <= 0.1)
 			{
 				IsRotateCompleted = true;

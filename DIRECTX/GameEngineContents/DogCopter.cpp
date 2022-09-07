@@ -3,6 +3,8 @@
 #include "InGameDogCopterAnimationControllerComponent.h"
 #include "DogCopterShooter.h"
 #include "DogBowlShooter.h"
+#include "ScoreLevel.h"
+#include "DogFightLevel.h"
 
 DogCopter::DogCopter()
 	: Renderer(nullptr)
@@ -33,9 +35,10 @@ void DogCopter::Start()
 		Renderer->CreateFrameAnimationFolder("DogCopterAttack2", FrameAnimation_DESC("DogCopterRotatedIdle", 0.1f));
 		Renderer->CreateFrameAnimationFolder("DogCopterBeforeRotateCameraOut", FrameAnimation_DESC("DogCopterBeforeRotateCameraOut", 0.1f));
 		Renderer->CreateFrameAnimationFolder("DogCopterRotateCameraOut", FrameAnimation_DESC("DogCopterRotateCameraOut", 0.1f));
-		Renderer->CreateFrameAnimationFolder("DogCopterDie", FrameAnimation_DESC("DeathIdle", 0.1f));
+		Renderer->CreateFrameAnimationFolder("DogCopterDie", FrameAnimation_DESC("DeathIdle", 0,0,0.1f, false));
+		Renderer->CreateFrameAnimationFolder("DogCopterKnockOut", FrameAnimation_DESC("DeathIdle", 0.1f, false));
 
-		Renderer->AnimationBindEnd("DogCopterDie", std::bind(&DogCopter::OnDeathAnimationFrameFinished, this, std::placeholders::_1));
+		Renderer->AnimationBindEnd("DogCopterKnockOut", std::bind(&DogCopter::OnDeathAnimationFrameFinished, this, std::placeholders::_1));
 
 		Renderer->AnimationBindEnd("DogCopterIntro", std::bind(&DogCopter::OnIntroAnimationFrameFinished, this, std::placeholders::_1));
 		Renderer->AnimationBindFrame("DogCopterIntro", std::bind(&DogCopter::Test, this, std::placeholders::_1));
@@ -195,10 +198,6 @@ void DogCopter::BeforeRoateCameraIn()
 bool DogCopter::OnTakeDamage(GameEngineCollision* _This, GameEngineCollision* _Other)
 {
 	SetHP(GetHP() - 1);
-	if (GetHP() <= 0)
-	{
-		Die();
-	}
 	return true;
 }
 
@@ -221,7 +220,14 @@ void DogCopter::OnIdleAnimationFrameChanged(const FrameAnimation_DESC& _Info)
 {
 	if (_Info.CurFrame == 6)
 	{
-		Attack1();
+		if (GetHP() <= 0)
+		{
+			Die();
+		}
+		else
+		{
+			Attack1();
+		}
 	}
 }
 
@@ -262,7 +268,7 @@ void DogCopter::OnRotateCameraOutAnimationFrameChanged(const FrameAnimation_DESC
 
 void DogCopter::OnDeathAnimationFrameFinished(const FrameAnimation_DESC& _Info)
 {
-	// scorescreen ¶ç¿ì±â
+	GEngine::ChangeLevel("Score");
 }
 
 void DogCopter::OnBeforeRotateCameraAnimationFrameChanged(const FrameAnimation_DESC& _Info)

@@ -213,9 +213,6 @@
     <ClInclude Include="IWorldMapCharacterBase.h">
       <Filter>Actor\Base</Filter>
     </ClInclude>
-    <ClInclude Include="HourglassLevel.h">
-      <Filter>Level</Filter>
-    </ClInclude>
     <ClInclude Include="ITalkable.h">
       <Filter>Actor\Interface</Filter>
     </ClInclude>
@@ -522,6 +519,10 @@
     <ClInclude Include="HydrantBullet.h">
       <Filter>Actor\Weapon\Bullet\Monster</Filter>
     </ClInclude>
+    <ClInclude Include="HourglassLevel.h">
+      <Filter>Level\01 Play</Filter>
+    </ClInclude>
+    <ClInclude Include="ScoreLevel.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp">
@@ -592,9 +593,6 @@
     </ClCompile>
     <ClCompile Include="IWorldMapCharacterBase.cpp">
       <Filter>Actor\Base</Filter>
-    </ClCompile>
-    <ClCompile Include="HourglassLevel.cpp">
-      <Filter>Level</Filter>
     </ClCompile>
     <ClCompile Include="ITalkable.cpp">
       <Filter>Actor\Interface</Filter>
@@ -899,5 +897,9 @@
     <ClCompile Include="HydrantBullet.cpp">
       <Filter>Actor\Weapon\Bullet\Monster</Filter>
     </ClCompile>
+    <ClCompile Include="HourglassLevel.cpp">
+      <Filter>Level\01 Play</Filter>
+    </ClCompile>
+    <ClCompile Include="ScoreLevel.cpp" />
   </ItemGroup>
 </Project>
