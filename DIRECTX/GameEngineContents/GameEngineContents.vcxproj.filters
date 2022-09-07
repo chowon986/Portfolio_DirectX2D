@@ -345,9 +345,6 @@
     <ClInclude Include="InGameMonsterAnimationControllerComponent.h">
       <Filter>Components\Monster</Filter>
     </ClInclude>
-    <ClInclude Include="TutorialBackground.h">
-      <Filter>Actor\Play\InGame\Object\Tutorial</Filter>
-    </ClInclude>
     <ClInclude Include="BackgroundHills.h">
       <Filter>Actor\Play\InGame\Object\DogFight</Filter>
     </ClInclude>
@@ -724,9 +721,6 @@
     </ClCompile>
     <ClCompile Include="InGameMonsterAnimationControllerComponent.cpp">
       <Filter>Components\Monster</Filter>
-    </ClCompile>
-    <ClCompile Include="TutorialBackground.cpp">
-      <Filter>Actor\Play\InGame\Object\Tutorial</Filter>
     </ClCompile>
     <ClCompile Include="BackgroundHills.cpp">
       <Filter>Actor\Play\InGame\Object\DogFight</Filter>

@@ -21,6 +21,8 @@ protected:
 	void End() override;
 
 private:
+
+private:
 	GameEngineTextureRenderer* BackgroundRenderer;
 	GameEngineTextureRenderer* ColMapRenderer;
 };
