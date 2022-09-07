@@ -4,6 +4,8 @@
 #include <functional>
 #include "CharacterState.h"
 #include <GameEngineCore/GameEngineBlur.h>
+#include "PeaShooterItem.h"
+#include "PeaShooter.h"
 
 SelectLevel::SelectLevel()
 	: OptionRenderer(nullptr)
@@ -39,6 +41,12 @@ void SelectLevel::Start()
 	GetMainCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
 	State = CreateActor<CharacterState>(GameObjectGroup::CharacterState);
 	State->SetLevelOverOn();
+	State->EquippedItems[InventoryType::ShotA] = new PeaShooterItem;
+	if (WeaponItemBase* Item = dynamic_cast<WeaponItemBase*>(State->EquippedItems[InventoryType::ShotA]))
+	{
+		Item->Weapon = CreateActor<PeaShooter>();
+		Item->Weapon->SetLevelOverOn();
+	}
 
 	if (false == GameEngineInput::GetInst()->IsKey("MoveDown"))
 	{

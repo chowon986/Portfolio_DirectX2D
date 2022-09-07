@@ -3,6 +3,7 @@
 #include "WeaponItemBase.h"
 #include "CharmItemBase.h"
 #include "SuperItemBase.h"
+#include "PeaShooterItem.h"
 
 CharacterState::CharacterState()
 {
@@ -10,11 +11,31 @@ CharacterState::CharacterState()
 
 CharacterState::~CharacterState()
 {
+	if (EquippedItems.size() > 0)
+	{
+		for (std::map<InventoryType, ItemBase*>::iterator it = EquippedItems.begin(); it != EquippedItems.end(); it++)
+		{
+			if (it->second != nullptr)
+			{
+				delete it->second;
+				it->second = nullptr;
+			}
+		}
+		EquippedItems.clear();
+	}
+
 	if (Items.size() > 0)
 	{
-		for (std::map<ItemType, ItemBase*>::iterator it = Items.begin(); it != Items.end(); it++)
+		for (std::map<ItemType, std::vector<ItemBase*>>::iterator it = Items.begin(); it != Items.end(); it++)
 		{
-			delete it->second;
+			for (ItemBase* Item : it->second)
+			{
+				if (Item != nullptr)
+				{
+					delete Item;
+					Item = nullptr;
+				}
+			}
 		}
 		Items.clear();
 	}
@@ -22,10 +43,15 @@ CharacterState::~CharacterState()
 
 void CharacterState::Start()
 {
-	Items.insert(std::make_pair<ItemType, ItemBase*>(ItemType::ShotA, new WeaponItemBase()));
-	Items.insert(std::make_pair<ItemType, ItemBase*>(ItemType::ShotB, new WeaponItemBase()));
-	Items.insert(std::make_pair<ItemType, ItemBase*>(ItemType::Charm, new CharmItemBase()));
-	Items.insert(std::make_pair<ItemType, ItemBase*>(ItemType::Super, new SuperItemBase()));
+	EquippedItems.insert(std::make_pair<InventoryType, ItemBase*>(InventoryType::ShotA, nullptr));
+	EquippedItems.insert(std::make_pair<InventoryType, ItemBase*>(InventoryType::ShotB, nullptr));
+	EquippedItems.insert(std::make_pair<InventoryType, ItemBase*>(InventoryType::Super, nullptr));
+	EquippedItems.insert(std::make_pair<InventoryType, ItemBase*>(InventoryType::Charm, nullptr));
+
+	Items.insert(std::make_pair<ItemType, std::vector<ItemBase*>>(ItemType::Shoot, std::vector<ItemBase*>()));
+	Items.insert(std::make_pair<ItemType, std::vector<ItemBase*>>(ItemType::Super, std::vector<ItemBase*>()));
+	Items.insert(std::make_pair<ItemType, std::vector<ItemBase*>>(ItemType::Charm, std::vector<ItemBase*>()));
+
 
 	if (false == GameEngineInput::GetInst()->IsKey("AddCoin"))
 	{
@@ -37,7 +63,7 @@ void CharacterState::Start()
 void CharacterState::OnLevelChanged()
 {
 	{	
-		ItemBase* item = Items[ItemType::Charm];
+		ItemBase* item = EquippedItems[InventoryType::Charm];
 		if (CharmItemBase* ItemBase = dynamic_cast<CharmItemBase*>(item))
 		{
 			MaxHP = ItemBase->MaxHP;
@@ -45,7 +71,7 @@ void CharacterState::OnLevelChanged()
 	}
 
 	{
-		ItemBase* item = Items[ItemType::Super];
+		ItemBase* item = EquippedItems[InventoryType::Super];
 		if (SuperItemBase* ItemBase = dynamic_cast<SuperItemBase*>(item))
 		{
 
@@ -53,7 +79,7 @@ void CharacterState::OnLevelChanged()
 	}
 
 	{
-		ItemBase* item = Items[ItemType::ShotA];
+		ItemBase* item = EquippedItems[InventoryType::ShotA];
 		if (WeaponItemBase* ItemBase = dynamic_cast<WeaponItemBase*>(item))
 		{
 
@@ -61,10 +87,9 @@ void CharacterState::OnLevelChanged()
 	}
 
 	{
-		ItemBase* item = Items[ItemType::ShotB];
+		ItemBase* item = EquippedItems[InventoryType::ShotB];
 		if (WeaponItemBase* ItemBase = dynamic_cast<WeaponItemBase*>(item))
 		{
-
 		}
 	}
 }

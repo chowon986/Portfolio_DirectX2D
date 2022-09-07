@@ -30,11 +30,6 @@ void WorldMapCuphead::Start()
 			GameEngineInput::GetInst()->CreateKey("Enter", 'B');
 		}
 
-		if (false == GameEngineInput::GetInst()->IsKey("Inventory"))
-		{
-			GameEngineInput::GetInst()->CreateKey("Inventory", 'I');
-
-		}
 	}
 
 	{
@@ -93,25 +88,6 @@ void WorldMapCuphead::Start()
 void WorldMapCuphead::Update(float _DeltaTime)
 {
 	GetLevel()->GetMainCameraActorTransform().SetLocalPosition({ GetTransform().GetLocalPosition().x + 6.0f, GetTransform().GetLocalPosition().y - 32 });
-
-	if (true == GameEngineInput::GetInst()->IsDown("Inventory"))
-	{
-		InventoryOnOffSwitch();
-		if (true == InventoryOn)
-		{
-			if (Inventory != nullptr)
-			{
-				Inventory->On();
-			}
-		}
-		else
-		{
-			if (Inventory != nullptr)
-			{
-				Inventory->Off();
-			}
-		}
-	}
 
 	if (false == Collision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::NPC, CollisionType::CT_AABB2D,
 		std::bind(&WorldMapCuphead::CanPortalCollision, this, std::placeholders::_1, std::placeholders::_2)))

@@ -2,6 +2,9 @@
 #include "ItemBase.h"
 
 ItemBase::ItemBase()
+	: ItemName("")
+	, Type(ItemType::None)
+
 {
 }
 

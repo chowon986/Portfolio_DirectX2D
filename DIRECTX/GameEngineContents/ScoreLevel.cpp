@@ -2,8 +2,12 @@
 #include "ScoreLevel.h"
 #include "CharacterState.h"
 #include <GameEngineCore/GameEngineBlur.h>
+#include <GameEngineCore/GameEngineFontRenderer.h>
 
 ScoreLevel::ScoreLevel()
+	: BackgroundRenderer(nullptr)
+	, IrisRenderer(nullptr)
+	, State(nullptr)
 {
 }
 
@@ -59,6 +63,18 @@ void ScoreLevel::Start()
 		BoardRenderer->SetScaleModeImage();
 		BoardRenderer->GetTransform().SetLocalPosition(float4{ 750.0f, -425.0f,(int)ZOrder::Foreground });
 	}
+
+	{
+		GameEngineActor* Font = CreateActor<GameEngineActor>();
+		GameEngineFontRenderer* FontRenderer = Font->CreateComponent<GameEngineFontRenderer>();
+		FontRenderer->SetRenderingOrder(10000);
+		FontRenderer->SetText("½Ã°£", "µ¸¿ò");
+		FontRenderer->SetColor({ 1.0f, 1.0f, 1.0f, 1.0 });
+		FontRenderer->SetSize(30);
+		FontRenderer->GetTransform().SetLocalPosition(float4{ 750.0f, -425.0f,(int)ZOrder::Foreground - 1});
+		FontRenderer->ChangeCamera(CAMERAORDER::UICAMERA);
+	}
+
 	if (State == nullptr)
 	{
 		GameEngineActor* Player = CreateActor<GameEngineActor>();

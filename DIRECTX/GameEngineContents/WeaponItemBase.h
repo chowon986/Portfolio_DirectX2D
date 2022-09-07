@@ -13,7 +13,7 @@ public:
 	WeaponItemBase& operator=(const WeaponItemBase& _Other) = delete;
 	WeaponItemBase& operator=(WeaponItemBase&& _Other) noexcept = delete;
 
-private:
+public:
 	WeaponBase* Weapon;	
 };
 

@@ -3,7 +3,9 @@
 
 TwinHeartItem::TwinHeartItem()
 {
+	WeaponItemBase();
 	ItemName = "TwinHeart";
+	Type = ItemType::Charm;
 }
 
 TwinHeartItem::~TwinHeartItem()

@@ -523,6 +523,9 @@
       <Filter>Level\01 Play</Filter>
     </ClInclude>
     <ClInclude Include="ScoreLevel.h" />
+    <ClInclude Include="PeaShooterItem.h">
+      <Filter>Actor\Item\Weapon</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp">
@@ -901,5 +904,8 @@
       <Filter>Level\01 Play</Filter>
     </ClCompile>
     <ClCompile Include="ScoreLevel.cpp" />
+    <ClCompile Include="PeaShooterItem.cpp">
+      <Filter>Actor\Item\Weapon</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

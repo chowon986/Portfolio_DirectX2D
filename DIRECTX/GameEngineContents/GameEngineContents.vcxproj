@@ -249,6 +249,7 @@
     <ClInclude Include="Omm.h" />
     <ClInclude Include="PeaBullet.h" />
     <ClInclude Include="PeaShooter.h" />
+    <ClInclude Include="PeaShooterItem.h" />
     <ClInclude Include="Ph1Dog.h" />
     <ClInclude Include="Ph2Dog.h" />
     <ClInclude Include="PhysicsComponent.h" />
@@ -386,6 +387,7 @@
     <ClCompile Include="Omm.cpp" />
     <ClCompile Include="PeaBullet.cpp" />
     <ClCompile Include="PeaShooter.cpp" />
+    <ClCompile Include="PeaShooterItem.cpp" />
     <ClCompile Include="Ph1Dog.cpp" />
     <ClCompile Include="Ph2Dog.cpp" />
     <ClCompile Include="PhysicsComponent.cpp" />

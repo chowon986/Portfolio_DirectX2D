@@ -69,4 +69,5 @@ private:
 	bool AlphaOn;
 	float CanTakeDamageIntervalTime;
 	float CanTakeDamageElapsedTime;
+
 };

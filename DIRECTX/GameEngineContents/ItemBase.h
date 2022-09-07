@@ -1,6 +1,7 @@
 #pragma once
 #include "Delegates.h"
 
+enum class ItemType;
 class ItemBase
 {
 public:
@@ -13,5 +14,6 @@ public:
 
 public:
 	std::string ItemName;
+	ItemType Type;
 };
 

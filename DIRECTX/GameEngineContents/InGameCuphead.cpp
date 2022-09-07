@@ -8,6 +8,8 @@
 #include "ConvergeShooter.h"
 #include "BoomerangShooter.h"
 #include "ChargerShooter.h"
+#include "CharacterState.h"
+#include "WeaponItemBase.h"
 
 InGameCuphead::InGameCuphead()
 	: IsInputEnabled(false)
@@ -131,26 +133,26 @@ void InGameCuphead::Start()
 	Animation->SetCharacterName("Cuphead");
 
 	{
-		// รั
+		std::list<GameEngineActor*> Actors = GetLevel()->GetGroup(GameObjectGroup::CharacterState);
+		WeaponBase* Weapon = nullptr;
+		for (GameEngineActor* Actor : Actors)
+		{
+			if (CharacterState* _State = dynamic_cast<CharacterState*>(Actor))
+			{
+				if (WeaponItemBase* ShotAItem = dynamic_cast<WeaponItemBase*>(_State->EquippedItems[InventoryType::ShotA]))
+				{
+					Weapon = ShotAItem->Weapon;
+					Weapon->SetParent(this);
+				}
+			}
 
-		PeaShooter* Shooter = GetLevel()->CreateActor<PeaShooter>();
-		Shooter->SetParent(this);
-		//Shooter->GetTransform().SetLocalPosition({ 70.0f, 90.0f });
-
-		//SpreadShooter* Shooter = GetLevel()->CreateActor<SpreadShooter>();
-		//Shooter->SetParent(this);
-
-		//ConvergeShooter* Shooter = GetLevel()->CreateActor<ConvergeShooter>();
-		//Shooter->SetParent(this);
-
-		//BoomerangShooter* Shooter = GetLevel()->CreateActor<BoomerangShooter>();
-		//Shooter->SetParent(this);
-
-		//ChargerShooter* Shooter = GetLevel()->CreateActor<ChargerShooter>();
-		//Shooter->SetParent(this);
+		}
+		if (Weapon == nullptr)
+		{
+			PeaShooter* Shooter = GetLevel()->CreateActor<PeaShooter>();
+			Shooter->SetParent(this);
+		}
 	}
-
-	//GetLevel()->PushRenderer(Renderer, CAMERAORDER::ROTATECAMERA);
 }
 
 void InGameCuphead::Update(float _DeltaTime)

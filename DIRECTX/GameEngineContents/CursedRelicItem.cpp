@@ -3,7 +3,9 @@
 
 CursedRelicItem::CursedRelicItem()
 {
+	WeaponItemBase();
 	ItemName = "CursedRelic";
+	Type = ItemType::Charm;
 }
 
 CursedRelicItem::~CursedRelicItem()

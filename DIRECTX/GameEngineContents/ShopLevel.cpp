@@ -11,7 +11,7 @@
 #include "TwinHeartItem.h"
 #include "BoomerangShooterItem.h"
 #include "ConvergeShooterItem.h"
-#include "ItemInventory.h"
+#include "CharacterState.h"
 #include <GameEngineCore/GameEngineBlur.h>
 
 ShopLevel::ShopLevel()
@@ -147,19 +147,8 @@ void ShopLevel::Start()
 		ItemRenderers.push_back(ItemIconRenderer);
 		ItemName.push_back(Item->ItemName);
 	}
-}
 
-void ShopLevel::LevelStartEvent()
-{
-	std::list<GameEngineActor*> Actors = GetGroup(GameObjectGroup::INVENTORY);
-	for (GameEngineActor* Actor : Actors)
-	{
-		if (ItemInventory* _Inventory = dynamic_cast<ItemInventory*>(Actor))
-		{
-			Inventory = _Inventory;
-		}
-	}
-
+	
 }
 
 void ShopLevel::Update(float _DeltaTime)
@@ -247,9 +236,17 @@ void ShopLevel::EndIrisAnimation(const FrameAnimation_DESC& _Info)
 void ShopLevel::BuyItemEnd(const FrameAnimation_DESC& _Info)
 {
 	ItemRenderers[SelectItemNum]->GetActor()->Off();
-	if (Inventory != nullptr)
+	
+	std::list<GameEngineActor*> Actors = GetGroup(GameObjectGroup::CharacterState);
+	for (GameEngineActor* Actor : Actors)
 	{
-		Inventory->PurchasedItem.push_back(ItemName[SelectItemNum]);
+		if (CharacterState* State = dynamic_cast<CharacterState*>(Actor))
+		{
+			ItemType Type = ItemNames[SelectItemNum]->Type;
+			ItemBase* Item = ItemNames[SelectItemNum];
+			State->Items[Type].push_back(Item);
+		}
 	}
+
 	Phase = ShopPhase::Select;
 }

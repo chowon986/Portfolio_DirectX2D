@@ -30,7 +30,6 @@ public:
 
 protected:
 	void Start() override;
-	void LevelStartEvent() override;
 	void Update(float _DeltaTime) override;
 	void End() override;
 

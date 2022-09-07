@@ -18,11 +18,21 @@
 
 enum class ItemType
 {
+	None,
+	Shoot,
+	Super,
+	Charm,
+};
+
+enum class InventoryType
+{
+	None,
 	ShotA,
 	ShotB,
 	Super,
 	Charm,
 };
+
 
 enum class CharacterType
 {

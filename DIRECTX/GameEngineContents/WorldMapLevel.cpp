@@ -86,6 +86,10 @@ void WorldMapLevel::Start()
 		GameEngineInput::GetInst()->CreateKey("EnterMap", 'B');
 	}
 
+	if (false == GameEngineInput::GetInst()->IsKey("Inventory"))
+	{
+		GameEngineInput::GetInst()->CreateKey("Inventory", 'I');
+	}
 	{
 		GameEngineActor* CurCoin = CreateActor<GameEngineActor>(GameObjectGroup::UI);
 		GameEngineTextureRenderer* CoinRenderer = CurCoin->CreateComponent<GameEngineTextureRenderer>();
@@ -512,7 +516,6 @@ void WorldMapLevel::Start()
 		Renderer->ScaleToTexture();
 		Renderer->GetTransform().SetLocalPosition({ 1860.0f, -1085.0f, (int)ZOrder::NPCB });
 	}
-
 }
 
 void WorldMapLevel::Update(float _DeltaTime)
@@ -520,6 +523,14 @@ void WorldMapLevel::Update(float _DeltaTime)
 	if (true == GameEngineInput::GetInst()->IsDown("LevelChange"))
 	{
 		GEngine::ChangeLevel("DogFight");
+	}
+
+	if (true == GameEngineInput::GetInst()->IsDown("Inventory"))
+	{
+		if (Inventory != nullptr)
+		{
+			Inventory->OnOffSwitch();
+		}
 	}
 	
 	ColMapOnOffSwitch();
