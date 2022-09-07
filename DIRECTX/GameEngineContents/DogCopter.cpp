@@ -24,12 +24,14 @@ void DogCopter::Start()
 	IInGameMonsterBase::Start();
 	{
 		Renderer = CreateComponent<GameEngineTextureRenderer>();
-		Renderer->CreateFrameAnimationFolder("DogCopterIntro", FrameAnimation_DESC("DogCopterIntro",0, 44, 0.1f, false));
+		Renderer->CreateFrameAnimationFolder("DogCopterIntro", FrameAnimation_DESC("DogCopterIntro", 0, 44, 0.1f, false));
 		Renderer->CreateFrameAnimationFolder("DogCopterIdle", FrameAnimation_DESC("DogCopterIdle", 0.1f));
 		Renderer->CreateFrameAnimationFolder("DogCopterAttack1", FrameAnimation_DESC("DogCopterIdle", 0.1f));
+		Renderer->CreateFrameAnimationFolder("DogCopterBeforeRotateCamera", FrameAnimation_DESC("DogCopterBeforeRotateCamera", 0.1f));
 		Renderer->CreateFrameAnimationFolder("DogCopterRotateCamera", FrameAnimation_DESC("DogCopterRotateCamera", 0.1f));
 		Renderer->CreateFrameAnimationFolder("DogCopterRotatedIdle", FrameAnimation_DESC("DogCopterRotatedIdle", 0.1f));
 		Renderer->CreateFrameAnimationFolder("DogCopterAttack2", FrameAnimation_DESC("DogCopterRotatedIdle", 0.1f));
+		Renderer->CreateFrameAnimationFolder("DogCopterBeforeRotateCameraOut", FrameAnimation_DESC("DogCopterBeforeRotateCameraOut", 0.1f));
 		Renderer->CreateFrameAnimationFolder("DogCopterRotateCameraOut", FrameAnimation_DESC("DogCopterRotateCameraOut", 0.1f));
 		Renderer->CreateFrameAnimationFolder("DogCopterDie", FrameAnimation_DESC("DeathIdle", 0.1f));
 
@@ -43,10 +45,11 @@ void DogCopter::Start()
 		Renderer->AnimationBindFrame("DogCopterRotatedIdle", std::bind(&DogCopter::Test, this, std::placeholders::_1));
 		//Renderer->AnimationBindFrame("DogCopterRotateCamera", std::bind(&DogCopter::Test, this, std::placeholders::_1));
 		Renderer->AnimationBindEnd("DogCopterRotateCameraOut", std::bind(&DogCopter::OnRotateCameraOutAnimationFrameFinished, this, std::placeholders::_1));
-	
+
 		Renderer->AnimationBindFrame("DogCopterIdle", std::bind(&DogCopter::OnIdleAnimationFrameChanged, this, std::placeholders::_1));
 		Renderer->AnimationBindFrame("DogCopterRotateCameraOut", std::bind(&DogCopter::OnRotateCameraOutAnimationFrameChanged, this, std::placeholders::_1));
-		Renderer->AnimationBindFrame("DogCopterRotateCamera", std::bind(&DogCopter::OnRotateCameraAnimationFrameChanged, this, std::placeholders::_1));
+		Renderer->AnimationBindFrame("DogCopterBeforeRotateCamera", std::bind(&DogCopter::OnBeforeRotateCameraAnimationFrameChanged, this, std::placeholders::_1));
+		Renderer->AnimationBindFrame("DogCopterBeforeRotateCameraOut", std::bind(&DogCopter::OnBeforeRotateCameraOutAnimationFrameChanged, this, std::placeholders::_1));
 
 		Renderer->ChangeFrameAnimation("DogCopterIntro");
 		Renderer->SetScaleModeImage();
@@ -111,7 +114,7 @@ void DogCopter::Start()
 	}
 
 	srand(time(NULL));
-	
+
 	Collision = CreateComponent<GameEngineCollision>();
 	Collision->GetTransform().SetWorldScale({ 300.0f,300.0f,1.0f });
 	Collision->GetTransform().SetWorldPosition({ 640.0f, -360.0f });
@@ -128,16 +131,6 @@ void DogCopter::Update(float _DeltaTime)
 
 	Collision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::PC_BULLET, CollisionType::CT_AABB2D, std::bind(&DogCopter::OnTakeDamage, this, std::placeholders::_1, std::placeholders::_2));
 
-	if (GetState() == InGameMonsterState::BeforeRotateCameraIn)
-	{
-		ArmsRenderer->ChangeFrameAnimation("Nothing");
-		ArmsRenderer->Off();
-
-		WristRenderer->ChangeFrameAnimation("Nothing");
-		WristRenderer->Off();
-
-		RotateCameraIn();
-	}
 }
 
 void DogCopter::End()
@@ -255,30 +248,46 @@ void DogCopter::OnRotateCameraOutAnimationFrameFinished(const FrameAnimation_DES
 
 void DogCopter::OnRotateCameraAnimationFrameChanged(const FrameAnimation_DESC& _Info)
 {
-	LeftHandRenderer->ChangeFrameAnimation("Nothing");
-	RightHandRenderer->ChangeFrameAnimation("Nothing");
-
-	if (_Info.CurFrame == 11)
-	{
-		LeftHandRenderer->ChangeFrameAnimation("Nothing");
-		RightHandRenderer->ChangeFrameAnimation("Nothing");
-	}
+	int a = 0;
 }
 
 void DogCopter::OnRotateCameraOutAnimationFrameChanged(const FrameAnimation_DESC& _Info)
 {
-	if (_Info.CurFrame == 14)
+	if (_Info.CurFrame == 3)
 	{
 		LeftHandRenderer->ChangeFrameAnimation("PawMerge");
-		LeftHandRenderer->On();
 		RightHandRenderer->ChangeFrameAnimation("PawMerge");
-		RightHandRenderer->On();
 	}
 }
 
 void DogCopter::OnDeathAnimationFrameFinished(const FrameAnimation_DESC& _Info)
 {
 	// scorescreen ¶ç¿ì±â
+}
+
+void DogCopter::OnBeforeRotateCameraAnimationFrameChanged(const FrameAnimation_DESC& _Info)
+{
+	ArmsRenderer->ChangeFrameAnimation("Nothing");
+	ArmsRenderer->Off();
+
+	WristRenderer->ChangeFrameAnimation("Nothing");
+	WristRenderer->Off();
+
+	if (_Info.CurFrame == 10)
+	{
+
+		LeftHandRenderer->ChangeFrameAnimation("Nothing");
+		RightHandRenderer->ChangeFrameAnimation("Nothing");
+		RotateCameraIn();
+	}
+}
+
+void DogCopter::OnBeforeRotateCameraOutAnimationFrameChanged(const FrameAnimation_DESC& _Info)
+{
+	if (_Info.CurFrame == 10)
+	{
+		RotateCameraOut();
+	}
 }
 
 void DogCopter::Test(const FrameAnimation_DESC& _Info)

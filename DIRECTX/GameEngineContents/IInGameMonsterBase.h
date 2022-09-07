@@ -46,6 +46,7 @@ enum class InGameMonsterState
 	RotateCameraIdle,
 	BeforeRotateCameraIn,
 	RotateCameraIn,
+	BeforeRoToateCameraOut,
 	RotateCameraOut,
 };
 

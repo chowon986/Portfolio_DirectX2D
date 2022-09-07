@@ -100,6 +100,7 @@ private:
 	GameEngineTextureRenderer* SuperMeter;
 	IInGameCharacterBase* Player;
 	CharacterState* State;
+	float RoateTime;
 
 };
 

@@ -39,7 +39,7 @@ void DogBowlShooter::Update(float _DeltaTime)
 			{
 				if (Character != nullptr)
 				{
-					Character->SetState(InGameMonsterState::RotateCameraOut);
+					Character->SetState(InGameMonsterState::BeforeRoToateCameraOut);
 					Character->SetAttackState(InGameMonsterAttackState::None);
 					ShootCount = 0;
 					return;

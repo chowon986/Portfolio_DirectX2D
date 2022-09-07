@@ -679,7 +679,21 @@ void DogFightLevel::Update(float _DeltaTime)
 		if (IsRotateCompleted == false)
 		{
 			RotateElapsedTime += _DeltaTime;
-			float Time = RotateElapsedTime / 30;
+			switch (LeaderCopter->GetState())
+			{
+			case InGameMonsterState::RotateCameraIn:
+			{
+				RoateTime = 10;
+				break;
+			}
+			case InGameMonsterState::RotateCameraOut:
+			{
+				RoateTime = 5;
+				break;
+			}
+			}
+
+			float Time = RotateElapsedTime / RoateTime;
 			if (abs(CameraRotation.z - ZAngle) <= 0.1)
 			{
 				IsRotateCompleted = true;

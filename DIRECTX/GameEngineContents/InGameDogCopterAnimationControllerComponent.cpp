@@ -38,6 +38,11 @@ void InGameDogCopterAnimationControllerComponent::UpdateAnimation()
 		Renderer->ChangeFrameAnimation(Name + "Idle");
 	}
 
+	else if (State == InGameMonsterState::BeforeRotateCameraIn)
+	{
+		Renderer->ChangeFrameAnimation(Name + "BeforeRotateCamera");
+	}
+
 	else if (State == InGameMonsterState::RotateCameraIn)
 	{
 		Renderer->ChangeFrameAnimation(Name + "RotateCamera");
@@ -52,6 +57,11 @@ void InGameDogCopterAnimationControllerComponent::UpdateAnimation()
 	else if (State == InGameMonsterState::RotateCameraOut)
 	{
 		Renderer->ChangeFrameAnimation(Name + "RotateCameraOut");
+	}
+
+	else if (State == InGameMonsterState::BeforeRoToateCameraOut)
+	{
+		Renderer->ChangeFrameAnimation(Name + "BeforeRotateCameraOut");
 	}
 
 	else if (State == InGameMonsterState::TakeDamage)
