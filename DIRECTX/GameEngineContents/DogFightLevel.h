@@ -97,7 +97,7 @@ private:
 	float ZAngle;
 
 	GameEngineTextureRenderer* ReadyWallopRenderer;
-	GameEngineTextureRenderer* HP;
+	GameEngineTextureRenderer* HPRenderer;
 	int HPCount;
 	GameEngineTextureRenderer* SuperMeter;
 	IInGameCharacterBase* Player;

@@ -133,7 +133,7 @@ void ScoreLevel::Update(float _DeltaTime)
 {
 	if (IrisRenderer->GetPixelData().PlusColor.a > -1.0f)
 	{
-		IrisRenderer->GetPixelData().PlusColor.a -= _DeltaTime * 0.2;
+		IrisRenderer->GetPixelData().PlusColor.a -= _DeltaTime * 0.3;
 	}
 	BackgroundRenderer->GetTransform().SetLocalRotate({0.0f, 0.0f, 10 * _DeltaTime});
 }

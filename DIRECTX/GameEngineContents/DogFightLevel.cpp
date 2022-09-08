@@ -77,7 +77,8 @@ void DogFightLevel::Start()
 
 	{
 		GameEngineActor* PlayerHP = CreateActor<GameEngineActor>();
-		HP = PlayerHP->CreateComponent<GameEngineTextureRenderer>();
+		HPCount = 3;
+		HPRenderer = PlayerHP->CreateComponent<GameEngineTextureRenderer>();
 	}
 
 

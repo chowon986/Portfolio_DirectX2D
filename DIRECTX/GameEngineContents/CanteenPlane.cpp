@@ -55,6 +55,15 @@ bool CanteenPlane::RotateLeaderCopter()
 
 void CanteenPlane::Start()
 {
+
+	RedDogBowlCollsion = CreateComponent<GameEngineCollision>();
+	RedDogBowlCollsion->GetTransform().SetLocalScale({ 7200.0f, 200.0f, 1.0f });
+	RedDogBowlCollsion->ChangeOrder((int)ObjectOrder::TRACKING1);
+
+	YellowDogBowlCollsion = CreateComponent<GameEngineCollision>();
+	YellowDogBowlCollsion->GetTransform().SetLocalScale({ 7200.0f, 500.0f, 1.0f });
+	YellowDogBowlCollsion->ChangeOrder((int)ObjectOrder::TRACKING2);
+
 	//GetLevel()->GetUICamera()->SetCameraOrder(this, CAMERAORDER::UICAMERA);
 
 	{

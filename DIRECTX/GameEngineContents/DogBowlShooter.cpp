@@ -59,12 +59,14 @@ void DogBowlShooter::Update(float _DeltaTime)
 					Bullet->GetRenderer()->ChangeFrameAnimation("RedDogBowlDrop");
 					Bullet->GetMonsterPhysicsComponent()->Reset();
 					Bullet->GetMonsterPhysicsComponent()->AddForce(30);
+					Bullet->SetColor("Red");
 				}
 				else
 				{
 					Bullet->GetRenderer()->ChangeFrameAnimation("YellowDogBowlDrop");
 					Bullet->GetMonsterPhysicsComponent()->Reset();
 					Bullet->GetMonsterPhysicsComponent()->AddForce(30);
+					Bullet->SetColor("Yellow");
 				}
 			}
 			break;

@@ -24,6 +24,12 @@ public:
 	void SetMonsterPhysicsComponent(MonsterPhysicsComponent* _Physics);
 	MonsterPhysicsComponent* GetMonsterPhysicsComponent() { return Physics; }
 
+	std::string GetColor() { return Color; }
+	void SetColor(std::string _Color) { Color = _Color; }
+
+	GameEngineCollision* GetTrackCollision() { return TrackCollision; }
+	void SetTrackCollision(GameEngineCollision* _Collision) { TrackCollision = _Collision; }
+
 private:
 	virtual void Start() override;
 	virtual void Update(float _DeltaTime) override;
@@ -36,7 +42,9 @@ private:
 	DogBowlBulletMovementComponent* DogBowlMovementComponent;
 	float RotateAngle;
 	bool IsOnGround;
+	int Index;
 	GameEngineCollision* TrackCollision;
 	float4 Direction;
+	std::string Color;
 };
 

@@ -127,7 +127,5 @@ private:
 	MulticastDelegate<bool> IsOnGroundChangedDelegate;
 	bool IsOnGround;
 	float HP;
-	GameEngineCollision* RedDogBowlCollsion;
-	GameEngineCollision* YellowDogBowlCollsion;
 };
 

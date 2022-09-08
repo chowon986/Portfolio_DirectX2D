@@ -34,13 +34,7 @@ void IInGameCharacterBase::SetShooterState(InGameCharacterShooterState _State)
 
 void IInGameCharacterBase::Start()
 {
-	RedDogBowlCollsion = CreateComponent<GameEngineCollision>();
-	RedDogBowlCollsion->GetTransform().SetLocalScale({ 7200.0f, 100.0f, 1.0f });
-	RedDogBowlCollsion->ChangeOrder((int)ObjectOrder::TRACKING1);
 
-	YellowDogBowlCollsion = CreateComponent<GameEngineCollision>();
-	YellowDogBowlCollsion ->GetTransform().SetLocalScale({ 7200.0f, 100.0f, 1.0f });
-	YellowDogBowlCollsion ->ChangeOrder((int)ObjectOrder::TRACKING2);
 }
 
 void IInGameCharacterBase::Update(float _Delta)

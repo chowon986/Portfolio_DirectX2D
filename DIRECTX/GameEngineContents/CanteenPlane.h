@@ -7,6 +7,7 @@ class IInGameCharacterBase;
 class Canteen;
 enum class InGameMonsterState;
 class DogCopter;
+class GameEngineCollision;
 class CanteenPlane : public GameEngineActor
 {
 public:
@@ -57,6 +58,7 @@ private:
 	float ElapsedXTime;
 	bool IsPhase2MoveCompleted;
 	bool IsPhase3MoveCompleted;
-
+	GameEngineCollision* RedDogBowlCollsion;
+	GameEngineCollision* YellowDogBowlCollsion;
 };
 
