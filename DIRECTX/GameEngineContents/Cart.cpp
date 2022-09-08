@@ -24,9 +24,17 @@ void Cart::Start()
 void Cart::Update(float _DeltaTime)
 {
 	PortalBase::Update(_DeltaTime);
-
 }
 
 void Cart::End()
 {
+}
+
+bool Cart::OnPortalCollision(GameEngineCollision* _This, GameEngineCollision* _Other)
+{
+	if (true == GameEngineInput::GetInst()->IsDown("EnterMap"))
+	{
+		GEngine::ChangeLevel("Tutorial");
+	}
+	return false;
 }

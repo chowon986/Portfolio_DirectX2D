@@ -24,15 +24,18 @@ void Dogfight::Start()
 
 void Dogfight::Update(float _DeltaTime)
 {
-	if (Collision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::PC, CollisionType::CT_AABB2D, std::bind(&Dogfight::OnPortalCollision, this, std::placeholders::_1, std::placeholders::_2)))
-	{
-		if (true == GameEngineInput::GetInst()->IsDown("EnterMap"))
-		{
-			GEngine::ChangeLevel("DogFight");
-		}
-	}
+	PortalBase::Update(_DeltaTime);
 }
 
 void Dogfight::End()
 {
+}
+
+bool Dogfight::OnPortalCollision(GameEngineCollision* _This, GameEngineCollision* _Other)
+{
+	if (true == GameEngineInput::GetInst()->IsDown("EnterMap"))
+	{
+		GEngine::ChangeLevel("DogFight");
+	}
+	return false;
 }
