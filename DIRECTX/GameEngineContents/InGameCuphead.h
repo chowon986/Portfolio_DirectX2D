@@ -37,6 +37,7 @@ protected:
 	void SuperAttack() override;
 	void Walk() override;
 	void Idle() override;
+	void OnStateChanged() override;
 
 	void OnPrepareAnimationEnded(const FrameAnimation_DESC& _Info);
 	void OnDashAnimationEnded(const FrameAnimation_DESC& _Info);
@@ -44,6 +45,7 @@ protected:
 	void OnGhostAnimationEnded(const FrameAnimation_DESC& _Info);
 	void OnShootAnimationFrameChanged(const FrameAnimation_DESC& _Info);
 	void OnShootAnimationFrameStarted(const FrameAnimation_DESC& _Info);
+	void OnJumpAnimationFrameChanged(const FrameAnimation_DESC& _Info);
 	void UpdateState();
 	void UpdateDirection();
 	void CheckCollision();

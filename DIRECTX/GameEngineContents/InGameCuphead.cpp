@@ -110,7 +110,7 @@ void InGameCuphead::Start()
 	Renderer->AnimationBindFrame("IngameCupheadShootDown", std::bind(&InGameCuphead::OnShootAnimationFrameChanged, this, std::placeholders::_1));
 	Renderer->AnimationBindFrame("IngameCupheadShootUp", std::bind(&InGameCuphead::OnShootAnimationFrameChanged, this, std::placeholders::_1));
 	Renderer->AnimationBindFrame("IngameCupheadDuckShoot", std::bind(&InGameCuphead::OnShootAnimationFrameChanged, this, std::placeholders::_1));
-
+	Renderer->AnimationBindFrame("IngameCupheadJump", std::bind(&InGameCuphead::OnJumpAnimationFrameChanged, this, std::placeholders::_1));
 
 	SetHP(5);
 
@@ -211,6 +211,24 @@ void InGameCuphead::Idle()
 	SetState(InGameCharacterState::Idle);
 }
 
+void InGameCuphead::OnStateChanged()
+{
+	if (GetState() == InGameCharacterState::Jump)
+	{
+		GetPhysicsComponent()->Reset();
+		GetPhysicsComponent()->AddForce(50);
+	}
+	else if (GetState() == InGameCharacterState::Parry)
+	{
+		GetPhysicsComponent()->AddForce(20);
+	}
+	if (GetState() == InGameCharacterState::Dash)
+	{
+		GetPhysicsComponent()->Reset();
+		GetPhysicsComponent()->Off();
+	}
+}
+
 void InGameCuphead::OnPrepareAnimationEnded(const FrameAnimation_DESC& _Info)
 {
 	IsInputEnabled = true;
@@ -219,6 +237,11 @@ void InGameCuphead::OnPrepareAnimationEnded(const FrameAnimation_DESC& _Info)
 void InGameCuphead::OnDashAnimationEnded(const FrameAnimation_DESC& _Info)
 {
 	IsInputEnabled = true;
+	if (GetIsOnGround() == false)
+	{
+	Renderer->ChangeFrameAnimation("InGameCupheadJump");
+	}
+	GetPhysicsComponent()->On();
 }
 
 void InGameCuphead::OnTakeDamageAnimationEnded(const FrameAnimation_DESC& _Info)
@@ -240,7 +263,7 @@ void InGameCuphead::OnShootAnimationFrameChanged(const FrameAnimation_DESC& _Inf
 {
 	FrameAnimation_DESC* Info = const_cast<FrameAnimation_DESC*>(&_Info);
 	Info->Inter = 0.05f;
-	if (Info->CurFrame == 2)
+	if (Info->CurFrame % 2)
 	{
 		SetShooterState(InGameCharacterShooterState::BasicShot);
 	}
@@ -253,6 +276,19 @@ void InGameCuphead::OnShootAnimationFrameChanged(const FrameAnimation_DESC& _Inf
 void InGameCuphead::OnShootAnimationFrameStarted(const FrameAnimation_DESC& _Info)
 {
 
+}
+
+void InGameCuphead::OnJumpAnimationFrameChanged(const FrameAnimation_DESC& _Info)
+{
+	FrameAnimation_DESC* Info = const_cast<FrameAnimation_DESC*>(&_Info);
+	if (Info->CurFrame % 2 == 0)
+	{
+		SetShooterState(InGameCharacterShooterState::BasicShot);
+	}
+	else
+	{
+		SetShooterState(InGameCharacterShooterState::None);
+	}
 }
 
 
@@ -288,14 +324,12 @@ void InGameCuphead::Duck()
 void InGameCuphead::Jump()
 {
 	SetState(InGameCharacterState::Jump);
-	GetPhysicsComponent()->Reset();
-	GetPhysicsComponent()->AddForce(50);
+
 }
 
 void InGameCuphead::Parry()
 {
 	SetState(InGameCharacterState::Parry);
-	GetPhysicsComponent()->AddForce(10);
 }
 
 void InGameCuphead::Prepare()

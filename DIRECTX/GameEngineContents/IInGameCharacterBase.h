@@ -68,6 +68,7 @@ public:
 protected:
 	virtual void Start() override;
 	virtual void Update(float _Delta) override;
+	virtual void OnStateChanged();
 
 public:
 	void SetState(InGameCharacterState _State);

@@ -29,7 +29,7 @@ void PeaBullet::Start()
 	Renderer->SetScaleModeImage();
 
 	MovementComponent = CreateComponent<BulletMovementComponent>();
-	MovementComponent->SetSpeed(400.0f);
+	MovementComponent->SetSpeed(1500.0f);
 
 	Collision = CreateComponent<GameEngineCollision>();
 	Collision->SetParent(this);

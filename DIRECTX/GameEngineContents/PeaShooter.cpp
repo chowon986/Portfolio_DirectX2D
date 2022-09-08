@@ -20,7 +20,7 @@ void PeaShooter::Start()
 	SparkRenderer->AnimationBindEnd("PeashotSpark", std::bind(&PeaShooter::PeashotSparkAnimationFrameFinished, this, std::placeholders::_1));
 	SparkRenderer->ChangeFrameAnimation("Nothing");
 	SparkRenderer->SetScaleModeImage();
-	IntervalTime = 0.05f;
+	IntervalTime = 0.0f;
 }
 
 void PeaShooter::End()
@@ -38,9 +38,9 @@ void PeaShooter::Update(float _DeltaTime)
 	WeaponBase::Update(_DeltaTime);
 
 	ElapsedTime += _DeltaTime;
-	if (ElapsedTime > IntervalTime)
+	//if (ElapsedTime > IntervalTime)
 	{
-		ElapsedTime -= IntervalTime;
+		//ElapsedTime -= IntervalTime;
 		if (IInGameCharacterBase* Parent = dynamic_cast<IInGameCharacterBase*>(GetParent()))
 		{
 			ShooterState = Parent->GetShooterState();
@@ -57,7 +57,10 @@ void PeaShooter::Update(float _DeltaTime)
 				{
 					SparkRenderer->ChangeFrameAnimation("PeashotSpark");
 					float4 Direction = GetVerticalDirection() + GetHorizontalDirection();
-
+					if (Direction.CompareInt3D(float4::ZERO))
+					{
+						return;
+					}
 					PeaBullet* Bullet = GetLevel()->CreateActor<PeaBullet>();
 					Bullet->SetColMapImage(GetColMapImage());
 					Bullet->GetTransform().SetWorldPosition(GetTransform().GetWorldPosition()); // Need to CHK

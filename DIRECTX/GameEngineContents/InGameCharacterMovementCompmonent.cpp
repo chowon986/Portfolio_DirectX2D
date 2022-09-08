@@ -87,8 +87,6 @@ void InGameCharacterMovementCompmonent::Update(float _DeltaTime)
 
 	if (State == InGameCharacterState::Dash)
 	{
-		Physics->Reset();
-
 		float4 Dir = InGameCharacter->GetRenderer()->GetTransform().GetLocalScale().x < 0 ? float4::LEFT : float4::RIGHT;
 		float DashSpeed = Speed;
 		InGameCharacter->GetTransform().SetWorldMove(Dir * DashSpeed * _DeltaTime);

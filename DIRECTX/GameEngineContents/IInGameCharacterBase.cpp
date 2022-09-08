@@ -43,11 +43,16 @@ void IInGameCharacterBase::Update(float _Delta)
 	//GameEngineDebug::DrawBox(YellowDogBowlCollsion->GetTransform(), { 1.0f, 0.0f,0.0f, 0.5f });
 }
 
+void IInGameCharacterBase::OnStateChanged()
+{
+}
+
 void IInGameCharacterBase::SetState(InGameCharacterState _State)
 {
 	if (State != _State)
 	{
 		State = _State;
+		OnStateChanged();
 		StateChangedDelegate.Invoke(State);
 	}
 }
