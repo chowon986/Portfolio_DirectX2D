@@ -194,6 +194,7 @@
     <ClInclude Include="ConvergeShooterItem.h" />
     <ClInclude Include="Cowgirl.h" />
     <ClInclude Include="CursedRelicItem.h" />
+    <ClInclude Include="Darkness.h" />
     <ClInclude Include="Delegates.h" />
     <ClInclude Include="DogBowlBullet.h" />
     <ClInclude Include="DogBowlBulletMovementComponent.h" />
@@ -334,6 +335,7 @@
     <ClCompile Include="ConvergeShooterItem.cpp" />
     <ClCompile Include="Cowgirl.cpp" />
     <ClCompile Include="CursedRelicItem.cpp" />
+    <ClCompile Include="Darkness.cpp" />
     <ClCompile Include="DogBowlBullet.cpp" />
     <ClCompile Include="DogBowlBulletMovementComponent.cpp" />
     <ClCompile Include="DogBowlShooter.cpp" />

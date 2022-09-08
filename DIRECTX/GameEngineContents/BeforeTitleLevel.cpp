@@ -2,6 +2,7 @@
 #include "BeforeTitleLevel.h"
 #include "Background.h"
 #include "OldFilm.h"
+#include "Darkness.h"
 #include "Enums.h"
 #include <GameEngineCore/GEngine.h>
 #include <GameEngineCore/GameEngineBlur.h>
@@ -31,11 +32,8 @@ void BeforeTitleLevel::Start()
 	MDHRLogoRenderer->SetTexture("Loading_background.png");
 	MDHRLogoRenderer->AnimationBindEnd("BeforeTitle", std::bind(&BeforeTitleLevel::OnHDMRAnimationFrameEnd, this, std::placeholders::_1));
 	
-	GameEngineActor* Darkness = CreateActor<GameEngineActor>();
-	GameEngineTextureRenderer* Renderer = Darkness->CreateComponent<GameEngineTextureRenderer>();
-	Renderer->SetTexture("Darkness.png");
-	Renderer->GetTransform().SetLocalScale({ 1280, 720, 1.0 });
-	Renderer->GetPipeLine()->SetOutputMergerBlend("Darkness");
+	//Darkness* DarknessActor = CreateActor<Darkness>();
+	//DarknessActor->SetLevelOverOn();
 
 	OldFilm* PostEffect = CreateActor<OldFilm>(GameObjectGroup::UI);
 	PostEffect->SetLevelOverOn();

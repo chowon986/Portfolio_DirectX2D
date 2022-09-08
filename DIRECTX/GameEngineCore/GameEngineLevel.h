@@ -16,6 +16,7 @@ enum class CAMERAORDER : int
 	USER6,
 	IRISCAMERA,
 	UICAMERA,
+	UICAMERA2,
 };
 
 // 설명 : 화면(타이틀 화면, 플레이 화면, 인벤토리 화면)
@@ -78,6 +79,11 @@ public:
 		return Cameras[static_cast<int>(CAMERAORDER::UICAMERA)];
 	}
 
+	GameEngineCamera* GetUICamera2()
+	{
+		return Cameras[static_cast<int>(CAMERAORDER::UICAMERA2)];
+	}
+
 	GameEngineCameraActor* GetMainCameraActor();
 
 	GameEngineTransform& GetMainCameraActorTransform();
@@ -98,7 +104,11 @@ public:
 
 	GameEngineCameraActor* GetUICameraActor();
 
+	GameEngineCameraActor* GetUICameraActor2();
+
 	GameEngineTransform& GetUICameraActorTransform();
+
+	GameEngineTransform& GetUICameraActorTransform2();
 
 	//template<typename ReturnType, typename ActorType, typename GroupIndexType>
 	//ReturnType* CreateActor(GroupIndexType _ObjectGroupIndex)
@@ -197,6 +207,11 @@ public:
 	void PushRendererToUICamera(GameEngineRenderer* _Renderer)
 	{
 		PushRenderer(_Renderer, static_cast<int>(CAMERAORDER::UICAMERA));
+	}
+
+	void PushRendererToUICamera2(GameEngineRenderer* _Renderer)
+	{
+		PushRenderer(_Renderer, static_cast<int>(CAMERAORDER::UICAMERA2));
 	}
 
 	void PushRendererToBackgroundCamera(GameEngineRenderer* _Renderer)

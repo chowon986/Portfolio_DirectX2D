@@ -41,6 +41,11 @@ void GameEngineRenderer::PushRendererToUICamera()
 	GetActor()->GetLevel()->PushRendererToUICamera(this);
 }
 
+void GameEngineRenderer::PushRendererToUICamera2()
+{
+	GetActor()->GetLevel()->PushRendererToUICamera2(this);
+}
+
 GameEngineRenderingPipeLine* GameEngineRenderer::GetClonePipeLine(GameEngineRenderingPipeLine* _Rendering)
 {
 	// 이름없는 녀석으로 만든다.

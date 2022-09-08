@@ -80,6 +80,7 @@ protected:
 
     void PushRendererToMainCamera();
     void PushRendererToUICamera();
+    void PushRendererToUICamera2();
 
 
     class GameEngineCamera* Camera;
