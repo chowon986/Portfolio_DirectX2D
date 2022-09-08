@@ -42,6 +42,7 @@ void SelectLevel::Start()
 	State = CreateActor<CharacterState>(GameObjectGroup::CharacterState);
 	State->SetLevelOverOn();
 	State->EquippedItems[InventoryType::ShotA] = new PeaShooterItem;
+	State->Items[ItemType::Shoot].push_back(new PeaShooterItem);
 	if (WeaponItemBase* Item = dynamic_cast<WeaponItemBase*>(State->EquippedItems[InventoryType::ShotA]))
 	{
 		Item->Weapon = CreateActor<PeaShooter>();

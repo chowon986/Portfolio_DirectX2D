@@ -87,6 +87,15 @@ void WorldMapCuphead::Start()
 
 void WorldMapCuphead::Update(float _DeltaTime)
 {
+	if (Inventory->IsUpdate())
+	{
+		InventoryOn = true;
+	}
+	else
+	{
+		InventoryOn = false;
+	}
+
 	GetLevel()->GetMainCameraActorTransform().SetLocalPosition({ GetTransform().GetLocalPosition().x + 6.0f, GetTransform().GetLocalPosition().y - 32 });
 
 	if (false == Collision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::NPC, CollisionType::CT_AABB2D,
@@ -104,7 +113,10 @@ void WorldMapCuphead::Update(float _DeltaTime)
 		true == GameEngineInput::GetInst()->IsPress("MoveDown") ||
 		true == GameEngineInput::GetInst()->IsPress("MoveUp"))
 	{
+		if (InventoryOn == false)
+		{
 		Walk();
+		}
 	}
 	else
 	{

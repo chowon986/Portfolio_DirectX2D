@@ -89,7 +89,7 @@ void WorldMapLevel::Start()
 
 	if (false == GameEngineInput::GetInst()->IsKey("Inventory"))
 	{
-		GameEngineInput::GetInst()->CreateKey("Inventory", 'I');
+		GameEngineInput::GetInst()->CreateKey("Inventory", 'Y');
 	}
 	{
 		GameEngineActor* CurCoin = CreateActor<GameEngineActor>(GameObjectGroup::UI);
