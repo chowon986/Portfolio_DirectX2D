@@ -263,7 +263,7 @@ void InGameCuphead::OnShootAnimationFrameChanged(const FrameAnimation_DESC& _Inf
 {
 	FrameAnimation_DESC* Info = const_cast<FrameAnimation_DESC*>(&_Info);
 	Info->Inter = 0.05f;
-	if (Info->CurFrame % 2)
+	if (Info->CurFrame % 2 == 0)
 	{
 		SetShooterState(InGameCharacterShooterState::BasicShot);
 	}

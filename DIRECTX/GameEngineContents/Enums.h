@@ -56,6 +56,7 @@ enum class ObjectOrder
 	TRACKING1,
 	TRACKING2,
 	PARRIABLEOBJECT,
+	ONLYPARRIABLEOBJECT,
 };
 
 enum class GameObjectGroup 
