@@ -76,6 +76,7 @@ void WorldMapLevel::LevelStartEvent()
 void WorldMapLevel::Start()
 {
 	GetMainCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
+	GetUICamera2()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
 
 	Inventory = CreateActor<ItemInventory>(GameObjectGroup::INVENTORY);
 	Inventory->SetLevelOverOn();
@@ -95,10 +96,9 @@ void WorldMapLevel::Start()
 		GameEngineTextureRenderer* CoinRenderer = CurCoin->CreateComponent<GameEngineTextureRenderer>();
 		CoinRenderer->SetTexture("WorldMapCoin.png");
 		CoinRenderer->ScaleToTexture();
-		CoinRenderer->GetTransform().SetWorldScale({ CoinRenderer->GetTransform().GetWorldScale().x * 0.75f, CoinRenderer->GetTransform().GetWorldScale().y * 0.72f, 1 });
 		CoinRenderer->GetTransform().PixLocalNegativeX();
-		CoinRenderer->GetTransform().SetWorldPosition({ -580.0f, 320.0f,(int)ZOrder::UI - 100 });
-		CoinRenderer->ChangeCamera(CAMERAORDER::UICAMERA);
+		CoinRenderer->GetTransform().SetWorldPosition({ -580.0f, 330.0f,(int)ZOrder::UI - 100 });
+		CoinRenderer->ChangeCamera(CAMERAORDER::UICAMERA2);
 	}
 
 	{
@@ -107,7 +107,7 @@ void WorldMapLevel::Start()
 		CoinCountRenderer->SetTexture("CoinCount0.png");
 		CoinCountRenderer->ScaleToTexture();
 		CoinCountRenderer->GetTransform().SetWorldPosition({ -535.0f, 330.0f,(int)ZOrder::UI - 100 });
-		CoinCountRenderer->ChangeCamera(CAMERAORDER::UICAMERA);
+		CoinCountRenderer->ChangeCamera(CAMERAORDER::UICAMERA2);
 	}
 
 	{

@@ -25,5 +25,9 @@ private:
 private:
 	GameEngineTextureRenderer* BackgroundRenderer;
 	GameEngineTextureRenderer* ColMapRenderer;
+	GameEngineTextureRenderer* WheatARenderer;
+	GameEngineTextureRenderer* WheatBRenderer;
+	GameEngineTextureRenderer* WheatCRenderer;
+	GameEngineTextureRenderer* RipRenderer;
 };
 

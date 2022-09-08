@@ -17,7 +17,13 @@ void ItemInventory::Start()
 	GameEngineTextureRenderer* InventoryScreen = CreateComponent<GameEngineTextureRenderer>();
 	InventoryScreen->SetTexture("slot_selection_bg.png");
 	InventoryScreen->ScaleToTexture();
-	InventoryScreen->ChangeCamera(CAMERAORDER::UICAMERA);
+	InventoryScreen->GetTransform().SetLocalPosition({ 0.0f, -0.0f,(int)ZOrder::UI });
+	InventoryScreen->ChangeCamera(CAMERAORDER::UICAMERA2);
+
+}
+
+void ItemInventory::Update(float _DeltaTime)
+{
 
 	std::list<GameEngineActor*> Actors = GetLevel()->GetGroup(GameObjectGroup::CharacterState);
 	for (GameEngineActor* Actor : Actors)
@@ -26,30 +32,36 @@ void ItemInventory::Start()
 		{
 			for (ItemBase* Item : _State->Items[ItemType::Charm])
 			{
-				GameEngineTextureRenderer* Test = CreateComponent<GameEngineTextureRenderer>();
-				Test->CreateFrameAnimationFolder(Item->ItemName + "Equip", FrameAnimation_DESC(Item->ItemName + "Equip", 0.1f, false));
-				Test->ChangeFrameAnimation(Item->ItemName + "Equip");
-				Test->SetScaleModeImage();
-				Test->GetTransform().SetWorldPosition({ Test->GetTransform().GetWorldPosition().x, Test->GetTransform().GetWorldPosition().y, (int)ZOrder::UI});
-				Test->ChangeCamera(CAMERAORDER::UICAMERA);
+				GameEngineTextureRenderer* ItemIconRenderer = CreateComponent<GameEngineTextureRenderer>();
+				ItemIconRenderer->CreateFrameAnimationFolder(Item->ItemName + "Equip", FrameAnimation_DESC(Item->ItemName + "Equip", 0.1f, false));
+				ItemIconRenderer->ChangeFrameAnimation(Item->ItemName + "Equip");
+				ItemIconRenderer->SetScaleModeImage();
+				ItemIconRenderer->GetTransform().SetLocalPosition({ 0.0f,0.0f, (int)ZOrder::UI - 5 });
+				ItemIconRenderer->ChangeCamera(CAMERAORDER::UICAMERA2);
 			}
 
 			for (ItemBase* Item : _State->Items[ItemType::Shoot])
 			{
-
+				GameEngineTextureRenderer* ItemIconRenderer = CreateComponent<GameEngineTextureRenderer>();
+				ItemIconRenderer->CreateFrameAnimationFolder(Item->ItemName + "Equip", FrameAnimation_DESC(Item->ItemName + "Equip", 0.1f, false));
+				ItemIconRenderer->ChangeFrameAnimation(Item->ItemName + "Equip");
+				ItemIconRenderer->SetScaleModeImage();
+				ItemIconRenderer->GetTransform().SetLocalPosition({ 0.0f,0.0f, (int)ZOrder::UI - 5 });
+				ItemIconRenderer->ChangeCamera(CAMERAORDER::UICAMERA2);
 			}
 
 			for (ItemBase* Item : _State->Items[ItemType::Super])
 			{
-
+				GameEngineTextureRenderer* ItemIconRenderer = CreateComponent<GameEngineTextureRenderer>();
+				ItemIconRenderer->CreateFrameAnimationFolder(Item->ItemName + "Equip", FrameAnimation_DESC(Item->ItemName + "Equip", 0.1f, false));
+				ItemIconRenderer->ChangeFrameAnimation(Item->ItemName + "Equip");
+				ItemIconRenderer->SetScaleModeImage();
+				ItemIconRenderer->GetTransform().SetLocalPosition({ 0.0f,0.0f, (int)ZOrder::UI - 5 });
+				ItemIconRenderer->ChangeCamera(CAMERAORDER::UICAMERA2);
 			}
 		}
 
 	}
-}
-
-void ItemInventory::Update(float _DeltaTime)
-{
 }
 
 void ItemInventory::End()
