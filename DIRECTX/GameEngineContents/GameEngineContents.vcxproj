@@ -248,6 +248,7 @@
     <ClInclude Include="NewsCat.h" />
     <ClInclude Include="OldFilm.h" />
     <ClInclude Include="Omm.h" />
+    <ClInclude Include="Pawn.h" />
     <ClInclude Include="PeaBullet.h" />
     <ClInclude Include="PeaShooter.h" />
     <ClInclude Include="PeaShooterItem.h" />
@@ -387,6 +388,7 @@
     <ClCompile Include="NewsCat.cpp" />
     <ClCompile Include="OldFilm.cpp" />
     <ClCompile Include="Omm.cpp" />
+    <ClCompile Include="Pawn.cpp" />
     <ClCompile Include="PeaBullet.cpp" />
     <ClCompile Include="PeaShooter.cpp" />
     <ClCompile Include="PeaShooterItem.cpp" />

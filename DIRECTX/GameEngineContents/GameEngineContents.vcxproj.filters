@@ -529,6 +529,9 @@
     <ClInclude Include="Darkness.h">
       <Filter>Global</Filter>
     </ClInclude>
+    <ClInclude Include="Pawn.h">
+      <Filter>Actor\Play\InGame\NPC</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp">
@@ -912,6 +915,9 @@
     </ClCompile>
     <ClCompile Include="Darkness.cpp">
       <Filter>Global</Filter>
+    </ClCompile>
+    <ClCompile Include="Pawn.cpp">
+      <Filter>Actor\Play\InGame\NPC</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
