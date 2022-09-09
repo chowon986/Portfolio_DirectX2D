@@ -15,6 +15,7 @@ enum class InventoryPhase
 
 class WeaponBase;
 class IInGameCharacterBase;
+class ItemBase;
 class ItemInventory : public GameEngineActor
 {
 public:
@@ -36,15 +37,16 @@ public:
 	std::vector<std::string> PurchasedItem;
 	bool OnceCheck;
 	GameEngineTextureRenderer* InventoryFront;
-	GameEngineTextureRenderer* ShotASlot;
-	GameEngineTextureRenderer* ShotBSlot;
-	GameEngineTextureRenderer* ShotCSlot;
-	GameEngineTextureRenderer* ShotDSlot;
+	GameEngineTextureRenderer* ShotABackRenderer;
+	GameEngineTextureRenderer* FrontSlotB;
+	GameEngineTextureRenderer* FrontSlotC;
+	GameEngineTextureRenderer* FrontSlotD;
 	GameEngineTextureRenderer* Selector;
 	GameEngineTextureRenderer* FrontARenderer;
 	GameEngineTextureRenderer* FrontBRenderer;
 	GameEngineTextureRenderer* FrontCRenderer;
 	GameEngineTextureRenderer* FrontDRenderer;
+	GameEngineTextureRenderer* SelectedRenderer;
 	InventoryPhase Phase;
 	InventoryPhase BeforePhase;
 	std::string EquippedShotAName;
@@ -53,10 +55,16 @@ public:
 	std::string EquippedCharmName;
 	std::vector<float4> SelectorPosFront;
 	std::vector<float4> SelectorPosBack;
-	std::vector<std::string> SlotItemName;
+	std::map<int, GameEngineTextureRenderer*> ItemIconRenderers;
+	std::map<int, GameEngineTextureRenderer*> SuperIconRenderers;
 
 	int CurPos;
 	int MaxPos;
 	int MinPos;
+
+	float ElapsedTime;
+	float SelectInvervalTime;
+
+	std::vector<ItemBase*> ItemName;
 };
 

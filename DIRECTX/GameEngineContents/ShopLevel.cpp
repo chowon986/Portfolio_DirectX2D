@@ -13,6 +13,9 @@
 #include "ConvergeShooterItem.h"
 #include "CharacterState.h"
 #include <GameEngineCore/GameEngineBlur.h>
+#include "SpreadShooter.h"
+#include "ConvergeShooter.h"
+#include "BoomerangShooter.h"
 
 ShopLevel::ShopLevel()
 	: IrisRenderer(nullptr)
@@ -118,6 +121,18 @@ void ShopLevel::Start()
 		ItemNames.push_back(CursedRelicIcon);
 		ItemNames.push_back(ConvergeShooterIcon);
 		ItemNames.push_back(SmokeBombIcon);
+
+		SpreadShooter* ShooterA = CreateActor<SpreadShooter>();
+		SpreadShooterIcon->Weapon = ShooterA;
+		SpreadShooterIcon->Weapon->SetLevelOverOn();
+
+		BoomerangShooter* ShooterB = CreateActor<BoomerangShooter>();
+		BoomerangShooterIcon->Weapon = ShooterB;
+		BoomerangShooterIcon->Weapon->SetLevelOverOn();
+
+		ConvergeShooter* ShooterC = CreateActor<ConvergeShooter>(); 
+		ConvergeShooterIcon->Weapon = ShooterC;
+		ConvergeShooterIcon->Weapon->SetLevelOverOn();
 	}
 
 	for (ItemBase* Item : ItemNames)

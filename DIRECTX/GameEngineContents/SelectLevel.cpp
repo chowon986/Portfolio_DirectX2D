@@ -41,8 +41,9 @@ void SelectLevel::Start()
 	GetMainCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
 	State = CreateActor<CharacterState>(GameObjectGroup::CharacterState);
 	State->SetLevelOverOn();
-	State->EquippedItems[InventoryType::ShotA] = new PeaShooterItem;
-	State->Items[ItemType::Shoot].push_back(new PeaShooterItem);
+	PeaShooterItem* PeaShot = new PeaShooterItem;
+	State->EquippedItems[InventoryType::ShotA] = PeaShot;
+	State->Items[ItemType::Shoot].push_back(PeaShot);
 	if (WeaponItemBase* Item = dynamic_cast<WeaponItemBase*>(State->EquippedItems[InventoryType::ShotA]))
 	{
 		Item->Weapon = CreateActor<PeaShooter>();
