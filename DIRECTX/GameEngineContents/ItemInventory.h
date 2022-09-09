@@ -37,6 +37,9 @@ public:
 	bool OnceCheck;
 	GameEngineTextureRenderer* InventoryFront;
 	GameEngineTextureRenderer* ShotASlot;
+	GameEngineTextureRenderer* ShotBSlot;
+	GameEngineTextureRenderer* ShotCSlot;
+	GameEngineTextureRenderer* ShotDSlot;
 	GameEngineTextureRenderer* Selector;
 	GameEngineTextureRenderer* FrontARenderer;
 	GameEngineTextureRenderer* FrontBRenderer;
@@ -49,11 +52,11 @@ public:
 	std::string EquippedSuperName;
 	std::string EquippedCharmName;
 	std::vector<float4> SelectorPosFront;
-	std::vector<float4> SelectorPosA;
-	std::vector<float4> SelectorPosB;
-	std::vector<float4> SelectorPosC;
-	std::vector<float4> SelectorPosD;
+	std::vector<float4> SelectorPosBack;
+	std::vector<std::string> SlotItemName;
 
 	int CurPos;
+	int MaxPos;
+	int MinPos;
 };
 
