@@ -233,6 +233,7 @@ void ItemInventory::Start()
 			GameEngineTextureRenderer* ItemIconRenderer5 = CreateComponent<GameEngineTextureRenderer>();
 			GameEngineTextureRenderer* ItemIconRenderer6 = CreateComponent<GameEngineTextureRenderer>();
 			GameEngineTextureRenderer* ItemIconRenderer7 = CreateComponent<GameEngineTextureRenderer>();
+			GameEngineTextureRenderer* ItemIconRenderer8 = CreateComponent<GameEngineTextureRenderer>();
 
 			CharmIconRenderers.insert(std::make_pair(0, ItemIconRenderer0));
 			CharmIconRenderers.insert(std::make_pair(1, ItemIconRenderer1));
@@ -242,6 +243,7 @@ void ItemInventory::Start()
 			CharmIconRenderers.insert(std::make_pair(5, ItemIconRenderer5));
 			CharmIconRenderers.insert(std::make_pair(6, ItemIconRenderer6));
 			CharmIconRenderers.insert(std::make_pair(7, ItemIconRenderer7));
+			CharmIconRenderers.insert(std::make_pair(8, ItemIconRenderer7));
 
 			for (int i = 0; i < CharmIconRenderers.size(); i++)
 			{
@@ -448,20 +450,29 @@ void ItemInventory::Update(float _DeltaTime)
 					if (BslotSelectedNum != i)
 					{
 						ItemIconRenderers[i]->ChangeFrameAnimation(Item->ItemName + "Equip");
+						ItemIconRenderers[i]->GetTransform().SetLocalPosition( SelectorPosBack[i]);
 						ItemName[i] = Item;
 					}
 					else if (BslotSelectedNum == i && BslotSelectedNum != -1)
 					{
-						ItemIconRenderers[BslotSelectedNum]->ChangeFrameAnimation(Item->ItemName + "Ok");
+						ItemIconRenderers[i]->ChangeFrameAnimation(Item->ItemName + "Ok");
+						ItemIconRenderers[i]->GetTransform().SetLocalPosition(SelectorPosBack[i]);
 					}
+					if (AslotSelectedNum == i)
+					{
+						EIcon->GetTransform().SetLocalPosition(SelectorPosBack[i]);
+						EIcon->SetPivot(PIVOTMODE::LEFTBOT);
+						EIcon->On();
+					}
+					if (AslotSelectedNum == -1)
+					{
+						EIcon->GetTransform().SetLocalPosition(SelectorPosBack[0]);
+						EIcon->SetPivot(PIVOTMODE::LEFTBOT);
+						EIcon->On();
+					}
+					i++;
 				}
-				if (AslotSelectedNum == -1)
-				{
-					_State->EquippedItems[InventoryType::ShotA] = ItemName[0];
-					EIcon->GetTransform().SetLocalPosition(SelectorPosBack[0]);
-					EIcon->SetPivot(PIVOTMODE::LEFTBOT);
-					EIcon->On();
-				}
+
 			}
 		}
 		if (GameEngineInput::GetInst()->IsDown("Select"))
@@ -660,6 +671,12 @@ void ItemInventory::Update(float _DeltaTime)
 							{
 								ItemIconBRenderers[AslotSelectedNum]->ChangeFrameAnimation(Item->ItemName + "Ok");
 							}
+							if (BslotSelectedNum == i)
+							{
+								EIcon->GetTransform().SetLocalPosition(SelectorPosBack[1]);
+								EIcon->SetPivot(PIVOTMODE::LEFTBOT);
+								EIcon->On();
+							}
 							i++;
 						}
 						if (AslotSelectedNum == -1)
@@ -688,6 +705,7 @@ void ItemInventory::Update(float _DeltaTime)
 								EIcon->GetTransform().SetLocalPosition(SelectorPosBack[0]);
 								EIcon->SetPivot(PIVOTMODE::LEFTBOT);
 								EIcon->On();
+								BslotSelectedNum = 0;
 							}
 						}
 					}
@@ -705,6 +723,7 @@ void ItemInventory::Update(float _DeltaTime)
 								EIcon->GetTransform().SetLocalPosition(SelectorPosBack[1]);
 								EIcon->SetPivot(PIVOTMODE::LEFTBOT);
 								EIcon->On();
+								BslotSelectedNum = 1;
 							}
 						}
 					}
@@ -722,6 +741,7 @@ void ItemInventory::Update(float _DeltaTime)
 								EIcon->GetTransform().SetLocalPosition(SelectorPosBack[2]);
 								EIcon->SetPivot(PIVOTMODE::LEFTBOT);
 								EIcon->On();
+								BslotSelectedNum = 2;
 							}
 						}
 					}
@@ -739,6 +759,7 @@ void ItemInventory::Update(float _DeltaTime)
 								EIcon->GetTransform().SetLocalPosition(SelectorPosBack[3]);
 								EIcon->SetPivot(PIVOTMODE::LEFTBOT);
 								EIcon->On();
+								BslotSelectedNum = 3;
 							}
 						}
 					}
@@ -756,6 +777,7 @@ void ItemInventory::Update(float _DeltaTime)
 								EIcon->GetTransform().SetLocalPosition(SelectorPosBack[4]);
 								EIcon->SetPivot(PIVOTMODE::LEFTBOT);
 								EIcon->On();
+								BslotSelectedNum = 4;
 							}
 						}
 					}
@@ -773,6 +795,7 @@ void ItemInventory::Update(float _DeltaTime)
 								EIcon->GetTransform().SetLocalPosition(SelectorPosBack[5]);
 								EIcon->SetPivot(PIVOTMODE::LEFTBOT);
 								EIcon->On();
+								BslotSelectedNum = 5;
 							}
 						}
 					}
@@ -790,6 +813,7 @@ void ItemInventory::Update(float _DeltaTime)
 								EIcon->GetTransform().SetLocalPosition(SelectorPosBack[6]);
 								EIcon->SetPivot(PIVOTMODE::LEFTBOT);
 								EIcon->On();
+								BslotSelectedNum = 6;
 							}
 						}
 					}
@@ -807,6 +831,7 @@ void ItemInventory::Update(float _DeltaTime)
 								EIcon->GetTransform().SetLocalPosition(SelectorPosBack[7]);
 								EIcon->SetPivot(PIVOTMODE::LEFTBOT);
 								EIcon->On();
+								BslotSelectedNum = 7;
 							}
 						}
 					}
@@ -824,6 +849,7 @@ void ItemInventory::Update(float _DeltaTime)
 								EIcon->GetTransform().SetLocalPosition(SelectorPosBack[8]);
 								EIcon->SetPivot(PIVOTMODE::LEFTBOT);
 								EIcon->On();
+								BslotSelectedNum = 8;
 							}
 						}
 					}
