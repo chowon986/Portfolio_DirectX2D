@@ -49,6 +49,7 @@ enum class InGameMonsterState
 	BeforeRoToateCameraOut,
 	RotateCameraOut,
 	KnockOut,
+	Jump,
 };
 
 enum class InGameMonsterAttackState

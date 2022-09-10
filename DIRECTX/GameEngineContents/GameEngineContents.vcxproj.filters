@@ -522,7 +522,6 @@
     <ClInclude Include="HourglassLevel.h">
       <Filter>Level\01 Play</Filter>
     </ClInclude>
-    <ClInclude Include="ScoreLevel.h" />
     <ClInclude Include="PeaShooterItem.h">
       <Filter>Actor\Item\Weapon</Filter>
     </ClInclude>
@@ -540,6 +539,15 @@
     </ClInclude>
     <ClInclude Include="SuperGhostItem.h">
       <Filter>Actor\Item\Super</Filter>
+    </ClInclude>
+    <ClInclude Include="BishopLevel.h">
+      <Filter>Level\01 Play</Filter>
+    </ClInclude>
+    <ClInclude Include="ScoreLevel.h">
+      <Filter>Level\01 Play</Filter>
+    </ClInclude>
+    <ClInclude Include="PawnPhysicsComponent.h">
+      <Filter>Components\Monster</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -918,7 +926,6 @@
     <ClCompile Include="HourglassLevel.cpp">
       <Filter>Level\01 Play</Filter>
     </ClCompile>
-    <ClCompile Include="ScoreLevel.cpp" />
     <ClCompile Include="PeaShooterItem.cpp">
       <Filter>Actor\Item\Weapon</Filter>
     </ClCompile>
@@ -936,6 +943,15 @@
     </ClCompile>
     <ClCompile Include="SuperGhostItem.cpp">
       <Filter>Actor\Item\Super</Filter>
+    </ClCompile>
+    <ClCompile Include="BishopLevel.cpp">
+      <Filter>Level\01 Play</Filter>
+    </ClCompile>
+    <ClCompile Include="ScoreLevel.cpp">
+      <Filter>Level\01 Play</Filter>
+    </ClCompile>
+    <ClCompile Include="PawnPhysicsComponent.cpp">
+      <Filter>Components\Monster</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -10,6 +10,7 @@
 #include "HourglassLevel.h"
 #include "BeforeTitleLevel.h"
 #include "ScoreLevel.h"
+#include "BishopLevel.h"
 #include <GameEngineCore/GameEngineBlend.h>
 
 #pragma comment(lib, "GameEngineBase.lib")
@@ -128,6 +129,15 @@ void ContentsCore::Start()
 		GameEngineTexture::Load(Textures4[i].GetFullPath());
 	}
 
+	Dir.MoveParent();
+	Dir.Move("16BishopLevel");
+	std::vector<GameEngineFile> Textures5 = Dir.GetAllFile();
+
+	for (size_t i = 0; i < Textures5.size(); i++)
+	{
+		GameEngineTexture::Load(Textures5[i].GetFullPath());
+	}
+
 	GameEngineTexture::Cut("Cup.png", 20, 20);
 	GameEngineTexture::Cut("Cup_Dash.png", 8, 1);
 
@@ -140,6 +150,7 @@ void ContentsCore::Start()
 	CreateLevel<TutorialLevel>("Tutorial");
 	CreateLevel<DogFightLevel>("DogFight");
 	CreateLevel<ScoreLevel>("Score");
+	CreateLevel<BishopLevel>("Bishop");
 	ChangeLevel("BeforeTitle");
 
 	GameEngineFont::Load("Title");

@@ -70,6 +70,12 @@ void PhysicsComponent::FixedUpdate(float _DeltaTime)
 		Reset();
 	}
 
+	while (true == ColMapTexture->GetPixelToFloat4(Actor->GetTransform().GetWorldPosition().x, -Actor->GetTransform().GetWorldPosition().y - 10).CompareInt4D(float4::BLACK))
+	{
+		Actor->GetTransform().SetWorldMove(float4::DOWN * _DeltaTime);
+		Reset();
+	}
+
 	Actor->SetIsOnGround(Speed == 0);
 
 	while (true == ColMapTexture->GetPixelToFloat4(Actor->GetTransform().GetWorldPosition().x - 10, -Actor->GetTransform().GetWorldPosition().y).CompareInt4D(float4::BLACK) ||
@@ -83,6 +89,7 @@ void PhysicsComponent::FixedUpdate(float _DeltaTime)
 	{
 		Actor->GetTransform().SetWorldMove(float4::LEFT * _DeltaTime);
 	}
+
 }
 
 void PhysicsComponent::AddForce(float _Power)

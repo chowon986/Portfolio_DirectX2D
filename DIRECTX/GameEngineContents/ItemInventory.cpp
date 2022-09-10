@@ -243,7 +243,7 @@ void ItemInventory::Start()
 			CharmIconRenderers.insert(std::make_pair(5, ItemIconRenderer5));
 			CharmIconRenderers.insert(std::make_pair(6, ItemIconRenderer6));
 			CharmIconRenderers.insert(std::make_pair(7, ItemIconRenderer7));
-			CharmIconRenderers.insert(std::make_pair(8, ItemIconRenderer7));
+			CharmIconRenderers.insert(std::make_pair(8, ItemIconRenderer8));
 
 			for (int i = 0; i < CharmIconRenderers.size(); i++)
 			{

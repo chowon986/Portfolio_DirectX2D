@@ -163,6 +163,7 @@
     <ClInclude Include="BackgroundObject.h" />
     <ClInclude Include="Bakery.h" />
     <ClInclude Include="BeforeTitleLevel.h" />
+    <ClInclude Include="BishopLevel.h" />
     <ClInclude Include="Boat.h" />
     <ClInclude Include="Boatman.h" />
     <ClInclude Include="BoatRipples.h" />
@@ -249,6 +250,7 @@
     <ClInclude Include="OldFilm.h" />
     <ClInclude Include="Omm.h" />
     <ClInclude Include="Pawn.h" />
+    <ClInclude Include="PawnPhysicsComponent.h" />
     <ClInclude Include="PeaBullet.h" />
     <ClInclude Include="PeaShooter.h" />
     <ClInclude Include="PeaShooterItem.h" />
@@ -308,6 +310,7 @@
     <ClCompile Include="BackgroundObject.cpp" />
     <ClCompile Include="Bakery.cpp" />
     <ClCompile Include="BeforeTitleLevel.cpp" />
+    <ClCompile Include="BishopLevel.cpp" />
     <ClCompile Include="Boat.cpp" />
     <ClCompile Include="Boatman.cpp" />
     <ClCompile Include="BoatRipples.cpp" />
@@ -392,6 +395,7 @@
     <ClCompile Include="OldFilm.cpp" />
     <ClCompile Include="Omm.cpp" />
     <ClCompile Include="Pawn.cpp" />
+    <ClCompile Include="PawnPhysicsComponent.cpp" />
     <ClCompile Include="PeaBullet.cpp" />
     <ClCompile Include="PeaShooter.cpp" />
     <ClCompile Include="PeaShooterItem.cpp" />
