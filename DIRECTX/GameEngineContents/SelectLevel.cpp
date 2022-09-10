@@ -6,6 +6,10 @@
 #include <GameEngineCore/GameEngineBlur.h>
 #include "PeaShooterItem.h"
 #include "PeaShooter.h"
+#include "SuperBeamItem.h"
+#include "SuperGhostItem.h"
+#include "SuperInvincibleItem.h"
+#include "AstalCookieItem.h"
 
 SelectLevel::SelectLevel()
 	: OptionRenderer(nullptr)
@@ -49,6 +53,16 @@ void SelectLevel::Start()
 		Item->Weapon = CreateActor<PeaShooter>();
 		Item->Weapon->SetLevelOverOn();
 	}
+
+	SuperBeamItem* SuperBeamItemIcon = new SuperBeamItem();
+	SuperGhostItem* SuperGhostItemIcon = new SuperGhostItem();
+	SuperInvincibleItem* SuperInvincibleItemIcon = new SuperInvincibleItem();
+	State->Items[ItemType::Super].push_back(SuperBeamItemIcon);
+	State->Items[ItemType::Super].push_back(SuperInvincibleItemIcon);
+	State->Items[ItemType::Super].push_back(SuperGhostItemIcon);
+
+	AstalCookieItem* AstalCookieItemIcon = new AstalCookieItem();
+	State->Items[ItemType::Charm].push_back(AstalCookieItemIcon);
 
 	if (false == GameEngineInput::GetInst()->IsKey("MoveDown"))
 	{

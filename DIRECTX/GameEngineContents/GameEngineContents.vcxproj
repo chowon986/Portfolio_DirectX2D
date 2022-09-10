@@ -274,6 +274,9 @@
     <ClInclude Include="SpreadBullet.h" />
     <ClInclude Include="SpreadShooter.h" />
     <ClInclude Include="SpreadShooterItem.h" />
+    <ClInclude Include="SuperBeamItem.h" />
+    <ClInclude Include="SuperGhostItem.h" />
+    <ClInclude Include="SuperInvincibleItem.h" />
     <ClInclude Include="SuperItemBase.h" />
     <ClInclude Include="TattooBullet.h" />
     <ClInclude Include="TattooShooter.h" />
@@ -416,6 +419,9 @@
     <ClCompile Include="SpreadBullet.cpp" />
     <ClCompile Include="SpreadShooter.cpp" />
     <ClCompile Include="SpreadShooterItem.cpp" />
+    <ClCompile Include="SuperBeamItem.cpp" />
+    <ClCompile Include="SuperGhostItem.cpp" />
+    <ClCompile Include="SuperInvincibleItem.cpp" />
     <ClCompile Include="SuperItemBase.cpp" />
     <ClCompile Include="TattooBullet.cpp" />
     <ClCompile Include="TattooShooter.cpp" />

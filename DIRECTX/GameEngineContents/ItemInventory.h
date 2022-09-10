@@ -34,29 +34,25 @@ public:
 	void SetPhase(InventoryPhase _Phase) { Phase = _Phase; }
 
 public:
-	std::vector<std::string> PurchasedItem;
-	bool OnceCheck;
 	GameEngineTextureRenderer* InventoryFront;
 	GameEngineTextureRenderer* ShotABackRenderer;
-	GameEngineTextureRenderer* FrontSlotB;
-	GameEngineTextureRenderer* FrontSlotC;
-	GameEngineTextureRenderer* FrontSlotD;
 	GameEngineTextureRenderer* Selector;
-	GameEngineTextureRenderer* FrontARenderer;
-	GameEngineTextureRenderer* FrontBRenderer;
-	GameEngineTextureRenderer* FrontCRenderer;
-	GameEngineTextureRenderer* FrontDRenderer;
-	GameEngineTextureRenderer* SelectedRenderer;
+	GameEngineTextureRenderer* EIcon;
 	InventoryPhase Phase;
 	InventoryPhase BeforePhase;
 	std::string EquippedShotAName;
 	std::string EquippedShotBName;
 	std::string EquippedSuperName;
 	std::string EquippedCharmName;
+	std::vector<ItemBase*> ItemName;
 	std::vector<float4> SelectorPosFront;
 	std::vector<float4> SelectorPosBack;
+	std::vector<float4> SelectorPos3Slot;
+	std::map<int, GameEngineTextureRenderer*> FrontRenderers;
 	std::map<int, GameEngineTextureRenderer*> ItemIconRenderers;
+	std::map<int, GameEngineTextureRenderer*> ItemIconBRenderers;
 	std::map<int, GameEngineTextureRenderer*> SuperIconRenderers;
+	std::map<int, GameEngineTextureRenderer*> CharmIconRenderers;
 
 	int CurPos;
 	int MaxPos;
@@ -65,6 +61,8 @@ public:
 	float ElapsedTime;
 	float SelectInvervalTime;
 
-	std::vector<ItemBase*> ItemName;
+	int AslotSelectedNum;
+	int BslotSelectedNum;
+	int CslotSelectedNum;
 };
 

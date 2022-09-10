@@ -6,20 +6,17 @@
 #include "PeaShooterItem.h"
 
 ItemInventory::ItemInventory()
-	:OnceCheck(false)
-	, Phase(InventoryPhase::Front)
+	: Phase(InventoryPhase::Front)
 	, CurPos(0)
 	, BeforePhase(InventoryPhase::None)
 	, ShotABackRenderer(nullptr)
-	, FrontARenderer(nullptr)
-	, FrontBRenderer(nullptr)
-	, FrontCRenderer(nullptr)
-	, FrontDRenderer(nullptr)
-	, FrontSlotC(nullptr)
-	, FrontSlotD(nullptr)
 	, MinPos(0)
 	, SelectInvervalTime(0.2)
 	, ItemName(8)
+	, AslotSelectedNum(-1)
+	, BslotSelectedNum(-1)
+	, Selector(nullptr)
+	, EIcon(nullptr)
 {
 }
 
@@ -44,6 +41,10 @@ void ItemInventory::Start()
 	SelectorPosBack.push_back(float4{ -51.0f, 0.0f, (int)ZOrder::UI - 5 });
 	SelectorPosBack.push_back(float4{ 47.0f, 0.0f, (int)ZOrder::UI - 5 });
 	SelectorPosBack.push_back(float4{ 147.0f, 0.0f , (int)ZOrder::UI - 5 });
+
+	SelectorPos3Slot.push_back(float4{ -100.0f, 90.0f, (int)ZOrder::UI - 5 });
+	SelectorPos3Slot.push_back(float4{ 0.0f, 90.0f, (int)ZOrder::UI - 5 });
+	SelectorPos3Slot.push_back(float4{ 100.0f, 90.0f, (int)ZOrder::UI - 5 });
 
 	InventoryFront = CreateComponent<GameEngineTextureRenderer>();
 	InventoryFront->SetTexture("ch_equip_front.png");
@@ -85,14 +86,58 @@ void ItemInventory::Start()
 		{
 			ItemIconRenderers[i]->CreateFrameAnimationFolder("UnKnown", FrameAnimation_DESC("UnKnown", 0.05f, true));
 			ItemIconRenderers[i]->CreateFrameAnimationFolder("BoomerangShooterEquip", FrameAnimation_DESC("BoomerangShooterEquip", 0.05f, true));
+			ItemIconRenderers[i]->CreateFrameAnimationFolder("BoomerangShooterOk", FrameAnimation_DESC("BoomerangShooterOk", 0.05f, true));
 			ItemIconRenderers[i]->CreateFrameAnimationFolder("ConvergeShooterEquip", FrameAnimation_DESC("ConvergeShooterEquip", 0.05f, true));
-			ItemIconRenderers[i]->CreateFrameAnimationFolder("PeashooterEquip", FrameAnimation_DESC("PeashooterEquip", 0.05f, true));
+			ItemIconRenderers[i]->CreateFrameAnimationFolder("ConvergeShooterOk", FrameAnimation_DESC("ConvergeShooterOk", 0.05f, true));
+			ItemIconRenderers[i]->CreateFrameAnimationFolder("PeaShooterEquip", FrameAnimation_DESC("PeashooterEquip", 0.05f, true));
+			ItemIconRenderers[i]->CreateFrameAnimationFolder("PeaShooterOk", FrameAnimation_DESC("PeashooterOk", 0.05f, true));
 			ItemIconRenderers[i]->CreateFrameAnimationFolder("SpreadShooterEquip", FrameAnimation_DESC("SpreadShooterEquip", 0.05f, true));
+			ItemIconRenderers[i]->CreateFrameAnimationFolder("SpreadShooterOk", FrameAnimation_DESC("SpreadShooterOk", 0.05f, true));
 			ItemIconRenderers[i]->ChangeFrameAnimation("UnKnown");
 			ItemIconRenderers[i]->SetScaleModeImage();
 			ItemIconRenderers[i]->GetTransform().SetLocalPosition(SelectorPosBack[i]);
 			ItemIconRenderers[i]->ChangeCamera(CAMERAORDER::UICAMERA2);
 			ItemIconRenderers[i]->Off();
+		}
+	}
+
+	{
+		GameEngineTextureRenderer* ItemIconRenderer0 = CreateComponent<GameEngineTextureRenderer>();
+		GameEngineTextureRenderer* ItemIconRenderer1 = CreateComponent<GameEngineTextureRenderer>();
+		GameEngineTextureRenderer* ItemIconRenderer2 = CreateComponent<GameEngineTextureRenderer>();
+		GameEngineTextureRenderer* ItemIconRenderer3 = CreateComponent<GameEngineTextureRenderer>();
+		GameEngineTextureRenderer* ItemIconRenderer4 = CreateComponent<GameEngineTextureRenderer>();
+		GameEngineTextureRenderer* ItemIconRenderer5 = CreateComponent<GameEngineTextureRenderer>();
+		GameEngineTextureRenderer* ItemIconRenderer6 = CreateComponent<GameEngineTextureRenderer>();
+		GameEngineTextureRenderer* ItemIconRenderer7 = CreateComponent<GameEngineTextureRenderer>();
+		GameEngineTextureRenderer* ItemIconRenderer8 = CreateComponent<GameEngineTextureRenderer>();
+
+		ItemIconBRenderers.insert(std::make_pair(0, ItemIconRenderer0));
+		ItemIconBRenderers.insert(std::make_pair(1, ItemIconRenderer1));
+		ItemIconBRenderers.insert(std::make_pair(2, ItemIconRenderer2));
+		ItemIconBRenderers.insert(std::make_pair(3, ItemIconRenderer3));
+		ItemIconBRenderers.insert(std::make_pair(4, ItemIconRenderer4));
+		ItemIconBRenderers.insert(std::make_pair(5, ItemIconRenderer5));
+		ItemIconBRenderers.insert(std::make_pair(6, ItemIconRenderer6));
+		ItemIconBRenderers.insert(std::make_pair(7, ItemIconRenderer7));
+		ItemIconBRenderers.insert(std::make_pair(8, ItemIconRenderer8));
+
+		for (int i = 0; i < ItemIconBRenderers.size(); i++)
+		{
+			ItemIconBRenderers[i]->CreateFrameAnimationFolder("UnKnown", FrameAnimation_DESC("UnKnown", 0.05f, true));
+			ItemIconBRenderers[i]->CreateFrameAnimationFolder("BoomerangShooterEquip", FrameAnimation_DESC("BoomerangShooterEquip", 0.05f, true));
+			ItemIconBRenderers[i]->CreateFrameAnimationFolder("BoomerangShooterOk", FrameAnimation_DESC("BoomerangShooterOk", 0.05f, true));
+			ItemIconBRenderers[i]->CreateFrameAnimationFolder("ConvergeShooterEquip", FrameAnimation_DESC("ConvergeShooterEquip", 0.05f, true));
+			ItemIconBRenderers[i]->CreateFrameAnimationFolder("ConvergeShooterOk", FrameAnimation_DESC("ConvergeShooterOk", 0.05f, true));
+			ItemIconBRenderers[i]->CreateFrameAnimationFolder("PeaShooterEquip", FrameAnimation_DESC("PeashooterEquip", 0.05f, true));
+			ItemIconBRenderers[i]->CreateFrameAnimationFolder("PeaShooterOk", FrameAnimation_DESC("PeashooterOk", 0.05f, true));
+			ItemIconBRenderers[i]->CreateFrameAnimationFolder("SpreadShooterEquip", FrameAnimation_DESC("SpreadShooterEquip", 0.05f, true));
+			ItemIconBRenderers[i]->CreateFrameAnimationFolder("SpreadShooterOk", FrameAnimation_DESC("SpreadShooterOk", 0.05f, true));
+			ItemIconBRenderers[i]->ChangeFrameAnimation("UnKnown");
+			ItemIconBRenderers[i]->SetScaleModeImage();
+			ItemIconBRenderers[i]->GetTransform().SetLocalPosition(SelectorPosBack[i]);
+			ItemIconBRenderers[i]->ChangeCamera(CAMERAORDER::UICAMERA2);
+			ItemIconBRenderers[i]->Off();
 		}
 	}
 
@@ -105,7 +150,114 @@ void ItemInventory::Start()
 	ItemName.push_back(nullptr);
 	ItemName.push_back(nullptr);
 
-	SelectedRenderer = CreateComponent<GameEngineTextureRenderer>();
+
+	EIcon = CreateComponent<GameEngineTextureRenderer>();
+	EIcon->CreateFrameAnimationFolder("EquipE", FrameAnimation_DESC("EquipE", 0.05, true));
+	EIcon->ChangeFrameAnimation("EquipE");
+	EIcon->SetScaleModeImage();
+	EIcon->ChangeCamera(CAMERAORDER::UICAMERA2);
+	EIcon->Off();
+
+	GameEngineTextureRenderer* FrontARenderer = CreateComponent<GameEngineTextureRenderer>();
+	FrontRenderers.insert(std::make_pair(0, FrontARenderer));
+
+	GameEngineTextureRenderer* FrontBRenderer = CreateComponent<GameEngineTextureRenderer>();
+	FrontRenderers.insert(std::make_pair(1, FrontBRenderer));
+
+	GameEngineTextureRenderer* FrontCRenderer = CreateComponent<GameEngineTextureRenderer>();
+	FrontRenderers.insert(std::make_pair(2, FrontCRenderer));
+
+	GameEngineTextureRenderer* FrontDRenderer = CreateComponent<GameEngineTextureRenderer>();
+	FrontRenderers.insert(std::make_pair(3, FrontDRenderer));
+
+	for (int i = 0; i < 2; i++)
+	{
+		FrontRenderers[i]->CreateFrameAnimationFolder("UnKnown", FrameAnimation_DESC("UnKnown", 0.05f, true));
+		FrontRenderers[i]->CreateFrameAnimationFolder("BoomerangShooterEquip", FrameAnimation_DESC("BoomerangShooterEquip", 0.05f, true));
+		FrontRenderers[i]->CreateFrameAnimationFolder("ConvergeShooterEquip", FrameAnimation_DESC("ConvergeShooterEquip", 0.05f, true));
+		FrontRenderers[i]->CreateFrameAnimationFolder("PeaShooterEquip", FrameAnimation_DESC("PeashooterEquip", 0.05f, true));
+		FrontRenderers[i]->CreateFrameAnimationFolder("SpreadShooterEquip", FrameAnimation_DESC("SpreadShooterEquip", 0.05f, true));
+		FrontRenderers[i]->SetScaleModeImage();
+		FrontRenderers[i]->ChangeCamera(CAMERAORDER::UICAMERA2);
+	}
+
+	FrontRenderers[2]->CreateFrameAnimationFolder("UnKnown", FrameAnimation_DESC("UnKnown", 0.05f, true));
+	FrontRenderers[2]->CreateFrameAnimationFolder("SuperBeamEquip", FrameAnimation_DESC("SuperBeamEquip", 0.05f, true));
+	FrontRenderers[2]->CreateFrameAnimationFolder("SuperGhostEquip", FrameAnimation_DESC("SuperGhostEquip", 0.05f, true));
+	FrontRenderers[2]->CreateFrameAnimationFolder("SuperInvincibleEquip", FrameAnimation_DESC("SuperInvincibleEquip", 0.05f, true));
+	FrontRenderers[2]->SetScaleModeImage();
+	FrontRenderers[2]->ChangeCamera(CAMERAORDER::UICAMERA2);
+
+	FrontRenderers[3]->CreateFrameAnimationFolder("UnKnown", FrameAnimation_DESC("UnKnown", 0.05f, true));
+	FrontRenderers[3]->CreateFrameAnimationFolder("AstalCookieEquip", FrameAnimation_DESC("AstalCookieEquip", 0.05f, true));
+	FrontRenderers[3]->CreateFrameAnimationFolder("CursedRelicEquip", FrameAnimation_DESC("CursedRelicEquip", 0.05f, true));
+	FrontRenderers[3]->CreateFrameAnimationFolder("SmokeBombEquip", FrameAnimation_DESC("SmokeBombEquip", 0.05f, true));
+	FrontRenderers[3]->SetScaleModeImage();
+	FrontRenderers[3]->ChangeCamera(CAMERAORDER::UICAMERA2);
+
+	ShotABackRenderer = CreateComponent<GameEngineTextureRenderer>();
+	ShotABackRenderer->ChangeCamera(CAMERAORDER::UICAMERA2);
+	ShotABackRenderer->GetTransform().SetLocalPosition({ 0.0f, -10.0f,(int)ZOrder::UI });
+	ShotABackRenderer->Off();
+
+	{
+		GameEngineTextureRenderer* ItemIconRenderer0 = CreateComponent<GameEngineTextureRenderer>();
+		GameEngineTextureRenderer* ItemIconRenderer1 = CreateComponent<GameEngineTextureRenderer>();
+		GameEngineTextureRenderer* ItemIconRenderer2 = CreateComponent<GameEngineTextureRenderer>();
+
+		SuperIconRenderers.insert(std::make_pair(0, ItemIconRenderer0));
+		SuperIconRenderers.insert(std::make_pair(1, ItemIconRenderer1));
+		SuperIconRenderers.insert(std::make_pair(2, ItemIconRenderer2));
+
+		for (int i = 0; i < SuperIconRenderers.size(); i++)
+		{
+			SuperIconRenderers[i]->CreateFrameAnimationFolder("UnKnown", FrameAnimation_DESC("UnKnown", 0.05f, true));
+			SuperIconRenderers[i]->CreateFrameAnimationFolder("SuperBeamEquip", FrameAnimation_DESC("SuperBeamEquip", 0.05f, true));
+			SuperIconRenderers[i]->CreateFrameAnimationFolder("SuperGhostEquip", FrameAnimation_DESC("SuperGhostEquip", 0.05f, true));
+			SuperIconRenderers[i]->CreateFrameAnimationFolder("SuperInvincibleEquip", FrameAnimation_DESC("SuperInvincibleEquip", 0.05f, true));
+			SuperIconRenderers[i]->ChangeFrameAnimation("UnKnown");
+			SuperIconRenderers[i]->GetTransform().SetLocalPosition(SelectorPos3Slot[i]);
+			SuperIconRenderers[i]->SetScaleModeImage();
+			SuperIconRenderers[i]->ChangeCamera(CAMERAORDER::UICAMERA2);
+			SuperIconRenderers[i]->Off();
+		}
+	}
+
+	{
+		{
+			GameEngineTextureRenderer* ItemIconRenderer0 = CreateComponent<GameEngineTextureRenderer>();
+			GameEngineTextureRenderer* ItemIconRenderer1 = CreateComponent<GameEngineTextureRenderer>();
+			GameEngineTextureRenderer* ItemIconRenderer2 = CreateComponent<GameEngineTextureRenderer>();
+			GameEngineTextureRenderer* ItemIconRenderer3 = CreateComponent<GameEngineTextureRenderer>();
+			GameEngineTextureRenderer* ItemIconRenderer4 = CreateComponent<GameEngineTextureRenderer>();
+			GameEngineTextureRenderer* ItemIconRenderer5 = CreateComponent<GameEngineTextureRenderer>();
+			GameEngineTextureRenderer* ItemIconRenderer6 = CreateComponent<GameEngineTextureRenderer>();
+			GameEngineTextureRenderer* ItemIconRenderer7 = CreateComponent<GameEngineTextureRenderer>();
+
+			CharmIconRenderers.insert(std::make_pair(0, ItemIconRenderer0));
+			CharmIconRenderers.insert(std::make_pair(1, ItemIconRenderer1));
+			CharmIconRenderers.insert(std::make_pair(2, ItemIconRenderer2));
+			CharmIconRenderers.insert(std::make_pair(3, ItemIconRenderer3));
+			CharmIconRenderers.insert(std::make_pair(4, ItemIconRenderer4));
+			CharmIconRenderers.insert(std::make_pair(5, ItemIconRenderer5));
+			CharmIconRenderers.insert(std::make_pair(6, ItemIconRenderer6));
+			CharmIconRenderers.insert(std::make_pair(7, ItemIconRenderer7));
+
+			for (int i = 0; i < CharmIconRenderers.size(); i++)
+			{
+				CharmIconRenderers[i]->CreateFrameAnimationFolder("UnKnown", FrameAnimation_DESC("UnKnown", 0.05f, true));
+				CharmIconRenderers[i]->CreateFrameAnimationFolder("AstalCookieEquip", FrameAnimation_DESC("AstalCookieEquip", 0.05f, true));
+				CharmIconRenderers[i]->CreateFrameAnimationFolder("CursedRelicEquip", FrameAnimation_DESC("CursedRelicEquip", 0.05f, true));
+				CharmIconRenderers[i]->CreateFrameAnimationFolder("SmokeBombEquip", FrameAnimation_DESC("SmokeBombEquip", 0.05f, true));
+				CharmIconRenderers[i]->CreateFrameAnimationFolder("TwinHeartEquip", FrameAnimation_DESC("TwinHeartEquip", 0.05f, true));
+				CharmIconRenderers[i]->ChangeFrameAnimation("UnKnown");
+				CharmIconRenderers[i]->SetScaleModeImage();
+				CharmIconRenderers[i]->GetTransform().SetLocalPosition(SelectorPosBack[i]);
+				CharmIconRenderers[i]->ChangeCamera(CAMERAORDER::UICAMERA2);
+				CharmIconRenderers[i]->Off();
+			}
+		}
+	}
 }
 
 void ItemInventory::Update(float _DeltaTime)
@@ -124,41 +276,28 @@ void ItemInventory::Update(float _DeltaTime)
 
 	if (GetPhase() == InventoryPhase::Front)
 	{
+		ShotABackRenderer->Off();
+
 		if (BeforePhase != GetPhase())
 		{
-			if (BeforePhase == InventoryPhase::ShotASlot)
-			{
-				for (int i = 0; i < ItemIconRenderers.size(); i++)
-				{
-					ItemIconRenderers[i]->Off();
-				}
-			}
-			else if (BeforePhase == InventoryPhase::ShotBSlot)
-			{
-
-			}
-			else if (BeforePhase == InventoryPhase::SuperSlot)
-			{
-
-			}
-			else if (BeforePhase == InventoryPhase::CharmSlot)
-			{
-
-			}
-
 			BeforePhase = Phase;
 
-			if (FrontARenderer != nullptr)
+			for (int i = 0; i < FrontRenderers.size(); i++)
 			{
-				FrontARenderer->On();
-				FrontBRenderer->On();
-				FrontCRenderer->On();
-				FrontDRenderer->On();
+				if (FrontRenderers[i] != nullptr)
+				{
+					FrontRenderers[i]->On();
+				}
+			}
+
+			if (InventoryFront != nullptr)
+			{
 				InventoryFront->SetTexture("ch_equip_front.png");
 				InventoryFront->On();
-				CurPos = 0;
-				MaxPos = 4;
 			}
+
+			CurPos = 0;
+			MaxPos = 4;
 
 			std::list<GameEngineActor*> Actors = GetLevel()->GetGroup(GameObjectGroup::CharacterState);
 			for (GameEngineActor* Actor : Actors)
@@ -175,23 +314,15 @@ void ItemInventory::Update(float _DeltaTime)
 						if (EquippedShotAName != EquippedItemShotA->ItemName + "Equip")
 						{
 							EquippedShotAName = EquippedItemShotA->ItemName + "Equip";
-							FrontARenderer = CreateComponent<GameEngineTextureRenderer>();
-							FrontARenderer->CreateFrameAnimationFolder(EquippedShotAName, FrameAnimation_DESC(EquippedShotAName, 0.05f, true));
-							FrontARenderer->ChangeFrameAnimation(EquippedShotAName);
-							FrontARenderer->SetScaleModeImage();
-							FrontARenderer->GetTransform().SetLocalPosition({ -198.0f,-165.0f, (int)ZOrder::UI - 5 });
-							FrontARenderer->ChangeCamera(CAMERAORDER::UICAMERA2);
+							FrontRenderers[0]->ChangeFrameAnimation(EquippedShotAName);
+							FrontRenderers[0]->GetTransform().SetLocalPosition({ -198.0f,-165.0f, (int)ZOrder::UI - 5 });
 						}
 					}
 					else
 					{
 						EquippedShotAName = "UnKnown";
-						FrontARenderer = CreateComponent<GameEngineTextureRenderer>();
-						FrontARenderer->CreateFrameAnimationFolder(EquippedShotAName, FrameAnimation_DESC(EquippedShotAName, 0.05f, true));
-						FrontARenderer->ChangeFrameAnimation(EquippedShotAName);
-						FrontARenderer->SetScaleModeImage();
-						FrontARenderer->GetTransform().SetLocalPosition({ -198.0f,-165.0f, (int)ZOrder::UI - 5 });
-						FrontARenderer->ChangeCamera(CAMERAORDER::UICAMERA2);
+						FrontRenderers[0]->ChangeFrameAnimation(EquippedShotAName);
+						FrontRenderers[0]->GetTransform().SetLocalPosition({ -198.0f,-165.0f, (int)ZOrder::UI - 5 });
 					}
 
 					if (nullptr != EquippedItemShotB)
@@ -199,23 +330,15 @@ void ItemInventory::Update(float _DeltaTime)
 						if (EquippedShotBName != EquippedItemShotB->ItemName + "Equip")
 						{
 							EquippedShotBName = EquippedItemShotB->ItemName + "Equip";
-							FrontBRenderer = CreateComponent<GameEngineTextureRenderer>();
-							FrontBRenderer->CreateFrameAnimationFolder(EquippedShotBName, FrameAnimation_DESC(EquippedShotBName, 0.05f, true));
-							FrontBRenderer->ChangeFrameAnimation(EquippedShotBName);
-							FrontBRenderer->SetScaleModeImage();
-							FrontBRenderer->GetTransform().SetLocalPosition({ -98.0f,-165.0f, (int)ZOrder::UI - 5 });
-							FrontBRenderer->ChangeCamera(CAMERAORDER::UICAMERA2);
+							FrontRenderers[1]->ChangeFrameAnimation(EquippedShotBName);
+							FrontRenderers[1]->GetTransform().SetLocalPosition({ -98.0f,-165.0f, (int)ZOrder::UI - 5 });
 						}
 					}
 					else
 					{
 						EquippedShotBName = "UnKnown";
-						FrontBRenderer = CreateComponent<GameEngineTextureRenderer>();
-						FrontBRenderer->CreateFrameAnimationFolder(EquippedShotBName, FrameAnimation_DESC(EquippedShotBName, 0.05f, true));
-						FrontBRenderer->ChangeFrameAnimation(EquippedShotBName);
-						FrontBRenderer->SetScaleModeImage();
-						FrontBRenderer->GetTransform().SetLocalPosition({ -98.0f,-165.0f, (int)ZOrder::UI - 5 });
-						FrontBRenderer->ChangeCamera(CAMERAORDER::UICAMERA2);
+						FrontRenderers[1]->ChangeFrameAnimation(EquippedShotBName);
+						FrontRenderers[1]->GetTransform().SetLocalPosition({ -98.0f,-165.0f, (int)ZOrder::UI - 5 });
 					}
 
 					if (nullptr != EquippedItemSuper)
@@ -223,46 +346,31 @@ void ItemInventory::Update(float _DeltaTime)
 						if (EquippedSuperName != EquippedItemSuper->ItemName + "Equip")
 						{
 							EquippedSuperName = EquippedItemSuper->ItemName + "Equip";
-							FrontCRenderer = CreateComponent<GameEngineTextureRenderer>();
-							FrontCRenderer->CreateFrameAnimationFolder(EquippedSuperName, FrameAnimation_DESC(EquippedSuperName, 0.05f, true));
-							FrontCRenderer->ChangeFrameAnimation(EquippedSuperName);
-							FrontCRenderer->SetScaleModeImage();
-							FrontCRenderer->GetTransform().SetLocalPosition({ 0.0f,-165.0f, (int)ZOrder::UI - 5 });
-							FrontCRenderer->ChangeCamera(CAMERAORDER::UICAMERA2);
+							FrontRenderers[2]->ChangeFrameAnimation(EquippedSuperName);
+							FrontRenderers[2]->GetTransform().SetLocalPosition({ 0.0f,-165.0f, (int)ZOrder::UI - 5 });
 						}
 					}
 					else
 					{
 						EquippedSuperName = "UnKnown";
-						FrontCRenderer = CreateComponent<GameEngineTextureRenderer>();
-						FrontCRenderer->CreateFrameAnimationFolder(EquippedSuperName, FrameAnimation_DESC(EquippedSuperName, 0.05f, true));
-						FrontCRenderer->ChangeFrameAnimation(EquippedSuperName);
-						FrontCRenderer->SetScaleModeImage();
-						FrontCRenderer->GetTransform().SetLocalPosition({ 0.0f,-165.0f, (int)ZOrder::UI - 5 });
-						FrontCRenderer->ChangeCamera(CAMERAORDER::UICAMERA2);
+						FrontRenderers[2]->ChangeFrameAnimation(EquippedSuperName);
+						FrontRenderers[2]->GetTransform().SetLocalPosition({ 0.0f,-165.0f, (int)ZOrder::UI - 5 });
 					}
 
 					if (nullptr != EquippedItemCharm)
 					{
 						if (EquippedCharmName != EquippedItemCharm->ItemName + "Equip")
 						{
-							FrontDRenderer = CreateComponent<GameEngineTextureRenderer>();
-							FrontDRenderer->CreateFrameAnimationFolder(EquippedCharmName, FrameAnimation_DESC(EquippedCharmName, 0.05f, true));
-							FrontDRenderer->ChangeFrameAnimation(EquippedCharmName);
-							FrontDRenderer->SetScaleModeImage();
-							FrontDRenderer->GetTransform().SetLocalPosition({ 100.0f,-165.0f, (int)ZOrder::UI - 5 });
-							FrontDRenderer->ChangeCamera(CAMERAORDER::UICAMERA2);
+							EquippedCharmName = EquippedItemCharm->ItemName + "Equip";
+							FrontRenderers[3]->ChangeFrameAnimation(EquippedCharmName);
+							FrontRenderers[3]->GetTransform().SetLocalPosition({ 100.0f,-165.0f, (int)ZOrder::UI - 5 });
 						}
 					}
 					else
 					{
 						EquippedCharmName = "UnKnown";
-						FrontDRenderer = CreateComponent<GameEngineTextureRenderer>();
-						FrontDRenderer->CreateFrameAnimationFolder(EquippedCharmName, FrameAnimation_DESC(EquippedCharmName, 0.1f, false));
-						FrontDRenderer->ChangeFrameAnimation(EquippedCharmName);
-						FrontDRenderer->SetScaleModeImage();
-						FrontDRenderer->GetTransform().SetLocalPosition({ 100.0f,-165.0f, (int)ZOrder::UI - 5 });
-						FrontDRenderer->ChangeCamera(CAMERAORDER::UICAMERA2);
+						FrontRenderers[3]->ChangeFrameAnimation(EquippedCharmName);
+						FrontRenderers[3]->GetTransform().SetLocalPosition({ 100.0f,-165.0f, (int)ZOrder::UI - 5 });
 					}
 				}
 			}
@@ -305,54 +413,54 @@ void ItemInventory::Update(float _DeltaTime)
 	{
 		if (BeforePhase != GetPhase())
 		{
-			if (BeforePhase == InventoryPhase::Front)
+			for (int i = 0; i < FrontRenderers.size(); i++)
 			{
-				FrontARenderer->Off();
-				FrontBRenderer->Off();
-				FrontCRenderer->Off();
-				FrontDRenderer->Off();
-
-				BeforePhase = Phase;
-				CurPos = 0;
-				MaxPos = 8;
+				if (FrontRenderers[i] != nullptr)
+				{
+					FrontRenderers[i]->Off();
+				}
 			}
+			BeforePhase = Phase;
+			CurPos = 0;
+			MaxPos = 8;
 			Selector->GetTransform().SetLocalPosition(SelectorPosBack[CurPos]);
 			InventoryFront->SetTexture("ch_equip_back.png");
-			if (ShotABackRenderer == nullptr)
-			{
-				ShotABackRenderer = CreateComponent<GameEngineTextureRenderer>();
-				ShotABackRenderer->SetTexture("generic_equip_back_9_icons.png");
-				ShotABackRenderer->ScaleToTexture();
-				ShotABackRenderer->GetTransform().SetLocalPosition({ 0.0f, -10.0f,(int)ZOrder::UI });
-				ShotABackRenderer->ChangeCamera(CAMERAORDER::UICAMERA2);
-			}
-			else
-			{
-				ShotABackRenderer->On();
-			}
+			ShotABackRenderer->SetTexture("generic_equip_back_9_icons.png");
+			ShotABackRenderer->ScaleToTexture();
+			ShotABackRenderer->On();
+		}
 
-			for (int i = 0; i < ItemIconRenderers.size(); i++)
-			{
-				ItemIconRenderers[i]->On();
-			}
+		for (int i = 0; i < ItemIconRenderers.size(); i++)
+		{
+			ItemIconRenderers[i]->On();
+		}
 
-			std::list<GameEngineActor*> Actors = GetLevel()->GetGroup(GameObjectGroup::CharacterState);
-			for (GameEngineActor* Actor : Actors)
+		std::list<GameEngineActor*> Actors = GetLevel()->GetGroup(GameObjectGroup::CharacterState);
+		for (GameEngineActor* Actor : Actors)
+		{
+			if (CharacterState* _State = dynamic_cast<CharacterState*>(Actor))
 			{
-				if (CharacterState* _State = dynamic_cast<CharacterState*>(Actor))
+				std::vector<ItemBase*> ShotAItems = _State->Items[ItemType::Shoot];
+
+				int i = 0;
+				for (ItemBase* Item : ShotAItems)
 				{
-					std::vector<ItemBase*> ShotAItems = _State->Items[ItemType::Shoot];
-
-					int i = 0;
-					for (ItemBase* Item : ShotAItems)
+					if (BslotSelectedNum != i)
 					{
-						if (i < ShotAItems.size())
-						{
-							ItemIconRenderers[i]->ChangeFrameAnimation(Item->ItemName + "Equip");
-							ItemName[i] = Item;
-							i++;
-						}
+						ItemIconRenderers[i]->ChangeFrameAnimation(Item->ItemName + "Equip");
+						ItemName[i] = Item;
 					}
+					else if (BslotSelectedNum == i && BslotSelectedNum != -1)
+					{
+						ItemIconRenderers[BslotSelectedNum]->ChangeFrameAnimation(Item->ItemName + "Ok");
+					}
+				}
+				if (AslotSelectedNum == -1)
+				{
+					_State->EquippedItems[InventoryType::ShotA] = ItemName[0];
+					EIcon->GetTransform().SetLocalPosition(SelectorPosBack[0]);
+					EIcon->SetPivot(PIVOTMODE::LEFTBOT);
+					EIcon->On();
 				}
 			}
 		}
@@ -360,9 +468,6 @@ void ItemInventory::Update(float _DeltaTime)
 		{
 			if (ElapsedTime > SelectInvervalTime)
 			{
-				// 아이템을 선택했다는 표시를 보여준다.
-				//SelectedRenderer->ChangeFrameAnimation("");
-				//SelectedRenderer->GetTransform().SetLocalPosition(float4{});
 				if (Selector->GetTransform().GetLocalPosition().x == SelectorPosBack[0].x)
 				{
 					std::list<GameEngineActor*> Actors = GetLevel()->GetGroup(GameObjectGroup::CharacterState);
@@ -371,6 +476,10 @@ void ItemInventory::Update(float _DeltaTime)
 						if (CharacterState* _State = dynamic_cast<CharacterState*>(Actor))
 						{
 							_State->EquippedItems[InventoryType::ShotA] = ItemName[0];
+							EIcon->GetTransform().SetLocalPosition(SelectorPosBack[0]);
+							EIcon->SetPivot(PIVOTMODE::LEFTBOT);
+							EIcon->On();
+							AslotSelectedNum = 0;
 						}
 					}
 				}
@@ -382,6 +491,10 @@ void ItemInventory::Update(float _DeltaTime)
 						if (CharacterState* _State = dynamic_cast<CharacterState*>(Actor))
 						{
 							_State->EquippedItems[InventoryType::ShotA] = ItemName[1];
+							EIcon->GetTransform().SetLocalPosition(SelectorPosBack[1]);
+							EIcon->SetPivot(PIVOTMODE::LEFTBOT);
+							EIcon->On();
+							AslotSelectedNum = 1;
 						}
 					}
 				}
@@ -393,6 +506,10 @@ void ItemInventory::Update(float _DeltaTime)
 						if (CharacterState* _State = dynamic_cast<CharacterState*>(Actor))
 						{
 							_State->EquippedItems[InventoryType::ShotA] = ItemName[2];
+							EIcon->GetTransform().SetLocalPosition(SelectorPosBack[2]);
+							EIcon->SetPivot(PIVOTMODE::LEFTBOT);
+							EIcon->On();
+							AslotSelectedNum = 2;
 						}
 					}
 				}
@@ -404,6 +521,10 @@ void ItemInventory::Update(float _DeltaTime)
 						if (CharacterState* _State = dynamic_cast<CharacterState*>(Actor))
 						{
 							_State->EquippedItems[InventoryType::ShotA] = ItemName[3];
+							EIcon->GetTransform().SetLocalPosition(SelectorPosBack[3]);
+							EIcon->SetPivot(PIVOTMODE::LEFTBOT);
+							EIcon->On();
+							AslotSelectedNum = 3;
 						}
 					}
 				}
@@ -415,6 +536,10 @@ void ItemInventory::Update(float _DeltaTime)
 						if (CharacterState* _State = dynamic_cast<CharacterState*>(Actor))
 						{
 							_State->EquippedItems[InventoryType::ShotA] = ItemName[4];
+							EIcon->GetTransform().SetLocalPosition(SelectorPosBack[4]);
+							EIcon->SetPivot(PIVOTMODE::LEFTBOT);
+							EIcon->On();
+							AslotSelectedNum = 4;
 						}
 					}
 				}
@@ -426,6 +551,10 @@ void ItemInventory::Update(float _DeltaTime)
 						if (CharacterState* _State = dynamic_cast<CharacterState*>(Actor))
 						{
 							_State->EquippedItems[InventoryType::ShotA] = ItemName[5];
+							EIcon->GetTransform().SetLocalPosition(SelectorPosBack[5]);
+							EIcon->SetPivot(PIVOTMODE::LEFTBOT);
+							EIcon->On();
+							AslotSelectedNum = 5;
 						}
 					}
 				}
@@ -437,6 +566,10 @@ void ItemInventory::Update(float _DeltaTime)
 						if (CharacterState* _State = dynamic_cast<CharacterState*>(Actor))
 						{
 							_State->EquippedItems[InventoryType::ShotA] = ItemName[6];
+							EIcon->GetTransform().SetLocalPosition(SelectorPosBack[6]);
+							EIcon->SetPivot(PIVOTMODE::LEFTBOT);
+							EIcon->On();
+							AslotSelectedNum = 6;
 						}
 					}
 				}
@@ -448,6 +581,10 @@ void ItemInventory::Update(float _DeltaTime)
 						if (CharacterState* _State = dynamic_cast<CharacterState*>(Actor))
 						{
 							_State->EquippedItems[InventoryType::ShotA] = ItemName[7];
+							EIcon->GetTransform().SetLocalPosition(SelectorPosBack[7]);
+							EIcon->SetPivot(PIVOTMODE::LEFTBOT);
+							EIcon->On();
+							AslotSelectedNum = 7;
 						}
 					}
 				}
@@ -459,6 +596,10 @@ void ItemInventory::Update(float _DeltaTime)
 						if (CharacterState* _State = dynamic_cast<CharacterState*>(Actor))
 						{
 							_State->EquippedItems[InventoryType::ShotA] = ItemName[8];
+							EIcon->GetTransform().SetLocalPosition(SelectorPosBack[8]);
+							EIcon->SetPivot(PIVOTMODE::LEFTBOT);
+							EIcon->On();
+							AslotSelectedNum = 8;
 						}
 					}
 				}
@@ -471,40 +612,32 @@ void ItemInventory::Update(float _DeltaTime)
 			}
 		}
 	}
-	if (GetPhase() == InventoryPhase::ShotBSlot)
+	else if (GetPhase() == InventoryPhase::ShotBSlot)
 	{
 		if (BeforePhase != GetPhase())
 		{
-			if (BeforePhase == InventoryPhase::Front)
+			for (int i = 0; i < FrontRenderers.size(); i++)
 			{
-				FrontARenderer->Off();
-				FrontBRenderer->Off();
-				FrontCRenderer->Off();
-				FrontDRenderer->Off();
-
-				BeforePhase = Phase;
-				CurPos = 0;
-				MaxPos = 8;
+				if (FrontRenderers[i] != nullptr)
+				{
+					FrontRenderers[i]->Off();
+				}
 			}
+			BeforePhase = Phase;
+			CurPos = 0;
+			MaxPos = 8;
+
 			Selector->GetTransform().SetLocalPosition(SelectorPosBack[CurPos]);
 			InventoryFront->SetTexture("ch_equip_back.png");
-			if (ShotABackRenderer == nullptr)
+			ShotABackRenderer->SetTexture("generic_equip_back_9_icons.png");
+			ShotABackRenderer->ScaleToTexture();
+			ShotABackRenderer->On();
+
+			for (int i = 0; i < ItemIconBRenderers.size(); i++)
 			{
-				ShotABackRenderer = CreateComponent<GameEngineTextureRenderer>();
-				ShotABackRenderer->SetTexture("generic_equip_back_9_icons.png");
-				ShotABackRenderer->ScaleToTexture();
-				ShotABackRenderer->GetTransform().SetLocalPosition({ 0.0f, -10.0f,(int)ZOrder::UI });
-				ShotABackRenderer->ChangeCamera(CAMERAORDER::UICAMERA2);
-			}
-			else
-			{
-				ShotABackRenderer->On();
+				ItemIconBRenderers[i]->On();
 			}
 
-			for (int i = 0; i < ItemIconRenderers.size(); i++)
-			{
-				ItemIconRenderers[i]->On();
-			}
 
 			std::list<GameEngineActor*> Actors = GetLevel()->GetGroup(GameObjectGroup::CharacterState);
 			for (GameEngineActor* Actor : Actors)
@@ -518,92 +651,182 @@ void ItemInventory::Update(float _DeltaTime)
 					{
 						if (i < ShotAItems.size())
 						{
-							ItemIconRenderers[i]->ChangeFrameAnimation(Item->ItemName + "Equip");
+							if (AslotSelectedNum != i)
+							{
+								ItemIconBRenderers[i]->ChangeFrameAnimation(Item->ItemName + "Equip");
+								ItemName[i] = Item;
+							}
+							else if (AslotSelectedNum == i && AslotSelectedNum != -1)
+							{
+								ItemIconBRenderers[AslotSelectedNum]->ChangeFrameAnimation(Item->ItemName + "Ok");
+							}
 							i++;
-							//
+						}
+						if (AslotSelectedNum == -1)
+						{
+							ItemIconBRenderers[0]->ChangeFrameAnimation(Item->ItemName + "Ok");
 						}
 					}
+
 				}
 			}
 		}
-		// 상동 Selected Collision과 충돌했으면 Renderer의 애니메이션 바꾸기
 		if (GameEngineInput::GetInst()->IsDown("Select"))
 		{
 			if (ElapsedTime > SelectInvervalTime)
 			{
 				if (Selector->GetTransform().GetLocalPosition().x == SelectorPosBack[0].x)
 				{
-					int a = 0;
-					// 아이템을 선택했다는 표시를 보여준다.
-					//SelectedRenderer->ChangeFrameAnimation("");
-					//SelectedRenderer->GetTransform().SetLocalPosition(float4{});
-
-					// 이 아이템을 선택한 아이템으로 넣어야한다.
 					std::list<GameEngineActor*> Actors = GetLevel()->GetGroup(GameObjectGroup::CharacterState);
 					for (GameEngineActor* Actor : Actors)
 					{
-
 						if (CharacterState* _State = dynamic_cast<CharacterState*>(Actor))
 						{
-							if (nullptr == dynamic_cast<PeaShooterItem*>(_State->EquippedItems[InventoryType::ShotA]) &&
-								nullptr == dynamic_cast<PeaShooterItem*>(_State->EquippedItems[InventoryType::ShotB])) // ShotA로 선택한 무기가 아니고 B로 선택한 무기가 아니면
+							if (_State->EquippedItems[InventoryType::ShotA] != ItemName[0])
 							{
-								_State->EquippedItems[InventoryType::ShotB] = new PeaShooterItem; // B로 넣어라
+								_State->EquippedItems[InventoryType::ShotB] = ItemName[0];
+								EIcon->GetTransform().SetLocalPosition(SelectorPosBack[0]);
+								EIcon->SetPivot(PIVOTMODE::LEFTBOT);
+								EIcon->On();
 							}
 						}
 					}
 				}
 				else if (Selector->GetTransform().GetLocalPosition().x == SelectorPosBack[1].x)
 				{
-
 					std::list<GameEngineActor*> Actors = GetLevel()->GetGroup(GameObjectGroup::CharacterState);
 					for (GameEngineActor* Actor : Actors)
 					{
-
 						if (CharacterState* _State = dynamic_cast<CharacterState*>(Actor))
 						{
-							if (nullptr == dynamic_cast<PeaShooterItem*>(_State->EquippedItems[InventoryType::ShotA]) &&
-								nullptr == dynamic_cast<PeaShooterItem*>(_State->EquippedItems[InventoryType::ShotB])) // ShotA로 선택한 무기가 아니고 B로 선택한 무기가 아니면
+							if (_State->EquippedItems[InventoryType::ShotA] != ItemName[1])
 							{
-								_State->EquippedItems[InventoryType::ShotB] = new PeaShooterItem; // B로 넣어라
+								_State->EquippedItems[InventoryType::ShotB] = ItemName[1];
+								EIcon->GetTransform().SetLocalPosition(SelectorPosBack[1]);
+								EIcon->SetPivot(PIVOTMODE::LEFTBOT);
+								EIcon->On();
 							}
 						}
 					}
 				}
 				else if (Selector->GetTransform().GetLocalPosition().x == SelectorPosBack[2].x)
 				{
-					//SelectedRenderer->ChangeFrameAnimation("");
-					//SelectedRenderer->GetTransform().SetLocalPosition(float4{});
+					std::list<GameEngineActor*> Actors = GetLevel()->GetGroup(GameObjectGroup::CharacterState);
+					for (GameEngineActor* Actor : Actors)
+					{
+						if (CharacterState* _State = dynamic_cast<CharacterState*>(Actor))
+						{
+							if (_State->EquippedItems[InventoryType::ShotA] != ItemName[2])
+							{
+								_State->EquippedItems[InventoryType::ShotB] = ItemName[2];
+								EIcon->GetTransform().SetLocalPosition(SelectorPosBack[2]);
+								EIcon->SetPivot(PIVOTMODE::LEFTBOT);
+								EIcon->On();
+							}
+						}
+					}
 				}
 				else if (Selector->GetTransform().GetLocalPosition().x == SelectorPosBack[3].x)
 				{
-					//SelectedRenderer->ChangeFrameAnimation("");
-					//SelectedRenderer->GetTransform().SetLocalPosition(float4{});
+					std::list<GameEngineActor*> Actors = GetLevel()->GetGroup(GameObjectGroup::CharacterState);
+					for (GameEngineActor* Actor : Actors)
+					{
+						if (CharacterState* _State = dynamic_cast<CharacterState*>(Actor))
+						{
+							if (_State->EquippedItems[InventoryType::ShotA] != ItemName[3])
+							{
+								_State->EquippedItems[InventoryType::ShotB] = ItemName[3];
+								EIcon->GetTransform().SetLocalPosition(SelectorPosBack[3]);
+								EIcon->SetPivot(PIVOTMODE::LEFTBOT);
+								EIcon->On();
+							}
+						}
+					}
 				}
 				else if (Selector->GetTransform().GetLocalPosition().x == SelectorPosBack[4].x)
 				{
-					//SelectedRenderer->ChangeFrameAnimation("");
-					//SelectedRenderer->GetTransform().SetLocalPosition(float4{});
+					std::list<GameEngineActor*> Actors = GetLevel()->GetGroup(GameObjectGroup::CharacterState);
+					for (GameEngineActor* Actor : Actors)
+					{
+						if (CharacterState* _State = dynamic_cast<CharacterState*>(Actor))
+						{
+							if (_State->EquippedItems[InventoryType::ShotA] != ItemName[4])
+							{
+								_State->EquippedItems[InventoryType::ShotB] = ItemName[4];
+								EIcon->GetTransform().SetLocalPosition(SelectorPosBack[4]);
+								EIcon->SetPivot(PIVOTMODE::LEFTBOT);
+								EIcon->On();
+							}
+						}
+					}
 				}
 				else if (Selector->GetTransform().GetLocalPosition().x == SelectorPosBack[5].x)
 				{
-					//SelectedRenderer->ChangeFrameAnimation("");
-					//SelectedRenderer->GetTransform().SetLocalPosition(float4{});
+					std::list<GameEngineActor*> Actors = GetLevel()->GetGroup(GameObjectGroup::CharacterState);
+					for (GameEngineActor* Actor : Actors)
+					{
+						if (CharacterState* _State = dynamic_cast<CharacterState*>(Actor))
+						{
+							if (_State->EquippedItems[InventoryType::ShotA] != ItemName[5])
+							{
+								_State->EquippedItems[InventoryType::ShotB] = ItemName[5];
+								EIcon->GetTransform().SetLocalPosition(SelectorPosBack[5]);
+								EIcon->SetPivot(PIVOTMODE::LEFTBOT);
+								EIcon->On();
+							}
+						}
+					}
 				}
 				else if (Selector->GetTransform().GetLocalPosition().x == SelectorPosBack[6].x)
 				{
-					//SelectedRenderer->ChangeFrameAnimation("");
-					//SelectedRenderer->GetTransform().SetLocalPosition(float4{});
+					std::list<GameEngineActor*> Actors = GetLevel()->GetGroup(GameObjectGroup::CharacterState);
+					for (GameEngineActor* Actor : Actors)
+					{
+						if (CharacterState* _State = dynamic_cast<CharacterState*>(Actor))
+						{
+							if (_State->EquippedItems[InventoryType::ShotA] != ItemName[6])
+							{
+								_State->EquippedItems[InventoryType::ShotB] = ItemName[6];
+								EIcon->GetTransform().SetLocalPosition(SelectorPosBack[6]);
+								EIcon->SetPivot(PIVOTMODE::LEFTBOT);
+								EIcon->On();
+							}
+						}
+					}
 				}
 				else if (Selector->GetTransform().GetLocalPosition().x == SelectorPosBack[7].x)
 				{
-					//SelectedRenderer->ChangeFrameAnimation("");
-					//SelectedRenderer->GetTransform().SetLocalPosition(float4{});
+					std::list<GameEngineActor*> Actors = GetLevel()->GetGroup(GameObjectGroup::CharacterState);
+					for (GameEngineActor* Actor : Actors)
+					{
+						if (CharacterState* _State = dynamic_cast<CharacterState*>(Actor))
+						{
+							if (_State->EquippedItems[InventoryType::ShotA] != ItemName[7])
+							{
+								_State->EquippedItems[InventoryType::ShotB] = ItemName[7];
+								EIcon->GetTransform().SetLocalPosition(SelectorPosBack[7]);
+								EIcon->SetPivot(PIVOTMODE::LEFTBOT);
+								EIcon->On();
+							}
+						}
+					}
 				}
 				else if (Selector->GetTransform().GetLocalPosition().x == SelectorPosBack[8].x)
 				{
-					//SelectedRenderer->ChangeFrameAnimation("");
-					//SelectedRenderer->GetTransform().SetLocalPosition(float4{});
+					std::list<GameEngineActor*> Actors = GetLevel()->GetGroup(GameObjectGroup::CharacterState);
+					for (GameEngineActor* Actor : Actors)
+					{
+						if (CharacterState* _State = dynamic_cast<CharacterState*>(Actor))
+						{
+							if (_State->EquippedItems[InventoryType::ShotA] != ItemName[8])
+							{
+								_State->EquippedItems[InventoryType::ShotB] = ItemName[8];
+								EIcon->GetTransform().SetLocalPosition(SelectorPosBack[8]);
+								EIcon->SetPivot(PIVOTMODE::LEFTBOT);
+								EIcon->On();
+							}
+						}
+					}
 				}
 				else
 				{
@@ -614,35 +837,27 @@ void ItemInventory::Update(float _DeltaTime)
 			}
 		}
 	}
-	if (GetPhase() == InventoryPhase::SuperSlot)
+	else if (GetPhase() == InventoryPhase::SuperSlot)
 	{
 		if (BeforePhase != GetPhase())
 		{
-			if (BeforePhase == InventoryPhase::Front)
+			for (int i = 0; i < FrontRenderers.size(); i++)
 			{
-				FrontARenderer->Off();
-				FrontBRenderer->Off();
-				FrontCRenderer->Off();
-				FrontDRenderer->Off();
+				if (FrontRenderers[i] != nullptr)
+				{
+					FrontRenderers[i]->Off();
+				}
+			}
+			BeforePhase = Phase;
+			CurPos = 0;
+			MaxPos = 8;
 
-				BeforePhase = Phase;
-				CurPos = 0;
-				MaxPos = 3;
-			}
-			Selector->GetTransform().SetLocalPosition(SelectorPosBack[CurPos]);
+			Selector->GetTransform().SetLocalPosition(SelectorPos3Slot[CurPos]);
 			InventoryFront->SetTexture("ch_equip_back.png");
-			if (ShotABackRenderer == nullptr)
-			{
-				ShotABackRenderer = CreateComponent<GameEngineTextureRenderer>();
-				ShotABackRenderer->SetTexture("generic_equip_back_super_icons.png");
-				ShotABackRenderer->ScaleToTexture();
-				ShotABackRenderer->GetTransform().SetLocalPosition({ 0.0f, -10.0f,(int)ZOrder::UI });
-				ShotABackRenderer->ChangeCamera(CAMERAORDER::UICAMERA2);
-			}
-			else
-			{
-				ShotABackRenderer->On();
-			}
+
+			ShotABackRenderer->SetTexture("generic_equip_back_super_icons.png");
+			ShotABackRenderer->ScaleToTexture();
+			ShotABackRenderer->On();
 
 			for (int i = 0; i < SuperIconRenderers.size(); i++)
 			{
@@ -654,99 +869,70 @@ void ItemInventory::Update(float _DeltaTime)
 			{
 				if (CharacterState* _State = dynamic_cast<CharacterState*>(Actor))
 				{
-					std::vector<ItemBase*> ShotAItems = _State->Items[ItemType::Super];
+					std::vector<ItemBase*> SuperItems = _State->Items[ItemType::Super];
 
 					int i = 0;
-					for (ItemBase* Item : ShotAItems)
+					for (ItemBase* Item : SuperItems)
 					{
-						if (i < ShotAItems.size())
+						if (i < SuperItems.size())
 						{
-							ItemIconRenderers[i]->ChangeFrameAnimation(Item->ItemName + "Equip");
+							SuperIconRenderers[i]->ChangeFrameAnimation(Item->ItemName + "Equip");
+							ItemName[i] = Item;
 							i++;
-							//
 						}
 					}
+
 				}
 			}
 		}
-
 		if (GameEngineInput::GetInst()->IsDown("Select"))
 		{
 			if (ElapsedTime > SelectInvervalTime)
 			{
-				if (Selector->GetTransform().GetLocalPosition().x == SelectorPosBack[0].x)
+				if (Selector->GetTransform().GetLocalPosition().x == SelectorPos3Slot[0].x)
 				{
-					int a = 0;
-					// 아이템을 선택했다는 표시를 보여준다.
-					//SelectedRenderer->ChangeFrameAnimation("");
-					//SelectedRenderer->GetTransform().SetLocalPosition(float4{});
-
-					// 이 아이템을 선택한 아이템으로 넣어야한다.
 					std::list<GameEngineActor*> Actors = GetLevel()->GetGroup(GameObjectGroup::CharacterState);
 					for (GameEngineActor* Actor : Actors)
 					{
-
 						if (CharacterState* _State = dynamic_cast<CharacterState*>(Actor))
 						{
-							if (nullptr == dynamic_cast<PeaShooterItem*>(_State->EquippedItems[InventoryType::ShotA]) &&
-								nullptr == dynamic_cast<PeaShooterItem*>(_State->EquippedItems[InventoryType::ShotB])) // ShotA로 선택한 무기가 아니고 B로 선택한 무기가 아니면
-							{
-								_State->EquippedItems[InventoryType::ShotB] = new PeaShooterItem; // B로 넣어라
-							}
+							_State->EquippedItems[InventoryType::Super] = ItemName[0];
+							EIcon->GetTransform().SetLocalPosition(SelectorPos3Slot[0]);
+							EIcon->SetPivot(PIVOTMODE::LEFTBOT);
+							EIcon->On();
+							AslotSelectedNum = 0;
 						}
 					}
 				}
-				else if (Selector->GetTransform().GetLocalPosition().x == SelectorPosBack[1].x)
+				else if (Selector->GetTransform().GetLocalPosition().x == SelectorPos3Slot[1].x)
 				{
-
 					std::list<GameEngineActor*> Actors = GetLevel()->GetGroup(GameObjectGroup::CharacterState);
 					for (GameEngineActor* Actor : Actors)
 					{
-
 						if (CharacterState* _State = dynamic_cast<CharacterState*>(Actor))
 						{
-							if (nullptr == dynamic_cast<PeaShooterItem*>(_State->EquippedItems[InventoryType::ShotA]) &&
-								nullptr == dynamic_cast<PeaShooterItem*>(_State->EquippedItems[InventoryType::ShotB])) // ShotA로 선택한 무기가 아니고 B로 선택한 무기가 아니면
-							{
-								_State->EquippedItems[InventoryType::ShotB] = new PeaShooterItem; // B로 넣어라
-							}
+							_State->EquippedItems[InventoryType::Super] = ItemName[1];
+							EIcon->GetTransform().SetLocalPosition(SelectorPos3Slot[1]);
+							EIcon->SetPivot(PIVOTMODE::LEFTBOT);
+							EIcon->On();
+							AslotSelectedNum = 0;
 						}
 					}
 				}
-				else if (Selector->GetTransform().GetLocalPosition().x == SelectorPosBack[2].x)
+				else if (Selector->GetTransform().GetLocalPosition().x == SelectorPos3Slot[2].x)
 				{
-					//SelectedRenderer->ChangeFrameAnimation("");
-					//SelectedRenderer->GetTransform().SetLocalPosition(float4{});
-				}
-				else if (Selector->GetTransform().GetLocalPosition().x == SelectorPosBack[3].x)
-				{
-					//SelectedRenderer->ChangeFrameAnimation("");
-					//SelectedRenderer->GetTransform().SetLocalPosition(float4{});
-				}
-				else if (Selector->GetTransform().GetLocalPosition().x == SelectorPosBack[4].x)
-				{
-					//SelectedRenderer->ChangeFrameAnimation("");
-					//SelectedRenderer->GetTransform().SetLocalPosition(float4{});
-				}
-				else if (Selector->GetTransform().GetLocalPosition().x == SelectorPosBack[5].x)
-				{
-					//SelectedRenderer->ChangeFrameAnimation("");
-					//SelectedRenderer->GetTransform().SetLocalPosition(float4{});
-				}
-				else if (Selector->GetTransform().GetLocalPosition().x == SelectorPosBack[6].x)
-				{
-					//SelectedRenderer->ChangeFrameAnimation("");
-					//SelectedRenderer->GetTransform().SetLocalPosition(float4{});
-				}
-				else if (Selector->GetTransform().GetLocalPosition().x == SelectorPosBack[7].x)
-				{
-					//SelectedRenderer->ChangeFrameAnimation("");
-					//SelectedRenderer->GetTransform().SetLocalPosition(float4{});
-				}
-				else if (Selector->GetTransform().GetLocalPosition().x == SelectorPosBack[8].x)
-				{
-					//SelectedRenderer->ChangeFrameAnimation("");
-					//SelectedRenderer->GetTransform().SetLocalPosition(float4{});
+					std::list<GameEngineActor*> Actors = GetLevel()->GetGroup(GameObjectGroup::CharacterState);
+					for (GameEngineActor* Actor : Actors)
+					{
+						if (CharacterState* _State = dynamic_cast<CharacterState*>(Actor))
+						{
+							_State->EquippedItems[InventoryType::Super] = ItemName[2];
+							EIcon->GetTransform().SetLocalPosition(SelectorPos3Slot[2]);
+							EIcon->SetPivot(PIVOTMODE::LEFTBOT);
+							EIcon->On();
+							AslotSelectedNum = 0;
+						}
+					}
 				}
 				else
 				{
@@ -757,9 +943,194 @@ void ItemInventory::Update(float _DeltaTime)
 			}
 		}
 	}
-	if (GetPhase() == InventoryPhase::CharmSlot)
+	else if (GetPhase() == InventoryPhase::CharmSlot)
 	{
-		
+		if (BeforePhase != GetPhase())
+		{
+			for (int i = 0; i < FrontRenderers.size(); i++)
+			{
+				if (FrontRenderers[i] != nullptr)
+				{
+					FrontRenderers[i]->Off();
+				}
+			}
+			BeforePhase = Phase;
+			CurPos = 0;
+			MaxPos = 8;
+			Selector->GetTransform().SetLocalPosition(SelectorPosBack[CurPos]);
+			InventoryFront->SetTexture("ch_equip_back.png");
+			ShotABackRenderer->SetTexture("generic_equip_back_9_icons.png");
+			ShotABackRenderer->ScaleToTexture();
+			ShotABackRenderer->On();
+		}
+
+		for (int i = 0; i < CharmIconRenderers.size(); i++)
+		{
+			CharmIconRenderers[i]->On();
+		}
+
+		std::list<GameEngineActor*> Actors = GetLevel()->GetGroup(GameObjectGroup::CharacterState);
+		for (GameEngineActor* Actor : Actors)
+		{
+			if (CharacterState* _State = dynamic_cast<CharacterState*>(Actor))
+			{
+				std::vector<ItemBase*> CharmItems = _State->Items[ItemType::Charm];
+
+				int i = 0;
+				for (ItemBase* Item : CharmItems)
+				{
+					CharmIconRenderers[i]->ChangeFrameAnimation(Item->ItemName + "Equip");
+					ItemName[i] = Item;
+					i++;
+				}
+			}
+		}
+		if (GameEngineInput::GetInst()->IsDown("Select"))
+		{
+			if (ElapsedTime > SelectInvervalTime)
+			{
+				if (Selector->GetTransform().GetLocalPosition().x == SelectorPosBack[0].x)
+				{
+					std::list<GameEngineActor*> Actors = GetLevel()->GetGroup(GameObjectGroup::CharacterState);
+					for (GameEngineActor* Actor : Actors)
+					{
+						if (CharacterState* _State = dynamic_cast<CharacterState*>(Actor))
+						{
+							_State->EquippedItems[InventoryType::Charm] = ItemName[0];
+							EIcon->GetTransform().SetLocalPosition(SelectorPosBack[0]);
+							EIcon->SetPivot(PIVOTMODE::LEFTBOT);
+							EIcon->On();
+						}
+					}
+				}
+				else if (Selector->GetTransform().GetLocalPosition().x == SelectorPosBack[1].x)
+				{
+					std::list<GameEngineActor*> Actors = GetLevel()->GetGroup(GameObjectGroup::CharacterState);
+					for (GameEngineActor* Actor : Actors)
+					{
+						if (CharacterState* _State = dynamic_cast<CharacterState*>(Actor))
+						{
+							_State->EquippedItems[InventoryType::Charm] = ItemName[1];
+							EIcon->GetTransform().SetLocalPosition(SelectorPosBack[1]);
+							EIcon->SetPivot(PIVOTMODE::LEFTBOT);
+							EIcon->On();
+							AslotSelectedNum = 1;
+						}
+					}
+				}
+				else if (Selector->GetTransform().GetLocalPosition().x == SelectorPosBack[2].x)
+				{
+					std::list<GameEngineActor*> Actors = GetLevel()->GetGroup(GameObjectGroup::CharacterState);
+					for (GameEngineActor* Actor : Actors)
+					{
+						if (CharacterState* _State = dynamic_cast<CharacterState*>(Actor))
+						{
+							_State->EquippedItems[InventoryType::Charm] = ItemName[2];
+							EIcon->GetTransform().SetLocalPosition(SelectorPosBack[2]);
+							EIcon->SetPivot(PIVOTMODE::LEFTBOT);
+							EIcon->On();
+							AslotSelectedNum = 2;
+						}
+					}
+				}
+				else if (Selector->GetTransform().GetLocalPosition().x == SelectorPosBack[3].x)
+				{
+					std::list<GameEngineActor*> Actors = GetLevel()->GetGroup(GameObjectGroup::CharacterState);
+					for (GameEngineActor* Actor : Actors)
+					{
+						if (CharacterState* _State = dynamic_cast<CharacterState*>(Actor))
+						{
+							_State->EquippedItems[InventoryType::Charm] = ItemName[3];
+							EIcon->GetTransform().SetLocalPosition(SelectorPosBack[3]);
+							EIcon->SetPivot(PIVOTMODE::LEFTBOT);
+							EIcon->On();
+							AslotSelectedNum = 3;
+						}
+					}
+				}
+				else if (Selector->GetTransform().GetLocalPosition().x == SelectorPosBack[4].x)
+				{
+					std::list<GameEngineActor*> Actors = GetLevel()->GetGroup(GameObjectGroup::CharacterState);
+					for (GameEngineActor* Actor : Actors)
+					{
+						if (CharacterState* _State = dynamic_cast<CharacterState*>(Actor))
+						{
+							_State->EquippedItems[InventoryType::Charm] = ItemName[4];
+							EIcon->GetTransform().SetLocalPosition(SelectorPosBack[4]);
+							EIcon->SetPivot(PIVOTMODE::LEFTBOT);
+							EIcon->On();
+							AslotSelectedNum = 4;
+						}
+					}
+				}
+				else if (Selector->GetTransform().GetLocalPosition().x == SelectorPosBack[5].x)
+				{
+					std::list<GameEngineActor*> Actors = GetLevel()->GetGroup(GameObjectGroup::CharacterState);
+					for (GameEngineActor* Actor : Actors)
+					{
+						if (CharacterState* _State = dynamic_cast<CharacterState*>(Actor))
+						{
+							_State->EquippedItems[InventoryType::Charm] = ItemName[5];
+							EIcon->GetTransform().SetLocalPosition(SelectorPosBack[5]);
+							EIcon->SetPivot(PIVOTMODE::LEFTBOT);
+							EIcon->On();
+							AslotSelectedNum = 5;
+						}
+					}
+				}
+				else if (Selector->GetTransform().GetLocalPosition().x == SelectorPosBack[6].x)
+				{
+					std::list<GameEngineActor*> Actors = GetLevel()->GetGroup(GameObjectGroup::CharacterState);
+					for (GameEngineActor* Actor : Actors)
+					{
+						if (CharacterState* _State = dynamic_cast<CharacterState*>(Actor))
+						{
+							_State->EquippedItems[InventoryType::Charm] = ItemName[6];
+							EIcon->GetTransform().SetLocalPosition(SelectorPosBack[6]);
+							EIcon->SetPivot(PIVOTMODE::LEFTBOT);
+							EIcon->On();
+							AslotSelectedNum = 6;
+						}
+					}
+				}
+				else if (Selector->GetTransform().GetLocalPosition().x == SelectorPosBack[7].x)
+				{
+					std::list<GameEngineActor*> Actors = GetLevel()->GetGroup(GameObjectGroup::CharacterState);
+					for (GameEngineActor* Actor : Actors)
+					{
+						if (CharacterState* _State = dynamic_cast<CharacterState*>(Actor))
+						{
+							_State->EquippedItems[InventoryType::Charm] = ItemName[7];
+							EIcon->GetTransform().SetLocalPosition(SelectorPosBack[7]);
+							EIcon->SetPivot(PIVOTMODE::LEFTBOT);
+							EIcon->On();
+							AslotSelectedNum = 7;
+						}
+					}
+				}
+				else if (Selector->GetTransform().GetLocalPosition().x == SelectorPosBack[8].x)
+				{
+					std::list<GameEngineActor*> Actors = GetLevel()->GetGroup(GameObjectGroup::CharacterState);
+					for (GameEngineActor* Actor : Actors)
+					{
+						if (CharacterState* _State = dynamic_cast<CharacterState*>(Actor))
+						{
+							_State->EquippedItems[InventoryType::Charm] = ItemName[8];
+							EIcon->GetTransform().SetLocalPosition(SelectorPosBack[8]);
+							EIcon->SetPivot(PIVOTMODE::LEFTBOT);
+							EIcon->On();
+							AslotSelectedNum = 8;
+						}
+					}
+				}
+				else
+				{
+					return;
+				}
+
+				ElapsedTime = 0.0f;
+			}
+		}
 	}
 	{
 		// Selector 이동
@@ -797,24 +1168,44 @@ void ItemInventory::Update(float _DeltaTime)
 			case InventoryPhase::ShotASlot:
 			{
 				ShotABackRenderer->Off();
+				for (int i = 0; i < ItemIconRenderers.size(); i++)
+				{
+					ItemIconRenderers[i]->Off();
+				}
+				EIcon->Off();
 				SetPhase(InventoryPhase::Front);
 			}
 			break;
 			case InventoryPhase::ShotBSlot:
 			{
-				FrontSlotB->Off();
+				ShotABackRenderer->Off();
+				for (int i = 0; i < ItemIconBRenderers.size(); i++)
+				{
+					ItemIconBRenderers[i]->Off();
+				}
+				EIcon->Off();
 				SetPhase(InventoryPhase::Front);
 			}
 			break;
 			case InventoryPhase::SuperSlot:
 			{
-				FrontSlotC->Off();
+				ShotABackRenderer->Off();
+				for (int i = 0; i < SuperIconRenderers.size(); i++)
+				{
+					SuperIconRenderers[i]->Off();
+				}
+				EIcon->Off();
 				SetPhase(InventoryPhase::Front);
 			}
 			break;
 			case InventoryPhase::CharmSlot:
 			{
-				FrontSlotD->Off();
+				ShotABackRenderer->Off();
+				for (int i = 0; i < CharmIconRenderers.size(); i++)
+				{
+					CharmIconRenderers[i]->Off();
+				}
+				EIcon->Off();
 				SetPhase(InventoryPhase::Front);
 			}
 			break;
@@ -824,7 +1215,6 @@ void ItemInventory::Update(float _DeltaTime)
 		{
 			if (GetPhase() == InventoryPhase::ShotASlot ||
 				GetPhase() == InventoryPhase::ShotBSlot ||
-				GetPhase() == InventoryPhase::SuperSlot ||
 				GetPhase() == InventoryPhase::CharmSlot)
 			{
 				CurPos += 5;
@@ -838,7 +1228,6 @@ void ItemInventory::Update(float _DeltaTime)
 		{
 			if (GetPhase() == InventoryPhase::ShotASlot ||
 				GetPhase() == InventoryPhase::ShotBSlot ||
-				GetPhase() == InventoryPhase::SuperSlot ||
 				GetPhase() == InventoryPhase::CharmSlot)
 			{
 				CurPos -= 5;
@@ -859,16 +1248,25 @@ void ItemInventory::Update(float _DeltaTime)
 			Selector->GetTransform().SetLocalPosition(SelectorPosFront[CurPos]);
 		}
 
-		if (GetPhase() == InventoryPhase::ShotASlot ||
+		else if (GetPhase() == InventoryPhase::SuperSlot)
+		{
+			MaxPos = 2;
+			if (CurPos >= 2)
+			{
+				CurPos = 2;
+			}
+			Selector->GetTransform().SetLocalPosition(SelectorPos3Slot[CurPos]);
+		}
+
+		else if (GetPhase() == InventoryPhase::ShotASlot ||
 			GetPhase() == InventoryPhase::ShotBSlot ||
-			GetPhase() == InventoryPhase::SuperSlot ||
 			GetPhase() == InventoryPhase::CharmSlot)
 		{
 			Selector->GetTransform().SetLocalPosition(SelectorPosBack[CurPos]);
 		}
 	}
-
 }
+
 
 void ItemInventory::End()
 {

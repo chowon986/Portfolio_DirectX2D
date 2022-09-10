@@ -532,6 +532,15 @@
     <ClInclude Include="Pawn.h">
       <Filter>Actor\Play\InGame\NPC</Filter>
     </ClInclude>
+    <ClInclude Include="SuperBeamItem.h">
+      <Filter>Actor\Item\Super</Filter>
+    </ClInclude>
+    <ClInclude Include="SuperInvincibleItem.h">
+      <Filter>Actor\Item\Super</Filter>
+    </ClInclude>
+    <ClInclude Include="SuperGhostItem.h">
+      <Filter>Actor\Item\Super</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp">
@@ -918,6 +927,15 @@
     </ClCompile>
     <ClCompile Include="Pawn.cpp">
       <Filter>Actor\Play\InGame\NPC</Filter>
+    </ClCompile>
+    <ClCompile Include="SuperBeamItem.cpp">
+      <Filter>Actor\Item\Super</Filter>
+    </ClCompile>
+    <ClCompile Include="SuperInvincibleItem.cpp">
+      <Filter>Actor\Item\Super</Filter>
+    </ClCompile>
+    <ClCompile Include="SuperGhostItem.cpp">
+      <Filter>Actor\Item\Super</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

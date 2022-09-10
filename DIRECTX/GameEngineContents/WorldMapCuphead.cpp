@@ -11,7 +11,6 @@ WorldMapCuphead::WorldMapCuphead()
 	, WalkCheckElapsedTime(0)
 	, InventoryOn(false)
 {
-
 }
 
 WorldMapCuphead::~WorldMapCuphead()
