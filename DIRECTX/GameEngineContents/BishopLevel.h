@@ -22,8 +22,11 @@ protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;
 	void End() override;
+
 private:
 	void ColMapOnOffSwitch();
+	bool OnIndexCollision(GameEngineCollision* _This, GameEngineCollision* _Other);
+	bool IndexCollisionOn(GameEngineCollision* _This, GameEngineCollision* _Other);
 
 private:
 	GameEngineTextureRenderer* BackgroundRenderer;
@@ -32,5 +35,15 @@ private:
 	GameEngineTexture* ColMapTexture;
 	std::vector<float> PawnPosX;
 	std::vector<Pawn*> BossPawnActors;
+	GameEngineCollision* IndexCollisionA;
+	GameEngineCollision* IndexCollisionB;
+	GameEngineCollision* IndexCollisionC;
+	GameEngineCollision* IndexCollisionD;
+	GameEngineCollision* IndexCollisionE;
+	GameEngineCollision* IndexCollisionF;
+	GameEngineCollision* IndexCollisionG;
+	GameEngineCollision* IndexCollisionH;
+	std::vector<GameEngineCollision*> Collisions;
+	std::vector<float> AttackIntervalTimes;
 };
 

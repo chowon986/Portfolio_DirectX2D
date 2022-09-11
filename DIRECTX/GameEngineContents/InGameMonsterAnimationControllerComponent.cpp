@@ -66,6 +66,16 @@ void InGameMonsterAnimationControllerComponent::UpdateAnimation()
 		Renderer->ChangeFrameAnimation(Name + "PrepareAttack2");
 	}
 
+	else if (State == InGameMonsterState::Run)
+	{
+		Renderer->ChangeFrameAnimation(Name + "Run");
+	}
+
+	else if (State == InGameMonsterState::Land)
+	{
+		Renderer->ChangeFrameAnimation(Name + "Land");
+	}
+
 	else if (State== InGameMonsterState::Attack1)
 	{
 		Renderer->ChangeFrameAnimation(Name + "Attack1");

@@ -68,11 +68,6 @@ void PawnPhysicsComponent::FixedUpdate(double _FixedUpdateInterval)
 		Monster->GetTransform().SetWorldMove(float4::UP * GameEngineTime::GetDeltaTime());
 		Reset();
 	}
-
-	if (Monster->IsOnGround != true)
-	{
-		Monster->IsOnGround = true;
-	}
 }
 
 void PawnPhysicsComponent::End()

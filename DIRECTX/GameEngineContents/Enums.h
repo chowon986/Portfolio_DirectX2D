@@ -58,6 +58,8 @@ enum class ObjectOrder
 	PARRIABLEOBJECT,
 	ONLYPARRIABLEOBJECT,
 	ITEM,
+	RETURN,
+	POSINDEX,
 };
 
 enum class GameObjectGroup 
