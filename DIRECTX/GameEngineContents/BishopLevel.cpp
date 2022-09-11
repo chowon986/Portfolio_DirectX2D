@@ -169,7 +169,10 @@ void BishopLevel::Update(float _DeltaTime)
 	{
 		if (BossPawnActors[i]->GetState() != InGameMonsterState::Prepare) // 하나라도 준비 상태가 아니면 
 		{
-			Collisions[i]->On(); // 켜진다.
+			for (int i = 0; i < 8; i++)
+			{
+				Collisions[i]->On(); // 켜진다.
+			}
 		}
 	}
 
