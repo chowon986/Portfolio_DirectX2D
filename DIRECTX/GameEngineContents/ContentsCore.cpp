@@ -1,6 +1,7 @@
 #include "PreCompile.h"
 #include "ContentsCore.h"
 
+#include "SaltBakerLevel.h"
 #include "ShopLevel.h"
 #include "TitleLevel.h"
 #include "SelectLevel.h"
@@ -151,6 +152,7 @@ void ContentsCore::Start()
 	CreateLevel<DogFightLevel>("DogFight");
 	CreateLevel<ScoreLevel>("Score");
 	CreateLevel<BishopLevel>("Bishop");
+	CreateLevel<SaltBakerLevel>("SaltBaker");
 	ChangeLevel("BeforeTitle");
 
 	GameEngineFont::Load("Title");

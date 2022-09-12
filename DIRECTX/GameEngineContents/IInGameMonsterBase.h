@@ -69,6 +69,9 @@ enum class InGameMonsterAttackState
 	LaserPattern2,
 	LaserPattern3,
 	DogBowl,
+	Attack1,
+	Attack2,
+	Attack3,
 };
 
 enum class Phase;

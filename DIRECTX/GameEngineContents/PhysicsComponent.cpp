@@ -59,7 +59,7 @@ void PhysicsComponent::FixedUpdate(float _DeltaTime)
 	// F = ma, 힘 = 질량 * 가속도
 	Power += Gravity * 20 * _DeltaTime;
 	Acceleration = Power / Mass;
-	Speed += Acceleration * _DeltaTime;
+	Speed = Acceleration * _DeltaTime;
 	Actor->GetTransform().SetWorldMove({ 0, Speed, 0 });
 
 	while (true == ColMapTexture->GetPixelToFloat4(Actor->GetTransform().GetWorldPosition().x, -Actor->GetTransform().GetWorldPosition().y).CompareInt4D(float4::BLACK) ||

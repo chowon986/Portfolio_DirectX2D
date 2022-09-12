@@ -157,6 +157,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="AnimalBullet.h" />
+    <ClInclude Include="AnimalBulletPhysicsComponent.h" />
     <ClInclude Include="AstalCookieItem.h" />
     <ClInclude Include="Background.h" />
     <ClInclude Include="BackgroundHills.h" />
@@ -186,6 +188,8 @@
     <ClInclude Include="ChargerBullet.h" />
     <ClInclude Include="ChargerShooter.h" />
     <ClInclude Include="CharmItemBase.h" />
+    <ClInclude Include="Chicken.h" />
+    <ClInclude Include="ChickenPhysicsComponent.h" />
     <ClInclude Include="ContentsCore.h">
       <SubType>
       </SubType>
@@ -265,6 +269,9 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="Rumrunners.h" />
+    <ClInclude Include="SaltBaker.h" />
+    <ClInclude Include="SaltBakerLevel.h" />
+    <ClInclude Include="SaltBakerShooter.h" />
     <ClInclude Include="ScoreBoard.h" />
     <ClInclude Include="ScoreLevel.h" />
     <ClInclude Include="SelectLevel.h" />
@@ -276,6 +283,8 @@
     <ClInclude Include="SpreadBullet.h" />
     <ClInclude Include="SpreadShooter.h" />
     <ClInclude Include="SpreadShooterItem.h" />
+    <ClInclude Include="StrawberryBullet.h" />
+    <ClInclude Include="SugarBullet.h" />
     <ClInclude Include="SuperBeamItem.h" />
     <ClInclude Include="SuperGhostItem.h" />
     <ClInclude Include="SuperInvincibleItem.h" />
@@ -304,6 +313,8 @@
     <ClInclude Include="YarnballShooter.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AnimalBullet.cpp" />
+    <ClCompile Include="AnimalBulletPhysicsComponent.cpp" />
     <ClCompile Include="AstalCookieItem.cpp" />
     <ClCompile Include="Background.cpp" />
     <ClCompile Include="BackgroundHills.cpp" />
@@ -333,6 +344,8 @@
     <ClCompile Include="ChargerBullet.cpp" />
     <ClCompile Include="ChargerShooter.cpp" />
     <ClCompile Include="CharmItemBase.cpp" />
+    <ClCompile Include="Chicken.cpp" />
+    <ClCompile Include="ChickenPhysicsComponent.cpp" />
     <ClCompile Include="ContentsCore.cpp">
       <SubType>
       </SubType>
@@ -412,6 +425,9 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Rumrunners.cpp" />
+    <ClCompile Include="SaltBaker.cpp" />
+    <ClCompile Include="SaltBakerLevel.cpp" />
+    <ClCompile Include="SaltBakerShooter.cpp" />
     <ClCompile Include="ScoreBoard.cpp" />
     <ClCompile Include="ScoreLevel.cpp" />
     <ClCompile Include="SelectLevel.cpp" />
@@ -423,6 +439,8 @@
     <ClCompile Include="SpreadBullet.cpp" />
     <ClCompile Include="SpreadShooter.cpp" />
     <ClCompile Include="SpreadShooterItem.cpp" />
+    <ClCompile Include="StrawberryBullet.cpp" />
+    <ClCompile Include="SugarBullet.cpp" />
     <ClCompile Include="SuperBeamItem.cpp" />
     <ClCompile Include="SuperGhostItem.cpp" />
     <ClCompile Include="SuperInvincibleItem.cpp" />

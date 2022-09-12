@@ -549,6 +549,31 @@
     <ClInclude Include="PawnPhysicsComponent.h">
       <Filter>Components\Monster</Filter>
     </ClInclude>
+    <ClInclude Include="SaltBaker.h">
+      <Filter>Actor\Play\InGame\NPC</Filter>
+    </ClInclude>
+    <ClInclude Include="SaltBakerShooter.h">
+      <Filter>Actor\Weapon\Shooter\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="StrawberryBullet.h">
+      <Filter>Actor\Weapon\Bullet\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="SaltBakerLevel.h">
+      <Filter>Level\01 Play</Filter>
+    </ClInclude>
+    <ClInclude Include="SugarBullet.h">
+      <Filter>Actor\Weapon\Bullet\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimalBullet.h">
+      <Filter>Actor\Weapon\Bullet\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimalBulletPhysicsComponent.h">
+      <Filter>Components\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="Chicken.h">
+      <Filter>Actor\Play\InGame\NPC</Filter>
+    </ClInclude>
+    <ClInclude Include="ChickenPhysicsComponent.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp">
@@ -953,5 +978,30 @@
     <ClCompile Include="PawnPhysicsComponent.cpp">
       <Filter>Components\Monster</Filter>
     </ClCompile>
+    <ClCompile Include="SaltBaker.cpp">
+      <Filter>Actor\Play\InGame\NPC</Filter>
+    </ClCompile>
+    <ClCompile Include="SaltBakerShooter.cpp">
+      <Filter>Actor\Weapon\Shooter\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="StrawberryBullet.cpp">
+      <Filter>Actor\Weapon\Bullet\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="SaltBakerLevel.cpp">
+      <Filter>Level\01 Play</Filter>
+    </ClCompile>
+    <ClCompile Include="SugarBullet.cpp">
+      <Filter>Actor\Weapon\Bullet\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimalBullet.cpp">
+      <Filter>Actor\Weapon\Bullet\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimalBulletPhysicsComponent.cpp">
+      <Filter>Components\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="Chicken.cpp">
+      <Filter>Actor\Play\InGame\NPC</Filter>
+    </ClCompile>
+    <ClCompile Include="ChickenPhysicsComponent.cpp" />
   </ItemGroup>
 </Project>

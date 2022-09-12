@@ -53,7 +53,7 @@ void PawnPhysicsComponent::FixedUpdate(double _FixedUpdateInterval)
 	// F = ma, 힘 = 질량 * 가속도
 	Power += Gravity * 20 * _FixedUpdateInterval;
 	Acceleration = Power / Mass;
-	Speed += Acceleration * _FixedUpdateInterval;
+	Speed = Acceleration * _FixedUpdateInterval;
 	Monster->GetTransform().SetWorldMove({ 0, Speed, 0 });
 
 	while (true == ColMapTexture->GetPixelToFloat4(Monster->GetTransform().GetWorldPosition().x, -(Monster->GetTransform().GetWorldPosition().y - 15)).CompareInt4D(float4::RED) &&

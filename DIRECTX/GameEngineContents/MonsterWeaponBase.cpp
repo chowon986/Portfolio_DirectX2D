@@ -164,6 +164,9 @@ void MonsterWeaponBase::OnMonsterAttackStateChanged(InGameMonsterAttackState _At
 	case InGameMonsterAttackState::LaserPattern1:
 		ElapsedTime = 0.0f;
 		break;
+	case InGameMonsterAttackState::Attack1:
+		ElapsedTime = 0.0f;
+		break;
 	}
 	UpdateDirection();
 }
