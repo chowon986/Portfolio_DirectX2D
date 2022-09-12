@@ -30,5 +30,7 @@ private:
 	std::map<int, float> StrawberryBulletStartPosX;
 	bool StartPosSwitch;
 	float SugarBulletStartPosX;
+	float LimeBulletStartPosX;
+	float LimeBulletStartPosY;
 };
 

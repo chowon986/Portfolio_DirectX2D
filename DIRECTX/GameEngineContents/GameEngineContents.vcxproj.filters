@@ -573,7 +573,12 @@
     <ClInclude Include="Chicken.h">
       <Filter>Actor\Play\InGame\NPC</Filter>
     </ClInclude>
-    <ClInclude Include="ChickenPhysicsComponent.h" />
+    <ClInclude Include="ChickenPhysicsComponent.h">
+      <Filter>Components\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="LimeBullet.h">
+      <Filter>Actor\Weapon\Bullet\Monster</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp">
@@ -1002,6 +1007,11 @@
     <ClCompile Include="Chicken.cpp">
       <Filter>Actor\Play\InGame\NPC</Filter>
     </ClCompile>
-    <ClCompile Include="ChickenPhysicsComponent.cpp" />
+    <ClCompile Include="ChickenPhysicsComponent.cpp">
+      <Filter>Components\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="LimeBullet.cpp">
+      <Filter>Actor\Weapon\Bullet\Monster</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

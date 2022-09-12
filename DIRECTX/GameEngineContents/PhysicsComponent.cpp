@@ -6,7 +6,7 @@ PhysicsComponent::PhysicsComponent()
 	: Speed(0.0f)
 	, Power(0.0f)
 	, Gravity(-9.8f)
-	, Mass(0.5f)
+	, Mass(0.4f)
 	, FixedUpdateInterval(0.01666666)
 	, ElapsedTime(0)
 {
@@ -59,7 +59,7 @@ void PhysicsComponent::FixedUpdate(float _DeltaTime)
 	// F = ma, 힘 = 질량 * 가속도
 	Power += Gravity * 20 * _DeltaTime;
 	Acceleration = Power / Mass;
-	Speed = Acceleration * _DeltaTime;
+	Speed += Acceleration * _DeltaTime;
 	Actor->GetTransform().SetWorldMove({ 0, Speed, 0 });
 
 	while (true == ColMapTexture->GetPixelToFloat4(Actor->GetTransform().GetWorldPosition().x, -Actor->GetTransform().GetWorldPosition().y).CompareInt4D(float4::BLACK) ||

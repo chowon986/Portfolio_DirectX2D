@@ -27,9 +27,9 @@ void SaltBakerLevel::Start()
 		ColMapRenderer->GetTransform().SetLocalPosition({ 640.0f, -360.0f, (int)ZOrder::Background + 1 });
 		SetMainColMapImage(ColMapRenderer);
 	}
-	//SaltBaker* Boss = CreateActor<SaltBaker>();
-	Chicken* Monster = CreateActor<Chicken>();
-	Monster->GetTransform().SetWorldPosition({ 640.0f, -360.0f });
+	SaltBaker* Boss = CreateActor<SaltBaker>();
+	//Chicken* Monster = CreateActor<Chicken>();
+	//Monster->GetTransform().SetWorldPosition({ 640.0f, -360.0f });
 
 	GetMainCamera()->SetProjectionSize({ 1280.0f, 720.0f });
 	GetRotateCamera()->SetProjectionSize({ 1536.0f, 864.0f });

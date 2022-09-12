@@ -72,6 +72,7 @@ enum class InGameMonsterAttackState
 	Attack1,
 	Attack2,
 	Attack3,
+	Attack4,
 };
 
 enum class Phase;

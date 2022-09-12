@@ -248,6 +248,7 @@
     <ClInclude Include="IWorldMapCharacterBase.h" />
     <ClInclude Include="Ladder.h" />
     <ClInclude Include="Lantern.h" />
+    <ClInclude Include="LimeBullet.h" />
     <ClInclude Include="MonsterPhysicsComponent.h" />
     <ClInclude Include="MonsterWeaponBase.h" />
     <ClInclude Include="NewsCat.h" />
@@ -402,6 +403,7 @@
     <ClCompile Include="IWorldMapCharacterBase.cpp" />
     <ClCompile Include="Ladder.cpp" />
     <ClCompile Include="Lantern.cpp" />
+    <ClCompile Include="LimeBullet.cpp" />
     <ClCompile Include="MonsterPhysicsComponent.cpp" />
     <ClCompile Include="MonsterWeaponBase.cpp" />
     <ClCompile Include="NewsCat.cpp" />

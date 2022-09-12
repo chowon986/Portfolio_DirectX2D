@@ -2,6 +2,7 @@
 #include "SaltBakerShooter.h"
 #include "IInGameMonsterBase.h"
 #include "StrawberryBullet.h"
+#include "LimeBullet.h"
 #include "SugarBullet.h"
 #include "AnimalBullet.h"
 #include "MonsterPhysicsComponent.h"
@@ -31,6 +32,11 @@ void SaltBakerShooter::UpdateDirection()
 	if (State == InGameMonsterState::Attack1)
 	{
 		Direction = float4::LEFT + float4::DOWN;
+	}
+
+	else if (State == InGameMonsterState::Attack4)
+	{
+		Direction = LimeBulletStartPosX == 50.0f ? float4::RIGHT : float4::LEFT;
 	}
 
 	UpdatePivot();
@@ -129,6 +135,34 @@ void SaltBakerShooter::Update(float _DeltaTime)
 				}
 			}
 			break;
+			case InGameMonsterAttackState::Attack4:
+			{
+				LimeBullet* Bullet = GetLevel()->CreateActor<LimeBullet>();
+				if (nullptr != GetColMapImage())
+				{
+					Bullet->SetColMapImage(GetColMapImage());
+				}
+
+				Bullet->GetRenderer()->ChangeFrameAnimation("Bow1");
+				Bullet->SetColMapImage(GetColMapImage());
+
+				StartPosSwitch = !StartPosSwitch;
+				if (StartPosSwitch == true)
+				{
+					LimeBulletStartPosY = -400.0f;
+					LimeBulletStartPosX = 50.0f;
+					Bullet->SetStartPosName("LeftUp");
+				}
+				else
+				{
+					LimeBulletStartPosY = -650;
+					LimeBulletStartPosX = 50.0f;
+					Bullet->SetStartPosName("LeftDown");
+				}
+				Bullet->GetTransform().SetWorldPosition({ LimeBulletStartPosX, LimeBulletStartPosY });
+				Bullet->SetDirection(GetDirection());
+			}
+			break;
 			}
 		}
 	}
@@ -136,14 +170,16 @@ void SaltBakerShooter::Update(float _DeltaTime)
 
 void SaltBakerShooter::UpdatePivot()
 {
-	if (State != InGameMonsterState::Attack1 ||
-		State != InGameMonsterState::Attack2)
+	if (State != InGameMonsterState::Attack1 &&
+		State != InGameMonsterState::Attack2 &&
+		State != InGameMonsterState::Attack4)
 	{
 		return;
 	}
 
 	if (State == InGameMonsterState::Attack1 ||
-		State == InGameMonsterState::Attack2)
+		State == InGameMonsterState::Attack2 ||
+		State == InGameMonsterState::Attack4)
 	{
 
 		GetTransform().SetLocalPosition({ 0.0f, 0.0f });
@@ -163,6 +199,12 @@ void SaltBakerShooter::OnMonsterAttackStateChanged(InGameMonsterAttackState _Att
 		ElapsedTime = 0.0f;
 		break;
 	case InGameMonsterAttackState::Attack2:
+		ElapsedTime = 0.0f;
+		break;
+	case InGameMonsterAttackState::Attack3:
+		ElapsedTime = 0.0f;
+		break;
+	case InGameMonsterAttackState::Attack4:
 		ElapsedTime = 0.0f;
 		break;
 	}

@@ -53,7 +53,7 @@ void MonsterPhysicsComponent::FixedUpdate(double _FixedUpdateInterval)
 	// F = ma, 힘 = 질량 * 가속도
 	Power += Gravity * 20 * _FixedUpdateInterval;
 	Acceleration = Power / Mass;
-	Speed = Acceleration * _FixedUpdateInterval;
+	Speed += Acceleration * _FixedUpdateInterval;
 	Bullet->GetTransform().SetWorldMove({ 0, Speed /** GameEngineTime::GetDeltaTime()*/, 0});
 	// 여기서 x값을 조정해주면 좌, 우로 이동하면서 내려갈 것 같음
 
