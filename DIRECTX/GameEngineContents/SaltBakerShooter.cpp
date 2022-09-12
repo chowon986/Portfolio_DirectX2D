@@ -60,7 +60,7 @@ void SaltBakerShooter::Update(float _DeltaTime)
 			{
 			case InGameMonsterAttackState::Attack1:
 			{
-				if (StrawberryBulletStartPosX.size() == 0)
+				if (StrawberryBulletStartPosX.size() < 4)
 				{
 					StrawberryBulletStartPosX = { std::make_pair(0, 300.0f), std::make_pair(1, 500.0f), std::make_pair(2,700.0f), std::make_pair(3,900.0f), std::make_pair(4,1100.0f), std::make_pair(5,1300.0f), std::make_pair(6,1500.0f), std::make_pair(7,1700.0f) };
 				}
