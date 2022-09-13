@@ -6,6 +6,11 @@
 #include <GameEngineCore/GameEngineBlur.h>
 #include "SaltBaker.h"
 #include "Chicken.h"
+#include "Pepper.h"
+#include "InGameCuphead.h"
+#include "CogWheel.h"
+#include "ShellWeDance.h"
+#include "SaltBakerHeart.h"
 
 SaltBakerLevel::SaltBakerLevel()
 {
@@ -24,11 +29,31 @@ void SaltBakerLevel::Start()
 		ColMapRenderer->SetTexture("TestColMap.png");
 		ColMapRenderer->ScaleToTexture();
 		ColMapRenderer->GetTransform().SetWorldScale({ 1280.0f,720.0f,1.0f });
-		ColMapRenderer->GetTransform().SetLocalPosition({ 640.0f, -360.0f, (int)ZOrder::Background + 1 });
+		ColMapRenderer->GetTransform().SetLocalPosition({640.0f, -360.0f, (int)ZOrder::Background + 1 });
 		SetMainColMapImage(ColMapRenderer);
 	}
-	SaltBaker* Boss = CreateActor<SaltBaker>();
-	//Chicken* Monster = CreateActor<Chicken>();
+	//InGameCuphead* Cuphead = CreateActor<InGameCuphead>();
+	//Cuphead->GetTransform().SetWorldPosition({ 640.0f,-360.0f });
+
+	//SaltBaker* Boss = CreateActor<SaltBaker>();
+	//Boss->GetTransform().SetWorldPosition({ 640.0f,-360.0f });
+
+	//Pepper* Ph2Monster1 = CreateActor<Pepper>();
+	//Ph2Monster1->GetTransform().SetWorldPosition({ 100.0f,100.0f,(int)ZOrder::NPC });
+	//Ph2Monster1->SetPlayer(Cuphead);
+	//Ph2Monster1->SetMonster(Boss);
+
+	//CogWheel* Ph3Monster1 = CreateActor<CogWheel>();
+	//Ph3Monster1->GetTransform().SetWorldPosition({ 640.0f,-600.0f });
+
+	//ShellWeDance* Ph3Monster2 = CreateActor<ShellWeDance>();
+	//Ph3Monster2->GetTransform().SetWorldPosition({ 640.0f,-600.0f });
+
+	SaltBakerHeart* Ph4Boss = CreateActor<SaltBakerHeart>();
+	Ph4Boss->GetTransform().SetWorldPosition({ 640.0f,-400.0f });
+
+
+	//Chicken* ComMonster = CreateActor<Chicken>();
 	//Monster->GetTransform().SetWorldPosition({ 640.0f, -360.0f });
 
 	GetMainCamera()->SetProjectionSize({ 1280.0f, 720.0f });

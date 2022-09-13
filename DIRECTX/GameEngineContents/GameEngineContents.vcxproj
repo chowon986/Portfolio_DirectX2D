@@ -190,6 +190,7 @@
     <ClInclude Include="CharmItemBase.h" />
     <ClInclude Include="Chicken.h" />
     <ClInclude Include="ChickenPhysicsComponent.h" />
+    <ClInclude Include="CogWheel.h" />
     <ClInclude Include="ContentsCore.h">
       <SubType>
       </SubType>
@@ -248,6 +249,7 @@
     <ClInclude Include="IWorldMapCharacterBase.h" />
     <ClInclude Include="Ladder.h" />
     <ClInclude Include="Lantern.h" />
+    <ClInclude Include="LeafBullet.h" />
     <ClInclude Include="LimeBullet.h" />
     <ClInclude Include="MonsterPhysicsComponent.h" />
     <ClInclude Include="MonsterWeaponBase.h" />
@@ -259,6 +261,9 @@
     <ClInclude Include="PeaBullet.h" />
     <ClInclude Include="PeaShooter.h" />
     <ClInclude Include="PeaShooterItem.h" />
+    <ClInclude Include="Pepper.h" />
+    <ClInclude Include="PepperBullet.h" />
+    <ClInclude Include="PepperShooter.h" />
     <ClInclude Include="Ph1Dog.h" />
     <ClInclude Include="Ph2Dog.h" />
     <ClInclude Include="PhysicsComponent.h" />
@@ -271,11 +276,15 @@
     </ClInclude>
     <ClInclude Include="Rumrunners.h" />
     <ClInclude Include="SaltBaker.h" />
+    <ClInclude Include="SaltBakerHeart.h" />
+    <ClInclude Include="SaltBakerHeartPhysicsComponent.h" />
     <ClInclude Include="SaltBakerLevel.h" />
     <ClInclude Include="SaltBakerShooter.h" />
     <ClInclude Include="ScoreBoard.h" />
     <ClInclude Include="ScoreLevel.h" />
     <ClInclude Include="SelectLevel.h" />
+    <ClInclude Include="ShellWeDance.h" />
+    <ClInclude Include="ShellWeDancePhysicsComponent.h" />
     <ClInclude Include="Shop.h" />
     <ClInclude Include="ShopLevel.h" />
     <ClInclude Include="Shovel.h" />
@@ -347,6 +356,7 @@
     <ClCompile Include="CharmItemBase.cpp" />
     <ClCompile Include="Chicken.cpp" />
     <ClCompile Include="ChickenPhysicsComponent.cpp" />
+    <ClCompile Include="CogWheel.cpp" />
     <ClCompile Include="ContentsCore.cpp">
       <SubType>
       </SubType>
@@ -403,6 +413,7 @@
     <ClCompile Include="IWorldMapCharacterBase.cpp" />
     <ClCompile Include="Ladder.cpp" />
     <ClCompile Include="Lantern.cpp" />
+    <ClCompile Include="LeafBullet.cpp" />
     <ClCompile Include="LimeBullet.cpp" />
     <ClCompile Include="MonsterPhysicsComponent.cpp" />
     <ClCompile Include="MonsterWeaponBase.cpp" />
@@ -414,6 +425,9 @@
     <ClCompile Include="PeaBullet.cpp" />
     <ClCompile Include="PeaShooter.cpp" />
     <ClCompile Include="PeaShooterItem.cpp" />
+    <ClCompile Include="Pepper.cpp" />
+    <ClCompile Include="PepperBullet.cpp" />
+    <ClCompile Include="PepperShooter.cpp" />
     <ClCompile Include="Ph1Dog.cpp" />
     <ClCompile Include="Ph2Dog.cpp" />
     <ClCompile Include="PhysicsComponent.cpp" />
@@ -428,11 +442,15 @@
     </ClCompile>
     <ClCompile Include="Rumrunners.cpp" />
     <ClCompile Include="SaltBaker.cpp" />
+    <ClCompile Include="SaltBakerHeart.cpp" />
+    <ClCompile Include="SaltBakerHeartPhysicsComponent.cpp" />
     <ClCompile Include="SaltBakerLevel.cpp" />
     <ClCompile Include="SaltBakerShooter.cpp" />
     <ClCompile Include="ScoreBoard.cpp" />
     <ClCompile Include="ScoreLevel.cpp" />
     <ClCompile Include="SelectLevel.cpp" />
+    <ClCompile Include="ShellWeDance.cpp" />
+    <ClCompile Include="ShellWeDancePhysicsComponent.cpp" />
     <ClCompile Include="Shop.cpp" />
     <ClCompile Include="ShopLevel.cpp" />
     <ClCompile Include="Shovel.cpp" />

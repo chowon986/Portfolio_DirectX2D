@@ -168,34 +168,34 @@ void ShopLevel::Start()
 
 void ShopLevel::Update(float _DeltaTime)
 {
-	if (OnceCheck == true)
-	{
-		ElapsedTime += _DeltaTime;
-		ElapsedTime = ElapsedTime / 1.0f;
-		float LeftDrawerPosX = LeftDrawerRenderer->GetTransform().GetLocalPosition().x;
-
-		if (IsLeftDrawerOpened == false)
+		if (OnceCheck == true)
 		{
-			if (StartLerpValueX.y == LeftDrawerPosX)
+			ElapsedTime += _DeltaTime;
+			ElapsedTime = ElapsedTime / 1.0f;
+			float LeftDrawerPosX = LeftDrawerRenderer->GetTransform().GetLocalPosition().x;
+
+			if (IsLeftDrawerOpened == false)
 			{
-				IsLeftDrawerOpened = true;
-				ElapsedTime = 0.0f;
+				if (StartLerpValueX.y == LeftDrawerPosX)
+				{
+					IsLeftDrawerOpened = true;
+					ElapsedTime = 0.0f;
+				}
+
+				EndPosition = float4::LerpLimit(StartLerpValueX.x, StartLerpValueX.y, ElapsedTime);
+			}
+			else
+			{
+				if (EndLerpValueX.y == LeftDrawerPosX)
+				{
+					OnceCheck = false;
+					Phase = ShopPhase::Select;
+				}
+				EndPosition = float4::LerpLimit(EndLerpValueX.x, EndLerpValueX.y, ElapsedTime);
 			}
 
-			EndPosition = float4::LerpLimit(StartLerpValueX.x, StartLerpValueX.y, ElapsedTime);
+			LeftDrawerRenderer->GetTransform().SetLocalPosition({ EndPosition.x, -210, (int)ZOrder::Background - 2 });
 		}
-		else
-		{
-			if (EndLerpValueX.y == LeftDrawerPosX)
-			{
-				OnceCheck = false;
-				Phase = ShopPhase::Select;
-			}
-			EndPosition = float4::LerpLimit(EndLerpValueX.x, EndLerpValueX.y, ElapsedTime);
-		}
-
-		LeftDrawerRenderer->GetTransform().SetLocalPosition({ EndPosition.x, -210, (int)ZOrder::Background - 2 });
-	}
 
 	if (Phase == ShopPhase::Select)
 	{

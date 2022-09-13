@@ -21,7 +21,7 @@ void SaltBaker::Start()
 	Renderer = CreateComponent<GameEngineTextureRenderer>();
 	Renderer->CreateFrameAnimationFolder("SaltBakerIntro", FrameAnimation_DESC("BulldogIdle", 0.1f));
 	Renderer->CreateFrameAnimationFolder("SaltBakerIdle", FrameAnimation_DESC("BulldogIdle", 0.1f));
-	Renderer->CreateFrameAnimationFolder("SaltBakerAttack5", FrameAnimation_DESC("BulldogAttack5", 0.1f));
+	Renderer->CreateFrameAnimationFolder("SaltBakerAttack5", FrameAnimation_DESC("BulldogAttack1", 0.1f));
 	Renderer->AnimationBindFrame("SaltBakerAttack5", std::bind(&SaltBaker::Test, this, std::placeholders::_1));
 	Renderer->SetScaleModeImage();
 	Renderer->ChangeFrameAnimation("SaltBakerAttack5");

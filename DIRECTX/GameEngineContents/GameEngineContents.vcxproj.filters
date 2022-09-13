@@ -579,6 +579,33 @@
     <ClInclude Include="LimeBullet.h">
       <Filter>Actor\Weapon\Bullet\Monster</Filter>
     </ClInclude>
+    <ClInclude Include="LeafBullet.h">
+      <Filter>Actor\Weapon\Bullet\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="Pepper.h">
+      <Filter>Actor\Play\InGame\NPC</Filter>
+    </ClInclude>
+    <ClInclude Include="PepperBullet.h">
+      <Filter>Actor\Weapon\Bullet\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="PepperShooter.h">
+      <Filter>Actor\Weapon\Shooter\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="CogWheel.h">
+      <Filter>Actor\Play\InGame\NPC</Filter>
+    </ClInclude>
+    <ClInclude Include="ShellWeDance.h">
+      <Filter>Actor\Play\InGame\NPC</Filter>
+    </ClInclude>
+    <ClInclude Include="ShellWeDancePhysicsComponent.h">
+      <Filter>Components\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="SaltBakerHeart.h">
+      <Filter>Actor\Play\InGame\NPC</Filter>
+    </ClInclude>
+    <ClInclude Include="SaltBakerHeartPhysicsComponent.h">
+      <Filter>Components\Monster</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp">
@@ -1012,6 +1039,33 @@
     </ClCompile>
     <ClCompile Include="LimeBullet.cpp">
       <Filter>Actor\Weapon\Bullet\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="LeafBullet.cpp">
+      <Filter>Actor\Weapon\Bullet\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="Pepper.cpp">
+      <Filter>Actor\Play\InGame\NPC</Filter>
+    </ClCompile>
+    <ClCompile Include="PepperBullet.cpp">
+      <Filter>Actor\Weapon\Bullet\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="PepperShooter.cpp">
+      <Filter>Actor\Weapon\Shooter\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="CogWheel.cpp">
+      <Filter>Actor\Play\InGame\NPC</Filter>
+    </ClCompile>
+    <ClCompile Include="ShellWeDance.cpp">
+      <Filter>Actor\Play\InGame\NPC</Filter>
+    </ClCompile>
+    <ClCompile Include="ShellWeDancePhysicsComponent.cpp">
+      <Filter>Components\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="SaltBakerHeart.cpp">
+      <Filter>Actor\Play\InGame\NPC</Filter>
+    </ClCompile>
+    <ClCompile Include="SaltBakerHeartPhysicsComponent.cpp">
+      <Filter>Components\Monster</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

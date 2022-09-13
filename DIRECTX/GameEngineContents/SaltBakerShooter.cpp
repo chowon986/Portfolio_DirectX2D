@@ -7,6 +7,7 @@
 #include "AnimalBullet.h"
 #include "MonsterPhysicsComponent.h"
 #include "AnimalBulletPhysicsComponent.h"
+#include "LeafBullet.h"
 
 SaltBakerShooter::SaltBakerShooter()
 	: MonsterAttackState(InGameMonsterAttackState::None)
@@ -105,7 +106,7 @@ void SaltBakerShooter::Update(float _DeltaTime)
 				int RandomKey = rand() % 3;
 
 				AnimalBullet* Bullet = GetLevel()->CreateActor<AnimalBullet>();
-				if(nullptr != GetColMapImage())
+				if (nullptr != GetColMapImage())
 				{
 					Bullet->SetColMapImage(GetColMapImage());
 				}
@@ -117,7 +118,7 @@ void SaltBakerShooter::Update(float _DeltaTime)
 					Bullet->GetTransform().SetWorldPosition({ 50, -500.0f });
 					Bullet->SetAnimal("Camel");
 				}
-				else if(RandomKey == 1)
+				else if (RandomKey == 1)
 				{
 					Bullet->GetRenderer()->ChangeFrameAnimation("YellowDogBowlDrop");
 					Bullet->GetMonsterPhysicsComponent()->Reset();
@@ -163,6 +164,62 @@ void SaltBakerShooter::Update(float _DeltaTime)
 				Bullet->SetDirection(GetDirection());
 			}
 			break;
+			case InGameMonsterAttackState::Attack5:
+			{
+				{
+					LeafBullet* Bullet = GetLevel()->CreateActor<LeafBullet>();
+					if (nullptr != GetColMapImage())
+					{
+						Bullet->SetColMapImage(GetColMapImage());
+					}
+
+					Bullet->GetRenderer()->ChangeFrameAnimation("Bow1");
+					Bullet->SetIndexNum(0);
+					Bullet->SetColMapImage(GetColMapImage());
+					Bullet->GetTransform().SetWorldPosition({ 200.0f, 0.0f });
+					Bullet->SetDirection(GetDirection());
+				}
+				{
+					LeafBullet* Bullet = GetLevel()->CreateActor<LeafBullet>();
+					if (nullptr != GetColMapImage())
+					{
+						Bullet->SetColMapImage(GetColMapImage());
+					}
+
+					Bullet->GetRenderer()->ChangeFrameAnimation("Bow1");
+					Bullet->SetIndexNum(1);
+					Bullet->SetColMapImage(GetColMapImage());
+					Bullet->GetTransform().SetWorldPosition({ 500.0f,0.0f });
+					Bullet->SetDirection(GetDirection());
+				}
+				{
+					LeafBullet* Bullet = GetLevel()->CreateActor<LeafBullet>();
+					if (nullptr != GetColMapImage())
+					{
+						Bullet->SetColMapImage(GetColMapImage());
+					}
+
+					Bullet->GetRenderer()->ChangeFrameAnimation("Bow1");
+					Bullet->SetIndexNum(2);
+					Bullet->SetColMapImage(GetColMapImage());
+					Bullet->GetTransform().SetWorldPosition({ 800.0f, 0.0f });
+					Bullet->SetDirection(GetDirection());
+				}
+				{
+					LeafBullet* Bullet = GetLevel()->CreateActor<LeafBullet>();
+					if (nullptr != GetColMapImage())
+					{
+						Bullet->SetColMapImage(GetColMapImage());
+					}
+
+					Bullet->GetRenderer()->ChangeFrameAnimation("Bow1");
+					Bullet->SetIndexNum(3);
+					Bullet->SetColMapImage(GetColMapImage());
+					Bullet->GetTransform().SetWorldPosition({ 1100.0f, 0.0f });
+					Bullet->SetDirection(GetDirection());
+				}
+			}
+			break;
 			}
 		}
 	}
@@ -172,14 +229,16 @@ void SaltBakerShooter::UpdatePivot()
 {
 	if (State != InGameMonsterState::Attack1 &&
 		State != InGameMonsterState::Attack2 &&
-		State != InGameMonsterState::Attack4)
+		State != InGameMonsterState::Attack4 &&
+		State != InGameMonsterState::Attack5)
 	{
 		return;
 	}
 
 	if (State == InGameMonsterState::Attack1 ||
 		State == InGameMonsterState::Attack2 ||
-		State == InGameMonsterState::Attack4)
+		State == InGameMonsterState::Attack4 ||
+		State == InGameMonsterState::Attack5)
 	{
 
 		GetTransform().SetLocalPosition({ 0.0f, 0.0f });
@@ -205,6 +264,9 @@ void SaltBakerShooter::OnMonsterAttackStateChanged(InGameMonsterAttackState _Att
 		ElapsedTime = 0.0f;
 		break;
 	case InGameMonsterAttackState::Attack4:
+		ElapsedTime = 0.0f;
+		break;
+	case InGameMonsterAttackState::Attack5:
 		ElapsedTime = 0.0f;
 		break;
 	}
