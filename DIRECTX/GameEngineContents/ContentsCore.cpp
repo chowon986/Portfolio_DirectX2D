@@ -75,6 +75,21 @@ void ContentsCore::Start()
 		GameEngineInput::GetInst()->CreateKey("ColMapOnOffSwitch", 'O');
 	}
 
+	{
+
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExitsChildDirectory("ConstantResources");
+		Dir.Move("ConstantResources");
+		Dir.Move("Sound");
+
+		std::vector<GameEngineFile> Files = Dir.GetAllFile();
+
+		for (GameEngineFile& File : Files)
+		{
+			GameEngineSound::LoadRessource(File);
+		}
+	}
+
 	GameEngineDirectory Dir;
 	Dir.MoveParentToExitsChildDirectory("ConstantResources");
 	Dir.Move("ConstantResources");

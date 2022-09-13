@@ -10,7 +10,7 @@
 #include <GameEngineCore/GameEngineTextureRenderer.h>
 
 BeforeTitleLevel::BeforeTitleLevel()
-	: BlackScreenToAnimationIntervalTime(3.0f)
+	: BlackScreenToAnimationIntervalTime(3.5f)
 	, ElapsedTime(0.0f)
 	, MDHRLogoRenderer(nullptr)
 {
@@ -37,6 +37,8 @@ void BeforeTitleLevel::Start()
 
 	OldFilm* PostEffect = CreateActor<OldFilm>(GameObjectGroup::UI);
 	PostEffect->SetLevelOverOn();
+
+	GameEngineSound::SoundPlayOneShot("MDHR.mp3");
 }
 
 void BeforeTitleLevel::Update(float _DeltaTime)
