@@ -18,11 +18,11 @@ void SugarBullet::Start()
 {
 
 	Renderer = CreateComponent<GameEngineTextureRenderer>();
-	Renderer->CreateFrameAnimationFolder("Bow1", FrameAnimation_DESC("Bow1", 0.1f));
-	Renderer->CreateFrameAnimationFolder("Bow2", FrameAnimation_DESC("Bow2", 0.1f)); // Pink
-	Renderer->CreateFrameAnimationFolder("Wow1", FrameAnimation_DESC("Wow1", 0.1f));
-	Renderer->CreateFrameAnimationFolder("Wow2", FrameAnimation_DESC("Wow2", 0.1f)); // Pink
-	Renderer->ChangeFrameAnimation("Bow1");
+	Renderer->CreateFrameAnimationFolder("Sugar0", FrameAnimation_DESC("Sugar0", 0.1f));
+	Renderer->CreateFrameAnimationFolder("Sugar1", FrameAnimation_DESC("Sugar1", 0.1f)); // Pink
+	Renderer->CreateFrameAnimationFolder("Sugar2", FrameAnimation_DESC("Sugar2", 0.1f));
+	Renderer->CreateFrameAnimationFolder("Sugar3", FrameAnimation_DESC("Sugar3", 0.1f)); // Pink
+	Renderer->ChangeFrameAnimation("Sugar0");
 	Renderer->SetScaleModeImage();
 	SetRenderer(Renderer);
 

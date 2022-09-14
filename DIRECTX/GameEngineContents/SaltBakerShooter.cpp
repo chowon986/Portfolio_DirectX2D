@@ -112,8 +112,10 @@ void SaltBakerShooter::Update(float _DeltaTime)
 					SugarBulletStartPosX = -100;
 				}
 
+				int RandomSugarNum = GameEngineRandom::MainRandom.RandomInt(0, 3);
+
 				SugarBullet* Bullet = GetLevel()->CreateActor<SugarBullet>();
-				Bullet->GetRenderer()->ChangeFrameAnimation("Bow1");
+				Bullet->GetRenderer()->ChangeFrameAnimation("Sugar" + std::to_string(RandomSugarNum));
 				Bullet->SetColMapImage(GetColMapImage());
 				Bullet->GetTransform().SetWorldPosition({ SugarBulletStartPosX, -500.0f });
 			}
