@@ -375,6 +375,8 @@ void EngineMesh()
 	}
 
 	GameEngineFont::Load("µ¸¿ò");
+	GameEngineFont::Load("FBBlue");
+	GameEngineFont::Load("Yoon-Backjae");
 }
 
 void GameEngineCore::EngineResourcesInitialize()

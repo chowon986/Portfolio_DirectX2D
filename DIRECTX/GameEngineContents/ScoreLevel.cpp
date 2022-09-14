@@ -31,7 +31,6 @@ void ScoreLevel::LevelStartEvent()
 void ScoreLevel::Start()
 {
 	GetMainCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
-	GetMainCameraActorTransform().SetLocalPosition({ 640, -360 });
 	{
 		GameEngineActor* Iris = CreateActor<GameEngineActor>();
 		IrisRenderer = Iris->CreateComponent<GameEngineTextureRenderer>();
@@ -67,12 +66,63 @@ void ScoreLevel::Start()
 	{
 		GameEngineActor* Font = CreateActor<GameEngineActor>();
 		GameEngineFontRenderer* FontRenderer = Font->CreateComponent<GameEngineFontRenderer>();
-		FontRenderer->SetRenderingOrder(10000);
-		FontRenderer->SetText("시간", "돋움");
-		FontRenderer->SetColor({ 1.0f, 1.0f, 1.0f, 1.0 });
-		FontRenderer->SetSize(30);
-		FontRenderer->GetTransform().SetLocalPosition(float4{ 750.0f, -425.0f,(int)ZOrder::Foreground - 1});
 		FontRenderer->ChangeCamera(CAMERAORDER::UICAMERA);
+		FontRenderer->SetText("시간 ", "Yoon-Backjae");
+		FontRenderer->SetColor({ 1.0f, 1.0f, 1.0f, 1.0 });
+		FontRenderer->SetSize(35);
+		FontRenderer->SetScreenPostion(float4{ 550.0f, 250.0f,(int)ZOrder::Foreground - 1 });
+		FontRenderer->SetRenderingOrder(10000);
+	}
+
+	{
+		GameEngineActor* Font = CreateActor<GameEngineActor>();
+		GameEngineFontRenderer* FontRenderer = Font->CreateComponent<GameEngineFontRenderer>();
+		FontRenderer->ChangeCamera(CAMERAORDER::UICAMERA);
+		FontRenderer->SetText("HP보너스 ", "Yoon-Backjae");
+		FontRenderer->SetColor({ 1.0f, 1.0f, 1.0f, 1.0 });
+		FontRenderer->SetSize(35);
+		FontRenderer->SetScreenPostion(float4{ 550.0f, 300.0f,(int)ZOrder::Foreground - 1});
+		FontRenderer->SetRenderingOrder(10000);
+	}
+	{
+		GameEngineActor* Font = CreateActor<GameEngineActor>();
+		GameEngineFontRenderer* FontRenderer = Font->CreateComponent<GameEngineFontRenderer>();
+		FontRenderer->ChangeCamera(CAMERAORDER::UICAMERA);
+		FontRenderer->SetText("회피 ", "Yoon-Backjae");
+		FontRenderer->SetColor({ 1.0f, 1.0f, 1.0f, 1.0 });
+		FontRenderer->SetSize(35);
+		FontRenderer->SetScreenPostion(float4{ 550.0f, 350.0f,(int)ZOrder::Foreground - 1 });
+		FontRenderer->SetRenderingOrder(10000);
+	}
+	{
+		GameEngineActor* Font = CreateActor<GameEngineActor>();
+		GameEngineFontRenderer* FontRenderer = Font->CreateComponent<GameEngineFontRenderer>();
+		FontRenderer->ChangeCamera(CAMERAORDER::UICAMERA);
+		FontRenderer->SetText("슈퍼 미터 ", "Yoon-Backjae");
+		FontRenderer->SetColor({ 1.0f, 1.0f, 1.0f, 1.0 });
+		FontRenderer->SetSize(35);
+		FontRenderer->SetScreenPostion(float4{ 550.0f, 400.0f,(int)ZOrder::Foreground - 1 });
+		FontRenderer->SetRenderingOrder(10000);
+	}
+	{
+		GameEngineActor* Font = CreateActor<GameEngineActor>();
+		GameEngineFontRenderer* FontRenderer = Font->CreateComponent<GameEngineFontRenderer>();
+		FontRenderer->ChangeCamera(CAMERAORDER::UICAMERA);
+		FontRenderer->SetText("스킬 레벨 ", "Yoon-Backjae");
+		FontRenderer->SetColor({ 1.0f, 1.0f, 1.0f, 1.0 });
+		FontRenderer->SetSize(35);
+		FontRenderer->SetScreenPostion(float4{ 550.0f, 350.0f,(int)ZOrder::Foreground - 1 });
+		FontRenderer->SetRenderingOrder(10000);
+	}
+	{
+		GameEngineActor* Font = CreateActor<GameEngineActor>();
+		GameEngineFontRenderer* FontRenderer = Font->CreateComponent<GameEngineFontRenderer>();
+		FontRenderer->ChangeCamera(CAMERAORDER::UICAMERA);
+		FontRenderer->SetText("득점 ", "Yoon-Backjae");
+		FontRenderer->SetColor({ 1.0f, 1.0f, 1.0f, 1.0 });
+		FontRenderer->SetSize(50);
+		FontRenderer->SetScreenPostion(float4{ 600.0f, 600.0f,(int)ZOrder::Foreground - 1 });
+		FontRenderer->SetRenderingOrder(10000);
 	}
 
 	if (State == nullptr)
@@ -126,6 +176,8 @@ void ScoreLevel::Start()
 			PlayerNameRenderer->GetTransform().SetLocalPosition(float4{ 320.0, -660.0f,(int)ZOrder::Foreground - 1 });
 		}
 	}
+
+	GetMainCameraActorTransform().SetLocalPosition({ 640, -360 });
 
 }
 

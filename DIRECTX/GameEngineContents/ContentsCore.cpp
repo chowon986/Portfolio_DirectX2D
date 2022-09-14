@@ -168,9 +168,7 @@ void ContentsCore::Start()
 	CreateLevel<ScoreLevel>("Score");
 	CreateLevel<BishopLevel>("Bishop");
 	CreateLevel<SaltBakerLevel>("SaltBaker");
-	ChangeLevel("BeforeTitle");
-
-	GameEngineFont::Load("Title");
+	ChangeLevel("Score");
 
 	GameEngineGUI::CreateGUIWindow<GameEngineStatusWindow>("EngineStatus", nullptr);
 }
