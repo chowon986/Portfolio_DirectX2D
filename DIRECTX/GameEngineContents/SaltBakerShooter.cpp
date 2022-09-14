@@ -8,6 +8,7 @@
 #include "MonsterPhysicsComponent.h"
 #include "AnimalBulletPhysicsComponent.h"
 #include "LeafBullet.h"
+#include <GameEngineBase/GameEngineRandom.h>
 
 SaltBakerShooter::SaltBakerShooter()
 	: MonsterAttackState(InGameMonsterAttackState::None)
@@ -66,12 +67,28 @@ void SaltBakerShooter::Update(float _DeltaTime)
 					StrawberryBulletStartPosX = { std::make_pair(0, 300.0f), std::make_pair(1, 500.0f), std::make_pair(2,700.0f), std::make_pair(3,900.0f), std::make_pair(4,1100.0f), std::make_pair(5,1300.0f), std::make_pair(6,1500.0f), std::make_pair(7,1700.0f) };
 				}
 
+				int RandomStartPosX = GameEngineRandom::MainRandom.RandomInt(0, 7);
+				float StartPositionX = StrawberryBulletStartPosX[RandomStartPosX];
+
 				StrawberryBullet* Bullet = GetLevel()->CreateActor<StrawberryBullet>();
-				Bullet->GetRenderer()->ChangeFrameAnimation("Bow1");
+				if (RandomStartPosX < 2)
+				{
+				Bullet->GetRenderer()->ChangeFrameAnimation("BerryA");
+				}
+				else if (2 <= RandomStartPosX && RandomStartPosX < 4)
+				{
+					Bullet->GetRenderer()->ChangeFrameAnimation("BerryB");
+				}
+				else if (4 <= RandomStartPosX && RandomStartPosX < 5)
+				{
+					Bullet->GetRenderer()->ChangeFrameAnimation("BerryC");
+				}
+				else if (5 <= RandomStartPosX )
+				{
+					Bullet->GetRenderer()->ChangeFrameAnimation("BerryD");
+				}
 				Bullet->SetColMapImage(GetColMapImage());
 
-				int RandomStartPosX = rand() % StrawberryBulletStartPosX.size();
-				float StartPositionX = StrawberryBulletStartPosX[RandomStartPosX];
 
 				std::map<int, float>::iterator It = StrawberryBulletStartPosX.find(RandomStartPosX);
 				if (It != StrawberryBulletStartPosX.end())
@@ -103,7 +120,7 @@ void SaltBakerShooter::Update(float _DeltaTime)
 			break;
 			case InGameMonsterAttackState::Attack3:
 			{
-				int RandomKey = rand() % 3;
+				int RandomKey = GameEngineRandom::MainRandom.RandomInt(0, 2);
 
 				AnimalBullet* Bullet = GetLevel()->CreateActor<AnimalBullet>();
 				if (nullptr != GetColMapImage())
