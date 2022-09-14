@@ -157,25 +157,27 @@ void SaltBakerShooter::Update(float _DeltaTime)
 			break;
 			case InGameMonsterAttackState::Attack4:
 			{
+				int RandomLimeNum = GameEngineRandom::MainRandom.RandomInt(0, 3);
+
 				LimeBullet* Bullet = GetLevel()->CreateActor<LimeBullet>();
 				if (nullptr != GetColMapImage())
 				{
 					Bullet->SetColMapImage(GetColMapImage());
 				}
 
-				Bullet->GetRenderer()->ChangeFrameAnimation("Bow1");
+				Bullet->GetRenderer()->ChangeFrameAnimation("Lime" + std::to_string(RandomLimeNum));
 				Bullet->SetColMapImage(GetColMapImage());
 
 				StartPosSwitch = !StartPosSwitch;
 				if (StartPosSwitch == true)
 				{
-					LimeBulletStartPosY = -400.0f;
+					LimeBulletStartPosY = -450.0f;
 					LimeBulletStartPosX = 50.0f;
 					Bullet->SetStartPosName("LeftUp");
 				}
 				else
 				{
-					LimeBulletStartPosY = -650;
+					LimeBulletStartPosY = -600;
 					LimeBulletStartPosX = 50.0f;
 					Bullet->SetStartPosName("LeftDown");
 				}

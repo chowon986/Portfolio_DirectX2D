@@ -18,11 +18,11 @@ void LimeBullet::Start()
 {
 
 	Renderer = CreateComponent<GameEngineTextureRenderer>();
-	Renderer->CreateFrameAnimationFolder("Bow1", FrameAnimation_DESC("Bow1", 0.1f));
-	Renderer->CreateFrameAnimationFolder("Bow2", FrameAnimation_DESC("Bow2", 0.1f)); // Pink
-	Renderer->CreateFrameAnimationFolder("Wow1", FrameAnimation_DESC("Wow1", 0.1f));
-	Renderer->CreateFrameAnimationFolder("Wow2", FrameAnimation_DESC("Wow2", 0.1f)); // Pink
-	Renderer->ChangeFrameAnimation("Bow1");
+	Renderer->CreateFrameAnimationFolder("Lime0", FrameAnimation_DESC("Lime0", 0.1f));
+	Renderer->CreateFrameAnimationFolder("Lime1", FrameAnimation_DESC("Lime1", 0.1f)); // Pink
+	Renderer->CreateFrameAnimationFolder("Lime2", FrameAnimation_DESC("Lime2", 0.1f));
+	Renderer->CreateFrameAnimationFolder("Lime3", FrameAnimation_DESC("Lime3", 0.1f)); // Pink
+	Renderer->ChangeFrameAnimation("Lime0");
 	Renderer->SetScaleModeImage();
 	SetRenderer(Renderer);
 
