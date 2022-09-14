@@ -64,6 +64,11 @@ void AnimalBulletPhysicsComponent::FixedUpdate(double _FixedUpdateInterval)
 		Reset();
 		IsOnGround = true;
 	}
+
+	if (IsOnGround == true)
+	{
+
+	}
 }
 
 void AnimalBulletPhysicsComponent::End()

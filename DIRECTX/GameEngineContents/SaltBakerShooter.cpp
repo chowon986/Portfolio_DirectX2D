@@ -8,6 +8,7 @@
 #include "MonsterPhysicsComponent.h"
 #include "AnimalBulletPhysicsComponent.h"
 #include "LeafBullet.h"
+#include <GameEngineBase/GameEngineRandom.h>
 
 SaltBakerShooter::SaltBakerShooter()
 	: MonsterAttackState(InGameMonsterAttackState::None)
@@ -66,12 +67,28 @@ void SaltBakerShooter::Update(float _DeltaTime)
 					StrawberryBulletStartPosX = { std::make_pair(0, 300.0f), std::make_pair(1, 500.0f), std::make_pair(2,700.0f), std::make_pair(3,900.0f), std::make_pair(4,1100.0f), std::make_pair(5,1300.0f), std::make_pair(6,1500.0f), std::make_pair(7,1700.0f) };
 				}
 
+				int RandomStartPosX = GameEngineRandom::MainRandom.RandomInt(0, 7);
+				float StartPositionX = StrawberryBulletStartPosX[RandomStartPosX];
+
 				StrawberryBullet* Bullet = GetLevel()->CreateActor<StrawberryBullet>();
-				Bullet->GetRenderer()->ChangeFrameAnimation("Bow1");
+				if (RandomStartPosX < 2)
+				{
+				Bullet->GetRenderer()->ChangeFrameAnimation("BerryA");
+				}
+				else if (2 <= RandomStartPosX && RandomStartPosX < 4)
+				{
+					Bullet->GetRenderer()->ChangeFrameAnimation("BerryB");
+				}
+				else if (4 <= RandomStartPosX && RandomStartPosX < 5)
+				{
+					Bullet->GetRenderer()->ChangeFrameAnimation("BerryC");
+				}
+				else if (5 <= RandomStartPosX )
+				{
+					Bullet->GetRenderer()->ChangeFrameAnimation("BerryD");
+				}
 				Bullet->SetColMapImage(GetColMapImage());
 
-				int RandomStartPosX = rand() % StrawberryBulletStartPosX.size();
-				float StartPositionX = StrawberryBulletStartPosX[RandomStartPosX];
 
 				std::map<int, float>::iterator It = StrawberryBulletStartPosX.find(RandomStartPosX);
 				if (It != StrawberryBulletStartPosX.end())
@@ -95,15 +112,17 @@ void SaltBakerShooter::Update(float _DeltaTime)
 					SugarBulletStartPosX = -100;
 				}
 
+				int RandomSugarNum = GameEngineRandom::MainRandom.RandomInt(0, 3);
+
 				SugarBullet* Bullet = GetLevel()->CreateActor<SugarBullet>();
-				Bullet->GetRenderer()->ChangeFrameAnimation("Bow1");
+				Bullet->GetRenderer()->ChangeFrameAnimation("Sugar" + std::to_string(RandomSugarNum));
 				Bullet->SetColMapImage(GetColMapImage());
 				Bullet->GetTransform().SetWorldPosition({ SugarBulletStartPosX, -500.0f });
 			}
 			break;
 			case InGameMonsterAttackState::Attack3:
 			{
-				int RandomKey = rand() % 3;
+				int RandomKey = GameEngineRandom::MainRandom.RandomInt(0, 2);
 
 				AnimalBullet* Bullet = GetLevel()->CreateActor<AnimalBullet>();
 				if (nullptr != GetColMapImage())
@@ -112,7 +131,7 @@ void SaltBakerShooter::Update(float _DeltaTime)
 				}
 				if (RandomKey == 0)
 				{
-					Bullet->GetRenderer()->ChangeFrameAnimation("RedDogBowlDrop");
+					Bullet->GetRenderer()->ChangeFrameAnimation("CamelJumpUp");
 					Bullet->GetMonsterPhysicsComponent()->Reset();
 					Bullet->GetMonsterPhysicsComponent()->AddForce(50);
 					Bullet->GetTransform().SetWorldPosition({ 50, -500.0f });
@@ -120,7 +139,7 @@ void SaltBakerShooter::Update(float _DeltaTime)
 				}
 				else if (RandomKey == 1)
 				{
-					Bullet->GetRenderer()->ChangeFrameAnimation("YellowDogBowlDrop");
+					Bullet->GetRenderer()->ChangeFrameAnimation("ElephantJumpUp");
 					Bullet->GetMonsterPhysicsComponent()->Reset();
 					Bullet->GetMonsterPhysicsComponent()->AddForce(40);
 					Bullet->GetTransform().SetWorldPosition({ 50, -500.0f });
@@ -128,7 +147,7 @@ void SaltBakerShooter::Update(float _DeltaTime)
 				}
 				else
 				{
-					Bullet->GetRenderer()->ChangeFrameAnimation("YellowDogBowlDrop");
+					Bullet->GetRenderer()->ChangeFrameAnimation("LionJumpUp");
 					Bullet->GetMonsterPhysicsComponent()->Reset();
 					Bullet->GetMonsterPhysicsComponent()->AddForce(30);
 					Bullet->GetTransform().SetWorldPosition({ 50, -500.0f });
@@ -138,25 +157,27 @@ void SaltBakerShooter::Update(float _DeltaTime)
 			break;
 			case InGameMonsterAttackState::Attack4:
 			{
+				int RandomLimeNum = GameEngineRandom::MainRandom.RandomInt(0, 3);
+
 				LimeBullet* Bullet = GetLevel()->CreateActor<LimeBullet>();
 				if (nullptr != GetColMapImage())
 				{
 					Bullet->SetColMapImage(GetColMapImage());
 				}
 
-				Bullet->GetRenderer()->ChangeFrameAnimation("Bow1");
+				Bullet->GetRenderer()->ChangeFrameAnimation("Lime" + std::to_string(RandomLimeNum));
 				Bullet->SetColMapImage(GetColMapImage());
 
 				StartPosSwitch = !StartPosSwitch;
 				if (StartPosSwitch == true)
 				{
-					LimeBulletStartPosY = -400.0f;
+					LimeBulletStartPosY = -450.0f;
 					LimeBulletStartPosX = 50.0f;
 					Bullet->SetStartPosName("LeftUp");
 				}
 				else
 				{
-					LimeBulletStartPosY = -650;
+					LimeBulletStartPosY = -600;
 					LimeBulletStartPosX = 50.0f;
 					Bullet->SetStartPosName("LeftDown");
 				}

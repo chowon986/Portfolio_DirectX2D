@@ -21,8 +21,8 @@ void SaltBaker::Start()
 	Renderer = CreateComponent<GameEngineTextureRenderer>();
 	Renderer->CreateFrameAnimationFolder("SaltBakerIntro", FrameAnimation_DESC("SaltBakerIntro", 0.1f));
 	Renderer->CreateFrameAnimationFolder("SaltBakerIdle", FrameAnimation_DESC("BulldogIdle", 0.1f));
-	Renderer->CreateFrameAnimationFolder("SaltBakerAttack5", FrameAnimation_DESC("BulldogAttack1", 0.1f));
-	Renderer->AnimationBindFrame("SaltBakerAttack5", std::bind(&SaltBaker::Test, this, std::placeholders::_1));
+	Renderer->CreateFrameAnimationFolder("SaltBakerAttack4", FrameAnimation_DESC("BulldogAttack1", 0.1f));
+	Renderer->AnimationBindFrame("SaltBakerAttack4", std::bind(&SaltBaker::Test, this, std::placeholders::_1));
 	Renderer->SetScaleModeImage();
 	Renderer->ChangeFrameAnimation("SaltBakerIntro");
 
@@ -62,8 +62,8 @@ void SaltBaker::Shoot()
 {
 	//SetState(InGameMonsterState::Attack5);
 	//SetAttackState(InGameMonsterAttackState::Attack5);
-	SetState(InGameMonsterState::Attack5);
-	SetAttackState(InGameMonsterAttackState::Attack5);
+	SetState(InGameMonsterState::Attack4);
+	SetAttackState(InGameMonsterAttackState::Attack4);
 }
 
 void SaltBaker::Die()
