@@ -26,9 +26,9 @@ CharacterState::~CharacterState()
 
 	if (Items.size() > 0)
 	{
-		for (std::map<ItemType, std::vector<ItemBase*>>::iterator it = Items.begin(); it != Items.end(); it++) // 타입 돌기
+		for (std::map<ItemType, std::vector<ItemBase*>>::iterator it = Items.begin(); it != Items.end(); it++) 
 		{
-			for (ItemBase* Item : it->second) // 타입 내부 돌기
+			for (ItemBase* Item : it->second)
 			{
 				if (Item != nullptr)
 				{
