@@ -35,8 +35,8 @@ void SaltBakerLevel::Start()
 	//InGameCuphead* Cuphead = CreateActor<InGameCuphead>();
 	//Cuphead->GetTransform().SetWorldPosition({ 640.0f,-360.0f });
 
-	//SaltBaker* Boss = CreateActor<SaltBaker>();
-	//Boss->GetTransform().SetWorldPosition({ 640.0f,-360.0f });
+	SaltBaker* Boss = CreateActor<SaltBaker>();
+	Boss->GetTransform().SetWorldPosition({ 640.0f,-360.0f });
 
 	//Pepper* Ph2Monster1 = CreateActor<Pepper>();
 	//Ph2Monster1->GetTransform().SetWorldPosition({ 100.0f,100.0f,(int)ZOrder::NPC });
@@ -49,8 +49,8 @@ void SaltBakerLevel::Start()
 	//ShellWeDance* Ph3Monster2 = CreateActor<ShellWeDance>();
 	//Ph3Monster2->GetTransform().SetWorldPosition({ 640.0f,-600.0f });
 
-	SaltBakerHeart* Ph4Boss = CreateActor<SaltBakerHeart>();
-	Ph4Boss->GetTransform().SetWorldPosition({ 640.0f,-400.0f });
+	//SaltBakerHeart* Ph4Boss = CreateActor<SaltBakerHeart>();
+	//Ph4Boss->GetTransform().SetWorldPosition({ 640.0f,-400.0f });
 
 
 	//Chicken* ComMonster = CreateActor<Chicken>();

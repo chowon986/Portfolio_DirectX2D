@@ -4,6 +4,7 @@
 class GameEngineCollision;
 class GameEngineTextureRenderer;
 class AnimalBulletPhysicsComponent;
+class GameEngineStateManager;
 class AnimalBullet : public BulletBase
 {
 public:
@@ -21,15 +22,21 @@ public:
 	AnimalBulletPhysicsComponent* GetMonsterPhysicsComponent() { return Physics; }
 	std::string GetAnimal() { return Animal; }
 	void SetAnimal(std::string _Animal) { Animal = _Animal; }
+	void SetCurAnimationName(std::string _AnimationName) { CurAnimationName = _AnimationName; }
+	std::string GetCurAnimationName() { return CurAnimationName; }
 
 private:
 	virtual void Start() override;
 	virtual void Update(float _DeltaTime) override;
 	virtual void End() override;
 
+	void OnJumpDownStartAnimationFrameFinished(const FrameAnimation_DESC& _Info);
+	void OnJumpUpStartAnimationFrameFinished(const FrameAnimation_DESC& _Info);
+
 private:
 	GameEngineCollision* Collision;
 	AnimalBulletPhysicsComponent* Physics;
 	std::string Animal;
+	std::string CurAnimationName;
 };
 

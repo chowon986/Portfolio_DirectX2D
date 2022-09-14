@@ -112,7 +112,7 @@ void SaltBakerShooter::Update(float _DeltaTime)
 				}
 				if (RandomKey == 0)
 				{
-					Bullet->GetRenderer()->ChangeFrameAnimation("RedDogBowlDrop");
+					Bullet->GetRenderer()->ChangeFrameAnimation("CamelJumpUp");
 					Bullet->GetMonsterPhysicsComponent()->Reset();
 					Bullet->GetMonsterPhysicsComponent()->AddForce(50);
 					Bullet->GetTransform().SetWorldPosition({ 50, -500.0f });
@@ -120,7 +120,7 @@ void SaltBakerShooter::Update(float _DeltaTime)
 				}
 				else if (RandomKey == 1)
 				{
-					Bullet->GetRenderer()->ChangeFrameAnimation("YellowDogBowlDrop");
+					Bullet->GetRenderer()->ChangeFrameAnimation("ElephantJumpUp");
 					Bullet->GetMonsterPhysicsComponent()->Reset();
 					Bullet->GetMonsterPhysicsComponent()->AddForce(40);
 					Bullet->GetTransform().SetWorldPosition({ 50, -500.0f });
@@ -128,7 +128,7 @@ void SaltBakerShooter::Update(float _DeltaTime)
 				}
 				else
 				{
-					Bullet->GetRenderer()->ChangeFrameAnimation("YellowDogBowlDrop");
+					Bullet->GetRenderer()->ChangeFrameAnimation("LionJumpUp");
 					Bullet->GetMonsterPhysicsComponent()->Reset();
 					Bullet->GetMonsterPhysicsComponent()->AddForce(30);
 					Bullet->GetTransform().SetWorldPosition({ 50, -500.0f });
