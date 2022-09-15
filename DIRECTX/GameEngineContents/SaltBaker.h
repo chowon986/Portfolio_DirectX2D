@@ -31,7 +31,8 @@ protected:
 	void Shoot() override;
 	void Die() override;
 
-	void Test(const FrameAnimation_DESC& _Info);
+	void OnIntroAnimationFrameChanged(const FrameAnimation_DESC& _Info);
+	void OnAttack3AnimationFrameChanged(const FrameAnimation_DESC& _Info);
 public:
 
 private:

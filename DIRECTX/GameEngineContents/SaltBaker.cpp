@@ -6,7 +6,7 @@
 
 SaltBaker::SaltBaker()
 	: Renderer(nullptr)
-	, State(InGameMonsterState::Idle)
+	, State(InGameMonsterState::Prepare)
 	, AttackState(InGameMonsterAttackState::None)
 	, Collision(nullptr)
 {
@@ -19,12 +19,12 @@ SaltBaker::~SaltBaker()
 void SaltBaker::Start()
 {
 	Renderer = CreateComponent<GameEngineTextureRenderer>();
-	Renderer->CreateFrameAnimationFolder("SaltBakerIntro", FrameAnimation_DESC("SaltBakerIntro", 0.1f));
-	Renderer->CreateFrameAnimationFolder("SaltBakerIdle", FrameAnimation_DESC("BulldogIdle", 0.1f));
-	Renderer->CreateFrameAnimationFolder("SaltBakerAttack4", FrameAnimation_DESC("BulldogAttack1", 0.1f));
-	Renderer->AnimationBindFrame("SaltBakerAttack4", std::bind(&SaltBaker::Test, this, std::placeholders::_1));
+	Renderer->CreateFrameAnimationFolder("SaltBakerAttack2", FrameAnimation_DESC("SaltBakerIntro", 0.1f));
+	Renderer->CreateFrameAnimationFolder("SaltBakerAttack3", FrameAnimation_DESC("SaltBakerAttack3", 0.1f));
+	Renderer->AnimationBindFrame("SaltBakerAttack2", std::bind(&SaltBaker::OnIntroAnimationFrameChanged, this, std::placeholders::_1));
+	Renderer->AnimationBindFrame("SaltBakerAttack3", std::bind(&SaltBaker::OnAttack3AnimationFrameChanged, this, std::placeholders::_1));
 	Renderer->SetScaleModeImage();
-	Renderer->ChangeFrameAnimation("SaltBakerIntro");
+	Renderer->ChangeFrameAnimation("SaltBakerAttack2");
 
 	SetRenderer(Renderer);
 
@@ -60,10 +60,6 @@ void SaltBaker::Idle()
 
 void SaltBaker::Shoot()
 {
-	//SetState(InGameMonsterState::Attack5);
-	//SetAttackState(InGameMonsterAttackState::Attack5);
-	SetState(InGameMonsterState::Attack4);
-	SetAttackState(InGameMonsterAttackState::Attack4);
 }
 
 void SaltBaker::Die()
@@ -71,22 +67,23 @@ void SaltBaker::Die()
 	SetState(InGameMonsterState::Die);
 }
 
-void SaltBaker::Test(const FrameAnimation_DESC& _Info)
+void SaltBaker::OnIntroAnimationFrameChanged(const FrameAnimation_DESC& _Info)
 {
-	if (_Info.CurFrame == 3)
+	if (_Info.CurFrame == 42)
 	{
-		Shoot();
+		SetState(InGameMonsterState::Attack2);
+		SetAttackState(InGameMonsterAttackState::Attack2);
 	}
-	else if (_Info.CurFrame == 5)
+	else if (_Info.CurFrame == 62)
 	{
-		Shoot();
+		SetState(InGameMonsterState::Attack3);
 	}
-	else if (_Info.CurFrame == 7)
+}
+
+void SaltBaker::OnAttack3AnimationFrameChanged(const FrameAnimation_DESC& _Info)
+{
+	if(_Info.CurFrame == 104)
 	{
-		Shoot();
-	}
-	else
-	{
-		SetAttackState(InGameMonsterAttackState::None);
+		SetAttackState(InGameMonsterAttackState::Attack3);
 	}
 }

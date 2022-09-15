@@ -54,8 +54,8 @@ void SaltBakerShooter::Update(float _DeltaTime)
 	{
 		ElapsedTime -= IntervalTime;
 
-		if (MonsterAttackState != AttackState)
-		{
+		//if (MonsterAttackState != AttackState)
+		//{
 			MonsterAttackState = AttackState;
 
 			switch (MonsterAttackState)
@@ -242,7 +242,7 @@ void SaltBakerShooter::Update(float _DeltaTime)
 			}
 			break;
 			}
-		}
+		/*}*/
 	}
 }
 
@@ -276,19 +276,19 @@ void SaltBakerShooter::OnMonsterAttackStateChanged(InGameMonsterAttackState _Att
 	switch (_AttackState)
 	{
 	case InGameMonsterAttackState::Attack1:
-		ElapsedTime = 0.0f;
+		IntervalTime = 0.0f;
 		break;
 	case InGameMonsterAttackState::Attack2:
-		ElapsedTime = 0.0f;
+		IntervalTime = 1.0f;
 		break;
 	case InGameMonsterAttackState::Attack3:
-		ElapsedTime = 0.0f;
+		IntervalTime = 1.0f;
 		break;
 	case InGameMonsterAttackState::Attack4:
-		ElapsedTime = 0.0f;
+		IntervalTime = 0.0f;
 		break;
 	case InGameMonsterAttackState::Attack5:
-		ElapsedTime = 0.0f;
+		IntervalTime = 0.0f;
 		break;
 	}
 
