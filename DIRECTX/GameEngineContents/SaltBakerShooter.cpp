@@ -118,6 +118,14 @@ void SaltBakerShooter::Update(float _DeltaTime)
 				Bullet->GetRenderer()->ChangeFrameAnimation("Sugar" + std::to_string(RandomSugarNum));
 				Bullet->SetColMapImage(GetColMapImage());
 				Bullet->GetTransform().SetWorldPosition({ SugarBulletStartPosX, -500.0f });
+				++SugarAttackCount;
+				if (SugarAttackCount >= 5)
+				{
+					if (Character != nullptr)
+					{
+						Character->SetAttackState(InGameMonsterAttackState::None);
+					}
+				}
 			}
 			break;
 			case InGameMonsterAttackState::Attack3:

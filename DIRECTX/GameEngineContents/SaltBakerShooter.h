@@ -32,5 +32,6 @@ private:
 	float SugarBulletStartPosX;
 	float LimeBulletStartPosX;
 	float LimeBulletStartPosY;
+	int SugarAttackCount;
 };
 
