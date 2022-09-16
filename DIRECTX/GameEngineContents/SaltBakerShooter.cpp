@@ -284,7 +284,7 @@ void SaltBakerShooter::OnMonsterAttackStateChanged(InGameMonsterAttackState _Att
 	switch (_AttackState)
 	{
 	case InGameMonsterAttackState::Attack1:
-		IntervalTime = 0.0f;
+		IntervalTime = 1.0f;
 		break;
 	case InGameMonsterAttackState::Attack2:
 		IntervalTime = 1.0f;

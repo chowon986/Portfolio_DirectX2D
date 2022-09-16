@@ -19,8 +19,10 @@ SaltBaker::~SaltBaker()
 void SaltBaker::Start()
 {
 	Renderer = CreateComponent<GameEngineTextureRenderer>();
+	Renderer->CreateFrameAnimationFolder("SaltBakerAttack1", FrameAnimation_DESC("SaltBakerAttack1", 0.1f));
 	Renderer->CreateFrameAnimationFolder("SaltBakerAttack2", FrameAnimation_DESC("SaltBakerIntro", 0.1f));
 	Renderer->CreateFrameAnimationFolder("SaltBakerAttack3", FrameAnimation_DESC("SaltBakerAttack3", 0.1f));
+	Renderer->AnimationBindFrame("SaltBakerAttack1", std::bind(&SaltBaker::OnAttack1AnimationFrameChanged, this, std::placeholders::_1));
 	Renderer->AnimationBindFrame("SaltBakerAttack2", std::bind(&SaltBaker::OnIntroAnimationFrameChanged, this, std::placeholders::_1));
 	Renderer->AnimationBindFrame("SaltBakerAttack3", std::bind(&SaltBaker::OnAttack3AnimationFrameChanged, this, std::placeholders::_1));
 	Renderer->SetScaleModeImage();
@@ -85,5 +87,21 @@ void SaltBaker::OnAttack3AnimationFrameChanged(const FrameAnimation_DESC& _Info)
 	if(_Info.CurFrame == 104)
 	{
 		SetAttackState(InGameMonsterAttackState::Attack3);
+	}
+	else if (_Info.CurFrame == 133)
+	{
+		SetState(InGameMonsterState::Attack1);
+	}
+}
+
+void SaltBaker::OnAttack1AnimationFrameChanged(const FrameAnimation_DESC& _Info)
+{
+	if (_Info.CurFrame == 26)
+	{
+		SetAttackState(InGameMonsterAttackState::Attack1);
+	}
+	else if (_Info.CurFrame == 44)
+	{
+		//SetState(InGameMonsterState::Attack1);
 	}
 }
