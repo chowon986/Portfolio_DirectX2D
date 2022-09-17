@@ -19,6 +19,14 @@ BishopLevel::~BishopLevel()
 {
 }
 
+void BishopLevel::LevelStartEvent()
+{
+	Cuphead = CreateActor<InGameCuphead>(GameObjectGroup::Player);
+	Cuphead->GetTransform().SetLocalPosition({ 640.0f, -360.0f, (int)ZOrder::Player });
+	Cuphead->SetColMapImage(ColMapRenderer);
+	PushToRotateCamera(Cuphead);
+}
+
 void BishopLevel::Start()
 {
 	GetMainCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
@@ -114,12 +122,6 @@ void BishopLevel::Start()
 		PawnColMapRenderer->ScaleToTexture();
 		PawnColMapRenderer->GetTransform().SetLocalPosition({ 640.0f, -360.0f, (int)ZOrder::Background + 1 });
 		SetMainColMapImage(PawnColMapRenderer);
-	}
-	{
-		Cuphead = CreateActor<InGameCuphead>(GameObjectGroup::Player);
-		Cuphead->GetTransform().SetLocalPosition({ 640.0f, -360.0f, (int)ZOrder::Player });
-		Cuphead->SetColMapImage(ColMapRenderer);
-		PushToRotateCamera(Cuphead);
 	}
 
 	{

@@ -19,6 +19,7 @@ public:
 	BishopLevel& operator=(BishopLevel&& _Other) noexcept = delete;
 
 protected:
+	void LevelStartEvent() override;
 	void Start() override;
 	void Update(float _DeltaTime) override;
 	void End() override;

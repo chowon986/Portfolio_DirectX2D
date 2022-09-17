@@ -39,6 +39,16 @@ public:
 		return ColMapImage;
 	}
 
+	void SetIsEquipped(bool _IsEquipped)
+	{
+		IsEquipped = _IsEquipped;
+	}
+
+	bool GetIsEquipped()
+	{
+		return IsEquipped;
+	}
+
 protected:
 	virtual void UpdateDirection();
 	void Update(float _DeltaTime) override;
@@ -61,5 +71,6 @@ private:
 	MulticastDelegate<float4> OnVerticalDirectionChangedDelegate;
 	MulticastDelegate<float4> OnHorizontalDirectionChangedDelegate;
 	GameEngineTextureRenderer* ColMapImage;
+	bool IsEquipped;
 };
 

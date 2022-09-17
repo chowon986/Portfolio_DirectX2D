@@ -35,6 +35,10 @@ void PeaShooter::PeashotSparkAnimationFrameFinished(const FrameAnimation_DESC& _
 
 void PeaShooter::Update(float _DeltaTime)
 {
+	if (true != GetIsEquipped())
+	{
+		return;
+	}
 	WeaponBase::Update(_DeltaTime);
 
 	ElapsedTime += _DeltaTime;

@@ -27,6 +27,10 @@ void BoomerangShooter::End()
 
 void BoomerangShooter::Update(float _DeltaTime)
 {
+	if (true != GetIsEquipped())
+	{
+		return;
+	}
 	WeaponBase::Update(_DeltaTime);
 
 	ElapsedTime += _DeltaTime;

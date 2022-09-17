@@ -158,7 +158,7 @@ public:
 	{
 		return AllActors[_ObjectGroupIndex];
 	}
-
+	
 	template<typename ObjectType, typename GroupIndexType>
 	std::list<ObjectType*> GetConvertToGroup(GroupIndexType _ObjectGroupIndex)
 	{

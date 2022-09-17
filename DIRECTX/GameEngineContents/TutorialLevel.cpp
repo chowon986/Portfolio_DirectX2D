@@ -41,6 +41,11 @@ void TutorialLevel::LevelStartEvent()
 			CurCoin = State->Coin;
 		}
 	}
+
+	Cuphead = CreateActor<InGameCuphead>(GameObjectGroup::Player);
+	Cuphead->GetTransform().SetLocalPosition({ 640, -360, (int)ZOrder::Player });
+	Cuphead->SetColMapImage(ColMapRenderer);
+	PushToRotateCamera(Cuphead);
 }
 
 void TutorialLevel::Start()
@@ -68,10 +73,6 @@ void TutorialLevel::Start()
 	}
 
 	{
-		Cuphead = CreateActor<InGameCuphead>(GameObjectGroup::Player);
-		Cuphead->GetTransform().SetLocalPosition({ 640, -360, (int)ZOrder::Player});
-		Cuphead->SetColMapImage(ColMapRenderer);
-		PushToRotateCamera(Cuphead);
 
 		WheatA = CreateActor<GameEngineActor>(GameObjectGroup::UI);
 		WheatARenderer = WheatA->CreateComponent<GameEngineTextureRenderer>();
@@ -132,6 +133,7 @@ void TutorialLevel::Start()
 		CoinRenderer = Coin->CreateComponent<GameEngineTextureRenderer>();
 		CoinRenderer->CreateFrameAnimationFolder("TutorialCoin", FrameAnimation_DESC("TutorialCoin", 0.05f, true));
 		CoinRenderer->CreateFrameAnimationFolder("TutorialCoinDeath", FrameAnimation_DESC("TutorialCoinDeath", 0.05f, false));
+		CoinRenderer->CreateFrameAnimationFolder("Nothing", FrameAnimation_DESC("Nothing", 0.05f, false));
 		CoinRenderer->ChangeFrameAnimation("TutorialCoin");
 		CoinRenderer->SetScaleModeImage();
 		Coin->GetTransform().SetLocalPosition({ 1200, -100.0f, (int)ZOrder::Foreground });

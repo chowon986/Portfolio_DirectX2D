@@ -14,6 +14,7 @@ WeaponBase::WeaponBase()
 	, AttackState(InGameCharacterAttackState::None)
 	, ColMapImage(nullptr)
 	, ShooterState(InGameCharacterShooterState::None)
+	, IsEquipped(false)
 {
 }
 
@@ -229,40 +230,52 @@ void WeaponBase::UpdatePivot()
 
 void WeaponBase::OnCharacterVerticalDirectionChanged(std::string _VerticalDirection)
 {
-	UpdateDirection();
-	OnVerticalDirectionChangedDelegate.Invoke(VerticalDirection);
+	if (true == IsEquipped)
+	{
+		UpdateDirection();
+		OnVerticalDirectionChangedDelegate.Invoke(VerticalDirection);
+	}
 }
 
 void WeaponBase::OnCharacterHorizontalDirectionChanged(std::string _HorizontalDirection)
 {
-	UpdateDirection();
-	OnHorizontalDirectionChangedDelegate.Invoke(HorizontalDirection);
+	if (true == IsEquipped)
+	{
+		UpdateDirection();
+		OnHorizontalDirectionChangedDelegate.Invoke(HorizontalDirection);
+	}
 }
 
 
 void WeaponBase::OnCharacterStateChanged(InGameCharacterState _State)
 {
-	UpdateDirection();
+	if (true == IsEquipped)
+	{
+		UpdateDirection();
+	}
 }
 
 void WeaponBase::OnCharacterAttackStateChanged(InGameCharacterAttackState _AttackState)
 {
-	switch (_AttackState)
+	if (true == IsEquipped)
 	{
-	case InGameCharacterAttackState::None:
-		ElapsedTime = -1;
-		break;
-	case InGameCharacterAttackState::Shoot:
-		ElapsedTime = 0.0f;
-		break;
-	case InGameCharacterAttackState::SpecialAttack:
-		ElapsedTime = 0.0f;
-		break;
-	case InGameCharacterAttackState::SuperAttack:
-		ElapsedTime = 0.0f;
-		break;
+		switch (_AttackState)
+		{
+		case InGameCharacterAttackState::None:
+			ElapsedTime = -1;
+			break;
+		case InGameCharacterAttackState::Shoot:
+			ElapsedTime = 0.0f;
+			break;
+		case InGameCharacterAttackState::SpecialAttack:
+			ElapsedTime = 0.0f;
+			break;
+		case InGameCharacterAttackState::SuperAttack:
+			ElapsedTime = 0.0f;
+			break;
+		}
+		UpdateDirection();
 	}
-	UpdateDirection();
 }
 
 

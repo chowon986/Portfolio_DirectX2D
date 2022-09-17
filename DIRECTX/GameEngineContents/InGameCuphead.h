@@ -3,6 +3,8 @@
 #include "IInGameCharacterBase.h"
 
 enum class InGameCharacterState;
+class WeaponBase;
+class CharacterState;
 class GameEngineCollision;
 class InGameCharacterMovementCompmonent;
 class InGameCharacterAnimationControllerComponent;
@@ -60,6 +62,9 @@ protected:
 	void OnParryAnimationFrameEnd(const FrameAnimation_DESC& _Info);
 	void OnParryAnimationFrameStarted(const FrameAnimation_DESC& _Info);
 
+	void SetCharacterState(CharacterState* _State) { State = _State; }
+	CharacterState* GetCharacterState() { return State; }
+
 private:
 	GameEngineTextureRenderer* Renderer;
 	bool IsInputEnabled;
@@ -71,5 +76,7 @@ private:
 	bool AlphaOn;
 	float CanTakeDamageIntervalTime;
 	float CanTakeDamageElapsedTime;
-
+	bool ToggleWeapon;
+	CharacterState* State;
+	WeaponBase* EquippedWeapon;
 };

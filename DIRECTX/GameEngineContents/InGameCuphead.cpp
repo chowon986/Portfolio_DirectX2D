@@ -22,6 +22,7 @@ InGameCuphead::InGameCuphead()
 	, AlphaOn(true)
 	, CanTakeDamageElapsedTime(0.0f)
 	, CanTakeDamageIntervalTime(1.0f)
+	, ToggleWeapon(false)
 {
 }
 
@@ -38,6 +39,7 @@ void InGameCuphead::Start()
 		GameEngineInput::GetInst()->CreateKey("Shoot", VK_LSHIFT);
 		GameEngineInput::GetInst()->CreateKey("Jump", VK_CONTROL);
 		GameEngineInput::GetInst()->CreateKey("Dash", 'Z');
+		GameEngineInput::GetInst()->CreateKey("ChangeGun", 'Q');
 	}
 
 	Renderer = CreateComponent<GameEngineTextureRenderer>();
@@ -134,23 +136,26 @@ void InGameCuphead::Start()
 
 	{
 		std::list<GameEngineActor*> Actors = GetLevel()->GetGroup(GameObjectGroup::CharacterState);
-		WeaponBase* Weapon = nullptr;
+		EquippedWeapon = nullptr;
 		for (GameEngineActor* Actor : Actors)
 		{
-			if (CharacterState* _State = dynamic_cast<CharacterState*>(Actor))
+			if (State = dynamic_cast<CharacterState*>(Actor))
 			{
-				if (WeaponItemBase* ShotAItem = dynamic_cast<WeaponItemBase*>(_State->EquippedItems[InventoryType::ShotA]))
+				if (WeaponItemBase* ShotAItem = dynamic_cast<WeaponItemBase*>(State->EquippedItems[InventoryType::ShotA]))
 				{
-					Weapon = ShotAItem->Weapon;
-					Weapon->SetParent(this);
+					EquippedWeapon = ShotAItem->Weapon;
+					EquippedWeapon->SetParent(this);
+					EquippedWeapon->SetIsEquipped(true);
 				}
 			}
 
 		}
-		if (Weapon == nullptr)
+
+		if (EquippedWeapon == nullptr)
 		{
 			PeaShooter* Shooter = GetLevel()->CreateActor<PeaShooter>();
 			Shooter->SetParent(this);
+			EquippedWeapon->SetIsEquipped(true);
 		}
 	}
 }
@@ -162,6 +167,27 @@ void InGameCuphead::Update(float _DeltaTime)
 	CheckCollision();
 
 	CanTakeDamageElapsedTime += _DeltaTime;
+
+	if (true == GameEngineInput::GetInst()->IsDown("ChangeGun"))
+	{
+		ToggleWeapon = !ToggleWeapon;
+		
+		WeaponItemBase* Item = ToggleWeapon ? dynamic_cast<WeaponItemBase*>(State->EquippedItems[InventoryType::ShotB]) :dynamic_cast<WeaponItemBase*>(State->EquippedItems[InventoryType::ShotA]);
+		if (nullptr != Item)
+		{
+			if (nullptr != EquippedWeapon)
+			{
+				EquippedWeapon->SetIsEquipped(false);
+			}
+
+			EquippedWeapon = Item->Weapon;
+			EquippedWeapon->SetIsEquipped(true);
+			if (nullptr != EquippedWeapon && nullptr == EquippedWeapon->GetParent())
+			{
+				EquippedWeapon->SetParent(this);
+			}
+		}
+	}
 
 	if (true == GetLevel()->GetMainCameraActor()->IsFreeCameraMode())
 	{
