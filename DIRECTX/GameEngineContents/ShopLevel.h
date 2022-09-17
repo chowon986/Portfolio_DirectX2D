@@ -54,7 +54,7 @@ private:
 	ItemInventory* Inventory;
 
 public:
-	std::vector<ItemBase*> ItemNames;
+	std::vector<std::shared_ptr<ItemBase>> ItemNames;
 	std::vector<GameEngineTextureRenderer*> ItemRenderers;
 	std::vector<std::string> ItemName;
 	float ItemPosX;

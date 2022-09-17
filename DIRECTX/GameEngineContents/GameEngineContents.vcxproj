@@ -269,6 +269,8 @@
     <ClInclude Include="PhysicsComponent.h" />
     <ClInclude Include="Pickaxe.h" />
     <ClInclude Include="Pig.h" />
+    <ClInclude Include="PlayerCard.h" />
+    <ClInclude Include="PlayerHP.h" />
     <ClInclude Include="PortalBase.h" />
     <ClInclude Include="PreCompile.h">
       <SubType>
@@ -433,6 +435,8 @@
     <ClCompile Include="PhysicsComponent.cpp" />
     <ClCompile Include="Pickaxe.cpp" />
     <ClCompile Include="Pig.cpp" />
+    <ClCompile Include="PlayerCard.cpp" />
+    <ClCompile Include="PlayerHP.cpp" />
     <ClCompile Include="PortalBase.cpp" />
     <ClCompile Include="PreCompile.cpp">
       <SubType>

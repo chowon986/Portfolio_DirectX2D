@@ -147,7 +147,7 @@ void InGameCuphead::Start()
 		{
 			if (State = dynamic_cast<CharacterState*>(Actor))
 			{
-				if (WeaponItemBase* ShotAItem = dynamic_cast<WeaponItemBase*>(State->EquippedItems[InventoryType::ShotA]))
+				if (WeaponItemBase* ShotAItem = dynamic_cast<WeaponItemBase*>(State->EquippedItems[InventoryType::ShotA].get()))
 				{
 					EquippedWeapon = ShotAItem->Weapon;
 					EquippedWeapon->SetParent(this);
@@ -203,7 +203,7 @@ void InGameCuphead::Update(float _DeltaTime)
 	{
 		ToggleWeapon = !ToggleWeapon;
 		
-		WeaponItemBase* Item = ToggleWeapon ? dynamic_cast<WeaponItemBase*>(State->EquippedItems[InventoryType::ShotB]) :dynamic_cast<WeaponItemBase*>(State->EquippedItems[InventoryType::ShotA]);
+		WeaponItemBase* Item = ToggleWeapon ? dynamic_cast<WeaponItemBase*>(State->EquippedItems[InventoryType::ShotB].get()) :dynamic_cast<WeaponItemBase*>(State->EquippedItems[InventoryType::ShotA].get());
 		if (nullptr != Item)
 		{
 			if (nullptr != EquippedWeapon)

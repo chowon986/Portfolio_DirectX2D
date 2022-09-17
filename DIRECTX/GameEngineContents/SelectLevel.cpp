@@ -45,23 +45,23 @@ void SelectLevel::Start()
 	GetMainCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
 	State = CreateActor<CharacterState>(GameObjectGroup::CharacterState);
 	State->SetLevelOverOn();
-	PeaShooterItem* PeaShot = new PeaShooterItem;
+	std::shared_ptr<PeaShooterItem> PeaShot = std::make_shared<PeaShooterItem>();
 	State->EquippedItems[InventoryType::ShotA] = PeaShot;
 	State->Items[ItemType::Shoot].push_back(PeaShot);
-	if (WeaponItemBase* Item = dynamic_cast<WeaponItemBase*>(State->EquippedItems[InventoryType::ShotA]))
+	if (WeaponItemBase* Item = dynamic_cast<WeaponItemBase*>(State->EquippedItems[InventoryType::ShotA].get()))
 	{
 		Item->Weapon = CreateActor<PeaShooter>();
 		Item->Weapon->SetLevelOverOn();
 	}
 
-	SuperBeamItem* SuperBeamItemIcon = new SuperBeamItem();
-	SuperGhostItem* SuperGhostItemIcon = new SuperGhostItem();
-	SuperInvincibleItem* SuperInvincibleItemIcon = new SuperInvincibleItem();
+	std::shared_ptr<SuperBeamItem> SuperBeamItemIcon = std::make_shared<SuperBeamItem>();
+	std::shared_ptr<SuperGhostItem> SuperGhostItemIcon = std::make_shared<SuperGhostItem>();
+	std::shared_ptr<SuperInvincibleItem> SuperInvincibleItemIcon = std::make_shared<SuperInvincibleItem>();
 	State->Items[ItemType::Super].push_back(SuperBeamItemIcon);
 	State->Items[ItemType::Super].push_back(SuperInvincibleItemIcon);
 	State->Items[ItemType::Super].push_back(SuperGhostItemIcon);
 
-	AstalCookieItem* AstalCookieItemIcon = new AstalCookieItem();
+	std::shared_ptr<AstalCookieItem> AstalCookieItemIcon = std::make_shared<AstalCookieItem>();
 	State->Items[ItemType::Charm].push_back(AstalCookieItemIcon);
 
 	if (false == GameEngineInput::GetInst()->IsKey("MoveDown"))

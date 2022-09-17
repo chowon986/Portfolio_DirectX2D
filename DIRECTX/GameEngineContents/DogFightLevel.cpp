@@ -12,6 +12,7 @@
 #include "WorldMapCuphead.h"
 #include "CharacterState.h"
 #include <GameEngineCore/GameEngineBlur.h>
+#include "PlayerHP.h"
 
 DogFightLevel::DogFightLevel()
 	: ColMapRenderer(nullptr)
@@ -560,6 +561,9 @@ void DogFightLevel::Update(float _DeltaTime)
 			Player = Cuphead;
 		}
 
+		//PlayerHP* HPUI = CreateActor<PlayerHP>(GameObjectGroup::Monster);
+		//HPUI->SetPlayer(Cuphead);
+		
 		//PushToBackgroundCamera(CaptainCanteenPlane);
 		//PushToBackgroundCamera(PH1BulldogPlane);
 

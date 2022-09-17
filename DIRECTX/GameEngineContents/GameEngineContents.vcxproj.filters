@@ -606,6 +606,12 @@
     <ClInclude Include="SaltBakerHeartPhysicsComponent.h">
       <Filter>Components\Monster</Filter>
     </ClInclude>
+    <ClInclude Include="PlayerHP.h">
+      <Filter>Global</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerCard.h">
+      <Filter>Global</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp">
@@ -1066,6 +1072,12 @@
     </ClCompile>
     <ClCompile Include="SaltBakerHeartPhysicsComponent.cpp">
       <Filter>Components\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerHP.cpp">
+      <Filter>Global</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerCard.cpp">
+      <Filter>Global</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

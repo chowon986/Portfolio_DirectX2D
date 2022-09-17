@@ -18,7 +18,7 @@ public:
 
 	void OnLevelChanged();
 
-	void SetEquippedItem(InventoryType _Item, ItemBase* _ItemBase);
+	void SetEquippedItem(InventoryType _Item, std::shared_ptr<ItemBase> _ItemBase);
 
 protected:
 	void Start() override;
@@ -31,7 +31,7 @@ public:
 	int Coin;
 	float ShootSpeed;
 	bool OnDashInvisible;
-	std::map<InventoryType, ItemBase*> EquippedItems;
-	std::map<ItemType, std::vector<ItemBase*>> Items;
+	std::map<InventoryType, std::shared_ptr<ItemBase>> EquippedItems;
+	std::map<ItemType, std::vector<std::shared_ptr<ItemBase>>> Items;
 };
 

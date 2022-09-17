@@ -307,10 +307,10 @@ void ItemInventory::Update(float _DeltaTime)
 			{
 				if (CharacterState* _State = dynamic_cast<CharacterState*>(Actor))
 				{
-					ItemBase* EquippedItemShotA = _State->EquippedItems[InventoryType::ShotA];
-					ItemBase* EquippedItemShotB = _State->EquippedItems[InventoryType::ShotB];
-					ItemBase* EquippedItemSuper = _State->EquippedItems[InventoryType::Super];
-					ItemBase* EquippedItemCharm = _State->EquippedItems[InventoryType::Charm];
+					std::shared_ptr<ItemBase> EquippedItemShotA = _State->EquippedItems[InventoryType::ShotA];
+					std::shared_ptr<ItemBase> EquippedItemShotB = _State->EquippedItems[InventoryType::ShotB];
+					std::shared_ptr<ItemBase> EquippedItemSuper = _State->EquippedItems[InventoryType::Super];
+					std::shared_ptr<ItemBase> EquippedItemCharm = _State->EquippedItems[InventoryType::Charm];
 
 					if (nullptr != EquippedItemShotA)
 					{
@@ -443,10 +443,10 @@ void ItemInventory::Update(float _DeltaTime)
 		{
 			if (CharacterState* _State = dynamic_cast<CharacterState*>(Actor))
 			{
-				std::vector<ItemBase*> ShotAItems = _State->Items[ItemType::Shoot];
+				std::vector<std::shared_ptr<ItemBase>> ShotAItems = _State->Items[ItemType::Shoot];
 
 				int i = 0;
-				for (ItemBase* Item : ShotAItems)
+				for (std::shared_ptr<ItemBase> Item : ShotAItems)
 				{
 					if (BslotSelectedNum != i)
 					{
@@ -656,10 +656,10 @@ void ItemInventory::Update(float _DeltaTime)
 			{
 				if (CharacterState* _State = dynamic_cast<CharacterState*>(Actor))
 				{
-					std::vector<ItemBase*> ShotAItems = _State->Items[ItemType::Shoot];
+					std::vector<std::shared_ptr<ItemBase>> ShotAItems = _State->Items[ItemType::Shoot];
 
 					int i = 0;
-					for (ItemBase* Item : ShotAItems)
+					for (std::shared_ptr<ItemBase> Item : ShotAItems)
 					{
 						if (i < ShotAItems.size())
 						{
@@ -896,10 +896,10 @@ void ItemInventory::Update(float _DeltaTime)
 			{
 				if (CharacterState* _State = dynamic_cast<CharacterState*>(Actor))
 				{
-					std::vector<ItemBase*> SuperItems = _State->Items[ItemType::Super];
+					std::vector<std::shared_ptr<ItemBase>> SuperItems = _State->Items[ItemType::Super];
 
 					int i = 0;
-					for (ItemBase* Item : SuperItems)
+					for (std::shared_ptr<ItemBase> Item : SuperItems)
 					{
 						if (i < SuperItems.size())
 						{
@@ -1001,10 +1001,10 @@ void ItemInventory::Update(float _DeltaTime)
 		{
 			if (CharacterState* _State = dynamic_cast<CharacterState*>(Actor))
 			{
-				std::vector<ItemBase*> CharmItems = _State->Items[ItemType::Charm];
+				std::vector<std::shared_ptr<ItemBase>> CharmItems = _State->Items[ItemType::Charm];
 
 				int i = 0;
-				for (ItemBase* Item : CharmItems)
+				for (std::shared_ptr<ItemBase> Item : CharmItems)
 				{
 					CharmIconRenderers[i]->ChangeFrameAnimation(Item->ItemName + "Equip");
 					ItemName[i] = Item;

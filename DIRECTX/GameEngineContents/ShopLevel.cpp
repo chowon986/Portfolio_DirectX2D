@@ -37,14 +37,6 @@ ShopLevel::ShopLevel()
 
 ShopLevel::~ShopLevel()
 {
-	for (ItemBase* Item : ItemNames)
-	{
-		if (Item != nullptr)
-		{
-			delete Item;
-			Item = nullptr;
-		}
-	}
 }
 
 void ShopLevel::Start()
@@ -109,12 +101,12 @@ void ShopLevel::Start()
 
 
 	{
-		TwinHeartItem* TwinHeartIcon = new TwinHeartItem();
-		CursedRelicItem* CursedRelicIcon = new CursedRelicItem();
-		SmokeBombItem* SmokeBombIcon = new SmokeBombItem();
-		SpreadShooterItem* SpreadShooterIcon = new SpreadShooterItem();
-		BoomerangShooterItem* BoomerangShooterIcon = new BoomerangShooterItem();
-		ConvergeShooterItem* ConvergeShooterIcon = new ConvergeShooterItem();
+		std::shared_ptr<TwinHeartItem> TwinHeartIcon = std::make_shared<TwinHeartItem>();
+		std::shared_ptr<CursedRelicItem> CursedRelicIcon = std::make_shared<CursedRelicItem>();
+		std::shared_ptr<SmokeBombItem> SmokeBombIcon = std::make_shared<SmokeBombItem>();
+		std::shared_ptr<SpreadShooterItem> SpreadShooterIcon = std::make_shared<SpreadShooterItem>();
+		std::shared_ptr<BoomerangShooterItem> BoomerangShooterIcon = std::make_shared<BoomerangShooterItem>();
+		std::shared_ptr<ConvergeShooterItem> ConvergeShooterIcon = std::make_shared<ConvergeShooterItem>();
 		ItemNames.push_back(SpreadShooterIcon);
 		ItemNames.push_back(TwinHeartIcon);
 		ItemNames.push_back(BoomerangShooterIcon);
@@ -135,7 +127,7 @@ void ShopLevel::Start()
 		ConvergeShooterIcon->Weapon->SetLevelOverOn();
 	}
 
-	for (ItemBase* Item : ItemNames)
+	for (std::shared_ptr<ItemBase> Item : ItemNames)
 	{
 		GameEngineActor* ItemIcon = CreateActor<GameEngineActor>(GameObjectGroup::UI);
 		GameEngineTextureRenderer* ItemIconRenderer = ItemIcon->CreateComponent<GameEngineTextureRenderer>();
@@ -258,7 +250,7 @@ void ShopLevel::BuyItemEnd(const FrameAnimation_DESC& _Info)
 		if (CharacterState* State = dynamic_cast<CharacterState*>(Actor))
 		{
 			ItemType Type = ItemNames[SelectItemNum]->Type;
-			ItemBase* Item = ItemNames[SelectItemNum];
+			std::shared_ptr<ItemBase> Item = ItemNames[SelectItemNum];
 			State->Items[Type].push_back(Item);
 		}
 	}

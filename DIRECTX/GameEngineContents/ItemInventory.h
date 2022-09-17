@@ -44,7 +44,7 @@ public:
 	std::string EquippedShotBName;
 	std::string EquippedSuperName;
 	std::string EquippedCharmName;
-	std::vector<ItemBase*> ItemName;
+	std::vector<std::shared_ptr<ItemBase>> ItemName;
 	std::vector<float4> SelectorPosFront;
 	std::vector<float4> SelectorPosBack;
 	std::vector<float4> SelectorPos3Slot;
