@@ -10,6 +10,7 @@
 #include "ChargerShooter.h"
 #include "CharacterState.h"
 #include "WeaponItemBase.h"
+#include "CharmItemBase.h"
 
 InGameCuphead::InGameCuphead()
 	: IsInputEnabled(false)
@@ -114,7 +115,7 @@ void InGameCuphead::Start()
 	Renderer->AnimationBindFrame("IngameCupheadDuckShoot", std::bind(&InGameCuphead::OnShootAnimationFrameChanged, this, std::placeholders::_1));
 	Renderer->AnimationBindFrame("IngameCupheadJump", std::bind(&InGameCuphead::OnJumpAnimationFrameChanged, this, std::placeholders::_1));
 
-	SetHP(5);
+	SetHP(3);
 
 	{
 		// Collision
@@ -134,6 +135,8 @@ void InGameCuphead::Start()
 	Animation = CreateComponent<InGameCharacterAnimationControllerComponent>();
 	Animation->SetCharacterName("Cuphead");
 
+	SetHP(3);
+
 	{
 		std::list<GameEngineActor*> Actors = GetLevel()->GetGroup(GameObjectGroup::CharacterState);
 		EquippedWeapon = nullptr;
@@ -148,7 +151,6 @@ void InGameCuphead::Start()
 					EquippedWeapon->SetIsEquipped(true);
 				}
 			}
-
 		}
 
 		if (EquippedWeapon == nullptr)

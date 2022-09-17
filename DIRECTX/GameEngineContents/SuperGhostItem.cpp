@@ -3,7 +3,6 @@
 
 SuperGhostItem::SuperGhostItem()
 {
-	WeaponItemBase();
 	ItemName = "SuperGhost";
 	Type = ItemType::Super;
 }

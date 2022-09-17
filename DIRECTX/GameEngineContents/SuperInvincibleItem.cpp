@@ -3,7 +3,6 @@
 
 SuperInvincibleItem::SuperInvincibleItem()
 {
-	WeaponItemBase();
 	ItemName = "SuperInvincible";
 	Type = ItemType::Super;
 }

@@ -3,9 +3,9 @@
 
 CursedRelicItem::CursedRelicItem()
 {
-	WeaponItemBase();
 	ItemName = "CursedRelic";
 	Type = ItemType::Charm;
+	MaxHP = 1;
 }
 
 CursedRelicItem::~CursedRelicItem()

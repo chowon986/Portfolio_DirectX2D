@@ -4,6 +4,7 @@
 AstalCookieItem::AstalCookieItem()
 {
 	ItemName = "AstalCookie";
+	MaxHP = 3;
 }
 
 AstalCookieItem::~AstalCookieItem()

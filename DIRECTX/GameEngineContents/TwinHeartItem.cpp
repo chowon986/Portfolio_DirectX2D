@@ -3,9 +3,9 @@
 
 TwinHeartItem::TwinHeartItem()
 {
-	WeaponItemBase();
 	ItemName = "TwinHeart";
 	Type = ItemType::Charm;
+	MaxHP = 4;
 }
 
 TwinHeartItem::~TwinHeartItem()

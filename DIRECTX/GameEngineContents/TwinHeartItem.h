@@ -1,7 +1,7 @@
 #pragma once
-#include "WeaponItemBase.h"
+#include "CharmItemBase.h"
 
-class TwinHeartItem : public WeaponItemBase
+class TwinHeartItem : public CharmItemBase
 {
 public:
 	TwinHeartItem();

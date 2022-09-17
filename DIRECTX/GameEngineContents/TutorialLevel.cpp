@@ -45,6 +45,7 @@ void TutorialLevel::LevelStartEvent()
 	Cuphead = CreateActor<InGameCuphead>(GameObjectGroup::Player);
 	Cuphead->GetTransform().SetLocalPosition({ 640, -360, (int)ZOrder::Player });
 	Cuphead->SetColMapImage(ColMapRenderer);
+	Cuphead->SetHP(State->MaxHP);
 	PushToRotateCamera(Cuphead);
 }
 

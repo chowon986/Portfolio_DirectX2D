@@ -1,7 +1,7 @@
 #pragma once
-#include "WeaponItemBase.h"
+#include "CharmItemBase.h"
 
-class AstalCookieItem : public WeaponItemBase
+class AstalCookieItem : public CharmItemBase
 {
 public:
 	AstalCookieItem();

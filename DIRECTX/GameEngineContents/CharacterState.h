@@ -18,6 +18,8 @@ public:
 
 	void OnLevelChanged();
 
+	void SetEquippedItem(InventoryType _Item, ItemBase* _ItemBase);
+
 protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;

@@ -67,6 +67,7 @@ void CharacterState::OnLevelChanged()
 		if (CharmItemBase* ItemBase = dynamic_cast<CharmItemBase*>(item))
 		{
 			MaxHP = ItemBase->MaxHP;
+			Type = ItemBase->PlayerCharacterType;
 		}
 	}
 
@@ -91,6 +92,20 @@ void CharacterState::OnLevelChanged()
 		if (WeaponItemBase* ItemBase = dynamic_cast<WeaponItemBase*>(item))
 		{
 		}
+	}
+}
+
+void CharacterState::SetEquippedItem(InventoryType _Item, ItemBase* _ItemBase)
+{
+	EquippedItems[_Item] = _ItemBase;
+	switch (_Item) {
+	case InventoryType::Charm:
+		if (CharmItemBase* Item = dynamic_cast<CharmItemBase*>(_ItemBase))
+		{
+			MaxHP = Item->MaxHP;
+			Type = Item->PlayerCharacterType;
+		}
+		break;
 	}
 }
 

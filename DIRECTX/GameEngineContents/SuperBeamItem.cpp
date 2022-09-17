@@ -3,7 +3,6 @@
 
 SuperBeamItem::SuperBeamItem()
 {
-	WeaponItemBase();
 	ItemName = "SuperBeam";
 	Type = ItemType::Super;
 }

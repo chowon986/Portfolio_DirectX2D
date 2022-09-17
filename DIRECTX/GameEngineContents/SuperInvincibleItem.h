@@ -1,7 +1,7 @@
 #pragma once
-#include "WeaponItemBase.h"
+#include "ItemBase.h"
 
-class SuperInvincibleItem : public WeaponItemBase
+class SuperInvincibleItem : public ItemBase
 {
 public:
 	SuperInvincibleItem();

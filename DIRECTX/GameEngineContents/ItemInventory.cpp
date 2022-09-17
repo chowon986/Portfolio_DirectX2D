@@ -191,6 +191,7 @@ void ItemInventory::Start()
 	FrontRenderers[3]->CreateFrameAnimationFolder("UnKnown", FrameAnimation_DESC("UnKnown", 0.05f, true));
 	FrontRenderers[3]->CreateFrameAnimationFolder("AstalCookieEquip", FrameAnimation_DESC("AstalCookieEquip", 0.05f, true));
 	FrontRenderers[3]->CreateFrameAnimationFolder("CursedRelicEquip", FrameAnimation_DESC("CursedRelicEquip", 0.05f, true));
+	FrontRenderers[3]->CreateFrameAnimationFolder("TwinHeartEquip", FrameAnimation_DESC("TwinHeartEquip", 0.05f, true));
 	FrontRenderers[3]->CreateFrameAnimationFolder("SmokeBombEquip", FrameAnimation_DESC("SmokeBombEquip", 0.05f, true));
 	FrontRenderers[3]->SetScaleModeImage();
 	FrontRenderers[3]->ChangeCamera(CAMERAORDER::UICAMERA2);
@@ -1022,7 +1023,7 @@ void ItemInventory::Update(float _DeltaTime)
 					{
 						if (CharacterState* _State = dynamic_cast<CharacterState*>(Actor))
 						{
-							_State->EquippedItems[InventoryType::Charm] = ItemName[0];
+							_State->SetEquippedItem(InventoryType::Charm, ItemName[0]);
 							EIcon->GetTransform().SetLocalPosition(SelectorPosBack[0]);
 							EIcon->SetPivot(PIVOTMODE::LEFTBOT);
 							EIcon->On();
@@ -1036,7 +1037,7 @@ void ItemInventory::Update(float _DeltaTime)
 					{
 						if (CharacterState* _State = dynamic_cast<CharacterState*>(Actor))
 						{
-							_State->EquippedItems[InventoryType::Charm] = ItemName[1];
+							_State->SetEquippedItem(InventoryType::Charm, ItemName[1]);
 							EIcon->GetTransform().SetLocalPosition(SelectorPosBack[1]);
 							EIcon->SetPivot(PIVOTMODE::LEFTBOT);
 							EIcon->On();
@@ -1051,7 +1052,7 @@ void ItemInventory::Update(float _DeltaTime)
 					{
 						if (CharacterState* _State = dynamic_cast<CharacterState*>(Actor))
 						{
-							_State->EquippedItems[InventoryType::Charm] = ItemName[2];
+							_State->SetEquippedItem(InventoryType::Charm, ItemName[2]);
 							EIcon->GetTransform().SetLocalPosition(SelectorPosBack[2]);
 							EIcon->SetPivot(PIVOTMODE::LEFTBOT);
 							EIcon->On();
@@ -1066,7 +1067,7 @@ void ItemInventory::Update(float _DeltaTime)
 					{
 						if (CharacterState* _State = dynamic_cast<CharacterState*>(Actor))
 						{
-							_State->EquippedItems[InventoryType::Charm] = ItemName[3];
+							_State->SetEquippedItem(InventoryType::Charm, ItemName[3]);
 							EIcon->GetTransform().SetLocalPosition(SelectorPosBack[3]);
 							EIcon->SetPivot(PIVOTMODE::LEFTBOT);
 							EIcon->On();
@@ -1081,7 +1082,7 @@ void ItemInventory::Update(float _DeltaTime)
 					{
 						if (CharacterState* _State = dynamic_cast<CharacterState*>(Actor))
 						{
-							_State->EquippedItems[InventoryType::Charm] = ItemName[4];
+							_State->SetEquippedItem(InventoryType::Charm, ItemName[4]);
 							EIcon->GetTransform().SetLocalPosition(SelectorPosBack[4]);
 							EIcon->SetPivot(PIVOTMODE::LEFTBOT);
 							EIcon->On();
@@ -1096,7 +1097,7 @@ void ItemInventory::Update(float _DeltaTime)
 					{
 						if (CharacterState* _State = dynamic_cast<CharacterState*>(Actor))
 						{
-							_State->EquippedItems[InventoryType::Charm] = ItemName[5];
+							_State->SetEquippedItem(InventoryType::Charm, ItemName[5]);
 							EIcon->GetTransform().SetLocalPosition(SelectorPosBack[5]);
 							EIcon->SetPivot(PIVOTMODE::LEFTBOT);
 							EIcon->On();
@@ -1111,7 +1112,7 @@ void ItemInventory::Update(float _DeltaTime)
 					{
 						if (CharacterState* _State = dynamic_cast<CharacterState*>(Actor))
 						{
-							_State->EquippedItems[InventoryType::Charm] = ItemName[6];
+							_State->SetEquippedItem(InventoryType::Charm, ItemName[6]);
 							EIcon->GetTransform().SetLocalPosition(SelectorPosBack[6]);
 							EIcon->SetPivot(PIVOTMODE::LEFTBOT);
 							EIcon->On();
@@ -1126,7 +1127,7 @@ void ItemInventory::Update(float _DeltaTime)
 					{
 						if (CharacterState* _State = dynamic_cast<CharacterState*>(Actor))
 						{
-							_State->EquippedItems[InventoryType::Charm] = ItemName[7];
+							_State->SetEquippedItem(InventoryType::Charm, ItemName[7]);
 							EIcon->GetTransform().SetLocalPosition(SelectorPosBack[7]);
 							EIcon->SetPivot(PIVOTMODE::LEFTBOT);
 							EIcon->On();
@@ -1141,7 +1142,7 @@ void ItemInventory::Update(float _DeltaTime)
 					{
 						if (CharacterState* _State = dynamic_cast<CharacterState*>(Actor))
 						{
-							_State->EquippedItems[InventoryType::Charm] = ItemName[8];
+							_State->SetEquippedItem(InventoryType::Charm, ItemName[8]);
 							EIcon->GetTransform().SetLocalPosition(SelectorPosBack[8]);
 							EIcon->SetPivot(PIVOTMODE::LEFTBOT);
 							EIcon->On();

@@ -2,10 +2,10 @@
 #include "SmokeBombItem.h"
 
 SmokeBombItem::SmokeBombItem()
-	:WeaponItemBase()
 {
 	ItemName = "SmokeBomb";
 	Type = ItemType::Charm;
+	MaxHP = 3;
 }
 
 SmokeBombItem::~SmokeBombItem()

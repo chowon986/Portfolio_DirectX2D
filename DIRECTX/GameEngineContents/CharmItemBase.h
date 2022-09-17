@@ -14,7 +14,7 @@ public:
 	CharmItemBase& operator=(CharmItemBase&& _Other) noexcept = delete;
 
 public:
-	CharacterType Type;
+	CharacterType PlayerCharacterType;
 	int MaxHP;
 	std::vector<WeaponBase*> Weapons;
 };
