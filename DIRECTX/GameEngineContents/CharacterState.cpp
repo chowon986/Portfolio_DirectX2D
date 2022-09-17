@@ -104,6 +104,7 @@ void CharacterState::SetEquippedItem(InventoryType _Item, ItemBase* _ItemBase)
 		{
 			MaxHP = Item->MaxHP;
 			Type = Item->PlayerCharacterType;
+			OnDashInvisible = Item->OnDashInvisible;
 		}
 		break;
 	}

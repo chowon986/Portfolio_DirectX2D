@@ -30,6 +30,7 @@ public:
 	int MaxHP;
 	int Coin;
 	float ShootSpeed;
+	bool OnDashInvisible;
 	std::map<InventoryType, ItemBase*> EquippedItems;
 	std::map<ItemType, std::vector<ItemBase*>> Items;
 };

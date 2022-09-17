@@ -43,6 +43,7 @@ protected:
 
 	void OnPrepareAnimationEnded(const FrameAnimation_DESC& _Info);
 	void OnDashAnimationEnded(const FrameAnimation_DESC& _Info);
+	void OnDashAnimationFrameChanged(const FrameAnimation_DESC& _Info);
 	void OnTakeDamageAnimationEnded(const FrameAnimation_DESC& _Info);
 	void OnGhostAnimationEnded(const FrameAnimation_DESC& _Info);
 	void OnShootAnimationFrameChanged(const FrameAnimation_DESC& _Info);
@@ -65,6 +66,9 @@ protected:
 	void SetCharacterState(CharacterState* _State) { State = _State; }
 	CharacterState* GetCharacterState() { return State; }
 
+public:
+	void SetOnDashInvisible(bool _IsInvisible) { IsInvisible = _IsInvisible; }
+
 private:
 	GameEngineTextureRenderer* Renderer;
 	bool IsInputEnabled;
@@ -77,6 +81,9 @@ private:
 	float CanTakeDamageIntervalTime;
 	float CanTakeDamageElapsedTime;
 	bool ToggleWeapon;
+	bool IsInvisible;
 	CharacterState* State;
 	WeaponBase* EquippedWeapon;
+	float InvisibleElapsedTime;
+	bool CountInvisibleTime;
 };

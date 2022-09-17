@@ -16,6 +16,7 @@ public:
 public:
 	CharacterType PlayerCharacterType;
 	int MaxHP;
+	bool OnDashInvisible;
 	std::vector<WeaponBase*> Weapons;
 };
 

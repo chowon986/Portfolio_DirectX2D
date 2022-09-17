@@ -134,8 +134,8 @@ void WorldMapLevel::Start()
 		UnderWaterLandRenderer = UnderWaterLand->CreateComponent<GameEngineTextureRenderer>();
 		UnderWaterLandRenderer->SetTexture("dlc_underwater_land.png");
 		UnderWaterLandRenderer->ScaleToTexture();
-		UnderWaterLandRenderer->SetPivot(PIVOTMODE::LEFTTOP);
 		UnderWaterLandRenderer->GetTransform().SetLocalPosition({ 1853, -1318, (int)ZOrder::Background - 1 });
+		//UnderWaterLandRenderer->SetPivot(PIVOTMODE::LEFTTOP);
 	}
 
 	{

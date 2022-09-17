@@ -46,6 +46,7 @@ void TutorialLevel::LevelStartEvent()
 	Cuphead->GetTransform().SetLocalPosition({ 640, -360, (int)ZOrder::Player });
 	Cuphead->SetColMapImage(ColMapRenderer);
 	Cuphead->SetHP(State->MaxHP);
+	Cuphead->SetOnDashInvisible(State->OnDashInvisible);
 	PushToRotateCamera(Cuphead);
 }
 

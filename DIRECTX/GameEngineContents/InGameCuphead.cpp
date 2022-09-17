@@ -24,6 +24,8 @@ InGameCuphead::InGameCuphead()
 	, CanTakeDamageElapsedTime(0.0f)
 	, CanTakeDamageIntervalTime(1.0f)
 	, ToggleWeapon(false)
+	, IsInvisible(false)
+	, CountInvisibleTime(false)
 {
 }
 
@@ -56,6 +58,7 @@ void InGameCuphead::Start()
 	// Dash
 	Renderer->CreateFrameAnimationCutTexture("IngameCupheadDash", FrameAnimation_DESC("Cup_Dash.png", 0, 7, 0.06f, true));
 	Renderer->AnimationBindEnd("IngameCupheadDash", std::bind(&InGameCuphead::OnDashAnimationEnded, this, std::placeholders::_1));
+	Renderer->AnimationBindFrame("IngameCupheadDash", std::bind(&InGameCuphead::OnDashAnimationFrameChanged, this, std::placeholders::_1));
 
 	// Intro
 	Renderer->CreateFrameAnimationCutTexture("IngameCupheadIntro", FrameAnimation_DESC("Cup.png", 220, 247, 0.1f, true));
@@ -168,6 +171,32 @@ void InGameCuphead::Update(float _DeltaTime)
 	OnCollisionDebug();
 	CheckCollision();
 
+	if (true == CountInvisibleTime)
+	{
+		InvisibleElapsedTime += _DeltaTime;
+	}
+
+	if (false == Renderer->IsUpdate())
+	{
+		if (InvisibleElapsedTime > 0.3)
+		{
+			if (false == Renderer->IsUpdate())
+			{
+				Renderer->On();
+				MainCollision->On();
+			}
+
+			IsInputEnabled = true;
+			if (GetIsOnGround() == false)
+			{
+				Renderer->ChangeFrameAnimation("InGameCupheadJump");
+			}
+			GetPhysicsComponent()->On();
+			InvisibleElapsedTime = 0.0f;
+			CountInvisibleTime = false;
+		}
+	}
+
 	CanTakeDamageElapsedTime += _DeltaTime;
 
 	if (true == GameEngineInput::GetInst()->IsDown("ChangeGun"))
@@ -267,9 +296,22 @@ void InGameCuphead::OnDashAnimationEnded(const FrameAnimation_DESC& _Info)
 	IsInputEnabled = true;
 	if (GetIsOnGround() == false)
 	{
-	Renderer->ChangeFrameAnimation("InGameCupheadJump");
+		Renderer->ChangeFrameAnimation("InGameCupheadJump");
 	}
 	GetPhysicsComponent()->On();
+}
+
+void InGameCuphead::OnDashAnimationFrameChanged(const FrameAnimation_DESC& _Info)
+{
+	if (_Info.CurFrame == 2)
+	{
+		if (true == IsInvisible)
+		{
+			Renderer->Off();
+			MainCollision->Off();
+			CountInvisibleTime = true;
+		}
+	}
 }
 
 void InGameCuphead::OnTakeDamageAnimationEnded(const FrameAnimation_DESC& _Info)
