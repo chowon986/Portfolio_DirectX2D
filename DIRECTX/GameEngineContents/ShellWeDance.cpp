@@ -18,8 +18,8 @@ ShellWeDance::~ShellWeDance()
 void ShellWeDance::Start()
 {
 	Renderer = CreateComponent<GameEngineTextureRenderer>();
-	Renderer->CreateFrameAnimationFolder("ShellWeDanceIntro", FrameAnimation_DESC("BulldogIdle", 0.1f));
-	Renderer->CreateFrameAnimationFolder("ShellWeDanceAttack1", FrameAnimation_DESC("BulldogIdle", 0.1f));
+	Renderer->CreateFrameAnimationFolder("ShellWeDanceIntro", FrameAnimation_DESC("ShellWeDance", 0.1f));
+	Renderer->CreateFrameAnimationFolder("ShellWeDanceAttack1", FrameAnimation_DESC("ShellWeDance", 0.1f));
 	Renderer->AnimationBindFrame("ShellWeDanceAttack1", std::bind(&ShellWeDance::Test, this, std::placeholders::_1));
 	Renderer->SetScaleModeImage();
 	Renderer->ChangeFrameAnimation("ShellWeDanceAttack1");
@@ -54,11 +54,11 @@ void ShellWeDance::Update(float _DeltaTime)
 		Physics->IsOnGround = false;
 	}
 
-	if (true == ColMapTexture->GetPixelToFloat4(GetTransform().GetWorldPosition().x - 100, -GetTransform().GetWorldPosition().y).CompareInt4D(float4::BLACK))
+	if (true == ColMapTexture->GetPixelToFloat4(static_cast<int>(GetTransform().GetWorldPosition().x - 100.0f), static_cast<int>(-GetTransform().GetWorldPosition().y)).CompareInt4D(float4::BLACK))
 	{
 		MoveDirection = float4::RIGHT;
 	}
-	else if (true == ColMapTexture->GetPixelToFloat4(GetTransform().GetWorldPosition().x + 100, -GetTransform().GetWorldPosition().y).CompareInt4D(float4::BLACK))
+	else if (true == ColMapTexture->GetPixelToFloat4(static_cast<int>(GetTransform().GetWorldPosition().x + 100), static_cast<int>( - GetTransform().GetWorldPosition().y)).CompareInt4D(float4::BLACK))
 	{
 		MoveDirection = float4::LEFT;
 	}

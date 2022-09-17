@@ -370,6 +370,7 @@ void InGameCuphead::Aim()
 void InGameCuphead::TakeDamage()
 {
 	IsInputEnabled = false;
+	SetHP(GetHP() - 1);
 	SetState(InGameCharacterState::TakeDamage);
 }
 

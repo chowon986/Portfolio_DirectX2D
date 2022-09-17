@@ -26,7 +26,12 @@ public:
 	IInGameCharacterBase* GetPlayer() {return Player; }
 
 private:
+	void ChangeHPUI(int _HP);
+	void HP1AnimationFrameFinished(const FrameAnimation_DESC& _Info);
+
+private:
 	GameEngineTextureRenderer* Renderer;
 	IInGameCharacterBase* Player;
+	int HP;
 };
 

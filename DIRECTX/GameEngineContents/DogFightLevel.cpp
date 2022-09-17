@@ -76,13 +76,6 @@ void DogFightLevel::Start()
 	GetRotateCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
 	GetRotateCamera2()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
 
-	{
-		GameEngineActor* PlayerHP = CreateActor<GameEngineActor>();
-		HPCount = 3;
-		HPRenderer = PlayerHP->CreateComponent<GameEngineTextureRenderer>();
-	}
-
-
 	if (false == GameEngineInput::GetInst()->IsKey("PhaseChangeKey"))
 	{
 		GameEngineInput::GetInst()->CreateKey("PhaseChangeKey", 'L');
@@ -555,15 +548,20 @@ void DogFightLevel::Update(float _DeltaTime)
 			Cuphead->GetTransform().SetLocalPosition({ -120, 50, (int)ZOrder::Player });
 			Cuphead->SetColMapImage(ColMapRenderer);
 
+			Cuphead->SetHP(State->MaxHP);
+			Cuphead->SetOnDashInvisible(State->OnDashInvisible);
+
+			PlayerHP* HPUI = CreateActor<PlayerHP>(GameObjectGroup::Monster);
+			HPUI->SetPlayer(Cuphead);
+			HPUI->GetTransform().SetLocalPosition({ 75.0f,-675.0f });
+
 			CaptainCanteenPlane->SetPlayer(Cuphead);
 			CaptainCanteenPlane->SetColMapImage(ColMapRenderer);
 			PushToRotateCamera(CaptainCanteenPlane);
 			Player = Cuphead;
-		}
 
-		//PlayerHP* HPUI = CreateActor<PlayerHP>(GameObjectGroup::Monster);
-		//HPUI->SetPlayer(Cuphead);
-		
+
+		}		
 		//PushToBackgroundCamera(CaptainCanteenPlane);
 		//PushToBackgroundCamera(PH1BulldogPlane);
 

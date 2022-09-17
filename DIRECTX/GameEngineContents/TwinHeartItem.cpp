@@ -5,7 +5,7 @@ TwinHeartItem::TwinHeartItem()
 {
 	ItemName = "TwinHeart";
 	Type = ItemType::Charm;
-	MaxHP = 4;
+	MaxHP = 5;
 	OnDashInvisible = false;
 }
 

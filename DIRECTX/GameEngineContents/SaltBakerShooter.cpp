@@ -124,6 +124,7 @@ void SaltBakerShooter::Update(float _DeltaTime)
 					if (Character != nullptr)
 					{
 						Character->SetAttackState(InGameMonsterAttackState::None);
+						SugarAttackCount = 0;
 					}
 				}
 			}
