@@ -33,12 +33,12 @@ void SaltBakerShooter::UpdateDirection()
 
 	if (State == InGameMonsterState::Attack1)
 	{
-		Direction = float4::LEFT + float4::DOWN;
+		Direction = (float4::LEFT + float4::DOWN);
 	}
 
 	else if (State == InGameMonsterState::Attack4)
 	{
-		Direction = LimeBulletStartPosX == 50.0f ? float4::RIGHT : float4::LEFT;
+		Direction = float4::LEFT;
 	}
 
 	UpdatePivot();
@@ -97,7 +97,7 @@ void SaltBakerShooter::Update(float _DeltaTime)
 				}
 
 				Bullet->GetTransform().SetWorldPosition({ StartPositionX, 10.0f });
-				Bullet->SetDirection(GetDirection());
+				Bullet->SetDirection(float4::LEFT + float4::DOWN);
 			}
 			break;
 			case InGameMonsterAttackState::Attack2:
@@ -177,21 +177,20 @@ void SaltBakerShooter::Update(float _DeltaTime)
 				Bullet->GetRenderer()->ChangeFrameAnimation("Lime" + std::to_string(RandomLimeNum));
 				Bullet->SetColMapImage(GetColMapImage());
 
-				StartPosSwitch = !StartPosSwitch;
-				if (StartPosSwitch == true)
+				if (RandomLimeNum == 0 || RandomLimeNum == 1)
 				{
 					LimeBulletStartPosY = -450.0f;
-					LimeBulletStartPosX = 50.0f;
+					LimeBulletStartPosX = 1250.0f;
 					Bullet->SetStartPosName("LeftUp");
 				}
 				else
 				{
 					LimeBulletStartPosY = -600;
-					LimeBulletStartPosX = 50.0f;
+					LimeBulletStartPosX = 1250.0f;
 					Bullet->SetStartPosName("LeftDown");
 				}
 				Bullet->GetTransform().SetWorldPosition({ LimeBulletStartPosX, LimeBulletStartPosY });
-				Bullet->SetDirection(GetDirection());
+				Bullet->SetDirection(float4::LEFT);
 			}
 			break;
 			case InGameMonsterAttackState::Attack5:
@@ -294,10 +293,10 @@ void SaltBakerShooter::OnMonsterAttackStateChanged(InGameMonsterAttackState _Att
 		IntervalTime = 1.0f;
 		break;
 	case InGameMonsterAttackState::Attack4:
-		IntervalTime = 0.0f;
+		IntervalTime = 1.0f;
 		break;
 	case InGameMonsterAttackState::Attack5:
-		IntervalTime = 0.0f;
+		IntervalTime = 1.0f;
 		break;
 	}
 

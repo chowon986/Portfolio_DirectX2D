@@ -20,13 +20,15 @@ void SaltBaker::Start()
 {
 	Renderer = CreateComponent<GameEngineTextureRenderer>();
 	Renderer->CreateFrameAnimationFolder("SaltBakerAttack1", FrameAnimation_DESC("SaltBakerAttack1", 0.1f));
-	Renderer->CreateFrameAnimationFolder("SaltBakerAttack2", FrameAnimation_DESC("SaltBakerIntro", 0.1f));
+	Renderer->CreateFrameAnimationFolder("SaltBakerIntro", FrameAnimation_DESC("SaltBakerIntro", 0.1f));
 	Renderer->CreateFrameAnimationFolder("SaltBakerAttack3", FrameAnimation_DESC("SaltBakerAttack3", 0.1f));
+	Renderer->CreateFrameAnimationFolder("SaltBakerAttack4", FrameAnimation_DESC("SaltBakerAttack4", 0.1f));
 	Renderer->AnimationBindFrame("SaltBakerAttack1", std::bind(&SaltBaker::OnAttack1AnimationFrameChanged, this, std::placeholders::_1));
-	Renderer->AnimationBindFrame("SaltBakerAttack2", std::bind(&SaltBaker::OnIntroAnimationFrameChanged, this, std::placeholders::_1));
+	Renderer->AnimationBindFrame("SaltBakerIntro", std::bind(&SaltBaker::OnIntroAnimationFrameChanged, this, std::placeholders::_1));
 	Renderer->AnimationBindFrame("SaltBakerAttack3", std::bind(&SaltBaker::OnAttack3AnimationFrameChanged, this, std::placeholders::_1));
+	Renderer->AnimationBindFrame("SaltBakerAttack4", std::bind(&SaltBaker::OnAttack4AnimationFrameChanged, this, std::placeholders::_1));
 	Renderer->SetScaleModeImage();
-	Renderer->ChangeFrameAnimation("SaltBakerAttack2");
+	Renderer->ChangeFrameAnimation("SaltBakerIntro");
 
 	SetRenderer(Renderer);
 
@@ -73,7 +75,7 @@ void SaltBaker::OnIntroAnimationFrameChanged(const FrameAnimation_DESC& _Info)
 {
 	if (_Info.CurFrame == 42)
 	{
-		SetState(InGameMonsterState::Attack2);
+		SetState(InGameMonsterState::Prepare);
 		SetAttackState(InGameMonsterAttackState::Attack2);
 	}
 	else if (_Info.CurFrame == 62)
@@ -102,6 +104,14 @@ void SaltBaker::OnAttack1AnimationFrameChanged(const FrameAnimation_DESC& _Info)
 	}
 	else if (_Info.CurFrame == 44)
 	{
-		//SetState(InGameMonsterState::Attack1);
+		SetState(InGameMonsterState::Attack4);
+	}
+}
+
+void SaltBaker::OnAttack4AnimationFrameChanged(const FrameAnimation_DESC& _Info)
+{
+	if (_Info.CurFrame == 101)
+	{
+		SetAttackState(InGameMonsterAttackState::Attack4);
 	}
 }

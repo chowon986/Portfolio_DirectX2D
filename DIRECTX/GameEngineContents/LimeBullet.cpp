@@ -51,7 +51,7 @@ void LimeBullet::Update(float _DeltaTime)
 		return;
 	}
 
-	if (true == ColMapTexture->GetPixelToFloat4(GetTransform().GetWorldPosition().x, -GetTransform().GetWorldPosition().y).CompareInt4D(float4::BLACK))
+	if (true == ColMapTexture->GetPixelToFloat4(GetTransform().GetWorldPosition().x - 10, -GetTransform().GetWorldPosition().y).CompareInt4D(float4::BLACK))
 	{
 		SetDirection(float4::ZERO);
 		if (GetStartPosName() == "LeftUp")
@@ -64,7 +64,7 @@ void LimeBullet::Update(float _DeltaTime)
 
 			if (abs(CurPos.y - (-700)) <= 1)
 			{
-				SetDirection(float4::LEFT);
+				SetDirection(float4::RIGHT);
 			}
 			else
 			{
@@ -81,7 +81,7 @@ void LimeBullet::Update(float _DeltaTime)
 
 			if (abs(CurPos.y - (-350)) <= 1)
 			{
-				SetDirection(float4::LEFT);
+				SetDirection(float4::RIGHT);
 			}
 			else
 			{
