@@ -68,11 +68,11 @@ void PeaBullet::Test(const FrameAnimation_DESC& _Info)
 	int a = 0;
 }
 
-bool PeaBullet::AttackSuccess(GameEngineCollision* _This, GameEngineCollision* _Other)
+CollisionReturn PeaBullet::AttackSuccess(GameEngineCollision* _This, GameEngineCollision* _Other)
 {
 	MovementComponent->SetSpeed(0.0f);
 	Renderer->ChangeFrameAnimation("PeashotDeath");
-	return true;
+	return CollisionReturn::ContinueCheck;
 }
 
 void PeaBullet::PeashotLoop(const FrameAnimation_DESC& _DESC)

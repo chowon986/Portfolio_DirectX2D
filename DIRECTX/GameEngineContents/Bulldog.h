@@ -67,7 +67,7 @@ private:
 	void OnAttack2AnimationFrameChanged(const FrameAnimation_DESC& _Info);
 	void Test(const FrameAnimation_DESC& _Info);
 	
-	bool OnTakeDamage(GameEngineCollision* _This, GameEngineCollision* _Other);
+	CollisionReturn OnTakeDamage(GameEngineCollision* _This, GameEngineCollision* _Other);
 
 	void SetEndPos(float4 _EndPos) { EndPos = _EndPos; }
 	float4 GetEndPos() { return EndPos; }

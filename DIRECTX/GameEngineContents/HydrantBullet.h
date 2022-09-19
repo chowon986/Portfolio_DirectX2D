@@ -17,7 +17,7 @@ public:
 public:
 	GameEngineTextureRenderer* GetRenderer() { return Renderer; }
 	void SetRenderer(GameEngineTextureRenderer* _Renderer) { Renderer = _Renderer; }
-	bool Attack(GameEngineCollision* _This, GameEngineCollision* _Other);
+	CollisionReturn Attack(GameEngineCollision* _This, GameEngineCollision* _Other);
 	void OnDeathAnimationFrameFninished(const FrameAnimation_DESC& _Info);
 	void OnPuffAnimationFrameFninished(const FrameAnimation_DESC& _Info);
 

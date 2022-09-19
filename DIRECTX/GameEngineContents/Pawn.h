@@ -52,8 +52,8 @@ private:
 	float4 GetDirection() { return Direction; }
 	void CheckJumpDirection();
 
-	bool OnReturnCollision(GameEngineCollision* _This, GameEngineCollision* _Other);
-	bool OnPawnCollision(GameEngineCollision* _This, GameEngineCollision* _Other);
+	CollisionReturn OnReturnCollision(GameEngineCollision* _This, GameEngineCollision* _Other);
+	CollisionReturn OnPawnCollision(GameEngineCollision* _This, GameEngineCollision* _Other);
 
 	void PawnPrepareAnimationFrameFinished(const FrameAnimation_DESC& _Info);
 	void PawnPrepareToIntroAnimationFrameChanged(const FrameAnimation_DESC& _Info);

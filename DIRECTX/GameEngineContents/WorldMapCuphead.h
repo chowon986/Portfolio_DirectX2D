@@ -33,7 +33,7 @@ protected:
 	bool InventoryOnOffSwitch() { InventoryOn = !InventoryOn; return InventoryOn; }
 
 private:
-	bool CanPortalCollision(GameEngineCollision* _This, GameEngineCollision* _Other);
+	CollisionReturn CanPortalCollision(GameEngineCollision* _This, GameEngineCollision* _Other);
 
 private:
 	MovementComponent* Movement;

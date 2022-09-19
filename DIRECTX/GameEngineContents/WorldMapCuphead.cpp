@@ -7,8 +7,8 @@
 WorldMapCuphead::WorldMapCuphead()
 	: Movement(nullptr)
 	, Animation(nullptr)
-	, WalkCheckInterval(0.03)
-	, WalkCheckElapsedTime(0)
+	, WalkCheckInterval(0.03f)
+	, WalkCheckElapsedTime(0.0f)
 	, InventoryOn(false)
 {
 }
@@ -97,15 +97,11 @@ void WorldMapCuphead::Update(float _DeltaTime)
 
 	GetLevel()->GetMainCameraActorTransform().SetLocalPosition({ GetTransform().GetLocalPosition().x + 6.0f, GetTransform().GetLocalPosition().y - 32 });
 
-	if (false == Collision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::NPC, CollisionType::CT_AABB2D,
-		std::bind(&WorldMapCuphead::CanPortalCollision, this, std::placeholders::_1, std::placeholders::_2)))
-	{
-		EnterRenderer->Off();
-	}
-	else
-	{
-		EnterRenderer->On();
-	}
+	EnterRenderer->Off();
+
+	Collision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::NPC, CollisionType::CT_AABB2D,
+		std::bind(&WorldMapCuphead::CanPortalCollision, this, std::placeholders::_1, std::placeholders::_2));
+
 
 	if (true == GameEngineInput::GetInst()->IsPress("MoveLeft") ||
 		true == GameEngineInput::GetInst()->IsPress("MoveRight") ||
@@ -129,9 +125,11 @@ void WorldMapCuphead::Idle()
 	WalkCheckElapsedTime = 0;
 }
 
-bool WorldMapCuphead::CanPortalCollision(GameEngineCollision* _This, GameEngineCollision* _Other)
+CollisionReturn WorldMapCuphead::CanPortalCollision(GameEngineCollision* _This, GameEngineCollision* _Other)
 {
-	return true;
+	EnterRenderer->On();
+
+	return CollisionReturn::ContinueCheck;
 }
 
 void WorldMapCuphead::Walk()

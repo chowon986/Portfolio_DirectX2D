@@ -47,7 +47,7 @@ protected:
 	void RotateCameraOut();
 	void RotateCameraIdle();
 	void BeforeRoateCameraIn();
-	bool OnTakeDamage(GameEngineCollision* _This, GameEngineCollision* _Other);
+	CollisionReturn OnTakeDamage(GameEngineCollision* _This, GameEngineCollision* _Other);
 
 private:
 	GameEngineTextureRenderer* Renderer;

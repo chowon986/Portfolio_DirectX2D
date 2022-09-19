@@ -34,7 +34,7 @@ void OldFilm::Start()
 		GetLevel()->PushRendererToUICamera(PostEffectRenderer);
 		PostEffectRenderer->GetPipeLine()->SetOutputMergerBlend("OldFilm");
 		PostEffectRenderer->GetPixelData().MulColor = 1.2;
-		PostEffectRenderer->Option.ColorInversion = 1;
+		PostEffectRenderer->renderOption.ColorInversion = 1;
 		PostEffectRenderer->AnimationBindFrame("04RevScreenFX", std::bind(&OldFilm::Test, this, std::placeholders::_1));
 	}
 }

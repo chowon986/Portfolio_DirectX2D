@@ -24,6 +24,7 @@
       <Filter>TargetEffect</Filter>
     </FxCompile>
     <FxCompile Include="RenderOption.fx" />
+    <FxCompile Include="ITextureAtlas.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Debug">

@@ -6,6 +6,7 @@
 #include "GameEngineLevel.h"
 #include "GameEngineVertexs.h"
 #include "GameEngineConstantBuffer.h"
+#include "GameEngineStructuredBuffer.h"
 #include <math.h>
 
 
@@ -37,9 +38,14 @@ void EngineInputLayOut()
 	// float4 Postion5
 	// float4 Postion6
 
-	GameEngineVertex::LayOut.AddInputLayOut("POSITION", DXGI_FORMAT::DXGI_FORMAT_R32G32B32A32_FLOAT); // 16
-	GameEngineVertex::LayOut.AddInputLayOut("TEXCOORD", DXGI_FORMAT::DXGI_FORMAT_R32G32B32A32_FLOAT); // 32
-	GameEngineVertex::LayOut.AddInputLayOut("COLOR", DXGI_FORMAT::DXGI_FORMAT_R32G32B32A32_FLOAT); // 48
+	// 하나가 끝났습니다.
+	GameEngineVertex::LayOut.AddInputLayOut("POSITION", DXGI_FORMAT::DXGI_FORMAT_R32G32B32A32_FLOAT, 0); // 16
+	GameEngineVertex::LayOut.AddInputLayOut("TEXCOORD", DXGI_FORMAT::DXGI_FORMAT_R32G32B32A32_FLOAT, 0); // 32
+	GameEngineVertex::LayOut.AddInputLayOut("COLOR", DXGI_FORMAT::DXGI_FORMAT_R32G32B32A32_FLOAT, 0); // 48
+	GameEngineVertex::LayOut.OffsetReset();
+
+	// 인스턴싱 데이터용을 넣어줍니다.
+	GameEngineVertex::LayOut.AddInputLayOut("ROWINDEX", DXGI_FORMAT::DXGI_FORMAT_R32_UINT, 1, D3D11_INPUT_PER_INSTANCE_DATA, 1); // 48
 }
 
 void EngineSubSetting()
@@ -71,7 +77,6 @@ void EngineSubSetting()
 		Desc.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_ONE;
 		Desc.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_ONE;
 
-
 		GameEngineBlend::Create("AlphaBlend", Desc);
 	}
 
@@ -91,14 +96,6 @@ void EngineSubSetting()
 		Desc.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP::D3D11_BLEND_OP_ADD;
 		Desc.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND::D3D11_BLEND_ONE;
 		Desc.RenderTarget[0].DestBlendAlpha = D3D11_BLEND::D3D11_BLEND_ONE;
-		//blendStateDescription.RenderTarget[0].SrcBlend = D3D11_BLEND_ONE;
-		//blendStateDescription.RenderTarget[0].DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
-		//blendStateDescription.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;
-		//blendStateDescription.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_ONE;
-		//blendStateDescription.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_ZERO;
-		//blendStateDescription.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
-		//blendStateDescription.RenderTarget[0].RenderTargetWriteMask = 0x0f;
-
 
 		GameEngineBlend::Create("TransparentBlend", Desc);
 	}
@@ -128,7 +125,7 @@ void EngineSubSetting()
 
 		Desc.DepthEnable = true;
 		Desc.DepthFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_ALWAYS;
-		Desc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK::D3D11_DEPTH_WRITE_MASK_ALL;
+		Desc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK::D3D11_DEPTH_WRITE_MASK_ZERO;
 		Desc.StencilEnable = false;
 		GameEngineDepthStencil::Create("AlwaysDepth", Desc);
 	}
@@ -215,7 +212,14 @@ void EngineRenderingPipeLine()
 		GameEngineRenderingPipeLine* NewPipe = GameEngineRenderingPipeLine::Create("TextureAtlas");
 		NewPipe->SetVertexShader("TextureAtlas.hlsl");
 		NewPipe->SetPixelShader("TextureAtlas.hlsl");
+		// NewPipe->InstancingSetting();
 	}
+
+	//{
+	//	GameEngineRenderingPipeLine* NewPipe = GameEngineRenderingPipeLine::Create("TextureAtlas_Inst");
+	//	NewPipe->SetVertexShader("TextureAtlas_Inst.hlsl");
+	//	NewPipe->SetPixelShader("TextureAtlas_Inst.hlsl");
+	//}
 
 	{
 		GameEngineRenderingPipeLine* NewPipe = GameEngineRenderingPipeLine::Create("3DDebug");
@@ -415,6 +419,7 @@ void GameEngineCore::EngineResourcesDestroy()
 	GameEngineRasterizer::ResourcesDestroy();
 	GameEngineBlend::ResourcesDestroy();
 	GameEngineConstantBuffer::ResourcesDestroy();
+	GameEngineStructuredBuffer::ResourcesDestroy();
 	GameEngineSound::ResourcesDestroy();
 	GameEngineFont::ResourcesDestroy();
 

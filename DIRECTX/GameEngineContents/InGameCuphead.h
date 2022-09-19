@@ -57,8 +57,8 @@ protected:
 	void OpenScoreBoard();
 	
 	bool GetIsOpenScoreBoard();
-	bool OnTakeDamage(GameEngineCollision* _This, GameEngineCollision* _Other);
-	bool OnParry(GameEngineCollision* _This, GameEngineCollision* _Other);
+	CollisionReturn OnTakeDamage(GameEngineCollision* _This, GameEngineCollision* _Other);
+	CollisionReturn OnParry(GameEngineCollision* _This, GameEngineCollision* _Other);
 
 	void OnParryAnimationFrameEnd(const FrameAnimation_DESC& _Info);
 	void OnParryAnimationFrameStarted(const FrameAnimation_DESC& _Info);

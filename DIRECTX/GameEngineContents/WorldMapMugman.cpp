@@ -6,8 +6,8 @@
 WorldMapMugman::WorldMapMugman()
 	: Movement(nullptr)
 	, Animation(nullptr)
-	, WalkCheckInterval(0.1)
-	, WalkCheckElapsedTime(0)
+	, WalkCheckInterval(0.1f)
+	, WalkCheckElapsedTime(0.0f)
 {
 
 }
@@ -76,15 +76,10 @@ void WorldMapMugman::Update(float _DeltaTime)
 {
 	GetLevel()->GetMainCameraActorTransform().SetLocalPosition({ GetTransform().GetLocalPosition().x + 6.0f, GetTransform().GetLocalPosition().y - 32 });
 
-	if (false == Collision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::NPC, CollisionType::CT_AABB2D,
-		std::bind(&WorldMapMugman::CanPortalCollision, this, std::placeholders::_1, std::placeholders::_2)))
-	{
-		EnterRenderer->Off();
-	}
-	else
-	{
-		EnterRenderer->On();
-	}
+	EnterRenderer->Off();
+
+	Collision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::NPC, CollisionType::CT_AABB2D,
+		std::bind(&WorldMapMugman::CanPortalCollision, this, std::placeholders::_1, std::placeholders::_2));
 
 	if (true == GameEngineInput::GetInst()->IsPress("MoveLeft") ||
 		true == GameEngineInput::GetInst()->IsPress("MoveRight") ||
@@ -105,10 +100,11 @@ void WorldMapMugman::Idle()
 	WalkCheckElapsedTime = 0;
 }
 
-bool WorldMapMugman::CanPortalCollision(GameEngineCollision* _This, GameEngineCollision* _Other)
+CollisionReturn WorldMapMugman::CanPortalCollision(GameEngineCollision* _This, GameEngineCollision* _Other)
 {
+	EnterRenderer->On();
 
-	return true;
+	return CollisionReturn::ContinueCheck;
 }
 
 

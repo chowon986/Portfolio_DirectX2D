@@ -26,8 +26,8 @@ protected:
 
 private:
 	void ColMapOnOffSwitch();
-	bool OnIndexCollision(GameEngineCollision* _This, GameEngineCollision* _Other);
-	bool IndexCollisionOn(GameEngineCollision* _This, GameEngineCollision* _Other);
+	CollisionReturn OnIndexCollision(GameEngineCollision* _This, GameEngineCollision* _Other);
+	CollisionReturn IndexCollisionOn(GameEngineCollision* _This, GameEngineCollision* _Other);
 
 private:
 	GameEngineTextureRenderer* BackgroundRenderer;

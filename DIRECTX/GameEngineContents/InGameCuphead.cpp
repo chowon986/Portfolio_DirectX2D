@@ -527,20 +527,20 @@ bool InGameCuphead::GetIsOpenScoreBoard()
 	return IsOpenScoreBoard;
 }
 
-bool InGameCuphead::OnTakeDamage(GameEngineCollision* _This, GameEngineCollision* _Other)
+CollisionReturn InGameCuphead::OnTakeDamage(GameEngineCollision* _This, GameEngineCollision* _Other)
 {
 	if (CanTakeDamageIntervalTime < CanTakeDamageElapsedTime)
 	{
 		CanTakeDamageElapsedTime = 0.0f;
 		TakeDamage();
 	}
-	return false;
+	return CollisionReturn::ContinueCheck;
 }
 
-bool InGameCuphead::OnParry(GameEngineCollision* _This, GameEngineCollision* _Other)
+CollisionReturn InGameCuphead::OnParry(GameEngineCollision* _This, GameEngineCollision* _Other)
 {
 	int a = 0;
-	return false;
+	return CollisionReturn::ContinueCheck;
 }
 
 void InGameCuphead::OnParryAnimationFrameEnd(const FrameAnimation_DESC& _Info)

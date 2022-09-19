@@ -116,7 +116,7 @@ void DogCopter::Start()
 		BowlShooter->SetParent(this);
 	}
 
-	srand(time(NULL));
+	srand(static_cast<unsigned int>(time(NULL)));
 
 	Collision = CreateComponent<GameEngineCollision>();
 	Collision->GetTransform().SetWorldScale({ 300.0f,300.0f,1.0f });
@@ -195,10 +195,10 @@ void DogCopter::BeforeRoateCameraIn()
 	SetState(InGameMonsterState::BeforeRotateCameraIn);
 }
 
-bool DogCopter::OnTakeDamage(GameEngineCollision* _This, GameEngineCollision* _Other)
+CollisionReturn DogCopter::OnTakeDamage(GameEngineCollision* _This, GameEngineCollision* _Other)
 {
 	SetHP(GetHP() - 1);
-	return true;
+	return CollisionReturn::Break;
 }
 
 

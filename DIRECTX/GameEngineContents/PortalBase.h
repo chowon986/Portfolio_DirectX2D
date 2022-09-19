@@ -28,6 +28,6 @@ protected:
 	GameEngineCollision* Collision;
 
 protected:
-	virtual bool OnPortalCollision(GameEngineCollision* _This, GameEngineCollision* _Other);
+	virtual CollisionReturn OnPortalCollision(GameEngineCollision* _This, GameEngineCollision* _Other);
 };
 

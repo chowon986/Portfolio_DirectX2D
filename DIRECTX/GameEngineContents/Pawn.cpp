@@ -63,7 +63,7 @@ void Pawn::Start()
 	//PosIndexCollision->GetTransform().SetLocalScale({ 50.0f,100.0f,1.0f });
 	//PosIndexCollision->GetTransform().SetLocalPosition({ 0.0f,300.0f,1.0f });
 
-	srand(time(NULL));
+	srand(static_cast<unsigned int>(time(NULL)));
 
 	SetRenderer(Renderer);
 
@@ -80,10 +80,10 @@ void Pawn::SetPawnPhysicsComponent(PawnPhysicsComponent* _Physics)
 void Pawn::CheckJumpDirection()
 {
 	int RandomDiretionNum = (rand() % 2) + 1;
-	Direction.x = RandomDiretionNum == 1 ? 1 : -1;
+	Direction.x = RandomDiretionNum == 1 ? 1.0f : -1.0f;
 }
 
-bool Pawn::OnReturnCollision(GameEngineCollision* _This, GameEngineCollision* _Other)
+CollisionReturn Pawn::OnReturnCollision(GameEngineCollision* _This, GameEngineCollision* _Other)
 {
 	RandomPosIndex = rand() % 8; // 한 위치를 랜덤으로 정한다.
 	GetTransform().SetWorldPosition({ PawnPosX[RandomPosIndex] , 50.0f }); // 그 위치로 이동시킨다.
@@ -96,12 +96,12 @@ bool Pawn::OnReturnCollision(GameEngineCollision* _This, GameEngineCollision* _O
 
 	Prepare();
 
-	return false;
+	return CollisionReturn::ContinueCheck;
 }
 
-bool Pawn::OnPawnCollision(GameEngineCollision* _This, GameEngineCollision* _Other)
+CollisionReturn Pawn::OnPawnCollision(GameEngineCollision* _This, GameEngineCollision* _Other)
 {
-	return true;
+	return CollisionReturn::ContinueCheck;
 }
 
 void Pawn::CheckMoveDirection()
@@ -110,7 +110,7 @@ void Pawn::CheckMoveDirection()
 	{
 		float4 PlayerPos = GetPlayer()->GetTransform().GetWorldPosition();
 		float4 MyPos = GetTransform().GetWorldPosition();
-		Direction.x = PlayerPos.ix() - MyPos.ix() > 0 ? 1 : -1;
+		Direction.x = PlayerPos.ix() - MyPos.ix() > 0 ? 1.0f : -1.0f;
 	}
 }
 

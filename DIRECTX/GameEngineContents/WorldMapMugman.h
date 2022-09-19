@@ -28,7 +28,7 @@ protected:
 	void Idle() override;
 
 private:
-	bool CanPortalCollision(GameEngineCollision* _This, GameEngineCollision* _Other);
+	CollisionReturn CanPortalCollision(GameEngineCollision* _This, GameEngineCollision* _Other);
 
 private:
 	MovementComponent* Movement;

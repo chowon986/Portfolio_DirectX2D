@@ -58,12 +58,12 @@ private:
 	bool IsWheatBParriable;
 	bool IsWheatCParriable;
 
-	bool OnWheatACollision(GameEngineCollision* _This, GameEngineCollision* _Other);
-	bool OnWheatBCollision(GameEngineCollision* _This, GameEngineCollision* _Other);
-	bool OnWheatCCollision(GameEngineCollision* _This, GameEngineCollision* _Other);
-	bool OnRipCollision(GameEngineCollision* _This, GameEngineCollision* _Other);
-	bool OnCoinCollision(GameEngineCollision* _This, GameEngineCollision* _Other);
-	bool OnPortalCollision(GameEngineCollision* _This, GameEngineCollision* _Other);
+	CollisionReturn OnWheatACollision(GameEngineCollision* _This, GameEngineCollision* _Other);
+	CollisionReturn OnWheatBCollision(GameEngineCollision* _This, GameEngineCollision* _Other);
+	CollisionReturn OnWheatCCollision(GameEngineCollision* _This, GameEngineCollision* _Other);
+	CollisionReturn OnRipCollision(GameEngineCollision* _This, GameEngineCollision* _Other);
+	CollisionReturn OnCoinCollision(GameEngineCollision* _This, GameEngineCollision* _Other);
+	CollisionReturn OnPortalCollision(GameEngineCollision* _This, GameEngineCollision* _Other);
 
 	void OnTutorialCoinDeathAnimationFinished(const FrameAnimation_DESC& _Info);
 	void OnTutorialStartBackgroundAnimationEnd(const FrameAnimation_DESC& _Info);

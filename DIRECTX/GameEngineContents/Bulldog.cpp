@@ -123,7 +123,7 @@ void Bulldog::Start()
 		Collision->ChangeOrder(ObjectOrder::MONSTER);
 	}
 
-	srand(time(NULL));
+	srand(static_cast<int>(time(NULL)));
 
 	SetHP(3);
 
@@ -182,32 +182,9 @@ void Bulldog::Update(float _DeltaTime)
 
 void Bulldog::UpdateState()
 {
-	if (true == Collision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::PC_BULLET, CollisionType::CT_AABB2D,
-		std::bind(&Bulldog::OnTakeDamage, this, std::placeholders::_1, std::placeholders::_2)))
-	{
-		if (CanTakeDamageTime > 1.0f)
-		{
-			CanTakeDamageTime = 0.0f;
-			SetHP(GetHP() - 1);
-			if (GetHP() <= 0)
-			{
-				Die();
-			}
-			else
-			{
-				TakeDamage();
-			}
-			if (GetHP() == 2)
-			{
-				if (DogCopter == nullptr)
-				{
-					DogCopter = GetLevel()->CreateActor<DogCopterPhase1>();
-					DogCopter->SetState(InGameMonsterState::Prepare);
-				}
-			}
-		}
-	}
-
+	Collision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::PC_BULLET, CollisionType::CT_AABB2D,
+		std::bind(&Bulldog::OnTakeDamage, this, std::placeholders::_1, std::placeholders::_2));
+	
 	GetState();
 }
 
@@ -302,12 +279,33 @@ void Bulldog::FinishAttack()
 
 void Bulldog::OnPrepareAnimationFinished(const FrameAnimation_DESC& _Info)
 {
-Mount();
+	Mount();
 }
 
-bool Bulldog::OnTakeDamage(GameEngineCollision* _This, GameEngineCollision* _Other)
+CollisionReturn Bulldog::OnTakeDamage(GameEngineCollision* _This, GameEngineCollision* _Other)
 {
-	return true;
+	if (CanTakeDamageTime > 1.0f)
+	{
+		CanTakeDamageTime = 0.0f;
+		SetHP(GetHP() - 1);
+		if (GetHP() <= 0)
+		{
+			Die();
+		}
+		else
+		{
+			TakeDamage();
+		}
+		if (GetHP() == 2)
+		{
+			if (DogCopter == nullptr)
+			{
+				DogCopter = GetLevel()->CreateActor<DogCopterPhase1>();
+				DogCopter->SetState(InGameMonsterState::Prepare);
+			}
+		}
+	}
+	return CollisionReturn::Break;
 }
 
 void Bulldog::BulldogDieCheck(const FrameAnimation_DESC& _Info)
@@ -492,7 +490,7 @@ void Bulldog::OnIdleAnimationFrameChanged(const FrameAnimation_DESC& _Info)
 	if (_Info.CurFrame == 4)
 	{
 		EndPos = float4(Plane->GetTransform().GetLocalPosition().x, -250);
-		MoveSpeed = 0.01;
+		MoveSpeed = static_cast<float>(0.01);
 		PlayerPosX = Plane->GetPlayer()->GetTransform().GetLocalPosition().x;
 	}
 }

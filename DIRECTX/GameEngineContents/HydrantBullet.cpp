@@ -20,14 +20,14 @@ HydrantBullet::~HydrantBullet()
 {
 }
 
-bool HydrantBullet::Attack(GameEngineCollision* _This, GameEngineCollision* _Other)
+CollisionReturn HydrantBullet::Attack(GameEngineCollision* _This, GameEngineCollision* _Other)
 {
 	if (nullptr != Renderer)
 	{
 		Renderer->ChangeFrameAnimation("HydrantBulletDeath");
 		OnDeath = true;
 	}
-	return true;
+	return CollisionReturn::ContinueCheck;
 }
 
 void HydrantBullet::OnDeathAnimationFrameFninished(const FrameAnimation_DESC& _Info)
@@ -42,7 +42,7 @@ void HydrantBullet::OnPuffAnimationFrameFninished(const FrameAnimation_DESC& _In
 
 void HydrantBullet::Start()
 {
-	srand(time(NULL));
+	srand(static_cast<int>(time(NULL)));
 
 	std::vector<float> RandomPosX = { 0.0f, 640.0f, 1280.0f };
 	int RandomPosXIndex = rand() % RandomPosX.size();
@@ -86,7 +86,7 @@ void HydrantBullet::Update(float _DeltaTime)
 					{
 						GameEngineActor* HydrantPuff = GetLevel()->CreateActor<GameEngineActor>();
 						HydrantPuffRenderer = HydrantPuff->CreateComponent<GameEngineTextureRenderer>();
-						HydrantPuffRenderer->CreateFrameAnimationFolder("HydrantPuff", FrameAnimation_DESC("HydrantPuff", 0.05, false));
+						HydrantPuffRenderer->CreateFrameAnimationFolder("HydrantPuff", FrameAnimation_DESC("HydrantPuff", 0.05f, false));
 						HydrantPuffRenderer->AnimationBindEnd("HydrantPuff", std::bind(&HydrantBullet::OnPuffAnimationFrameFninished, this, std::placeholders::_1));
 					}
 				}

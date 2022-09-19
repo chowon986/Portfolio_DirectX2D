@@ -20,5 +20,6 @@ protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;
 	void End() override;
+	CollisionReturn OnPortalCollision(GameEngineCollision* _This, GameEngineCollision* _Other) override;
 };
 

@@ -149,7 +149,7 @@ void Ph2Dog::Start()
 		BowWowGun->SetParent(this);
 	}
 
-	srand(time(NULL));
+	srand(static_cast<unsigned int>(time(NULL)));
 	SetHP(3);
 }
 
@@ -209,17 +209,8 @@ void Ph2Dog::Update(float _DeltaTime)
 		GetTransform().SetWorldPosition({ static_cast<float>(TestX + 640.0f), static_cast<float>(TestY - 360.0f) });
 	}
 
-	if (true == Collision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::PC_BULLET, CollisionType::CT_AABB2D,
-		std::bind(&Ph2Dog::OnTakeDamage, this, std::placeholders::_1, std::placeholders::_2)))
-	{
-		TakeDamage();
-		SetHP(GetHP() - 1);
-		if (GetHP() <= 0)
-		{
-			Renderer->ChangeFrameAnimation("Ph2DogDie");
-		}
-	}
-
+	Collision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::PC_BULLET, CollisionType::CT_AABB2D,
+		std::bind(&Ph2Dog::OnTakeDamage, this, std::placeholders::_1, std::placeholders::_2));
 }
 
 bool Ph2Dog::SetStartPos()
@@ -228,9 +219,15 @@ bool Ph2Dog::SetStartPos()
 	return OnceCheck;
 }
 
-bool Ph2Dog::OnTakeDamage(GameEngineCollision* _This, GameEngineCollision* _Other)
+CollisionReturn Ph2Dog::OnTakeDamage(GameEngineCollision* _This, GameEngineCollision* _Other)
 {
-	return true;
+	TakeDamage();
+	SetHP(GetHP() - 1);
+	if (GetHP() <= 0)
+	{
+		Renderer->ChangeFrameAnimation("Ph2DogDie");
+	}
+	return CollisionReturn::ContinueCheck;
 }
 
 void Ph2Dog::TakeDamage()
@@ -265,12 +262,12 @@ void Ph2Dog::None()
 
 double Ph2Dog::GetXFromAngle(double Angle)
 {
-	return cosf(Angle) * 550;
+	return cosf(static_cast<float>(Angle)) * 550.0f;
 }
 
 double Ph2Dog::GetYFromAngle(double Angle)
 {
-	return sinf(Angle) * 300;
+	return sinf(static_cast<float>(Angle)) * 300.0f;
 }
 
 void Ph2Dog::SetPlayer(IInGameCharacterBase* _Player)

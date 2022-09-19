@@ -49,7 +49,7 @@ public:
 	void Ph2DogDieCheck(const FrameAnimation_DESC& _Info);
 
 	bool SetStartPos();
-	bool OnTakeDamage(GameEngineCollision* _This, GameEngineCollision* _Other);
+	CollisionReturn OnTakeDamage(GameEngineCollision* _This, GameEngineCollision* _Other);
 private:
 	InGamePh2DogState State;
 	IInGameCharacterBase* Player;

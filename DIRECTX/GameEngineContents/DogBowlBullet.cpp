@@ -32,7 +32,7 @@ void DogBowlBullet::Start()
 	DirectionMap.insert(std::make_pair<int, float4>(0, { 400, 300,(int)ZOrder::Player + 1 }));
 	DirectionMap.insert(std::make_pair<int, float4>(1, { 800, 300,(int)ZOrder::Player + 1 }));
 
-	srand(time(NULL));
+	srand(static_cast<unsigned int>(time(NULL)));
 
 	Index = rand() % DirectionMap.size();
 	GetTransform().SetLocalPosition(DirectionMap[Index]);
@@ -66,7 +66,7 @@ void DogBowlBullet::Update(float _DeltaTime)
 		}
 		else
 		{
-			Direction.x = Index == 0 ? -1 : 1;
+			Direction.x = Index == 0 ? -1.0f : 1.0f;
 		}
 	}
 	else if (GetColor() == "Yellow")
@@ -77,7 +77,7 @@ void DogBowlBullet::Update(float _DeltaTime)
 		}
 		else
 		{
-			Direction.x = Index == 0 ? -1 : 1;
+			Direction.x = Index == 0 ? -1.0f : 1.0f;
 		}
 	}
 
@@ -92,14 +92,14 @@ void DogBowlBullet::End()
 {
 }
 
-bool DogBowlBullet::CanCollision(GameEngineCollision* _This, GameEngineCollision* _Other)
+CollisionReturn DogBowlBullet::CanCollision(GameEngineCollision* _This, GameEngineCollision* _Other)
 {
 	if (GetMonsterPhysicsComponent() != nullptr)
 	{
 		GetMonsterPhysicsComponent()->Off();
 	}
 
-	Direction.x = Index == 0 ? 1 : -1;
+	Direction.x = Index == 0 ? 1.0f : -1.0f;
 
-	return true;
+	return CollisionReturn::ContinueCheck;
 }

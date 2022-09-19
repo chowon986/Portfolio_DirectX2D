@@ -31,11 +31,11 @@ void Dogfight::End()
 {
 }
 
-bool Dogfight::OnPortalCollision(GameEngineCollision* _This, GameEngineCollision* _Other)
+CollisionReturn Dogfight::OnPortalCollision(GameEngineCollision* _This, GameEngineCollision* _Other)
 {
 	if (true == GameEngineInput::GetInst()->IsDown("EnterMap"))
 	{
 		GEngine::ChangeLevel("DogFight");
 	}
-	return false;
+	return CollisionReturn::ContinueCheck;
 }

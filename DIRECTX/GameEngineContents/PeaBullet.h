@@ -21,7 +21,7 @@ private:
 	void OnPeashotDeathAnimationFrameFinished(const FrameAnimation_DESC& _Info);
 	void Test(const FrameAnimation_DESC& _Info);
 
-	bool AttackSuccess(GameEngineCollision* _This, GameEngineCollision* _Other);
+	CollisionReturn AttackSuccess(GameEngineCollision* _This, GameEngineCollision* _Other);
 
 private:
 	PeaShooter* Weapon;

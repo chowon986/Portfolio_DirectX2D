@@ -8,7 +8,7 @@
 
 // Copy(수정본) 이 함수를 호출한 랜더타겟의 내용을 모두 지우고 수정본의 내용을 복사해라.
 
-// Merge(수정본, 블랜드) 이 함수를 호출한 랜더타겟 위에 수정본이 내용을 덮어 씌워라.
+// Merge(수정본, 블랜드) 이 함수를 호출한 랜더타겟 위에 수정보느이 내용을 덮어 씌워라.
 
 // Effect() 이 랜더타겟에 무언가 효과를 줘.
 
@@ -34,6 +34,25 @@
 
 class GameEnginePostEffect
 {
+private:
+	bool IsUpdate_ = true;
+
+public:
+	bool IsUpdate()
+	{
+		return IsUpdate_;
+	}
+
+	virtual void On()
+	{
+		IsUpdate_ = true;
+	}
+
+	virtual void Off()
+	{
+		IsUpdate_ = false;
+	}
+
 public:
 	virtual void EffectInit() = 0;
 	virtual void Effect(class GameEngineRenderTarget* _Render) = 0;
@@ -131,11 +150,13 @@ private:
 
 public:
 	template<typename EffectType>
-	void AddEffect()
+	EffectType* AddEffect()
 	{
-		EffectType* NewEffect = new EffectType();
+		GameEnginePostEffect* NewEffect = new EffectType();
 		NewEffect->EffectInit();
 		Effects.push_back(NewEffect);
+
+		return reinterpret_cast<EffectType*>(NewEffect);
 	}
 };
 

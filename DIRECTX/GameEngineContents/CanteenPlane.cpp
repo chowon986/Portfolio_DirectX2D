@@ -30,10 +30,18 @@ void CanteenPlane::SetDogCopter(DogCopter* _LeaderCopter)
 	LeaderState = LeaderCopter->GetState();
 }
 
-bool CanteenPlane::CanMove(GameEngineCollision* _This, GameEngineCollision* _Other)
+CollisionReturn CanteenPlane::CanMoveLeft(GameEngineCollision* _This, GameEngineCollision* _Other)
 {
-	return true;
+	MoveDirection = float4::LEFT;
+	return CollisionReturn();
 }
+
+CollisionReturn CanteenPlane::CanMoveRight(GameEngineCollision* _This, GameEngineCollision* _Other)
+{
+	MoveDirection = float4::RIGHT;
+	return CollisionReturn();
+}
+
 
 bool CanteenPlane::RotateLeaderCopter()
 {
@@ -228,37 +236,27 @@ void CanteenPlane::Update(float _DeltaTime)
 			//GetLevel()->GetUICameraActor()->GetTransform().SetLocalRotate({ 0.0, 0.0, 90.0f });
 		}
 	}
+	MoveDirection = float4::ZERO;
 
-	if (LeftCollision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::PC, CollisionType::CT_AABB2D,
-		std::bind(&CanteenPlane::CanMove, this, std::placeholders::_1, std::placeholders::_2)))
-	{
-		MoveDirection = float4::LEFT;
-	}
+	LeftCollision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::PC, CollisionType::CT_AABB2D,
+		std::bind(&CanteenPlane::CanMoveLeft, this, std::placeholders::_1, std::placeholders::_2));
 
-	else if (RightCollision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::PC, CollisionType::CT_AABB2D,
-		std::bind(&CanteenPlane::CanMove, this, std::placeholders::_1, std::placeholders::_2)))
-	{
-		
-		MoveDirection = float4::RIGHT;
-	}
+	RightCollision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::PC, CollisionType::CT_AABB2D,
+		std::bind(&CanteenPlane::CanMoveRight, this, std::placeholders::_1, std::placeholders::_2));
 
-	else
-	{
-		MoveDirection = float4::ZERO;
-	}
 
 	if (ColMapTexture == nullptr)
 	{
 		ColMapTexture = ColMapImage->GetCurTexture();
 	}
 
-	while (ColMapTexture->GetPixelToFloat4(GetTransform().GetWorldPosition().x + 230.0f, -GetTransform().GetWorldPosition().y).CompareInt4D(float4::BLACK))
+	while (ColMapTexture->GetPixelToFloat4(static_cast<int>(GetTransform().GetWorldPosition().x + 230.0f), static_cast<int>(-GetTransform().GetWorldPosition().y)).CompareInt4D(float4::BLACK))
 	{
 		MoveDirection = float4::ZERO;
 		GetTransform().SetWorldMove(float4::LEFT * _DeltaTime);
 	} 
 	
-	while (ColMapTexture->GetPixelToFloat4(GetTransform().GetWorldPosition().x - 230.0f, -GetTransform().GetWorldPosition().y).CompareInt4D(float4::BLACK))
+	while (ColMapTexture->GetPixelToFloat4(static_cast<int>(GetTransform().GetWorldPosition().x - 230.0f), static_cast<int>(-GetTransform().GetWorldPosition().y)).CompareInt4D(float4::BLACK))
 	{
 		MoveDirection = float4::ZERO;
 		GetTransform().SetWorldMove(float4::RIGHT * _DeltaTime);

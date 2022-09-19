@@ -37,7 +37,7 @@ void PortalBase::End()
 {
 }
 
-bool PortalBase::OnPortalCollision(GameEngineCollision* _This, GameEngineCollision* _Other)
+CollisionReturn PortalBase::OnPortalCollision(GameEngineCollision* _This, GameEngineCollision* _Other)
 {
-	return true;
+	return CollisionReturn::ContinueCheck;
 }

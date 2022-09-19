@@ -30,11 +30,11 @@ void Cart::End()
 {
 }
 
-bool Cart::OnPortalCollision(GameEngineCollision* _This, GameEngineCollision* _Other)
+CollisionReturn Cart::OnPortalCollision(GameEngineCollision* _This, GameEngineCollision* _Other)
 {
 	if (true == GameEngineInput::GetInst()->IsDown("EnterMap"))
 	{
 		GEngine::ChangeLevel("Tutorial");
 	}
-	return false;
+	return CollisionReturn::ContinueCheck;
 }

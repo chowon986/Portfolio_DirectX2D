@@ -28,7 +28,8 @@ public:
 	void SetDogCopter(DogCopter* _LeaderCopter);
 	DogCopter* GetDogCopter() { return LeaderCopter; }
 
-	bool CanMove(GameEngineCollision* _This, GameEngineCollision* _Other);
+	CollisionReturn CanMoveLeft(GameEngineCollision* _This, GameEngineCollision* _Other);
+	CollisionReturn CanMoveRight(GameEngineCollision* _This, GameEngineCollision* _Other);
 
 	bool RotateLeaderCopter();
 

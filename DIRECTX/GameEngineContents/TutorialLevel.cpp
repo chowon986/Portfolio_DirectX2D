@@ -45,7 +45,7 @@ void TutorialLevel::LevelStartEvent()
 	Cuphead = CreateActor<InGameCuphead>(GameObjectGroup::Player);
 	Cuphead->GetTransform().SetLocalPosition({ 640, -360, (int)ZOrder::Player });
 	Cuphead->SetColMapImage(ColMapRenderer);
-	Cuphead->SetHP(State->MaxHP);
+	Cuphead->SetHP(static_cast<float>(State->MaxHP));
 	Cuphead->SetOnDashInvisible(State->OnDashInvisible);
 	PushToRotateCamera(Cuphead);
 }
@@ -240,47 +240,47 @@ void TutorialLevel::End()
 {
 }
 
-bool TutorialLevel::OnWheatACollision(GameEngineCollision* _This, GameEngineCollision* _Other)
+CollisionReturn TutorialLevel::OnWheatACollision(GameEngineCollision* _This, GameEngineCollision* _Other)
 {
 	SetPhase(TutorialPhase::Phase2);
-	return true;
+	return CollisionReturn::ContinueCheck;
 }
 
-bool TutorialLevel::OnWheatBCollision(GameEngineCollision* _This, GameEngineCollision* _Other)
+CollisionReturn TutorialLevel::OnWheatBCollision(GameEngineCollision* _This, GameEngineCollision* _Other)
 {
 	RipRenderer->ChangeFrameAnimation("RipClose");
 	SetPhase(TutorialPhase::Phase3);
-	return true;
+	return CollisionReturn::ContinueCheck;
 }
 
-bool TutorialLevel::OnWheatCCollision(GameEngineCollision* _This, GameEngineCollision* _Other)
+CollisionReturn TutorialLevel::OnWheatCCollision(GameEngineCollision* _This, GameEngineCollision* _Other)
 {
 	SetPhase(TutorialPhase::Phase1);
 	Coin->On();
 	WheatA->On();
-	return true;
+	return CollisionReturn::ContinueCheck;
 }
 
-bool TutorialLevel::OnRipCollision(GameEngineCollision* _This, GameEngineCollision* _Other)
+CollisionReturn TutorialLevel::OnRipCollision(GameEngineCollision* _This, GameEngineCollision* _Other)
 {
 	RipRenderer->ChangeFrameAnimation("RipClose");
 	SetPhase(TutorialPhase::Phase1);
-	return true;
+	return CollisionReturn::ContinueCheck;
 }
 
-bool TutorialLevel::OnCoinCollision(GameEngineCollision* _This, GameEngineCollision* _Other)
+CollisionReturn TutorialLevel::OnCoinCollision(GameEngineCollision* _This, GameEngineCollision* _Other)
 {
 	CoinRenderer->ChangeFrameAnimation("TutorialCoinDeath");
 	if (CurCoin < 25)
 	{
 		++CurCoin;
 	}
-	return true;
+	return CollisionReturn::ContinueCheck;
 }
 
-bool TutorialLevel::OnPortalCollision(GameEngineCollision* _This, GameEngineCollision* _Other)
+CollisionReturn TutorialLevel::OnPortalCollision(GameEngineCollision* _This, GameEngineCollision* _Other)
 {
-	return true;
+	return CollisionReturn::ContinueCheck;
 }
 
 void TutorialLevel::OnTutorialCoinDeathAnimationFinished(const FrameAnimation_DESC& _Info)

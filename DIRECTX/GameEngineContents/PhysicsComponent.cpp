@@ -27,7 +27,7 @@ void PhysicsComponent::Update(float _DeltaTime)
 	while (ElapsedTime > FixedUpdateInterval)
 	{
 		ElapsedTime -= FixedUpdateInterval;
-		FixedUpdate(FixedUpdateInterval);
+		FixedUpdate(static_cast<float>(FixedUpdateInterval));
 	}
 }
 
@@ -70,7 +70,7 @@ void PhysicsComponent::FixedUpdate(float _DeltaTime)
 		Reset();
 	}
 
-	while (true == ColMapTexture->GetPixelToFloat4(Actor->GetTransform().GetWorldPosition().x, -Actor->GetTransform().GetWorldPosition().y - 10).CompareInt4D(float4::BLACK))
+	while (true == ColMapTexture->GetPixelToFloat4(static_cast<int>(Actor->GetTransform().GetWorldPosition().x), static_cast<int>(-Actor->GetTransform().GetWorldPosition().y - 10)).CompareInt4D(float4::BLACK))
 	{
 		Actor->GetTransform().SetWorldMove(float4::DOWN * _DeltaTime);
 		Reset();
@@ -78,14 +78,14 @@ void PhysicsComponent::FixedUpdate(float _DeltaTime)
 
 	Actor->SetIsOnGround(Speed == 0);
 
-	while (true == ColMapTexture->GetPixelToFloat4(Actor->GetTransform().GetWorldPosition().x - 10, -Actor->GetTransform().GetWorldPosition().y).CompareInt4D(float4::BLACK) ||
-		true == ColMapTexture->GetPixelToFloat4(Actor->GetTransform().GetWorldPosition().x - 10, -Actor->GetTransform().GetWorldPosition().y - 10).CompareInt4D(float4::BLACK))
+	while (true == ColMapTexture->GetPixelToFloat4(static_cast<int>(Actor->GetTransform().GetWorldPosition().x - 10), static_cast<int>(-Actor->GetTransform().GetWorldPosition().y)).CompareInt4D(float4::BLACK) ||
+		true == ColMapTexture->GetPixelToFloat4(static_cast<int>(Actor->GetTransform().GetWorldPosition().x - 10), static_cast<int>(-Actor->GetTransform().GetWorldPosition().y - 10)).CompareInt4D(float4::BLACK))
 	{
 		Actor->GetTransform().SetWorldMove(float4::RIGHT * _DeltaTime);
 	}
 
-	while (true == ColMapTexture->GetPixelToFloat4(Actor->GetTransform().GetWorldPosition().x + 10, -Actor->GetTransform().GetWorldPosition().y).CompareInt4D(float4::BLACK) ||
-		true == ColMapTexture->GetPixelToFloat4(Actor->GetTransform().GetWorldPosition().x + 10, -Actor->GetTransform().GetWorldPosition().y - 10).CompareInt4D(float4::BLACK))
+	while (true == ColMapTexture->GetPixelToFloat4(static_cast<int>(Actor->GetTransform().GetWorldPosition().x + 10), static_cast<int>(-Actor->GetTransform().GetWorldPosition().y)).CompareInt4D(float4::BLACK) ||
+		true == ColMapTexture->GetPixelToFloat4(static_cast<int>(Actor->GetTransform().GetWorldPosition().x + 10), static_cast<int>(-Actor->GetTransform().GetWorldPosition().y - 10)).CompareInt4D(float4::BLACK))
 	{
 		Actor->GetTransform().SetWorldMove(float4::LEFT * _DeltaTime);
 	}
@@ -97,7 +97,7 @@ void PhysicsComponent::AddForce(float _Power)
 	Power += _Power;
 }
 
-bool PhysicsComponent::GroundCheck(GameEngineCollision* _This, GameEngineCollision* _Other)
+CollisionReturn PhysicsComponent::GroundCheck(GameEngineCollision* _This, GameEngineCollision* _Other)
 {
-	return true;
+	return CollisionReturn::Break;
 }

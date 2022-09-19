@@ -196,7 +196,7 @@ void BishopLevel::ColMapOnOffSwitch()
 	BackgroundRenderer->OnOffSwitch();
 }
 
-bool BishopLevel::OnIndexCollision(GameEngineCollision* _This, GameEngineCollision* _Other)
+CollisionReturn BishopLevel::OnIndexCollision(GameEngineCollision* _This, GameEngineCollision* _Other)
 {
 	if (Pawn* Monster = dynamic_cast<Pawn*>(_Other->GetParent()))
 	{
@@ -209,16 +209,16 @@ bool BishopLevel::OnIndexCollision(GameEngineCollision* _This, GameEngineCollisi
 			_This->On();
 		}
 	}
-	return false;
+	return CollisionReturn::ContinueCheck;
 }
 
-bool BishopLevel::IndexCollisionOn(GameEngineCollision* _This, GameEngineCollision* _Other)
+CollisionReturn BishopLevel::IndexCollisionOn(GameEngineCollision* _This, GameEngineCollision* _Other)
 {
 	for (int i = 0; i < 8; i++)
 	{
 		Collisions[i]->On(); // ÄÑÁø´Ù.
 	}
-	return false;
+	return CollisionReturn::ContinueCheck;
 }
 
 void BishopLevel::End()
