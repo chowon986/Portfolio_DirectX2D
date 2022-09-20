@@ -228,7 +228,7 @@ void SaltBaker::OnSaltBakerPhase2FrameChanged(const FrameAnimation_DESC& _Info)
 		{
 			PepperShooter* Pepper = GetLevel()->CreateActor<PepperShooter>();
 			Pepper->SetParent(this);
-			Pepper->GetTransform().SetWorldPosition({ 100.0f, -500.0f, GetTransform().GetWorldPosition().z - 1 });
+			Pepper->GetTransform().SetWorldPosition({ 100.0f, -120.0f, GetTransform().GetWorldPosition().z - 1 });
 			Pepper->SetDeathNum(0);
 		}
 		{
@@ -240,7 +240,7 @@ void SaltBaker::OnSaltBakerPhase2FrameChanged(const FrameAnimation_DESC& _Info)
 		{
 			PepperShooter* Pepper = GetLevel()->CreateActor<PepperShooter>();
 			Pepper->SetParent(this);
-			Pepper->GetTransform().SetWorldPosition({ 100.0f, -120.0f, GetTransform().GetWorldPosition().z - 1 });
+			Pepper->GetTransform().SetWorldPosition({ 100.0f, -500.0f, GetTransform().GetWorldPosition().z - 1 });
 			Pepper->SetDeathNum(2);
 		}
 		{

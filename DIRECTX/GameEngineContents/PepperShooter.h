@@ -2,6 +2,15 @@
 #include "MonsterWeaponBase.h"
 #include "Delegates.h"
 
+enum class PepperState
+{
+	Prepare,
+	Idle,
+	Attack1, // 총알
+	Attack2, // 보스 공격
+	Death, 
+};
+
 enum class InGameMonsterState;
 enum class InGameMonsterAttackState;
 class GameEngineUpdateObject;
@@ -29,17 +38,22 @@ private:
 	void OnMonsterStateChanged(InGameMonsterState _State) override;
 	void OnMonsterAttackStateChanged(InGameMonsterAttackState _AttackState) override;
 
+	void UpdateAnimation();
+
 	void SetHP(int _HP) { HP = _HP; }
 	int GetHP() { return HP; }
 	
 	CollisionReturn OnTakeDamage(GameEngineCollision* _This, GameEngineCollision* _Other);
+
+	void SetPepperState(PepperState _State);
+	PepperState GetPepperState() { return State; }
 
 	void OnPepperShooterIntroAnimationFrameFinished(const FrameAnimation_DESC& _Info);
 	void OnPepperShooterAttackAnimationFrameFinished(const FrameAnimation_DESC& _Info);
 	void OnPepperShooterDeathAnimationFrameFinished(const FrameAnimation_DESC& _Info);
 
 public:
-	void SetDeathNum(int _Num) { DeathNum = _Num; }
+	void SetDeathNum(int _Num);
 	int GetDeathNum() { return DeathNum; }
 
 private:
@@ -51,5 +65,10 @@ private:
 	float CanTakeDamageInterval;
 	int DeathNum;
 	SaltBaker* Boss;
+	float4 DestPos;
+	float4 StartPos;
+	PepperState State;
+	bool StartBodyAttack;
+	float ElapsedTimeMove;
 };
 

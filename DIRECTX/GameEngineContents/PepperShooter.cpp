@@ -14,6 +14,8 @@ PepperShooter::PepperShooter()
 	, Collision(nullptr)
 	, CanTakeDamageInterval(1.0f)
 	, DeathNum(0)
+	, StartBodyAttack(false)
+	, ElapsedTimeMove(0.0f)
 {
 }
 
@@ -23,38 +25,41 @@ PepperShooter::~PepperShooter()
 
 void PepperShooter::UpdateDirection()
 {
-	UpdatePivot();
 }
 
 
 void PepperShooter::UpdatePivot()
 {
-	if (State != InGameMonsterState::Attack1)
-	{
-		return;
-	}
-
-	if (State == InGameMonsterState::Attack1)
-	{
-		GetTransform().SetLocalPosition({ 0.0f, 0.0f });
-	}
 }
 
 void PepperShooter::OnMonsterStateChanged(InGameMonsterState _State)
 {
-	UpdateDirection();
 }
 
 void PepperShooter::OnMonsterAttackStateChanged(InGameMonsterAttackState _AttackState)
 {
-	switch (_AttackState)
+}
+
+void PepperShooter::UpdateAnimation()
+{
+	switch (State)
 	{
-	case InGameMonsterAttackState::Attack1:
-		ElapsedTime = 0.0f;
+	case PepperState::Prepare:
+		Renderer->ChangeFrameAnimation("PepperShooterIntro");
+		break;
+	case PepperState::Idle:
+		Renderer->ChangeFrameAnimation("PepperShooterIdle");
+		break;
+	case PepperState::Attack1:		
+		Renderer->ChangeFrameAnimation("PepperShooterAttack");
+		break;
+	case PepperState::Attack2:
+		Renderer->ChangeFrameAnimation("PepperShooterDeath" + std::to_string(DeathNum));
+		break;
+		break;
+	case PepperState::Death:
 		break;
 	}
-
-	UpdateDirection();
 }
 
 CollisionReturn PepperShooter::OnTakeDamage(GameEngineCollision* _This, GameEngineCollision* _Other)
@@ -68,11 +73,20 @@ CollisionReturn PepperShooter::OnTakeDamage(GameEngineCollision* _This, GameEngi
 
 }
 
+void PepperShooter::SetPepperState(PepperState _State)
+{
+	if (State != _State)
+	{
+		State = _State;
+		UpdateAnimation();
+	}
+}
+
 void PepperShooter::OnPepperShooterIntroAnimationFrameFinished(const FrameAnimation_DESC& _Info)
 {
 	if (_Info.CurFrame == 16)
 	{
-		Renderer->ChangeFrameAnimation("PepperShooterIdle");
+		SetPepperState(PepperState::Idle);
 	}
 }
 
@@ -105,37 +119,65 @@ void PepperShooter::OnPepperShooterAttackAnimationFrameFinished(const FrameAnima
 
 	if (_Info.CurFrame == 43)
 	{
-		Renderer->ChangeFrameAnimation("PepperShooterIdle");
+		SetPepperState(PepperState::Idle);
 	}
 }
 
 void PepperShooter::OnPepperShooterDeathAnimationFrameFinished(const FrameAnimation_DESC& _Info)
 {
-	if (DeathNum == 0 && _Info.CurFrame == 4)
+	if (DeathNum == 0)
 	{
-		// 몬스터한테 이동해야해Death();
+		if (_Info.CurFrame == 11)
+		{
+			SetHP(10);
+		}
+		else if (_Info.CurFrame == 5)
+		{
+			StartBodyAttack = true;
+		}
 	}
 
+	else if (DeathNum == 1)
+	{
+		if (_Info.CurFrame == 16)
+		{
+			SetHP(10);
+		}
+		else if (_Info.CurFrame == 5)
+		{
+			StartBodyAttack = true;
+		}
+	}
 
-	//if (DeathNum == 0 && _Info.CurFrame == 11)
-	//{
-	//	Death();
-	//}
+	else if (DeathNum == 2)
+	{
+		if (_Info.CurFrame == 20)
+		{
+			SetHP(10);
+		}
+		else if (_Info.CurFrame == 5)
+		{
+			StartBodyAttack = true;
+		}
+	}
 
-	//else if (DeathNum == 1 && _Info.CurFrame == 16)
-	//{
-	//	Death();
-	//}
+	else if (DeathNum == 3)
+	{
+		if (_Info.CurFrame == 10)
+		{
+			SetHP(10);
+		}
+		else if (_Info.CurFrame == 5)
+		{
+			StartBodyAttack = true;
+		}
+	}
+}
 
-	//else if (DeathNum == 2 && _Info.CurFrame == 20)
-	//{
-	//	Death();
-	//}
-
-	//else if (DeathNum == 3 && _Info.CurFrame == 10)
-	//{
-	//	Death();
-	//}
+void PepperShooter::SetDeathNum(int _Num)
+{
+	DeathNum = _Num;
+	StartPos = GetTransform().GetWorldPosition();
 }
 
 void PepperShooter::Start()
@@ -164,37 +206,71 @@ void PepperShooter::Start()
 	Collision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::PC_BULLET, CollisionType::CT_AABB2D, std::bind(&PepperShooter::OnTakeDamage, this, std::placeholders::_1, std::placeholders::_2));
 
 	HP = 10;
+	DestPos = float4({ 800.0f,-250.0f, GetTransform().GetWorldPosition().z });
+
+	SetPepperState(PepperState::Prepare);
 }
 
 void PepperShooter::Update(float _DeltaTime)
 {
 	MonsterWeaponBase::Update(_DeltaTime);
 
-	ElapsedTime += _DeltaTime;
-
-	if (ElapsedTime > 1.0f)
+	// Attack1 -> Idle
+	// Attack2 -> Prepare -> Idle
+	if (State == PepperState::Idle)
 	{
-		SetHP(GetHP() - 1);
-		ElapsedTime = 0.0f;
-	}
-
-	if (GetHP() <= 2)
-	{
-		if (SaltBaker* Boss = dynamic_cast<SaltBaker*>(GetParent()))
+		ElapsedTimeMove = 0.f;
+		StartBodyAttack = false;
+		ElapsedTime += _DeltaTime;
+		if (ElapsedTime > 3.0f)
 		{
-			if (Boss->GetHP() <= 0)
+			SetPepperState(PepperState::Attack1);
+		}
+		else if (GetHP() <= 10)
+		{
+			SetPepperState(PepperState::Attack2);
+		}
+	}
+	else if (State == PepperState::Attack2)
+	{
+		ElapsedTime = 0.0f;
+		if (StartBodyAttack == true)
+		{
+			ElapsedTimeMove += _DeltaTime;
+			float4 WorldPos = GetTransform().GetWorldPosition();
+			float DestX = GameEngineMath::LerpLimit(WorldPos.x, DestPos.x, ElapsedTimeMove / 30);
+			float DestY = GameEngineMath::LerpLimit(WorldPos.y, DestPos.y, ElapsedTimeMove / 30);
+
+			if (abs(DestX - DestPos.x) < 1 &&
+				abs(DestY - DestPos.y) < 1)
 			{
-				Renderer->ChangeFrameAnimation("PepperShooterDeath" + std::to_string(DeathNum));
-				SetHP(10);
+				GetTransform().SetWorldPosition(StartPos);
+				SetPepperState(PepperState::Prepare);
+			}
+			else
+			{
+				GetTransform().SetWorldPosition(float4(DestX, DestY, WorldPos.z));
 			}
 		}
-		else
-		{
-			SetHP(10);
-			Renderer->ChangeFrameAnimation("PepperShooterAttack");
-		}
-
 	}
+	else
+	{
+		ElapsedTimeMove = 0.f;
+		StartBodyAttack = false;
+		ElapsedTime = 0.0f;
+	}
+	// Idle -> Attack1 ? Attack2는 아니고 3초에 한번씩
+	// Idle -> Death ? Attack1이 아니고 HP가 5 이하
+
+
+	//if (SaltBaker* Boss = dynamic_cast<SaltBaker*>(GetParent()))
+	//{
+	//	if (Boss->GetHP() <= 0)
+	//	{
+	//		Renderer->ChangeFrameAnimation("PepperShooterDeath" + std::to_string(DeathNum));
+	//		SetHP(10);
+	//	}
+	//}
 }
 
 void PepperShooter::End()
