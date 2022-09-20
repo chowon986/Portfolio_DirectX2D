@@ -194,6 +194,7 @@ void SaltBakerShooter::Update(float _DeltaTime)
 			}
 			break;
 			case InGameMonsterAttackState::Attack5:
+			case InGameMonsterAttackState::Attack6:
 			{
 				{
 					LeafBullet* Bullet = GetLevel()->CreateActor<LeafBullet>();
@@ -259,7 +260,8 @@ void SaltBakerShooter::UpdatePivot()
 	if (State != InGameMonsterState::Attack1 &&
 		State != InGameMonsterState::Attack2 &&
 		State != InGameMonsterState::Attack4 &&
-		State != InGameMonsterState::Attack5)
+		State != InGameMonsterState::Attack5 &&
+		State != InGameMonsterState::Attack6)
 	{
 		return;
 	}
@@ -267,7 +269,8 @@ void SaltBakerShooter::UpdatePivot()
 	if (State == InGameMonsterState::Attack1 ||
 		State == InGameMonsterState::Attack2 ||
 		State == InGameMonsterState::Attack4 ||
-		State == InGameMonsterState::Attack5)
+		State == InGameMonsterState::Attack5 ||
+		State == InGameMonsterState::Attack6)
 	{
 
 		GetTransform().SetLocalPosition({ 0.0f, 0.0f });
@@ -296,6 +299,9 @@ void SaltBakerShooter::OnMonsterAttackStateChanged(InGameMonsterAttackState _Att
 		IntervalTime = 1.0f;
 		break;
 	case InGameMonsterAttackState::Attack5:
+		IntervalTime = 1.0f;
+		break;
+	case InGameMonsterAttackState::Attack6:
 		IntervalTime = 1.0f;
 		break;
 	}

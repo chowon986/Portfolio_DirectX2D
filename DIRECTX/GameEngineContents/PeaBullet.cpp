@@ -4,6 +4,7 @@
 #include "PeaShooter.h"
 #include "BulletMovementComponent.h"
 #include "IInGameCharacterBase.h"
+#include "PepperShooter.h"
 
 PeaBullet::PeaBullet()
 	: Weapon(nullptr)
@@ -70,7 +71,13 @@ void PeaBullet::Test(const FrameAnimation_DESC& _Info)
 
 CollisionReturn PeaBullet::AttackSuccess(GameEngineCollision* _This, GameEngineCollision* _Other)
 {
-	MovementComponent->SetSpeed(0.0f);
+	if (PepperShooter* Pepper = dynamic_cast<PepperShooter*>(_Other))
+	{
+	}
+	else
+	{
+		MovementComponent->SetSpeed(0.0f);
+	}
 	Renderer->ChangeFrameAnimation("PeashotDeath");
 	return CollisionReturn::ContinueCheck;
 }

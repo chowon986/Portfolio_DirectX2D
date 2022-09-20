@@ -7,6 +7,9 @@ enum class InGameMonsterAttackState;
 class GameEngineUpdateObject;
 class StrawberryBullet;
 class IInGameCharacterBase;
+class GameEngineTextureRenderer;
+enum class CollisionReturn;
+class SaltBaker;
 class PepperShooter : public MonsterWeaponBase
 {
 public:
@@ -26,8 +29,27 @@ private:
 	void OnMonsterStateChanged(InGameMonsterState _State) override;
 	void OnMonsterAttackStateChanged(InGameMonsterAttackState _AttackState) override;
 
+	void SetHP(int _HP) { HP = _HP; }
+	int GetHP() { return HP; }
+	
+	CollisionReturn OnTakeDamage(GameEngineCollision* _This, GameEngineCollision* _Other);
+
+	void OnPepperShooterIntroAnimationFrameFinished(const FrameAnimation_DESC& _Info);
+	void OnPepperShooterAttackAnimationFrameFinished(const FrameAnimation_DESC& _Info);
+	void OnPepperShooterDeathAnimationFrameFinished(const FrameAnimation_DESC& _Info);
+
+public:
+	void SetDeathNum(int _Num) { DeathNum = _Num; }
+	int GetDeathNum() { return DeathNum; }
+
 private:
 	InGameMonsterAttackState MonsterAttackState;
 	IInGameCharacterBase* Player;
+	GameEngineTextureRenderer* Renderer;
+	GameEngineCollision* Collision;
+	int HP;
+	float CanTakeDamageInterval;
+	int DeathNum;
+	SaltBaker* Boss;
 };
 

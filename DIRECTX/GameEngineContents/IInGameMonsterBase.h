@@ -34,6 +34,7 @@ enum class InGameMonsterState
 	Attack3,
 	Attack4,
 	Attack5,
+	Attack6,
 	PrepareAttack1,
 	PrepareAttack2,
 	AttackFinish1,
@@ -53,6 +54,7 @@ enum class InGameMonsterState
 	Land,
 	Run,
 	MoveToPhase2,
+	Phase2,
 };
 
 enum class InGameMonsterAttackState
@@ -75,6 +77,7 @@ enum class InGameMonsterAttackState
 	Attack3,
 	Attack4,
 	Attack5,
+	Attack6,
 };
 
 enum class Phase;

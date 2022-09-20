@@ -51,6 +51,11 @@ void InGameMonsterAnimationControllerComponent::UpdateAnimation()
 		Renderer->ChangeFrameAnimation(Name + "Phase2Intro");
 	}
 
+	if (State == InGameMonsterState::Phase2)
+	{
+		Renderer->ChangeFrameAnimation(Name + "Phase2");
+	}
+
 	else if (State == InGameMonsterState::Unmount)
 	{
 		Renderer->ChangeFrameAnimation(Name + "Unmount");

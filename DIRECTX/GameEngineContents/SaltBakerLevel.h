@@ -2,6 +2,7 @@
 #include <GameEngineCore/GameEngineLevel.h>
 
 // Ό³Έν :
+enum class Phase;
 class GameEngineTextureRenderer;
 class SaltBakerLevel : public GameEngineLevel
 {
@@ -20,11 +21,17 @@ protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;
 	void End() override;
+
 private:
 	void EndAnimation(const FrameAnimation_DESC& _Info);
+
+public:
+	void SetPhase(Phase _Phase) { CurPhase = _Phase; }
+	Phase GetPhase() { return CurPhase; }
 
 private:
 	GameEngineTextureRenderer* ColMapRenderer;
 	GameEngineTextureRenderer* KitchenRenderer;
+	Phase CurPhase;
 };
 

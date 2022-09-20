@@ -18,11 +18,10 @@ void PepperBullet::Start()
 {
 
 	Renderer = CreateComponent<GameEngineTextureRenderer>();
-	Renderer->CreateFrameAnimationFolder("Bow1", FrameAnimation_DESC("Bow1", 0.1f));
-	Renderer->CreateFrameAnimationFolder("Bow2", FrameAnimation_DESC("Bow2", 0.1f)); // Pink
-	Renderer->CreateFrameAnimationFolder("Wow1", FrameAnimation_DESC("Wow1", 0.1f));
-	Renderer->CreateFrameAnimationFolder("Wow2", FrameAnimation_DESC("Wow2", 0.1f)); // Pink
-	Renderer->ChangeFrameAnimation("Bow1");
+	Renderer->CreateFrameAnimationFolder("Pepper0", FrameAnimation_DESC("Pepper0", 0.1f));
+	Renderer->CreateFrameAnimationFolder("Pepper1", FrameAnimation_DESC("Pepper1", 0.1f)); // Pink
+	Renderer->CreateFrameAnimationFolder("Pepper2", FrameAnimation_DESC("Pepper2", 0.1f));
+	Renderer->ChangeFrameAnimation("Pepper0");
 	Renderer->SetScaleModeImage();
 	SetRenderer(Renderer);
 

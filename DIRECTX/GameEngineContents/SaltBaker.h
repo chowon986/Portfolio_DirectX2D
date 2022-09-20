@@ -8,6 +8,7 @@ class BulldogPlane;
 class GameEngineCollision;
 class GameEngineTextureRenderer;
 class InGameMovementComponent;
+class InGameLevelBase;
 class InGameMonsterAnimationControllerComponent;
 class SaltBaker : public IInGameMonsterBase
 {
@@ -37,6 +38,9 @@ protected:
 	void OnAttack3AnimationFrameChanged(const FrameAnimation_DESC& _Info);
 	void OnAttack4AnimationFrameChanged(const FrameAnimation_DESC& _Info);
 	void OnSaltBakerPhase2IntroFrameChanged(const FrameAnimation_DESC& _Info);
+	void OnSaltBakerPhase2FrameChanged(const FrameAnimation_DESC& _Info);
+	void OnSaltBakerAttack5FrameChanged(const FrameAnimation_DESC& _Info);
+	void OnSaltBakerAttack6FrameChanged(const FrameAnimation_DESC& _Info);
 
 public:
 	void SetBackgroundRenderer(GameEngineTextureRenderer* _Renderer) { BackgroundRenderer = _Renderer; }
@@ -49,4 +53,8 @@ private:
 	InGameMonsterAttackState AttackState;
 	GameEngineCollision* Collision;
 	GameEngineTextureRenderer* BackgroundRenderer;
+	InGameLevelBase* Level;
+	bool TimeCountOn;
+	float CanAttackIntervalTime;
+	float ElapsedTime;
 };
