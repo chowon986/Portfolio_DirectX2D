@@ -32,20 +32,21 @@ void SaltBakerLevel::Start()
 		ColMapRenderer->GetTransform().SetLocalPosition({640.0f, -360.0f, (int)ZOrder::Background + 1 });
 		SetMainColMapImage(ColMapRenderer);
 	}
-
 	{
 		Background* Kitchen = CreateActor<Background>(GameObjectGroup::UI);
-		GameEngineTextureRenderer* KitchenRenderer = Kitchen->CreateComponent<GameEngineTextureRenderer>();
+		KitchenRenderer = Kitchen->CreateComponent<GameEngineTextureRenderer>();
 		KitchenRenderer->CreateFrameAnimationFolder("Kitchen", FrameAnimation_DESC("Kitchen", 0.1f, true));
 		KitchenRenderer->ChangeFrameAnimation("Kitchen");
 		KitchenRenderer->SetScaleModeImage();
 		KitchenRenderer->GetTransform().SetLocalPosition({ 640.0f, -360.0f, (int)ZOrder::Background });
 	}
-	//InGameCuphead* Cuphead = CreateActor<InGameCuphead>();
-	//Cuphead->GetTransform().SetWorldPosition({ 640.0f,-360.0f });
 
 	SaltBaker* Boss = CreateActor<SaltBaker>();
 	Boss->GetTransform().SetWorldPosition({ 640.0f,-360.0f });
+	Boss->SetBackgroundRenderer(KitchenRenderer);
+
+	//InGameCuphead* Cuphead = CreateActor<InGameCuphead>();
+	//Cuphead->GetTransform().SetWorldPosition({ 640.0f,-360.0f });
 
 	//Pepper* Ph2Monster1 = CreateActor<Pepper>();
 	//Ph2Monster1->GetTransform().SetWorldPosition({ 100.0f,100.0f,(int)ZOrder::NPC });

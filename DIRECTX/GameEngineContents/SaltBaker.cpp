@@ -19,16 +19,18 @@ SaltBaker::~SaltBaker()
 void SaltBaker::Start()
 {
 	Renderer = CreateComponent<GameEngineTextureRenderer>();
-	Renderer->CreateFrameAnimationFolder("SaltBakerIntro", FrameAnimation_DESC("SaltBakerIntro", 0.1f));
-	Renderer->CreateFrameAnimationFolder("SaltBakerAttack1", FrameAnimation_DESC("SaltBakerAttack1", 0.1f));
-	Renderer->CreateFrameAnimationFolder("SaltBakerAttack2", FrameAnimation_DESC("SaltBakerAttack2", 0.1f));
-	Renderer->CreateFrameAnimationFolder("SaltBakerAttack3", FrameAnimation_DESC("SaltBakerAttack3", 0.1f));
-	Renderer->CreateFrameAnimationFolder("SaltBakerAttack4", FrameAnimation_DESC("SaltBakerAttack4", 0.1f));
+	Renderer->CreateFrameAnimationFolder("SaltBakerIntro", FrameAnimation_DESC("SaltBakerIntro", 0.05f));
+	Renderer->CreateFrameAnimationFolder("SaltBakerAttack1", FrameAnimation_DESC("SaltBakerAttack1", 0.05f));
+	Renderer->CreateFrameAnimationFolder("SaltBakerAttack2", FrameAnimation_DESC("SaltBakerAttack2", 0.05f));
+	Renderer->CreateFrameAnimationFolder("SaltBakerAttack3", FrameAnimation_DESC("SaltBakerAttack3", 0.05f));
+	Renderer->CreateFrameAnimationFolder("SaltBakerAttack4", FrameAnimation_DESC("SaltBakerAttack4", 0.05f));
+	Renderer->CreateFrameAnimationFolder("SaltBakerPhase2Intro", FrameAnimation_DESC("SaltBakerPhase2Intro", 0.05f));
 	Renderer->AnimationBindFrame("SaltBakerIntro", std::bind(&SaltBaker::OnIntroAnimationFrameChanged, this, std::placeholders::_1));
 	Renderer->AnimationBindFrame("SaltBakerAttack1", std::bind(&SaltBaker::OnAttack1AnimationFrameChanged, this, std::placeholders::_1));
 	Renderer->AnimationBindFrame("SaltBakerAttack2", std::bind(&SaltBaker::OnAttack2AnimationFrameChanged, this, std::placeholders::_1));
 	Renderer->AnimationBindFrame("SaltBakerAttack3", std::bind(&SaltBaker::OnAttack3AnimationFrameChanged, this, std::placeholders::_1));
 	Renderer->AnimationBindFrame("SaltBakerAttack4", std::bind(&SaltBaker::OnAttack4AnimationFrameChanged, this, std::placeholders::_1));
+	Renderer->AnimationBindFrame("SaltBakerPhase2Intro", std::bind(&SaltBaker::OnSaltBakerPhase2IntroFrameChanged, this, std::placeholders::_1));
 	Renderer->SetScaleModeImage();
 	Renderer->ChangeFrameAnimation("SaltBakerIntro");
 
@@ -130,6 +132,28 @@ void SaltBaker::OnAttack4AnimationFrameChanged(const FrameAnimation_DESC& _Info)
 	}
 	else if (_Info.CurFrame == 122)
 	{
-		SetState(InGameMonsterState::Attack2);
+		if (GetHP() <= 0)
+		{
+			SetState(InGameMonsterState::MoveToPhase2);
+		}
+		else
+		{
+			SetState(InGameMonsterState::Attack2);
+		}
+	}
+}
+
+void SaltBaker::OnSaltBakerPhase2IntroFrameChanged(const FrameAnimation_DESC& _Info)
+{
+	if (_Info.CurFrame == 108)
+	{
+		if (nullptr != BackgroundRenderer)
+		{
+			BackgroundRenderer->SetTexture("MoveKitchen.png");
+		}
+	}
+	else if (_Info.CurFrame >= 109)
+	{
+		BackgroundRenderer->GetTransform().SetWorldMove(float4::DOWN * GameEngineTime::GetDeltaTime() * 500);
 	}
 }

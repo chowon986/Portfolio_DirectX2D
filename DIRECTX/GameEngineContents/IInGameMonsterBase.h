@@ -52,6 +52,7 @@ enum class InGameMonsterState
 	Jump,
 	Land,
 	Run,
+	MoveToPhase2,
 };
 
 enum class InGameMonsterAttackState

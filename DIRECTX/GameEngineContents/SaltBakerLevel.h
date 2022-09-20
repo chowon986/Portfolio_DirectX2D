@@ -25,5 +25,6 @@ private:
 
 private:
 	GameEngineTextureRenderer* ColMapRenderer;
+	GameEngineTextureRenderer* KitchenRenderer;
 };
 

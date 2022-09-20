@@ -36,12 +36,17 @@ protected:
 	void OnAttack2AnimationFrameChanged(const FrameAnimation_DESC& _Info);
 	void OnAttack3AnimationFrameChanged(const FrameAnimation_DESC& _Info);
 	void OnAttack4AnimationFrameChanged(const FrameAnimation_DESC& _Info);
+	void OnSaltBakerPhase2IntroFrameChanged(const FrameAnimation_DESC& _Info);
 
 public:
+	void SetBackgroundRenderer(GameEngineTextureRenderer* _Renderer) { BackgroundRenderer = _Renderer; }
+	GameEngineTextureRenderer* GetBackgroundRenderer() { return BackgroundRenderer; }
 
 private:
 	GameEngineTextureRenderer* Renderer;
+	GameEngineTextureRenderer* HandRenderer;
 	InGameMonsterState State;
 	InGameMonsterAttackState AttackState;
 	GameEngineCollision* Collision;
+	GameEngineTextureRenderer* BackgroundRenderer;
 };
