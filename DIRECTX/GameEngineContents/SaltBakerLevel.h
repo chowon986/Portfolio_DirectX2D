@@ -1,10 +1,10 @@
 #pragma once
-#include <GameEngineCore/GameEngineLevel.h>
+#include "InGameLevelBase.h"
 
 // Ό³Έν :
 enum class Phase;
 class GameEngineTextureRenderer;
-class SaltBakerLevel : public GameEngineLevel
+class SaltBakerLevel : public InGameLevelBase
 {
 public:
 	// constrcuter destructer

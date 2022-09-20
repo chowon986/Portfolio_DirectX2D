@@ -38,7 +38,6 @@ void LimeBullet::Start()
 
 void LimeBullet::Update(float _DeltaTime)
 {
-
 	GameEngineTextureRenderer* CollisionMap = GetLevel()->GetMainColMapImage();
 	if (CollisionMap == nullptr)
 	{

@@ -196,6 +196,8 @@ void SaltBakerShooter::Update(float _DeltaTime)
 			case InGameMonsterAttackState::Attack5:
 			case InGameMonsterAttackState::Attack6:
 			{
+				int LeafCount = GameEngineRandom::MainRandom.RandomInt(3, 4);
+
 				{
 					LeafBullet* Bullet = GetLevel()->CreateActor<LeafBullet>();
 					if (nullptr != GetColMapImage())
@@ -203,11 +205,10 @@ void SaltBakerShooter::Update(float _DeltaTime)
 						Bullet->SetColMapImage(GetColMapImage());
 					}
 
-					Bullet->GetRenderer()->ChangeFrameAnimation("Bow1");
+					Bullet->GetRenderer()->ChangeFrameAnimation("Leaf0");
 					Bullet->SetIndexNum(0);
 					Bullet->SetColMapImage(GetColMapImage());
 					Bullet->GetTransform().SetWorldPosition({ 200.0f, 0.0f });
-					Bullet->SetDirection(GetDirection());
 				}
 				{
 					LeafBullet* Bullet = GetLevel()->CreateActor<LeafBullet>();
@@ -216,11 +217,10 @@ void SaltBakerShooter::Update(float _DeltaTime)
 						Bullet->SetColMapImage(GetColMapImage());
 					}
 
-					Bullet->GetRenderer()->ChangeFrameAnimation("Bow1");
+					Bullet->GetRenderer()->ChangeFrameAnimation("Leaf1");
 					Bullet->SetIndexNum(1);
 					Bullet->SetColMapImage(GetColMapImage());
 					Bullet->GetTransform().SetWorldPosition({ 500.0f,0.0f });
-					Bullet->SetDirection(GetDirection());
 				}
 				{
 					LeafBullet* Bullet = GetLevel()->CreateActor<LeafBullet>();
@@ -229,11 +229,10 @@ void SaltBakerShooter::Update(float _DeltaTime)
 						Bullet->SetColMapImage(GetColMapImage());
 					}
 
-					Bullet->GetRenderer()->ChangeFrameAnimation("Bow1");
+					Bullet->GetRenderer()->ChangeFrameAnimation("Leaf2");
 					Bullet->SetIndexNum(2);
 					Bullet->SetColMapImage(GetColMapImage());
 					Bullet->GetTransform().SetWorldPosition({ 800.0f, 0.0f });
-					Bullet->SetDirection(GetDirection());
 				}
 				{
 					LeafBullet* Bullet = GetLevel()->CreateActor<LeafBullet>();
@@ -242,11 +241,10 @@ void SaltBakerShooter::Update(float _DeltaTime)
 						Bullet->SetColMapImage(GetColMapImage());
 					}
 
-					Bullet->GetRenderer()->ChangeFrameAnimation("Bow1");
+					Bullet->GetRenderer()->ChangeFrameAnimation("Leaf3");
 					Bullet->SetIndexNum(3);
 					Bullet->SetColMapImage(GetColMapImage());
 					Bullet->GetTransform().SetWorldPosition({ 1100.0f, 0.0f });
-					Bullet->SetDirection(GetDirection());
 				}
 			}
 			break;

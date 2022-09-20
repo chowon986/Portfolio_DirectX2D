@@ -64,16 +64,18 @@ void SaltBaker::Start()
 
 void SaltBaker::Update(float _DeltaTime)
 {
-	if (Level->GetPhase() == Phase::Phase2 &&
-		GetState() == InGameMonsterState::Idle)
+	if (Level != nullptr)
 	{
-		TimeCountOn = true;
+		if (Level->GetPhase() == Phase::Phase2 &&
+			GetState() == InGameMonsterState::Idle)
+		{
+			TimeCountOn = true;
+		}
+		else
+		{
+			TimeCountOn = false;
+		}
 	}
-	else
-	{
-		TimeCountOn = false;
-	}
-
 	if (true == TimeCountOn)
 	{
 		ElapsedTime += _DeltaTime;
@@ -88,12 +90,12 @@ void SaltBaker::Update(float _DeltaTime)
 		if (RandomAttackNum == 0)
 		{
 			SetState(InGameMonsterState::Attack5);
-			//SetAttackState(InGameMonsterAttackState::Attack5); 손을 만들어서 손이 set해줘야 할 것 같음
+			SetAttackState(InGameMonsterAttackState::Attack5); //손을 만들어서 손이 set해줘야 할 것 같음
 		}
 		else
 		{
 			SetState(InGameMonsterState::Attack6);
-			//SetAttackState(InGameMonsterAttackState::Attack6);
+			SetAttackState(InGameMonsterAttackState::Attack6);
 		}
 	}
 }

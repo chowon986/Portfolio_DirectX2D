@@ -20,11 +20,11 @@ void LeafBullet::Start()
 {
 
 	Renderer = CreateComponent<GameEngineTextureRenderer>();
-	Renderer->CreateFrameAnimationFolder("Bow1", FrameAnimation_DESC("Bow1", 0.1f));
-	Renderer->CreateFrameAnimationFolder("Bow2", FrameAnimation_DESC("Bow2", 0.1f)); // Pink
-	Renderer->CreateFrameAnimationFolder("Wow1", FrameAnimation_DESC("Wow1", 0.1f));
-	Renderer->CreateFrameAnimationFolder("Wow2", FrameAnimation_DESC("Wow2", 0.1f)); // Pink
-	Renderer->ChangeFrameAnimation("Bow1");
+	Renderer->CreateFrameAnimationFolder("Leaf0", FrameAnimation_DESC("Leaf0", 0.1f));
+	Renderer->CreateFrameAnimationFolder("Leaf1", FrameAnimation_DESC("Leaf1", 0.1f)); // Pink
+	Renderer->CreateFrameAnimationFolder("Leaf2", FrameAnimation_DESC("Leaf2", 0.1f));
+	Renderer->CreateFrameAnimationFolder("Leaf3", FrameAnimation_DESC("Leaf3", 0.1f)); // Pink
+	Renderer->ChangeFrameAnimation("Leaf0");
 	Renderer->SetScaleModeImage();
 	SetRenderer(Renderer);
 
@@ -70,7 +70,7 @@ void LeafBullet::Update(float _DeltaTime)
 	{
 		if (IsLeafPosRightEnd == false)
 		{
-			if (DestPosX[IndexNum] == CurPos.x)
+			if (abs(CurPos.x - DestPosX[IndexNum]) <= 0.01f )
 			{
 				IsLeafPosRightEnd = true;
 				ElapsedTime = 0.0f;
@@ -81,7 +81,7 @@ void LeafBullet::Update(float _DeltaTime)
 		}
 		else
 		{
-			if (StartPosX[IndexNum] == CurPos.x)
+			if (abs(CurPos.x - StartPosX[IndexNum]) <= 0.01f)
 			{
 				IsLeafPosRightEnd = false;
 				ElapsedTime = 0.0f;
