@@ -41,10 +41,14 @@ protected:
 	void OnSaltBakerPhase2FrameChanged(const FrameAnimation_DESC& _Info);
 	void OnSaltBakerAttack5FrameChanged(const FrameAnimation_DESC& _Info);
 	void OnSaltBakerAttack6FrameChanged(const FrameAnimation_DESC& _Info);
+	void OnSaltBakerTakeDamageFrameChanged(const FrameAnimation_DESC& _Info);
 
 public:
 	void SetBackgroundRenderer(GameEngineTextureRenderer* _Renderer) { BackgroundRenderer = _Renderer; }
 	GameEngineTextureRenderer* GetBackgroundRenderer() { return BackgroundRenderer; }
+
+	void SetTakeDamageNum(int _Num) { TakeDamageNum = _Num; }
+	int GetTakeDamageNum() { return TakeDamageNum; }
 
 private:
 	GameEngineTextureRenderer* Renderer;
@@ -57,4 +61,5 @@ private:
 	bool TimeCountOn;
 	float CanAttackIntervalTime;
 	float ElapsedTime;
+	int TakeDamageNum;
 };

@@ -15,6 +15,7 @@ SaltBaker::SaltBaker()
 	, TimeCountOn(false)
 	, CanAttackIntervalTime(3.0f)
 	, ElapsedTime(0.0f)
+	, TakeDamageNum(-1)
 {
 }
 
@@ -35,7 +36,10 @@ void SaltBaker::Start()
 	Renderer->CreateFrameAnimationFolder("SaltBakerPhase2Intro", FrameAnimation_DESC("SaltBakerPhase2Intro", 0.05f));
 	Renderer->CreateFrameAnimationFolder("SaltBakerPhase2", FrameAnimation_DESC("SaltBakerPhase2", 0.05f));
 	Renderer->CreateFrameAnimationFolder("SaltBakerIdle", FrameAnimation_DESC("SaltBakerIdle", 0.05f));
-	Renderer->CreateFrameAnimationFolder("SaltBakerTakeDamage", FrameAnimation_DESC("SaltBakerIdle", 0.05f));
+	Renderer->CreateFrameAnimationFolder("SaltBakerTakeDamage0", FrameAnimation_DESC("SaltBakerTakeDamage0", 0.05f));
+	Renderer->CreateFrameAnimationFolder("SaltBakerTakeDamage1", FrameAnimation_DESC("SaltBakerTakeDamage1", 0.05f));
+	Renderer->CreateFrameAnimationFolder("SaltBakerTakeDamage2", FrameAnimation_DESC("SaltBakerTakeDamage2", 0.05f));
+	Renderer->CreateFrameAnimationFolder("SaltBakerTakeDamage3", FrameAnimation_DESC("SaltBakerTakeDamage3", 0.05f));
 
 	Renderer->AnimationBindFrame("SaltBakerIntro", std::bind(&SaltBaker::OnIntroAnimationFrameChanged, this, std::placeholders::_1));
 	Renderer->AnimationBindFrame("SaltBakerAttack1", std::bind(&SaltBaker::OnAttack1AnimationFrameChanged, this, std::placeholders::_1));
@@ -46,6 +50,10 @@ void SaltBaker::Start()
 	Renderer->AnimationBindFrame("SaltBakerPhase2", std::bind(&SaltBaker::OnSaltBakerPhase2FrameChanged, this, std::placeholders::_1));
 	Renderer->AnimationBindFrame("SaltBakerAttack5", std::bind(&SaltBaker::OnSaltBakerAttack5FrameChanged, this, std::placeholders::_1));
 	Renderer->AnimationBindFrame("SaltBakerAttack6", std::bind(&SaltBaker::OnSaltBakerAttack6FrameChanged, this, std::placeholders::_1));
+	Renderer->AnimationBindFrame("SaltBakerTakeDamage0", std::bind(&SaltBaker::OnSaltBakerTakeDamageFrameChanged, this, std::placeholders::_1));
+	Renderer->AnimationBindFrame("SaltBakerTakeDamage1", std::bind(&SaltBaker::OnSaltBakerTakeDamageFrameChanged, this, std::placeholders::_1));
+	Renderer->AnimationBindFrame("SaltBakerTakeDamage2", std::bind(&SaltBaker::OnSaltBakerTakeDamageFrameChanged, this, std::placeholders::_1));
+	Renderer->AnimationBindFrame("SaltBakerTakeDamage3", std::bind(&SaltBaker::OnSaltBakerTakeDamageFrameChanged, this, std::placeholders::_1));
 	Renderer->SetScaleModeImage();
 	Renderer->ChangeFrameAnimation("SaltBakerIntro");
 
@@ -83,7 +91,7 @@ void SaltBaker::Update(float _DeltaTime)
 
 	if (ElapsedTime > CanAttackIntervalTime)
 	{
-		ElapsedTime - CanAttackIntervalTime;
+		ElapsedTime -= CanAttackIntervalTime;
 
 		int RandomAttackNum = GameEngineRandom::MainRandom.RandomInt(0, 1);
 
@@ -184,6 +192,7 @@ void SaltBaker::OnAttack4AnimationFrameChanged(const FrameAnimation_DESC& _Info)
 		if (GetHP() <= 0)
 		{
 			SetState(InGameMonsterState::MoveToPhase2);
+			SetHP(GetHP() + 1); ////
 			SetAttackState(InGameMonsterAttackState::None);
 		}
 		else
@@ -270,5 +279,43 @@ void SaltBaker::OnSaltBakerAttack6FrameChanged(const FrameAnimation_DESC& _Info)
 	if (_Info.CurFrame == 46)
 	{
 		SetState(InGameMonsterState::Idle);
+	}
+}
+
+void SaltBaker::OnSaltBakerTakeDamageFrameChanged(const FrameAnimation_DESC& _Info)
+{
+	if (TakeDamageNum != -1)
+	{
+		if (TakeDamageNum == 0)
+		{
+			if (_Info.CurFrame == 16)
+			{
+				SetState(InGameMonsterState::Idle);
+			}
+		}
+
+		if (TakeDamageNum == 1)
+		{
+			if (_Info.CurFrame == 17)
+			{
+				SetState(InGameMonsterState::Idle);
+			}
+		}
+
+		if (TakeDamageNum == 2)
+		{
+			if (_Info.CurFrame == 18)
+			{
+				SetState(InGameMonsterState::Idle);
+			}
+		}
+
+		if (TakeDamageNum == 3)
+		{
+			if (_Info.CurFrame == 15)
+			{
+				SetState(InGameMonsterState::Idle);
+			}
+		}
 	}
 }

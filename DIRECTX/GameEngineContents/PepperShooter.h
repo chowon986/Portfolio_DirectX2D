@@ -51,6 +51,7 @@ private:
 	void OnPepperShooterIntroAnimationFrameFinished(const FrameAnimation_DESC& _Info);
 	void OnPepperShooterAttackAnimationFrameFinished(const FrameAnimation_DESC& _Info);
 	void OnPepperShooterDeathAnimationFrameFinished(const FrameAnimation_DESC& _Info);
+	void OnPepperShooterReturnAnimationFrameFinished(const FrameAnimation_DESC& _Info);
 
 public:
 	void SetDeathNum(int _Num);

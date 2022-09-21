@@ -56,8 +56,8 @@ void PepperShooter::UpdateAnimation()
 	case PepperState::Attack2:
 		Renderer->ChangeFrameAnimation("PepperShooterDeath" + std::to_string(DeathNum));
 		break;
-		break;
 	case PepperState::Death:
+		Renderer->ChangeFrameAnimation("PepperShooterReturn");
 		break;
 	}
 }
@@ -174,6 +174,11 @@ void PepperShooter::OnPepperShooterDeathAnimationFrameFinished(const FrameAnimat
 	}
 }
 
+void PepperShooter::OnPepperShooterReturnAnimationFrameFinished(const FrameAnimation_DESC& _Info)
+{
+	Death();
+}
+
 void PepperShooter::SetDeathNum(int _Num)
 {
 	DeathNum = _Num;
@@ -190,12 +195,14 @@ void PepperShooter::Start()
 	Renderer->CreateFrameAnimationFolder("PepperShooterDeath3", FrameAnimation_DESC("PepperShooterDeathD", 0.05f, false));
 	Renderer->CreateFrameAnimationFolder("PepperShooterAttack", FrameAnimation_DESC("PepperShooterAttack", 0.05f, false));
 	Renderer->CreateFrameAnimationFolder("PepperShooterIdle", FrameAnimation_DESC("PepperShooterIdle", 0.05f, true));
+	Renderer->CreateFrameAnimationFolder("PepperShooterReturn", FrameAnimation_DESC("PepperShooterReturn", 0.05f, true));
 	Renderer->AnimationBindFrame("PepperShooterIntro", std::bind(&PepperShooter::OnPepperShooterIntroAnimationFrameFinished, this, std::placeholders::_1));
 	Renderer->AnimationBindFrame("PepperShooterAttack", std::bind(&PepperShooter::OnPepperShooterAttackAnimationFrameFinished, this, std::placeholders::_1));
 	Renderer->AnimationBindFrame("PepperShooterDeath0", std::bind(&PepperShooter::OnPepperShooterDeathAnimationFrameFinished, this, std::placeholders::_1));
 	Renderer->AnimationBindFrame("PepperShooterDeath1", std::bind(&PepperShooter::OnPepperShooterDeathAnimationFrameFinished, this, std::placeholders::_1));
 	Renderer->AnimationBindFrame("PepperShooterDeath2", std::bind(&PepperShooter::OnPepperShooterDeathAnimationFrameFinished, this, std::placeholders::_1));
 	Renderer->AnimationBindFrame("PepperShooterDeath3", std::bind(&PepperShooter::OnPepperShooterDeathAnimationFrameFinished, this, std::placeholders::_1));
+	Renderer->AnimationBindEnd("PepperShooterReturn", std::bind(&PepperShooter::OnPepperShooterReturnAnimationFrameFinished, this, std::placeholders::_1));
 	Renderer->SetScaleModeImage();
 	Renderer->ChangeFrameAnimation("PepperShooterIntro");
 
@@ -215,11 +222,17 @@ void PepperShooter::Update(float _DeltaTime)
 {
 	MonsterWeaponBase::Update(_DeltaTime);
 
-	// Attack1 -> Idle
-	// Attack2 -> Prepare -> Idle
+	if (Boss = dynamic_cast<SaltBaker*>(GetParent()))
+	{
+		if (Boss->GetHP() <= 0)
+		{
+			SetPepperState(PepperState::Death);
+		}
+	}
+
 	if (State == PepperState::Idle)
 	{
-		ElapsedTimeMove = 0.f;
+		ElapsedTimeMove = 0.0f;
 		StartBodyAttack = false;
 		ElapsedTime += _DeltaTime;
 		if (ElapsedTime > 3.0f)
@@ -228,28 +241,41 @@ void PepperShooter::Update(float _DeltaTime)
 		}
 		else if (GetHP() <= 10)
 		{
+			//if (Boss->GetState() == InGameMonsterState::TakeDamage)
+			//{
+			//	return;
+			//}
 			SetPepperState(PepperState::Attack2);
 		}
 	}
 	else if (State == PepperState::Attack2)
 	{
 		ElapsedTime = 0.0f;
-		if (StartBodyAttack == true)
+		if (nullptr != Boss)
 		{
-			ElapsedTimeMove += _DeltaTime;
-			float4 WorldPos = GetTransform().GetWorldPosition();
-			float DestX = GameEngineMath::LerpLimit(WorldPos.x, DestPos.x, ElapsedTimeMove / 30);
-			float DestY = GameEngineMath::LerpLimit(WorldPos.y, DestPos.y, ElapsedTimeMove / 30);
+			if (StartBodyAttack == true)
+			{
+				ElapsedTimeMove += _DeltaTime;
+				float4 WorldPos = GetTransform().GetWorldPosition();
+				float DestX = GameEngineMath::LerpLimit(WorldPos.x, DestPos.x, ElapsedTimeMove / 30);
+				float DestY = GameEngineMath::LerpLimit(WorldPos.y, DestPos.y, ElapsedTimeMove / 30);
 
-			if (abs(DestX - DestPos.x) < 1 &&
-				abs(DestY - DestPos.y) < 1)
-			{
-				GetTransform().SetWorldPosition(StartPos);
-				SetPepperState(PepperState::Prepare);
-			}
-			else
-			{
-				GetTransform().SetWorldPosition(float4(DestX, DestY, WorldPos.z));
+				if (abs(DestX - DestPos.x) < 1 &&
+					abs(DestY - DestPos.y) < 1)
+				{
+					if (nullptr != Boss)
+					{
+						Boss->SetTakeDamageNum(DeathNum);
+						Boss->SetState(InGameMonsterState::TakeDamage);
+						Boss->SetHP(Boss->GetHP() - 1);
+					}
+					GetTransform().SetWorldPosition(StartPos);
+					SetPepperState(PepperState::Prepare);
+				}
+				else
+				{
+					GetTransform().SetWorldPosition(float4(DestX, DestY, WorldPos.z));
+				}
 			}
 		}
 	}
@@ -259,18 +285,9 @@ void PepperShooter::Update(float _DeltaTime)
 		StartBodyAttack = false;
 		ElapsedTime = 0.0f;
 	}
+
 	// Idle -> Attack1 ? Attack2는 아니고 3초에 한번씩
 	// Idle -> Death ? Attack1이 아니고 HP가 5 이하
-
-
-	//if (SaltBaker* Boss = dynamic_cast<SaltBaker*>(GetParent()))
-	//{
-	//	if (Boss->GetHP() <= 0)
-	//	{
-	//		Renderer->ChangeFrameAnimation("PepperShooterDeath" + std::to_string(DeathNum));
-	//		SetHP(10);
-	//	}
-	//}
 }
 
 void PepperShooter::End()

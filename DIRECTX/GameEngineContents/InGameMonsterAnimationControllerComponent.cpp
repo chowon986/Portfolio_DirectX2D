@@ -1,6 +1,7 @@
 #include "PreCompile.h"
 #include "InGameMonsterAnimationControllerComponent.h"
 #include "Bulldog.h"
+#include "SaltBaker.h"
 
 InGameMonsterAnimationControllerComponent::InGameMonsterAnimationControllerComponent()
 {
@@ -86,7 +87,7 @@ void InGameMonsterAnimationControllerComponent::UpdateAnimation()
 		Renderer->ChangeFrameAnimation(Name + "Land");
 	}
 
-	else if (State== InGameMonsterState::Attack1)
+	else if (State == InGameMonsterState::Attack1)
 	{
 		Renderer->ChangeFrameAnimation(Name + "Attack1");
 	}
@@ -165,12 +166,19 @@ void InGameMonsterAnimationControllerComponent::UpdateAnimation()
 
 	else if (State == InGameMonsterState::Idle)
 	{
-
 		Renderer->ChangeFrameAnimation(Name + "Idle");
 	}
 
 	else if (State == InGameMonsterState::TakeDamage)
 	{
+		if (Name == "SaltBaker")
+		{
+			if (SaltBaker* Boss = dynamic_cast<SaltBaker*>(GetParent()))
+			{
+				int Num = Boss->GetTakeDamageNum();
+				Renderer->ChangeFrameAnimation(Name + "TakeDamage" + std::to_string(Num));
+			}
+		}
 	}
 
 	else if (State == InGameMonsterState::Die)
