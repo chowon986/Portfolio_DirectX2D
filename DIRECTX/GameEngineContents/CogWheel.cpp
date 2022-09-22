@@ -1,11 +1,12 @@
 #include "PreCompile.h"
 #include "CogWheel.h"
+#include "CogWheelDust.h"
 #include "InGameMovementComponent.h"
 #include "InGameMonsterAnimationControllerComponent.h"
 
 CogWheel::CogWheel()
 	: Renderer(nullptr)
-	, State(InGameMonsterState::Idle)
+	, State(InGameMonsterState::None)
 	, AttackState(InGameMonsterAttackState::None)
 	, Collision(nullptr)
 {
@@ -18,18 +19,30 @@ CogWheel::~CogWheel()
 void CogWheel::Start()
 {
 	Renderer = CreateComponent<GameEngineTextureRenderer>();
-	Renderer->CreateFrameAnimationFolder("CogWheelIntro", FrameAnimation_DESC("BulldogIdle", 0.1f));
-	Renderer->CreateFrameAnimationFolder("CogWheelAttack1", FrameAnimation_DESC("BulldogIdle", 0.1f));
-	Renderer->AnimationBindFrame("CogWheelAttack1", std::bind(&CogWheel::Test, this, std::placeholders::_1));
+	Renderer->CreateFrameAnimationFolder("CogWheelIntro", FrameAnimation_DESC("CogWheelIntro", 0.05f));
+	Renderer->CreateFrameAnimationFolder("CogWheelAlternate", FrameAnimation_DESC("CogWheelAlternate", 0.05f));
+	Renderer->CreateFrameAnimationFolder("CogWheelIdle", FrameAnimation_DESC("CogWheelIdle", 0.05f));
+	Renderer->CreateFrameAnimationFolder("CogWheelTurn", FrameAnimation_DESC("CogWheelTurn", 0.05f));
+	Renderer->CreateFrameAnimationFolder("CogWheelDie", FrameAnimation_DESC("CogWheelTurn", 0.05f));
+
+	Renderer->AnimationBindFrame("CogWheelIntro", std::bind(&CogWheel::OnCogWheelIntroAnimationFrameChanged, this, std::placeholders::_1));
+	Renderer->AnimationBindFrame("CogWheelAlternate", std::bind(&CogWheel::OnCogWheelAlternateAnimationFrameChanged, this, std::placeholders::_1));
+	Renderer->AnimationBindFrame("CogWheelTurn", std::bind(&CogWheel::OnCogWheelTurnAnimationFrameChanged, this, std::placeholders::_1));
+	Renderer->AnimationBindFrame("CogWheelDie", std::bind(&CogWheel::OnCogWheelDeathAnimationFrameChanged, this, std::placeholders::_1));
+
 	Renderer->SetScaleModeImage();
-	Renderer->ChangeFrameAnimation("CogWheelAttack1");
+	Renderer->ChangeFrameAnimation("CogWheelIntro");
+	Renderer->SetPivot(PIVOTMODE::BOT);
 
 	SetRenderer(Renderer);
 
-	InGameMovementComponent* Movement = CreateComponent<InGameMovementComponent>();
 	InGameMonsterAnimationControllerComponent* Animation = CreateComponent<InGameMonsterAnimationControllerComponent>();
 	Animation->SetMonsterName("CogWheel");
 	MoveDirection = float4::RIGHT;
+	SetState(InGameMonsterState::Prepare);
+
+	Dust = GetLevel()->CreateActor<CogWheelDust>();
+	Dust->SetBoss(this);
 }
 
 void CogWheel::Update(float _DeltaTime)
@@ -46,16 +59,43 @@ void CogWheel::Update(float _DeltaTime)
 		return;
 	}
 
-	if (true == ColMapTexture->GetPixelToFloat4(GetTransform().GetWorldPosition().x - 10, -GetTransform().GetWorldPosition().y).CompareInt4D(float4::BLACK))
+	if (GetState() == InGameMonsterState::Prepare)
 	{
+		MoveDirection = float4::ZERO;
+		return;
+	}
+	if (GetState() == InGameMonsterState::Alternate)
+	{
+		if (MoveDirection.CompareInt3D(float4::ZERO))
+		{
+			MoveDirection = float4::RIGHT;
+		}
+	}
+
+	if (true == ColMapTexture->GetPixelToFloat4(GetTransform().GetWorldPosition().x - 50, -GetTransform().GetWorldPosition().y).CompareInt4D(float4::BLACK))
+	{
+		SetState(InGameMonsterState::Turn);
 		MoveDirection = float4::RIGHT;
 	}
-	else if (true == ColMapTexture->GetPixelToFloat4(GetTransform().GetWorldPosition().x + 10, -GetTransform().GetWorldPosition().y).CompareInt4D(float4::BLACK))
+	else if (true == ColMapTexture->GetPixelToFloat4(GetTransform().GetWorldPosition().x + 50, -GetTransform().GetWorldPosition().y).CompareInt4D(float4::BLACK))
 	{
+		SetState(InGameMonsterState::Turn);
 		MoveDirection = float4::LEFT;
 	}
 
-	GetTransform().SetLocalMove(MoveDirection);
+	if (GetState() == InGameMonsterState::Alternate || GetState() == InGameMonsterState::Idle)
+	{
+		if (MoveDirection.CompareInt3D(float4::RIGHT))
+		{
+			Renderer->GetTransform().PixLocalPositiveX();
+		}
+		else if (MoveDirection.CompareInt3D(float4::LEFT))
+		{
+			Renderer->GetTransform().PixLocalNegativeX();
+		}
+	}
+
+	GetTransform().SetLocalMove(MoveDirection * _DeltaTime * 200);
 }
 
 void CogWheel::TakeDamage()
@@ -75,10 +115,6 @@ void CogWheel::Idle()
 
 void CogWheel::Shoot()
 {
-	//SetState(InGameMonsterState::Attack5);
-	//SetAttackState(InGameMonsterAttackState::Attack5);
-	SetState(InGameMonsterState::Attack1);
-	SetAttackState(InGameMonsterAttackState::Attack1);
 }
 
 void CogWheel::Die()
@@ -86,6 +122,43 @@ void CogWheel::Die()
 	SetState(InGameMonsterState::Die);
 }
 
-void CogWheel::Test(const FrameAnimation_DESC& _Info)
+void CogWheel::OnCogWheelIntroAnimationFrameChanged(const FrameAnimation_DESC& _Info)
 {
+	if (_Info.CurFrame == 20)
+	{
+		if (nullptr != Dust)
+		{
+			Dust->SetState(CogWheelDustState::Intro);
+		}
+	}
+
+	if (_Info.CurFrame == 25)
+	{
+		SetState(InGameMonsterState::Alternate);
+	}
 }
+
+void CogWheel::OnCogWheelAlternateAnimationFrameChanged(const FrameAnimation_DESC& _Info)
+{
+	if (_Info.CurFrame == 15)
+	{
+		SetState(InGameMonsterState::Idle);
+	}
+}
+
+void CogWheel::OnCogWheelTurnAnimationFrameChanged(const FrameAnimation_DESC& _Info)
+{
+	if (_Info.CurFrame == 8)
+	{
+		SetState(InGameMonsterState::Alternate);
+	}
+}
+
+void CogWheel::OnCogWheelDeathAnimationFrameChanged(const FrameAnimation_DESC& _Info)
+{
+	if (_Info.CurFrame == 19)
+	{
+		SetState(InGameMonsterState::Die);
+	}
+}
+

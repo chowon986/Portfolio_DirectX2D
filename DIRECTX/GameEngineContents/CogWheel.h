@@ -9,6 +9,7 @@ class GameEngineCollision;
 class GameEngineTextureRenderer;
 class InGameMovementComponent;
 class IInGameCharacterBase;
+class CogWheelDust;
 class InGameMonsterAnimationControllerComponent;
 class CogWheel : public IInGameMonsterBase
 {
@@ -32,7 +33,11 @@ protected:
 	void Shoot() override;
 	void Die() override;
 
-	void Test(const FrameAnimation_DESC& _Info);
+private:
+	void OnCogWheelIntroAnimationFrameChanged(const FrameAnimation_DESC& _Info);
+	void OnCogWheelAlternateAnimationFrameChanged(const FrameAnimation_DESC& _Info);
+	void OnCogWheelTurnAnimationFrameChanged(const FrameAnimation_DESC& _Info);
+	void OnCogWheelDeathAnimationFrameChanged(const FrameAnimation_DESC& _Info);
 
 private:
 	GameEngineTextureRenderer* Renderer;
@@ -40,4 +45,5 @@ private:
 	InGameMonsterAttackState AttackState;
 	GameEngineCollision* Collision;
 	float4 MoveDirection;
+	CogWheelDust* Dust;
 };

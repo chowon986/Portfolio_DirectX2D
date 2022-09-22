@@ -55,6 +55,9 @@ enum class InGameMonsterState
 	Run,
 	MoveToPhase2,
 	Phase2,
+	None,
+	Alternate, // cogwheel
+	Turn, // cogwheel
 };
 
 enum class InGameMonsterAttackState

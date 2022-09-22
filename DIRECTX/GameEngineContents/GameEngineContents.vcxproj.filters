@@ -139,6 +139,9 @@
     <Filter Include="Actor\Item\Super">
       <UniqueIdentifier>{ee8ebaaa-1554-4e74-a4ae-9e971ab58b73}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Actor\Play\InGame\NPC\Effect">
+      <UniqueIdentifier>{b15b08e7-dc7c-44b4-b478-602701dc5e99}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ContentsCore.h">
@@ -612,6 +615,9 @@
     <ClInclude Include="PlayerCard.h">
       <Filter>Global</Filter>
     </ClInclude>
+    <ClInclude Include="CogWheelDust.h">
+      <Filter>Actor\Play\InGame\NPC\Effect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp">
@@ -1078,6 +1084,9 @@
     </ClCompile>
     <ClCompile Include="PlayerCard.cpp">
       <Filter>Global</Filter>
+    </ClCompile>
+    <ClCompile Include="CogWheelDust.cpp">
+      <Filter>Actor\Play\InGame\NPC\Effect</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

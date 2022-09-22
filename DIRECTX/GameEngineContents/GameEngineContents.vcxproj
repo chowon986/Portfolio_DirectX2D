@@ -191,6 +191,7 @@
     <ClInclude Include="Chicken.h" />
     <ClInclude Include="ChickenPhysicsComponent.h" />
     <ClInclude Include="CogWheel.h" />
+    <ClInclude Include="CogWheelDust.h" />
     <ClInclude Include="ContentsCore.h">
       <SubType>
       </SubType>
@@ -359,6 +360,7 @@
     <ClCompile Include="Chicken.cpp" />
     <ClCompile Include="ChickenPhysicsComponent.cpp" />
     <ClCompile Include="CogWheel.cpp" />
+    <ClCompile Include="CogWheelDust.cpp" />
     <ClCompile Include="ContentsCore.cpp">
       <SubType>
       </SubType>
