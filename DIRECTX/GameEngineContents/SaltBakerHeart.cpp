@@ -28,7 +28,7 @@ void SaltBakerHeart::Start()
 
 	Collision = CreateComponent<GameEngineCollision>();
 	Collision->GetTransform().SetLocalScale({ 60.0f, 60.0f, 1.0f });
-	Collision->ChangeOrder(ObjectOrder::MONSTER_BULLET);
+	Collision->ChangeOrder(ObjectOrder::NPC);
 
 	Renderer->ChangeCamera(CAMERAORDER::ROTATECAMERA);
 
@@ -37,7 +37,8 @@ void SaltBakerHeart::Start()
 	StartPosX.insert(std::make_pair<int, float>(0, 400.0f));
 	DestPosX.insert(std::make_pair<int, float>(0, 700.0f));
 
-	SetUpDownDirection(float4::DOWN);
+	SetVerticalDirection(float4::DOWN);
+	SetHorizontalDirection(float4::RIGHT);
 }
 
 void SaltBakerHeart::Update(float _DeltaTime)
@@ -54,43 +55,48 @@ void SaltBakerHeart::Update(float _DeltaTime)
 		return;
 	}
 
-	ElapsedTime += _DeltaTime;
-	LerpTime = ElapsedTime / 1.0f;
-	float4 CurPos = GetTransform().GetWorldPosition();
+	//ElapsedTime += _DeltaTime;
+	//LerpTime = ElapsedTime / 1.0f;
+	//float4 CurPos = GetTransform().GetWorldPosition();
 
-	if (IsHeartPosRightEnd == false)
-	{
-		if (DestPosX[0] == CurPos.x)
-		{
-			IsHeartPosRightEnd = true;
-			ElapsedTime = 0.0f;
-			return;
-		}
+	//if (IsHeartPosRightEnd == false)
+	//{
+	//	if (DestPosX[0] == CurPos.x)
+	//	{
+	//		IsHeartPosRightEnd = true;
+	//		ElapsedTime = 0.0f;
+	//		return;
+	//	}
 
-		LerpPos = float4::LerpLimit(StartPosX[0], DestPosX[0], LerpTime);
-	}
-	else
-	{
-		if (StartPosX[0] == CurPos.x)
-		{
-			IsHeartPosRightEnd = false;
-			ElapsedTime = 0.0f;
-			return;
-		}
-		LerpPos = float4::LerpLimit(DestPosX[0], StartPosX[0], LerpTime);
-	}
+	//	LerpPos = float4::LerpLimit(StartPosX[0], DestPosX[0], LerpTime);
+	//}
+	//else
+	//{
+	//	if (StartPosX[0] == CurPos.x)
+	//	{
+	//		IsHeartPosRightEnd = false;
+	//		ElapsedTime = 0.0f;
+	//		return;
+	//	}
+	//	LerpPos = float4::LerpLimit(DestPosX[0], StartPosX[0], LerpTime);
+	//}
 
-	GetTransform().SetLocalPosition({ LerpPos.x, CurPos.y, (int)ZOrder::Background - 2 });
+	//GetTransform().SetLocalPosition({ LerpPos.x, CurPos.y, (int)ZOrder::Background - 2 });
 
 	if (true == ColMapTexture->GetPixelToFloat4(GetTransform().GetWorldPosition().x, -(GetTransform().GetWorldPosition().y - 15)).CompareInt4D(float4::BLACK))
 	{
-		SetUpDownDirection(float4::UP);
+		SetVerticalDirection(float4::UP);
 	}
 	else if (true == ColMapTexture->GetPixelToFloat4(GetTransform().GetWorldPosition().x, -(GetTransform().GetWorldPosition().y + 15)).CompareInt4D(float4::BLACK))
 	{
-		SetUpDownDirection(float4::DOWN);
+		SetVerticalDirection(float4::DOWN);
 	}
-	GetTransform().SetLocalMove(GetUpDownDirection() * _DeltaTime * 200);
+
+	Collision->IsCollision(CollisionType::CT_AABB2D, (int)ObjectOrder::TRACKING1, CollisionType::CT_AABB2D, std::bind(&SaltBakerHeart::OnDirectionChangeColToLeft, this, std::placeholders::_1, std::placeholders::_2));
+	Collision->IsCollision(CollisionType::CT_AABB2D, (int)ObjectOrder::TRACKING1, CollisionType::CT_AABB2D, std::bind(&SaltBakerHeart::OnDirectionChangeColToRight, this, std::placeholders::_1, std::placeholders::_2));
+
+
+	GetTransform().SetLocalMove((VerticalDirection + HorizontalDirection) * _DeltaTime * 200);
 
 }
 
@@ -122,6 +128,16 @@ void SaltBakerHeart::Die()
 	SetState(InGameMonsterState::Die);
 }
 
-void SaltBakerHeart::Test(const FrameAnimation_DESC& _Info)
+CollisionReturn SaltBakerHeart::OnDirectionChangeColToLeft(GameEngineCollision* _This, GameEngineCollision* _Other)
 {
+	SetHorizontalDirection(float4::LEFT);
+
+	return CollisionReturn::ContinueCheck;
+}
+
+CollisionReturn SaltBakerHeart::OnDirectionChangeColToRight(GameEngineCollision* _This, GameEngineCollision* _Other)
+{
+	SetHorizontalDirection(float4::RIGHT);
+
+	return CollisionReturn::ContinueCheck;
 }

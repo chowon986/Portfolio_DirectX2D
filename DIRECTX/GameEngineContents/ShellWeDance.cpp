@@ -2,6 +2,7 @@
 #include "ShellWeDance.h"
 #include "InGameMonsterAnimationControllerComponent.h"
 #include "ShellWeDancePhysicsComponent.h"
+#include "SaltBakerLevel.h"
 
 ShellWeDance::ShellWeDance()
 	: Renderer(nullptr)
@@ -18,9 +19,10 @@ ShellWeDance::~ShellWeDance()
 void ShellWeDance::Start()
 {
 	Renderer = CreateComponent<GameEngineTextureRenderer>();
-	Renderer->CreateFrameAnimationFolder("ShellWeDanceIntro", FrameAnimation_DESC("ShellWeDance", 0.1f));
-	Renderer->CreateFrameAnimationFolder("ShellWeDanceAttack1", FrameAnimation_DESC("ShellWeDance", 0.1f));
-	Renderer->AnimationBindFrame("ShellWeDanceAttack1", std::bind(&ShellWeDance::Test, this, std::placeholders::_1));
+	Renderer->CreateFrameAnimationFolder("ShellWeDanceIntro", FrameAnimation_DESC("ShellWeDance", 0.05f));
+	Renderer->CreateFrameAnimationFolder("ShellWeDanceAttack1", FrameAnimation_DESC("ShellWeDance", 0.05f));
+	Renderer->CreateFrameAnimationFolder("ShellWeDanceDie", FrameAnimation_DESC("ShellWeDance", 0.05f));
+	Renderer->AnimationBindFrame("ShellWeDanceDie", std::bind(&ShellWeDance::OnShellWeDanceDeathAnimationFrameChanged, this, std::placeholders::_1));
 	Renderer->SetScaleModeImage();
 	Renderer->ChangeFrameAnimation("ShellWeDanceAttack1");
 
@@ -35,6 +37,11 @@ void ShellWeDance::Start()
 
 void ShellWeDance::Update(float _DeltaTime)
 {
+	if (GetHP() <= 0)
+	{
+		SetState(InGameMonsterState::Die);
+	}
+
 	GameEngineTextureRenderer* CollisionMap = GetLevel()->GetMainColMapImage();
 	if (CollisionMap == nullptr)
 	{
@@ -50,17 +57,17 @@ void ShellWeDance::Update(float _DeltaTime)
 	if (Physics->IsOnGround == true)
 	{
 		Physics->Reset();
-		Physics->AddForce(60);
+		Physics->AddForce(68);
 		Physics->IsOnGround = false;
 	}
 
-	if (true == ColMapTexture->GetPixelToFloat4(static_cast<int>(GetTransform().GetWorldPosition().x - 100.0f), static_cast<int>(-GetTransform().GetWorldPosition().y)).CompareInt4D(float4::BLACK))
+	if (true == ColMapTexture->GetPixelToFloat4(static_cast<int>(GetTransform().GetWorldPosition().x - 65.0f), static_cast<int>(-GetTransform().GetWorldPosition().y)).CompareInt4D(float4::BLACK))
 	{
-		MoveDirection = float4::RIGHT;
+		MoveDirection = float4::RIGHT * 2.5;
 	}
-	else if (true == ColMapTexture->GetPixelToFloat4(static_cast<int>(GetTransform().GetWorldPosition().x + 100), static_cast<int>( - GetTransform().GetWorldPosition().y)).CompareInt4D(float4::BLACK))
+	else if (true == ColMapTexture->GetPixelToFloat4(static_cast<int>(GetTransform().GetWorldPosition().x + 65.0f), static_cast<int>( - GetTransform().GetWorldPosition().y)).CompareInt4D(float4::BLACK))
 	{
-		MoveDirection = float4::LEFT;
+		MoveDirection = float4::LEFT * 2.5;
 	}
 
 	GetTransform().SetLocalMove(MoveDirection * _DeltaTime * 200);
@@ -94,6 +101,14 @@ void ShellWeDance::Die()
 	SetState(InGameMonsterState::Die);
 }
 
-void ShellWeDance::Test(const FrameAnimation_DESC& _Info)
+void ShellWeDance::OnShellWeDanceDeathAnimationFrameChanged(const FrameAnimation_DESC& _Info)
 {
+	if (_Info.CurFrame == 5)
+	{
+		Death();
+		if (SaltBakerLevel* Level = dynamic_cast<SaltBakerLevel*>(GetLevel()))
+		{
+			Level->SetPhase(Phase::Phase4);
+		}
+	}
 }

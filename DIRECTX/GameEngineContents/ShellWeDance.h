@@ -33,7 +33,7 @@ protected:
 	void Shoot() override;
 	void Die() override;
 
-	void Test(const FrameAnimation_DESC& _Info);
+	void OnShellWeDanceDeathAnimationFrameChanged(const FrameAnimation_DESC& _Info);
 
 public:
 	void SetPhysicsComponent(ShellWeDancePhysicsComponent* _Physics) { Physics = _Physics;}

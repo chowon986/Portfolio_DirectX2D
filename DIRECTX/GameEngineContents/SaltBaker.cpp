@@ -40,6 +40,7 @@ void SaltBaker::Start()
 	Renderer->CreateFrameAnimationFolder("SaltBakerTakeDamage1", FrameAnimation_DESC("SaltBakerTakeDamage1", 0.05f));
 	Renderer->CreateFrameAnimationFolder("SaltBakerTakeDamage2", FrameAnimation_DESC("SaltBakerTakeDamage2", 0.05f));
 	Renderer->CreateFrameAnimationFolder("SaltBakerTakeDamage3", FrameAnimation_DESC("SaltBakerTakeDamage3", 0.05f));
+	Renderer->CreateFrameAnimationFolder("SaltBakerDie", FrameAnimation_DESC("SaltBakerDeath", 0.05f));
 
 	Renderer->AnimationBindFrame("SaltBakerIntro", std::bind(&SaltBaker::OnIntroAnimationFrameChanged, this, std::placeholders::_1));
 	Renderer->AnimationBindFrame("SaltBakerAttack1", std::bind(&SaltBaker::OnAttack1AnimationFrameChanged, this, std::placeholders::_1));
@@ -54,6 +55,7 @@ void SaltBaker::Start()
 	Renderer->AnimationBindFrame("SaltBakerTakeDamage1", std::bind(&SaltBaker::OnSaltBakerTakeDamageFrameChanged, this, std::placeholders::_1));
 	Renderer->AnimationBindFrame("SaltBakerTakeDamage2", std::bind(&SaltBaker::OnSaltBakerTakeDamageFrameChanged, this, std::placeholders::_1));
 	Renderer->AnimationBindFrame("SaltBakerTakeDamage3", std::bind(&SaltBaker::OnSaltBakerTakeDamageFrameChanged, this, std::placeholders::_1));
+	Renderer->AnimationBindFrame("SaltBakerDie", std::bind(&SaltBaker::OnSaltBakerDieAnimationFrameChanged, this, std::placeholders::_1));
 	Renderer->SetScaleModeImage();
 	Renderer->ChangeFrameAnimation("SaltBakerIntro");
 
@@ -77,6 +79,11 @@ void SaltBaker::Update(float _DeltaTime)
 		if (Level->GetPhase() == Phase::Phase2 &&
 			GetState() == InGameMonsterState::Idle)
 		{
+			if (GetHP() <= 0)
+			{
+				SetState(InGameMonsterState::Die);
+				return;
+			}
 			TimeCountOn = true;
 		}
 		else
@@ -94,7 +101,7 @@ void SaltBaker::Update(float _DeltaTime)
 		ElapsedTime -= CanAttackIntervalTime;
 
 		int RandomAttackNum = GameEngineRandom::MainRandom.RandomInt(0, 1);
-
+		
 		if (RandomAttackNum == 0)
 		{
 			SetState(InGameMonsterState::Attack5);
@@ -192,7 +199,6 @@ void SaltBaker::OnAttack4AnimationFrameChanged(const FrameAnimation_DESC& _Info)
 		if (GetHP() <= 0)
 		{
 			SetState(InGameMonsterState::MoveToPhase2);
-			SetHP(GetHP() + 1); ////
 			SetAttackState(InGameMonsterAttackState::None);
 		}
 		else
@@ -316,6 +322,18 @@ void SaltBaker::OnSaltBakerTakeDamageFrameChanged(const FrameAnimation_DESC& _In
 			{
 				SetState(InGameMonsterState::Idle);
 			}
+		}
+	}
+}
+
+void SaltBaker::OnSaltBakerDieAnimationFrameChanged(const FrameAnimation_DESC& _Info)
+{
+	if (_Info.CurFrame == 90)
+	{
+		Death();
+		if (nullptr != Level)
+		{
+			Level->SetPhase(Phase::Phase3);
 		}
 	}
 }

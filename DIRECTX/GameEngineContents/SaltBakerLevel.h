@@ -25,13 +25,9 @@ protected:
 private:
 	void EndAnimation(const FrameAnimation_DESC& _Info);
 
-public:
-	void SetPhase(Phase _Phase) { CurPhase = _Phase; }
-	Phase GetPhase() { return CurPhase; }
-
 private:
 	GameEngineTextureRenderer* ColMapRenderer;
 	GameEngineTextureRenderer* KitchenRenderer;
-	Phase CurPhase;
+	Phase BeforePhase;
 };
 

@@ -13,6 +13,7 @@
 #include "SaltBakerHeart.h"
 
 SaltBakerLevel::SaltBakerLevel()
+	:BeforePhase(Phase::Ready)
 {
 }
 
@@ -48,20 +49,6 @@ void SaltBakerLevel::Start()
 	//InGameCuphead* Cuphead = CreateActor<InGameCuphead>();
 	//Cuphead->GetTransform().SetWorldPosition({ 640.0f,-360.0f });
 
-	//Pepper* Ph2Monster1 = CreateActor<Pepper>();
-	//Ph2Monster1->GetTransform().SetWorldPosition({ 100.0f,100.0f,(int)ZOrder::NPC });
-	//Ph2Monster1->SetPlayer(Cuphead);
-	//Ph2Monster1->SetMonster(Boss);
-
-	//CogWheel* Ph3Monster1 = CreateActor<CogWheel>();
-	//Ph3Monster1->GetTransform().SetWorldPosition({ 640.0f,-600.0f });
-
-	//ShellWeDance* Ph3Monster2 = CreateActor<ShellWeDance>();
-	//Ph3Monster2->GetTransform().SetWorldPosition({ 640.0f,-600.0f });
-
-	//SaltBakerHeart* Ph4Boss = CreateActor<SaltBakerHeart>();
-	//Ph4Boss->GetTransform().SetWorldPosition({ 640.0f,-400.0f });
-
 
 	//Chicken* ComMonster = CreateActor<Chicken>();
 	//Monster->GetTransform().SetWorldPosition({ 640.0f, -360.0f });
@@ -80,6 +67,27 @@ void SaltBakerLevel::Update(float _DeltaTime)
 	if (true == GameEngineInput::GetInst()->IsDown("LevelChange"))
 	{
 		GEngine::ChangeLevel("WorldMap");
+	}
+
+	if (CurrentPhase != BeforePhase)
+	{
+		BeforePhase = CurrentPhase;
+
+		if (CurrentPhase == Phase::Phase3)
+		{
+			CogWheel* Ph3Monster1 = CreateActor<CogWheel>();
+			Ph3Monster1->GetTransform().SetWorldPosition({ 640.0f,-600.0f });
+
+			ShellWeDance* Ph3Monster2 = CreateActor<ShellWeDance>();
+			Ph3Monster2->GetTransform().SetWorldPosition({ 640.0f,-600.0f });
+		}
+
+		else if (CurrentPhase == Phase::Phase4)
+		{
+			//ColMapRenderer->SetTexture(".png");
+			SaltBakerHeart* Ph4Boss = CreateActor<SaltBakerHeart>();
+			Ph4Boss->GetTransform().SetWorldPosition({ 640.0f,-400.0f });
+		}
 	}
 }
 

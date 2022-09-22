@@ -38,8 +38,13 @@ protected:
 public:
 	void SetPhysicsComponent(SaltBakerHeartPhysicsComponent* _Physics) { Physics = _Physics; }
 	SaltBakerHeartPhysicsComponent* GetPhysicsComponent() { return Physics; }
-	void SetUpDownDirection(float4 _Direction) { UpDownDirection = _Direction; }
-	float4 GetUpDownDirection() { return UpDownDirection; }
+	void SetVerticalDirection(float4 _Direction) { VerticalDirection = _Direction; }
+	float4 GetVerticalDirection() { return VerticalDirection; }
+	void SetHorizontalDirection(float4 _Direction) { HorizontalDirection = _Direction; }
+	float4 GetHorizontalDirection() { return HorizontalDirection; }
+
+	CollisionReturn OnDirectionChangeColToLeft(GameEngineCollision* _This, GameEngineCollision* _Other);
+	CollisionReturn OnDirectionChangeColToRight(GameEngineCollision* _This, GameEngineCollision* _Other);
 
 private:
 	GameEngineTextureRenderer* Renderer;
@@ -54,5 +59,6 @@ private:
 	float ElapsedTime;
 	float LerpTime;
 	float4 LerpPos;
-	float4 UpDownDirection;
+	float4 VerticalDirection;
+	float4 HorizontalDirection;
 };

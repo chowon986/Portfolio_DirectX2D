@@ -8,6 +8,7 @@ enum class Phase
 	Phase1,
 	Phase2,
 	Phase3,
+	Phase4,
 };
 
 class InGameLevelBase : public GameEngineLevel
@@ -33,8 +34,10 @@ protected:
 	void Update(float _DeltaTime) override;
 	void End() override;
 
-private:
+protected:
 	Phase CurrentPhase;
+
+private:
 	MulticastDelegate<Phase> PhaseChangedDelegate;
 };
 

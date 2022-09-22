@@ -226,7 +226,8 @@ void PepperShooter::Update(float _DeltaTime)
 	{
 		if (Boss->GetHP() <= 0)
 		{
-			SetPepperState(PepperState::Death);
+			//SetPepperState(PepperState::Death);
+			return;
 		}
 	}
 

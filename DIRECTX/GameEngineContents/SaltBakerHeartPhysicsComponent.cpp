@@ -64,15 +64,31 @@ void SaltBakerHeartPhysicsComponent::FixedUpdate(double _FixedUpdateInterval)
 		Bullet->GetTransform().SetWorldMove(float4::UP * _FixedUpdateInterval);
 		Reset();
 		IsOnBottomGround = true;
-		Bullet->SetUpDownDirection(float4::UP);
+		Bullet->SetVerticalDirection(float4::UP);
 	}
 
 	while (true == ColMapTexture->GetPixelToFloat4(Bullet->GetTransform().GetWorldPosition().x, -(Bullet->GetTransform().GetWorldPosition().y + 15)).CompareInt4D(float4::BLACK))
 	{
-		Bullet->GetTransform().SetWorldMove(float4::UP * _FixedUpdateInterval);
+		Bullet->GetTransform().SetWorldMove(float4::DOWN * _FixedUpdateInterval);
 		Reset();
 		IsOnCeilingGround = true;
-		Bullet->SetUpDownDirection(float4::DOWN);
+		Bullet->SetVerticalDirection(float4::DOWN);
+	}
+
+	while (true == ColMapTexture->GetPixelToFloat4(Bullet->GetTransform().GetWorldPosition().x - 15, -(Bullet->GetTransform().GetWorldPosition().y )).CompareInt4D(float4::BLACK))
+	{
+		Bullet->GetTransform().SetWorldMove(float4::RIGHT * _FixedUpdateInterval);
+		Reset();
+		IsOnCeilingGround = true;
+		Bullet->SetHorizontalDirection(float4::RIGHT);
+	}
+
+	while (true == ColMapTexture->GetPixelToFloat4(Bullet->GetTransform().GetWorldPosition().x - 15, -(Bullet->GetTransform().GetWorldPosition().y)).CompareInt4D(float4::BLACK))
+	{
+		Bullet->GetTransform().SetWorldMove(float4::LEFT * _FixedUpdateInterval);
+		Reset();
+		IsOnCeilingGround = true;
+		Bullet->SetHorizontalDirection(float4::LEFT);
 	}
 }
 

@@ -42,6 +42,7 @@ protected:
 	void OnSaltBakerAttack5FrameChanged(const FrameAnimation_DESC& _Info);
 	void OnSaltBakerAttack6FrameChanged(const FrameAnimation_DESC& _Info);
 	void OnSaltBakerTakeDamageFrameChanged(const FrameAnimation_DESC& _Info);
+	void OnSaltBakerDieAnimationFrameChanged(const FrameAnimation_DESC& _Info);
 
 public:
 	void SetBackgroundRenderer(GameEngineTextureRenderer* _Renderer) { BackgroundRenderer = _Renderer; }
