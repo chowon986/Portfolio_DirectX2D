@@ -8,6 +8,7 @@ CogWheelDust::CogWheelDust()
 	, Renderer(nullptr)
 	, CurState(CogWheelDustState::None)
 	, BeforeState(CogWheelDustState::None)
+	, Ph3Boss(nullptr)
 {
 }
 
@@ -29,26 +30,32 @@ void CogWheelDust::Start()
 
 void CogWheelDust::Update(float _DeltaTime)
 {
+	if (nullptr != Boss)
+	{
+		if (Boss->GetHP() <= 0)
+		{
+			//	Death(); ph3 완성되면 주석 풀기
+		}
+	}
+
+	if (CurState == CogWheelDustState::None)
+	{
+		Renderer->Off();
+	}
+
 	if (CurState != BeforeState)
 	{
 		BeforeState = CurState;
-		if (CurState == CogWheelDustState::None)
+		if (CurState == CogWheelDustState::Intro)
 		{
-			Renderer->Off();
-		}
-		else
-		{
-			if (CurState == CogWheelDustState::Intro)
+			Renderer->ChangeFrameAnimation("CogWheelIntroDust");
+			if (nullptr != Boss)
 			{
-				Renderer->ChangeFrameAnimation("CogWheelIntroDust");
-				if (nullptr != Boss)
-				{
-					float4 BossPos = Boss->GetTransform().GetWorldPosition();
-					Renderer->GetTransform().SetWorldPosition({ BossPos.x, BossPos.y + 15, BossPos.z-1});
-				}
+				float4 BossPos = Boss->GetTransform().GetWorldPosition();
+				Renderer->GetTransform().SetWorldPosition({ BossPos.x, BossPos.y + 15, BossPos.z - 1 });
 			}
-			Renderer->On();
 		}
+		Renderer->On();
 	}
 }
 
@@ -61,6 +68,14 @@ void CogWheelDust::OnCogWheelIntroDustAnimationFrameChanged(const FrameAnimation
 	if (_Info.CurFrame == 7)
 	{
 		SetState(CogWheelDustState::None);
-		GetLevel()->CreateActor<ShellWeDance>();
+
+		float4 BossPos = Boss->GetTransform().GetWorldPosition();
+
+		if (nullptr == Ph3Boss)
+		{
+			Ph3Boss = GetLevel()->CreateActor<ShellWeDance>();
+			Ph3Boss->GetTransform().SetWorldPosition({ 300.0f,-360.0f,BossPos.z + 1 });
+			Ph3Boss->SetWheel(Boss);
+		}
 	}
 }

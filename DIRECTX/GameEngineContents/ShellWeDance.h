@@ -11,6 +11,7 @@ class InGameMovementComponent;
 class IInGameCharacterBase;
 class InGameMonsterAnimationControllerComponent;
 class ShellWeDancePhysicsComponent;
+class CogWheel;
 class ShellWeDance : public IInGameMonsterBase
 {
 public:
@@ -23,6 +24,9 @@ public:
 	ShellWeDance& operator=(const ShellWeDance& _Other) = delete;
 	ShellWeDance& operator=(ShellWeDance&& _Other) noexcept = delete;
 
+public:
+	void SetWheel(CogWheel* _Wheel) { Wheel = _Wheel; }
+
 protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;
@@ -33,11 +37,14 @@ protected:
 	void Shoot() override;
 	void Die() override;
 
-	void OnShellWeDanceDeathAnimationFrameChanged(const FrameAnimation_DESC& _Info);
-
-public:
-	void SetPhysicsComponent(ShellWeDancePhysicsComponent* _Physics) { Physics = _Physics;}
+private:
+	void SetPhysicsComponent(ShellWeDancePhysicsComponent* _Physics) { Physics = _Physics; }
 	ShellWeDancePhysicsComponent* GetPhysicsComponent() { return Physics; }
+	void OnShellWeDanceDeathAnimationFrameChanged(const FrameAnimation_DESC& _Info);
+	void OnShellWeDanceIntroAnimationFrameChanged(const FrameAnimation_DESC& _Info);	
+	void OnShellWeDanceAttack1AnimationFrameChanged(const FrameAnimation_DESC& _Info);
+	void SetCurAnimationName(std::string _AnimationName) { CurAnimationName = _AnimationName; }
+	std::string GetCurAnimationName() { return CurAnimationName; }
 
 private:
 	GameEngineTextureRenderer* Renderer;
@@ -46,4 +53,7 @@ private:
 	GameEngineCollision* Collision;
 	float4 MoveDirection;
 	ShellWeDancePhysicsComponent* Physics;
+	CogWheel* Wheel;
+	std::string CurAnimationName;
+	float4 BeforeMoveDirection;
 };

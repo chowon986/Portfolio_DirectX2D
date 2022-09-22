@@ -72,12 +72,12 @@ void CogWheel::Update(float _DeltaTime)
 		}
 	}
 
-	if (true == ColMapTexture->GetPixelToFloat4(GetTransform().GetWorldPosition().x - 50, -GetTransform().GetWorldPosition().y).CompareInt4D(float4::BLACK))
+	if (true == ColMapTexture->GetPixelToFloat4(GetTransform().GetWorldPosition().x - 50, -GetTransform().GetWorldPosition().y).CompareInt4D(float4::BLUE))
 	{
 		SetState(InGameMonsterState::Turn);
 		MoveDirection = float4::RIGHT;
 	}
-	else if (true == ColMapTexture->GetPixelToFloat4(GetTransform().GetWorldPosition().x + 50, -GetTransform().GetWorldPosition().y).CompareInt4D(float4::BLACK))
+	else if (true == ColMapTexture->GetPixelToFloat4(GetTransform().GetWorldPosition().x + 50, -GetTransform().GetWorldPosition().y).CompareInt4D(float4::BLUE))
 	{
 		SetState(InGameMonsterState::Turn);
 		MoveDirection = float4::LEFT;

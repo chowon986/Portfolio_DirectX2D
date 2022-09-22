@@ -3,12 +3,17 @@
 #include "InGameMonsterAnimationControllerComponent.h"
 #include "ShellWeDancePhysicsComponent.h"
 #include "SaltBakerLevel.h"
+#include "CogWheel.h"
 
 ShellWeDance::ShellWeDance()
 	: Renderer(nullptr)
 	, State(InGameMonsterState::Idle)
 	, AttackState(InGameMonsterAttackState::None)
 	, Collision(nullptr)
+	, Wheel(nullptr)
+	, Physics(nullptr)
+	, CurAnimationName("")
+	, BeforeMoveDirection(float4::ZERO)
 {
 }
 
@@ -19,27 +24,37 @@ ShellWeDance::~ShellWeDance()
 void ShellWeDance::Start()
 {
 	Renderer = CreateComponent<GameEngineTextureRenderer>();
-	Renderer->CreateFrameAnimationFolder("ShellWeDanceIntro", FrameAnimation_DESC("ShellWeDance", 0.05f));
-	Renderer->CreateFrameAnimationFolder("ShellWeDanceAttack1", FrameAnimation_DESC("ShellWeDance", 0.05f));
-	Renderer->CreateFrameAnimationFolder("ShellWeDanceDie", FrameAnimation_DESC("ShellWeDance", 0.05f));
+	Renderer->CreateFrameAnimationFolder("ShellWeDanceIntro", FrameAnimation_DESC("ShellWeDanceIntro", 0.05f));
+	Renderer->CreateFrameAnimationFolder("ShellWeDanceDie", FrameAnimation_DESC("ShellWeDanceDeath", 0.05f));
+	Renderer->CreateFrameAnimationFolder("ShellWeDanceIdle", FrameAnimation_DESC("ShellWeDanceIdle", 0.05f));
+	Renderer->CreateFrameAnimationFolder("ShellWeDanceAttack1", FrameAnimation_DESC("ShellWeDanceLand", 0.05f));
+
+	Renderer->AnimationBindFrame("ShellWeDanceIntro", std::bind(&ShellWeDance::OnShellWeDanceIntroAnimationFrameChanged, this, std::placeholders::_1));
 	Renderer->AnimationBindFrame("ShellWeDanceDie", std::bind(&ShellWeDance::OnShellWeDanceDeathAnimationFrameChanged, this, std::placeholders::_1));
+	Renderer->AnimationBindFrame("ShellWeDanceAttack1", std::bind(&ShellWeDance::OnShellWeDanceAttack1AnimationFrameChanged, this, std::placeholders::_1));
 	Renderer->SetScaleModeImage();
-	Renderer->ChangeFrameAnimation("ShellWeDanceAttack1");
+	Renderer->SetPivot(PIVOTMODE::BOT);
+
+	Renderer->ChangeFrameAnimation("ShellWeDanceIntro");
 
 	SetRenderer(Renderer);
 
-	SetPhysicsComponent(CreateComponent<ShellWeDancePhysicsComponent>());
-
 	InGameMonsterAnimationControllerComponent* Animation = CreateComponent<InGameMonsterAnimationControllerComponent>();
 	Animation->SetMonsterName("ShellWeDance");
-	MoveDirection = float4::RIGHT;
+	MoveDirection = float4::ZERO;
+
+	SetState(InGameMonsterState::Prepare);
 }
 
 void ShellWeDance::Update(float _DeltaTime)
 {
 	if (GetHP() <= 0)
 	{
-		SetState(InGameMonsterState::Die);
+		//SetState(InGameMonsterState::Die);
+		//if (nullptr != Wheel)
+		//{
+		//	Wheel->SetState(InGameMonsterState::Die); //ph3 완성되면 주석 풀기
+		//}
 	}
 
 	GameEngineTextureRenderer* CollisionMap = GetLevel()->GetMainColMapImage();
@@ -54,18 +69,35 @@ void ShellWeDance::Update(float _DeltaTime)
 		return;
 	}
 
-	if (Physics->IsOnGround == true)
+	if (GetState() == InGameMonsterState::Prepare)
 	{
-		Physics->Reset();
-		Physics->AddForce(68);
-		Physics->IsOnGround = false;
+		MoveDirection = float4::ZERO;
 	}
 
-	if (true == ColMapTexture->GetPixelToFloat4(static_cast<int>(GetTransform().GetWorldPosition().x - 65.0f), static_cast<int>(-GetTransform().GetWorldPosition().y)).CompareInt4D(float4::BLACK))
+	if (GetState() == InGameMonsterState::Idle)
+	{
+		if (nullptr != Physics)
+		{
+			if (Physics->IsOnGround == true)
+			{
+				if (MoveDirection.CompareInt3D(float4::ZERO))
+				{
+					MoveDirection = float4::RIGHT * 2.5;
+				}
+
+				BeforeMoveDirection = MoveDirection;
+				MoveDirection = float4::ZERO;
+				Shoot();
+			}
+
+		}
+	}
+
+	if (true == ColMapTexture->GetPixelToFloat4(static_cast<int>(GetTransform().GetWorldPosition().x - 65.0f), static_cast<int>(-GetTransform().GetWorldPosition().y)).CompareInt4D(float4::BLUE))
 	{
 		MoveDirection = float4::RIGHT * 2.5;
 	}
-	else if (true == ColMapTexture->GetPixelToFloat4(static_cast<int>(GetTransform().GetWorldPosition().x + 65.0f), static_cast<int>( - GetTransform().GetWorldPosition().y)).CompareInt4D(float4::BLACK))
+	else if (true == ColMapTexture->GetPixelToFloat4(static_cast<int>(GetTransform().GetWorldPosition().x + 65.0f), static_cast<int>( - GetTransform().GetWorldPosition().y)).CompareInt4D(float4::BLUE))
 	{
 		MoveDirection = float4::LEFT * 2.5;
 	}
@@ -86,14 +118,13 @@ void ShellWeDance::Prepare()
 void ShellWeDance::Idle()
 {
 	SetState(InGameMonsterState::Idle);
+	SetCurAnimationName("ShellWeDanceIdle");
 }
 
 void ShellWeDance::Shoot()
 {
-	//SetState(InGameMonsterState::Attack5);
-	//SetAttackState(InGameMonsterAttackState::Attack5);
 	SetState(InGameMonsterState::Attack1);
-	SetAttackState(InGameMonsterAttackState::Attack1);
+	SetCurAnimationName("ShellWeDanceAttack1");
 }
 
 void ShellWeDance::Die()
@@ -112,3 +143,32 @@ void ShellWeDance::OnShellWeDanceDeathAnimationFrameChanged(const FrameAnimation
 		}
 	}
 }
+
+void ShellWeDance::OnShellWeDanceIntroAnimationFrameChanged(const FrameAnimation_DESC& _Info)
+{
+	if (_Info.CurFrame == 65)
+	{
+		GetTransform().SetWorldPosition({ 640.0f, 50.0f });
+		SetState(InGameMonsterState::Idle);
+		if (nullptr == Physics)
+		{
+			Physics = CreateComponent<ShellWeDancePhysicsComponent>();
+		}
+	}
+}
+
+void ShellWeDance::OnShellWeDanceAttack1AnimationFrameChanged(const FrameAnimation_DESC& _Info)
+{
+	if (_Info.CurFrame == 2)
+	{
+		if (nullptr != Physics)
+		{
+			Idle();
+			MoveDirection = BeforeMoveDirection;
+			Physics->Reset();
+			Physics->AddForce(60);
+			Physics->IsOnGround = false;
+		}
+	}
+}
+

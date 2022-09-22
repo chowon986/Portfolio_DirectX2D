@@ -42,9 +42,9 @@ void SaltBakerLevel::Start()
 		KitchenRenderer->GetTransform().SetLocalPosition({ 640.0f, -360.0f, (int)ZOrder::Background });
 	}
 
-	SaltBaker* Boss = CreateActor<SaltBaker>();
-	Boss->GetTransform().SetWorldPosition({ 640.0f,-360.0f });
-	Boss->SetBackgroundRenderer(KitchenRenderer);
+	//SaltBaker* Boss = CreateActor<SaltBaker>();
+	//Boss->GetTransform().SetWorldPosition({ 640.0f,-360.0f });
+	//Boss->SetBackgroundRenderer(KitchenRenderer);
 
 	//InGameCuphead* Cuphead = CreateActor<InGameCuphead>();
 	//Cuphead->GetTransform().SetWorldPosition({ 640.0f,-360.0f });
@@ -77,6 +77,7 @@ void SaltBakerLevel::Update(float _DeltaTime)
 
 		if (CurrentPhase == Phase::Phase3)
 		{
+			ColMapRenderer->SetTexture("SBPh3ColMap.png");
 			CogWheel* Ph3Monster1 = CreateActor<CogWheel>();
 			Ph3Monster1->GetTransform().SetWorldPosition({ 300.0f,-650.0f });
 		}

@@ -8,6 +8,7 @@ enum class CogWheelDustState
 };
 
 class CogWheel;
+class ShellWeDance;
 class GameEngineTextureRenderer;
 class CogWheelDust : public GameEngineActor
 {
@@ -39,5 +40,6 @@ private:
 	GameEngineTextureRenderer* Renderer;
 	CogWheelDustState CurState;
 	CogWheelDustState BeforeState;
+	ShellWeDance* Ph3Boss;
 };
 
