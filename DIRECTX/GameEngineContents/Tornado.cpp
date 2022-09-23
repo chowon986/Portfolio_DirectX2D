@@ -21,7 +21,7 @@ void Tornado::Start()
 	Renderer->GetTransform().SetWorldPosition({ 0.0, 720.0f });
 
 	Collision = CreateComponent<GameEngineCollision>();
-	Collision->GetTransform().SetWorldScale({ 100.0f,720.0f,1.0f });
+	Collision->GetTransform().SetWorldScale({ 100.0f,1000.0f,1.0f });
 	Collision->GetTransform().SetLocalPosition({ 0.0f, 360.0f });
 
 	SetState(TornadoState::Intro);

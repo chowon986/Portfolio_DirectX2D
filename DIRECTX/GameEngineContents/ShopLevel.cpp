@@ -32,6 +32,7 @@ ShopLevel::ShopLevel()
 	, SelectItemNum(0)
 	, ShopPig(nullptr)
 	, Time(0.0f)
+	, BeforeSelectItemNum(-1)
 {
 }
 
@@ -76,7 +77,7 @@ void ShopLevel::Start()
 		LeftDrawerRenderer = LeftDrawer->CreateComponent<GameEngineTextureRenderer>();
 		LeftDrawerRenderer->SetTexture("dlc_shop_drawer_left.png");
 		LeftDrawerRenderer->ScaleToTexture();
-		LeftDrawerRenderer->GetTransform().SetLocalPosition({ -320, -210, (int)ZOrder::Background - 2 });
+		LeftDrawerRenderer->GetTransform().SetLocalPosition({ -320, -210, (int)ZOrder::Background - 3 });
 	}
 
 	{
@@ -104,7 +105,7 @@ void ShopLevel::Start()
 		IrisRenderer = Iris->CreateComponent<GameEngineTextureRenderer>();
 		IrisRenderer->GetTransform().SetLocalScale({ 1280,720,1 });
 		IrisRenderer->GetTransform().SetLocalPosition({ 0,0,-1000 });
-		IrisRenderer->CreateFrameAnimationFolder("IrisAStart", FrameAnimation_DESC("IrisA", 0.1f, false));
+		IrisRenderer->CreateFrameAnimationFolder("IrisAStart", FrameAnimation_DESC("IrisA", 0.07f, false));
 		IrisRenderer->AnimationBindEnd("IrisAStart", std::bind(&ShopLevel::EndIrisAnimation, this, std::placeholders::_1));
 		IrisRenderer->ChangeFrameAnimation("IrisAStart");
 		IrisRenderer->ChangeCamera(CAMERAORDER::UICAMERA2);
@@ -188,7 +189,12 @@ void ShopLevel::Start()
 		ItemName.push_back(Item->ItemName);
 	}
 
-
+	{
+		GameEngineActor* Font = CreateActor<GameEngineActor>();
+		FontRenderer = Font->CreateComponent<GameEngineTextureRenderer>();
+		FontRenderer->CreateFrameAnimationFolder("Nothing", FrameAnimation_DESC("Nothing", 0.1f, false));
+		FontRenderer->GetTransform().SetWorldPosition({ -300.0f, -205.0f,(int)ZOrder::Background - 2 });
+	}
 }
 
 void ShopLevel::Update(float _DeltaTime)
@@ -252,8 +258,6 @@ void ShopLevel::Update(float _DeltaTime)
 			{
 				SelectItemNum = 5;
 			}
-
-			ItemRenderers[SelectItemNum]->ChangeFrameAnimation(ItemName[SelectItemNum] + "Select");
 		}
 
 		else if (true == GameEngineInput::GetInst()->IsDown("MoveLeft"))
@@ -265,8 +269,6 @@ void ShopLevel::Update(float _DeltaTime)
 			{
 				SelectItemNum = 0;
 			}
-
-			ItemRenderers[SelectItemNum]->ChangeFrameAnimation(ItemName[SelectItemNum] + "Select");
 		}
 
 		else if (true == GameEngineInput::GetInst()->IsDown("ESC"))
@@ -278,12 +280,26 @@ void ShopLevel::Update(float _DeltaTime)
 					State->Coin = CurCoin;
 				}
 			}
-			ShopPig->GetRenderer()->ChangeFrameAnimation("Welcome"); // bye로 바꾸기
+			ShopPig->GetRenderer()->ChangeFrameAnimation("Welcome"); // bye로 바꾸기, 닫히기, 바이 인사하기, iris
+		}
+
+		if (SelectItemNum != BeforeSelectItemNum)
+		{
+			BeforeSelectItemNum = SelectItemNum;
+			FontRenderer->SetTexture("Font" + std::to_string(SelectItemNum) + ".png");
+			FontRenderer->ScaleToTexture();
+			ItemRenderers[SelectItemNum]->ChangeFrameAnimation(ItemName[SelectItemNum] + "Select");
 		}
 	}
 
 	if (Phase == ShopPhase::Buy)
 	{
+		if (GameEngineInput::GetInst()->IsDown("ESC") /*|| nullptr == State*/)
+		{
+			Phase = ShopPhase::Select;
+		}
+
+
 		if (nullptr != State)
 		{
 			switch (SelectItemNum)
@@ -293,6 +309,7 @@ void ShopLevel::Update(float _DeltaTime)
 				{
 					State->Coin -= 4;
 					ItemRenderers[SelectItemNum]->ChangeFrameAnimation("ItemSelectOK");
+					FontRenderer->SetTexture("Font6.png");
 					return;
 				}
 				else
@@ -306,6 +323,7 @@ void ShopLevel::Update(float _DeltaTime)
 				{
 					State->Coin -= 3;
 					ItemRenderers[SelectItemNum]->ChangeFrameAnimation("ItemSelectOK");
+					FontRenderer->SetTexture("Font6.png");
 					return;
 				}
 				else
@@ -319,6 +337,7 @@ void ShopLevel::Update(float _DeltaTime)
 				{
 					State->Coin -= 4;
 					ItemRenderers[SelectItemNum]->ChangeFrameAnimation("ItemSelectOK");
+					FontRenderer->SetTexture("Font6.png");
 					return;
 				}
 				else
@@ -332,6 +351,7 @@ void ShopLevel::Update(float _DeltaTime)
 				{
 					State->Coin -= 1;
 					ItemRenderers[SelectItemNum]->ChangeFrameAnimation("ItemSelectOK");
+					FontRenderer->SetTexture("Font6.png");
 					return;
 				}
 				else
@@ -345,6 +365,7 @@ void ShopLevel::Update(float _DeltaTime)
 				{
 					State->Coin -= 4;
 					ItemRenderers[SelectItemNum]->ChangeFrameAnimation("ItemSelectOK");
+					FontRenderer->SetTexture("Font6.png");
 					return;
 				}
 				else
@@ -358,6 +379,7 @@ void ShopLevel::Update(float _DeltaTime)
 				{
 					State->Coin -= 3;
 					ItemRenderers[SelectItemNum]->ChangeFrameAnimation("ItemSelectOK");
+					FontRenderer->SetTexture("Font6.png");
 					return;
 				}
 				else
@@ -381,6 +403,8 @@ void ShopLevel::EndIrisAnimation(const FrameAnimation_DESC& _Info)
 {
 	ShopPig->GetRenderer()->ChangeFrameAnimation("Welcome");
 	ItemRenderers[SelectItemNum]->ChangeFrameAnimation(ItemName[SelectItemNum] + "Select");
+	FontRenderer->SetTexture("Font" + std::to_string(SelectItemNum) + ".png");
+	FontRenderer->ScaleToTexture();
 	OnceCheck = true;
 }
 
@@ -396,6 +420,16 @@ void ShopLevel::BuyItemEnd(const FrameAnimation_DESC& _Info)
 			ItemType Type = ItemNames[SelectItemNum]->Type;
 			std::shared_ptr<ItemBase> Item = ItemNames[SelectItemNum];
 			State->Items[Type].push_back(Item);
+		}
+	}
+
+	for (int i = 0; i < 6; i++)
+	{
+		if (true == ItemRenderers[i]->IsUpdate())
+		{
+			SelectItemNum = i;
+			Phase = ShopPhase::Select;
+			return;
 		}
 	}
 

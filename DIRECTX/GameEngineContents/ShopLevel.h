@@ -66,5 +66,7 @@ public:
 	CharacterState* State;
 	int CurCoin;
 	GameEngineTextureRenderer* CoinCountRenderer;
+	GameEngineTextureRenderer* FontRenderer;
+	int BeforeSelectItemNum;
 };
 
