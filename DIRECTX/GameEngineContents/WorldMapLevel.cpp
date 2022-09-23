@@ -91,6 +91,7 @@ void WorldMapLevel::Start()
 	{
 		GameEngineInput::GetInst()->CreateKey("Inventory", 'Y');
 	}
+
 	{
 		GameEngineActor* CurCoin = CreateActor<GameEngineActor>(GameObjectGroup::UI);
 		GameEngineTextureRenderer* CoinRenderer = CurCoin->CreateComponent<GameEngineTextureRenderer>();
@@ -547,6 +548,14 @@ void WorldMapLevel::Update(float _DeltaTime)
 			CurCoin = State->Coin;
 			if (CurCoin < 0 || CurCoin > 25)
 			{
+				if (CurCoin < 0)
+				{
+					CurCoin = 0;
+				}
+				else if (CurCoin > 25)
+				{
+					CurCoin = 25;
+				}
 				return;
 			}
 			CoinCountRenderer->SetTexture("CoinCount" + std::to_string(CurCoin)+".png");

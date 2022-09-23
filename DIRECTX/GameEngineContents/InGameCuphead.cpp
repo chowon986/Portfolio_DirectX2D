@@ -11,6 +11,7 @@
 #include "CharacterState.h"
 #include "WeaponItemBase.h"
 #include "CharmItemBase.h"
+#include "SaltBakerLevel.h"
 
 InGameCuphead::InGameCuphead()
 	: IsInputEnabled(false)
@@ -520,6 +521,14 @@ void InGameCuphead::CheckCollision()
 		std::bind(&InGameCuphead::OnTakeDamage, this, std::placeholders::_1, std::placeholders::_2));
 	MainCollision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::MONSTER, CollisionType::CT_AABB2D,
 		std::bind(&InGameCuphead::OnTakeDamage, this, std::placeholders::_1, std::placeholders::_2));
+
+	if (SaltBakerLevel* Level = dynamic_cast<SaltBakerLevel*>(GetLevel()))
+	{
+		MainCollision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::TRACKING1, CollisionType::CT_AABB2D,
+			std::bind(&InGameCuphead::OnTakeDamage, this, std::placeholders::_1, std::placeholders::_2));
+		MainCollision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::TRACKING1, CollisionType::CT_AABB2D,
+			std::bind(&InGameCuphead::OnTakeDamage, this, std::placeholders::_1, std::placeholders::_2));
+	}
 }
 
 bool InGameCuphead::GetIsOpenScoreBoard()

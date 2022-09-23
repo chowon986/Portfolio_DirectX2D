@@ -19,7 +19,7 @@ void Bakery::Start()
 	Renderer->ScaleToTexture();
 	Renderer->SetPivot(PIVOTMODE::CENTER);
 
-	Collision->GetTransform().SetLocalScale({ 100.0f, 100.0f, 1.0f });
+	Collision->GetTransform().SetLocalScale({ 300.0f, 300.0f, 1.0f });
 }
 
 void Bakery::Update(float _DeltaTime)

@@ -39,6 +39,19 @@ ShopLevel::~ShopLevel()
 {
 }
 
+void ShopLevel::LevelStartEvent()
+{
+	std::list<GameEngineActor*> Actors = GetGroup(GameObjectGroup::CharacterState);
+	for (GameEngineActor* Actor : Actors)
+	{
+		if (CharacterState* _State = dynamic_cast<CharacterState*>(Actor))
+		{
+			State = _State;
+			CurCoin = State->Coin;
+		}
+	}
+}
+
 void ShopLevel::Start()
 {
 	GetMainCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
@@ -94,7 +107,27 @@ void ShopLevel::Start()
 		IrisRenderer->CreateFrameAnimationFolder("IrisAStart", FrameAnimation_DESC("IrisA", 0.1f, false));
 		IrisRenderer->AnimationBindEnd("IrisAStart", std::bind(&ShopLevel::EndIrisAnimation, this, std::placeholders::_1));
 		IrisRenderer->ChangeFrameAnimation("IrisAStart");
+		IrisRenderer->ChangeCamera(CAMERAORDER::UICAMERA2);
 	}
+
+	{
+		GameEngineActor* CurCoin = CreateActor<GameEngineActor>(GameObjectGroup::UI);
+		GameEngineTextureRenderer* CoinRenderer = CurCoin->CreateComponent<GameEngineTextureRenderer>();
+		CoinRenderer->SetTexture("WorldMapCoin.png");
+		CoinRenderer->ScaleToTexture();
+		CoinRenderer->GetTransform().PixLocalNegativeX();
+		CoinRenderer->GetTransform().SetWorldPosition({ -580.0f, 330.0f,(int)ZOrder::UI - 100 });
+		CoinRenderer->ChangeCamera(CAMERAORDER::UICAMERA2);
+	}
+	{
+		GameEngineActor* CoinCount = CreateActor<GameEngineActor>(GameObjectGroup::UI);
+		CoinCountRenderer = CoinCount->CreateComponent<GameEngineTextureRenderer>();
+		CoinCountRenderer->SetTexture("CoinCount0.png");
+		CoinCountRenderer->ScaleToTexture();
+		CoinCountRenderer->GetTransform().SetWorldPosition({ -535.0f, 330.0f,(int)ZOrder::UI - 100 });
+		CoinCountRenderer->ChangeCamera(CAMERAORDER::UICAMERA2);
+	}
+
 	StartLerpValueX = { -320.0f, -850.0f };
 	EndLerpValueX = { -850.0f, -780.0f };
 	Phase = ShopPhase::None;
@@ -122,7 +155,7 @@ void ShopLevel::Start()
 		BoomerangShooterIcon->Weapon = ShooterB;
 		BoomerangShooterIcon->Weapon->SetLevelOverOn();
 
-		ConvergeShooter* ShooterC = CreateActor<ConvergeShooter>(); 
+		ConvergeShooter* ShooterC = CreateActor<ConvergeShooter>();
 		ConvergeShooterIcon->Weapon = ShooterC;
 		ConvergeShooterIcon->Weapon->SetLevelOverOn();
 	}
@@ -155,39 +188,53 @@ void ShopLevel::Start()
 		ItemName.push_back(Item->ItemName);
 	}
 
-	
+
 }
 
 void ShopLevel::Update(float _DeltaTime)
 {
-		if (OnceCheck == true)
+	if (State != nullptr)
+	{
+		CurCoin = State->Coin;
+		if (CurCoin < 0)
 		{
-			ElapsedTime += _DeltaTime;
-			ElapsedTime = ElapsedTime / 1.0f;
-			float LeftDrawerPosX = LeftDrawerRenderer->GetTransform().GetLocalPosition().x;
-
-			if (IsLeftDrawerOpened == false)
-			{
-				if (StartLerpValueX.y == LeftDrawerPosX)
-				{
-					IsLeftDrawerOpened = true;
-					ElapsedTime = 0.0f;
-				}
-
-				EndPosition = float4::LerpLimit(StartLerpValueX.x, StartLerpValueX.y, ElapsedTime);
-			}
-			else
-			{
-				if (EndLerpValueX.y == LeftDrawerPosX)
-				{
-					OnceCheck = false;
-					Phase = ShopPhase::Select;
-				}
-				EndPosition = float4::LerpLimit(EndLerpValueX.x, EndLerpValueX.y, ElapsedTime);
-			}
-
-			LeftDrawerRenderer->GetTransform().SetLocalPosition({ EndPosition.x, -210, (int)ZOrder::Background - 2 });
+			CurCoin = 0;
 		}
+		else if (CurCoin > 25)
+		{
+			CurCoin = 25;
+		}
+		CoinCountRenderer->SetTexture("CoinCount" + std::to_string(CurCoin) + ".png");
+	}
+
+	if (OnceCheck == true)
+	{
+		ElapsedTime += _DeltaTime;
+		ElapsedTime = ElapsedTime / 1.0f;
+		float LeftDrawerPosX = LeftDrawerRenderer->GetTransform().GetLocalPosition().x;
+
+		if (IsLeftDrawerOpened == false)
+		{
+			if (StartLerpValueX.y == LeftDrawerPosX)
+			{
+				IsLeftDrawerOpened = true;
+				ElapsedTime = 0.0f;
+			}
+
+			EndPosition = float4::LerpLimit(StartLerpValueX.x, StartLerpValueX.y, ElapsedTime);
+		}
+		else
+		{
+			if (EndLerpValueX.y == LeftDrawerPosX)
+			{
+				OnceCheck = false;
+				Phase = ShopPhase::Select;
+			}
+			EndPosition = float4::LerpLimit(EndLerpValueX.x, EndLerpValueX.y, ElapsedTime);
+		}
+
+		LeftDrawerRenderer->GetTransform().SetLocalPosition({ EndPosition.x, -210, (int)ZOrder::Background - 2 });
+	}
 
 	if (Phase == ShopPhase::Select)
 	{
@@ -221,11 +268,108 @@ void ShopLevel::Update(float _DeltaTime)
 
 			ItemRenderers[SelectItemNum]->ChangeFrameAnimation(ItemName[SelectItemNum] + "Select");
 		}
+
+		else if (true == GameEngineInput::GetInst()->IsDown("ESC"))
+		{
+			if (nullptr != State)
+			{
+				if (State->Coin != CurCoin)
+				{
+					State->Coin = CurCoin;
+				}
+			}
+			ShopPig->GetRenderer()->ChangeFrameAnimation("Welcome"); // bye로 바꾸기
+		}
 	}
 
 	if (Phase == ShopPhase::Buy)
 	{
-		ItemRenderers[SelectItemNum]->ChangeFrameAnimation("ItemSelectOK");
+		if (nullptr != State)
+		{
+			switch (SelectItemNum)
+			{
+			case 0:
+				if (State->Coin >= 4)
+				{
+					State->Coin -= 4;
+					ItemRenderers[SelectItemNum]->ChangeFrameAnimation("ItemSelectOK");
+					return;
+				}
+				else
+				{
+					Phase = ShopPhase::Select;
+					return;
+				}
+				break;
+			case 1:
+				if (State->Coin >= 3)
+				{
+					State->Coin -= 3;
+					ItemRenderers[SelectItemNum]->ChangeFrameAnimation("ItemSelectOK");
+					return;
+				}
+				else
+				{
+					Phase = ShopPhase::Select;
+					return;
+				}
+				break;
+			case 2:
+				if (State->Coin >= 4)
+				{
+					State->Coin -= 4;
+					ItemRenderers[SelectItemNum]->ChangeFrameAnimation("ItemSelectOK");
+					return;
+				}
+				else
+				{
+					Phase = ShopPhase::Select;
+					return;
+				}
+				break;
+			case 3:
+				if (State->Coin >= 1)
+				{
+					State->Coin -= 1;
+					ItemRenderers[SelectItemNum]->ChangeFrameAnimation("ItemSelectOK");
+					return;
+				}
+				else
+				{
+					Phase = ShopPhase::Select;
+					return;
+				}
+				break;
+			case 4:
+				if (State->Coin >= 4)
+				{
+					State->Coin -= 4;
+					ItemRenderers[SelectItemNum]->ChangeFrameAnimation("ItemSelectOK");
+					return;
+				}
+				else
+				{
+					Phase = ShopPhase::Select;
+					return;
+				}
+				break;
+			case 5:
+				if (State->Coin >= 3)
+				{
+					State->Coin -= 3;
+					ItemRenderers[SelectItemNum]->ChangeFrameAnimation("ItemSelectOK");
+					return;
+				}
+				else
+				{
+					Phase = ShopPhase::Select;
+					return;
+				}
+				break;
+			default:
+				break;
+			}
+		}
 	}
 }
 
@@ -243,7 +387,7 @@ void ShopLevel::EndIrisAnimation(const FrameAnimation_DESC& _Info)
 void ShopLevel::BuyItemEnd(const FrameAnimation_DESC& _Info)
 {
 	ItemRenderers[SelectItemNum]->GetActor()->Off();
-	
+
 	std::list<GameEngineActor*> Actors = GetGroup(GameObjectGroup::CharacterState);
 	for (GameEngineActor* Actor : Actors)
 	{

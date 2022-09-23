@@ -21,5 +21,7 @@ protected:
 	void Update(float _DeltaTime) override;
 	void End() override;
 
+private:
+	CollisionReturn OnPortalCollision(GameEngineCollision* _This, GameEngineCollision* _Other);
 };
 
