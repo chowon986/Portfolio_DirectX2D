@@ -4,6 +4,7 @@
 #include "ShellWeDancePhysicsComponent.h"
 #include "SaltBakerLevel.h"
 #include "CogWheel.h"
+#include "ShellWeDanceDust.h"
 
 ShellWeDance::ShellWeDance()
 	: Renderer(nullptr)
@@ -44,6 +45,9 @@ void ShellWeDance::Start()
 	MoveDirection = float4::ZERO;
 
 	SetState(InGameMonsterState::Prepare);
+
+	Dust = GetLevel()->CreateActor<ShellWeDanceDust>();
+	Dust->SetBoss(this);
 }
 
 void ShellWeDance::Update(float _DeltaTime)
@@ -159,6 +163,14 @@ void ShellWeDance::OnShellWeDanceIntroAnimationFrameChanged(const FrameAnimation
 
 void ShellWeDance::OnShellWeDanceAttack1AnimationFrameChanged(const FrameAnimation_DESC& _Info)
 {
+	if (_Info.CurFrame == 1)
+	{
+		if (nullptr != Dust)
+		{
+			Dust->SetState(ShellWeDanceDustState::Intro);
+		}
+	}
+
 	if (_Info.CurFrame == 2)
 	{
 		if (nullptr != Physics)

@@ -32,7 +32,8 @@ protected:
 	void End() override;
 
 private:
-	void OnShellWeDanceIntroDustAnimationFrameChanged(const FrameAnimation_DESC& _Info);
+	void OnShellWeDanceLandDustAnimationFrameChanged(const FrameAnimation_DESC& _Info);
+	void OnShellWeDanceDeathDustAnimationFrameChanged(const FrameAnimation_DESC& _Info);
 
 private:
 	ShellWeDance* Boss;

@@ -12,6 +12,7 @@ class IInGameCharacterBase;
 class InGameMonsterAnimationControllerComponent;
 class ShellWeDancePhysicsComponent;
 class CogWheel;
+class ShellWeDanceDust;
 class ShellWeDance : public IInGameMonsterBase
 {
 public:
@@ -56,4 +57,5 @@ private:
 	CogWheel* Wheel;
 	std::string CurAnimationName;
 	float4 BeforeMoveDirection;
+	ShellWeDanceDust* Dust;
 };

@@ -61,7 +61,7 @@ void SaltBakerLevel::Start()
 	GetRotateCameraActorTransform().SetLocalPosition({ 640, -360 });
 	GetIrisCameraActorTransform().SetLocalPosition({ 640.0f, -360.0f });
 
-	SetPhase(Phase::Phase3);
+	SetPhase(Phase::Phase4);
 }
 
 void SaltBakerLevel::Update(float _DeltaTime)
