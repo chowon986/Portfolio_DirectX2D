@@ -311,6 +311,7 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="Tornado.h" />
     <ClInclude Include="TutorialLevel.h" />
     <ClInclude Include="TwinHeartItem.h" />
     <ClInclude Include="Waterfall.h" />
@@ -481,6 +482,7 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="Tornado.cpp" />
     <ClCompile Include="TutorialLevel.cpp" />
     <ClCompile Include="TwinHeartItem.cpp" />
     <ClCompile Include="Waterfall.cpp" />

@@ -32,6 +32,8 @@ protected:
 	void Idle() override;
 	void Shoot() override;
 	void Die() override;
+	void Turn();
+	void TurnPink();
 
 	void Test(const FrameAnimation_DESC& _Info);
 
@@ -45,6 +47,11 @@ public:
 
 	CollisionReturn OnDirectionChangeColToLeft(GameEngineCollision* _This, GameEngineCollision* _Other);
 	CollisionReturn OnDirectionChangeColToRight(GameEngineCollision* _This, GameEngineCollision* _Other);
+	CollisionReturn OnChangeParriable(GameEngineCollision* _This, GameEngineCollision* _Other);
+	CollisionReturn OnChangeNotParriable(GameEngineCollision* _This, GameEngineCollision* _Other);
+
+	void OnSaltBakerHeartIntroAnimationFrameChanged(const FrameAnimation_DESC& _Info);
+	void OnSaltBakerHeartTurnAnimationFrameChanged(const FrameAnimation_DESC& _Info);
 
 private:
 	GameEngineTextureRenderer* Renderer;

@@ -142,6 +142,12 @@
     <Filter Include="Actor\Play\InGame\NPC\Effect">
       <UniqueIdentifier>{b15b08e7-dc7c-44b4-b478-602701dc5e99}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Actor\Play\InGame\NPC\DogFight">
+      <UniqueIdentifier>{b0f00435-69b0-4242-bdf0-661a6f1aee29}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\Play\InGame\NPC\SaltBaker">
+      <UniqueIdentifier>{c59234dd-6cb0-4c89-84e2-a841433ed889}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ContentsCore.h">
@@ -336,9 +342,6 @@
     <ClInclude Include="BoomerangBulletMovementComponent.h">
       <Filter>Components\Character\InGame\Bullet</Filter>
     </ClInclude>
-    <ClInclude Include="Bulldog.h">
-      <Filter>Actor\Play\InGame\NPC</Filter>
-    </ClInclude>
     <ClInclude Include="IInGameMonsterBase.h">
       <Filter>Actor\Base</Filter>
     </ClInclude>
@@ -423,17 +426,11 @@
     <ClInclude Include="MonsterWeaponBase.h">
       <Filter>Actor\Weapon\Base\Monster</Filter>
     </ClInclude>
-    <ClInclude Include="Ph1Dog.h">
-      <Filter>Actor\Play\InGame\NPC</Filter>
-    </ClInclude>
     <ClInclude Include="TennisballShooter.h">
       <Filter>Actor\Weapon\Shooter\Monster</Filter>
     </ClInclude>
     <ClInclude Include="TennisballBullet.h">
       <Filter>Actor\Weapon\Bullet\Monster</Filter>
-    </ClInclude>
-    <ClInclude Include="Ph2Dog.h">
-      <Filter>Actor\Play\InGame\NPC</Filter>
     </ClInclude>
     <ClInclude Include="BowWowShooter.h">
       <Filter>Actor\Weapon\Shooter\Monster</Filter>
@@ -449,9 +446,6 @@
     </ClInclude>
     <ClInclude Include="CanteenPlane.h">
       <Filter>Actor\Play\InGame\Object\DogFight</Filter>
-    </ClInclude>
-    <ClInclude Include="Canteen.h">
-      <Filter>Actor\Play\InGame\NPC</Filter>
     </ClInclude>
     <ClInclude Include="InGamePh2DogAnimationControllerComponent.h">
       <Filter>Components\Monster</Filter>
@@ -552,9 +546,6 @@
     <ClInclude Include="PawnPhysicsComponent.h">
       <Filter>Components\Monster</Filter>
     </ClInclude>
-    <ClInclude Include="SaltBaker.h">
-      <Filter>Actor\Play\InGame\NPC</Filter>
-    </ClInclude>
     <ClInclude Include="SaltBakerShooter.h">
       <Filter>Actor\Weapon\Shooter\Monster</Filter>
     </ClInclude>
@@ -573,9 +564,6 @@
     <ClInclude Include="AnimalBulletPhysicsComponent.h">
       <Filter>Components\Monster</Filter>
     </ClInclude>
-    <ClInclude Include="Chicken.h">
-      <Filter>Actor\Play\InGame\NPC</Filter>
-    </ClInclude>
     <ClInclude Include="ChickenPhysicsComponent.h">
       <Filter>Components\Monster</Filter>
     </ClInclude>
@@ -585,26 +573,14 @@
     <ClInclude Include="LeafBullet.h">
       <Filter>Actor\Weapon\Bullet\Monster</Filter>
     </ClInclude>
-    <ClInclude Include="Pepper.h">
-      <Filter>Actor\Play\InGame\NPC</Filter>
-    </ClInclude>
     <ClInclude Include="PepperBullet.h">
       <Filter>Actor\Weapon\Bullet\Monster</Filter>
     </ClInclude>
     <ClInclude Include="PepperShooter.h">
       <Filter>Actor\Weapon\Shooter\Monster</Filter>
     </ClInclude>
-    <ClInclude Include="CogWheel.h">
-      <Filter>Actor\Play\InGame\NPC</Filter>
-    </ClInclude>
-    <ClInclude Include="ShellWeDance.h">
-      <Filter>Actor\Play\InGame\NPC</Filter>
-    </ClInclude>
     <ClInclude Include="ShellWeDancePhysicsComponent.h">
       <Filter>Components\Monster</Filter>
-    </ClInclude>
-    <ClInclude Include="SaltBakerHeart.h">
-      <Filter>Actor\Play\InGame\NPC</Filter>
     </ClInclude>
     <ClInclude Include="SaltBakerHeartPhysicsComponent.h">
       <Filter>Components\Monster</Filter>
@@ -620,6 +596,39 @@
     </ClInclude>
     <ClInclude Include="ShellWeDanceDust.h">
       <Filter>Actor\Play\InGame\NPC\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Bulldog.h">
+      <Filter>Actor\Play\InGame\NPC\DogFight</Filter>
+    </ClInclude>
+    <ClInclude Include="Canteen.h">
+      <Filter>Actor\Play\InGame\NPC\DogFight</Filter>
+    </ClInclude>
+    <ClInclude Include="Ph1Dog.h">
+      <Filter>Actor\Play\InGame\NPC\DogFight</Filter>
+    </ClInclude>
+    <ClInclude Include="Ph2Dog.h">
+      <Filter>Actor\Play\InGame\NPC\DogFight</Filter>
+    </ClInclude>
+    <ClInclude Include="SaltBaker.h">
+      <Filter>Actor\Play\InGame\NPC\SaltBaker</Filter>
+    </ClInclude>
+    <ClInclude Include="SaltBakerHeart.h">
+      <Filter>Actor\Play\InGame\NPC\SaltBaker</Filter>
+    </ClInclude>
+    <ClInclude Include="ShellWeDance.h">
+      <Filter>Actor\Play\InGame\NPC\SaltBaker</Filter>
+    </ClInclude>
+    <ClInclude Include="CogWheel.h">
+      <Filter>Actor\Play\InGame\NPC\SaltBaker</Filter>
+    </ClInclude>
+    <ClInclude Include="Chicken.h">
+      <Filter>Actor\Play\InGame\NPC\SaltBaker</Filter>
+    </ClInclude>
+    <ClInclude Include="Pepper.h">
+      <Filter>Actor\Play\InGame\NPC\SaltBaker</Filter>
+    </ClInclude>
+    <ClInclude Include="Tornado.h">
+      <Filter>Actor\Play\InGame\NPC\SaltBaker</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -809,9 +818,6 @@
     <ClCompile Include="BoomerangBulletMovementComponent.cpp">
       <Filter>Components\Character\InGame\Bullet</Filter>
     </ClCompile>
-    <ClCompile Include="Bulldog.cpp">
-      <Filter>Actor\Play\InGame\NPC</Filter>
-    </ClCompile>
     <ClCompile Include="IInGameMonsterBase.cpp">
       <Filter>Actor\Base</Filter>
     </ClCompile>
@@ -896,17 +902,11 @@
     <ClCompile Include="MonsterWeaponBase.cpp">
       <Filter>Actor\Weapon\Base\Monster</Filter>
     </ClCompile>
-    <ClCompile Include="Ph1Dog.cpp">
-      <Filter>Actor\Play\InGame\NPC</Filter>
-    </ClCompile>
     <ClCompile Include="TennisballShooter.cpp">
       <Filter>Actor\Weapon\Shooter\Monster</Filter>
     </ClCompile>
     <ClCompile Include="TennisballBullet.cpp">
       <Filter>Actor\Weapon\Bullet\Monster</Filter>
-    </ClCompile>
-    <ClCompile Include="Ph2Dog.cpp">
-      <Filter>Actor\Play\InGame\NPC</Filter>
     </ClCompile>
     <ClCompile Include="BowWowShooter.cpp">
       <Filter>Actor\Weapon\Shooter\Monster</Filter>
@@ -922,9 +922,6 @@
     </ClCompile>
     <ClCompile Include="CanteenPlane.cpp">
       <Filter>Actor\Play\InGame\Object\DogFight</Filter>
-    </ClCompile>
-    <ClCompile Include="Canteen.cpp">
-      <Filter>Actor\Play\InGame\NPC</Filter>
     </ClCompile>
     <ClCompile Include="InGamePh2DogAnimationControllerComponent.cpp">
       <Filter>Components\Monster</Filter>
@@ -1025,9 +1022,6 @@
     <ClCompile Include="PawnPhysicsComponent.cpp">
       <Filter>Components\Monster</Filter>
     </ClCompile>
-    <ClCompile Include="SaltBaker.cpp">
-      <Filter>Actor\Play\InGame\NPC</Filter>
-    </ClCompile>
     <ClCompile Include="SaltBakerShooter.cpp">
       <Filter>Actor\Weapon\Shooter\Monster</Filter>
     </ClCompile>
@@ -1046,9 +1040,6 @@
     <ClCompile Include="AnimalBulletPhysicsComponent.cpp">
       <Filter>Components\Monster</Filter>
     </ClCompile>
-    <ClCompile Include="Chicken.cpp">
-      <Filter>Actor\Play\InGame\NPC</Filter>
-    </ClCompile>
     <ClCompile Include="ChickenPhysicsComponent.cpp">
       <Filter>Components\Monster</Filter>
     </ClCompile>
@@ -1058,26 +1049,14 @@
     <ClCompile Include="LeafBullet.cpp">
       <Filter>Actor\Weapon\Bullet\Monster</Filter>
     </ClCompile>
-    <ClCompile Include="Pepper.cpp">
-      <Filter>Actor\Play\InGame\NPC</Filter>
-    </ClCompile>
     <ClCompile Include="PepperBullet.cpp">
       <Filter>Actor\Weapon\Bullet\Monster</Filter>
     </ClCompile>
     <ClCompile Include="PepperShooter.cpp">
       <Filter>Actor\Weapon\Shooter\Monster</Filter>
     </ClCompile>
-    <ClCompile Include="CogWheel.cpp">
-      <Filter>Actor\Play\InGame\NPC</Filter>
-    </ClCompile>
-    <ClCompile Include="ShellWeDance.cpp">
-      <Filter>Actor\Play\InGame\NPC</Filter>
-    </ClCompile>
     <ClCompile Include="ShellWeDancePhysicsComponent.cpp">
       <Filter>Components\Monster</Filter>
-    </ClCompile>
-    <ClCompile Include="SaltBakerHeart.cpp">
-      <Filter>Actor\Play\InGame\NPC</Filter>
     </ClCompile>
     <ClCompile Include="SaltBakerHeartPhysicsComponent.cpp">
       <Filter>Components\Monster</Filter>
@@ -1093,6 +1072,39 @@
     </ClCompile>
     <ClCompile Include="ShellWeDanceDust.cpp">
       <Filter>Actor\Play\InGame\NPC\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Bulldog.cpp">
+      <Filter>Actor\Play\InGame\NPC\DogFight</Filter>
+    </ClCompile>
+    <ClCompile Include="Canteen.cpp">
+      <Filter>Actor\Play\InGame\NPC\DogFight</Filter>
+    </ClCompile>
+    <ClCompile Include="Ph1Dog.cpp">
+      <Filter>Actor\Play\InGame\NPC\DogFight</Filter>
+    </ClCompile>
+    <ClCompile Include="Ph2Dog.cpp">
+      <Filter>Actor\Play\InGame\NPC\DogFight</Filter>
+    </ClCompile>
+    <ClCompile Include="SaltBaker.cpp">
+      <Filter>Actor\Play\InGame\NPC\SaltBaker</Filter>
+    </ClCompile>
+    <ClCompile Include="SaltBakerHeart.cpp">
+      <Filter>Actor\Play\InGame\NPC\SaltBaker</Filter>
+    </ClCompile>
+    <ClCompile Include="ShellWeDance.cpp">
+      <Filter>Actor\Play\InGame\NPC\SaltBaker</Filter>
+    </ClCompile>
+    <ClCompile Include="CogWheel.cpp">
+      <Filter>Actor\Play\InGame\NPC\SaltBaker</Filter>
+    </ClCompile>
+    <ClCompile Include="Chicken.cpp">
+      <Filter>Actor\Play\InGame\NPC\SaltBaker</Filter>
+    </ClCompile>
+    <ClCompile Include="Pepper.cpp">
+      <Filter>Actor\Play\InGame\NPC\SaltBaker</Filter>
+    </ClCompile>
+    <ClCompile Include="Tornado.cpp">
+      <Filter>Actor\Play\InGame\NPC\SaltBaker</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

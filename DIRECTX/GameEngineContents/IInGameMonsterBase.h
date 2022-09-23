@@ -24,6 +24,7 @@ enum class InGameMonsterState
 {
 	Prepare, // 완료
 	Idle, // 완료
+	IdlePink,
 	TakeDamage,
 	Unmount,
 	Mount,
@@ -58,6 +59,7 @@ enum class InGameMonsterState
 	None,
 	Alternate, // cogwheel
 	Turn, // cogwheel
+	TurnPink, // cogwheel
 };
 
 enum class InGameMonsterAttackState

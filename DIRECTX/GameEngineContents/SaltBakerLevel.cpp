@@ -11,6 +11,7 @@
 #include "CogWheel.h"
 #include "ShellWeDance.h"
 #include "SaltBakerHeart.h"
+#include "Tornado.h"
 
 SaltBakerLevel::SaltBakerLevel()
 	:BeforePhase(Phase::Ready)
@@ -85,8 +86,18 @@ void SaltBakerLevel::Update(float _DeltaTime)
 		else if (CurrentPhase == Phase::Phase4)
 		{
 			//ColMapRenderer->SetTexture(".png");
-			SaltBakerHeart* Ph4Boss = CreateActor<SaltBakerHeart>();
-			Ph4Boss->GetTransform().SetWorldPosition({ 640.0f,-400.0f });
+			{
+				Tornado* Ph4Tornado = CreateActor<Tornado>();
+				Ph4Tornado->GetTransform().SetWorldPosition({ 200.0f, 720.0f });
+				Ph4Tornado->GetCollision()->ChangeOrder(ObjectOrder::TRACKING1);
+
+			}
+
+			{
+				Tornado* Ph4Tornado = CreateActor<Tornado>();
+				Ph4Tornado->GetTransform().SetWorldPosition({ 1080.0f, 720.0f });
+				Ph4Tornado->GetCollision()->ChangeOrder(ObjectOrder::TRACKING2);
+			}
 		}
 	}
 }
