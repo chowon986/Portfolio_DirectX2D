@@ -135,8 +135,7 @@ CollisionReturn BulletBase::AttackSuccess(GameEngineCollision* _This, GameEngine
 	{
 		if (IInGameCharacterBase* Character = Level->GetPlayer())
 		{
-			//Character->SetGauge(Character->GetGauge() + 1.0f);
-			Character->SetGauge(4);
+			Character->SetGauge(Character->GetGauge() + 0.05f);
 		}
 	}
 	OnAttackSuccess( _This,  _Other);
