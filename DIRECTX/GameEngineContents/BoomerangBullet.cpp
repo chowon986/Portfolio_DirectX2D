@@ -24,7 +24,7 @@ void BoomerangBullet::Start()
 	Renderer->ScaleToTexture();
 
 	MovementComponent = CreateComponent<BoomerangBulletMovementComponent>();
-	MovementComponent->SetSpeed(20.0f);
+	MovementComponent->SetSpeed(5.0f);
 
 	Renderer->ChangeCamera(CAMERAORDER::IRISCAMERA);
 
