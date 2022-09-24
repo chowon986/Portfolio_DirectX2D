@@ -300,6 +300,8 @@
     <ClInclude Include="StrawberryBullet.h" />
     <ClInclude Include="SugarBullet.h" />
     <ClInclude Include="SuperBeamItem.h" />
+    <ClInclude Include="SuperBoomerangBullet.h" />
+    <ClInclude Include="SuperBoomerangBulletMovementComponent.h" />
     <ClInclude Include="SuperGhostItem.h" />
     <ClInclude Include="SuperInvincibleItem.h" />
     <ClInclude Include="SuperItemBase.h" />
@@ -471,6 +473,8 @@
     <ClCompile Include="StrawberryBullet.cpp" />
     <ClCompile Include="SugarBullet.cpp" />
     <ClCompile Include="SuperBeamItem.cpp" />
+    <ClCompile Include="SuperBoomerangBullet.cpp" />
+    <ClCompile Include="SuperBoomerangBulletMovementComponent.cpp" />
     <ClCompile Include="SuperGhostItem.cpp" />
     <ClCompile Include="SuperInvincibleItem.cpp" />
     <ClCompile Include="SuperItemBase.cpp" />

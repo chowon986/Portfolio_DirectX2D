@@ -48,6 +48,7 @@ void TutorialLevel::LevelStartEvent()
 	Cuphead->SetHP(static_cast<float>(State->MaxHP));
 	Cuphead->SetOnDashInvisible(State->OnDashInvisible);
 	PushToRotateCamera(Cuphead);
+	Player = Cuphead;
 }
 
 void TutorialLevel::Start()

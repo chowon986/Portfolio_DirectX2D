@@ -2,6 +2,7 @@
 #include "BulletBase.h"
 
 class PeaShooter;
+class GameEngineCollision;
 class GameEngineTextureRenderer;
 class PeaBullet : public BulletBase
 {
@@ -13,6 +14,9 @@ public:
 	PeaBullet& operator=(const PeaBullet& _Other) = delete;
 	PeaBullet& operator=(PeaBullet&& _Other) noexcept = delete;
 
+protected:
+	void OnAttackSuccess(GameEngineCollision* _This, GameEngineCollision* _Other) override;
+
 private:
 	virtual void Start() override;
 	virtual void Update(float _DeltaTime) override;
@@ -20,8 +24,6 @@ private:
 
 	void OnPeashotDeathAnimationFrameFinished(const FrameAnimation_DESC& _Info);
 	void Test(const FrameAnimation_DESC& _Info);
-
-	CollisionReturn AttackSuccess(GameEngineCollision* _This, GameEngineCollision* _Other);
 
 private:
 	void PeashotLoop(const FrameAnimation_DESC& _DESC);

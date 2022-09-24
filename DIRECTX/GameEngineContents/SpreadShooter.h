@@ -16,6 +16,7 @@ public:
 	SpreadShooter& operator=(SpreadShooter&& _Other) noexcept = delete;
 
 private:
+	void Shoot() override;
 	void Start() override;
 	void Update(float _DeltaTime) override;
 	void End() override;

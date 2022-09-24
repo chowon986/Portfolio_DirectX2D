@@ -38,7 +38,7 @@ public:
 
 	float GetSpeed() { return Speed; }
 
-	void Reset() { Power = 0.0f, Acceleration = 0.0f, Speed = 0.0f; }
+	void Reset() { Power = 0.0f; Acceleration = 0.0f; Speed = 0.0f; }
 
 	CollisionReturn GroundCheck(GameEngineCollision* _This, GameEngineCollision* _Other);
 	

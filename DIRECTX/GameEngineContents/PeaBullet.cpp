@@ -5,6 +5,7 @@
 #include "BulletMovementComponent.h"
 #include "IInGameCharacterBase.h"
 #include "PepperShooter.h"
+#include <GameEngineContents/InGameLevelBase.h>
 
 PeaBullet::PeaBullet()
 {
@@ -16,7 +17,6 @@ PeaBullet::~PeaBullet()
 
 void PeaBullet::Start()
 {
-
 	Renderer = CreateComponent<GameEngineTextureRenderer>();
 	Renderer->CreateFrameAnimationFolder("PeashotLoop", FrameAnimation_DESC("PeashotLoop", 0.05f));
 	Renderer->CreateFrameAnimationFolder("PeashotIntro", FrameAnimation_DESC("PeashotIntro", 0.05f));
@@ -41,8 +41,7 @@ void PeaBullet::Start()
 
 void PeaBullet::Update(float _DeltaTime)
 {
-	Collision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::MONSTER, CollisionType::CT_AABB2D, std::bind(&PeaBullet::AttackSuccess, this, std::placeholders::_1, std::placeholders::_2));
-	Collision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::MONSTER_DAMAGEABLE_BULLET, CollisionType::CT_AABB2D, std::bind(&PeaBullet::AttackSuccess, this, std::placeholders::_1, std::placeholders::_2));
+	BulletBase::Update(_DeltaTime); //¸ðµç ÃÑ
 
 	if (nullptr == ColMapImage)
 	{
@@ -68,17 +67,9 @@ void PeaBullet::Test(const FrameAnimation_DESC& _Info)
 	int a = 0;
 }
 
-CollisionReturn PeaBullet::AttackSuccess(GameEngineCollision* _This, GameEngineCollision* _Other)
+void PeaBullet::OnAttackSuccess(GameEngineCollision* _This, GameEngineCollision* _Other)
 {
-	if (PepperShooter* Pepper = dynamic_cast<PepperShooter*>(_Other))
-	{
-	}
-	else
-	{
-		MovementComponent->SetSpeed(0.0f);
-	}
 	Renderer->ChangeFrameAnimation("PeashotDeath");
-	return CollisionReturn::ContinueCheck;
 }
 
 void PeaBullet::PeashotLoop(const FrameAnimation_DESC& _DESC)

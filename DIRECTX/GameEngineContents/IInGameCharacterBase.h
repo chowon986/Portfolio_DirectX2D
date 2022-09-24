@@ -36,8 +36,8 @@ enum class InGameCharacterAttackState
 {
 	None,
 	Shoot,
-	SpecialAttack,
-	SuperAttack,
+	SpecialAttack, // 5장
+	SuperAttack, // 1장
 };
 
 enum class InGameCharacterShooterState
@@ -103,6 +103,7 @@ public:
 
 	MulticastDelegate<InGameCharacterState>& GetStateChangedDelegate() { return StateChangedDelegate; }
 	MulticastDelegate<InGameCharacterAttackState>& GetAttackStateChangedDelegate() { return AttackStateChangedDelegate; }
+	MulticastDelegate<InGameCharacterShooterState>& GetShooterStatChangedDelegate() { return ShooterStateChangedDelegate; }
 	MulticastDelegate<std::string>& GetVerticalDirectionChangedDelegate() { return VerticalDirectionChangedDelegate; }
 	MulticastDelegate<std::string>& GetHorizontalDirectionChangedDelegate() { return HorizontalDirectionChangedDelegate; }
 	MulticastDelegate<bool>& GetIsOnGroundChangedDelegate() { return IsOnGroundChangedDelegate; }
@@ -110,8 +111,13 @@ public:
 	void SetIsOnGround(bool _IsOnGround);
 	bool GetIsOnGround() { return IsOnGround; }
 
+	void SetGauge(float _Gauge);
+	float GetGauge();
+	int GetMaxGauge();
+
 protected:
 	GameEngineCollision* MainCollision;
+
 private:
 	GameEngineTextureRenderer* ColMapImage;
 	GameEngineTextureRenderer* Renderer;
@@ -123,10 +129,13 @@ private:
 	std::string HorizontalDir; // 수평 방향 (좌우)
 	MulticastDelegate<InGameCharacterState> StateChangedDelegate;
 	MulticastDelegate<InGameCharacterAttackState> AttackStateChangedDelegate;
+	MulticastDelegate<InGameCharacterShooterState> ShooterStateChangedDelegate;
 	MulticastDelegate<std::string> VerticalDirectionChangedDelegate;
 	MulticastDelegate<std::string> HorizontalDirectionChangedDelegate;
 	MulticastDelegate<bool> IsOnGroundChangedDelegate;
 	bool IsOnGround;
 	float HP;
+	float Gauge;
+	int MaxGauge;
 };
 

@@ -1,6 +1,9 @@
 #include "PreCompile.h"
 #include "BulletBase.h"
 #include "BulletMovementComponent.h"
+#include "PepperShooter.h"
+#include <GameEngineContents/InGameLevelBase.h>
+#include "IInGameCharacterBase.h"
 
 BulletBase::BulletBase()
 	: Renderer(nullptr)
@@ -82,6 +85,12 @@ void BulletBase::Start()
 
 void BulletBase::Update(float _DeltaTime)
 {
+	if (nullptr != Collision)
+	{
+		Collision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::MONSTER, CollisionType::CT_AABB2D, std::bind(&BulletBase::AttackSuccess, this, std::placeholders::_1, std::placeholders::_2));
+		Collision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::MONSTER_DAMAGEABLE_BULLET, CollisionType::CT_AABB2D, std::bind(&BulletBase::AttackSuccess, this, std::placeholders::_1, std::placeholders::_2));
+	}
+
 	if (nullptr == ColMapImage)
 	{
 		return;
@@ -106,5 +115,31 @@ void BulletBase::Update(float _DeltaTime)
 
 void BulletBase::End()
 {
+}
+
+CollisionReturn BulletBase::AttackSuccess(GameEngineCollision* _This, GameEngineCollision* _Other)
+{
+	if (PepperShooter* Pepper = dynamic_cast<PepperShooter*>(_Other))
+	{
+
+	}
+	else
+	{
+		if (nullptr != MovementComponent)
+		{
+		MovementComponent->SetSpeed(0.0f);
+		}
+	}
+
+	if (InGameLevelBase* Level = dynamic_cast<InGameLevelBase*>(GetLevel()))
+	{
+		if (IInGameCharacterBase* Character = Level->GetPlayer())
+		{
+			//Character->SetGauge(Character->GetGauge() + 1.0f);
+			Character->SetGauge(4);
+		}
+	}
+	OnAttackSuccess( _This,  _Other);
+	return CollisionReturn::Break;
 }
 

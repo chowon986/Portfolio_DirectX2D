@@ -11,6 +11,48 @@ ChargerShooter::~ChargerShooter()
 {
 }
 
+void ChargerShooter::Shoot()
+{
+	if (true != GetIsEquipped())
+	{
+		return;
+	}
+
+	{
+		if (IInGameCharacterBase* Parent = dynamic_cast<IInGameCharacterBase*>(GetParent()))
+		{
+			InGameCharacterShooterState ShooterState = Parent->GetShooterState();
+			switch (ShooterState)
+			{
+
+			case InGameCharacterShooterState::BasicShot:
+			{
+				float4 Direction = GetVerticalDirection() + GetHorizontalDirection();
+				if (Direction.CompareInt2D(float4::ZERO))
+				{
+					return;
+				}
+
+				ChargerBullet* Bullet = GetLevel()->CreateActor<ChargerBullet>();
+				Bullet->GetTransform().SetWorldPosition(GetTransform().GetWorldPosition());
+				Bullet->SetDirection(Direction);
+				Bullet->SetColMapImage(GetColMapImage());
+			}
+			break;
+			case InGameCharacterShooterState::SuperShot:
+			{
+			}
+			break;
+			case InGameCharacterShooterState::None:
+				SparkRenderer->ChangeFrameAnimation("Nothing");
+				break;
+			default:
+				SparkRenderer->ChangeFrameAnimation("Nothing");
+			}
+		}
+	}
+}
+
 void ChargerShooter::Start()
 {
 }
@@ -22,40 +64,5 @@ void ChargerShooter::End()
 
 void ChargerShooter::Update(float _DeltaTime)
 {
-	if (true != GetIsEquipped())
-	{
-		return;
-	}
-	WeaponBase::Update(_DeltaTime);
-
-	ElapsedTime += _DeltaTime;
-	ChargeTime += _DeltaTime;
-	if (ElapsedTime > IntervalTime)
-	{
-		ElapsedTime -= IntervalTime;
-		switch (AttackState)
-		{
-		case InGameCharacterAttackState::Shoot:
-		{
-			float4 Direction = GetVerticalDirection() + GetHorizontalDirection();
-			if (Direction.CompareInt2D(float4::ZERO))
-			{
-				return;
-			}
-
-			ChargerBullet* Bullet = GetLevel()->CreateActor<ChargerBullet>();
-			Bullet->GetTransform().SetWorldPosition(GetTransform().GetWorldPosition());
-			Bullet->SetDirection(Direction);
-			Bullet->SetColMapImage(GetColMapImage());
-		}
-		break;
-		case InGameCharacterAttackState::SpecialAttack:
-			// Å« ÃÑ¾ËÀ» ½ð´Ù.
-			break;
-		case InGameCharacterAttackState::SuperAttack:
-			// ÇÊ»ì±â¸¦ ½ð´Ù.
-			break;
-		}
-	}
 }
 

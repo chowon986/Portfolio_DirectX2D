@@ -630,6 +630,12 @@
     <ClInclude Include="Tornado.h">
       <Filter>Actor\Play\InGame\NPC\SaltBaker</Filter>
     </ClInclude>
+    <ClInclude Include="SuperBoomerangBullet.h">
+      <Filter>Actor\Weapon\Bullet\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="SuperBoomerangBulletMovementComponent.h">
+      <Filter>Components\Character\InGame\Bullet</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp">
@@ -1105,6 +1111,12 @@
     </ClCompile>
     <ClCompile Include="Tornado.cpp">
       <Filter>Actor\Play\InGame\NPC\SaltBaker</Filter>
+    </ClCompile>
+    <ClCompile Include="SuperBoomerangBullet.cpp">
+      <Filter>Actor\Weapon\Bullet\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="SuperBoomerangBulletMovementComponent.cpp">
+      <Filter>Components\Character\InGame\Bullet</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

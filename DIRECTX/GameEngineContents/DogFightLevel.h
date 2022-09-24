@@ -49,7 +49,6 @@ public:
 	void ReadyWallopAnimationFrameFinished(const FrameAnimation_DESC& _Info);
 
 	CharacterState* GetCharacterState() { return State;}
-	IInGameCharacterBase* GetPlayer() { return Player; }
 
 protected:
 	void LevelStartEvent() override;
@@ -100,7 +99,6 @@ private:
 	GameEngineTextureRenderer* HPRenderer;
 	int HPCount;
 	GameEngineTextureRenderer* SuperMeter;
-	IInGameCharacterBase* Player;
 	CharacterState* State;
 	float RotateTime;
 

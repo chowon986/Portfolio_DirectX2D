@@ -21,7 +21,7 @@ private:
 
 public:
 	GameEngineTransform& GetTransform()
-	{
+		{
 		return Transform;
 	}
 

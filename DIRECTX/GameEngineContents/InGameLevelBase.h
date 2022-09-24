@@ -11,6 +11,7 @@ enum class Phase
 	Phase4,
 };
 
+class IInGameCharacterBase;
 class InGameLevelBase : public GameEngineLevel
 {
 public:
@@ -28,7 +29,8 @@ public:
 	Phase GetPhase();
 	void SetPhase(Phase _Phase);
 	MulticastDelegate<Phase>& GetPhaseChangedDelegate() { return PhaseChangedDelegate; }
-
+	IInGameCharacterBase* GetPlayer() { return Player; }
+	
 protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;
@@ -37,6 +39,7 @@ protected:
 
 protected:
 	Phase CurrentPhase;
+	IInGameCharacterBase* Player;
 
 private:
 	MulticastDelegate<Phase> PhaseChangedDelegate;

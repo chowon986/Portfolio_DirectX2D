@@ -19,6 +19,8 @@ public:
 	virtual float4 GetDirection() { return Direction; }
 	virtual void SetDirection(float4 _Direction);
 
+	BulletMovementComponent* GetMovementComponent() { return MovementComponent; }
+
 	void SetColMapImage(GameEngineTextureRenderer* _ColMapImage)
 	{
 		ColMapImage = _ColMapImage;
@@ -46,6 +48,8 @@ protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;
 	void End() override;
+	CollisionReturn AttackSuccess(GameEngineCollision* _This, GameEngineCollision* _Other);
+	virtual void OnAttackSuccess(GameEngineCollision* _This, GameEngineCollision* _Other) {}
 
 protected:
 	float4 Direction;

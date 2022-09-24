@@ -2,6 +2,8 @@
 #include "BoomerangShooter.h"
 #include "IInGameCharacterBase.h"
 #include "BoomerangBullet.h"
+#include "SuperBoomerangBullet.h"
+#include "SuperBoomerangBulletMovementComponent.h"
 
 BoomerangShooter::BoomerangShooter()
 {
@@ -24,37 +26,56 @@ void BoomerangShooter::End()
 {
 }
 
-
-void BoomerangShooter::Update(float _DeltaTime)
+void BoomerangShooter::Shoot()
 {
 	if (true != GetIsEquipped())
 	{
 		return;
 	}
-	WeaponBase::Update(_DeltaTime);
 
-	ElapsedTime += _DeltaTime;
-	if (ElapsedTime > IntervalTime)
 	{
-		ElapsedTime -= IntervalTime;
-		switch (AttackState)
+		if (IInGameCharacterBase* Parent = dynamic_cast<IInGameCharacterBase*>(GetParent()))
 		{
-		case InGameCharacterAttackState::Shoot:
-		{
-			float4 Direction = GetVerticalDirection() + GetHorizontalDirection();
+			InGameCharacterShooterState ShooterState = Parent->GetShooterState();
+			switch (ShooterState)
+			{
 
-			BoomerangBullet* Bullet = GetLevel()->CreateActor<BoomerangBullet>();
-			Bullet->GetTransform().SetWorldPosition(GetTransform().GetWorldPosition());
-			Bullet->SetDirection(Direction);
-		}
-		break;
-		case InGameCharacterAttackState::SpecialAttack:
-			// Å« ÃÑ¾ËÀ» ½ð´Ù.
+			case InGameCharacterShooterState::BasicShot:
+			{
+				float4 Direction = GetVerticalDirection() + GetHorizontalDirection();
+
+				BoomerangBullet* Bullet = GetLevel()->CreateActor<BoomerangBullet>();
+				Bullet->GetTransform().SetWorldPosition(GetTransform().GetWorldPosition());
+				Bullet->SetDirection(Direction);
+			}
 			break;
-		case InGameCharacterAttackState::SuperAttack:
-			// ÇÊ»ì±â¸¦ ½ð´Ù.
+			case InGameCharacterShooterState::SuperShot:
+			{
+				float4 Direction = GetVerticalDirection() + GetHorizontalDirection();
+				if (Direction.CompareInt3D(float4::ZERO))
+				{
+					return;
+				}
+				SuperBoomerangBullet* Bullet = GetLevel()->CreateActor<SuperBoomerangBullet>();
+				Bullet->SetColMapImage(GetColMapImage());
+				Bullet->GetTransform().SetWorldPosition(GetTransform().GetWorldPosition()); // Need to CHK
+
+				if (SuperBoomerangBulletMovementComponent* Movement = dynamic_cast<SuperBoomerangBulletMovementComponent*>(Bullet->GetMovementComponent()))
+				{
+					Movement->AddForce(Direction * 10);
+					Movement->SetGravity(-Direction);
+				}
+			}
 			break;
+			default:
+				break;
+			}
 		}
 	}
+}
+
+
+void BoomerangShooter::Update(float _DeltaTime)
+{
 }
 

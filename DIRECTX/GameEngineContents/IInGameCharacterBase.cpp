@@ -8,6 +8,8 @@ IInGameCharacterBase::IInGameCharacterBase()
 	, HorizontalDir("Center")
 	, IsOnGround(false)
 	, HP(0)
+	, Gauge(0.0f)
+	, MaxGauge(5)
 {
 }
 
@@ -29,18 +31,25 @@ void IInGameCharacterBase::SetShooterState(InGameCharacterShooterState _State)
 	if (ShooterState != _State)
 	{
 		ShooterState = _State;
+		ShooterStateChangedDelegate.Invoke(ShooterState);
 	}
 }
 
 void IInGameCharacterBase::Start()
 {
-
+	if (false == GameEngineInput::GetInst()->IsKey("Aim"))
+	{
+		GameEngineInput::GetInst()->CreateKey("Aim", 'A');
+		GameEngineInput::GetInst()->CreateKey("Shoot", VK_LSHIFT);
+		GameEngineInput::GetInst()->CreateKey("GaugeShoot", 'X');
+		GameEngineInput::GetInst()->CreateKey("Jump", VK_CONTROL);
+		GameEngineInput::GetInst()->CreateKey("Dash", 'Z');
+		GameEngineInput::GetInst()->CreateKey("ChangeGun", 'Q');
+	}
 }
 
 void IInGameCharacterBase::Update(float _Delta)
 {
-	//GameEngineDebug::DrawBox(RedDogBowlCollsion->GetTransform(), { 1.0f, 0.0f,0.0f, 0.5f });
-	//GameEngineDebug::DrawBox(YellowDogBowlCollsion->GetTransform(), { 1.0f, 0.0f,0.0f, 0.5f });
 }
 
 void IInGameCharacterBase::OnStateChanged()
@@ -97,5 +106,27 @@ void IInGameCharacterBase::SetIsOnGround(bool _IsOnGround)
 		IsOnGround = _IsOnGround;
 		IsOnGroundChangedDelegate.Invoke(IsOnGround);
 	}
+}
+
+void IInGameCharacterBase::SetGauge(float _Gauge)
+{
+	if (Gauge != _Gauge)
+	{
+		Gauge = _Gauge;
+		if (Gauge > MaxGauge)
+		{
+			Gauge = MaxGauge;
+		}
+	}
+}
+
+float IInGameCharacterBase::GetGauge()
+{
+	return Gauge;
+}
+
+int IInGameCharacterBase::GetMaxGauge()
+{
+	return MaxGauge;
 }
 

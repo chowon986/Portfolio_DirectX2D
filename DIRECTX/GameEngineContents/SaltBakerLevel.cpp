@@ -49,6 +49,7 @@ void SaltBakerLevel::Start()
 
 	//InGameCuphead* Cuphead = CreateActor<InGameCuphead>();
 	//Cuphead->GetTransform().SetWorldPosition({ 640.0f,-360.0f });
+	//Player = Cuphead;
 
 
 	//Chicken* ComMonster = CreateActor<Chicken>();

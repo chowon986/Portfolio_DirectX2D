@@ -11,6 +11,65 @@ SpreadShooter::~SpreadShooter()
 {
 }
 
+void SpreadShooter::Shoot()
+{
+	if (true != GetIsEquipped())
+	{
+		return;
+	}
+
+	{
+		if (IInGameCharacterBase* Parent = dynamic_cast<IInGameCharacterBase*>(GetParent()))
+		{
+			InGameCharacterShooterState ShooterState = Parent->GetShooterState();
+			switch (ShooterState)
+			{
+
+			case InGameCharacterShooterState::BasicShot:
+			{
+				float4 Direction = GetVerticalDirection() + GetHorizontalDirection();
+				{
+					SpreadBullet* Bullet = GetLevel()->CreateActor<SpreadBullet>();
+					Bullet->GetTransform().SetWorldPosition(GetTransform().GetWorldPosition());
+					float4 Dir = float4::VectorRotationToDegreeZAxis(Direction, -15);
+					Bullet->SetDirection(Dir);
+					Bullet->SetColMapImage(GetColMapImage());
+
+				}
+
+				{
+					SpreadBullet* Bullet = GetLevel()->CreateActor<SpreadBullet>();
+					Bullet->GetTransform().SetWorldPosition(GetTransform().GetWorldPosition());
+					float4 Dir = float4::VectorRotationToDegreeZAxis(Direction, 15);
+					Bullet->SetDirection(Dir);
+					Bullet->SetColMapImage(GetColMapImage());
+
+				}
+
+				{
+					SpreadBullet* Bullet = GetLevel()->CreateActor<SpreadBullet>();
+					Bullet->GetTransform().SetWorldPosition(GetTransform().GetWorldPosition());
+					float4 Dir = float4::VectorRotationToDegreeZAxis(Direction, 0);
+					Bullet->SetDirection(Dir);
+					Bullet->SetColMapImage(GetColMapImage());
+
+				}
+			}
+			break;
+			case InGameCharacterShooterState::SuperShot:
+			{
+			}
+			break;
+			case InGameCharacterShooterState::None:
+				//SparkRenderer->ChangeFrameAnimation("Nothing");
+				break;
+			default:
+				break;
+			}
+		}
+	}
+}
+
 void SpreadShooter::Start()
 {
 }
@@ -21,77 +80,5 @@ void SpreadShooter::End()
 
 void SpreadShooter::Update(float _DeltaTime)
 {
-	if (true != GetIsEquipped())
-	{
-		return;
-	}
-	WeaponBase::Update(_DeltaTime);
-
-	ElapsedTime += _DeltaTime;
-	if (ElapsedTime > IntervalTime)
-	{
-		ElapsedTime -= IntervalTime;
-		switch (AttackState)
-		{
-		case InGameCharacterAttackState::Shoot:
-		{
-			float4 Direction = GetVerticalDirection() + GetHorizontalDirection();
-			//{
-			//	SpreadBullet* Bullet = GetLevel()->CreateActor<SpreadBullet>();
-			//	Bullet->GetTransform().SetWorldPosition(GetTransform().GetWorldPosition());
-			//	float4 Dir = float4::VectorRotationToDegreeZAxis(Direction, -7.5);
-			//	Bullet->SetDirection(Dir);
-			//}
-
-			//{
-			//	SpreadBullet* Bullet = GetLevel()->CreateActor<SpreadBullet>();
-			//	Bullet->GetTransform().SetWorldPosition(GetTransform().GetWorldPosition());
-			//	float4 Dir = float4::VectorRotationToDegreeZAxis(Direction, 7.5);
-			//	Bullet->SetDirection(Dir);
-			//}
-
-			//{
-			//	SpreadBullet* Bullet = GetLevel()->CreateActor<SpreadBullet>();
-			//	Bullet->GetTransform().SetWorldPosition(GetTransform().GetWorldPosition());
-			//	float4 Dir = float4::VectorRotationToDegreeZAxis(Direction, 0);
-			//	Bullet->SetDirection(Dir);
-			//}		
-
-			{
-				SpreadBullet* Bullet = GetLevel()->CreateActor<SpreadBullet>();
-				Bullet->GetTransform().SetWorldPosition(GetTransform().GetWorldPosition());
-				float4 Dir = float4::VectorRotationToDegreeZAxis(Direction, -15);
-				Bullet->SetDirection(Dir);
-				Bullet->SetColMapImage(GetColMapImage());
-
-			}
-
-			{
-				SpreadBullet* Bullet = GetLevel()->CreateActor<SpreadBullet>();
-				Bullet->GetTransform().SetWorldPosition(GetTransform().GetWorldPosition());
-				float4 Dir = float4::VectorRotationToDegreeZAxis(Direction, 15);
-				Bullet->SetDirection(Dir);
-				Bullet->SetColMapImage(GetColMapImage());
-
-			}
-
-			{
-				SpreadBullet* Bullet = GetLevel()->CreateActor<SpreadBullet>();
-				Bullet->GetTransform().SetWorldPosition(GetTransform().GetWorldPosition());
-				float4 Dir = float4::VectorRotationToDegreeZAxis(Direction, 0);
-				Bullet->SetDirection(Dir);
-				Bullet->SetColMapImage(GetColMapImage());
-
-			}
-		}
-		break;
-		case InGameCharacterAttackState::SpecialAttack:
-			// Å« ÃÑ¾ËÀ» ½ð´Ù.
-			break;
-		case InGameCharacterAttackState::SuperAttack:
-			// ÇÊ»ì±â¸¦ ½ð´Ù.
-			break;
-		}
-	}
 }
 

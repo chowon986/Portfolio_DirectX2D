@@ -39,14 +39,6 @@ InGameCuphead::~InGameCuphead()
 void InGameCuphead::Start()
 {
 	IInGameCharacterBase::Start();
-	if (false == GameEngineInput::GetInst()->IsKey("Aim"))
-	{
-		GameEngineInput::GetInst()->CreateKey("Aim", 'A');
-		GameEngineInput::GetInst()->CreateKey("Shoot", VK_LSHIFT);
-		GameEngineInput::GetInst()->CreateKey("Jump", VK_CONTROL);
-		GameEngineInput::GetInst()->CreateKey("Dash", 'Z');
-		GameEngineInput::GetInst()->CreateKey("ChangeGun", 'Q');
-	}
 
 	Renderer = CreateComponent<GameEngineTextureRenderer>();
 	SetRenderer(Renderer);
@@ -163,6 +155,7 @@ void InGameCuphead::Start()
 		{
 			PeaShooter* Shooter = GetLevel()->CreateActor<PeaShooter>();
 			Shooter->SetParent(this);
+			EquippedWeapon = Shooter;
 			EquippedWeapon->SetIsEquipped(true);
 		}
 	}
@@ -250,14 +243,43 @@ void InGameCuphead::Update(float _DeltaTime)
 	UpdateDirection();
 	UpdateState();
 
-	if (true == GameEngineInput::GetInst()->IsPress("Shoot") &&
-		GetState() != InGameCharacterState::Dash)
+	if (GetState() != InGameCharacterState::Dash)
 	{
-		if (TutorialLevel* Level = dynamic_cast<TutorialLevel*>(GetLevel()))
+		if (true == GameEngineInput::GetInst()->IsPress("Shoot"))
 		{
-			return;
+			if (TutorialLevel* Level = dynamic_cast<TutorialLevel*>(GetLevel()))
+			{
+				return;
+			}
+			Shoot();
 		}
-		Shoot();
+		else if (true == GameEngineInput::GetInst()->IsDown("GaugeShoot"))
+		{
+			if (GetGauge() == GetMaxGauge())
+			{
+				SetAttackState(InGameCharacterAttackState::SpecialAttack);
+				SetShooterState(InGameCharacterShooterState::SpecialShot);
+				SetGauge(0);
+			}
+			else
+			{
+				if (GetGauge() > 1.0f)
+				{
+					SetShooterState(InGameCharacterShooterState::SuperShot);
+					SetAttackState(InGameCharacterAttackState::SuperAttack);
+					SetShooterState(InGameCharacterShooterState::None);
+					SetGauge(GetGauge()-1);
+				}
+				else
+				{
+					SetAttackState(InGameCharacterAttackState::None);
+				}
+			}
+		}
+		else
+		{
+			SetAttackState(InGameCharacterAttackState::None);
+		}
 	}
 	else
 	{
@@ -360,7 +382,7 @@ void InGameCuphead::OnJumpAnimationFrameChanged(const FrameAnimation_DESC& _Info
 	FrameAnimation_DESC* Info = const_cast<FrameAnimation_DESC*>(&_Info);
 	if (Info->CurFrame % 2 == 0)
 	{
-		SetShooterState(InGameCharacterShooterState::BasicShot);
+		//SetShooterState(InGameCharacterShooterState::BasicShot);
 	}
 	else
 	{

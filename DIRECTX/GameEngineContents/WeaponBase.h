@@ -24,6 +24,7 @@ public:
 
 	void OnCharacterStateChanged(InGameCharacterState _State);
 	void OnCharacterAttackStateChanged(InGameCharacterAttackState _AttackState);
+	void OnCharacterShooterStateChanged(InGameCharacterShooterState _ShooterState);
 	void OnCharacterVerticalDirectionChanged(std::string VerticalDirection);
 	void OnCharacterHorizontalDirectionChanged(std::string HorizontalDirection);
 
@@ -51,6 +52,7 @@ public:
 
 protected:
 	virtual void UpdateDirection();
+	virtual void Shoot() {}
 	void Update(float _DeltaTime) override;
 	void UpdatePivot();
 
@@ -63,8 +65,6 @@ protected:
 	InGameCharacterState State;
 	std::string CharacterHorizontalDirection;
 	std::string CharacterVerticalDirection;
-	InGameCharacterAttackState AttackState;
-	InGameCharacterShooterState ShooterState;
 	GameEngineTextureRenderer* SparkRenderer;
 
 private:
@@ -72,5 +72,6 @@ private:
 	MulticastDelegate<float4> OnHorizontalDirectionChangedDelegate;
 	GameEngineTextureRenderer* ColMapImage;
 	bool IsEquipped;
+
 };
 

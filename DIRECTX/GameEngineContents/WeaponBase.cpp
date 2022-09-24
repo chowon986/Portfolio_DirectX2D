@@ -11,9 +11,7 @@ WeaponBase::WeaponBase()
 	, State(InGameCharacterState::Prepare)
 	, CharacterHorizontalDirection("Center")
 	, CharacterVerticalDirection("Center")
-	, AttackState(InGameCharacterAttackState::None)
 	, ColMapImage(nullptr)
-	, ShooterState(InGameCharacterShooterState::None)
 	, IsEquipped(false)
 {
 }
@@ -85,23 +83,6 @@ void WeaponBase::UpdateDirection()
 
 void WeaponBase::Update(float _DeltaTime)
 {
-	Character = dynamic_cast<IInGameCharacterBase*>(GetParent());
-	UpdatePivot();
-
-	if (Character == nullptr)
-	{
-		return;
-	}
-	AttackState = Character->GetAttackState();
-	if (AttackState == InGameCharacterAttackState::None)
-	{
-		return;
-	}
-
-	if (ElapsedTime == -1)
-	{
-		return;
-	}
 }
 
 void WeaponBase::UpdatePivot()
@@ -259,22 +240,19 @@ void WeaponBase::OnCharacterAttackStateChanged(InGameCharacterAttackState _Attac
 {
 	if (true == IsEquipped)
 	{
-		switch (_AttackState)
-		{
-		case InGameCharacterAttackState::None:
-			ElapsedTime = -1;
-			break;
-		case InGameCharacterAttackState::Shoot:
-			ElapsedTime = 0.0f;
-			break;
-		case InGameCharacterAttackState::SpecialAttack:
-			ElapsedTime = 0.0f;
-			break;
-		case InGameCharacterAttackState::SuperAttack:
-			ElapsedTime = 0.0f;
-			break;
-		}
+		UpdatePivot();
 		UpdateDirection();
+		Shoot();
+	}
+}
+
+void WeaponBase::OnCharacterShooterStateChanged(InGameCharacterShooterState _ShooterState)
+{
+	if (true == IsEquipped)
+	{
+		UpdatePivot();
+		UpdateDirection();
+		Shoot();
 	}
 }
 
@@ -288,6 +266,7 @@ void WeaponBase::SetParent(GameEngineUpdateObject* _Parent)
 	{
 		Character->GetStateChangedDelegate().Add(std::bind(&WeaponBase::OnCharacterStateChanged, this, std::placeholders::_1));
 		Character->GetAttackStateChangedDelegate().Add(std::bind(&WeaponBase::OnCharacterAttackStateChanged, this, std::placeholders::_1));
+		Character->GetShooterStatChangedDelegate().Add(std::bind(&WeaponBase::OnCharacterShooterStateChanged, this, std::placeholders::_1));
 		Character->GetVerticalDirectionChangedDelegate().Add(std::bind(&WeaponBase::OnCharacterVerticalDirectionChanged, this, std::placeholders::_1));
 		Character->GetHorizontalDirectionChangedDelegate().Add(std::bind(&WeaponBase::OnCharacterHorizontalDirectionChanged, this, std::placeholders::_1));
 		UpdateDirection();
