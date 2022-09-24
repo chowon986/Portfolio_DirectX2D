@@ -12,6 +12,7 @@
 #include "WeaponItemBase.h"
 #include "CharmItemBase.h"
 #include "SaltBakerLevel.h"
+#include <GameEngineContents/TutorialLevel.h>
 
 InGameCuphead::InGameCuphead()
 	: IsInputEnabled(false)
@@ -33,6 +34,7 @@ InGameCuphead::InGameCuphead()
 InGameCuphead::~InGameCuphead()
 {
 }
+
 
 void InGameCuphead::Start()
 {
@@ -251,6 +253,10 @@ void InGameCuphead::Update(float _DeltaTime)
 	if (true == GameEngineInput::GetInst()->IsPress("Shoot") &&
 		GetState() != InGameCharacterState::Dash)
 	{
+		if (TutorialLevel* Level = dynamic_cast<TutorialLevel*>(GetLevel()))
+		{
+			return;
+		}
 		Shoot();
 	}
 	else

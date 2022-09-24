@@ -536,30 +536,19 @@ void WorldMapLevel::Update(float _DeltaTime)
 	
 	ColMapOnOffSwitch();
 
+
 	if (State != nullptr)
 	{
-		if (CurCoin == State->Coin)
+		CurCoin = State->Coin;
+		if (CurCoin < 0)
 		{
-			return;
+			CurCoin = 0;
 		}
-
-		else
+		else if (CurCoin > 25)
 		{
-			CurCoin = State->Coin;
-			if (CurCoin < 0 || CurCoin > 25)
-			{
-				if (CurCoin < 0)
-				{
-					CurCoin = 0;
-				}
-				else if (CurCoin > 25)
-				{
-					CurCoin = 25;
-				}
-				return;
-			}
-			CoinCountRenderer->SetTexture("CoinCount" + std::to_string(CurCoin)+".png");
+			CurCoin = 25;
 		}
+		CoinCountRenderer->SetTexture("CoinCount" + std::to_string(CurCoin) + ".png");
 	}
 }
 

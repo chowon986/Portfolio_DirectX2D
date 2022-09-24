@@ -21,19 +21,9 @@ void GameEngineActor::End() {}
 
 void GameEngineActor::DetachObject()
 {
-	if (nullptr == GetParent())
-	{
-		return;
-	}
-
 	GameEngineUpdateObject::DetachObject();
 
 	GetTransform().DetachTransform();
-
-	if (false == IsDeath())
-	{
-		GetLevel()->PushActor(this, this->GetOrder());
-	}
 }
 
 void GameEngineActor::SetParent(GameEngineUpdateObject* _Object)
@@ -45,6 +35,14 @@ void GameEngineActor::SetParent(GameEngineUpdateObject* _Object)
 
 	GameEngineUpdateObject::SetParent(_Object);
 
+	if (nullptr == _Object)
+	{
+		if (false == IsDeath())
+		{
+			GetLevel()->PushActor(this, this->GetOrder());
+		}
+	}
+	else
 	{
 		GameEngineTransformBase* Actor = nullptr;
 		if (Actor = dynamic_cast<GameEngineTransformBase*>(_Object))
@@ -53,6 +51,4 @@ void GameEngineActor::SetParent(GameEngineUpdateObject* _Object)
 			return;
 		}
 	}
-
-	MsgBoxAssert("트랜스폼이 없는 컴포넌트에 트랜스폼이 있는 부모를 붙이려고 했습니다.");
 }

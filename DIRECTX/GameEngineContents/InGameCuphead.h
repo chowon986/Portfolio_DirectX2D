@@ -24,7 +24,6 @@ public:
 protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;
-	void End() override {}
 	void Aim() override;
 	void TakeDamage() override;
 	void Dash() override;

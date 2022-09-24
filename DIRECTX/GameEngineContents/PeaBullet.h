@@ -24,7 +24,6 @@ private:
 	CollisionReturn AttackSuccess(GameEngineCollision* _This, GameEngineCollision* _Other);
 
 private:
-	PeaShooter* Weapon;
 	void PeashotLoop(const FrameAnimation_DESC& _DESC);
 };
 

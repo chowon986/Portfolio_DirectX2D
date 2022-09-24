@@ -310,6 +310,7 @@ void ShopLevel::Update(float _DeltaTime)
 					State->Coin -= 4;
 					ItemRenderers[SelectItemNum]->ChangeFrameAnimation("ItemSelectOK");
 					FontRenderer->SetTexture("Font6.png");
+					Phase = ShopPhase::Select;
 					return;
 				}
 				else
@@ -324,6 +325,7 @@ void ShopLevel::Update(float _DeltaTime)
 					State->Coin -= 3;
 					ItemRenderers[SelectItemNum]->ChangeFrameAnimation("ItemSelectOK");
 					FontRenderer->SetTexture("Font6.png");
+					Phase = ShopPhase::Select;
 					return;
 				}
 				else
@@ -338,6 +340,7 @@ void ShopLevel::Update(float _DeltaTime)
 					State->Coin -= 4;
 					ItemRenderers[SelectItemNum]->ChangeFrameAnimation("ItemSelectOK");
 					FontRenderer->SetTexture("Font6.png");
+					Phase = ShopPhase::Select;
 					return;
 				}
 				else
@@ -352,6 +355,7 @@ void ShopLevel::Update(float _DeltaTime)
 					State->Coin -= 1;
 					ItemRenderers[SelectItemNum]->ChangeFrameAnimation("ItemSelectOK");
 					FontRenderer->SetTexture("Font6.png");
+					Phase = ShopPhase::Select;
 					return;
 				}
 				else
@@ -366,6 +370,7 @@ void ShopLevel::Update(float _DeltaTime)
 					State->Coin -= 4;
 					ItemRenderers[SelectItemNum]->ChangeFrameAnimation("ItemSelectOK");
 					FontRenderer->SetTexture("Font6.png");
+					Phase = ShopPhase::Select;
 					return;
 				}
 				else
@@ -380,6 +385,7 @@ void ShopLevel::Update(float _DeltaTime)
 					State->Coin -= 3;
 					ItemRenderers[SelectItemNum]->ChangeFrameAnimation("ItemSelectOK");
 					FontRenderer->SetTexture("Font6.png");
+					Phase = ShopPhase::Select;
 					return;
 				}
 				else

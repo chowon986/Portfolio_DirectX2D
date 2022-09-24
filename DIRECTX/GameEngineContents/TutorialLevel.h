@@ -1,5 +1,5 @@
 #pragma once
-#include <GameEngineCore/GameEngineLevel.h>
+#include "InGameLevelBase.h"
 
 enum class TutorialPhase
 {
@@ -11,7 +11,7 @@ enum class TutorialPhase
 class GameEngineTextureRenderer;
 class InGameCuphead;
 class CharacterState;
-class TutorialLevel : public GameEngineLevel
+class TutorialLevel : public InGameLevelBase
 {
 public:
 	TutorialLevel();

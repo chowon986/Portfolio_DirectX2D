@@ -7,7 +7,6 @@
 #include "PepperShooter.h"
 
 PeaBullet::PeaBullet()
-	: Weapon(nullptr)
 {
 }
 

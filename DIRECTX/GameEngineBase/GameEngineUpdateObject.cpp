@@ -31,10 +31,20 @@ void GameEngineUpdateObject::ReleaseHierarchy()
 
 void GameEngineUpdateObject::SetParent(GameEngineUpdateObject* _Parent)
 {
-	DetachObject();
+	if (Parent != _Parent)
+	{
+		if (nullptr != Parent)
+		{
+			DetachObject();
+		}
 
-	Parent = _Parent;
-	Parent->Childs.push_back(this);
+		Parent = _Parent;
+
+		if (nullptr != _Parent)
+		{
+			_Parent->Childs.push_back(this);
+		}
+	}
 }
 
 void GameEngineUpdateObject::DetachObject()
