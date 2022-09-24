@@ -185,8 +185,6 @@
     <ClInclude Include="Cart.h" />
     <ClInclude Include="Catus.h" />
     <ClInclude Include="CharacterState.h" />
-    <ClInclude Include="ChargerBullet.h" />
-    <ClInclude Include="ChargerShooter.h" />
     <ClInclude Include="CharmItemBase.h" />
     <ClInclude Include="Chicken.h" />
     <ClInclude Include="ChickenPhysicsComponent.h" />
@@ -302,9 +300,12 @@
     <ClInclude Include="SuperBeamItem.h" />
     <ClInclude Include="SuperBoomerangBullet.h" />
     <ClInclude Include="SuperBoomerangBulletMovementComponent.h" />
+    <ClInclude Include="SuperConvergeBullet.h" />
     <ClInclude Include="SuperGhostItem.h" />
     <ClInclude Include="SuperInvincibleItem.h" />
     <ClInclude Include="SuperItemBase.h" />
+    <ClInclude Include="SuperPeaBullet.h" />
+    <ClInclude Include="SuperSpreadBullet.h" />
     <ClInclude Include="TattooBullet.h" />
     <ClInclude Include="TattooShooter.h" />
     <ClInclude Include="TennisballBullet.h" />
@@ -358,8 +359,6 @@
     <ClCompile Include="Cart.cpp" />
     <ClCompile Include="Catus.cpp" />
     <ClCompile Include="CharacterState.cpp" />
-    <ClCompile Include="ChargerBullet.cpp" />
-    <ClCompile Include="ChargerShooter.cpp" />
     <ClCompile Include="CharmItemBase.cpp" />
     <ClCompile Include="Chicken.cpp" />
     <ClCompile Include="ChickenPhysicsComponent.cpp" />
@@ -475,9 +474,12 @@
     <ClCompile Include="SuperBeamItem.cpp" />
     <ClCompile Include="SuperBoomerangBullet.cpp" />
     <ClCompile Include="SuperBoomerangBulletMovementComponent.cpp" />
+    <ClCompile Include="SuperConvergeBullet.cpp" />
     <ClCompile Include="SuperGhostItem.cpp" />
     <ClCompile Include="SuperInvincibleItem.cpp" />
     <ClCompile Include="SuperItemBase.cpp" />
+    <ClCompile Include="SuperPeaBullet.cpp" />
+    <ClCompile Include="SuperSpreadBullet.cpp" />
     <ClCompile Include="TattooBullet.cpp" />
     <ClCompile Include="TattooShooter.cpp" />
     <ClCompile Include="TennisballBullet.cpp" />

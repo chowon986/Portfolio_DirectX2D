@@ -372,9 +372,6 @@
     <ClInclude Include="BoomerangShooter.h">
       <Filter>Actor\Weapon\Shooter\Player</Filter>
     </ClInclude>
-    <ClInclude Include="ChargerShooter.h">
-      <Filter>Actor\Weapon\Shooter\Player</Filter>
-    </ClInclude>
     <ClInclude Include="ConvergeShooter.h">
       <Filter>Actor\Weapon\Shooter\Player</Filter>
     </ClInclude>
@@ -385,9 +382,6 @@
       <Filter>Actor\Weapon\Shooter\Player</Filter>
     </ClInclude>
     <ClInclude Include="BoomerangBullet.h">
-      <Filter>Actor\Weapon\Bullet\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="ChargerBullet.h">
       <Filter>Actor\Weapon\Bullet\Player</Filter>
     </ClInclude>
     <ClInclude Include="ConvergeBullet.h">
@@ -636,6 +630,15 @@
     <ClInclude Include="SuperBoomerangBulletMovementComponent.h">
       <Filter>Components\Character\InGame\Bullet</Filter>
     </ClInclude>
+    <ClInclude Include="SuperSpreadBullet.h">
+      <Filter>Actor\Weapon\Bullet\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="SuperPeaBullet.h">
+      <Filter>Actor\Weapon\Bullet\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="SuperConvergeBullet.h">
+      <Filter>Actor\Weapon\Bullet\Player</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp">
@@ -854,9 +857,6 @@
     <ClCompile Include="BoomerangShooter.cpp">
       <Filter>Actor\Weapon\Shooter\Player</Filter>
     </ClCompile>
-    <ClCompile Include="ChargerShooter.cpp">
-      <Filter>Actor\Weapon\Shooter\Player</Filter>
-    </ClCompile>
     <ClCompile Include="ConvergeShooter.cpp">
       <Filter>Actor\Weapon\Shooter\Player</Filter>
     </ClCompile>
@@ -867,9 +867,6 @@
       <Filter>Actor\Weapon\Shooter\Player</Filter>
     </ClCompile>
     <ClCompile Include="BoomerangBullet.cpp">
-      <Filter>Actor\Weapon\Bullet\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="ChargerBullet.cpp">
       <Filter>Actor\Weapon\Bullet\Player</Filter>
     </ClCompile>
     <ClCompile Include="ConvergeBullet.cpp">
@@ -1117,6 +1114,15 @@
     </ClCompile>
     <ClCompile Include="SuperBoomerangBulletMovementComponent.cpp">
       <Filter>Components\Character\InGame\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="SuperSpreadBullet.cpp">
+      <Filter>Actor\Weapon\Bullet\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="SuperPeaBullet.cpp">
+      <Filter>Actor\Weapon\Bullet\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="SuperConvergeBullet.cpp">
+      <Filter>Actor\Weapon\Bullet\Player</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

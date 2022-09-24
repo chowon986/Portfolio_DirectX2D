@@ -2,6 +2,7 @@
 #include "ConvergeShooter.h"
 #include "IInGameCharacterBase.h"
 #include "ConvergeBullet.h"
+#include "SuperConvergeBullet.h"
 
 ConvergeShooter::ConvergeShooter()
 {
@@ -55,6 +56,14 @@ void ConvergeShooter::Shoot()
 			break;
 			case InGameCharacterShooterState::SuperShot:
 			{
+				float4 Direction = GetVerticalDirection() + GetHorizontalDirection();
+
+				SuperConvergeBullet* Bullet = GetLevel()->CreateActor<SuperConvergeBullet>();
+				Bullet->SetColMapImage(GetColMapImage());
+				Bullet->GetTransform().SetWorldPosition(GetTransform().GetWorldPosition());
+				float4 Dir = float4::VectorRotationToDegreeZAxis(Direction, 0);
+				Bullet->SetDirection(Dir);
+
 			}
 			break;
 			case InGameCharacterShooterState::None:

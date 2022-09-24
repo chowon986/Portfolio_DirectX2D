@@ -2,6 +2,7 @@
 #include "PeaShooter.h"
 #include "IInGameCharacterBase.h"
 #include "PeaBullet.h"
+#include "SuperPeaBullet.h"
 
 PeaShooter::PeaShooter()
 {
@@ -56,6 +57,12 @@ void PeaShooter::Shoot()
 			break;
 			case InGameCharacterShooterState::SuperShot:
 			{
+				float4 Direction = GetVerticalDirection() + GetHorizontalDirection();
+
+				SuperPeaBullet* Bullet = GetLevel()->CreateActor<SuperPeaBullet>();
+				Bullet->SetColMapImage(GetColMapImage());
+				Bullet->GetTransform().SetWorldPosition(GetTransform().GetWorldPosition()); // Need to CHK
+				Bullet->SetDirection(Direction);
 			}
 			break;
 			case InGameCharacterShooterState::None:
