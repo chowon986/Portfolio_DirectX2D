@@ -62,7 +62,7 @@ void SaltBakerLevel::Start()
 	GetRotateCameraActorTransform().SetLocalPosition({ 640, -360 });
 	GetIrisCameraActorTransform().SetLocalPosition({ 640.0f, -360.0f });
 
-	SetPhase(Phase::Phase4);
+	SetPhase(Phase::Phase1);
 }
 
 void SaltBakerLevel::Update(float _DeltaTime)
@@ -76,7 +76,16 @@ void SaltBakerLevel::Update(float _DeltaTime)
 	{
 		BeforePhase = CurrentPhase;
 
-		if (CurrentPhase == Phase::Phase3)
+		if (CurrentPhase == Phase::Phase1)
+		{
+			SaltBaker* Ph1Boss = CreateActor<SaltBaker>();
+			Ph1Boss->GetTransform().SetWorldPosition({ 640.0f,-360.0f });
+
+			Chicken* Ph1Monster = CreateActor<Chicken>();
+			Ph1Monster->GetTransform().SetWorldPosition({ 640.0f, -360.0f });
+		}
+
+		else if (CurrentPhase == Phase::Phase3)
 		{
 			ColMapRenderer->SetTexture("SBPh3ColMap.png");
 			CogWheel* Ph3Monster1 = CreateActor<CogWheel>();

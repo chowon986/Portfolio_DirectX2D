@@ -26,21 +26,21 @@ SaltBaker::~SaltBaker()
 void SaltBaker::Start()
 {
 	Renderer = CreateComponent<GameEngineTextureRenderer>();
-	Renderer->CreateFrameAnimationFolder("SaltBakerIntro", FrameAnimation_DESC("SaltBakerIntro", 0.05f));
-	Renderer->CreateFrameAnimationFolder("SaltBakerAttack1", FrameAnimation_DESC("SaltBakerAttack1", 0.05f));
-	Renderer->CreateFrameAnimationFolder("SaltBakerAttack2", FrameAnimation_DESC("SaltBakerAttack2", 0.05f));
-	Renderer->CreateFrameAnimationFolder("SaltBakerAttack3", FrameAnimation_DESC("SaltBakerAttack3", 0.05f));
-	Renderer->CreateFrameAnimationFolder("SaltBakerAttack4", FrameAnimation_DESC("SaltBakerAttack4", 0.05f));
-	Renderer->CreateFrameAnimationFolder("SaltBakerAttack5", FrameAnimation_DESC("SaltBakerAttack5", 0.05f));
-	Renderer->CreateFrameAnimationFolder("SaltBakerAttack6", FrameAnimation_DESC("SaltBakerAttack6", 0.05f));
-	Renderer->CreateFrameAnimationFolder("SaltBakerPhase2Intro", FrameAnimation_DESC("SaltBakerPhase2Intro", 0.05f));
-	Renderer->CreateFrameAnimationFolder("SaltBakerPhase2", FrameAnimation_DESC("SaltBakerPhase2", 0.05f));
-	Renderer->CreateFrameAnimationFolder("SaltBakerIdle", FrameAnimation_DESC("SaltBakerIdle", 0.05f));
-	Renderer->CreateFrameAnimationFolder("SaltBakerTakeDamage0", FrameAnimation_DESC("SaltBakerTakeDamage0", 0.05f));
-	Renderer->CreateFrameAnimationFolder("SaltBakerTakeDamage1", FrameAnimation_DESC("SaltBakerTakeDamage1", 0.05f));
-	Renderer->CreateFrameAnimationFolder("SaltBakerTakeDamage2", FrameAnimation_DESC("SaltBakerTakeDamage2", 0.05f));
-	Renderer->CreateFrameAnimationFolder("SaltBakerTakeDamage3", FrameAnimation_DESC("SaltBakerTakeDamage3", 0.05f));
-	Renderer->CreateFrameAnimationFolder("SaltBakerDie", FrameAnimation_DESC("SaltBakerDeath", 0.05f));
+	Renderer->CreateFrameAnimationFolder("SaltBakerIntro", FrameAnimation_DESC("SaltBakerIntro", 0.07f));
+	Renderer->CreateFrameAnimationFolder("SaltBakerAttack1", FrameAnimation_DESC("SaltBakerAttack1", 0.07f));
+	Renderer->CreateFrameAnimationFolder("SaltBakerAttack2", FrameAnimation_DESC("SaltBakerAttack2", 0.07f));
+	Renderer->CreateFrameAnimationFolder("SaltBakerAttack3", FrameAnimation_DESC("SaltBakerAttack3", 0.07f));
+	Renderer->CreateFrameAnimationFolder("SaltBakerAttack4", FrameAnimation_DESC("SaltBakerAttack4", 0.07f));
+	Renderer->CreateFrameAnimationFolder("SaltBakerAttack5", FrameAnimation_DESC("SaltBakerAttack5", 0.07f));
+	Renderer->CreateFrameAnimationFolder("SaltBakerAttack6", FrameAnimation_DESC("SaltBakerAttack6", 0.07f));
+	Renderer->CreateFrameAnimationFolder("SaltBakerPhase2Intro", FrameAnimation_DESC("SaltBakerPhase2Intro", 0.07f));
+	Renderer->CreateFrameAnimationFolder("SaltBakerPhase2", FrameAnimation_DESC("SaltBakerPhase2", 0.07f));
+	Renderer->CreateFrameAnimationFolder("SaltBakerIdle", FrameAnimation_DESC("SaltBakerIdle", 0.07f));
+	Renderer->CreateFrameAnimationFolder("SaltBakerTakeDamage0", FrameAnimation_DESC("SaltBakerTakeDamage0", 0.07f));
+	Renderer->CreateFrameAnimationFolder("SaltBakerTakeDamage1", FrameAnimation_DESC("SaltBakerTakeDamage1", 0.07f));
+	Renderer->CreateFrameAnimationFolder("SaltBakerTakeDamage2", FrameAnimation_DESC("SaltBakerTakeDamage2", 0.07f));
+	Renderer->CreateFrameAnimationFolder("SaltBakerTakeDamage3", FrameAnimation_DESC("SaltBakerTakeDamage3", 0.07f));
+	Renderer->CreateFrameAnimationFolder("SaltBakerDie", FrameAnimation_DESC("SaltBakerDeath", 0.07f));
 
 	Renderer->AnimationBindFrame("SaltBakerIntro", std::bind(&SaltBaker::OnIntroAnimationFrameChanged, this, std::placeholders::_1));
 	Renderer->AnimationBindFrame("SaltBakerAttack1", std::bind(&SaltBaker::OnAttack1AnimationFrameChanged, this, std::placeholders::_1));
@@ -231,7 +231,10 @@ void SaltBaker::OnSaltBakerPhase2IntroFrameChanged(const FrameAnimation_DESC& _I
 
 	if (_Info.CurFrame >= 109)
 	{
-		BackgroundRenderer->GetTransform().SetWorldMove(float4::DOWN * GameEngineTime::GetDeltaTime() * 500);
+		if (nullptr != BackgroundRenderer)
+		{
+			BackgroundRenderer->GetTransform().SetWorldMove(float4::DOWN * GameEngineTime::GetDeltaTime() * 500);
+		}
 	}
 	
 }

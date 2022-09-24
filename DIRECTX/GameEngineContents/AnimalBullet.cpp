@@ -74,21 +74,26 @@ void AnimalBullet::Update(float _DeltaTime)
 		if (GetAnimal() == "Camel")
 		{
 			Physics->Reset();
-			Physics->AddForce(50);
+			Physics->AddForce(60);
 			Physics->IsOnGround = false;
 		}
 		else if (GetAnimal() == "Elephant")
 		{
 			Physics->Reset();
-			Physics->AddForce(40);
+			Physics->AddForce(55);
 			Physics->IsOnGround = false;
 		}
 		else if(GetAnimal() == "Lion")
 		{
 			Physics->Reset();
-			Physics->AddForce(30);
+			Physics->AddForce(50);
 			Physics->IsOnGround = false;
 		}
+	}
+
+	if (GetTransform().GetWorldPosition().y < -750)
+	{
+		Death();
 	}
 }
 

@@ -199,7 +199,7 @@ void SaltBakerShooter::Update(float _DeltaTime)
 			{
 				Bullet->GetRenderer()->ChangeFrameAnimation("CamelJumpUp");
 				Bullet->GetMonsterPhysicsComponent()->Reset();
-				Bullet->GetMonsterPhysicsComponent()->AddForce(50);
+				Bullet->GetMonsterPhysicsComponent()->AddForce(60);
 				Bullet->GetTransform().SetWorldPosition({ 50, -500.0f });
 				Bullet->SetAnimal("Camel");
 			}
@@ -207,7 +207,7 @@ void SaltBakerShooter::Update(float _DeltaTime)
 			{
 				Bullet->GetRenderer()->ChangeFrameAnimation("ElephantJumpUp");
 				Bullet->GetMonsterPhysicsComponent()->Reset();
-				Bullet->GetMonsterPhysicsComponent()->AddForce(40);
+				Bullet->GetMonsterPhysicsComponent()->AddForce(55);
 				Bullet->GetTransform().SetWorldPosition({ 50, -500.0f });
 				Bullet->SetAnimal("Elephant");
 			}
@@ -215,7 +215,7 @@ void SaltBakerShooter::Update(float _DeltaTime)
 			{
 				Bullet->GetRenderer()->ChangeFrameAnimation("LionJumpUp");
 				Bullet->GetMonsterPhysicsComponent()->Reset();
-				Bullet->GetMonsterPhysicsComponent()->AddForce(30);
+				Bullet->GetMonsterPhysicsComponent()->AddForce(50);
 				Bullet->GetTransform().SetWorldPosition({ 50, -500.0f });
 				Bullet->SetAnimal("Lion");
 			}
@@ -292,7 +292,7 @@ void SaltBakerShooter::OnMonsterAttackStateChanged(InGameMonsterAttackState _Att
 		IntervalTime = 1.0f;
 		break;
 	case InGameMonsterAttackState::Attack3:
-		IntervalTime = 1.0f;
+		IntervalTime = 2.0f;
 		break;
 	case InGameMonsterAttackState::Attack4:
 		IntervalTime = 1.0f;

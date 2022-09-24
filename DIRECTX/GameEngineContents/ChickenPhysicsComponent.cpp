@@ -58,11 +58,14 @@ void ChickenPhysicsComponent::FixedUpdate(double _FixedUpdateInterval)
 	Monster->GetTransform().SetWorldMove({ 0, Speed , 0 });
 
 	IsOnGround = false;
-	while (true == ColMapTexture->GetPixelToFloat4(Monster->GetTransform().GetWorldPosition().x, -Monster->GetTransform().GetWorldPosition().y).CompareInt4D(float4::BLACK) ||
-		true == ColMapTexture->GetPixelToFloat4(Monster->GetTransform().GetWorldPosition().x, -Monster->GetTransform().GetWorldPosition().y + 15).CompareInt4D(float4::BLACK))
+
+
+	while (true == ColMapTexture->GetPixelToFloat4(Monster->GetTransform().GetWorldPosition().x, -Monster->GetTransform().GetWorldPosition().y).CompareInt4D((Gravity > 0 ? float4::BLACK : float4::RED)) ||
+		true == ColMapTexture->GetPixelToFloat4(Monster->GetTransform().GetWorldPosition().x, -Monster->GetTransform().GetWorldPosition().y + 15).CompareInt4D((Gravity > 0 ? float4::BLACK : float4::RED)))
 	{
 		Reset();
-		Monster->GetTransform().SetWorldMove(float4::DOWN * _FixedUpdateInterval);
+
+		Monster->GetTransform().SetWorldMove((Gravity > 0 ? float4::DOWN : float4::UP) * _FixedUpdateInterval);
 		IsOnGround = true;
 	}
 }
