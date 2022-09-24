@@ -497,7 +497,8 @@ void ItemInventory::Update(float _DeltaTime)
 			{
 				if (CharacterState* _State = dynamic_cast<CharacterState*>(Actor))
 				{
-					if (ItemName[i] == _State->EquippedItems[InventoryType::ShotA])
+					if (nullptr != _State->EquippedItems[InventoryType::ShotA] &&
+						ItemName[i] == _State->EquippedItems[InventoryType::ShotA])
 					{
 						_State->EquippedItems[InventoryType::ShotA] = ItemName[i];
 						EIcon->GetTransform().SetLocalPosition(SelectorPosBack[i]);
@@ -598,7 +599,8 @@ void ItemInventory::Update(float _DeltaTime)
 			{
 				if (CharacterState* _State = dynamic_cast<CharacterState*>(Actor))
 				{
-					if (ItemName[i] == _State->EquippedItems[InventoryType::ShotB])
+					if (nullptr != _State->EquippedItems[InventoryType::ShotB] &&
+						ItemName[i] == _State->EquippedItems[InventoryType::ShotB])
 					{
 						EIcon->GetTransform().SetLocalPosition(SelectorPosBack[i]);
 						EIcon->SetPivot(PIVOTMODE::LEFTBOT);
@@ -661,57 +663,42 @@ void ItemInventory::Update(float _DeltaTime)
 		{
 			if (ElapsedTime > SelectInvervalTime)
 			{
-				if (Selector->GetTransform().GetLocalPosition().x == SelectorPos3Slot[0].x)
+				for (int i = 0; i < SelectorPos3Slot.size(); i++)
 				{
-					std::list<GameEngineActor*> Actors = GetLevel()->GetGroup(GameObjectGroup::CharacterState);
-					for (GameEngineActor* Actor : Actors)
+					if (Selector->GetTransform().GetLocalPosition().x == SelectorPos3Slot[i].x)
 					{
-						if (CharacterState* _State = dynamic_cast<CharacterState*>(Actor))
+						std::list<GameEngineActor*> Actors = GetLevel()->GetGroup(GameObjectGroup::CharacterState);
+						for (GameEngineActor* Actor : Actors)
 						{
-							_State->EquippedItems[InventoryType::Super] = ItemName[0];
-							EIcon->GetTransform().SetLocalPosition(SelectorPos3Slot[0]);
-							EIcon->SetPivot(PIVOTMODE::LEFTBOT);
-							EIcon->On();
-							AslotSelectedNum = 0;
+							if (CharacterState* _State = dynamic_cast<CharacterState*>(Actor))
+							{
+								_State->EquippedItems[InventoryType::Super] = ItemName[i];
+								break;
+							}
 						}
 					}
-				}
-				else if (Selector->GetTransform().GetLocalPosition().x == SelectorPos3Slot[1].x)
-				{
-					std::list<GameEngineActor*> Actors = GetLevel()->GetGroup(GameObjectGroup::CharacterState);
-					for (GameEngineActor* Actor : Actors)
-					{
-						if (CharacterState* _State = dynamic_cast<CharacterState*>(Actor))
-						{
-							_State->EquippedItems[InventoryType::Super] = ItemName[1];
-							EIcon->GetTransform().SetLocalPosition(SelectorPos3Slot[1]);
-							EIcon->SetPivot(PIVOTMODE::LEFTBOT);
-							EIcon->On();
-							AslotSelectedNum = 0;
-						}
-					}
-				}
-				else if (Selector->GetTransform().GetLocalPosition().x == SelectorPos3Slot[2].x)
-				{
-					std::list<GameEngineActor*> Actors = GetLevel()->GetGroup(GameObjectGroup::CharacterState);
-					for (GameEngineActor* Actor : Actors)
-					{
-						if (CharacterState* _State = dynamic_cast<CharacterState*>(Actor))
-						{
-							_State->EquippedItems[InventoryType::Super] = ItemName[2];
-							EIcon->GetTransform().SetLocalPosition(SelectorPos3Slot[2]);
-							EIcon->SetPivot(PIVOTMODE::LEFTBOT);
-							EIcon->On();
-							AslotSelectedNum = 0;
-						}
-					}
-				}
-				else
-				{
-					return;
 				}
 
 				ElapsedTime = 0.0f;
+			}
+		}
+
+		for (int i = 0; i < SelectorPos3Slot.size(); i++)
+		{
+			std::list<GameEngineActor*> Actors = GetLevel()->GetGroup(GameObjectGroup::CharacterState);
+			for (GameEngineActor* Actor : Actors)
+			{
+				if (CharacterState* _State = dynamic_cast<CharacterState*>(Actor))
+				{
+					if (_State->EquippedItems[InventoryType::Super] != nullptr &&
+						_State->EquippedItems[InventoryType::Super] == ItemName[i])
+					{
+						EIcon->GetTransform().SetLocalPosition(SelectorPos3Slot[i]);
+						EIcon->SetPivot(PIVOTMODE::LEFTBOT);
+						EIcon->On();
+						break;
+					}
+				}
 			}
 		}
 	}
@@ -761,146 +748,42 @@ void ItemInventory::Update(float _DeltaTime)
 		{
 			if (ElapsedTime > SelectInvervalTime)
 			{
-				if (Selector->GetTransform().GetLocalPosition().x == SelectorPosBack[0].x)
+				for (int i = 0; i < SelectorPosBack.size(); i++)
 				{
-					std::list<GameEngineActor*> Actors = GetLevel()->GetGroup(GameObjectGroup::CharacterState);
-					for (GameEngineActor* Actor : Actors)
+					if (Selector->GetTransform().GetLocalPosition().x == SelectorPosBack[i].x)
 					{
-						if (CharacterState* _State = dynamic_cast<CharacterState*>(Actor))
+						std::list<GameEngineActor*> Actors = GetLevel()->GetGroup(GameObjectGroup::CharacterState);
+						for (GameEngineActor* Actor : Actors)
 						{
-							_State->SetEquippedItem(InventoryType::Charm, ItemName[0]);
-							EIcon->GetTransform().SetLocalPosition(SelectorPosBack[0]);
-							EIcon->SetPivot(PIVOTMODE::LEFTBOT);
-							EIcon->On();
+							if (CharacterState* _State = dynamic_cast<CharacterState*>(Actor))
+							{
+								_State->SetEquippedItem(InventoryType::Charm, ItemName[i]);
+								break;
+							}
 						}
 					}
-				}
-				else if (Selector->GetTransform().GetLocalPosition().x == SelectorPosBack[1].x)
-				{
-					std::list<GameEngineActor*> Actors = GetLevel()->GetGroup(GameObjectGroup::CharacterState);
-					for (GameEngineActor* Actor : Actors)
-					{
-						if (CharacterState* _State = dynamic_cast<CharacterState*>(Actor))
-						{
-							_State->SetEquippedItem(InventoryType::Charm, ItemName[1]);
-							EIcon->GetTransform().SetLocalPosition(SelectorPosBack[1]);
-							EIcon->SetPivot(PIVOTMODE::LEFTBOT);
-							EIcon->On();
-							AslotSelectedNum = 1;
-						}
-					}
-				}
-				else if (Selector->GetTransform().GetLocalPosition().x == SelectorPosBack[2].x)
-				{
-					std::list<GameEngineActor*> Actors = GetLevel()->GetGroup(GameObjectGroup::CharacterState);
-					for (GameEngineActor* Actor : Actors)
-					{
-						if (CharacterState* _State = dynamic_cast<CharacterState*>(Actor))
-						{
-							_State->SetEquippedItem(InventoryType::Charm, ItemName[2]);
-							EIcon->GetTransform().SetLocalPosition(SelectorPosBack[2]);
-							EIcon->SetPivot(PIVOTMODE::LEFTBOT);
-							EIcon->On();
-							AslotSelectedNum = 2;
-						}
-					}
-				}
-				else if (Selector->GetTransform().GetLocalPosition().x == SelectorPosBack[3].x)
-				{
-					std::list<GameEngineActor*> Actors = GetLevel()->GetGroup(GameObjectGroup::CharacterState);
-					for (GameEngineActor* Actor : Actors)
-					{
-						if (CharacterState* _State = dynamic_cast<CharacterState*>(Actor))
-						{
-							_State->SetEquippedItem(InventoryType::Charm, ItemName[3]);
-							EIcon->GetTransform().SetLocalPosition(SelectorPosBack[3]);
-							EIcon->SetPivot(PIVOTMODE::LEFTBOT);
-							EIcon->On();
-							AslotSelectedNum = 3;
-						}
-					}
-				}
-				else if (Selector->GetTransform().GetLocalPosition().x == SelectorPosBack[4].x)
-				{
-					std::list<GameEngineActor*> Actors = GetLevel()->GetGroup(GameObjectGroup::CharacterState);
-					for (GameEngineActor* Actor : Actors)
-					{
-						if (CharacterState* _State = dynamic_cast<CharacterState*>(Actor))
-						{
-							_State->SetEquippedItem(InventoryType::Charm, ItemName[4]);
-							EIcon->GetTransform().SetLocalPosition(SelectorPosBack[4]);
-							EIcon->SetPivot(PIVOTMODE::LEFTBOT);
-							EIcon->On();
-							AslotSelectedNum = 4;
-						}
-					}
-				}
-				else if (Selector->GetTransform().GetLocalPosition().x == SelectorPosBack[5].x)
-				{
-					std::list<GameEngineActor*> Actors = GetLevel()->GetGroup(GameObjectGroup::CharacterState);
-					for (GameEngineActor* Actor : Actors)
-					{
-						if (CharacterState* _State = dynamic_cast<CharacterState*>(Actor))
-						{
-							_State->SetEquippedItem(InventoryType::Charm, ItemName[5]);
-							EIcon->GetTransform().SetLocalPosition(SelectorPosBack[5]);
-							EIcon->SetPivot(PIVOTMODE::LEFTBOT);
-							EIcon->On();
-							AslotSelectedNum = 5;
-						}
-					}
-				}
-				else if (Selector->GetTransform().GetLocalPosition().x == SelectorPosBack[6].x)
-				{
-					std::list<GameEngineActor*> Actors = GetLevel()->GetGroup(GameObjectGroup::CharacterState);
-					for (GameEngineActor* Actor : Actors)
-					{
-						if (CharacterState* _State = dynamic_cast<CharacterState*>(Actor))
-						{
-							_State->SetEquippedItem(InventoryType::Charm, ItemName[6]);
-							EIcon->GetTransform().SetLocalPosition(SelectorPosBack[6]);
-							EIcon->SetPivot(PIVOTMODE::LEFTBOT);
-							EIcon->On();
-							AslotSelectedNum = 6;
-						}
-					}
-				}
-				else if (Selector->GetTransform().GetLocalPosition().x == SelectorPosBack[7].x)
-				{
-					std::list<GameEngineActor*> Actors = GetLevel()->GetGroup(GameObjectGroup::CharacterState);
-					for (GameEngineActor* Actor : Actors)
-					{
-						if (CharacterState* _State = dynamic_cast<CharacterState*>(Actor))
-						{
-							_State->SetEquippedItem(InventoryType::Charm, ItemName[7]);
-							EIcon->GetTransform().SetLocalPosition(SelectorPosBack[7]);
-							EIcon->SetPivot(PIVOTMODE::LEFTBOT);
-							EIcon->On();
-							AslotSelectedNum = 7;
-						}
-					}
-				}
-				else if (Selector->GetTransform().GetLocalPosition().x == SelectorPosBack[8].x)
-				{
-					std::list<GameEngineActor*> Actors = GetLevel()->GetGroup(GameObjectGroup::CharacterState);
-					for (GameEngineActor* Actor : Actors)
-					{
-						if (CharacterState* _State = dynamic_cast<CharacterState*>(Actor))
-						{
-							_State->SetEquippedItem(InventoryType::Charm, ItemName[8]);
-							EIcon->GetTransform().SetLocalPosition(SelectorPosBack[8]);
-							EIcon->SetPivot(PIVOTMODE::LEFTBOT);
-							EIcon->On();
-							AslotSelectedNum = 8;
-						}
-					}
-				}
-				else
-				{
-					return;
 				}
 
 				ElapsedTime = 0.0f;
+			}
+		}
+
+		for (int i = 0; i < SelectorPosBack.size(); i++)
+		{
+			std::list<GameEngineActor*> Actors = GetLevel()->GetGroup(GameObjectGroup::CharacterState);
+			for (GameEngineActor* Actor : Actors)
+			{
+				if (CharacterState* _State = dynamic_cast<CharacterState*>(Actor))
+				{
+					if (_State->EquippedItems[InventoryType::Charm] != nullptr &&
+						_State->EquippedItems[InventoryType::Charm] == ItemName[i])
+					{
+						EIcon->GetTransform().SetLocalPosition(SelectorPosBack[i]);
+						EIcon->SetPivot(PIVOTMODE::LEFTBOT);
+						EIcon->On();
+						break;
+					}
+				}
 			}
 		}
 	}
