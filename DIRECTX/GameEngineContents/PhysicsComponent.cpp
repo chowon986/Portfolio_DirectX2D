@@ -62,7 +62,7 @@ void PhysicsComponent::FixedUpdate(float _DeltaTime)
 	Speed += Acceleration * _DeltaTime;
 	Actor->GetTransform().SetWorldMove({ 0, Speed, 0 });
 
-	while (true == ColMapTexture->GetPixelToFloat4(Actor->GetTransform().GetWorldPosition().x, -Actor->GetTransform().GetWorldPosition().y).CompareInt4D(float4::BLACK) ||
+	while (true == ColMapTexture->GetPixelToFloat4(Actor->GetTransform().GetWorldPosition().x, -Actor->GetTransform().GetWorldPosition().y).CompareInt4D(float4::RED) ||
 		Actor->GetMainCollision()->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::GROUND, CollisionType::CT_AABB2D,
 			std::bind(&PhysicsComponent::GroundCheck, this, std::placeholders::_1, std::placeholders::_2)))
 	{

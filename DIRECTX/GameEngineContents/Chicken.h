@@ -8,6 +8,7 @@ class GameEngineCollision;
 class GameEngineTextureRenderer;
 class InGameMovementComponent;
 class ChickenPhysicsComponent;
+class SaltBakerLevel;
 class InGameMonsterAnimationControllerComponent;
 class Chicken : public IInGameMonsterBase
 {
@@ -36,10 +37,26 @@ public:
 	ChickenPhysicsComponent* GetChickenPhysicsComponent() { return Physics; }
 
 private:
+	void PrepareAttack1();
+
+	void OnChickenIntroAnimationFrameChanged(const FrameAnimation_DESC& _Info);
+	void OnChickenPrepareAttack1AnimationFrameChanged(const FrameAnimation_DESC& _Info);
+	void OnChickenAttack1AnimationFrameChanged(const FrameAnimation_DESC& _Info);
+	void OnChickenAttackFinish1AnimationFrameChanged(const FrameAnimation_DESC& _Info);
+	void OnChickenIdleAnimationFrameChanged(const FrameAnimation_DESC& _Info);
+	
+
+private:
+	SaltBakerLevel* Level;
+	GameEngineCollision* Collision;
+	ChickenPhysicsComponent* Physics;
 	GameEngineTextureRenderer* Renderer;
+	
 	InGameMonsterState State;
 	InGameMonsterAttackState AttackState;
-	GameEngineCollision* Collision;
+	
+	bool CanAttack;
+	float LerpTime;
+	float PlayerPosX;
 	float AttackIntervalTime;
-	ChickenPhysicsComponent* Physics;
 };

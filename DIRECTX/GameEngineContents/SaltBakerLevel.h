@@ -4,6 +4,7 @@
 // Ό³Έν :
 enum class Phase;
 class GameEngineTextureRenderer;
+class CharacterState;
 class SaltBakerLevel : public InGameLevelBase
 {
 public:
@@ -18,6 +19,7 @@ public:
 	SaltBakerLevel& operator=(SaltBakerLevel&& _Other) noexcept = delete;
 
 protected:
+	void LevelStartEvent() override;
 	void Start() override;
 	void Update(float _DeltaTime) override;
 	void End() override;
@@ -29,5 +31,7 @@ private:
 	GameEngineTextureRenderer* ColMapRenderer;
 	GameEngineTextureRenderer* KitchenRenderer;
 	Phase BeforePhase;
+	int HPCount;
+	CharacterState* State;
 };
 

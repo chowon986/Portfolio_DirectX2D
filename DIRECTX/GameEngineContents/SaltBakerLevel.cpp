@@ -11,6 +11,7 @@
 #include "CogWheel.h"
 #include "ShellWeDance.h"
 #include "SaltBakerHeart.h"
+#include "CharacterState.h"
 #include "Tornado.h"
 
 SaltBakerLevel::SaltBakerLevel()
@@ -20,6 +21,19 @@ SaltBakerLevel::SaltBakerLevel()
 
 SaltBakerLevel::~SaltBakerLevel()
 {
+}
+
+void SaltBakerLevel::LevelStartEvent()
+{
+	std::list<GameEngineActor*> Actors = GetGroup(GameObjectGroup::CharacterState);
+	for (GameEngineActor* Actor : Actors)
+	{
+		if (CharacterState* _State = dynamic_cast<CharacterState*>(Actor))
+		{
+			State = _State;
+			HPCount = State->MaxHP;
+		}
+	}
 }
 
 void SaltBakerLevel::Start()
@@ -42,18 +56,6 @@ void SaltBakerLevel::Start()
 		KitchenRenderer->SetScaleModeImage();
 		KitchenRenderer->GetTransform().SetLocalPosition({ 640.0f, -360.0f, (int)ZOrder::Background });
 	}
-
-	//SaltBaker* Boss = CreateActor<SaltBaker>();
-	//Boss->GetTransform().SetWorldPosition({ 640.0f,-360.0f });
-	//Boss->SetBackgroundRenderer(KitchenRenderer);
-
-	//InGameCuphead* Cuphead = CreateActor<InGameCuphead>();
-	//Cuphead->GetTransform().SetWorldPosition({ 640.0f,-360.0f });
-	//Player = Cuphead;
-
-
-	//Chicken* ComMonster = CreateActor<Chicken>();
-	//Monster->GetTransform().SetWorldPosition({ 640.0f, -360.0f });
 
 	GetMainCamera()->SetProjectionSize({ 1280.0f, 720.0f });
 	GetRotateCamera()->SetProjectionSize({ 1536.0f, 864.0f });
@@ -80,10 +82,21 @@ void SaltBakerLevel::Update(float _DeltaTime)
 		if (CurrentPhase == Phase::Phase1)
 		{
 			SaltBaker* Ph1Boss = CreateActor<SaltBaker>();
-			Ph1Boss->GetTransform().SetWorldPosition({ 640.0f,-360.0f });
+			Ph1Boss->GetTransform().SetWorldPosition({ 640.0f,-360.0f, (int)ZOrder::Player + 2});
 
 			Chicken* Ph1Monster = CreateActor<Chicken>();
-			Ph1Monster->GetTransform().SetWorldPosition({ 640.0f, -360.0f });
+			Ph1Monster->GetTransform().SetWorldPosition({ 640.0f, -50.0f, (int)ZOrder::Player+1 });
+
+			InGameCuphead* Cuphead = CreateActor<InGameCuphead>(GameObjectGroup::Player);
+			Cuphead->GetTransform().SetWorldPosition({ 640.0f,-360.0f, (int)ZOrder::Player });
+			Cuphead->SetColMapImage(ColMapRenderer);
+
+			if (nullptr != State)
+			{
+				Cuphead->SetHP(State->MaxHP);
+				Cuphead->SetOnDashInvisible(State->OnDashInvisible);
+			}
+			Player = Cuphead;
 		}
 
 		else if (CurrentPhase == Phase::Phase3)
