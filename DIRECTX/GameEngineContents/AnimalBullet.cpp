@@ -49,6 +49,10 @@ void AnimalBullet::Start()
 	SetAnimalBulletPhysicsComponent(CreateComponent<AnimalBulletPhysicsComponent>());
 
 	Renderer->ChangeCamera(CAMERAORDER::ROTATECAMERA);
+
+	Collision = CreateComponent<GameEngineCollision>();
+	Collision->GetTransform().SetLocalScale({ 100.0f, 100.0f, 1.0f });
+	Collision->ChangeOrder(ObjectOrder::MONSTER_BULLET);
 }
 
 void AnimalBullet::Update(float _DeltaTime)

@@ -548,9 +548,11 @@ void DogFightLevel::Update(float _DeltaTime)
 			Cuphead->GetTransform().SetLocalPosition({ -120, 50, (int)ZOrder::Player });
 			Cuphead->SetColMapImage(ColMapRenderer);
 
-			Cuphead->SetHP(State->MaxHP);
-			Cuphead->SetOnDashInvisible(State->OnDashInvisible);
-
+			if (nullptr != State)
+			{
+				Cuphead->SetHP(State->MaxHP);
+				Cuphead->SetOnDashInvisible(State->OnDashInvisible);
+			}
 			PlayerHP* HPUI = CreateActor<PlayerHP>(GameObjectGroup::Monster);
 			HPUI->SetPlayer(Cuphead);
 			HPUI->GetTransform().SetLocalPosition({ 75.0f,-675.0f });

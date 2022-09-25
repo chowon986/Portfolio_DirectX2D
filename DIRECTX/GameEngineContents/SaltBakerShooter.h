@@ -33,5 +33,8 @@ private:
 	float LimeBulletStartPosX;
 	float LimeBulletStartPosY;
 	int SugarAttackCount;
+	int DoughAttackCount;
+	bool CanDoughAttackWithBerry;
+	bool Switch;
 };
 

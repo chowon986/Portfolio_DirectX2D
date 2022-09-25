@@ -26,12 +26,16 @@ protected:
 
 private:
 	void EndAnimation(const FrameAnimation_DESC& _Info);
+	void OnIrisAnimationFrameEnd(const FrameAnimation_DESC& _Info);
 
 private:
 	GameEngineTextureRenderer* ColMapRenderer;
 	GameEngineTextureRenderer* KitchenRenderer;
+	GameEngineTextureRenderer* IrisRenderer;
 	Phase BeforePhase;
 	int HPCount;
 	CharacterState* State;
+	float ElapsedTime;
+	bool OnceCheck;
 };
 

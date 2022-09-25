@@ -52,11 +52,16 @@ private:
 	ChickenPhysicsComponent* Physics;
 	GameEngineTextureRenderer* Renderer;
 	
+	Phase BeforePhase;
 	InGameMonsterState State;
 	InGameMonsterAttackState AttackState;
-	
+
 	bool CanAttack;
+	bool CanRotate;
 	float LerpTime;
 	float PlayerPosX;
 	float AttackIntervalTime;
+	float Angle;
+	float TTLAngle;
+	float LastAngle;
 };

@@ -47,6 +47,8 @@ protected:
 public:
 	void SetBackgroundRenderer(GameEngineTextureRenderer* _Renderer) { BackgroundRenderer = _Renderer; }
 	GameEngineTextureRenderer* GetBackgroundRenderer() { return BackgroundRenderer; }
+	CollisionReturn OnDeathCollision(GameEngineCollision* _This, GameEngineCollision* _Other);
+
 
 	void SetTakeDamageNum(int _Num) { TakeDamageNum = _Num; }
 	int GetTakeDamageNum() { return TakeDamageNum; }
@@ -57,6 +59,7 @@ private:
 	InGameMonsterState State;
 	InGameMonsterAttackState AttackState;
 	GameEngineCollision* Collision;
+	GameEngineCollision* WholeCollision;
 	GameEngineTextureRenderer* BackgroundRenderer;
 	InGameLevelBase* Level;
 	bool TimeCountOn;

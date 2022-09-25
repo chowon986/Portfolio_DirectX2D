@@ -9,6 +9,10 @@ Chicken::Chicken()
 	: CanAttack(false)
 	, LerpTime(0.0f)
 	, PlayerPosX(0.0f)
+	, BeforePhase(Phase::Ready)
+	, CanRotate(false)
+	, Angle(0.0f)
+	, LastAngle(0.0f)
 {
 }
 
@@ -43,6 +47,9 @@ void Chicken::Start()
 
 	Renderer->SetPivotToVector(float4::UP * 5);
 
+	Collision = CreateComponent<GameEngineCollision>();
+	Collision->GetTransform().SetLocalScale({ 100.0f, 100.0f, 1.0f });
+	Collision->ChangeOrder(ObjectOrder::MONSTER_BULLET2);
 }
 
 void Chicken::Update(float _DeltaTime)
@@ -50,15 +57,24 @@ void Chicken::Update(float _DeltaTime)
 	AttackIntervalTime += _DeltaTime;
 	LerpTime += _DeltaTime;
 
+
 	if (Level = dynamic_cast<SaltBakerLevel*>(GetLevel()))
 	{
-		if (Level->GetPhase() == Phase::Phase1)
+		if (Level->GetPhase() != BeforePhase)
 		{
-			Physics->SetGravity(1.0f);
-		}
-		else if (Level->GetPhase() == Phase::Phase2)
-		{
-			Physics->SetGravity(-1.0f);
+			BeforePhase = Level->GetPhase();
+
+			if (Level->GetPhase() == Phase::Phase1)
+			{
+				Physics->SetGravity(1.0f);
+			}
+
+			else if (Level->GetPhase() == Phase::Phase2)
+			{
+				Physics->SetGravity(-1.0f);
+				CanRotate = true;
+				Renderer->SetPivotToVector(float4::DOWN * 15);
+			}
 		}
 	}
 
@@ -71,6 +87,21 @@ void Chicken::Update(float _DeltaTime)
 		{
 			float DestPosX = GameEngineMath::LerpLimit(CurPos.x, PlayerPosX, Time);
 			GetTransform().SetLocalPosition(float4({ DestPosX, CurPos.y, CurPos.z }));
+		}
+
+		if (true == CanRotate)
+		{
+			Angle = _DeltaTime * 4;
+			TTLAngle += Angle;
+			if (abs(TTLAngle - (GameEngineMath::PI)) <= 0.01)
+			{
+				CanRotate = false;
+			}
+			else
+			{
+				float RotationAngle = GameEngineMath::RadianToDegree * Angle;
+				Renderer->GetTransform().SetLocalRotate({ 0,0, RotationAngle });
+			}
 		}
 	}
 }
@@ -169,6 +200,13 @@ void Chicken::OnChickenAttackFinish1AnimationFrameChanged(const FrameAnimation_D
 			if (true == Renderer->IsCurAnimationPause())
 			{
 				Renderer->CurAnimationPauseOff();
+
+				if(true == CanRotate)
+				{
+					LastAngle = 180 - TTLAngle;
+					Renderer->GetTransform().SetLocalRotate({ 0,0, LastAngle });
+					CanRotate = false;
+				}
 			}
 		}
 	}

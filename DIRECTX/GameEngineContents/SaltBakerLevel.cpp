@@ -16,11 +16,12 @@
 
 SaltBakerLevel::SaltBakerLevel()
 	:BeforePhase(Phase::Ready)
+	, OnceCheck(false)
 {
 }
 
 SaltBakerLevel::~SaltBakerLevel()
-{
+{ 
 }
 
 void SaltBakerLevel::LevelStartEvent()
@@ -57,6 +58,17 @@ void SaltBakerLevel::Start()
 		KitchenRenderer->GetTransform().SetLocalPosition({ 640.0f, -360.0f, (int)ZOrder::Background });
 	}
 
+	Background* Iris = CreateActor<Background>(GameObjectGroup::UI);
+	IrisRenderer = Iris->CreateComponent<GameEngineTextureRenderer>();
+	IrisRenderer->GetTransform().SetLocalScale({ 1280.0f, 720.0f, 1.0f });
+	IrisRenderer->GetTransform().SetWorldPosition({ 640.0f, -360.0f });
+	IrisRenderer->CreateFrameAnimationFolder("IrisAStart", FrameAnimation_DESC("IrisA", 0.07f, false));
+	IrisRenderer->CreateFrameAnimationFolder("IrisA", FrameAnimation_DESC("IrisA", 0, 0, 0.07f, true));
+	IrisRenderer->CreateFrameAnimationFolder("IrisBStart", FrameAnimation_DESC("IrisB", 0.07f, true));
+	IrisRenderer->AnimationBindEnd("IrisAStart", std::bind(&SaltBakerLevel::OnIrisAnimationFrameEnd, this, std::placeholders::_1));
+	IrisRenderer->ChangeFrameAnimation("IrisA");
+	IrisRenderer->ChangeCamera(CAMERAORDER::IRISCAMERA);
+
 	GetMainCamera()->SetProjectionSize({ 1280.0f, 720.0f });
 	GetRotateCamera()->SetProjectionSize({ 1536.0f, 864.0f });
 	GetIrisCamera()->SetProjectionSize({ 1280.0f, 720.0f });
@@ -64,12 +76,18 @@ void SaltBakerLevel::Start()
 	GetMainCameraActorTransform().SetLocalPosition({ 640, -360 });
 	GetRotateCameraActorTransform().SetLocalPosition({ 640, -360 });
 	GetIrisCameraActorTransform().SetLocalPosition({ 640.0f, -360.0f });
-
-	SetPhase(Phase::Phase1);
 }
 
 void SaltBakerLevel::Update(float _DeltaTime)
 {
+	ElapsedTime += _DeltaTime;
+
+	if (ElapsedTime > 1.0f && OnceCheck == false)
+	{
+		IrisRenderer->ChangeFrameAnimation("IrisAStart");
+		OnceCheck = true;
+	}
+
 	if (true == GameEngineInput::GetInst()->IsDown("LevelChange"))
 	{
 		GEngine::ChangeLevel("WorldMap");
@@ -132,4 +150,10 @@ void SaltBakerLevel::End()
 void SaltBakerLevel::EndAnimation(const FrameAnimation_DESC& _Info)
 {
 	GEngine::ChangeLevel("WorldMap");
+}
+
+void SaltBakerLevel::OnIrisAnimationFrameEnd(const FrameAnimation_DESC& _Info)
+{
+	IrisRenderer->Off();
+	SetPhase(Phase::Phase1);
 }

@@ -5,6 +5,9 @@
 #include "InGameMonsterAnimationControllerComponent.h"
 #include "PepperShooter.h"
 #include "InGameLevelBase.h"
+#include "LimeBullet.h"
+#include "Chicken.h"
+#include "InGameCuphead.h"
 #include <GameEngineBase/GameEngineRandom.h>
 
 SaltBaker::SaltBaker()
@@ -61,6 +64,11 @@ void SaltBaker::Start()
 
 	SetRenderer(Renderer);
 
+	HandRenderer = CreateComponent<GameEngineTextureRenderer>();
+	HandRenderer->SetTexture("Hand.png");
+	HandRenderer->ScaleToTexture();
+	HandRenderer->Off();
+
 	InGameMovementComponent* Movement = CreateComponent<InGameMovementComponent>();
 	InGameMonsterAnimationControllerComponent* Animation = CreateComponent<InGameMonsterAnimationControllerComponent>();
 	Animation->SetMonsterName("SaltBaker");
@@ -70,10 +78,20 @@ void SaltBaker::Start()
 		SaltBakerShooter* SaltBakerGun = GetLevel()->CreateActor<SaltBakerShooter>();
 		SaltBakerGun->SetParent(this);
 	}
+
+	Collision = CreateComponent<GameEngineCollision>();
+	Collision->GetTransform().SetLocalScale({ 300.0f, 500.0f, 1.0f });
+	Collision->GetTransform().SetLocalPosition({ 0.0f, 300.0f });
+
+	WholeCollision = CreateComponent<GameEngineCollision>();
+	WholeCollision->GetTransform().SetLocalScale({ 1280.0f, 720.0f, 1.0f });
+	WholeCollision->GetTransform().SetLocalPosition({ 0.0f, 0.0f });
+	WholeCollision->Off();
 }
 
 void SaltBaker::Update(float _DeltaTime)
 {
+	//GEngine::CollisionDebugOn();
 	if (Level != nullptr)
 	{
 		if (Level->GetPhase() == Phase::Phase2 &&
@@ -81,8 +99,8 @@ void SaltBaker::Update(float _DeltaTime)
 		{
 			if (GetHP() <= 0)
 			{
-				SetState(InGameMonsterState::Die);
-				return;
+				//SetState(InGameMonsterState::Die);
+				//return;
 			}
 			TimeCountOn = true;
 		}
@@ -146,7 +164,14 @@ void SaltBaker::OnIntroAnimationFrameChanged(const FrameAnimation_DESC& _Info)
 		SetState(InGameMonsterState::Prepare);
 		SetAttackState(InGameMonsterAttackState::Attack2);
 	}
-	else if (_Info.CurFrame == 62)
+
+	if (_Info.CurFrame >= 50 && _Info.CurFrame < 57)
+	{
+		float4 CurPos = Collision->GetTransform().GetWorldPosition();
+		Collision->GetTransform().SetWorldPosition(CurPos + float4::LEFT * 50);
+	}
+
+	if (_Info.CurFrame == 62)
 	{
 		SetState(InGameMonsterState::Attack3);
 	}
@@ -158,7 +183,14 @@ void SaltBaker::OnAttack1AnimationFrameChanged(const FrameAnimation_DESC& _Info)
 	{
 		SetAttackState(InGameMonsterAttackState::Attack1);
 	}
-	else if (_Info.CurFrame == 44)
+
+	if (_Info.CurFrame >= 33 && _Info.CurFrame <= 40) 
+	{
+		float4 CurPos = Collision->GetTransform().GetWorldPosition();
+		Collision->GetTransform().SetWorldPosition(CurPos + float4::RIGHT * 45);
+	}
+
+	if (_Info.CurFrame == 44)
 	{
 		SetState(InGameMonsterState::Attack4);
 	}
@@ -166,10 +198,41 @@ void SaltBaker::OnAttack1AnimationFrameChanged(const FrameAnimation_DESC& _Info)
 
 void SaltBaker::OnAttack2AnimationFrameChanged(const FrameAnimation_DESC& _Info)
 {
+	if (_Info.CurFrame > 2 && _Info.CurFrame < 9)
+	{
+		float4 CurPos = Collision->GetTransform().GetWorldPosition();
+		Collision->GetTransform().SetWorldPosition(CurPos + float4::LEFT * 105);
+	}
+
+	if (_Info.CurFrame > 42 && _Info.CurFrame < 53)
+	{
+		float4 CurPos = Collision->GetTransform().GetWorldPosition();
+		Collision->GetTransform().SetWorldPosition(CurPos + float4::RIGHT * 30);
+	}
+
+	if (_Info.CurFrame > 95 && _Info.CurFrame < 105)
+	{
+		float4 CurPos = Collision->GetTransform().GetWorldPosition();
+		Collision->GetTransform().SetWorldPosition(CurPos + float4::RIGHT * 50);
+	}
+
+	if (_Info.CurFrame > 110 && _Info.CurFrame < 125)
+	{
+		float4 CurPos = Collision->GetTransform().GetWorldPosition();
+		Collision->GetTransform().SetWorldPosition(CurPos + float4::LEFT * 55);
+	}
+
+	if (_Info.CurFrame > 140 )
+	{
+		float4 CurPos = Collision->GetTransform().GetWorldPosition();
+		Collision->GetTransform().SetWorldPosition(CurPos + float4::RIGHT * 40);
+	}
+
 	if (_Info.CurFrame == 122)
 	{
 		SetAttackState(InGameMonsterAttackState::Attack2);
 	}
+
 	else if (_Info.CurFrame == 147)
 	{
 		SetState(InGameMonsterState::Attack1);
@@ -182,7 +245,14 @@ void SaltBaker::OnAttack3AnimationFrameChanged(const FrameAnimation_DESC& _Info)
 	{
 		SetAttackState(InGameMonsterAttackState::Attack3);
 	}
-	else if (_Info.CurFrame == 133)
+
+	if (_Info.CurFrame >= 130)
+	{
+		float4 CurPos = Collision->GetTransform().GetWorldPosition();
+		Collision->GetTransform().SetWorldPosition(CurPos + float4::RIGHT * 70);
+	}
+
+	if (_Info.CurFrame == 133)
 	{
 		SetState(InGameMonsterState::Attack1);
 	}
@@ -210,11 +280,55 @@ void SaltBaker::OnAttack4AnimationFrameChanged(const FrameAnimation_DESC& _Info)
 
 void SaltBaker::OnSaltBakerPhase2IntroFrameChanged(const FrameAnimation_DESC& _Info)
 {
+	if (_Info.CurFrame < 10)
+	{
+		float4 CurPos = Collision->GetTransform().GetWorldPosition();
+		Collision->GetTransform().SetWorldPosition(CurPos + float4::LEFT * 70);
+	}
+
+	if (_Info.CurFrame > 15 && _Info.CurFrame < 21)
+	{
+		float4 CurPos = Collision->GetTransform().GetWorldPosition();
+		Collision->GetTransform().SetWorldPosition(CurPos + float4::RIGHT * 70);
+	}
+
+	if (_Info.CurFrame == 100)
+	{
+		WholeCollision->On();
+		WholeCollision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::MONSTER_BULLET, CollisionType::CT_AABB2D, std::bind(&SaltBaker::OnDeathCollision, this, std::placeholders::_1, std::placeholders::_2));
+	}
+
 	if (_Info.CurFrame == 108)
 	{
 		if (nullptr != BackgroundRenderer)
 		{
 			BackgroundRenderer->SetTexture("MoveKitchen.png");
+		}
+	}
+
+	if (_Info.CurFrame == 130)
+	{
+		if (InGameLevelBase* Level = dynamic_cast<InGameLevelBase*>(GetLevel()))
+		{
+			if (InGameCuphead* Cuphead = dynamic_cast<InGameCuphead*>(Level->GetPlayer()))
+			{
+				Cuphead->GetTransform().SetWorldPosition({ 500.0f, -350.0f,Cuphead->GetTransform().GetWorldPosition().z });
+				Cuphead->On();
+				Cuphead->CanFly = true;
+			}
+
+		}
+	}
+
+	if (_Info.CurFrame == 135)
+	{
+		if (InGameLevelBase* Level = dynamic_cast<InGameLevelBase*>(GetLevel()))
+		{
+			if (InGameCuphead* Cuphead = dynamic_cast<InGameCuphead*>(Level->GetPlayer()))
+			{
+				Cuphead->CanFly = false;
+			}
+
 		}
 	}
 
@@ -226,7 +340,7 @@ void SaltBaker::OnSaltBakerPhase2IntroFrameChanged(const FrameAnimation_DESC& _I
 		}
 		SetState(InGameMonsterState::Phase2);
 		Renderer->SetPivot(PIVOTMODE::RIGHT);
-		Renderer->SetPivotToVector(float4{ 680.0f, 60.0f,Renderer->GetTransform().GetLocalPosition().z });
+		Renderer->SetPivotToVector(float4{ 680.0f, -60.0f,Renderer->GetTransform().GetLocalPosition().z });
 	}
 
 	if (_Info.CurFrame >= 109)
@@ -235,6 +349,12 @@ void SaltBaker::OnSaltBakerPhase2IntroFrameChanged(const FrameAnimation_DESC& _I
 		{
 			BackgroundRenderer->GetTransform().SetWorldMove(float4::DOWN * GameEngineTime::GetDeltaTime() * 500);
 		}
+	}
+
+	if (_Info.CurFrame == 145)
+	{
+		HandRenderer->GetTransform().SetWorldPosition({ 640.0f, -360.0f, Renderer->GetTransform().GetWorldPosition().z - 1 });
+		HandRenderer->On();
 	}
 	
 }
@@ -339,4 +459,26 @@ void SaltBaker::OnSaltBakerDieAnimationFrameChanged(const FrameAnimation_DESC& _
 			Level->SetPhase(Phase::Phase3);
 		}
 	}
+}
+
+CollisionReturn SaltBaker::OnDeathCollision(GameEngineCollision* _This, GameEngineCollision* _Other)
+{
+	if (LimeBullet* Bullet = dynamic_cast<LimeBullet*>(_Other->GetParent()))
+	{
+		Bullet->Death();
+	}
+
+	//if (Chicken* Monster = dynamic_cast<Chicken*>(_Other->GetParent()))
+	//{
+	//	Monster->Off();
+	//}
+
+	if(InGameLevelBase* Level = dynamic_cast<InGameLevelBase*>(GetLevel()))
+	{
+		Level->GetPlayer()->Off();
+	}
+
+	_This->Off();
+
+	return CollisionReturn::Break;
 }

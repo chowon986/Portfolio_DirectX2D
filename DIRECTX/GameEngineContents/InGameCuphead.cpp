@@ -27,6 +27,7 @@ InGameCuphead::InGameCuphead()
 	, ToggleWeapon(false)
 	, IsInvisible(false)
 	, CountInvisibleTime(false)
+	, CanFly(false)
 {
 }
 
@@ -162,6 +163,19 @@ void InGameCuphead::Start()
 
 void InGameCuphead::Update(float _DeltaTime)
 {
+	if (CanFly == true)
+	{
+		Renderer->ChangeFrameAnimation("IngameCupheadJump");
+		GetPhysicsComponent()->Off();
+	}
+	else
+	{
+		if (false == GetPhysicsComponent()->IsUpdate())
+		{
+			GetPhysicsComponent()->On();
+		}
+	}
+
 	IInGameCharacterBase::Update(_DeltaTime);
 	OnCollisionDebug();
 	CheckCollision();
@@ -547,6 +561,8 @@ void InGameCuphead::CheckCollision()
 	MainCollision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::MONSTER_DAMAGEABLE_BULLET, CollisionType::CT_AABB2D,
 		std::bind(&InGameCuphead::OnTakeDamage, this, std::placeholders::_1, std::placeholders::_2));
 	MainCollision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::MONSTER, CollisionType::CT_AABB2D,
+		std::bind(&InGameCuphead::OnTakeDamage, this, std::placeholders::_1, std::placeholders::_2));
+	MainCollision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::MONSTER_BULLET2, CollisionType::CT_AABB2D,
 		std::bind(&InGameCuphead::OnTakeDamage, this, std::placeholders::_1, std::placeholders::_2));
 
 	if (SaltBakerLevel* Level = dynamic_cast<SaltBakerLevel*>(GetLevel()))

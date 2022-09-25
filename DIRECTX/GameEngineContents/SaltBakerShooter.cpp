@@ -14,6 +14,10 @@ SaltBakerShooter::SaltBakerShooter()
 	: MonsterAttackState(InGameMonsterAttackState::None)
 	, StartPosSwitch(false)
 	, SugarBulletStartPosX(0.0f)
+	, DoughAttackCount(0)
+	, SugarAttackCount(0)
+	, CanDoughAttackWithBerry(false)
+	, Switch(true)
 {
 }
 
@@ -155,6 +159,54 @@ void SaltBakerShooter::Update(float _DeltaTime)
 
 			Bullet->GetTransform().SetWorldPosition({ StartPositionX, 10.0f });
 			Bullet->SetDirection(float4::LEFT + float4::DOWN);
+
+
+			if (DoughAttackCount < 5 && CanDoughAttackWithBerry == true)
+			{
+				Switch = !Switch;
+
+				if (Switch)
+				{
+					int RandomKey = GameEngineRandom::MainRandom.RandomInt(0, 2);
+
+					AnimalBullet* Bullet = GetLevel()->CreateActor<AnimalBullet>();
+					if (nullptr != GetColMapImage())
+					{
+						Bullet->SetColMapImage(GetColMapImage());
+					}
+					if (RandomKey == 0)
+					{
+						Bullet->GetRenderer()->ChangeFrameAnimation("CamelJumpUp");
+						Bullet->GetMonsterPhysicsComponent()->Reset();
+						Bullet->GetMonsterPhysicsComponent()->AddForce(60);
+						Bullet->GetTransform().SetWorldPosition({ 0, -500.0f });
+						Bullet->SetAnimal("Camel");
+					}
+					else if (RandomKey == 1)
+					{
+						Bullet->GetRenderer()->ChangeFrameAnimation("ElephantJumpUp");
+						Bullet->GetMonsterPhysicsComponent()->Reset();
+						Bullet->GetMonsterPhysicsComponent()->AddForce(55);
+						Bullet->GetTransform().SetWorldPosition({ 0, -500.0f });
+						Bullet->SetAnimal("Elephant");
+					}
+					else
+					{
+						Bullet->GetRenderer()->ChangeFrameAnimation("LionJumpUp");
+						Bullet->GetMonsterPhysicsComponent()->Reset();
+						Bullet->GetMonsterPhysicsComponent()->AddForce(50);
+						Bullet->GetTransform().SetWorldPosition({ 0, -500.0f });
+						Bullet->SetAnimal("Lion");
+					}
+					++DoughAttackCount;
+
+					if (DoughAttackCount == 5)
+					{
+						CanDoughAttackWithBerry = false;
+						DoughAttackCount = 0;
+					}
+				}
+			}
 		}
 		break;
 		case InGameMonsterAttackState::Attack2:
@@ -188,6 +240,7 @@ void SaltBakerShooter::Update(float _DeltaTime)
 		break;
 		case InGameMonsterAttackState::Attack3:
 		{
+
 			int RandomKey = GameEngineRandom::MainRandom.RandomInt(0, 2);
 
 			AnimalBullet* Bullet = GetLevel()->CreateActor<AnimalBullet>();
@@ -200,7 +253,7 @@ void SaltBakerShooter::Update(float _DeltaTime)
 				Bullet->GetRenderer()->ChangeFrameAnimation("CamelJumpUp");
 				Bullet->GetMonsterPhysicsComponent()->Reset();
 				Bullet->GetMonsterPhysicsComponent()->AddForce(60);
-				Bullet->GetTransform().SetWorldPosition({ 50, -500.0f });
+				Bullet->GetTransform().SetWorldPosition({ 0, -500.0f });
 				Bullet->SetAnimal("Camel");
 			}
 			else if (RandomKey == 1)
@@ -208,7 +261,7 @@ void SaltBakerShooter::Update(float _DeltaTime)
 				Bullet->GetRenderer()->ChangeFrameAnimation("ElephantJumpUp");
 				Bullet->GetMonsterPhysicsComponent()->Reset();
 				Bullet->GetMonsterPhysicsComponent()->AddForce(55);
-				Bullet->GetTransform().SetWorldPosition({ 50, -500.0f });
+				Bullet->GetTransform().SetWorldPosition({ 0, -500.0f });
 				Bullet->SetAnimal("Elephant");
 			}
 			else
@@ -216,9 +269,24 @@ void SaltBakerShooter::Update(float _DeltaTime)
 				Bullet->GetRenderer()->ChangeFrameAnimation("LionJumpUp");
 				Bullet->GetMonsterPhysicsComponent()->Reset();
 				Bullet->GetMonsterPhysicsComponent()->AddForce(50);
-				Bullet->GetTransform().SetWorldPosition({ 50, -500.0f });
+				Bullet->GetTransform().SetWorldPosition({ 0, -500.0f });
 				Bullet->SetAnimal("Lion");
 			}
+
+			if (DoughAttackCount < 5)
+			{
+				CanDoughAttackWithBerry = true;
+			}
+			++DoughAttackCount;
+			if (DoughAttackCount >= 5)
+			{
+				if (Character != nullptr)
+				{
+					Character->SetAttackState(InGameMonsterAttackState::None);
+					DoughAttackCount = 0;
+				}
+			}
+
 		}
 		break;
 		case InGameMonsterAttackState::Attack4:

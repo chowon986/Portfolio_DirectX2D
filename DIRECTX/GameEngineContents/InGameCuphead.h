@@ -68,6 +68,9 @@ protected:
 public:
 	void SetOnDashInvisible(bool _IsInvisible) { IsInvisible = _IsInvisible; }
 
+public:
+	bool CanFly;
+
 private:
 	GameEngineTextureRenderer* Renderer;
 	bool IsInputEnabled;
