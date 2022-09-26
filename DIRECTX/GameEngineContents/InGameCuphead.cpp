@@ -80,6 +80,9 @@ void InGameCuphead::Start()
 	Renderer->CreateFrameAnimationCutTexture("IngameCupheadShootUp", FrameAnimation_DESC("Cup.png", 116, 118, 0.1f, true));
 	Renderer->CreateFrameAnimationCutTexture("IngameCupheadDuckShoot", FrameAnimation_DESC("Cup.png", 174, 176, 0.1f, true));
 
+	Renderer->CreateFrameAnimationFolder("IngameCupheadExShootStraight", FrameAnimation_DESC("IngameCupheadExShootStraight", 0.1f, true));
+	Renderer->AnimationBindEnd("IngameCupheadExShootStraight", std::bind(&InGameCuphead::OnExShootAnimationEnded, this, std::placeholders::_1));
+
 	// TakeDamage
 	Renderer->CreateFrameAnimationCutTexture("IngameCupheadTakeDamage", FrameAnimation_DESC("Cup.png", 28, 33, 0.1f, true));
 	Renderer->AnimationBindEnd("IngameCupheadTakeDamage", std::bind(&InGameCuphead::OnTakeDamageAnimationEnded, this, std::placeholders::_1));
@@ -280,7 +283,6 @@ void InGameCuphead::Update(float _DeltaTime)
 				{
 					SetShooterState(InGameCharacterShooterState::SuperShot);
 					SetAttackState(InGameCharacterAttackState::SuperAttack);
-					SetShooterState(InGameCharacterShooterState::None);
 					SetGauge(GetGauge()-1);
 				}
 				else
@@ -291,7 +293,10 @@ void InGameCuphead::Update(float _DeltaTime)
 		}
 		else
 		{
-			SetAttackState(InGameCharacterAttackState::None);
+			if (GetAttackState() != InGameCharacterAttackState::SuperAttack)
+			{
+				SetAttackState(InGameCharacterAttackState::None);
+			}
 		}
 	}
 	else
@@ -359,6 +364,11 @@ void InGameCuphead::OnDashAnimationFrameChanged(const FrameAnimation_DESC& _Info
 void InGameCuphead::OnTakeDamageAnimationEnded(const FrameAnimation_DESC& _Info)
 {
 	IsInputEnabled = true;
+}
+
+void InGameCuphead::OnExShootAnimationEnded(const FrameAnimation_DESC& _Info)
+{
+	Idle();
 }
 
 void InGameCuphead::OnGhostAnimationEnded(const FrameAnimation_DESC& _Info)
@@ -459,14 +469,14 @@ void InGameCuphead::Shoot()
 	SetAttackState(InGameCharacterAttackState::Shoot);
 }
 
+void InGameCuphead::SuperAttack()
+{
+	SetAttackState(InGameCharacterAttackState::SuperAttack);
+
+}
 void InGameCuphead::SpecialAttack()
 {
 }
-
-void InGameCuphead::SuperAttack()
-{
-}
-
 void InGameCuphead::UpdateState()
 {
 	if (true == GameEngineInput::GetInst()->IsDown("Dash"))
@@ -506,7 +516,7 @@ void InGameCuphead::UpdateState()
 
 	else
 	{
-		if (GetIsOnGround() == true)
+		if (GetIsOnGround() == true && GetAttackState() != InGameCharacterAttackState::SuperAttack)
 		{
 			IsInputEnabled = true;
 			Idle();

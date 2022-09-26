@@ -120,7 +120,11 @@ void InGameCharacterAnimationControllerComponent::UpdateAnimation()
 
 		else if (State == InGameCharacterState::Idle)
 		{
-			if (AttackState == InGameCharacterAttackState::Shoot)
+			if (AttackState == InGameCharacterAttackState::SuperAttack)
+			{
+				Renderer->ChangeFrameAnimation("Ingame" + Name + "ExShootStraight");
+			}
+			else if (AttackState == InGameCharacterAttackState::Shoot)
 			{
 				if (VerticalDir == "Up")
 				{

@@ -14,19 +14,32 @@ SuperPeaBullet::~SuperPeaBullet()
 {
 }
 
+void SuperPeaBullet::OnPeashotExIntroAnimationFrameFinished(const FrameAnimation_DESC& _Info)
+{
+	Renderer->ChangeFrameAnimation("PeashotExLoop");
+}
+
 void SuperPeaBullet::OnAttackSuccess(GameEngineCollision* _This, GameEngineCollision* _Other)
 {
+	Renderer->ChangeFrameAnimation("PeashotExDeath");
+}
+
+void SuperPeaBullet::OnPeashotExDeathAnimationFrameFinished(const FrameAnimation_DESC& _Info)
+{
+	Death();
 }
 
 void SuperPeaBullet::Start()
 {
-
 	Renderer = CreateComponent<GameEngineTextureRenderer>();
-	Renderer->CreateFrameAnimationFolder("PeashotLoop", FrameAnimation_DESC("PeashotLoop", 0.05f));
-	Renderer->CreateFrameAnimationFolder("PeashotIntro", FrameAnimation_DESC("PeashotIntro", 0.05f));
-	Renderer->CreateFrameAnimationFolder("PeashotDeath", FrameAnimation_DESC("PeashotDeath", 0.05f, false));
+	Renderer->CreateFrameAnimationFolder("PeashotExIntro", FrameAnimation_DESC("PeashotExIntro", 0.05f));
+	Renderer->CreateFrameAnimationFolder("PeashotExLoop", FrameAnimation_DESC("PeashotExLoop", 0.05f));
+	Renderer->CreateFrameAnimationFolder("PeashotExDeath", FrameAnimation_DESC("PeashotExDeath", 0.05f, false));
 
-	Renderer->ChangeFrameAnimation("PeashotIntro");
+	Renderer->AnimationBindEnd("PeashotExIntro", std::bind(&SuperPeaBullet::OnPeashotExIntroAnimationFrameFinished, this, std::placeholders::_1));
+	Renderer->AnimationBindFrame("PeashotExDeath", std::bind(&SuperPeaBullet::OnPeashotExDeathAnimationFrameFinished, this, std::placeholders::_1));
+
+	Renderer->ChangeFrameAnimation("PeashotExIntro");
 	Renderer->SetScaleModeImage();
 
 	MovementComponent = CreateComponent<BulletMovementComponent>();
@@ -38,13 +51,10 @@ void SuperPeaBullet::Start()
 	Collision->ChangeOrder(ObjectOrder::PC_BULLET);
 	SetCollision(Collision);
 	Renderer->ChangeCamera(CAMERAORDER::ROTATECAMERA);
-
 }
 
 void SuperPeaBullet::Update(float _DeltaTime)
 {
-	BulletBase::Update(_DeltaTime); //¸ðµç ÃÑ
-
 	if (nullptr == ColMapImage)
 	{
 		SetColMapImage(GetLevel()->GetMainColMapImage());
@@ -57,9 +67,4 @@ void SuperPeaBullet::Update(float _DeltaTime)
 
 void SuperPeaBullet::End()
 {
-}
-
-void SuperPeaBullet::SuperPeashotLoop(const FrameAnimation_DESC& _DESC)
-{
-	//Renderer->ChangeFrameAnimation("SuperPeashotLoop");
 }

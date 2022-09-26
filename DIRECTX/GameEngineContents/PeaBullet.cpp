@@ -41,8 +41,6 @@ void PeaBullet::Start()
 
 void PeaBullet::Update(float _DeltaTime)
 {
-	BulletBase::Update(_DeltaTime); //¸ðµç ÃÑ
-
 	if (nullptr == ColMapImage)
 	{
 		SetColMapImage(GetLevel()->GetMainColMapImage());
