@@ -2,6 +2,7 @@
 #include "Chicken.h"
 #include "SaltBakerLevel.h"
 #include "InGameCuphead.h"
+#include "SaltBaker.h"
 #include "ChickenPhysicsComponent.h"
 #include "InGameMonsterAnimationControllerComponent.h"
 
@@ -10,9 +11,6 @@ Chicken::Chicken()
 	, LerpTime(0.0f)
 	, PlayerPosX(0.0f)
 	, BeforePhase(Phase::Ready)
-	, CanRotate(false)
-	, Angle(0.0f)
-	, LastAngle(0.0f)
 {
 }
 
@@ -28,6 +26,16 @@ void Chicken::Start()
 	Renderer->CreateFrameAnimationFolder("ChickenAttack1", FrameAnimation_DESC("ChickenSpin", 0.07f));
 	Renderer->CreateFrameAnimationFolder("ChickenAttackFinish1", FrameAnimation_DESC("ChickenJumpDown", 0.07f));
 	Renderer->CreateFrameAnimationFolder("ChickenIdle", FrameAnimation_DESC("ChickenIdle", 0.07f));
+	Renderer->CreateFrameAnimationFolder("ChickenVanish", FrameAnimation_DESC("ChickenVanish", 0.07f,false));
+
+
+	Renderer->CreateFrameAnimationFolder("ChickenPhase2Intro", FrameAnimation_DESC("ChickenPhase2Intro", 0.07f));
+	Renderer->CreateFrameAnimationFolder("ChickenPhase2Idle", FrameAnimation_DESC("ChickenPhase2Idle", 0.07f));
+	Renderer->CreateFrameAnimationFolder("ChickenPrepareAttack2", FrameAnimation_DESC("ChickenPrepareAttack2", 0.07f));
+	Renderer->CreateFrameAnimationFolder("ChickenAttack2", FrameAnimation_DESC("ChickenAttack2", 0.07f));
+	Renderer->CreateFrameAnimationFolder("ChickenAttackFinish2", FrameAnimation_DESC("ChickenAttackFinish2", 0.07f));
+	Renderer->CreateFrameAnimationFolder("ChickenDie", FrameAnimation_DESC("ChickenDeath", 0.07f));
+
 	Renderer->SetScaleModeImage();
 	Renderer->ChangeFrameAnimation("ChickenIntro");
 
@@ -44,6 +52,12 @@ void Chicken::Start()
 	Renderer->AnimationBindFrame("ChickenAttack1", std::bind(&Chicken::OnChickenAttack1AnimationFrameChanged, this, std::placeholders::_1));
 	Renderer->AnimationBindFrame("ChickenAttackFinish1", std::bind(&Chicken::OnChickenAttackFinish1AnimationFrameChanged, this, std::placeholders::_1));
 	Renderer->AnimationBindFrame("ChickenIdle", std::bind(&Chicken::OnChickenIdleAnimationFrameChanged, this, std::placeholders::_1));
+	Renderer->AnimationBindFrame("ChickenVanish", std::bind(&Chicken::OnChickenVanishAnimationFrameChanged, this, std::placeholders::_1));
+	Renderer->AnimationBindFrame("ChickenPhase2Intro", std::bind(&Chicken::OnChickenPhase2IntroAnimationFrameChanged, this, std::placeholders::_1));
+	Renderer->AnimationBindFrame("ChickenPhase2Idle", std::bind(&Chicken::OnChickenPhase2IdleAnimationFrameChanged, this, std::placeholders::_1));
+	Renderer->AnimationBindFrame("ChickenPrepareAttack2", std::bind(&Chicken::OnChickenPrepareAttack2AnimationFrameChanged, this, std::placeholders::_1));
+	Renderer->AnimationBindFrame("ChickenAttack2", std::bind(&Chicken::OnChickenAttack2AnimationFrameChanged, this, std::placeholders::_1));
+	Renderer->AnimationBindFrame("ChickenAttackFinish2", std::bind(&Chicken::OnChickenAttackFinish2AnimationFrameChanged, this, std::placeholders::_1));
 
 	Renderer->SetPivotToVector(float4::UP * 5);
 
@@ -57,7 +71,6 @@ void Chicken::Update(float _DeltaTime)
 	AttackIntervalTime += _DeltaTime;
 	LerpTime += _DeltaTime;
 
-
 	if (Level = dynamic_cast<SaltBakerLevel*>(GetLevel()))
 	{
 		if (Level->GetPhase() != BeforePhase)
@@ -67,13 +80,6 @@ void Chicken::Update(float _DeltaTime)
 			if (Level->GetPhase() == Phase::Phase1)
 			{
 				Physics->SetGravity(1.0f);
-			}
-
-			else if (Level->GetPhase() == Phase::Phase2)
-			{
-				Physics->SetGravity(-1.0f);
-				CanRotate = true;
-				Renderer->SetPivotToVector(float4::DOWN * 15);
 			}
 		}
 	}
@@ -87,21 +93,6 @@ void Chicken::Update(float _DeltaTime)
 		{
 			float DestPosX = GameEngineMath::LerpLimit(CurPos.x, PlayerPosX, Time);
 			GetTransform().SetLocalPosition(float4({ DestPosX, CurPos.y, CurPos.z }));
-		}
-
-		if (true == CanRotate)
-		{
-			Angle = _DeltaTime * 4;
-			TTLAngle += Angle;
-			if (abs(TTLAngle - (GameEngineMath::PI)) <= 0.01)
-			{
-				CanRotate = false;
-			}
-			else
-			{
-				float RotationAngle = GameEngineMath::RadianToDegree * Angle;
-				Renderer->GetTransform().SetLocalRotate({ 0,0, RotationAngle });
-			}
 		}
 	}
 }
@@ -141,6 +132,16 @@ void Chicken::PrepareAttack1()
 	SetState(InGameMonsterState::PrepareAttack1);
 }
 
+void Chicken::PrepareAttack2()
+{
+	SetState(InGameMonsterState::PrepareAttack2);
+}
+
+void Chicken::Phase2Idle()
+{
+	SetState(InGameMonsterState::Phase2Idle);
+}
+
 void Chicken::OnChickenIntroAnimationFrameChanged(const FrameAnimation_DESC& _Info)
 {
 	if (_Info.CurFrame == 17)
@@ -160,10 +161,6 @@ void Chicken::OnChickenPrepareAttack1AnimationFrameChanged(const FrameAnimation_
 			if (Level->GetPhase() == Phase::Phase1)
 			{
 				Physics->AddForce(-8.5f); // 아래->위
-			}
-			else if (Level->GetPhase() == Phase::Phase2)
-			{
-				Physics->AddForce(8.5f); // 아래->위
 			}
 
 			if (InGameCuphead* Player = dynamic_cast<InGameCuphead*>(Level->GetPlayer()))
@@ -187,6 +184,22 @@ void Chicken::OnChickenAttack1AnimationFrameChanged(const FrameAnimation_DESC& _
 	}
 }
 
+void Chicken::OnChickenAttack2AnimationFrameChanged(const FrameAnimation_DESC& _Info)
+{
+	if (true == Physics->IsOnGround)
+	{
+		SetState(InGameMonsterState::AttackFinish2);
+	}
+}
+
+void Chicken::OnChickenAttackFinish2AnimationFrameChanged(const FrameAnimation_DESC& _Info)
+{
+	if (_Info.CurFrame == 15)
+	{
+		Phase2Idle();
+	}
+}
+
 void Chicken::OnChickenAttackFinish1AnimationFrameChanged(const FrameAnimation_DESC& _Info)
 {
 	if (_Info.CurFrame == 10)
@@ -200,13 +213,6 @@ void Chicken::OnChickenAttackFinish1AnimationFrameChanged(const FrameAnimation_D
 			if (true == Renderer->IsCurAnimationPause())
 			{
 				Renderer->CurAnimationPauseOff();
-
-				if(true == CanRotate)
-				{
-					LastAngle = 180 - TTLAngle;
-					Renderer->GetTransform().SetLocalRotate({ 0,0, LastAngle });
-					CanRotate = false;
-				}
 			}
 		}
 	}
@@ -219,9 +225,91 @@ void Chicken::OnChickenAttackFinish1AnimationFrameChanged(const FrameAnimation_D
 
 void Chicken::OnChickenIdleAnimationFrameChanged(const FrameAnimation_DESC& _Info)
 {
+	if (_Info.CurFrame == 5)
+	{
+		if (SaltBakerLevel* Level = dynamic_cast<SaltBakerLevel*>(GetLevel()))
+		{
+			if (SaltBaker* Boss = dynamic_cast<SaltBaker*>(Level->GetSaltBaker()))
+			{
+				if (Boss->GetState() == InGameMonsterState::MoveToPhase2)
+				{
+					if (true == Physics->IsOnGround)
+					{
+						Renderer->ChangeFrameAnimation("ChickenVanish");
+					}
+				}
+			}
+		}
+	}
+
 	if (_Info.CurFrame == 11)
 	{
 		PrepareAttack1();
+	}
+}
+
+void Chicken::OnChickenVanishAnimationFrameChanged(const FrameAnimation_DESC& _Info)
+{
+	if (_Info.CurFrame == 6)
+	{
+		Off();
+	}
+}
+
+void Chicken::OnChickenPhase2IntroAnimationFrameChanged(const FrameAnimation_DESC& _Info)
+{
+	if (_Info.CurFrame == 14)
+	{
+		if (true != Physics->IsOnGround)
+		{
+			Renderer->CurAnimationPauseOn();
+		}
+		else if (true == Physics->IsOnGround)
+		{
+			if (true == Renderer->IsCurAnimationPause())
+			{
+				Renderer->CurAnimationPauseOff();
+			}
+		}
+	}
+
+	if (_Info.CurFrame == 34)
+	{
+		Phase2Idle();
+	}
+}
+
+void Chicken::OnChickenPhase2IdleAnimationFrameChanged(const FrameAnimation_DESC& _Info)
+{
+	if (_Info.CurFrame == 15)
+	{
+		PrepareAttack2();
+	}
+}
+
+void Chicken::OnChickenPrepareAttack2AnimationFrameChanged(const FrameAnimation_DESC& _Info)
+{
+	if (_Info.CurFrame == 11)
+	{
+		Physics->Reset();
+
+		if (SaltBakerLevel* Level = dynamic_cast<SaltBakerLevel*>(GetLevel()))
+		{
+			if (Level->GetPhase() == Phase::Phase2)
+			{
+				Physics->AddForce(8.5f); // 아래->위
+			}
+
+			if (InGameCuphead* Player = dynamic_cast<InGameCuphead*>(Level->GetPlayer()))
+			{
+				PlayerPosX = Player->GetTransform().GetWorldPosition().x;
+			}
+		}
+	}
+
+	if (_Info.CurFrame == 12)
+	{
+		SetState(InGameMonsterState::Attack2);
 	}
 }
 

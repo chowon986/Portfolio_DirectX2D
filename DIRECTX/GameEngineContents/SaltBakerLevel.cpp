@@ -99,10 +99,10 @@ void SaltBakerLevel::Update(float _DeltaTime)
 
 		if (CurrentPhase == Phase::Phase1)
 		{
-			SaltBaker* Ph1Boss = CreateActor<SaltBaker>();
+			Ph1Boss = CreateActor<SaltBaker>();
 			Ph1Boss->GetTransform().SetWorldPosition({ 640.0f,-360.0f, (int)ZOrder::Player + 2});
 
-			Chicken* Ph1Monster = CreateActor<Chicken>();
+			Ph1Monster = CreateActor<Chicken>();
 			Ph1Monster->GetTransform().SetWorldPosition({ 640.0f, -50.0f, (int)ZOrder::Player+1 });
 
 			InGameCuphead* Cuphead = CreateActor<InGameCuphead>(GameObjectGroup::Player);

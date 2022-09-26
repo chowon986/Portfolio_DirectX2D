@@ -5,6 +5,8 @@
 enum class Phase;
 class GameEngineTextureRenderer;
 class CharacterState;
+class Chicken;
+class SaltBaker;
 class SaltBakerLevel : public InGameLevelBase
 {
 public:
@@ -17,6 +19,10 @@ public:
 	SaltBakerLevel(SaltBakerLevel&& _Other) noexcept = delete;
 	SaltBakerLevel& operator=(const SaltBakerLevel& _Other) = delete;
 	SaltBakerLevel& operator=(SaltBakerLevel&& _Other) noexcept = delete;
+
+public:
+	SaltBaker* GetSaltBaker() { return Ph1Boss; }
+	Chicken* GetChicken() { return Ph1Monster; }
 
 protected:
 	void LevelStartEvent() override;
@@ -37,5 +43,7 @@ private:
 	CharacterState* State;
 	float ElapsedTime;
 	bool OnceCheck;
+	SaltBaker* Ph1Boss;
+	Chicken* Ph1Monster;
 };
 

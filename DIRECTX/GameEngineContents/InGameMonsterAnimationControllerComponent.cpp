@@ -47,6 +47,11 @@ void InGameMonsterAnimationControllerComponent::UpdateAnimation()
 		Renderer->ChangeFrameAnimation(Name + "Intro");
 	}
 
+	if (State == InGameMonsterState::Phase2Idle)
+	{
+		Renderer->ChangeFrameAnimation(Name + "Phase2Idle");
+	}
+
 	if (State == InGameMonsterState::IdlePink)
 	{
 		Renderer->ChangeFrameAnimation(Name + "IdlePink");

@@ -38,14 +38,21 @@ public:
 
 private:
 	void PrepareAttack1();
+	void PrepareAttack2();
+	void Phase2Idle();
 
 	void OnChickenIntroAnimationFrameChanged(const FrameAnimation_DESC& _Info);
 	void OnChickenPrepareAttack1AnimationFrameChanged(const FrameAnimation_DESC& _Info);
 	void OnChickenAttack1AnimationFrameChanged(const FrameAnimation_DESC& _Info);
 	void OnChickenAttackFinish1AnimationFrameChanged(const FrameAnimation_DESC& _Info);
 	void OnChickenIdleAnimationFrameChanged(const FrameAnimation_DESC& _Info);
-	
-
+	void OnChickenVanishAnimationFrameChanged(const FrameAnimation_DESC& _Info);
+	void OnChickenPhase2IntroAnimationFrameChanged(const FrameAnimation_DESC& _Info);
+	void OnChickenPhase2IdleAnimationFrameChanged(const FrameAnimation_DESC& _Info);
+	void OnChickenPrepareAttack2AnimationFrameChanged(const FrameAnimation_DESC& _Info);
+	void OnChickenAttack2AnimationFrameChanged(const FrameAnimation_DESC& _Info);
+	void OnChickenAttackFinish2AnimationFrameChanged(const FrameAnimation_DESC& _Info);
+		
 private:
 	SaltBakerLevel* Level;
 	GameEngineCollision* Collision;
@@ -57,11 +64,7 @@ private:
 	InGameMonsterAttackState AttackState;
 
 	bool CanAttack;
-	bool CanRotate;
 	float LerpTime;
 	float PlayerPosX;
 	float AttackIntervalTime;
-	float Angle;
-	float TTLAngle;
-	float LastAngle;
 };

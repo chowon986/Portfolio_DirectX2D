@@ -24,6 +24,7 @@ enum class InGameMonsterState
 {
 	Prepare, // 완료
 	Idle, // 완료
+	Phase2Idle,
 	IdlePink,
 	TakeDamage,
 	Unmount,

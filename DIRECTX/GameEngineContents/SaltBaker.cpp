@@ -7,8 +7,10 @@
 #include "InGameLevelBase.h"
 #include "LimeBullet.h"
 #include "Chicken.h"
+#include "ChickenPhysicsComponent.h"
 #include "InGameCuphead.h"
 #include <GameEngineBase/GameEngineRandom.h>
+#include "SaltBakerLevel.h"
 
 SaltBaker::SaltBaker()
 	: Renderer(nullptr)
@@ -101,6 +103,17 @@ void SaltBaker::Update(float _DeltaTime)
 			{
 				//SetState(InGameMonsterState::Die);
 				//return;
+			}
+
+			if (SaltBakerLevel* DycstLevel = dynamic_cast<SaltBakerLevel*>(Level))
+			{
+				if (false == DycstLevel->GetChicken()->IsUpdate())
+				{
+					Chicken* Ph2Monster = DycstLevel->GetChicken();
+					Ph2Monster->GetChickenPhysicsComponent()->SetGravity(-1.0f);
+					Ph2Monster->GetRenderer()->ChangeFrameAnimation("ChickenAttack2");
+					Ph2Monster->On();
+				}
 			}
 			TimeCountOn = true;
 		}
@@ -467,11 +480,6 @@ CollisionReturn SaltBaker::OnDeathCollision(GameEngineCollision* _This, GameEngi
 	{
 		Bullet->Death();
 	}
-
-	//if (Chicken* Monster = dynamic_cast<Chicken*>(_Other->GetParent()))
-	//{
-	//	Monster->Off();
-	//}
 
 	if(InGameLevelBase* Level = dynamic_cast<InGameLevelBase*>(GetLevel()))
 	{
