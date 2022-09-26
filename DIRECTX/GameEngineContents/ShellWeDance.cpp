@@ -69,6 +69,7 @@ void ShellWeDance::Update(float _DeltaTime)
 	if (GetHP() <= 0 && GetState() == InGameMonsterState::Attack1)
 	{
 		SetState(InGameMonsterState::Die);
+		Dust->GetRenderer()->ChangeFrameAnimation("ShellWeDanceDeathDust");
 		if (nullptr != Wheel)
 		{
 			Wheel->SetState(InGameMonsterState::Die);
@@ -152,7 +153,7 @@ void ShellWeDance::Die()
 
 void ShellWeDance::OnShellWeDanceDeathAnimationFrameChanged(const FrameAnimation_DESC& _Info)
 {
-	if (_Info.CurFrame == 5)
+	if (_Info.CurFrame == 54)
 	{
 		Death();
 		if (SaltBakerLevel* Level = dynamic_cast<SaltBakerLevel*>(GetLevel()))

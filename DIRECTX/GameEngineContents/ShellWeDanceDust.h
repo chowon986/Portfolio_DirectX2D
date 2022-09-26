@@ -5,6 +5,7 @@ enum class ShellWeDanceDustState
 {
 	None,
 	Intro,
+	Die,
 };
 
 class ShellWeDance;
@@ -25,6 +26,8 @@ public:
 	ShellWeDance* GetBoss() { return Boss; }
 	void SetState(ShellWeDanceDustState _State) { CurState = _State; }
 	ShellWeDanceDustState GetState() { return CurState; }
+
+	GameEngineTextureRenderer* GetRenderer() {return Renderer;}
 
 protected:
 	void Start() override;

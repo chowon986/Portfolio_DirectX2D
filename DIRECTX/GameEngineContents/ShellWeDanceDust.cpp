@@ -30,14 +30,6 @@ void ShellWeDanceDust::Start()
 
 void ShellWeDanceDust::Update(float _DeltaTime)
 {
-	if (nullptr != Boss)
-	{
-		if (Boss->GetHP() <= 0)
-		{
-			//	Death(); ph3 완성되면 주석 풀기
-		}
-	}
-
 	if (CurState == ShellWeDanceDustState::None)
 	{
 		Renderer->Off();
@@ -76,9 +68,5 @@ void ShellWeDanceDust::OnShellWeDanceDeathDustAnimationFrameChanged(const FrameA
 	if (_Info.CurFrame == 13)
 	{
 		Death();
-		if (SaltBakerLevel* Level = dynamic_cast<SaltBakerLevel*>(GetLevel()))
-		{
-			Level->SetPhase(Phase::Phase4);
-		}
 	}
 }
