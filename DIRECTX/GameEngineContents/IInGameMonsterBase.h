@@ -36,7 +36,6 @@ enum class InGameMonsterState
 	Attack3,
 	Attack4,
 	Attack5,
-	Attack6,
 	PrepareAttack1,
 	PrepareAttack2,
 	AttackFinish1,

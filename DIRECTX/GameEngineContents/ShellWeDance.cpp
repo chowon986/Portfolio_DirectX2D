@@ -38,6 +38,20 @@ void ShellWeDance::Start()
 
 	Renderer->ChangeFrameAnimation("ShellWeDanceIntro");
 
+	SnowRenderer = CreateComponent<GameEngineTextureRenderer>();
+	SnowRenderer->CreateFrameAnimationFolder("SnowBack", FrameAnimation_DESC("SnowBack", 0.05f));
+	SnowRenderer->ChangeFrameAnimation("SnowBack");
+	SnowRenderer->SetScaleModeImage();
+	SnowRenderer->GetTransform().SetLocalPosition({ 175.0f, 85.0f,1 });
+	SnowRenderer->Off();
+
+	SnowTopperRenderer = CreateComponent<GameEngineTextureRenderer>();
+	SnowTopperRenderer->CreateFrameAnimationFolder("SnowTopper", FrameAnimation_DESC("SnowTopper", 0.05f));
+	SnowTopperRenderer->ChangeFrameAnimation("SnowTopper");
+	SnowTopperRenderer->SetScaleModeImage();
+	SnowTopperRenderer->GetTransform().SetLocalPosition({ 175.0f, 85.0f,-1 });
+	SnowTopperRenderer->Off();
+
 	SetRenderer(Renderer);
 
 	InGameMonsterAnimationControllerComponent* Animation = CreateComponent<InGameMonsterAnimationControllerComponent>();
@@ -150,6 +164,21 @@ void ShellWeDance::OnShellWeDanceDeathAnimationFrameChanged(const FrameAnimation
 
 void ShellWeDance::OnShellWeDanceIntroAnimationFrameChanged(const FrameAnimation_DESC& _Info)
 {
+	if (_Info.CurFrame == 13)
+	{
+		Renderer->SetPivotToVector(float4::RIGHT * 15 + float4::UP * 10);
+		SnowRenderer->On();
+		SnowTopperRenderer->On();
+	}
+
+	if (_Info.CurFrame == 52)
+	{
+		Renderer->SetPivotToVector(float4::LEFT * 15 + float4::DOWN * 10);
+		SnowRenderer->On();
+		SnowRenderer->Off();
+		SnowTopperRenderer->Off();
+	}
+
 	if (_Info.CurFrame == 65)
 	{
 		GetTransform().SetWorldPosition({ 640.0f, 50.0f });

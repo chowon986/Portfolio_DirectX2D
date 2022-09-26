@@ -11,6 +11,7 @@
 #include "InGameCuphead.h"
 #include <GameEngineBase/GameEngineRandom.h>
 #include "SaltBakerLevel.h"
+#include "SaltBakerHand.h"
 
 SaltBaker::SaltBaker()
 	: Renderer(nullptr)
@@ -18,9 +19,10 @@ SaltBaker::SaltBaker()
 	, AttackState(InGameMonsterAttackState::None)
 	, Collision(nullptr)
 	, TimeCountOn(false)
-	, CanAttackIntervalTime(3.0f)
+	, CanAttackIntervalTime(5.0f)
 	, ElapsedTime(0.0f)
 	, TakeDamageNum(-1)
+	, PlusOn(true)
 {
 }
 
@@ -55,7 +57,6 @@ void SaltBaker::Start()
 	Renderer->AnimationBindFrame("SaltBakerPhase2Intro", std::bind(&SaltBaker::OnSaltBakerPhase2IntroFrameChanged, this, std::placeholders::_1));
 	Renderer->AnimationBindFrame("SaltBakerPhase2", std::bind(&SaltBaker::OnSaltBakerPhase2FrameChanged, this, std::placeholders::_1));
 	Renderer->AnimationBindFrame("SaltBakerAttack5", std::bind(&SaltBaker::OnSaltBakerAttack5FrameChanged, this, std::placeholders::_1));
-	Renderer->AnimationBindFrame("SaltBakerAttack6", std::bind(&SaltBaker::OnSaltBakerAttack6FrameChanged, this, std::placeholders::_1));
 	Renderer->AnimationBindFrame("SaltBakerTakeDamage0", std::bind(&SaltBaker::OnSaltBakerTakeDamageFrameChanged, this, std::placeholders::_1));
 	Renderer->AnimationBindFrame("SaltBakerTakeDamage1", std::bind(&SaltBaker::OnSaltBakerTakeDamageFrameChanged, this, std::placeholders::_1));
 	Renderer->AnimationBindFrame("SaltBakerTakeDamage2", std::bind(&SaltBaker::OnSaltBakerTakeDamageFrameChanged, this, std::placeholders::_1));
@@ -66,10 +67,19 @@ void SaltBaker::Start()
 
 	SetRenderer(Renderer);
 
-	HandRenderer = CreateComponent<GameEngineTextureRenderer>();
-	HandRenderer->SetTexture("Hand.png");
-	HandRenderer->ScaleToTexture();
-	HandRenderer->Off();
+	Hand = GetLevel()->CreateActor<SaltBakerHand>();
+	Hand->SetParent(this);
+	Hand->Off();
+
+	RightHandRenderer = CreateComponent<GameEngineTextureRenderer>();
+	RightHandRenderer->CreateFrameAnimationFolder("SaltBakerRightHand", FrameAnimation_DESC("SaltBakerRightHand", 0.07f));
+	RightHandRenderer->ChangeFrameAnimation("SaltBakerRightHand");
+	RightHandRenderer->SetScaleModeImage();
+	RightHandRenderer->SetPivot(PIVOTMODE::BOT);
+	RightHandRenderer->GetTransform().SetLocalPosition({ -300.0f, -500.0f, -1 });
+	RightHandRenderer->Off();
+
+	RightHandRenderer->AnimationBindFrame("SaltBakerRightHand", std::bind(&SaltBaker::OnRightHandAnimationFrameChanged, this, std::placeholders::_1));
 
 	InGameMovementComponent* Movement = CreateComponent<InGameMovementComponent>();
 	InGameMonsterAnimationControllerComponent* Animation = CreateComponent<InGameMonsterAnimationControllerComponent>();
@@ -84,7 +94,7 @@ void SaltBaker::Start()
 	Collision = CreateComponent<GameEngineCollision>();
 	Collision->GetTransform().SetLocalScale({ 300.0f, 500.0f, 1.0f });
 	Collision->GetTransform().SetLocalPosition({ 0.0f, 300.0f });
-	Collision->ChangeOrder(ObjectOrder::NPC);
+	Collision->ChangeOrder(ObjectOrder::MONSTER);
 
 	WholeCollision = CreateComponent<GameEngineCollision>();
 	WholeCollision->GetTransform().SetLocalScale({ 1280.0f, 720.0f, 1.0f });
@@ -97,6 +107,9 @@ void SaltBaker::Start()
 void SaltBaker::Update(float _DeltaTime)
 {
 	//GEngine::CollisionDebugOn();
+	Collision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::PC_BULLET, CollisionType::CT_AABB2D,
+		std::bind(&SaltBaker::OnTakeDamage, this, std::placeholders::_1, std::placeholders::_2));
+
 	if (Level != nullptr)
 	{
 		if (Level->GetPhase() == Phase::Phase2 &&
@@ -104,8 +117,8 @@ void SaltBaker::Update(float _DeltaTime)
 		{
 			if (GetHP() <= 0)
 			{
-				//SetState(InGameMonsterState::Die);
-				//return;
+				Die();
+				return;
 			}
 
 			if (SaltBakerLevel* DycstLevel = dynamic_cast<SaltBakerLevel*>(Level))
@@ -134,17 +147,10 @@ void SaltBaker::Update(float _DeltaTime)
 	{
 		ElapsedTime -= CanAttackIntervalTime;
 
-		int RandomAttackNum = GameEngineRandom::MainRandom.RandomInt(0, 1);
-		
-		if (RandomAttackNum == 0)
+		if (GetHP() >= 10)
 		{
 			SetState(InGameMonsterState::Attack5);
-			SetAttackState(InGameMonsterAttackState::Attack5); //손을 만들어서 손이 set해줘야 할 것 같음
-		}
-		else
-		{
-			SetState(InGameMonsterState::Attack6);
-			SetAttackState(InGameMonsterAttackState::Attack6);
+			RightHandRenderer->On();
 		}
 	}
 }
@@ -286,6 +292,7 @@ void SaltBaker::OnAttack4AnimationFrameChanged(const FrameAnimation_DESC& _Info)
 		{
 			SetState(InGameMonsterState::MoveToPhase2);
 			SetAttackState(InGameMonsterAttackState::None);
+			SetHP(20);
 		}
 		else
 		{
@@ -312,6 +319,7 @@ void SaltBaker::OnSaltBakerPhase2IntroFrameChanged(const FrameAnimation_DESC& _I
 	{
 		WholeCollision->On();
 		WholeCollision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::MONSTER_BULLET, CollisionType::CT_AABB2D, std::bind(&SaltBaker::OnDeathCollision, this, std::placeholders::_1, std::placeholders::_2));
+		Collision->Off();
 	}
 
 	if (_Info.CurFrame == 108)
@@ -369,8 +377,7 @@ void SaltBaker::OnSaltBakerPhase2IntroFrameChanged(const FrameAnimation_DESC& _I
 
 	if (_Info.CurFrame == 145)
 	{
-		HandRenderer->GetTransform().SetWorldPosition({ 640.0f, -360.0f, Renderer->GetTransform().GetWorldPosition().z - 1 });
-		HandRenderer->On();
+		Hand->On();
 	}
 	
 }
@@ -388,6 +395,7 @@ void SaltBaker::OnSaltBakerPhase2FrameChanged(const FrameAnimation_DESC& _Info)
 		{
 			PepperShooter* Pepper = GetLevel()->CreateActor<PepperShooter>();
 			Pepper->SetParent(this);
+			Pepper->GetRenderer()->GetTransform().PixLocalNegativeX();
 			Pepper->GetTransform().SetWorldPosition({ 1180.0f, -120.0f, GetTransform().GetWorldPosition().z - 1 });
 			Pepper->SetDeathNum(1);
 		}
@@ -400,6 +408,7 @@ void SaltBaker::OnSaltBakerPhase2FrameChanged(const FrameAnimation_DESC& _Info)
 		{
 			PepperShooter* Pepper = GetLevel()->CreateActor<PepperShooter>();
 			Pepper->SetParent(this);
+			Pepper->GetRenderer()->GetTransform().PixLocalNegativeX();
 			Pepper->GetTransform().SetWorldPosition({ 1180.0f, -500.0f, GetTransform().GetWorldPosition().z - 1 });
 			Pepper->SetDeathNum(3);
 		}
@@ -419,62 +428,110 @@ void SaltBaker::OnSaltBakerAttack5FrameChanged(const FrameAnimation_DESC& _Info)
 	}
 }
 
-void SaltBaker::OnSaltBakerAttack6FrameChanged(const FrameAnimation_DESC& _Info)
-{
-	if (_Info.CurFrame == 46)
-	{
-		SetState(InGameMonsterState::Idle);
-	}
-}
 
 void SaltBaker::OnSaltBakerTakeDamageFrameChanged(const FrameAnimation_DESC& _Info)
 {
-	if (TakeDamageNum != -1)
+	if (GetHP() > 0)
 	{
-		if (TakeDamageNum == 0)
+		if (TakeDamageNum != -1)
 		{
-			if (_Info.CurFrame == 16)
+			if (TakeDamageNum == 0)
 			{
-				SetState(InGameMonsterState::Idle);
+				if (_Info.CurFrame == 16)
+				{
+					SetState(InGameMonsterState::Idle);
+				}
 			}
-		}
 
-		if (TakeDamageNum == 1)
-		{
-			if (_Info.CurFrame == 17)
+			else if (TakeDamageNum == 1)
 			{
-				SetState(InGameMonsterState::Idle);
+				if (_Info.CurFrame == 17)
+				{
+					SetState(InGameMonsterState::Idle);
+				}
 			}
-		}
 
-		if (TakeDamageNum == 2)
-		{
-			if (_Info.CurFrame == 18)
+			else if (TakeDamageNum == 2)
 			{
-				SetState(InGameMonsterState::Idle);
+				if (_Info.CurFrame == 18)
+				{
+					SetState(InGameMonsterState::Idle);
+				}
 			}
-		}
 
-		if (TakeDamageNum == 3)
-		{
-			if (_Info.CurFrame == 15)
+			else if (TakeDamageNum == 3)
 			{
-				SetState(InGameMonsterState::Idle);
+				if (_Info.CurFrame == 15)
+				{
+					SetState(InGameMonsterState::Idle);
+				}
 			}
 		}
+	}
+	else
+	{
+		Die();
 	}
 }
 
 void SaltBaker::OnSaltBakerDieAnimationFrameChanged(const FrameAnimation_DESC& _Info)
 {
+	if (_Info.CurFrame >= 70)
+	{
+		if (SaltBakerLevel* DycstLevel = dynamic_cast<SaltBakerLevel*>(Level))
+		{
+			float DeltaTime = GameEngineTime::GetDeltaTime() * 10;
+			if (PlusOn == true)
+			{
+				if (DycstLevel->OldFilmRenderer->GetPixelData().PlusColor.a < 0)
+				{
+					DycstLevel->OldFilmRenderer->GetPixelData().PlusColor.a += DeltaTime;
+				}
+				else
+				{
+					PlusOn = false;
+				}
+			}
+			else
+			{
+				DycstLevel->AlphaSettingOn = true;
+			}
+		}
+	}
+
 	if (_Info.CurFrame == 90)
 	{
 		Death();
+		if (nullptr != Hand)
+		{
+			Hand->Death();
+		}
 		if (nullptr != Level)
 		{
 			Level->SetPhase(Phase::Phase3);
 		}
 	}
+}
+
+void SaltBaker::OnRightHandAnimationFrameChanged(const FrameAnimation_DESC& _Info)
+{
+	if (_Info.CurFrame == 36)
+	{
+		SetAttackState(InGameMonsterAttackState::Attack5);
+		RightHandRenderer->Off();
+	}
+	if (_Info.CurFrame == 38)
+	{
+		SetAttackState(InGameMonsterAttackState::None);
+	}
+
+}
+
+CollisionReturn SaltBaker::OnTakeDamage(GameEngineCollision* _This, GameEngineCollision* _Other)
+{
+	SetHP(GetHP() - 1);
+
+	return CollisionReturn::Break;
 }
 
 CollisionReturn SaltBaker::OnDeathCollision(GameEngineCollision* _This, GameEngineCollision* _Other)
@@ -484,7 +541,7 @@ CollisionReturn SaltBaker::OnDeathCollision(GameEngineCollision* _This, GameEngi
 		Bullet->Death();
 	}
 
-	if(InGameLevelBase* Level = dynamic_cast<InGameLevelBase*>(GetLevel()))
+	if(SaltBakerLevel* Level = dynamic_cast<SaltBakerLevel*>(GetLevel()))
 	{
 		Level->GetPlayer()->Off();
 	}

@@ -52,7 +52,7 @@ void ShellWeDanceDust::Update(float _DeltaTime)
 			if (nullptr != Boss)
 			{
 				float4 BossPos = Boss->GetTransform().GetWorldPosition();
-				Renderer->GetTransform().SetWorldPosition({ BossPos.x, BossPos.y - 15, BossPos.z - 0.5f });
+				Renderer->GetTransform().SetWorldPosition({ BossPos.x + 200, BossPos.y - 15, BossPos.z - 0.5f });
 			}
 		}
 		Renderer->On();

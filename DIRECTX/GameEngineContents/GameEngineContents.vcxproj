@@ -277,6 +277,7 @@
     </ClInclude>
     <ClInclude Include="Rumrunners.h" />
     <ClInclude Include="SaltBaker.h" />
+    <ClInclude Include="SaltBakerHand.h" />
     <ClInclude Include="SaltBakerHeart.h" />
     <ClInclude Include="SaltBakerHeartPhysicsComponent.h" />
     <ClInclude Include="SaltBakerLevel.h" />
@@ -451,6 +452,7 @@
     </ClCompile>
     <ClCompile Include="Rumrunners.cpp" />
     <ClCompile Include="SaltBaker.cpp" />
+    <ClCompile Include="SaltBakerHand.cpp" />
     <ClCompile Include="SaltBakerHeart.cpp" />
     <ClCompile Include="SaltBakerHeartPhysicsComponent.cpp" />
     <ClCompile Include="SaltBakerLevel.cpp" />

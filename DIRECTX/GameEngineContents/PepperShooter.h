@@ -57,6 +57,8 @@ public:
 	void SetDeathNum(int _Num);
 	int GetDeathNum() { return DeathNum; }
 
+	GameEngineTextureRenderer* GetRenderer() { return Renderer; }
+
 private:
 	InGameMonsterAttackState MonsterAttackState;
 	IInGameCharacterBase* Player;

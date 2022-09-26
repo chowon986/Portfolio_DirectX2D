@@ -39,6 +39,8 @@ public:
 	void SetPlayer(IInGameCharacterBase* _Player) { Player = _Player; }
 	IInGameMonsterBase* GetMonster() { return Monster; }
 	void SetMonster(IInGameMonsterBase* _Monster) { Monster = _Monster; }
+private:
+	CollisionReturn OnTakeDamage(GameEngineCollision* _This, GameEngineCollision* _Other);
 
 private:
 	GameEngineTextureRenderer* Renderer;

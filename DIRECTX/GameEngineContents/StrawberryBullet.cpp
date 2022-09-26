@@ -54,7 +54,7 @@ void StrawberryBullet::Update(float _DeltaTime)
 		return;
 	}
 
-	if (true == ColMapTexture->GetPixelToFloat4(GetTransform().GetWorldPosition().x, -GetTransform().GetWorldPosition().y).CompareInt4D(float4::RED))
+	if (true == ColMapTexture->GetPixelToFloat4(GetTransform().GetWorldPosition().x, -GetTransform().GetWorldPosition().y - 10).CompareInt4D(float4::RED))
 	{
 		MovementComponent->Off();
 		Renderer->ChangeFrameAnimation("BerryDeath");

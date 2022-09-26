@@ -18,10 +18,10 @@ void LimeBullet::Start()
 {
 
 	Renderer = CreateComponent<GameEngineTextureRenderer>();
-	Renderer->CreateFrameAnimationFolder("Lime0", FrameAnimation_DESC("Lime0", 0.1f));
-	Renderer->CreateFrameAnimationFolder("Lime1", FrameAnimation_DESC("Lime1", 0.1f)); // Pink
-	Renderer->CreateFrameAnimationFolder("Lime2", FrameAnimation_DESC("Lime2", 0.1f));
-	Renderer->CreateFrameAnimationFolder("Lime3", FrameAnimation_DESC("Lime3", 0.1f)); // Pink
+	Renderer->CreateFrameAnimationFolder("Lime0", FrameAnimation_DESC("Lime0", 0.07f));
+	Renderer->CreateFrameAnimationFolder("Lime1", FrameAnimation_DESC("Lime1", 0.07f)); // Pink
+	Renderer->CreateFrameAnimationFolder("Lime2", FrameAnimation_DESC("Lime2", 0.07f));
+	Renderer->CreateFrameAnimationFolder("Lime3", FrameAnimation_DESC("Lime3", 0.07f)); // Pink
 	Renderer->ChangeFrameAnimation("Lime0");
 	Renderer->SetScaleModeImage();
 	SetRenderer(Renderer);
@@ -31,7 +31,7 @@ void LimeBullet::Start()
 	Collision->ChangeOrder(ObjectOrder::MONSTER_BULLET);
 
 	MovementComponent = CreateComponent<BulletMovementComponent>();
-	MovementComponent->SetSpeed(400.0f);
+	MovementComponent->SetSpeed(500.0f);
 
 	Renderer->ChangeCamera(CAMERAORDER::ROTATECAMERA);
 }

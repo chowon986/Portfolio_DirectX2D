@@ -6,6 +6,7 @@
 #include <GameEngineBase/GameEngineRandom.h>
 #include "InGameCuphead.h"
 #include "SaltBaker.h"
+#include "SaltBakerLevel.h"
 
 PepperShooter::PepperShooter()
 	: MonsterAttackState(InGameMonsterAttackState::None)
@@ -62,17 +63,6 @@ void PepperShooter::UpdateAnimation()
 	}
 }
 
-CollisionReturn PepperShooter::OnTakeDamage(GameEngineCollision* _This, GameEngineCollision* _Other)
-{
-	if (ElapsedTime > 1.0f)
-	{
-		SetHP(GetHP() - 1);
-		ElapsedTime = 0.0f;
-	}
-	return CollisionReturn::ContinueCheck;
-
-}
-
 void PepperShooter::SetPepperState(PepperState _State)
 {
 	if (State != _State)
@@ -94,27 +84,25 @@ void PepperShooter::OnPepperShooterAttackAnimationFrameFinished(const FrameAnima
 {
 	if (_Info.CurFrame == 22)
 	{
-		if (nullptr != dynamic_cast<InGameCuphead*>(GetParent()))
+		if (SaltBakerLevel* Level = dynamic_cast<SaltBakerLevel*>(GetLevel()))
 		{
-			Player = dynamic_cast<InGameCuphead*>(GetParent());
+			if (InGameCuphead* Player = dynamic_cast<InGameCuphead*>(Level->GetPlayer()))
+			{
+				float4 PlayerPos = Player->GetTransform().GetWorldPosition();
+				float4 MoveDirection = PlayerPos - GetTransform().GetWorldPosition();
+				MoveDirection.Normalize();
+				Direction = float4({ MoveDirection });
+
+				float4 MyPos = GetTransform().GetWorldPosition();
+
+				int RandomAttackNum = GameEngineRandom::MainRandom.RandomInt(0, 2);
+				PepperBullet* Bullet = GetLevel()->CreateActor<PepperBullet>();
+				Bullet->GetRenderer()->ChangeFrameAnimation("Pepper" + std::to_string(RandomAttackNum));
+				Bullet->SetColMapImage(GetColMapImage());
+				Bullet->GetTransform().SetWorldPosition({ MyPos.x, MyPos.y, MyPos.z - 1 });
+				Bullet->SetDirection(Direction);
+			}
 		}
-
-		if (Player != nullptr)
-		{
-			float4 PlayerPos = Player->GetTransform().GetWorldPosition();
-			float4 MoveDirection = PlayerPos - GetTransform().GetWorldPosition();
-			MoveDirection.Normalize();
-			Direction = float4({ MoveDirection });
-		}
-
-		float4 MyPos = GetTransform().GetWorldPosition();
-
-		int RandomAttackNum = GameEngineRandom::MainRandom.RandomInt(0, 2);
-		PepperBullet* Bullet = GetLevel()->CreateActor<PepperBullet>();
-		Bullet->GetRenderer()->ChangeFrameAnimation("Pepper" + std::to_string(RandomAttackNum));
-		Bullet->SetColMapImage(GetColMapImage());
-		Bullet->GetTransform().SetWorldPosition({ MyPos.x, MyPos.y, MyPos.z - 1 });
-		Bullet->SetDirection(GetDirection());
 	}
 
 	if (_Info.CurFrame == 43)
@@ -208,9 +196,9 @@ void PepperShooter::Start()
 
 	Collision = CreateComponent<GameEngineCollision>();
 	Collision->SetParent(this);
-	Collision->ChangeOrder(ObjectOrder::MONSTER_DAMAGEABLE_BULLET);
-	Collision->GetTransform().SetWorldScale({ 100.0f, 150.0f, 1.0f });
-	Collision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::PC_BULLET, CollisionType::CT_AABB2D, std::bind(&PepperShooter::OnTakeDamage, this, std::placeholders::_1, std::placeholders::_2));
+	Collision->GetTransform().SetWorldScale({ 100.0f, 180.0f, 1.0f });
+	Collision->GetTransform().SetLocalPosition({ 0.0f, -30.0f });
+	Collision->ChangeOrder(ObjectOrder::MONSTER);
 
 	HP = 10;
 	DestPos = float4({ 800.0f,-250.0f, GetTransform().GetWorldPosition().z });
@@ -222,11 +210,17 @@ void PepperShooter::Update(float _DeltaTime)
 {
 	MonsterWeaponBase::Update(_DeltaTime);
 
+	if (GetPepperState() == PepperState::Idle)
+	{
+		Collision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::PC_BULLET, CollisionType::CT_AABB2D, std::bind(&PepperShooter::OnTakeDamage, this, std::placeholders::_1, std::placeholders::_2));
+	}
+
+
 	if (Boss = dynamic_cast<SaltBaker*>(GetParent()))
 	{
 		if (Boss->GetHP() <= 0)
 		{
-			//SetPepperState(PepperState::Death);
+			SetPepperState(PepperState::Death);
 			return;
 		}
 	}
@@ -240,7 +234,7 @@ void PepperShooter::Update(float _DeltaTime)
 		{
 			SetPepperState(PepperState::Attack1);
 		}
-		else if (GetHP() <= 10)
+		else if (GetHP() <= 0)
 		{
 			//if (Boss->GetState() == InGameMonsterState::TakeDamage)
 			//{
@@ -255,6 +249,7 @@ void PepperShooter::Update(float _DeltaTime)
 		if (nullptr != Boss)
 		{
 			if (StartBodyAttack == true)
+
 			{
 				ElapsedTimeMove += _DeltaTime;
 				float4 WorldPos = GetTransform().GetWorldPosition();
@@ -289,6 +284,12 @@ void PepperShooter::Update(float _DeltaTime)
 
 	// Idle -> Attack1 ? Attack2는 아니고 3초에 한번씩
 	// Idle -> Death ? Attack1이 아니고 HP가 5 이하
+}
+
+CollisionReturn PepperShooter::OnTakeDamage(GameEngineCollision* _This, GameEngineCollision* _Other)
+{
+	SetHP(GetHP() - 1);
+	return CollisionReturn::Break;
 }
 
 void PepperShooter::End()

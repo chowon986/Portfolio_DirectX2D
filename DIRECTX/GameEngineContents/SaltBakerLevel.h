@@ -23,6 +23,8 @@ public:
 public:
 	SaltBaker* GetSaltBaker() { return Ph1Boss; }
 	Chicken* GetChicken() { return Ph1Monster; }
+	GameEngineTextureRenderer* OldFilmRenderer;
+	bool AlphaSettingOn;
 
 protected:
 	void LevelStartEvent() override;

@@ -37,6 +37,13 @@ void Pepper::Start()
 		PepperShooter* PepperGun = GetLevel()->CreateActor<PepperShooter>();
 		PepperGun->SetParent(this);
 	}
+
+	Collision = CreateComponent<GameEngineCollision>();
+	Collision->GetTransform().SetLocalScale({ 300.0f, 500.0f, 1.0f });
+	Collision->GetTransform().SetLocalPosition({ 0.0f, 300.0f });
+	Collision->ChangeOrder(ObjectOrder::MONSTER);
+
+	SetHP(5);
 }
 
 void Pepper::Update(float _DeltaTime)
@@ -49,6 +56,15 @@ void Pepper::Update(float _DeltaTime)
 	}
 	GetTransform().SetWorldMove(AttackDirection);
 
+	Collision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::PC_BULLET, CollisionType::CT_AABB2D,
+	std::bind(&Pepper::OnTakeDamage, this, std::placeholders::_1, std::placeholders::_2));
+}
+
+CollisionReturn Pepper::OnTakeDamage(GameEngineCollision* _This, GameEngineCollision* _Other)
+{
+	SetHP(GetHP() - 1);
+
+	return CollisionReturn::Break;
 }
 
 void Pepper::TakeDamage()

@@ -17,6 +17,7 @@
 SaltBakerLevel::SaltBakerLevel()
 	:BeforePhase(Phase::Ready)
 	, OnceCheck(false)
+	, AlphaSettingOn(false)
 {
 }
 
@@ -45,8 +46,8 @@ void SaltBakerLevel::Start()
 		ColMapRenderer = ColMapImage->CreateComponent<GameEngineTextureRenderer>();
 		ColMapRenderer->SetTexture("TestColMap.png");
 		ColMapRenderer->ScaleToTexture();
-		ColMapRenderer->GetTransform().SetWorldScale({ 1280.0f,720.0f,1.0f });
-		ColMapRenderer->GetTransform().SetLocalPosition({640.0f, -360.0f, (int)ZOrder::Background + 1 });
+		ColMapRenderer->GetTransform().SetWorldScale({ 1280.0f, 720.0f, 1.0f });
+		ColMapRenderer->GetTransform().SetWorldPosition({640.0f, -360.0f, (int)ZOrder::Background + 1 });
 		SetMainColMapImage(ColMapRenderer);
 	}
 	{
@@ -57,6 +58,67 @@ void SaltBakerLevel::Start()
 		KitchenRenderer->ChangeFrameAnimation("Kitchen");
 		KitchenRenderer->SetScaleModeImage();
 		KitchenRenderer->GetTransform().SetLocalPosition({ 640.0f, -360.0f, (int)ZOrder::Background });
+	}
+	
+	//{
+	//	Background* Ph3Sky = CreateActor<Background>(GameObjectGroup::UI);
+	//	GameEngineTextureRenderer* Ph3SkyRenderer = Ph3Sky->CreateComponent<GameEngineTextureRenderer>();
+	//	Ph3SkyRenderer->CreateFrameAnimationFolder("Kitchen", FrameAnimation_DESC("Kitchen", 0.1f, true));
+	//	Ph3SkyRenderer->SetTexture("MoveKitchen.png");
+	//	Ph3SkyRenderer->ChangeFrameAnimation("Kitchen");
+	//	Ph3SkyRenderer->SetScaleModeImage();
+	//	Ph3SkyRenderer->GetTransform().SetLocalPosition({ 640.0f, -360.0f, (int)ZOrder::Background });
+	//}
+
+	{
+		Background* Ph3Background = CreateActor<Background>(GameObjectGroup::UI);
+		GameEngineTextureRenderer* Ph3BackgroundRenderer = Ph3Background->CreateComponent<GameEngineTextureRenderer>();
+		Ph3BackgroundRenderer->SetTexture("Ph3Background1.png");
+		Ph3BackgroundRenderer->ScaleToTexture();
+		Ph3BackgroundRenderer->GetTransform().SetLocalPosition({ 675.0f, -260.0f, (int)ZOrder::Background });
+	}
+
+	{
+		Background* Ph3Background = CreateActor<Background>(GameObjectGroup::UI);
+		GameEngineTextureRenderer* Ph3BackgroundRenderer = Ph3Background->CreateComponent<GameEngineTextureRenderer>();
+		Ph3BackgroundRenderer->SetTexture("Ph3Background2.png");
+		Ph3BackgroundRenderer->ScaleToTexture();
+		Ph3BackgroundRenderer->GetTransform().SetLocalPosition({ 630.0f, -320.0f, (int)ZOrder::Background - 1});
+	}
+
+	{
+		Background* Ph3Background = CreateActor<Background>(GameObjectGroup::UI);
+		GameEngineTextureRenderer* Ph3BackgroundRenderer = Ph3Background->CreateComponent<GameEngineTextureRenderer>();
+		Ph3BackgroundRenderer->SetTexture("Ph3Background3.png");
+		Ph3BackgroundRenderer->ScaleToTexture();
+		Ph3BackgroundRenderer->GetTransform().SetLocalPosition({ 655.0f, -610.0f, (int)ZOrder::Background - 2 });
+	}
+
+	{
+		Background* Ph3Background = CreateActor<Background>(GameObjectGroup::UI);
+		GameEngineTextureRenderer* Ph3BackgroundRenderer = Ph3Background->CreateComponent<GameEngineTextureRenderer>();
+		Ph3BackgroundRenderer->SetTexture("Ph3Background4.png");
+		Ph3BackgroundRenderer->ScaleToTexture();
+		Ph3BackgroundRenderer->GetTransform().SetLocalPosition({ 450.0f, -220.0f, (int)ZOrder::Background - 0.5});
+	}
+
+	{
+		Background* Ph3Background = CreateActor<Background>(GameObjectGroup::UI);
+		GameEngineTextureRenderer* Ph3BackgroundRenderer = Ph3Background->CreateComponent<GameEngineTextureRenderer>();
+		Ph3BackgroundRenderer->SetTexture("Ph3Background5.png");
+		Ph3BackgroundRenderer->ScaleToTexture();
+		Ph3BackgroundRenderer->GetTransform().SetLocalPosition({ 610.0f, -400.0f, (int)ZOrder::Background - 3 });
+	}
+
+	{
+		Background* OldFilm = CreateActor<Background>(GameObjectGroup::UI);
+		OldFilmRenderer = OldFilm->CreateComponent<GameEngineTextureRenderer>();
+		OldFilmRenderer->CreateFrameAnimationFolder("03ScreenFX", FrameAnimation_DESC("03ScreenFX", 0.1f, true));
+		OldFilmRenderer->ChangeFrameAnimation("03ScreenFX");
+		OldFilmRenderer->GetTransform().SetLocalScale({ 1280.0f, 720.0f, 1.0f });
+		OldFilmRenderer->GetTransform().SetLocalPosition({ 640.0f, -360.0f, (int)ZOrder::UI });
+		OldFilmRenderer->GetPixelData().PlusColor.a -= 1;
+		OldFilmRenderer->Off();
 	}
 
 	Background* Iris = CreateActor<Background>(GameObjectGroup::UI);
@@ -77,6 +139,7 @@ void SaltBakerLevel::Start()
 	GetMainCameraActorTransform().SetLocalPosition({ 640, -360 });
 	GetRotateCameraActorTransform().SetLocalPosition({ 640, -360 });
 	GetIrisCameraActorTransform().SetLocalPosition({ 640.0f, -360.0f });
+	SetPhase(Phase::Phase3);
 }
 
 void SaltBakerLevel::Update(float _DeltaTime)
@@ -100,29 +163,29 @@ void SaltBakerLevel::Update(float _DeltaTime)
 
 		if (CurrentPhase == Phase::Phase1)
 		{
-			Ph1Boss = CreateActor<SaltBaker>();
-			Ph1Boss->GetTransform().SetWorldPosition({ 640.0f,-360.0f, (int)ZOrder::Player + 2});
+			//Ph1Boss = CreateActor<SaltBaker>();
+			//Ph1Boss->GetTransform().SetWorldPosition({ 640.0f,-360.0f, (int)ZOrder::Player + 2});
 
-			Ph1Monster = CreateActor<Chicken>();
-			Ph1Monster->GetTransform().SetWorldPosition({ 640.0f, -50.0f, (int)ZOrder::Player+1 });
+			//Ph1Monster = CreateActor<Chicken>();
+			//Ph1Monster->GetTransform().SetWorldPosition({ 640.0f, -50.0f, (int)ZOrder::Player+1 });
 
-			InGameCuphead* Cuphead = CreateActor<InGameCuphead>(GameObjectGroup::Player);
-			Cuphead->GetTransform().SetWorldPosition({ 640.0f,-360.0f, (int)ZOrder::Player });
-			Cuphead->SetColMapImage(ColMapRenderer);
+			//InGameCuphead* Cuphead = CreateActor<InGameCuphead>(GameObjectGroup::Player);
+			//Cuphead->GetTransform().SetWorldPosition({ 640.0f,-360.0f, (int)ZOrder::Player });
+			//Cuphead->SetColMapImage(ColMapRenderer);
 
-			if (nullptr != State)
-			{
-				Cuphead->SetHP(State->MaxHP);
-				Cuphead->SetOnDashInvisible(State->OnDashInvisible);
-			}
-			Player = Cuphead;
+			//if (nullptr != State)
+			//{
+			//	Cuphead->SetHP(State->MaxHP);
+			//	Cuphead->SetOnDashInvisible(State->OnDashInvisible);
+			//}
+			//Player = Cuphead;
 		}
 
 		else if (CurrentPhase == Phase::Phase3)
 		{
 			ColMapRenderer->SetTexture("SBPh3ColMap.png");
 			CogWheel* Ph3Monster1 = CreateActor<CogWheel>();
-			Ph3Monster1->GetTransform().SetWorldPosition({ 300.0f,-650.0f });
+			Ph3Monster1->GetTransform().SetWorldPosition({ 300.0f, -650.0f });
 		}
 
 		else if (CurrentPhase == Phase::Phase4)

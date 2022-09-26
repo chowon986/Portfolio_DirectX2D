@@ -28,6 +28,9 @@ public:
 public:
 	void SetWheel(CogWheel* _Wheel) { Wheel = _Wheel; }
 
+public:
+	float4 MoveDirection;
+
 protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;
@@ -49,10 +52,11 @@ private:
 
 private:
 	GameEngineTextureRenderer* Renderer;
+	GameEngineTextureRenderer* SnowRenderer;
+	GameEngineTextureRenderer* SnowTopperRenderer;
 	InGameMonsterState State;
 	InGameMonsterAttackState AttackState;
 	GameEngineCollision* Collision;
-	float4 MoveDirection;
 	ShellWeDancePhysicsComponent* Physics;
 	CogWheel* Wheel;
 	std::string CurAnimationName;

@@ -639,6 +639,9 @@
     <ClInclude Include="SuperConvergeBullet.h">
       <Filter>Actor\Weapon\Bullet\Player</Filter>
     </ClInclude>
+    <ClInclude Include="SaltBakerHand.h">
+      <Filter>Actor\Play\InGame\NPC\SaltBaker</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp">
@@ -1123,6 +1126,9 @@
     </ClCompile>
     <ClCompile Include="SuperConvergeBullet.cpp">
       <Filter>Actor\Weapon\Bullet\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="SaltBakerHand.cpp">
+      <Filter>Actor\Play\InGame\NPC\SaltBaker</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

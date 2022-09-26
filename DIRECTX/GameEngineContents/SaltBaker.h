@@ -9,6 +9,7 @@ class GameEngineCollision;
 class GameEngineTextureRenderer;
 class InGameMovementComponent;
 class InGameLevelBase;
+class SaltBakerHand;
 class InGameMonsterAnimationControllerComponent;
 class SaltBaker : public IInGameMonsterBase
 {
@@ -32,6 +33,15 @@ protected:
 	void Shoot() override;
 	void Die() override;
 
+public:
+	void SetBackgroundRenderer(GameEngineTextureRenderer* _Renderer) { BackgroundRenderer = _Renderer; }
+	GameEngineTextureRenderer* GetBackgroundRenderer() { return BackgroundRenderer; }
+	CollisionReturn OnDeathCollision(GameEngineCollision* _This, GameEngineCollision* _Other);
+	void SetTakeDamageNum(int _Num) { TakeDamageNum = _Num; }
+	int GetTakeDamageNum() { return TakeDamageNum; }
+
+private:
+
 	void OnIntroAnimationFrameChanged(const FrameAnimation_DESC& _Info);
 	void OnAttack1AnimationFrameChanged(const FrameAnimation_DESC& _Info);
 	void OnAttack2AnimationFrameChanged(const FrameAnimation_DESC& _Info);
@@ -40,22 +50,15 @@ protected:
 	void OnSaltBakerPhase2IntroFrameChanged(const FrameAnimation_DESC& _Info);
 	void OnSaltBakerPhase2FrameChanged(const FrameAnimation_DESC& _Info);
 	void OnSaltBakerAttack5FrameChanged(const FrameAnimation_DESC& _Info);
-	void OnSaltBakerAttack6FrameChanged(const FrameAnimation_DESC& _Info);
 	void OnSaltBakerTakeDamageFrameChanged(const FrameAnimation_DESC& _Info);
 	void OnSaltBakerDieAnimationFrameChanged(const FrameAnimation_DESC& _Info);
+	void OnRightHandAnimationFrameChanged(const FrameAnimation_DESC& _Info);
 
-public:
-	void SetBackgroundRenderer(GameEngineTextureRenderer* _Renderer) { BackgroundRenderer = _Renderer; }
-	GameEngineTextureRenderer* GetBackgroundRenderer() { return BackgroundRenderer; }
-	CollisionReturn OnDeathCollision(GameEngineCollision* _This, GameEngineCollision* _Other);
-
-
-	void SetTakeDamageNum(int _Num) { TakeDamageNum = _Num; }
-	int GetTakeDamageNum() { return TakeDamageNum; }
+	CollisionReturn OnTakeDamage(GameEngineCollision* _This, GameEngineCollision* _Other);
 
 private:
 	GameEngineTextureRenderer* Renderer;
-	GameEngineTextureRenderer* HandRenderer;
+	GameEngineTextureRenderer* RightHandRenderer;
 	InGameMonsterState State;
 	InGameMonsterAttackState AttackState;
 	GameEngineCollision* Collision;
@@ -66,4 +69,6 @@ private:
 	float CanAttackIntervalTime;
 	float ElapsedTime;
 	int TakeDamageNum;
+	SaltBakerHand* Hand;
+	bool PlusOn;
 };

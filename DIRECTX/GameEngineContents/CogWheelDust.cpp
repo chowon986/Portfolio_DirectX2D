@@ -74,7 +74,8 @@ void CogWheelDust::OnCogWheelIntroDustAnimationFrameChanged(const FrameAnimation
 		if (nullptr == Ph3Boss)
 		{
 			Ph3Boss = GetLevel()->CreateActor<ShellWeDance>();
-			Ph3Boss->GetTransform().SetWorldPosition({ 300.0f,-360.0f,BossPos.z + 1 });
+			Ph3Boss->GetTransform().SetWorldPosition({ 250.0f,-450.0f,BossPos.z + 1 });
+			Ph3Boss->GetRenderer()->SetPivot(PIVOTMODE::LEFTBOT);
 			Ph3Boss->SetWheel(Boss);
 		}
 	}
