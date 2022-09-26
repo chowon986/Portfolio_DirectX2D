@@ -23,7 +23,7 @@ void CogWheel::Start()
 	Renderer->CreateFrameAnimationFolder("CogWheelAlternate", FrameAnimation_DESC("CogWheelAlternate", 0.05f));
 	Renderer->CreateFrameAnimationFolder("CogWheelIdle", FrameAnimation_DESC("CogWheelIdle", 0.05f));
 	Renderer->CreateFrameAnimationFolder("CogWheelTurn", FrameAnimation_DESC("CogWheelTurn", 0.05f));
-	Renderer->CreateFrameAnimationFolder("CogWheelDie", FrameAnimation_DESC("CogWheelTurn", 0.05f));
+	Renderer->CreateFrameAnimationFolder("CogWheelDie", FrameAnimation_DESC("CogWheelDie", 0.05f));
 
 	Renderer->AnimationBindFrame("CogWheelIntro", std::bind(&CogWheel::OnCogWheelIntroAnimationFrameChanged, this, std::placeholders::_1));
 	Renderer->AnimationBindFrame("CogWheelAlternate", std::bind(&CogWheel::OnCogWheelAlternateAnimationFrameChanged, this, std::placeholders::_1));
@@ -72,30 +72,33 @@ void CogWheel::Update(float _DeltaTime)
 		}
 	}
 
-	if (true == ColMapTexture->GetPixelToFloat4(GetTransform().GetWorldPosition().x - 50, -GetTransform().GetWorldPosition().y).CompareInt4D(float4::BLUE))
+	if (GetState() != InGameMonsterState::Die)
 	{
-		SetState(InGameMonsterState::Turn);
-		MoveDirection = float4::RIGHT;
-	}
-	else if (true == ColMapTexture->GetPixelToFloat4(GetTransform().GetWorldPosition().x + 50, -GetTransform().GetWorldPosition().y).CompareInt4D(float4::BLUE))
-	{
-		SetState(InGameMonsterState::Turn);
-		MoveDirection = float4::LEFT;
+		if (true == ColMapTexture->GetPixelToFloat4(GetTransform().GetWorldPosition().x - 50, -GetTransform().GetWorldPosition().y).CompareInt4D(float4::BLUE))
+		{
+			SetState(InGameMonsterState::Turn);
+			MoveDirection = float4::RIGHT;
+		}
+		else if (true == ColMapTexture->GetPixelToFloat4(GetTransform().GetWorldPosition().x + 50, -GetTransform().GetWorldPosition().y).CompareInt4D(float4::BLUE))
+		{
+			SetState(InGameMonsterState::Turn);
+			MoveDirection = float4::LEFT;
+		}
+
+		if (GetState() == InGameMonsterState::Alternate || GetState() == InGameMonsterState::Idle)
+		{
+			if (MoveDirection.CompareInt3D(float4::RIGHT))
+			{
+				Renderer->GetTransform().PixLocalPositiveX();
+			}
+			else if (MoveDirection.CompareInt3D(float4::LEFT))
+			{
+				Renderer->GetTransform().PixLocalNegativeX();
+			}
+		}
+		GetTransform().SetLocalMove(MoveDirection * _DeltaTime * 200);
 	}
 
-	if (GetState() == InGameMonsterState::Alternate || GetState() == InGameMonsterState::Idle)
-	{
-		if (MoveDirection.CompareInt3D(float4::RIGHT))
-		{
-			Renderer->GetTransform().PixLocalPositiveX();
-		}
-		else if (MoveDirection.CompareInt3D(float4::LEFT))
-		{
-			Renderer->GetTransform().PixLocalNegativeX();
-		}
-	}
-
-	GetTransform().SetLocalMove(MoveDirection * _DeltaTime * 200);
 }
 
 void CogWheel::TakeDamage()
@@ -158,7 +161,7 @@ void CogWheel::OnCogWheelDeathAnimationFrameChanged(const FrameAnimation_DESC& _
 {
 	if (_Info.CurFrame == 19)
 	{
-		SetState(InGameMonsterState::Die);
+		Death();
 	}
 }
 

@@ -66,13 +66,13 @@ void ShellWeDance::Start()
 
 void ShellWeDance::Update(float _DeltaTime)
 {
-	if (GetHP() <= 0)
+	if (GetHP() <= 0 && GetState() == InGameMonsterState::Attack1)
 	{
-		//SetState(InGameMonsterState::Die);
-		//if (nullptr != Wheel)
-		//{
-		//	Wheel->SetState(InGameMonsterState::Die); //ph3 완성되면 주석 풀기
-		//}
+		SetState(InGameMonsterState::Die);
+		if (nullptr != Wheel)
+		{
+			Wheel->SetState(InGameMonsterState::Die);
+		}
 	}
 
 	GameEngineTextureRenderer* CollisionMap = GetLevel()->GetMainColMapImage();

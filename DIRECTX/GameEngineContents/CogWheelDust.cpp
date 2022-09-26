@@ -32,9 +32,9 @@ void CogWheelDust::Update(float _DeltaTime)
 {
 	if (nullptr != Boss)
 	{
-		if (Boss->GetHP() <= 0)
+		if (Boss->GetState() == InGameMonsterState::Die)
 		{
-			//	Death(); ph3 완성되면 주석 풀기
+			Death();
 		}
 	}
 
