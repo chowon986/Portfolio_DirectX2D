@@ -34,7 +34,7 @@ void Chicken::Start()
 	Renderer->CreateFrameAnimationFolder("ChickenPrepareAttack2", FrameAnimation_DESC("ChickenPrepareAttack2", 0.07f));
 	Renderer->CreateFrameAnimationFolder("ChickenAttack2", FrameAnimation_DESC("ChickenAttack2", 0.07f));
 	Renderer->CreateFrameAnimationFolder("ChickenAttackFinish2", FrameAnimation_DESC("ChickenAttackFinish2", 0.07f));
-	Renderer->CreateFrameAnimationFolder("ChickenDie", FrameAnimation_DESC("ChickenDeath", 0.07f));
+	Renderer->CreateFrameAnimationFolder("ChickenDie", FrameAnimation_DESC("ChickenDeath", 0.07f, false));
 
 	Renderer->SetScaleModeImage();
 	Renderer->ChangeFrameAnimation("ChickenIntro");
@@ -58,6 +58,7 @@ void Chicken::Start()
 	Renderer->AnimationBindFrame("ChickenPrepareAttack2", std::bind(&Chicken::OnChickenPrepareAttack2AnimationFrameChanged, this, std::placeholders::_1));
 	Renderer->AnimationBindFrame("ChickenAttack2", std::bind(&Chicken::OnChickenAttack2AnimationFrameChanged, this, std::placeholders::_1));
 	Renderer->AnimationBindFrame("ChickenAttackFinish2", std::bind(&Chicken::OnChickenAttackFinish2AnimationFrameChanged, this, std::placeholders::_1));
+	Renderer->AnimationBindFrame("ChickenDie", std::bind(&Chicken::OnChickenDieAnimationFrameChanged, this, std::placeholders::_1));
 
 	Renderer->SetPivotToVector(float4::UP * 5);
 
@@ -200,6 +201,14 @@ void Chicken::OnChickenAttackFinish2AnimationFrameChanged(const FrameAnimation_D
 	}
 }
 
+void Chicken::OnChickenDieAnimationFrameChanged(const FrameAnimation_DESC& _Info)
+{
+	if (_Info.CurFrame == 36)
+	{
+		Death();
+	}
+}
+
 void Chicken::OnChickenAttackFinish1AnimationFrameChanged(const FrameAnimation_DESC& _Info)
 {
 	if (_Info.CurFrame == 10)
@@ -237,6 +246,10 @@ void Chicken::OnChickenIdleAnimationFrameChanged(const FrameAnimation_DESC& _Inf
 					{
 						Renderer->ChangeFrameAnimation("ChickenVanish");
 					}
+				}
+				if (Boss->GetState() == InGameMonsterState::Die)
+				{
+					SetState(InGameMonsterState::Die);
 				}
 			}
 		}

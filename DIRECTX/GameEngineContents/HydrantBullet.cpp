@@ -27,7 +27,7 @@ CollisionReturn HydrantBullet::Attack(GameEngineCollision* _This, GameEngineColl
 		Renderer->ChangeFrameAnimation("HydrantBulletDeath");
 		OnDeath = true;
 	}
-	return CollisionReturn::ContinueCheck;
+	return CollisionReturn::Break;
 }
 
 void HydrantBullet::OnDeathAnimationFrameFninished(const FrameAnimation_DESC& _Info)

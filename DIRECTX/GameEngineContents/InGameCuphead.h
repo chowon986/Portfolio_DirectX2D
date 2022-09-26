@@ -70,6 +70,7 @@ public:
 
 public:
 	bool CanFly;
+	bool OnParriable;
 
 private:
 	GameEngineTextureRenderer* Renderer;
@@ -78,7 +79,6 @@ private:
 	GameEngineCollision* Collision;
 	InGameCharacterMovementCompmonent* Movement;
 	InGameCharacterAnimationControllerComponent* Animation;
-	bool OnParriable;
 	bool AlphaOn;
 	float CanTakeDamageIntervalTime;
 	float CanTakeDamageElapsedTime;

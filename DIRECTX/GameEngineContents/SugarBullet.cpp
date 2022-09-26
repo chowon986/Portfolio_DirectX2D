@@ -3,10 +3,10 @@
 #include "GameEngineCore/GameEngineTextureRenderer.h"
 #include "BulletMovementComponent.h"
 #include "IInGameCharacterBase.h"
+#include "InGameCuphead.h"
 
 SugarBullet::SugarBullet()
-	: Collision(nullptr)
-	, DirectionElapsedTime(0.0f)
+	: DirectionElapsedTime(0.0f)
 {
 }
 
@@ -39,8 +39,26 @@ void SugarBullet::Update(float _DeltaTime)
 	Direction.x += _DeltaTime * 400;
 	Direction.y = sin(DirectionElapsedTime * 3) * 150 - 500;
 	GetTransform().SetWorldPosition({ Direction.x, Direction.y, GetTransform().GetWorldPosition().z});
+
+	if (Collision->GetOrder() == (int)ObjectOrder::PARRIABLEOBJECT)
+	{
+		Collision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::PC, CollisionType::CT_AABB2D,
+			std::bind(&SugarBullet::OnParryCollision, this, std::placeholders::_1, std::placeholders::_2));
+	}
 }
 
 void SugarBullet::End()
 {
+}
+
+CollisionReturn SugarBullet::OnParryCollision(GameEngineCollision* _This, GameEngineCollision* _Other)
+{
+	if (InGameCuphead* Player = dynamic_cast<InGameCuphead*>(_Other->GetParent()))
+	{
+		if (true == Player->OnParriable)
+		{
+			Death();
+		}
+	}
+	return CollisionReturn::Break;
 }

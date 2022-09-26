@@ -52,6 +52,7 @@ private:
 	void OnChickenPrepareAttack2AnimationFrameChanged(const FrameAnimation_DESC& _Info);
 	void OnChickenAttack2AnimationFrameChanged(const FrameAnimation_DESC& _Info);
 	void OnChickenAttackFinish2AnimationFrameChanged(const FrameAnimation_DESC& _Info);
+	void OnChickenDieAnimationFrameChanged(const FrameAnimation_DESC& _Info);
 		
 private:
 	SaltBakerLevel* Level;

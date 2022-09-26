@@ -53,6 +53,7 @@ void SaltBakerLevel::Start()
 		Background* Kitchen = CreateActor<Background>(GameObjectGroup::UI);
 		KitchenRenderer = Kitchen->CreateComponent<GameEngineTextureRenderer>();
 		KitchenRenderer->CreateFrameAnimationFolder("Kitchen", FrameAnimation_DESC("Kitchen", 0.1f, true));
+		KitchenRenderer->SetTexture("MoveKitchen.png");
 		KitchenRenderer->ChangeFrameAnimation("Kitchen");
 		KitchenRenderer->SetScaleModeImage();
 		KitchenRenderer->GetTransform().SetLocalPosition({ 640.0f, -360.0f, (int)ZOrder::Background });

@@ -225,6 +225,13 @@ void SaltBakerShooter::Update(float _DeltaTime)
 
 			SugarBullet* Bullet = GetLevel()->CreateActor<SugarBullet>();
 			Bullet->GetRenderer()->ChangeFrameAnimation("Sugar" + std::to_string(RandomSugarNum));
+			if (RandomSugarNum == 3)
+			{
+				if (nullptr != Bullet->GetCollision())
+				{
+					Bullet->GetCollision()->ChangeOrder(ObjectOrder::PARRIABLEOBJECT);
+				}
+			}
 			Bullet->SetColMapImage(GetColMapImage());
 			Bullet->GetTransform().SetWorldPosition({ SugarBulletStartPosX, -500.0f });
 			++SugarAttackCount;
@@ -260,7 +267,7 @@ void SaltBakerShooter::Update(float _DeltaTime)
 			{
 				Bullet->GetRenderer()->ChangeFrameAnimation("ElephantJumpUp");
 				Bullet->GetMonsterPhysicsComponent()->Reset();
-				Bullet->GetMonsterPhysicsComponent()->AddForce(55);
+				Bullet->GetMonsterPhysicsComponent()->AddForce(65);
 				Bullet->GetTransform().SetWorldPosition({ 0, -500.0f });
 				Bullet->SetAnimal("Elephant");
 			}
@@ -268,7 +275,7 @@ void SaltBakerShooter::Update(float _DeltaTime)
 			{
 				Bullet->GetRenderer()->ChangeFrameAnimation("LionJumpUp");
 				Bullet->GetMonsterPhysicsComponent()->Reset();
-				Bullet->GetMonsterPhysicsComponent()->AddForce(50);
+				Bullet->GetMonsterPhysicsComponent()->AddForce(55);
 				Bullet->GetTransform().SetWorldPosition({ 0, -500.0f });
 				Bullet->SetAnimal("Lion");
 			}

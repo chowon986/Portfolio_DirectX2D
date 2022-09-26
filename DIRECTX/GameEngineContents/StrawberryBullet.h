@@ -17,10 +17,13 @@ public:
 	GameEngineTextureRenderer* GetRenderer() { return Renderer; }
 	void SetRenderer(GameEngineTextureRenderer* _Renderer) { Renderer = _Renderer; }
 
-private:
+protected:
 	virtual void Start() override;
 	virtual void Update(float _DeltaTime) override;
 	virtual void End() override;
+
+private:
+	void OnBerryDeathAnimationFrameFinished(const FrameAnimation_DESC& _Info);
 
 private:
 	GameEngineCollision* Collision;

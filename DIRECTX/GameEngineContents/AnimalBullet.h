@@ -32,11 +32,15 @@ private:
 
 	void OnJumpDownStartAnimationFrameFinished(const FrameAnimation_DESC& _Info);
 	void OnJumpUpStartAnimationFrameFinished(const FrameAnimation_DESC& _Info);
+	void OnDeathAnimationFrameFinished(const FrameAnimation_DESC& _Info);
+
+	CollisionReturn Attack(GameEngineCollision* _This, GameEngineCollision* _Other);
 
 private:
 	GameEngineCollision* Collision;
 	AnimalBulletPhysicsComponent* Physics;
 	std::string Animal;
 	std::string CurAnimationName;
+	bool CanMove;
 };
 

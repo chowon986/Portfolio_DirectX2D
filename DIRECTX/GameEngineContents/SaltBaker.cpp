@@ -84,11 +84,14 @@ void SaltBaker::Start()
 	Collision = CreateComponent<GameEngineCollision>();
 	Collision->GetTransform().SetLocalScale({ 300.0f, 500.0f, 1.0f });
 	Collision->GetTransform().SetLocalPosition({ 0.0f, 300.0f });
+	Collision->ChangeOrder(ObjectOrder::NPC);
 
 	WholeCollision = CreateComponent<GameEngineCollision>();
 	WholeCollision->GetTransform().SetLocalScale({ 1280.0f, 720.0f, 1.0f });
 	WholeCollision->GetTransform().SetLocalPosition({ 0.0f, 0.0f });
 	WholeCollision->Off();
+
+	SetHP(5);
 }
 
 void SaltBaker::Update(float _DeltaTime)
