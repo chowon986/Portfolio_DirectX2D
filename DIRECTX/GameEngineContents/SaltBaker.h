@@ -10,6 +10,7 @@ class GameEngineTextureRenderer;
 class InGameMovementComponent;
 class InGameLevelBase;
 class SaltBakerHand;
+class SaltBakerLevel;
 class InGameMonsterAnimationControllerComponent;
 class SaltBaker : public IInGameMonsterBase
 {
@@ -64,7 +65,7 @@ private:
 	GameEngineCollision* Collision;
 	GameEngineCollision* WholeCollision;
 	GameEngineTextureRenderer* BackgroundRenderer;
-	InGameLevelBase* Level;
+	SaltBakerLevel* Level;
 	bool TimeCountOn;
 	float CanAttackIntervalTime;
 	float ElapsedTime;

@@ -97,11 +97,13 @@ void SaltBaker::Start()
 	Collision->ChangeOrder(ObjectOrder::MONSTER);
 
 	WholeCollision = CreateComponent<GameEngineCollision>();
-	WholeCollision->GetTransform().SetLocalScale({ 1280.0f, 720.0f, 1.0f });
+	WholeCollision->GetTransform().SetLocalScale({ 1500.0f, 1000.0f, 1.0f });
 	WholeCollision->GetTransform().SetLocalPosition({ 0.0f, 0.0f });
 	WholeCollision->Off();
 
 	SetHP(5);
+
+	Level = dynamic_cast<SaltBakerLevel*>(GetLevel());
 }
 
 void SaltBaker::Update(float _DeltaTime)
@@ -112,6 +114,18 @@ void SaltBaker::Update(float _DeltaTime)
 
 	if (Level != nullptr)
 	{
+		if (true == Level->BackgroundMoveFinished)
+		{
+			if (true == Renderer->IsCurAnimationPause())
+			{
+				Renderer->CurAnimationPauseOff();
+			}
+
+			if (InGameCuphead* Cuphead = dynamic_cast<InGameCuphead*>(Level->GetPlayer()))
+			{
+				Cuphead->CanFly = false;
+			}
+		}
 		if (Level->GetPhase() == Phase::Phase2 &&
 			GetState() == InGameMonsterState::Idle)
 		{
@@ -121,15 +135,12 @@ void SaltBaker::Update(float _DeltaTime)
 				return;
 			}
 
-			if (SaltBakerLevel* DycstLevel = dynamic_cast<SaltBakerLevel*>(Level))
+			if (false == Level->GetChicken()->IsUpdate())
 			{
-				if (false == DycstLevel->GetChicken()->IsUpdate())
-				{
-					Chicken* Ph2Monster = DycstLevel->GetChicken();
-					Ph2Monster->GetChickenPhysicsComponent()->SetGravity(-1.0f);
-					Ph2Monster->GetRenderer()->ChangeFrameAnimation("ChickenAttack2");
-					Ph2Monster->On();
-				}
+				Chicken* Ph2Monster = Level->GetChicken();
+				Ph2Monster->GetChickenPhysicsComponent()->SetGravity(-1.0f);
+				Ph2Monster->GetRenderer()->ChangeFrameAnimation("ChickenAttack2");
+				Ph2Monster->On();
 			}
 			TimeCountOn = true;
 		}
@@ -317,22 +328,33 @@ void SaltBaker::OnSaltBakerPhase2IntroFrameChanged(const FrameAnimation_DESC& _I
 
 	if (_Info.CurFrame == 100)
 	{
+		Collision->Off();
 		WholeCollision->On();
 		WholeCollision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::MONSTER_BULLET, CollisionType::CT_AABB2D, std::bind(&SaltBaker::OnDeathCollision, this, std::placeholders::_1, std::placeholders::_2));
-		Collision->Off();
+		if (nullptr != Level)
+		{
+			if (true == Level->GetPlayer()->IsUpdate())
+			{
+				Level->GetPlayer()->Off();
+			}
+		}
 	}
 
 	if (_Info.CurFrame == 108)
 	{
 		if (nullptr != BackgroundRenderer)
 		{
-			BackgroundRenderer->SetTexture("MoveKitchen.png");
+			BackgroundRenderer->GetActor()->Death();
+			if (nullptr != Level)
+			{
+				Level->BackgroundMoveOn = true;
+			}
 		}
 	}
 
 	if (_Info.CurFrame == 130)
 	{
-		if (InGameLevelBase* Level = dynamic_cast<InGameLevelBase*>(GetLevel()))
+		if (nullptr != Level)
 		{
 			if (InGameCuphead* Cuphead = dynamic_cast<InGameCuphead*>(Level->GetPlayer()))
 			{
@@ -340,39 +362,32 @@ void SaltBaker::OnSaltBakerPhase2IntroFrameChanged(const FrameAnimation_DESC& _I
 				Cuphead->On();
 				Cuphead->CanFly = true;
 			}
-
 		}
 	}
 
 	if (_Info.CurFrame == 135)
 	{
-		if (InGameLevelBase* Level = dynamic_cast<InGameLevelBase*>(GetLevel()))
+		if (nullptr != Level)
 		{
-			if (InGameCuphead* Cuphead = dynamic_cast<InGameCuphead*>(Level->GetPlayer()))
+			if (nullptr != Level)
 			{
-				Cuphead->CanFly = false;
+				if (false == Level->BackgroundMoveFinished)
+				{
+					Renderer->CurAnimationPauseOn();
+				}
 			}
-
 		}
 	}
 
 	if (_Info.CurFrame == 146)
 	{
-		if (Level = dynamic_cast<InGameLevelBase*>(GetLevel()))
+		if (nullptr != Level)
 		{
 			Level->SetPhase(Phase::Phase2);
 		}
 		SetState(InGameMonsterState::Phase2);
 		Renderer->SetPivot(PIVOTMODE::RIGHT);
 		Renderer->SetPivotToVector(float4{ 680.0f, -60.0f,Renderer->GetTransform().GetLocalPosition().z });
-	}
-
-	if (_Info.CurFrame >= 109)
-	{
-		if (nullptr != BackgroundRenderer)
-		{
-			BackgroundRenderer->GetTransform().SetWorldMove(float4::DOWN * GameEngineTime::GetDeltaTime() * 500);
-		}
 	}
 
 	if (_Info.CurFrame == 145)
@@ -395,7 +410,6 @@ void SaltBaker::OnSaltBakerPhase2FrameChanged(const FrameAnimation_DESC& _Info)
 		{
 			PepperShooter* Pepper = GetLevel()->CreateActor<PepperShooter>();
 			Pepper->SetParent(this);
-			Pepper->GetRenderer()->GetTransform().PixLocalNegativeX();
 			Pepper->GetTransform().SetWorldPosition({ 1180.0f, -120.0f, GetTransform().GetWorldPosition().z - 1 });
 			Pepper->SetDeathNum(1);
 		}
@@ -408,7 +422,6 @@ void SaltBaker::OnSaltBakerPhase2FrameChanged(const FrameAnimation_DESC& _Info)
 		{
 			PepperShooter* Pepper = GetLevel()->CreateActor<PepperShooter>();
 			Pepper->SetParent(this);
-			Pepper->GetRenderer()->GetTransform().PixLocalNegativeX();
 			Pepper->GetTransform().SetWorldPosition({ 1180.0f, -500.0f, GetTransform().GetWorldPosition().z - 1 });
 			Pepper->SetDeathNum(3);
 		}
@@ -476,27 +489,9 @@ void SaltBaker::OnSaltBakerTakeDamageFrameChanged(const FrameAnimation_DESC& _In
 
 void SaltBaker::OnSaltBakerDieAnimationFrameChanged(const FrameAnimation_DESC& _Info)
 {
-	if (_Info.CurFrame >= 70)
+	if (_Info.CurFrame == 10)
 	{
-		if (SaltBakerLevel* DycstLevel = dynamic_cast<SaltBakerLevel*>(Level))
-		{
-			float DeltaTime = GameEngineTime::GetDeltaTime() * 10;
-			if (PlusOn == true)
-			{
-				if (DycstLevel->OldFilmRenderer->GetPixelData().PlusColor.a < 0)
-				{
-					DycstLevel->OldFilmRenderer->GetPixelData().PlusColor.a += DeltaTime;
-				}
-				else
-				{
-					PlusOn = false;
-				}
-			}
-			else
-			{
-				DycstLevel->AlphaSettingOn = true;
-			}
-		}
+		Level->Phase2BreakOn = true;
 	}
 
 	if (_Info.CurFrame == 90)
@@ -508,7 +503,7 @@ void SaltBaker::OnSaltBakerDieAnimationFrameChanged(const FrameAnimation_DESC& _
 		}
 		if (nullptr != Level)
 		{
-			Level->SetPhase(Phase::Phase3);
+			//Level->SetPhase(Phase::Phase3);
 		}
 	}
 }
@@ -541,7 +536,7 @@ CollisionReturn SaltBaker::OnDeathCollision(GameEngineCollision* _This, GameEngi
 		Bullet->Death();
 	}
 
-	if(SaltBakerLevel* Level = dynamic_cast<SaltBakerLevel*>(GetLevel()))
+	if (nullptr != Level)
 	{
 		Level->GetPlayer()->Off();
 	}

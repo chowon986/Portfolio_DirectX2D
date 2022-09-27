@@ -50,15 +50,24 @@ void PepperShooter::UpdateAnimation()
 		break;
 	case PepperState::Idle:
 		Renderer->ChangeFrameAnimation("PepperShooterIdle");
+		if (DeathNum == 1 || DeathNum == 3)
+		{
+			Renderer->GetTransform().PixLocalNegativeX();
+		}
 		break;
 	case PepperState::Attack1:		
 		Renderer->ChangeFrameAnimation("PepperShooterAttack");
 		break;
 	case PepperState::Attack2:
 		Renderer->ChangeFrameAnimation("PepperShooterDeath" + std::to_string(DeathNum));
+		Renderer->GetTransform().PixLocalPositiveX();
 		break;
 	case PepperState::Death:
 		Renderer->ChangeFrameAnimation("PepperShooterReturn");
+		if (DeathNum == 1 || DeathNum == 3)
+		{
+			Renderer->GetTransform().PixLocalNegativeX();
+		}
 		break;
 	}
 }

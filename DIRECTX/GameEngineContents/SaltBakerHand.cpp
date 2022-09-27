@@ -19,7 +19,7 @@ void SaltBakerHand::Start()
 	Renderer->SetScaleModeImage();
 	Renderer->ChangeFrameAnimation("SaltBakerHandIdle");
 
-	Renderer->GetTransform().SetLocalPosition({ 0.0f, -380.0f });
+	Renderer->GetTransform().SetLocalPosition({ 0.0f, -380.0f, 0.0f });
 	Renderer->ChangeCamera(CAMERAORDER::ROTATECAMERA);
 
 	TopperRenderer = CreateComponent<GameEngineTextureRenderer>();
@@ -29,10 +29,8 @@ void SaltBakerHand::Start()
 	TopperRenderer->SetScaleModeImage();
 	TopperRenderer->ChangeFrameAnimation("SaltBakerHandIdleTopper");
 
-	TopperRenderer->GetTransform().SetLocalPosition({ -380.0f, -450.0f});
-
+	TopperRenderer->GetTransform().SetLocalPosition({ -380.0f, -450.0f, 0.0f});
 	TopperRenderer->ChangeCamera(CAMERAORDER::ROTATECAMERA);
-
 	Renderer->AnimationBindFrame("SaltBakerHandDeath", std::bind(&SaltBakerHand::OnSaltBakerHandDeathAnimationFrameChanged, this, std::placeholders::_1));
 
 }

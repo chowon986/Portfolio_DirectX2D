@@ -26,6 +26,9 @@ public:
 	Chicken* GetChicken() { return Ph1Monster; }
 	GameEngineTextureRenderer* OldFilmRenderer;
 	bool AlphaSettingOn;
+	bool BackgroundMoveOn;
+	bool BackgroundMoveFinished;
+	bool Phase2BreakOn;
 
 protected:
 	void LevelStartEvent() override;
@@ -40,6 +43,7 @@ private:
 private:
 	GameEngineTextureRenderer* ColMapRenderer;
 	GameEngineTextureRenderer* KitchenRenderer;
+	GameEngineTextureRenderer* KitchenRendererTopper;
 	GameEngineTextureRenderer* IrisRenderer;
 	Phase BeforePhase;
 	int HPCount;

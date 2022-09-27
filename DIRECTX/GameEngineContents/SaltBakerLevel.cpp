@@ -19,6 +19,9 @@ SaltBakerLevel::SaltBakerLevel()
 	:BeforePhase(Phase::Ready)
 	, OnceCheck(false)
 	, AlphaSettingOn(false)
+	, BackgroundMoveOn(false)
+	, BackgroundMoveFinished(false)
+	, Phase2BreakOn(false)
 {
 }
 
@@ -54,61 +57,70 @@ void SaltBakerLevel::Start()
 	{
 		Background* Kitchen = CreateActor<Background>(GameObjectGroup::UI);
 		KitchenRenderer = Kitchen->CreateComponent<GameEngineTextureRenderer>();
-		KitchenRenderer->CreateFrameAnimationFolder("Kitchen", FrameAnimation_DESC("Kitchen", 0.1f, true));
 		KitchenRenderer->SetTexture("MoveKitchen.png");
-		KitchenRenderer->ChangeFrameAnimation("Kitchen");
-		KitchenRenderer->SetScaleModeImage();
-		KitchenRenderer->GetTransform().SetLocalPosition({ 640.0f, -360.0f, (int)ZOrder::Background });
+		KitchenRenderer->ScaleToTexture();
+		KitchenRenderer->GetTransform().SetLocalPosition({ 640.0f, 843.0f, (int)ZOrder::Background });
 	}
 	
 	{
-		Background* Ph3Sky = CreateActor<Background>(GameObjectGroup::UI);
-		GameEngineTextureRenderer* Ph3SkyRenderer = Ph3Sky->CreateComponent<GameEngineTextureRenderer>();
-		Ph3SkyRenderer->CreateFrameAnimationFolder("Ph3Sky", FrameAnimation_DESC("Ph3Sky", 0.07f, true));
-		Ph3SkyRenderer->ChangeFrameAnimation("Ph3Sky");
-		Ph3SkyRenderer->SetScaleModeImage();
-		Ph3SkyRenderer->GetTransform().SetLocalPosition({ 640.0f, -100.0f, (int)ZOrder::Background });
+		Background* Kitchen = CreateActor<Background>(GameObjectGroup::UI);
+		KitchenRendererTopper = Kitchen->CreateComponent<GameEngineTextureRenderer>();
+		KitchenRendererTopper->CreateFrameAnimationFolder("Kitchen", FrameAnimation_DESC("Kitchen", 0.1f, true));
+		KitchenRendererTopper->ChangeFrameAnimation("Kitchen");
+		KitchenRendererTopper->SetScaleModeImage();
+		KitchenRendererTopper->ScaleToTexture();
+		KitchenRendererTopper->GetTransform().SetLocalPosition({ 640.0f, -360.0f, (int)ZOrder::Background - 1});
 	}
 
-	{
-		Background* Ph3Background = CreateActor<Background>(GameObjectGroup::UI);
-		GameEngineTextureRenderer* Ph3BackgroundRenderer = Ph3Background->CreateComponent<GameEngineTextureRenderer>();
-		Ph3BackgroundRenderer->SetTexture("Ph3Background1.png");
-		Ph3BackgroundRenderer->ScaleToTexture();
-		Ph3BackgroundRenderer->GetTransform().SetLocalPosition({ 675.0f, -260.0f, (int)ZOrder::Background });
-	}
+	//{
+	//	Background* Ph3Sky = CreateActor<Background>(GameObjectGroup::UI);
+	//	GameEngineTextureRenderer* Ph3SkyRenderer = Ph3Sky->CreateComponent<GameEngineTextureRenderer>();
+	//	Ph3SkyRenderer->CreateFrameAnimationFolder("Kitchen", FrameAnimation_DESC("Kitchen", 0.1f, true));
+	//	Ph3SkyRenderer->SetTexture("MoveKitchen.png");
+	//	Ph3SkyRenderer->ChangeFrameAnimation("Kitchen");
+	//	Ph3SkyRenderer->SetScaleModeImage();
+	//	Ph3SkyRenderer->GetTransform().SetLocalPosition({ 640.0f, -360.0f, (int)ZOrder::Background });
+	//}
 
-	{
-		Background* Ph3Background = CreateActor<Background>(GameObjectGroup::UI);
-		GameEngineTextureRenderer* Ph3BackgroundRenderer = Ph3Background->CreateComponent<GameEngineTextureRenderer>();
-		Ph3BackgroundRenderer->SetTexture("Ph3Background2.png");
-		Ph3BackgroundRenderer->ScaleToTexture();
-		Ph3BackgroundRenderer->GetTransform().SetLocalPosition({ 630.0f, -320.0f, (int)ZOrder::Background - 1});
-	}
+	//{
+	//	Background* Ph3Background = CreateActor<Background>(GameObjectGroup::UI);
+	//	GameEngineTextureRenderer* Ph3BackgroundRenderer = Ph3Background->CreateComponent<GameEngineTextureRenderer>();
+	//	Ph3BackgroundRenderer->SetTexture("Ph3Background1.png");
+	//	Ph3BackgroundRenderer->ScaleToTexture();
+	//	Ph3BackgroundRenderer->GetTransform().SetLocalPosition({ 675.0f, -260.0f, (int)ZOrder::Background });
+	//}
 
-	{
-		Background* Ph3Background = CreateActor<Background>(GameObjectGroup::UI);
-		GameEngineTextureRenderer* Ph3BackgroundRenderer = Ph3Background->CreateComponent<GameEngineTextureRenderer>();
-		Ph3BackgroundRenderer->SetTexture("Ph3Background3.png");
-		Ph3BackgroundRenderer->ScaleToTexture();
-		Ph3BackgroundRenderer->GetTransform().SetLocalPosition({ 655.0f, -610.0f, (int)ZOrder::Background - 2 });
-	}
+	//{
+	//	Background* Ph3Background = CreateActor<Background>(GameObjectGroup::UI);
+	//	GameEngineTextureRenderer* Ph3BackgroundRenderer = Ph3Background->CreateComponent<GameEngineTextureRenderer>();
+	//	Ph3BackgroundRenderer->SetTexture("Ph3Background2.png");
+	//	Ph3BackgroundRenderer->ScaleToTexture();
+	//	Ph3BackgroundRenderer->GetTransform().SetLocalPosition({ 630.0f, -320.0f, (int)ZOrder::Background - 1});
+	//}
 
-	{
-		Background* Ph3Background = CreateActor<Background>(GameObjectGroup::UI);
-		GameEngineTextureRenderer* Ph3BackgroundRenderer = Ph3Background->CreateComponent<GameEngineTextureRenderer>();
-		Ph3BackgroundRenderer->SetTexture("Ph3Background4.png");
-		Ph3BackgroundRenderer->ScaleToTexture();
-		Ph3BackgroundRenderer->GetTransform().SetLocalPosition({ 450.0f, -220.0f, (int)ZOrder::Background - 0.5});
-	}
+	//{
+	//	Background* Ph3Background = CreateActor<Background>(GameObjectGroup::UI);
+	//	GameEngineTextureRenderer* Ph3BackgroundRenderer = Ph3Background->CreateComponent<GameEngineTextureRenderer>();
+	//	Ph3BackgroundRenderer->SetTexture("Ph3Background3.png");
+	//	Ph3BackgroundRenderer->ScaleToTexture();
+	//	Ph3BackgroundRenderer->GetTransform().SetLocalPosition({ 655.0f, -610.0f, (int)ZOrder::Background - 2 });
+	//}
 
-	{
-		Background* Ph3Background = CreateActor<Background>(GameObjectGroup::UI);
-		GameEngineTextureRenderer* Ph3BackgroundRenderer = Ph3Background->CreateComponent<GameEngineTextureRenderer>();
-		Ph3BackgroundRenderer->SetTexture("Ph3Background5.png");
-		Ph3BackgroundRenderer->ScaleToTexture();
-		Ph3BackgroundRenderer->GetTransform().SetLocalPosition({ 610.0f, -400.0f, (int)ZOrder::Background - 3 });
-	}
+	//{
+	//	Background* Ph3Background = CreateActor<Background>(GameObjectGroup::UI);
+	//	GameEngineTextureRenderer* Ph3BackgroundRenderer = Ph3Background->CreateComponent<GameEngineTextureRenderer>();
+	//	Ph3BackgroundRenderer->SetTexture("Ph3Background4.png");
+	//	Ph3BackgroundRenderer->ScaleToTexture();
+	//	Ph3BackgroundRenderer->GetTransform().SetLocalPosition({ 450.0f, -220.0f, (int)ZOrder::Background - 0.5});
+	//}
+
+	//{
+	//	Background* Ph3Background = CreateActor<Background>(GameObjectGroup::UI);
+	//	GameEngineTextureRenderer* Ph3BackgroundRenderer = Ph3Background->CreateComponent<GameEngineTextureRenderer>();
+	//	Ph3BackgroundRenderer->SetTexture("Ph3Background5.png");
+	//	Ph3BackgroundRenderer->ScaleToTexture();
+	//	Ph3BackgroundRenderer->GetTransform().SetLocalPosition({ 610.0f, -400.0f, (int)ZOrder::Background - 3 });
+	//}
 
 	// Ph2Break
 	{
@@ -230,12 +242,32 @@ void SaltBakerLevel::Start()
 	GetMainCameraActorTransform().SetLocalPosition({ 640, -360 });
 	GetRotateCameraActorTransform().SetLocalPosition({ 640, -360 });
 	GetIrisCameraActorTransform().SetLocalPosition({ 640.0f, -360.0f });
-	SetPhase(Phase::Phase3);
+	SetPhase(Phase::Phase1);
 }
 
 void SaltBakerLevel::Update(float _DeltaTime)
 {
 	ElapsedTime += _DeltaTime;
+
+	if (true == Phase2BreakOn)
+	{
+
+	}
+
+	if (true == BackgroundMoveOn)
+	{
+		if (false == BackgroundMoveFinished)
+		{
+			if (KitchenRenderer->GetTransform().GetWorldPosition().y > -1550)
+			{
+				KitchenRenderer->GetTransform().SetWorldMove(float4::DOWN * _DeltaTime * 1000);
+			}
+			else
+			{
+				BackgroundMoveFinished = true;
+			}
+		}
+	}
 
 	if (ElapsedTime > 1.0f && OnceCheck == false)
 	{
@@ -254,22 +286,24 @@ void SaltBakerLevel::Update(float _DeltaTime)
 
 		if (CurrentPhase == Phase::Phase1)
 		{
-			//Ph1Boss = CreateActor<SaltBaker>();
-			//Ph1Boss->GetTransform().SetWorldPosition({ 640.0f,-360.0f, (int)ZOrder::Player + 2});
+			Ph1Boss = CreateActor<SaltBaker>();
+			Ph1Boss->GetTransform().SetWorldPosition({ 640.0f,-360.0f, (int)ZOrder::Player + 2});
+			Ph1Boss->SetBackgroundRenderer(KitchenRendererTopper);
 
-			//Ph1Monster = CreateActor<Chicken>();
-			//Ph1Monster->GetTransform().SetWorldPosition({ 640.0f, -50.0f, (int)ZOrder::Player+1 });
+			Ph1Monster = CreateActor<Chicken>();
+			Ph1Monster->GetTransform().SetWorldPosition({ 640.0f, -50.0f, (int)ZOrder::Player+1 });
 
-			//InGameCuphead* Cuphead = CreateActor<InGameCuphead>(GameObjectGroup::Player);
-			//Cuphead->GetTransform().SetWorldPosition({ 640.0f,-360.0f, (int)ZOrder::Player });
-			//Cuphead->SetColMapImage(ColMapRenderer);
+			InGameCuphead* Cuphead = CreateActor<InGameCuphead>(GameObjectGroup::Player);
+			Cuphead->GetTransform().SetWorldPosition({ 640.0f,-360.0f, (int)ZOrder::Player });
+			Cuphead->SetColMapImage(ColMapRenderer);
+			Cuphead->GetRenderer()->ChangeCamera(CAMERAORDER::ROTATECAMERA);
 
-			//if (nullptr != State)
-			//{
-			//	Cuphead->SetHP(State->MaxHP);
-			//	Cuphead->SetOnDashInvisible(State->OnDashInvisible);
-			//}
-			//Player = Cuphead;
+			if (nullptr != State)
+			{
+				Cuphead->SetHP(State->MaxHP);
+				Cuphead->SetOnDashInvisible(State->OnDashInvisible);
+			}
+			Player = Cuphead;
 		}
 
 		else if (CurrentPhase == Phase::Phase3)
