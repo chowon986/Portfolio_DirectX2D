@@ -46,11 +46,19 @@ private:
 	GameEngineTextureRenderer* KitchenRendererTopper;
 	GameEngineTextureRenderer* IrisRenderer;
 	Phase BeforePhase;
-	int HPCount;
 	CharacterState* State;
-	float ElapsedTime;
+	int HPCount;
+	int RendererNum;
 	bool OnceCheck;
+	bool OldFilmOnceCheck;
+	float BreakTime;
+	float ElapsedTime;
+	float OldFilmElapsedTime;
 	SaltBaker* Ph1Boss;
 	Chicken* Ph1Monster;
+	Background* KitchenTopper;
+	Background* Kitchen;
+	std::map<int, GameEngineActor*> BackgroundRenderer;
+	std::map<int, GameEngineActor*> BreakObjectActor;
 };
 

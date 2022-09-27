@@ -501,10 +501,6 @@ void SaltBaker::OnSaltBakerDieAnimationFrameChanged(const FrameAnimation_DESC& _
 		{
 			Hand->Death();
 		}
-		if (nullptr != Level)
-		{
-			//Level->SetPhase(Phase::Phase3);
-		}
 	}
 }
 
