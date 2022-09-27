@@ -60,15 +60,14 @@ void SaltBakerLevel::Start()
 		KitchenRenderer->GetTransform().SetLocalPosition({ 640.0f, -360.0f, (int)ZOrder::Background });
 	}
 	
-	//{
-	//	Background* Ph3Sky = CreateActor<Background>(GameObjectGroup::UI);
-	//	GameEngineTextureRenderer* Ph3SkyRenderer = Ph3Sky->CreateComponent<GameEngineTextureRenderer>();
-	//	Ph3SkyRenderer->CreateFrameAnimationFolder("Kitchen", FrameAnimation_DESC("Kitchen", 0.1f, true));
-	//	Ph3SkyRenderer->SetTexture("MoveKitchen.png");
-	//	Ph3SkyRenderer->ChangeFrameAnimation("Kitchen");
-	//	Ph3SkyRenderer->SetScaleModeImage();
-	//	Ph3SkyRenderer->GetTransform().SetLocalPosition({ 640.0f, -360.0f, (int)ZOrder::Background });
-	//}
+	{
+		Background* Ph3Sky = CreateActor<Background>(GameObjectGroup::UI);
+		GameEngineTextureRenderer* Ph3SkyRenderer = Ph3Sky->CreateComponent<GameEngineTextureRenderer>();
+		Ph3SkyRenderer->CreateFrameAnimationFolder("Ph3Sky", FrameAnimation_DESC("Ph3Sky", 0.07f, true));
+		Ph3SkyRenderer->ChangeFrameAnimation("Ph3Sky");
+		Ph3SkyRenderer->SetScaleModeImage();
+		Ph3SkyRenderer->GetTransform().SetLocalPosition({ 640.0f, -100.0f, (int)ZOrder::Background });
+	}
 
 	{
 		Background* Ph3Background = CreateActor<Background>(GameObjectGroup::UI);
