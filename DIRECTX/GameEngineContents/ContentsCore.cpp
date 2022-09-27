@@ -4,6 +4,7 @@
 #include "SaltBakerLevel.h"
 #include "ShopLevel.h"
 #include "TitleLevel.h"
+#include "StoryLevel.h"
 #include "SelectLevel.h"
 #include "DogFightLevel.h"
 #include "TutorialLevel.h"
@@ -161,6 +162,7 @@ void ContentsCore::Start()
 	CreateLevel<TitleLevel>("Title");
 	CreateLevel<SelectLevel>("Select");
 	CreateLevel<HourglassLevel>("Hourglass");
+	CreateLevel<StoryLevel>("Story");
 	CreateLevel<WorldMapLevel>("WorldMap");
 	CreateLevel<ShopLevel>("Shop");
 	CreateLevel<TutorialLevel>("Tutorial");

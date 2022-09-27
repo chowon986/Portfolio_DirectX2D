@@ -645,6 +645,9 @@
     <ClInclude Include="BreakObject.h">
       <Filter>Actor\Play\InGame\NPC\SaltBaker</Filter>
     </ClInclude>
+    <ClInclude Include="StoryLevel.h">
+      <Filter>Level\01 Play</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp">
@@ -1135,6 +1138,9 @@
     </ClCompile>
     <ClCompile Include="BreakObject.cpp">
       <Filter>Actor\Play\InGame\NPC\SaltBaker</Filter>
+    </ClCompile>
+    <ClCompile Include="StoryLevel.cpp">
+      <Filter>Level\01 Play</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

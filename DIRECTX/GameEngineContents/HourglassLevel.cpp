@@ -41,7 +41,7 @@ void HourglassLevel::Update(float _DeltaTime)
 {
 	if (true == GameEngineInput::GetInst()->IsDown("LevelChange"))
 	{
-		GEngine::ChangeLevel("WorldMap");
+		GEngine::ChangeLevel("Story");
 	}
 }
 
@@ -51,5 +51,5 @@ void HourglassLevel::End()
 
 void HourglassLevel::EndAnimation(const FrameAnimation_DESC& _Info)
 {
-	GEngine::ChangeLevel("WorldMap");
+	GEngine::ChangeLevel("Story");
 }
