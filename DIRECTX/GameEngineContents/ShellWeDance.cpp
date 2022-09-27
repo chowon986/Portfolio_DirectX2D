@@ -158,7 +158,7 @@ void ShellWeDance::OnShellWeDanceDeathAnimationFrameChanged(const FrameAnimation
 		Death();
 		if (SaltBakerLevel* Level = dynamic_cast<SaltBakerLevel*>(GetLevel()))
 		{
-			Level->SetPhase(Phase::Phase4);
+			// Àá±ñ ÁÖ¼® Level->SetPhase(Phase::Phase4);
 		}
 	}
 }

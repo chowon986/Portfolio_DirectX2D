@@ -176,6 +176,7 @@
     <ClInclude Include="BoomerangShooterItem.h" />
     <ClInclude Include="BowWowBullet.h" />
     <ClInclude Include="BowWowShooter.h" />
+    <ClInclude Include="BreakObject.h" />
     <ClInclude Include="Bulldog.h" />
     <ClInclude Include="BulldogPlane.h" />
     <ClInclude Include="BulletBase.h" />
@@ -351,6 +352,7 @@
     <ClCompile Include="BoomerangShooterItem.cpp" />
     <ClCompile Include="BowWowBullet.cpp" />
     <ClCompile Include="BowWowShooter.cpp" />
+    <ClCompile Include="BreakObject.cpp" />
     <ClCompile Include="Bulldog.cpp" />
     <ClCompile Include="BulldogPlane.cpp" />
     <ClCompile Include="BulletBase.cpp" />

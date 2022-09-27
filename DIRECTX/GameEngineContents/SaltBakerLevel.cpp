@@ -13,6 +13,7 @@
 #include "SaltBakerHeart.h"
 #include "CharacterState.h"
 #include "Tornado.h"
+#include "BreakObject.h"
 
 SaltBakerLevel::SaltBakerLevel()
 	:BeforePhase(Phase::Ready)
@@ -107,6 +108,97 @@ void SaltBakerLevel::Start()
 		Ph3BackgroundRenderer->SetTexture("Ph3Background5.png");
 		Ph3BackgroundRenderer->ScaleToTexture();
 		Ph3BackgroundRenderer->GetTransform().SetLocalPosition({ 610.0f, -400.0f, (int)ZOrder::Background - 3 });
+	}
+
+	// Ph2Break
+	{
+		BreakObject* Object = CreateActor<BreakObject>(GameObjectGroup::UI);
+		Object->SetStartPos({ 1100.0f, 50.0f, (int)ZOrder::UI });
+		Object-> GetTransform().SetWorldPosition(Object->GetStartPos());
+		Object->GetRenderer()->ChangeFrameAnimation("Ph2DeribsA");
+		Object->SetAnimationName("Ph2DeribsA");
+	}
+
+	{
+		BreakObject* Object = CreateActor<BreakObject>(GameObjectGroup::UI);
+		Object->SetStartPos({ 870.0f, 50.0f, (int)ZOrder::UI });
+		Object->GetTransform().SetWorldPosition(Object->GetStartPos());
+		Object->GetRenderer()->ChangeFrameAnimation("Ph2DeribsB");
+		Object->SetAnimationName("Ph2DeribsB");
+	}
+
+	{
+		BreakObject* Object = CreateActor<BreakObject>(GameObjectGroup::UI);
+		Object->SetStartPos({ 450.0f, 50.0f, (int)ZOrder::UI });
+		Object->GetTransform().SetWorldPosition(Object->GetStartPos());
+		Object->GetRenderer()->ChangeFrameAnimation("Ph2DeribsB");
+		Object->SetAnimationName("Ph2DeribsB");
+	}
+
+	{
+		BreakObject* Object = CreateActor<BreakObject>(GameObjectGroup::UI);
+		Object->SetStartPos({ 640, 50.0f, (int)ZOrder::UI });
+		Object->GetTransform().SetWorldPosition(Object->GetStartPos());
+		Object->GetRenderer()->ChangeFrameAnimation("Ph2DeribsC");
+		Object->SetAnimationName("Ph2DeribsC");
+	}
+
+	{
+		BreakObject* Object = CreateActor<BreakObject>(GameObjectGroup::UI);
+		Object->SetStartPos({ 1000, 50.0f, (int)ZOrder::UI });
+		Object->GetTransform().SetWorldPosition(Object->GetStartPos());
+		Object->GetRenderer()->ChangeFrameAnimation("Ph2DeribsD");
+		Object->SetAnimationName("Ph2DeribsD");
+	}
+
+	{
+		BreakObject* Object = CreateActor<BreakObject>(GameObjectGroup::UI);
+		Object->SetStartPos({ 640, 30.0f, (int)ZOrder::UI });
+		Object->GetTransform().SetWorldPosition(Object->GetStartPos());
+		Object->GetRenderer()->ChangeFrameAnimation("Ph2BreakMidLeftFall");
+		Object->SetAnimationName("Ph2BreakMidLeftFall");
+	}
+
+	{
+		BreakObject* Object = CreateActor<BreakObject>(GameObjectGroup::UI);
+		Object->SetStartPos({ 1150, 30.0f, (int)ZOrder::UI });
+		Object->GetTransform().SetWorldPosition(Object->GetStartPos());
+		Object->GetRenderer()->ChangeFrameAnimation("Ph2BreakMidRightFall");
+		Object->SetAnimationName("Ph2BreakMidRightFall");
+	}
+
+	{
+		BreakObject* Object = CreateActor<BreakObject>(GameObjectGroup::UI);
+		Object->SetStartPos({ 300, 30.0f, (int)ZOrder::UI });
+		Object->GetTransform().SetWorldPosition(Object->GetStartPos());
+		Object->GetRenderer()->ChangeFrameAnimation("Ph2BreakLeft");
+		Object->SetAnimationName("Ph2BreakLeft");
+	}
+
+	{
+		BreakObject* Object = CreateActor<BreakObject>(GameObjectGroup::UI);
+		Object->SetStartPos({ 150, 30.0f, (int)ZOrder::UI });
+		Object->GetTransform().SetWorldPosition(Object->GetStartPos());
+		Object->GetRenderer()->ChangeFrameAnimation("Ph2BreakRight");
+		Object->SetAnimationName("Ph2BreakRight");
+	}
+
+	{
+		BreakObject* Object = CreateActor<BreakObject>(GameObjectGroup::UI);
+		Object->SetStartPos({ 150, 30.0f, (int)ZOrder::UI });
+		Object->GetTransform().SetWorldPosition(Object->GetStartPos());
+		Object->GetRenderer()->GetTransform().PixLocalNegativeX();
+		Object->GetRenderer()->ChangeFrameAnimation("Ph2DeribsD");
+		Object->SetAnimationName("Ph2DeribsD");
+	}
+
+	{
+		BreakObject* Object = CreateActor<BreakObject>(GameObjectGroup::UI);
+		Object->SetStartPos({ 800, 30.0f, (int)ZOrder::UI });
+		Object->GetTransform().SetWorldPosition(Object->GetStartPos());
+		Object->GetRenderer()->GetTransform().PixLocalNegativeX();
+		Object->GetRenderer()->ChangeFrameAnimation("Ph2BreakFrontFallLeft");
+		Object->SetAnimationName("Ph2BreakFrontFallLeft");
 	}
 
 	{

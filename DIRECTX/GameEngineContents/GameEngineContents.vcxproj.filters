@@ -642,6 +642,9 @@
     <ClInclude Include="SaltBakerHand.h">
       <Filter>Actor\Play\InGame\NPC\SaltBaker</Filter>
     </ClInclude>
+    <ClInclude Include="BreakObject.h">
+      <Filter>Actor\Play\InGame\NPC\SaltBaker</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp">
@@ -1128,6 +1131,9 @@
       <Filter>Actor\Weapon\Bullet\Player</Filter>
     </ClCompile>
     <ClCompile Include="SaltBakerHand.cpp">
+      <Filter>Actor\Play\InGame\NPC\SaltBaker</Filter>
+    </ClCompile>
+    <ClCompile Include="BreakObject.cpp">
       <Filter>Actor\Play\InGame\NPC\SaltBaker</Filter>
     </ClCompile>
   </ItemGroup>

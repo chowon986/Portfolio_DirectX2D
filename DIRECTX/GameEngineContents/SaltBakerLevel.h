@@ -7,6 +7,7 @@ class GameEngineTextureRenderer;
 class CharacterState;
 class Chicken;
 class SaltBaker;
+class Background;
 class SaltBakerLevel : public InGameLevelBase
 {
 public:
