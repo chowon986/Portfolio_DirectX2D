@@ -9,6 +9,7 @@ SaltBakerHeart::SaltBakerHeart()
 	, State(InGameMonsterState::Idle)
 	, AttackState(InGameMonsterAttackState::None)
 	, Collision(nullptr)
+	, CanMove(false)
 {
 }
 
@@ -21,7 +22,7 @@ void SaltBakerHeart::Start()
 	Renderer = CreateComponent<GameEngineTextureRenderer>();
 	Renderer->CreateFrameAnimationFolder("SaltBakerHeartIdle", FrameAnimation_DESC("SaltBakerHeartIdle", 0.1f));
 	Renderer->CreateFrameAnimationFolder("SaltBakerHeartIdlePink", FrameAnimation_DESC("SaltBakerHeartIdlePink", 0.1f)); // Pink
-	Renderer->CreateFrameAnimationFolder("SaltBakerHeartIntro", FrameAnimation_DESC("SaltBakerHeartIntro", 0.1f));
+	Renderer->CreateFrameAnimationFolder("SaltBakerHeartIntro", FrameAnimation_DESC("SaltBakerHeartIntro", 0.1f, false));
 	Renderer->CreateFrameAnimationFolder("SaltBakerHeartTurn", FrameAnimation_DESC("SaltBakerHeartTurn", 0.1f)); // Pink
 	Renderer->CreateFrameAnimationFolder("SaltBakerHeartTurnPink", FrameAnimation_DESC("SaltBakerHeartTurnPink", 0.1f)); // Pink
 	Renderer->CreateFrameAnimationFolder("SaltBakerHeartDeath", FrameAnimation_DESC("SaltBakerHeartDeath", 0.1f)); // Pink
@@ -108,7 +109,7 @@ void SaltBakerHeart::Update(float _DeltaTime)
 		Collision->IsCollision(CollisionType::CT_AABB2D, (int)ObjectOrder::PC, CollisionType::CT_AABB2D, std::bind(&SaltBakerHeart::OnChangeNotParriable, this, std::placeholders::_1, std::placeholders::_2));
 	}
 
-	if (GetState() != InGameMonsterState::Prepare)
+	if (GetState() != InGameMonsterState::Prepare && CanMove == true)
 	{
 		GetTransform().SetLocalMove((VerticalDirection + HorizontalDirection) * _DeltaTime * 200);
 	}
@@ -212,6 +213,7 @@ void SaltBakerHeart::OnSaltBakerHeartIntroAnimationFrameChanged(const FrameAnima
 	if (_Info.CurFrame == 35)
 	{
 		SetState(InGameMonsterState::Idle);
+		CanMove = true;
 	}
 }
 

@@ -7,6 +7,7 @@ class GameEngineTextureRenderer;
 class CharacterState;
 class Chicken;
 class SaltBaker;
+class CharacterScore;
 class Background;
 class SaltBakerLevel : public InGameLevelBase
 {
@@ -30,8 +31,12 @@ public:
 	bool BackgroundMoveFinished;
 	bool Phase2BreakOn;
 
+public: 	
+	std::map<int, GameEngineActor*> BackgroundActor;
+
 protected:
 	void LevelStartEvent() override;
+	void LevelEndEvent() override;
 	void Start() override;
 	void Update(float _DeltaTime) override;
 	void End() override;
@@ -39,6 +44,7 @@ protected:
 private:
 	void EndAnimation(const FrameAnimation_DESC& _Info);
 	void OnIrisAnimationFrameEnd(const FrameAnimation_DESC& _Info);
+	void OnPh4WarningSkyAnimationFrameChanged(const FrameAnimation_DESC& _Info);
 
 private:
 	GameEngineTextureRenderer* ColMapRenderer;
@@ -47,18 +53,23 @@ private:
 	GameEngineTextureRenderer* IrisRenderer;
 	Phase BeforePhase;
 	CharacterState* State;
+	CharacterScore* Score;
 	int HPCount;
 	int RendererNum;
+	int ActorNum;
 	bool OnceCheck;
 	bool OldFilmOnceCheck;
+	bool TornadoCheck;
 	float BreakTime;
 	float ElapsedTime;
+	float PlayElapsedTime;
 	float OldFilmElapsedTime;
+	float TornadoElapsedTime;
 	SaltBaker* Ph1Boss;
 	Chicken* Ph1Monster;
 	Background* KitchenTopper;
 	Background* Kitchen;
-	std::map<int, GameEngineActor*> BackgroundRenderer;
 	std::map<int, GameEngineActor*> BreakObjectActor;
+	std::map<int, GameEngineActor*> LittleTornadoActor;
 };
 

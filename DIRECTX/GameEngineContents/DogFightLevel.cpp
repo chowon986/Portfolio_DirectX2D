@@ -11,6 +11,7 @@
 #include "DogCopter.h"
 #include "WorldMapCuphead.h"
 #include "CharacterState.h"
+#include "CharacterScore.h"
 #include <GameEngineCore/GameEngineBlur.h>
 #include "PlayerHP.h"
 
@@ -40,6 +41,7 @@ DogFightLevel::DogFightLevel()
 	, IsRotateCompleted(false)
 	, RotateElapsedTime(0.0f)
 	, RotateTime(10)
+	, PlayElapsedTime(0.0f)
 {
 }
 
@@ -58,14 +60,42 @@ void DogFightLevel::ColMapOnOffSwitch()
 
 void DogFightLevel::LevelStartEvent()
 {
-	std::list<GameEngineActor*> Actors = GetGroup(GameObjectGroup::CharacterState);
-	for (GameEngineActor* Actor : Actors)
 	{
-		if (CharacterState* _State = dynamic_cast<CharacterState*>(Actor))
+		std::list<GameEngineActor*> Actors = GetGroup(GameObjectGroup::CharacterState);
+		for (GameEngineActor* Actor : Actors)
 		{
-			State = _State;
-			HPCount = State->MaxHP;
+			if (CharacterState* _State = dynamic_cast<CharacterState*>(Actor))
+			{
+				State = _State;
+				HPCount = State->MaxHP;
+			}
 		}
+	}
+
+	{
+		std::list<GameEngineActor*> Actors = GetGroup(GameObjectGroup::CharacterScore);
+		for (GameEngineActor* Actor : Actors)
+		{
+			if (CharacterScore* _Score = dynamic_cast<CharacterScore*>(Actor))
+			{
+				Score = _Score;
+
+				Score->PlayTime = 0.0f;
+				Score->HP = 0;
+				Score->Parry = 0;
+				Score->UseCard = 0;
+				Score->SkillLevel = 2;
+			}
+		}
+	}
+}
+
+void DogFightLevel::LevelEndEvent()
+{
+	if (nullptr != Score)
+	{
+		Score->PlayTime = PlayElapsedTime;
+		Score->HP = Player->GetHP();
 	}
 }
 
@@ -516,6 +546,8 @@ void DogFightLevel::ReadyWallopAnimationFrameFinished(const FrameAnimation_DESC&
 
 void DogFightLevel::Update(float _DeltaTime)
 {
+	PlayElapsedTime += _DeltaTime;
+
 	ColMapOnOffSwitch();
 	if (GameEngineInput::GetInst()->IsDown("PhaseChangeKey"))
 	{
@@ -553,6 +585,7 @@ void DogFightLevel::Update(float _DeltaTime)
 				Cuphead->SetHP(State->MaxHP);
 				Cuphead->SetOnDashInvisible(State->OnDashInvisible);
 			}
+
 			PlayerHP* HPUI = CreateActor<PlayerHP>(GameObjectGroup::Monster);
 			HPUI->SetPlayer(Cuphead);
 			HPUI->GetTransform().SetLocalPosition({ 75.0f,-675.0f });
@@ -560,9 +593,8 @@ void DogFightLevel::Update(float _DeltaTime)
 			CaptainCanteenPlane->SetPlayer(Cuphead);
 			CaptainCanteenPlane->SetColMapImage(ColMapRenderer);
 			PushToRotateCamera(CaptainCanteenPlane);
+
 			Player = Cuphead;
-
-
 		}		
 		//PushToBackgroundCamera(CaptainCanteenPlane);
 		//PushToBackgroundCamera(PH1BulldogPlane);

@@ -8,6 +8,7 @@
 #include "ConvergeShooter.h"
 #include "BoomerangShooter.h"
 #include "CharacterState.h"
+#include "CharacterScore.h"
 #include "WeaponItemBase.h"
 #include "CharmItemBase.h"
 #include "SaltBakerLevel.h"
@@ -162,6 +163,17 @@ void InGameCuphead::Start()
 			EquippedWeapon->SetIsEquipped(true);
 		}
 	}
+
+	{
+		std::list<GameEngineActor*> Actors = GetLevel()->GetGroup(GameObjectGroup::CharacterScore);
+		for (GameEngineActor* Actor : Actors)
+		{
+			if (nullptr != dynamic_cast<CharacterScore*>(Actor))
+			{
+				Score = dynamic_cast<CharacterScore*>(Actor);
+			}
+		}
+	}
 }
 
 void InGameCuphead::Update(float _DeltaTime)
@@ -276,6 +288,8 @@ void InGameCuphead::Update(float _DeltaTime)
 				SetAttackState(InGameCharacterAttackState::SpecialAttack);
 				SetShooterState(InGameCharacterShooterState::SpecialShot);
 				SetGauge(0);
+				Score->UseCard += 1;
+
 			}
 			else
 			{
@@ -284,6 +298,7 @@ void InGameCuphead::Update(float _DeltaTime)
 					SetShooterState(InGameCharacterShooterState::SuperShot);
 					SetAttackState(InGameCharacterAttackState::SuperAttack);
 					SetGauge(GetGauge()-1);
+					Score->UseCard += 1;
 				}
 				else
 				{
@@ -596,13 +611,18 @@ CollisionReturn InGameCuphead::OnTakeDamage(GameEngineCollision* _This, GameEngi
 		CanTakeDamageElapsedTime = 0.0f;
 		TakeDamage();
 	}
+
 	return CollisionReturn::ContinueCheck;
 }
 
 CollisionReturn InGameCuphead::OnParry(GameEngineCollision* _This, GameEngineCollision* _Other)
 {
-	int a = 0;
-	return CollisionReturn::ContinueCheck;
+	SetGauge(GetGauge() + 1);
+	if (Score != nullptr)
+	{
+		Score->Parry += 1;
+	}
+	return CollisionReturn::Break;
 }
 
 void InGameCuphead::OnParryAnimationFrameEnd(const FrameAnimation_DESC& _Info)

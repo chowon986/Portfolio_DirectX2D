@@ -13,6 +13,7 @@
 #include "SaltBakerHeart.h"
 #include "CharacterState.h"
 #include "Tornado.h"
+#include "CharacterScore.h"
 #include "BreakObject.h"
 
 SaltBakerLevel::SaltBakerLevel()
@@ -24,23 +25,53 @@ SaltBakerLevel::SaltBakerLevel()
 	, Phase2BreakOn(false)
 	, RendererNum(0)
 	, OldFilmOnceCheck(false)
+	, TornadoCheck(false)
+	, ActorNum(0)
 {
 }
 
 SaltBakerLevel::~SaltBakerLevel()
-{ 
+{
 }
 
 void SaltBakerLevel::LevelStartEvent()
 {
-	std::list<GameEngineActor*> Actors = GetGroup(GameObjectGroup::CharacterState);
-	for (GameEngineActor* Actor : Actors)
 	{
-		if (CharacterState* _State = dynamic_cast<CharacterState*>(Actor))
+		std::list<GameEngineActor*> Actors = GetGroup(GameObjectGroup::CharacterState);
+		for (GameEngineActor* Actor : Actors)
 		{
-			State = _State;
-			HPCount = State->MaxHP;
+			if (CharacterState* _State = dynamic_cast<CharacterState*>(Actor))
+			{
+				State = _State;
+				HPCount = State->MaxHP;
+			}
 		}
+	}
+
+	{
+		std::list<GameEngineActor*> Actors = GetGroup(GameObjectGroup::CharacterScore);
+		for (GameEngineActor* Actor : Actors)
+		{
+			if (CharacterScore* _Score = dynamic_cast<CharacterScore*>(Actor))
+			{
+				Score = _Score;
+
+				Score->PlayTime = 0.0f;
+				Score->HP = 0;
+				Score->Parry = 0;
+				Score->UseCard = 0;
+				Score->SkillLevel = 2;
+			}
+		}
+	}
+}
+
+void SaltBakerLevel::LevelEndEvent()
+{
+	if (nullptr != Score)
+	{
+		Score->PlayTime = PlayElapsedTime;
+		Score->HP = Player->GetHP();
 	}
 }
 
@@ -85,9 +116,14 @@ void SaltBakerLevel::Start()
 		Background* BackgroundB = CreateActor<Background>(GameObjectGroup::UI);
 		GameEngineTextureRenderer* RendererB = BackgroundB->CreateComponent<GameEngineTextureRenderer>();
 		RendererB->CreateFrameAnimationFolder("Ph3Sky", FrameAnimation_DESC("Ph3Sky", 0.1f, true));
+		RendererB->CreateFrameAnimationFolder("Ph4WarningSKy", FrameAnimation_DESC("Ph3Sky", 0.1f, true));
+		RendererB->AnimationBindFrame("Ph4WarningSKy", std::bind(&SaltBakerLevel::OnPh4WarningSkyAnimationFrameChanged, this, std::placeholders::_1));
+		//RendererB->CreateFrameAnimationFolder("Ph4WarningSKy", FrameAnimation_DESC("Ph4WarningSKy", 0.1f, true));
+		//RendererB->AnimationBindFrame("Ph4WarningSKy", std::bind(&SaltBakerLevel::OnPh4WarningSkyAnimationFrameChanged, this, std::placeholders::_1));
 		RendererB->ChangeFrameAnimation("Ph3Sky");
-		RendererB->ScaleToTexture();
+		RendererB->SetScaleModeImage();
 		RendererB->GetTransform().SetLocalPosition({ 640.0f, -160.0f, (int)ZOrder::Background + 1 });
+		BackgroundB->SetRenderer(RendererB);
 		BackgroundB->Off();
 
 		Background* BackgroundC = CreateActor<Background>(GameObjectGroup::UI);
@@ -125,13 +161,13 @@ void SaltBakerLevel::Start()
 		RendererG->GetTransform().SetLocalPosition({ 610.0f, -400.0f, (int)ZOrder::Background - 3 });
 		BackgroundG->Off();
 
-		BackgroundRenderer.insert(std::make_pair(0, BackgroundA));
-		BackgroundRenderer.insert(std::make_pair(1, BackgroundB));
-		BackgroundRenderer.insert(std::make_pair(2, BackgroundC));
-		BackgroundRenderer.insert(std::make_pair(3, BackgroundD));
-		BackgroundRenderer.insert(std::make_pair(4, BackgroundE));
-		BackgroundRenderer.insert(std::make_pair(5, BackgroundF));
-		BackgroundRenderer.insert(std::make_pair(6, BackgroundG));
+		BackgroundActor.insert(std::make_pair(0, BackgroundA));
+		BackgroundActor.insert(std::make_pair(1, BackgroundB));
+		BackgroundActor.insert(std::make_pair(2, BackgroundC));
+		BackgroundActor.insert(std::make_pair(3, BackgroundD));
+		BackgroundActor.insert(std::make_pair(4, BackgroundE));
+		BackgroundActor.insert(std::make_pair(5, BackgroundF));
+		BackgroundActor.insert(std::make_pair(6, BackgroundG));
 	}
 
 		// BreakObject
@@ -215,17 +251,68 @@ void SaltBakerLevel::Start()
 		ObjectK->SetAnimationName("Ph2BreakFrontFallLeft");
 		ObjectK->Off();
 
+		BreakObject* TornadoA = CreateActor<BreakObject>(GameObjectGroup::UI); // 작은거
+		TornadoA->SetStartPos({ 500.0f, 30.0f, (int)ZOrder::UI });
+		TornadoA->GetTransform().SetWorldPosition(TornadoA->GetStartPos());
+		TornadoA->GetRenderer()->ChangeFrameAnimation("LittleTornadoA");
+		TornadoA->SetAnimationName("LittleTornadoA");
+		TornadoA->Off();
+
+
+		BreakObject* TornadoB = CreateActor<BreakObject>(GameObjectGroup::UI); // 큰거
+		TornadoB->SetStartPos({ 800.0f, -500.0f, (int)ZOrder::UI });
+		TornadoB->GetTransform().SetWorldPosition(TornadoB->GetStartPos());
+		TornadoB->GetRenderer()->ChangeFrameAnimation("LittleTornadoB");
+		TornadoB->SetAnimationName("LittleTornadoB");
+		TornadoB->Off();
+
+		BreakObject* TornadoC = CreateActor<BreakObject>(GameObjectGroup::UI); // 작은거
+		TornadoC->SetStartPos({ 1100.0f,-500.0f, (int)ZOrder::UI });
+		TornadoC->GetTransform().SetWorldPosition(TornadoC->GetStartPos());
+		TornadoC->GetRenderer()->ChangeFrameAnimation("LittleTornadoA");
+		TornadoC->SetAnimationName("LittleTornadoA");
+		TornadoC->Off();
+
+		BreakObject* TornadoD = CreateActor<BreakObject>(GameObjectGroup::UI); // 큰거
+		TornadoD->SetStartPos({ 200.0f,-500.0f, (int)ZOrder::UI });
+		TornadoD->GetTransform().SetWorldPosition(TornadoD->GetStartPos());
+		TornadoD->GetRenderer()->ChangeFrameAnimation("LittleTornadoB");
+		TornadoD->SetAnimationName("LittleTornadoB");
+		TornadoD->Off();
+
+		BreakObject* SaltMan = CreateActor<BreakObject>(GameObjectGroup::UI); // 작은거
+		SaltMan->SetStartPos({ 750.0f, -400.0f, (int)ZOrder::UI });
+		SaltMan->GetTransform().SetWorldPosition(SaltMan->GetStartPos());
+		SaltMan->GetRenderer()->ChangeFrameAnimation("SaltManIntro");
+		SaltMan->SetAnimationName("SaltManIntro");
+		SaltMan->Off();
+
+		BreakObject* TornadoE = CreateActor<BreakObject>(GameObjectGroup::UI); // 작은거
+		TornadoE->SetStartPos({ 640.0f, -500.0f, (int)ZOrder::UI });
+		TornadoE->GetTransform().SetWorldPosition(TornadoE->GetStartPos());
+		TornadoE->GetRenderer()->ChangeFrameAnimation("LittleTornadoA");
+		TornadoE->SetAnimationName("LittleTornadoA");
+		TornadoE->Off();
+
 		BreakObjectActor.insert(std::make_pair(0, ObjectA));
-		BreakObjectActor.insert(std::make_pair(2, ObjectB));
-		BreakObjectActor.insert(std::make_pair(4, ObjectC));
-		BreakObjectActor.insert(std::make_pair(6, ObjectD));
-		BreakObjectActor.insert(std::make_pair(8, ObjectE));
-		BreakObjectActor.insert(std::make_pair(10, ObjectF));
-		BreakObjectActor.insert(std::make_pair(9, ObjectG));
-		BreakObjectActor.insert(std::make_pair(7, ObjectH));
-		BreakObjectActor.insert(std::make_pair(5, ObjectI));
-		BreakObjectActor.insert(std::make_pair(3, ObjectJ));
 		BreakObjectActor.insert(std::make_pair(1, ObjectK));
+		BreakObjectActor.insert(std::make_pair(2, ObjectB));
+		BreakObjectActor.insert(std::make_pair(3, ObjectJ));
+		BreakObjectActor.insert(std::make_pair(4, ObjectC));
+		BreakObjectActor.insert(std::make_pair(5, ObjectI));
+		BreakObjectActor.insert(std::make_pair(6, ObjectD));
+		BreakObjectActor.insert(std::make_pair(7, ObjectH));
+		BreakObjectActor.insert(std::make_pair(8, ObjectE));
+		BreakObjectActor.insert(std::make_pair(9, ObjectG));
+		BreakObjectActor.insert(std::make_pair(10, ObjectF));
+
+		LittleTornadoActor.insert(std::make_pair(0, TornadoA));
+		LittleTornadoActor.insert(std::make_pair(1, TornadoB));
+		LittleTornadoActor.insert(std::make_pair(2, TornadoC));
+		LittleTornadoActor.insert(std::make_pair(3, TornadoD));
+		LittleTornadoActor.insert(std::make_pair(4, TornadoE));
+		LittleTornadoActor.insert(std::make_pair(5, SaltMan));
+		LittleTornadoActor.insert(std::make_pair(6, TornadoE));
 
 		for (int i = 0; i < 11; i++)
 		{
@@ -277,6 +364,25 @@ void SaltBakerLevel::Update(float _DeltaTime)
 	ElapsedTime += _DeltaTime;
 	BreakTime += _DeltaTime;
 	OldFilmElapsedTime += _DeltaTime;
+	TornadoElapsedTime += _DeltaTime;
+	PlayElapsedTime += _DeltaTime;
+
+	if (TornadoCheck == true)
+	{
+		if (ActorNum < 7 && TornadoElapsedTime > 0.5)
+		{
+			if (nullptr != LittleTornadoActor[ActorNum])
+			{
+				LittleTornadoActor[ActorNum]->On();
+			}
+			++ActorNum;
+			TornadoElapsedTime = 0.0f;
+		}
+		else if(ActorNum == 7)
+		{
+			TornadoCheck = false;
+		}
+	}
 
 	if (true == Phase2BreakOn)
 	{
@@ -314,10 +420,13 @@ void SaltBakerLevel::Update(float _DeltaTime)
 					KitchenTopper->Death();
 				}
 
-				BackgroundRenderer[i]->On();
+				BackgroundActor[i]->On();
 			}
-			SetPhase(Phase::Phase3);
-			OldFilmRenderer->Off();
+			if (GetPhase() != Phase::Phase4)
+			{
+				SetPhase(Phase::Phase3);
+				OldFilmRenderer->Off();
+			}
 		}
 	}
 
@@ -384,7 +493,6 @@ void SaltBakerLevel::Update(float _DeltaTime)
 
 		else if (CurrentPhase == Phase::Phase4)
 		{
-			//ColMapRenderer->SetTexture(".png");
 			{
 				Tornado* Ph4Tornado = CreateActor<Tornado>();
 				Ph4Tornado->GetTransform().SetWorldPosition({ 200.0f, 720.0f });
@@ -414,4 +522,20 @@ void SaltBakerLevel::OnIrisAnimationFrameEnd(const FrameAnimation_DESC& _Info)
 {
 	IrisRenderer->Off();
 	SetPhase(Phase::Phase1);
+}
+
+void SaltBakerLevel::OnPh4WarningSkyAnimationFrameChanged(const FrameAnimation_DESC& _Info)
+{
+	if (_Info.CurFrame ==3)
+	{
+		TornadoCheck = true;
+	}
+
+	if (_Info.CurFrame == 7)
+	{
+		if (Background* Actor = dynamic_cast<Background*>(BackgroundActor[1]))
+		{
+			Actor->GetRenderer()->ChangeFrameAnimation("Ph3Sky");
+		}
+	}
 }

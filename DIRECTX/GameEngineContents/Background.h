@@ -21,6 +21,11 @@ protected:
 	void Update(float _DeltaTime) override;
 	void End() override;
 
+public:
+	void SetRenderer(GameEngineTextureRenderer* _Renderer) { Renderer = _Renderer; }
+	GameEngineTextureRenderer* GetRenderer() { return Renderer; }
+
 private:
+	GameEngineTextureRenderer* Renderer;
 };
 

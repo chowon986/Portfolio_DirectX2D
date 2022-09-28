@@ -10,6 +10,7 @@
 #include "SuperGhostItem.h"
 #include "SuperInvincibleItem.h"
 #include "AstalCookieItem.h"
+#include "CharacterScore.h"
 
 SelectLevel::SelectLevel()
 	: OptionRenderer(nullptr)
@@ -33,6 +34,7 @@ SelectLevel::SelectLevel()
 	, SelectCharacterElapsedTime(0.0f)
 	, Phase(SelectLevelPhase::SelectOption)
 	, OptionNumber(std::to_string(OptionImageNum) + ".png")
+	, Score(nullptr)
 {
 }
 
@@ -43,6 +45,10 @@ SelectLevel::~SelectLevel()
 void SelectLevel::Start()
 {
 	GetMainCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
+
+	Score = CreateActor<CharacterScore>(GameObjectGroup::CharacterScore);
+	Score->SetLevelOverOn();
+
 	State = CreateActor<CharacterState>(GameObjectGroup::CharacterState);
 	State->SetLevelOverOn();
 	std::shared_ptr<PeaShooterItem> PeaShot = std::make_shared<PeaShooterItem>();

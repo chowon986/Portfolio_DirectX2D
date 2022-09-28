@@ -49,6 +49,7 @@ private:
 	void OnShellWeDanceAttack1AnimationFrameChanged(const FrameAnimation_DESC& _Info);
 	void SetCurAnimationName(std::string _AnimationName) { CurAnimationName = _AnimationName; }
 	std::string GetCurAnimationName() { return CurAnimationName; }
+	CollisionReturn OnTakeDamage(GameEngineCollision* _This, GameEngineCollision* _Other);
 
 private:
 	GameEngineTextureRenderer* Renderer;

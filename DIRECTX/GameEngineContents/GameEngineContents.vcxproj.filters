@@ -648,6 +648,9 @@
     <ClInclude Include="StoryLevel.h">
       <Filter>Level\01 Play</Filter>
     </ClInclude>
+    <ClInclude Include="CharacterScore.h">
+      <Filter>Global</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp">
@@ -1141,6 +1144,9 @@
     </ClCompile>
     <ClCompile Include="StoryLevel.cpp">
       <Filter>Level\01 Play</Filter>
+    </ClCompile>
+    <ClCompile Include="CharacterScore.cpp">
+      <Filter>Global</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

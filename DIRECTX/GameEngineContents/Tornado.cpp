@@ -34,8 +34,6 @@ void Tornado::Update(float _DeltaTime)
 		if (Renderer->GetTransform().GetWorldPosition().y <= 10)
 		{
 			SetState(TornadoState::Move);
-			SaltBakerHeart* Ph4Boss = GetLevel()->CreateActor<SaltBakerHeart>();
-			Ph4Boss->GetTransform().SetWorldPosition({ 640.0f,-400.0f });
 			return;
 		}
 		GetTransform().SetWorldMove(float4::DOWN * _DeltaTime * 400);

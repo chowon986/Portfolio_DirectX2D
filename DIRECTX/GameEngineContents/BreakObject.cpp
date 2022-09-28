@@ -1,5 +1,6 @@
 #include "PreCompile.h"
 #include "BreakObject.h"
+#include "SaltBakerHeart.h"
 
 BreakObject::BreakObject()
 	: StartPos(float4::ZERO)
@@ -31,6 +32,12 @@ void BreakObject::Start()
 	Renderer->CreateFrameAnimationFolder("Ph2BreakRightLoop", FrameAnimation_DESC("Ph2BreakRightLoop", 0.07f, true));
 	Renderer->CreateFrameAnimationFolder("Ph2BreakFrontFallLeft", FrameAnimation_DESC("Ph2BreakFrontFallLeft", 0.07f, true));
 	Renderer->CreateFrameAnimationFolder("Ph2BreakFrontFallLeftLoop", FrameAnimation_DESC("Ph2BreakFrontFallLeftLoop", 0.07f, true));
+	Renderer->CreateFrameAnimationFolder("LittleTornadoA", FrameAnimation_DESC("LittleTornadoA", 0.07f, true));
+	Renderer->CreateFrameAnimationFolder("LittleTornadoALoop", FrameAnimation_DESC("LittleTornadoALoop", 0.07f, true));
+	Renderer->CreateFrameAnimationFolder("LittleTornadoB", FrameAnimation_DESC("LittleTornadoB", 0.07f, true));
+	Renderer->CreateFrameAnimationFolder("LittleTornadoBLoop", FrameAnimation_DESC("LittleTornadoBLoop", 0.07f, true));
+	Renderer->CreateFrameAnimationFolder("SaltManIntro", FrameAnimation_DESC("SaltManIntro", 0.07f, true));
+	Renderer->CreateFrameAnimationFolder("SaltManIntroLoop", FrameAnimation_DESC("SaltManIntroLoop", 0.07f, true));
 
 	Renderer->AnimationBindFrame("Ph2DeribsA", std::bind(&BreakObject::OnGround, this, std::placeholders::_1));
 	Renderer->AnimationBindFrame("Ph2DeribsB", std::bind(&BreakObject::OnGround, this, std::placeholders::_1));
@@ -41,6 +48,10 @@ void BreakObject::Start()
 	Renderer->AnimationBindFrame("Ph2BreakLeft", std::bind(&BreakObject::OnBreakObjectsAnimationFrameChanged, this, std::placeholders::_1));
 	Renderer->AnimationBindFrame("Ph2BreakRight", std::bind(&BreakObject::OnBreakObjectsAnimationFrameChanged, this, std::placeholders::_1));
 	Renderer->AnimationBindFrame("Ph2BreakFrontFallLeft", std::bind(&BreakObject::OnBreakObjectsAnimationFrameChanged, this, std::placeholders::_1));
+	Renderer->AnimationBindFrame("LittleTornadoA", std::bind(&BreakObject::OnBreakObjectsAnimationFrameChanged, this, std::placeholders::_1));
+	Renderer->AnimationBindFrame("LittleTornadoB", std::bind(&BreakObject::OnBreakObjectsAnimationFrameChanged, this, std::placeholders::_1));
+	Renderer->AnimationBindFrame("SaltManIntro", std::bind(&BreakObject::OnSaltManIntroAnimationFrameChanged, this, std::placeholders::_1));
+	Renderer->AnimationBindFrame("SaltManIntroLoop", std::bind(&BreakObject::OnSaltManIntroAnimationFrameChanged, this, std::placeholders::_1));
 
 	Renderer->SetScaleModeImage();
 }
@@ -64,6 +75,12 @@ void BreakObject::Update(float _DeltaTime)
 		CanMove = false;
 	}
 
+	if  (AnimationName == "LittleTornadoA" || AnimationName == "LittleTornadoB" || AnimationName == "SaltManIntro")
+	{
+		Renderer->SetPivot(PIVOTMODE::BOT);
+		IsOnGround = false;
+		CanMove = false;
+	}
 
 	if (false == IsOnGround && true == CanMove)
 	{
@@ -129,6 +146,29 @@ void BreakObject::OnBreakObjectsAnimationFrameChanged(const FrameAnimation_DESC&
 			Renderer->ChangeFrameAnimation(AnimationName + "Loop");
 
 		}
+	}
+
+	if (AnimationName == "LittleTornadoA" || AnimationName == "LittleTornadoB")
+	{
+		if (_Info.CurFrame == 9)
+		{
+			Renderer->ChangeFrameAnimation(AnimationName + "Loop");
+
+		}
+	}
+}
+
+void BreakObject::OnSaltManIntroAnimationFrameChanged(const FrameAnimation_DESC& _Info)
+{
+	if (_Info.CurFrame == 40)
+	{
+		SaltBakerHeart* Ph4Boss = GetLevel()->CreateActor<SaltBakerHeart>();
+		Ph4Boss->GetTransform().SetWorldPosition({ 640.0f,-400.0f });
+	}
+
+	if (_Info.CurFrame == 52)
+	{
+		Renderer->ChangeFrameAnimation("SaltManIntroLoop");
 	}
 }
 

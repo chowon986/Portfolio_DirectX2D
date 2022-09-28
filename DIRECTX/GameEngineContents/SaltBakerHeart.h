@@ -63,6 +63,7 @@ private:
 	std::map<int, float> StartPosX;
 	std::map<int, float> DestPosX;
 	bool IsHeartPosRightEnd;
+	bool CanMove;
 	float ElapsedTime;
 	float LerpTime;
 	float4 LerpPos;

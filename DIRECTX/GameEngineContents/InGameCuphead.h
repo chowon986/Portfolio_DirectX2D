@@ -4,6 +4,7 @@
 
 enum class InGameCharacterState;
 class WeaponBase;
+class CharacterScore;
 class CharacterState;
 class GameEngineCollision;
 class InGameCharacterMovementCompmonent;
@@ -86,6 +87,7 @@ private:
 	bool ToggleWeapon;
 	bool IsInvisible;
 	CharacterState* State;
+	CharacterScore* Score;
 	WeaponBase* EquippedWeapon;
 	float InvisibleElapsedTime;
 	bool CountInvisibleTime;

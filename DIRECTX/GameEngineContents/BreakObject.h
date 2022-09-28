@@ -30,6 +30,7 @@ protected:
 private:
 	void OnGround(const FrameAnimation_DESC& _Info);
 	void OnBreakObjectsAnimationFrameChanged(const FrameAnimation_DESC& _Info);
+	void OnSaltManIntroAnimationFrameChanged(const FrameAnimation_DESC& _Info);
 
 private:
 	float4 StartPos;

@@ -69,6 +69,7 @@ enum class GameObjectGroup
 	Player,
 	Monster,
 	CharacterState,
+	CharacterScore,
 	INVENTORY,
 };
 

@@ -185,6 +185,7 @@
     <ClInclude Include="CanteenPlane.h" />
     <ClInclude Include="Cart.h" />
     <ClInclude Include="Catus.h" />
+    <ClInclude Include="CharacterScore.h" />
     <ClInclude Include="CharacterState.h" />
     <ClInclude Include="CharmItemBase.h" />
     <ClInclude Include="Chicken.h" />
@@ -362,6 +363,7 @@
     <ClCompile Include="CanteenPlane.cpp" />
     <ClCompile Include="Cart.cpp" />
     <ClCompile Include="Catus.cpp" />
+    <ClCompile Include="CharacterScore.cpp" />
     <ClCompile Include="CharacterState.cpp" />
     <ClCompile Include="CharmItemBase.cpp" />
     <ClCompile Include="Chicken.cpp" />

@@ -5,6 +5,7 @@
 #include "SaltBakerLevel.h"
 #include "CogWheel.h"
 #include "ShellWeDanceDust.h"
+#include "Background.h"
 
 ShellWeDance::ShellWeDance()
 	: Renderer(nullptr)
@@ -60,14 +61,25 @@ void ShellWeDance::Start()
 
 	SetState(InGameMonsterState::Prepare);
 
+	Collision = CreateComponent<GameEngineCollision>();
+	Collision->GetTransform().SetWorldScale({ 100.0f, 300.0f });
+
 	Dust = GetLevel()->CreateActor<ShellWeDanceDust>();
 	Dust->SetBoss(this);
+	SetHP(5);
 }
 
 void ShellWeDance::Update(float _DeltaTime)
 {
 	if (GetHP() <= 0 && GetState() == InGameMonsterState::Attack1)
 	{
+		if (SaltBakerLevel* Level = dynamic_cast<SaltBakerLevel*>(GetLevel()))
+		{
+			if (Background* Actor = dynamic_cast<Background*>(Level->BackgroundActor[1]))
+			{
+				Actor->GetRenderer()->ChangeFrameAnimation("Ph4WarningSKy");
+			}
+		}
 		SetState(InGameMonsterState::Die);
 		Dust->GetRenderer()->ChangeFrameAnimation("ShellWeDanceDeathDust");
 		if (nullptr != Wheel)
@@ -122,6 +134,9 @@ void ShellWeDance::Update(float _DeltaTime)
 	}
 
 	GetTransform().SetLocalMove(MoveDirection * _DeltaTime * 200);
+
+	Collision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::PC_BULLET, CollisionType::CT_AABB2D,
+		std::bind(&ShellWeDance::OnTakeDamage, this, std::placeholders::_1, std::placeholders::_2));
 }
 
 void ShellWeDance::TakeDamage()
@@ -158,7 +173,7 @@ void ShellWeDance::OnShellWeDanceDeathAnimationFrameChanged(const FrameAnimation
 		Death();
 		if (SaltBakerLevel* Level = dynamic_cast<SaltBakerLevel*>(GetLevel()))
 		{
-			// Àá±ñ ÁÖ¼® Level->SetPhase(Phase::Phase4);
+			Level->SetPhase(Phase::Phase4);
 		}
 	}
 }
@@ -212,5 +227,12 @@ void ShellWeDance::OnShellWeDanceAttack1AnimationFrameChanged(const FrameAnimati
 			Physics->IsOnGround = false;
 		}
 	}
+}
+
+CollisionReturn ShellWeDance::OnTakeDamage(GameEngineCollision* _This, GameEngineCollision* _Other)
+{
+	SetHP(GetHP() - 1);
+
+	return CollisionReturn::Break;
 }
 

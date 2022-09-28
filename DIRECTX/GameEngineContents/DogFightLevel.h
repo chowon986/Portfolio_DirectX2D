@@ -10,6 +10,7 @@ class Bulldog;
 class CanteenPlane;
 class DogCopter;
 class InGameCuphead;
+class CharacterScore;
 class IInGameCharacterBase;
 enum class InGameMonsterState;
 class CharacterState;
@@ -52,6 +53,7 @@ public:
 
 protected:
 	void LevelStartEvent() override;
+	void LevelEndEvent() override;
 	void Start() override;
 	void Update(float _DeltaTime) override;
 	void End() override;
@@ -84,6 +86,7 @@ private:
 	GameEngineTextureRenderer* ScreenLightRenderer;
 	bool IrisOnceCheck;
 	float ElapsedTime;
+	float PlayElapsedTime;
 
 	Ph2Dog* DogFightPh2DogB;
 	Ph2Dog* DogFightPh2DogD;
@@ -100,6 +103,7 @@ private:
 	int HPCount;
 	GameEngineTextureRenderer* SuperMeter;
 	CharacterState* State;
+	CharacterScore* Score;
 	float RotateTime;
 
 };

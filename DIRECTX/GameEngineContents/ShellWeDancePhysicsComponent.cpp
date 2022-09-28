@@ -58,7 +58,7 @@ void ShellWeDancePhysicsComponent::FixedUpdate(double _FixedUpdateInterval)
 	Bullet->GetTransform().SetWorldMove({ 0, Speed , 0 });
 
 	IsOnGround = false;
-	while (true == ColMapTexture->GetPixelToFloat4(Bullet->GetTransform().GetWorldPosition().x, -Bullet->GetTransform().GetWorldPosition().y).CompareInt4D(float4::BLACK))
+	while (true == ColMapTexture->GetPixelToFloat4(Bullet->GetTransform().GetWorldPosition().x, -Bullet->GetTransform().GetWorldPosition().y).CompareInt4D(float4::RED))
 	{
 		Bullet->GetTransform().SetWorldMove(float4::UP * _FixedUpdateInterval);
 		Reset();
