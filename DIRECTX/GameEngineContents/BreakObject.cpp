@@ -21,16 +21,26 @@ void BreakObject::Start()
 	Renderer->CreateFrameAnimationFolder("Ph2DeribsB", FrameAnimation_DESC("Ph2DeribsB", 0.07f, true));
 	Renderer->CreateFrameAnimationFolder("Ph2DeribsC", FrameAnimation_DESC("Ph2DeribsC", 0.07f, true));
 	Renderer->CreateFrameAnimationFolder("Ph2DeribsD", FrameAnimation_DESC("Ph2DeribsD", 0.07f, true));
-	Renderer->CreateFrameAnimationFolder("Ph2BreakMidLeftFall", FrameAnimation_DESC("Ph2BreakMidLeftFall", 0.07f, true));
+	Renderer->CreateFrameAnimationFolder("Ph2BreakMidLeftFall", FrameAnimation_DESC("Ph2BreakMidLeftFall", 0.07f, false));
+	Renderer->CreateFrameAnimationFolder("Ph2BreakMidLeftFallLoop", FrameAnimation_DESC("Ph2BreakMidLeftFallLoop", 0.07f, true));
 	Renderer->CreateFrameAnimationFolder("Ph2BreakMidRightFall", FrameAnimation_DESC("Ph2BreakMidRightFall", 0.07f, true));
+	Renderer->CreateFrameAnimationFolder("Ph2BreakMidRightFallLoop", FrameAnimation_DESC("Ph2BreakMidRightFallLoop", 0.07f, true));
 	Renderer->CreateFrameAnimationFolder("Ph2BreakLeft", FrameAnimation_DESC("Ph2BreakLeft", 0.07f, true));
+	Renderer->CreateFrameAnimationFolder("Ph2BreakLeftLoop", FrameAnimation_DESC("Ph2BreakLeftLoop", 0.07f, true));
 	Renderer->CreateFrameAnimationFolder("Ph2BreakRight", FrameAnimation_DESC("Ph2BreakRight", 0.07f, true));
+	Renderer->CreateFrameAnimationFolder("Ph2BreakRightLoop", FrameAnimation_DESC("Ph2BreakRightLoop", 0.07f, true));
 	Renderer->CreateFrameAnimationFolder("Ph2BreakFrontFallLeft", FrameAnimation_DESC("Ph2BreakFrontFallLeft", 0.07f, true));
+	Renderer->CreateFrameAnimationFolder("Ph2BreakFrontFallLeftLoop", FrameAnimation_DESC("Ph2BreakFrontFallLeftLoop", 0.07f, true));
 
 	Renderer->AnimationBindFrame("Ph2DeribsA", std::bind(&BreakObject::OnGround, this, std::placeholders::_1));
 	Renderer->AnimationBindFrame("Ph2DeribsB", std::bind(&BreakObject::OnGround, this, std::placeholders::_1));
 	Renderer->AnimationBindFrame("Ph2DeribsC", std::bind(&BreakObject::OnGround, this, std::placeholders::_1));
 	Renderer->AnimationBindFrame("Ph2DeribsD", std::bind(&BreakObject::OnGround, this, std::placeholders::_1));
+	Renderer->AnimationBindFrame("Ph2BreakMidLeftFall", std::bind(&BreakObject::OnBreakObjectsAnimationFrameChanged, this, std::placeholders::_1));
+	Renderer->AnimationBindFrame("Ph2BreakMidRightFall", std::bind(&BreakObject::OnBreakObjectsAnimationFrameChanged, this, std::placeholders::_1));
+	Renderer->AnimationBindFrame("Ph2BreakLeft", std::bind(&BreakObject::OnBreakObjectsAnimationFrameChanged, this, std::placeholders::_1));
+	Renderer->AnimationBindFrame("Ph2BreakRight", std::bind(&BreakObject::OnBreakObjectsAnimationFrameChanged, this, std::placeholders::_1));
+	Renderer->AnimationBindFrame("Ph2BreakFrontFallLeft", std::bind(&BreakObject::OnBreakObjectsAnimationFrameChanged, this, std::placeholders::_1));
 
 	Renderer->SetScaleModeImage();
 }
@@ -74,7 +84,55 @@ void BreakObject::End()
 {
 }
 
-void BreakObject::OnGround(const FrameAnimation_DESC _Info)
+void BreakObject::OnBreakObjectsAnimationFrameChanged(const FrameAnimation_DESC& _Info)
+{
+	if (AnimationName == "Ph2BreakMidLeftFall")
+	{
+		if (_Info.CurFrame == 9)
+		{
+			Renderer->ChangeFrameAnimation(AnimationName + "Loop");
+
+		}
+	}
+
+	if (AnimationName == "Ph2BreakMidRightFall")
+	{
+		if (_Info.CurFrame == 9)
+		{
+			Renderer->ChangeFrameAnimation(AnimationName + "Loop");
+
+		}
+	}
+
+	if (AnimationName == "Ph2BreakLeft")
+	{
+		if (_Info.CurFrame == 12)
+		{
+			Renderer->ChangeFrameAnimation(AnimationName + "Loop");
+
+		}
+	}
+
+	if (AnimationName == "Ph2BreakRight")
+	{
+		if (_Info.CurFrame == 13)
+		{
+			Renderer->ChangeFrameAnimation(AnimationName + "Loop");
+
+		}
+	}
+
+	if (AnimationName == "Ph2BreakFrontFallLeft")
+	{
+		if (_Info.CurFrame == 30)
+		{
+			Renderer->ChangeFrameAnimation(AnimationName + "Loop");
+
+		}
+	}
+}
+
+void BreakObject::OnGround(const FrameAnimation_DESC& _Info)
 {
 	if (AnimationName == "Ph2DeribsA")
 	{

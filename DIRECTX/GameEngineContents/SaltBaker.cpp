@@ -501,6 +501,10 @@ void SaltBaker::OnSaltBakerDieAnimationFrameChanged(const FrameAnimation_DESC& _
 		{
 			Hand->Death();
 		}
+		if (nullptr != Ph1Monster)
+		{
+			Ph1Monster->Death();
+		}
 	}
 }
 

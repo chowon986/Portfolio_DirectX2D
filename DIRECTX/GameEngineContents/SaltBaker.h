@@ -3,14 +3,15 @@
 
 enum class InGameMonsterState;
 enum class InGameMonsterAttackState;
-class InGameCharacter;
+class Chicken;
 class BulldogPlane;
-class GameEngineCollision;
-class GameEngineTextureRenderer;
-class InGameMovementComponent;
-class InGameLevelBase;
 class SaltBakerHand;
 class SaltBakerLevel;
+class InGameCharacter;
+class InGameLevelBase;
+class GameEngineCollision;
+class InGameMovementComponent;
+class GameEngineTextureRenderer;
 class InGameMonsterAnimationControllerComponent;
 class SaltBaker : public IInGameMonsterBase
 {
@@ -36,6 +37,7 @@ protected:
 
 public:
 	void SetBackgroundRenderer(GameEngineTextureRenderer* _Renderer) { BackgroundRenderer = _Renderer; }
+	void SetChicken(Chicken* _Actor) { Ph1Monster = _Actor; }
 	GameEngineTextureRenderer* GetBackgroundRenderer() { return BackgroundRenderer; }
 	CollisionReturn OnDeathCollision(GameEngineCollision* _This, GameEngineCollision* _Other);
 	void SetTakeDamageNum(int _Num) { TakeDamageNum = _Num; }
@@ -72,4 +74,5 @@ private:
 	int TakeDamageNum;
 	SaltBakerHand* Hand;
 	bool PlusOn;
+	Chicken* Ph1Monster;
 };

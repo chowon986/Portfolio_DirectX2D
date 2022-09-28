@@ -360,6 +360,8 @@ void SaltBakerLevel::Update(float _DeltaTime)
 			Ph1Monster = CreateActor<Chicken>();
 			Ph1Monster->GetTransform().SetWorldPosition({ 640.0f, -50.0f, (int)ZOrder::Player+1 });
 
+			Ph1Boss->SetChicken(Ph1Monster);
+
 			InGameCuphead* Cuphead = CreateActor<InGameCuphead>(GameObjectGroup::Player);
 			Cuphead->GetTransform().SetWorldPosition({ 640.0f,-360.0f, (int)ZOrder::Player });
 			Cuphead->SetColMapImage(ColMapRenderer);
