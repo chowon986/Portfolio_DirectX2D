@@ -101,6 +101,23 @@ void DogCopter::Start()
 		RightHandRenderer->GetTransform().PixLocalNegativeX();
 		RightHandRenderer->Off();
 
+		FakeLeftHandRenderer = CreateComponent<GameEngineTextureRenderer>();
+		FakeLeftHandRenderer->CreateFrameAnimationFolder("PawMerge", FrameAnimation_DESC("PawMerge", 0.1f));
+		FakeLeftHandRenderer->CreateFrameAnimationFolder("Nothing", FrameAnimation_DESC("Nothing", 0.1f));
+		FakeLeftHandRenderer->ChangeFrameAnimation("PawMerge");
+		FakeLeftHandRenderer->SetScaleModeImage();
+		FakeLeftHandRenderer->GetTransform().SetLocalPosition({ 125, -360, (int)ZOrder::NPC - 3 });
+		FakeLeftHandRenderer->Off();
+
+		FakeRightHandRenderer = CreateComponent<GameEngineTextureRenderer>();
+		FakeRightHandRenderer->CreateFrameAnimationFolder("PawMerge", FrameAnimation_DESC("PawMerge", 0.1f));
+		FakeRightHandRenderer->CreateFrameAnimationFolder("Nothing", FrameAnimation_DESC("Nothing", 0.1f));
+		FakeRightHandRenderer->ChangeFrameAnimation("PawMerge");
+		FakeRightHandRenderer->SetScaleModeImage();
+		FakeRightHandRenderer->GetTransform().SetLocalPosition({ 1180, -340, (int)ZOrder::NPC - 3 });
+		FakeRightHandRenderer->GetTransform().PixLocalNegativeX();
+		FakeRightHandRenderer->Off();
+
 		GetLevel()->PushRendererToRotateCamera2(LeftHandRenderer);
 		GetLevel()->PushRendererToRotateCamera2(RightHandRenderer);
 	}
@@ -212,7 +229,6 @@ void DogCopter::OnIntroAnimationFrameFinished(const FrameAnimation_DESC& _Info)
 	LeftHandRenderer->On();
 	RightHandRenderer->ChangeFrameAnimation("PawMerge");
 	RightHandRenderer->On();
-
 	Idle();
 }
 
@@ -226,6 +242,13 @@ void DogCopter::OnIdleAnimationFrameChanged(const FrameAnimation_DESC& _Info)
 		}
 		else
 		{
+			if (true == FakeLeftHandRenderer->IsUpdate())
+			{
+				LeftHandRenderer->ChangeFrameAnimation("PawMerge");
+				RightHandRenderer->ChangeFrameAnimation("PawMerge");
+				FakeLeftHandRenderer->Off();
+				FakeRightHandRenderer->Off();
+			}
 			Attack1();
 		}
 	}
@@ -261,8 +284,8 @@ void DogCopter::OnRotateCameraOutAnimationFrameChanged(const FrameAnimation_DESC
 {
 	if (_Info.CurFrame == 3)
 	{
-		LeftHandRenderer->ChangeFrameAnimation("PawMerge");
-		RightHandRenderer->ChangeFrameAnimation("PawMerge");
+		FakeLeftHandRenderer->On();
+		FakeRightHandRenderer->On();
 	}
 }
 
@@ -281,7 +304,6 @@ void DogCopter::OnBeforeRotateCameraAnimationFrameChanged(const FrameAnimation_D
 
 	if (_Info.CurFrame == 10)
 	{
-
 		LeftHandRenderer->ChangeFrameAnimation("Nothing");
 		RightHandRenderer->ChangeFrameAnimation("Nothing");
 		RotateCameraIn();

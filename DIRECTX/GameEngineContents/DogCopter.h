@@ -54,7 +54,9 @@ private:
 	GameEngineTextureRenderer* ArmsRenderer;
 	GameEngineTextureRenderer* WristRenderer;
 	GameEngineTextureRenderer* LeftHandRenderer;
+	GameEngineTextureRenderer* FakeLeftHandRenderer;
 	GameEngineTextureRenderer* RightHandRenderer;
+	GameEngineTextureRenderer* FakeRightHandRenderer;
 	SecretLeader* Leader;
 	GameEngineCollision* Collision;
 	bool OnceCheck;

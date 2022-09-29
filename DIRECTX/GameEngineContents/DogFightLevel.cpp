@@ -744,7 +744,7 @@ void DogFightLevel::Update(float _DeltaTime)
 			}
 			case InGameMonsterState::RotateCameraOut:
 			{
-				RotateTime = 5;
+				RotateTime = 4;
 				break;
 			}
 			}
