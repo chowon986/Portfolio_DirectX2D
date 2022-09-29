@@ -24,6 +24,7 @@ void BeforeTitleLevel::Start()
 {
 	GetMainCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
 	GetUICameraActorTransform().SetLocalPosition({ 0, 0 });
+	GetDarknessCameraActorTransform().SetLocalPosition({ 0, 0 });
 
 	Background* MDHRLogo = CreateActor<Background>(GameObjectGroup::UI);
 	MDHRLogoRenderer = MDHRLogo->CreateComponent<GameEngineTextureRenderer>();
@@ -33,6 +34,7 @@ void BeforeTitleLevel::Start()
 	MDHRLogoRenderer->AnimationBindEnd("BeforeTitle", std::bind(&BeforeTitleLevel::OnHDMRAnimationFrameEnd, this, std::placeholders::_1));
 	
 	//Darkness* DarknessActor = CreateActor<Darkness>();
+	//DarknessActor->GetTransform().SetWorldPosition({ 0.0f, 0.0f });
 	//DarknessActor->SetLevelOverOn();
 
 	OldFilm* PostEffect = CreateActor<OldFilm>(GameObjectGroup::UI);

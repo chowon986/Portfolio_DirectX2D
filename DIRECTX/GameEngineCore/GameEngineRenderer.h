@@ -66,7 +66,7 @@ protected:
 	void PushRendererToMainCamera();
 	void PushRendererToUICamera();
 	void PushRendererToUICamera2();
-
+	void PushRendererToDarknessCamera();
 
 	class GameEngineCamera* Camera;
 	CAMERAORDER CameraOrder;

@@ -53,14 +53,21 @@ GameEngineLevel::GameEngineLevel()
 		GameEngineCameraActor* CameraActor = CreateActor<GameEngineCameraActor>();
 		CameraActor->GetTransform().SetLocalPosition({ 0.0f, 0.0f, -100.0f });
 		CameraActor->GetCameraComponent()->SetProjectionMode(CAMERAPROJECTIONMODE::Orthographic);
-		CameraActor->GetCameraComponent()->SetCameraOrder(CAMERAORDER::UICAMERA);
+		CameraActor->GetCameraComponent()->SetCameraOrder(CAMERAORDER::UICAMERA2);
 	}
 
 	{
 		GameEngineCameraActor* CameraActor = CreateActor<GameEngineCameraActor>();
 		CameraActor->GetTransform().SetLocalPosition({ 0.0f, 0.0f, -100.0f });
 		CameraActor->GetCameraComponent()->SetProjectionMode(CAMERAPROJECTIONMODE::Orthographic);
-		CameraActor->GetCameraComponent()->SetCameraOrder(CAMERAORDER::UICAMERA2);
+		CameraActor->GetCameraComponent()->SetCameraOrder(CAMERAORDER::DARKNESSCAMERA);
+	}
+
+	{
+		GameEngineCameraActor* CameraActor = CreateActor<GameEngineCameraActor>();
+		CameraActor->GetTransform().SetLocalPosition({ 0.0f, 0.0f, -100.0f });
+		CameraActor->GetCameraComponent()->SetProjectionMode(CAMERAPROJECTIONMODE::Orthographic);
+		CameraActor->GetCameraComponent()->SetCameraOrder(CAMERAORDER::UICAMERA);
 	}
 }
 
@@ -159,16 +166,6 @@ GameEngineTransform& GameEngineLevel::GetMainCameraActorTransform()
 	return Cameras[static_cast<int>(CAMERAORDER::MAINCAMERA)]->GetActor()->GetTransform();
 }
 
-GameEngineCameraActor* GameEngineLevel::GetRotateCameraActor()
-{
-	return Cameras[static_cast<int>(CAMERAORDER::ROTATECAMERA)]->GetActor<GameEngineCameraActor>();
-}
-
-GameEngineCameraActor* GameEngineLevel::GetRotateCamera2Actor()
-{
-	return Cameras[static_cast<int>(CAMERAORDER::ROTATECAMERA2)]->GetActor<GameEngineCameraActor>();
-}
-
 GameEngineTransform& GameEngineLevel::GetRotateCameraActorTransform()
 {
 	return Cameras[static_cast<int>(CAMERAORDER::ROTATECAMERA)]->GetActor()->GetTransform();
@@ -184,21 +181,9 @@ GameEngineTransform& GameEngineLevel::GetIrisCameraActorTransform()
 	return Cameras[static_cast<int>(CAMERAORDER::IRISCAMERA)]->GetActor()->GetTransform();
 }
 
-GameEngineCameraActor* GameEngineLevel::GetBackgroundCameraActor()
-{
-	return Cameras[static_cast<int>(CAMERAORDER::BACKGROUND)]->GetActor<GameEngineCameraActor>();
-}
-
 GameEngineTransform& GameEngineLevel::GetBackgroundCameraActorTransform()
 {
 	return Cameras[static_cast<int>(CAMERAORDER::BACKGROUND)]->GetActor()->GetTransform();
-}
-
-
-
-GameEngineCameraActor* GameEngineLevel::GetMainCameraActor()
-{
-	return Cameras[static_cast<int>(CAMERAORDER::MAINCAMERA)]->GetActor<GameEngineCameraActor>();
 }
 
 GameEngineTransform& GameEngineLevel::GetUICameraActorTransform()
@@ -206,12 +191,40 @@ GameEngineTransform& GameEngineLevel::GetUICameraActorTransform()
 	return Cameras[static_cast<int>(CAMERAORDER::UICAMERA)]->GetActor()->GetTransform();
 }
 
+GameEngineTransform& GameEngineLevel::GetDarknessCameraActorTransform()
+{
+	return Cameras[static_cast<int>(CAMERAORDER::DARKNESSCAMERA)]->GetActor()->GetTransform();
+}
+
+GameEngineCameraActor* GameEngineLevel::GetMainCameraActor()
+{
+	return Cameras[static_cast<int>(CAMERAORDER::MAINCAMERA)]->GetActor<GameEngineCameraActor>();
+}
 
 GameEngineCameraActor* GameEngineLevel::GetUICameraActor()
 {
 	return Cameras[static_cast<int>(CAMERAORDER::UICAMERA)]->GetActor<GameEngineCameraActor>();
 }
 
+GameEngineCameraActor* GameEngineLevel::GetDarknessCameraActor()
+{
+	return Cameras[static_cast<int>(CAMERAORDER::DARKNESSCAMERA)]->GetActor<GameEngineCameraActor>();
+}
+
+GameEngineCameraActor* GameEngineLevel::GetBackgroundCameraActor()
+{
+	return Cameras[static_cast<int>(CAMERAORDER::BACKGROUND)]->GetActor<GameEngineCameraActor>();
+}
+
+GameEngineCameraActor* GameEngineLevel::GetRotateCameraActor()
+{
+	return Cameras[static_cast<int>(CAMERAORDER::ROTATECAMERA)]->GetActor<GameEngineCameraActor>();
+}
+
+GameEngineCameraActor* GameEngineLevel::GetRotateCamera2Actor()
+{
+	return Cameras[static_cast<int>(CAMERAORDER::ROTATECAMERA2)]->GetActor<GameEngineCameraActor>();
+}
 
 
 void GameEngineLevel::Render(float _DelataTime)

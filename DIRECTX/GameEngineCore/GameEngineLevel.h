@@ -13,10 +13,10 @@ enum class CAMERAORDER : int
 	USER3,
 	USER4,
 	USER5,
-	USER6,
 	IRISCAMERA,
-	UICAMERA,
 	UICAMERA2,
+	DARKNESSCAMERA,
+	UICAMERA,
 };
 
 // 설명 : 화면(타이틀 화면, 플레이 화면, 인벤토리 화면)
@@ -64,6 +64,11 @@ public:
 		return Cameras[static_cast<int>(CAMERAORDER::ROTATECAMERA2)];
 	}
 
+	GameEngineCamera* GetDarknessCamera()
+	{
+		return Cameras[static_cast<int>(CAMERAORDER::DARKNESSCAMERA)];
+	}
+
 	GameEngineCamera* GetIrisCamera()
 	{
 		return Cameras[static_cast<int>(CAMERAORDER::IRISCAMERA)];
@@ -87,6 +92,10 @@ public:
 	GameEngineCameraActor* GetMainCameraActor();
 
 	GameEngineTransform& GetMainCameraActorTransform();
+
+	GameEngineTransform& GetDarknessCameraActorTransform();
+
+	GameEngineCameraActor* GetDarknessCameraActor();
 
 	GameEngineCameraActor* GetRotateCameraActor();
 
@@ -207,6 +216,11 @@ public:
 	void PushRendererToUICamera(GameEngineRenderer* _Renderer)
 	{
 		PushRenderer(_Renderer, static_cast<int>(CAMERAORDER::UICAMERA));
+	}
+
+	void PushRendererToDarknessCamera(GameEngineRenderer* _Renderer)
+	{
+		PushRenderer(_Renderer, static_cast<int>(CAMERAORDER::DARKNESSCAMERA));
 	}
 
 	void PushRendererToUICamera2(GameEngineRenderer* _Renderer)

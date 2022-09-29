@@ -10,11 +10,6 @@ OldFilm::~OldFilm()
 {
 }
 
-void OldFilm::Test(const FrameAnimation_DESC& _Info)
-{
-	int a = 0;
-}
-
 void OldFilm::Start()
 {	
 	{
@@ -35,7 +30,6 @@ void OldFilm::Start()
 		PostEffectRenderer->GetPipeLine()->SetOutputMergerBlend("OldFilm");
 		PostEffectRenderer->GetPixelData().MulColor = 1.2;
 		PostEffectRenderer->renderOption.ColorInversion = 1;
-		PostEffectRenderer->AnimationBindFrame("04RevScreenFX", std::bind(&OldFilm::Test, this, std::placeholders::_1));
 	}
 }
 

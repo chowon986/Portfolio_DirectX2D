@@ -41,6 +41,11 @@ void GameEngineRenderer::PushRendererToUICamera()
 	GetActor()->GetLevel()->PushRendererToUICamera(this);
 }
 
+void GameEngineRenderer::PushRendererToDarknessCamera()
+{
+	GetActor()->GetLevel()->PushRendererToDarknessCamera(this);
+}
+
 void GameEngineRenderer::PushRendererToUICamera2()
 {
 	GetActor()->GetLevel()->PushRendererToUICamera2(this);

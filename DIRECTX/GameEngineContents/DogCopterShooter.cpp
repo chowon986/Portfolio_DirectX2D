@@ -486,6 +486,11 @@ void DogCopterShooter::Start()
 		LeftTopLaserRenderer->SetPivot(PIVOTMODE::LEFTTOP);
 		LeftTopLaserRenderer->Off();
 
+		GameEngineCollision* LeftTopLaserRendererCollision = CreateComponent<GameEngineCollision>();
+		LeftTopLaserRendererCollision->GetTransform().SetLocalScale({ 1000.0f, 10.0f, 1.0f });
+		LeftTopLaserRendererCollision->GetTransform().SetLocalPosition({ 555, -300, (int)ZOrder::NPC - 8 });
+		LeftTopLaserRendererCollision->GetTransform().SetLocalRotate({ 0, 0, -41 });
+
 		GameEngineTextureRenderer* LeftMidLaserRenderer = CreateComponent<GameEngineTextureRenderer>();
 		LeftMidLaserRenderer->CreateFrameAnimationFolder("LaserWarning", FrameAnimation_DESC("LaserWarningB", 0.05f, false));
 		LeftMidLaserRenderer->CreateFrameAnimationFolder("LaserBeam", FrameAnimation_DESC("LaserBeamMid", 0.05f, false));

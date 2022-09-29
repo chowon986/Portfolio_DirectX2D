@@ -16,8 +16,6 @@ public:
 	OldFilm& operator=(const OldFilm& _Other) = delete;
 	OldFilm& operator=(OldFilm&& _Other) noexcept = delete;
 
-	void Test(const FrameAnimation_DESC& _Info);
-
 protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;
