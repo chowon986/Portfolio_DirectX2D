@@ -79,6 +79,11 @@ void ShellWeDance::Update(float _DeltaTime)
 			{
 				Actor->GetRenderer()->ChangeFrameAnimation("Ph4WarningSKy");
 			}
+
+			if (Background* Actor = dynamic_cast<Background*>(Level->BackgroundActor[9]))
+			{
+				Actor->On();
+			}
 		}
 		SetState(InGameMonsterState::Die);
 		Dust->GetRenderer()->ChangeFrameAnimation("ShellWeDanceDeathDust");

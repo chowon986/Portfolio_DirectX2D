@@ -34,9 +34,6 @@ protected:
 	void Die() override;
 	void Turn();
 	void TurnPink();
-
-	void Test(const FrameAnimation_DESC& _Info);
-
 public:
 	void SetPhysicsComponent(SaltBakerHeartPhysicsComponent* _Physics) { Physics = _Physics; }
 	SaltBakerHeartPhysicsComponent* GetPhysicsComponent() { return Physics; }
@@ -52,7 +49,7 @@ public:
 
 	void OnSaltBakerHeartIntroAnimationFrameChanged(const FrameAnimation_DESC& _Info);
 	void OnSaltBakerHeartTurnAnimationFrameChanged(const FrameAnimation_DESC& _Info);
-
+	void OnSaltBakerHeartIntroLoopAnimationFrameChanged(const FrameAnimation_DESC& _Info);
 private:
 	GameEngineTextureRenderer* Renderer;
 	InGameMonsterState State;
@@ -65,8 +62,11 @@ private:
 	bool IsHeartPosRightEnd;
 	bool CanMove;
 	float ElapsedTime;
+	float CanMoveTime;
 	float LerpTime;
 	float4 LerpPos;
 	float4 VerticalDirection;
 	float4 HorizontalDirection;
+	bool CanMoveTimerOn;
+	bool OnceCheck;
 };

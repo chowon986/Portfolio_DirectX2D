@@ -27,6 +27,7 @@ SaltBakerLevel::SaltBakerLevel()
 	, OldFilmOnceCheck(false)
 	, TornadoCheck(false)
 	, ActorNum(0)
+	, OldFilmTimeCountOn(true)
 {
 }
 
@@ -116,10 +117,8 @@ void SaltBakerLevel::Start()
 		Background* BackgroundB = CreateActor<Background>(GameObjectGroup::UI);
 		GameEngineTextureRenderer* RendererB = BackgroundB->CreateComponent<GameEngineTextureRenderer>();
 		RendererB->CreateFrameAnimationFolder("Ph3Sky", FrameAnimation_DESC("Ph3Sky", 0.1f, true));
-		RendererB->CreateFrameAnimationFolder("Ph4WarningSKy", FrameAnimation_DESC("Ph3Sky", 0.1f, true));
+		RendererB->CreateFrameAnimationFolder("Ph4WarningSKy", FrameAnimation_DESC("Ph4WarningSKy", 0.1f, true));
 		RendererB->AnimationBindFrame("Ph4WarningSKy", std::bind(&SaltBakerLevel::OnPh4WarningSkyAnimationFrameChanged, this, std::placeholders::_1));
-		//RendererB->CreateFrameAnimationFolder("Ph4WarningSKy", FrameAnimation_DESC("Ph4WarningSKy", 0.1f, true));
-		//RendererB->AnimationBindFrame("Ph4WarningSKy", std::bind(&SaltBakerLevel::OnPh4WarningSkyAnimationFrameChanged, this, std::placeholders::_1));
 		RendererB->ChangeFrameAnimation("Ph3Sky");
 		RendererB->SetScaleModeImage();
 		RendererB->GetTransform().SetLocalPosition({ 640.0f, -160.0f, (int)ZOrder::Background + 1 });
@@ -161,6 +160,49 @@ void SaltBakerLevel::Start()
 		RendererG->GetTransform().SetLocalPosition({ 610.0f, -400.0f, (int)ZOrder::Background - 3 });
 		BackgroundG->Off();
 
+		Background* BackgroundH = CreateActor<Background>(GameObjectGroup::UI); // 观
+		GameEngineTextureRenderer* RendererH = BackgroundH->CreateComponent<GameEngineTextureRenderer>();
+		RendererH->CreateFrameAnimationFolder("SaltManBust", FrameAnimation_DESC("SaltManBust", 0.05f, true));
+		RendererH->ChangeFrameAnimation("SaltManBust");
+		RendererH->SetScaleModeImage();
+		RendererH->GetTransform().SetWorldPosition({ 850.0f, -250.0f,  (int)ZOrder::Background - 0.5f});
+		BackgroundH->Off();
+
+		Background* BackgroundI = CreateActor<Background>(GameObjectGroup::UI); // 观
+		GameEngineTextureRenderer* RendererI = BackgroundI->CreateComponent<GameEngineTextureRenderer>();
+		RendererI->CreateFrameAnimationFolder("SaltManBustRightBackIdle", FrameAnimation_DESC("SaltManBustRightBackIdle", 0.05f, true));
+		RendererI->ChangeFrameAnimation("SaltManBustRightBackIdle");
+		RendererI->SetScaleModeImage();
+		RendererI->GetTransform().SetWorldPosition({ 1040.0f, -260.0f,  (int)ZOrder::Background });
+		BackgroundI->Off();
+
+		Background* BackgroundJ = CreateActor<Background>(GameObjectGroup::UI); // 观
+		GameEngineTextureRenderer* RendererJ = BackgroundJ->CreateComponent<GameEngineTextureRenderer>();
+		RendererJ->CreateFrameAnimationFolder("SaltManBustCrack", FrameAnimation_DESC("SaltManBustCrack", 0.05f, true));
+		RendererJ->AnimationBindFrame("SaltManBustCrack", std::bind(&SaltBakerLevel::OnSaltManBustCrackAnimationFrameChanged, this, std::placeholders::_1));
+		RendererJ->ChangeFrameAnimation("SaltManBustCrack");
+		RendererJ->SetScaleModeImage();
+		RendererJ->SetPivot(PIVOTMODE::LEFTBOT);
+		RendererJ->GetTransform().SetWorldPosition({ 650, -350.0f, (int)ZOrder::Background - 1 });
+		BackgroundJ->Off();
+
+		Background* BackgroundK = CreateActor<Background>(GameObjectGroup::UI); // 观
+		GameEngineTextureRenderer* RendererK = BackgroundK->CreateComponent<GameEngineTextureRenderer>();
+		RendererK->CreateFrameAnimationFolder("SaltManBustLeft", FrameAnimation_DESC("SaltManBustLeft", 0.05f, false));
+		RendererK->ChangeFrameAnimation("SaltManBustLeft");
+		RendererK->SetScaleModeImage();
+		RendererK->GetTransform().SetWorldPosition({ 700.0f, -260.0f, (int)ZOrder::Background});
+		BackgroundK->Off();
+
+		Background* BackgroundL = CreateActor<Background>(GameObjectGroup::UI); // 观
+		GameEngineTextureRenderer* RendererL = BackgroundL->CreateComponent<GameEngineTextureRenderer>();
+		RendererL->CreateFrameAnimationFolder("SaltManBustRight", FrameAnimation_DESC("SaltManBustRight", 0.05f, false));
+		RendererL->AnimationBindFrame("SaltManBustRight", std::bind(&SaltBakerLevel::OnSaltManBustRightFrameChanged, this, std::placeholders::_1));
+		RendererL->ChangeFrameAnimation("SaltManBustRight");
+		RendererL->SetScaleModeImage();
+		RendererL->GetTransform().SetWorldPosition({ 850.0f, -260.0f, (int)ZOrder::Background - 0.3 });
+		BackgroundL->Off();
+
 		BackgroundActor.insert(std::make_pair(0, BackgroundA));
 		BackgroundActor.insert(std::make_pair(1, BackgroundB));
 		BackgroundActor.insert(std::make_pair(2, BackgroundC));
@@ -168,6 +210,12 @@ void SaltBakerLevel::Start()
 		BackgroundActor.insert(std::make_pair(4, BackgroundE));
 		BackgroundActor.insert(std::make_pair(5, BackgroundF));
 		BackgroundActor.insert(std::make_pair(6, BackgroundG));
+		BackgroundActor.insert(std::make_pair(7, BackgroundH));
+		BackgroundActor.insert(std::make_pair(8, BackgroundI));
+		BackgroundActor.insert(std::make_pair(9, BackgroundJ));
+		BackgroundActor.insert(std::make_pair(10, BackgroundK));
+		BackgroundActor.insert(std::make_pair(11, BackgroundL));
+
 	}
 
 		// BreakObject
@@ -280,8 +328,8 @@ void SaltBakerLevel::Start()
 		TornadoD->SetAnimationName("LittleTornadoB");
 		TornadoD->Off();
 
-		BreakObject* SaltMan = CreateActor<BreakObject>(GameObjectGroup::UI); // 累篮芭
-		SaltMan->SetStartPos({ 750.0f, -400.0f, (int)ZOrder::UI });
+		BreakObject* SaltMan = CreateActor<BreakObject>(GameObjectGroup::UI); // 救
+		SaltMan->SetStartPos({ 750.0f, -400.0f, (int)ZOrder::Background - 0.05});
 		SaltMan->GetTransform().SetWorldPosition(SaltMan->GetStartPos());
 		SaltMan->GetRenderer()->ChangeFrameAnimation("SaltManIntro");
 		SaltMan->SetAnimationName("SaltManIntro");
@@ -305,14 +353,14 @@ void SaltBakerLevel::Start()
 		BreakObjectActor.insert(std::make_pair(8, ObjectE));
 		BreakObjectActor.insert(std::make_pair(9, ObjectG));
 		BreakObjectActor.insert(std::make_pair(10, ObjectF));
+		BreakObjectActor.insert(std::make_pair(11, SaltMan));
 
 		LittleTornadoActor.insert(std::make_pair(0, TornadoA));
 		LittleTornadoActor.insert(std::make_pair(1, TornadoB));
 		LittleTornadoActor.insert(std::make_pair(2, TornadoC));
 		LittleTornadoActor.insert(std::make_pair(3, TornadoD));
 		LittleTornadoActor.insert(std::make_pair(4, TornadoE));
-		LittleTornadoActor.insert(std::make_pair(5, SaltMan));
-		LittleTornadoActor.insert(std::make_pair(6, TornadoE));
+		LittleTornadoActor.insert(std::make_pair(5, TornadoE));
 
 		for (int i = 0; i < 11; i++)
 		{
@@ -410,9 +458,9 @@ void SaltBakerLevel::Update(float _DeltaTime)
 			OldFilmOnceCheck = true;
 		}
 
-		if (OldFilmOnceCheck == true && OldFilmElapsedTime > 0.5)
+		if (OldFilmOnceCheck == true && OldFilmElapsedTime > 0.5 && OldFilmTimeCountOn == true)
 		{
-			for (int i = 0; i < 7; i++)
+			for (int i = 0; i < 9; i++)
 			{
 				if (true == Kitchen->IsUpdate())
 				{
@@ -420,12 +468,17 @@ void SaltBakerLevel::Update(float _DeltaTime)
 					KitchenTopper->Death();
 				}
 
-				BackgroundActor[i]->On();
+				if (nullptr != BackgroundActor[i])
+				{
+					BackgroundActor[i]->On();
+				}
 			}
+
 			if (GetPhase() != Phase::Phase4)
 			{
 				SetPhase(Phase::Phase3);
 				OldFilmRenderer->Off();
+				OldFilmTimeCountOn = false;
 			}
 		}
 	}
@@ -471,7 +524,7 @@ void SaltBakerLevel::Update(float _DeltaTime)
 
 			Ph1Boss->SetChicken(Ph1Monster);
 
-			InGameCuphead* Cuphead = CreateActor<InGameCuphead>(GameObjectGroup::Player);
+			Cuphead = CreateActor<InGameCuphead>(GameObjectGroup::Player);
 			Cuphead->GetTransform().SetWorldPosition({ 640.0f,-360.0f, (int)ZOrder::Player });
 			Cuphead->SetColMapImage(ColMapRenderer);
 			Cuphead->GetRenderer()->ChangeCamera(CAMERAORDER::ROTATECAMERA);
@@ -487,6 +540,7 @@ void SaltBakerLevel::Update(float _DeltaTime)
 		else if (CurrentPhase == Phase::Phase3)
 		{
 			ColMapRenderer->SetTexture("SBPh3ColMap.png");
+			Cuphead->SetColMapImage(ColMapRenderer);
 			CogWheel* Ph3Monster1 = CreateActor<CogWheel>();
 			Ph3Monster1->GetTransform().SetWorldPosition({ 300.0f, -650.0f });
 		}
@@ -536,6 +590,30 @@ void SaltBakerLevel::OnPh4WarningSkyAnimationFrameChanged(const FrameAnimation_D
 		if (Background* Actor = dynamic_cast<Background*>(BackgroundActor[1]))
 		{
 			Actor->GetRenderer()->ChangeFrameAnimation("Ph3Sky");
+		}
+	}
+}
+
+void SaltBakerLevel::OnSaltManBustCrackAnimationFrameChanged(const FrameAnimation_DESC& _Info)
+{
+	if (_Info.CurFrame == 12)
+	{
+		BackgroundActor[10]->On();
+		BackgroundActor[11]->On();
+		BreakObjectActor[11]->On();
+		BackgroundActor[7]->Death();
+		BackgroundActor[8]->Death();
+		BackgroundActor[9]->Death();
+	}
+}
+
+void SaltBakerLevel::OnSaltManBustRightFrameChanged(const FrameAnimation_DESC& _Info)
+{
+	if (_Info.CurFrame < 8)
+	{
+		if (Background* Actor = dynamic_cast<Background*>(BackgroundActor[11]))
+		{
+			Actor->GetTransform().SetLocalMove(float4::RIGHT * GameEngineTime::GetDeltaTime() * 3000);
 		}
 	}
 }

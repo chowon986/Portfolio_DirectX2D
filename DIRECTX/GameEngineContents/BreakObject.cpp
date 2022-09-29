@@ -38,6 +38,12 @@ void BreakObject::Start()
 	Renderer->CreateFrameAnimationFolder("LittleTornadoBLoop", FrameAnimation_DESC("LittleTornadoBLoop", 0.07f, true));
 	Renderer->CreateFrameAnimationFolder("SaltManIntro", FrameAnimation_DESC("SaltManIntro", 0.07f, true));
 	Renderer->CreateFrameAnimationFolder("SaltManIntroLoop", FrameAnimation_DESC("SaltManIntroLoop", 0.07f, true));
+	Renderer->CreateFrameAnimationFolder("SaltManBustCrack", FrameAnimation_DESC("SaltManBustCrack", 0.07f, true));
+	Renderer->CreateFrameAnimationFolder("SaltManBust", FrameAnimation_DESC("SaltManBust", 0.07f, true));
+	Renderer->CreateFrameAnimationFolder("SaltManBustLeft", FrameAnimation_DESC("SaltManBustLeft", 0.07f, true));
+	Renderer->CreateFrameAnimationFolder("SaltManBustRight", FrameAnimation_DESC("SaltManBustRight", 0.07f, true));
+	Renderer->CreateFrameAnimationFolder("SaltManBustRightBackIdle", FrameAnimation_DESC("SaltManBustRightBackIdle", 0.07f, true));
+	Renderer->CreateFrameAnimationFolder("SaltManBustRightBack", FrameAnimation_DESC("SaltManBustRightBack", 0.07f, true));
 
 	Renderer->AnimationBindFrame("Ph2DeribsA", std::bind(&BreakObject::OnGround, this, std::placeholders::_1));
 	Renderer->AnimationBindFrame("Ph2DeribsB", std::bind(&BreakObject::OnGround, this, std::placeholders::_1));

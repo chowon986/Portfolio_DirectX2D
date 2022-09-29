@@ -9,6 +9,7 @@ class Chicken;
 class SaltBaker;
 class CharacterScore;
 class Background;
+class InGameCuphead;
 class SaltBakerLevel : public InGameLevelBase
 {
 public:
@@ -45,6 +46,8 @@ private:
 	void EndAnimation(const FrameAnimation_DESC& _Info);
 	void OnIrisAnimationFrameEnd(const FrameAnimation_DESC& _Info);
 	void OnPh4WarningSkyAnimationFrameChanged(const FrameAnimation_DESC& _Info);
+	void OnSaltManBustCrackAnimationFrameChanged(const FrameAnimation_DESC& _Info);
+	void OnSaltManBustRightFrameChanged(const FrameAnimation_DESC& _Info);
 
 private:
 	GameEngineTextureRenderer* ColMapRenderer;
@@ -71,5 +74,7 @@ private:
 	Background* Kitchen;
 	std::map<int, GameEngineActor*> BreakObjectActor;
 	std::map<int, GameEngineActor*> LittleTornadoActor;
+	InGameCuphead* Cuphead;
+	bool OldFilmTimeCountOn;
 };
 
