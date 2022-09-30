@@ -34,6 +34,7 @@ public:
 
 public: 	
 	std::map<int, GameEngineActor*> BackgroundActor;
+	bool GlassOn;
 
 protected:
 	void LevelStartEvent() override;
@@ -73,6 +74,7 @@ private:
 	Background* KitchenTopper;
 	Background* Kitchen;
 	std::map<int, GameEngineActor*> BreakObjectActor;
+	std::map<int, GameEngineActor*> IceObjectActor;
 	std::map<int, GameEngineActor*> LittleTornadoActor;
 	InGameCuphead* Cuphead;
 	bool OldFilmTimeCountOn;

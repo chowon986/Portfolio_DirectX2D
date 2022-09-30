@@ -15,6 +15,7 @@
 #include "Tornado.h"
 #include "CharacterScore.h"
 #include "BreakObject.h"
+#include "GlassPlatform.h"
 
 SaltBakerLevel::SaltBakerLevel()
 	:BeforePhase(Phase::Ready)
@@ -28,6 +29,7 @@ SaltBakerLevel::SaltBakerLevel()
 	, TornadoCheck(false)
 	, ActorNum(0)
 	, OldFilmTimeCountOn(true)
+	, GlassOn(false)
 {
 }
 
@@ -336,11 +338,43 @@ void SaltBakerLevel::Start()
 		SaltMan->Off();
 
 		BreakObject* TornadoE = CreateActor<BreakObject>(GameObjectGroup::UI); // 작은거
-		TornadoE->SetStartPos({ 640.0f, -500.0f, (int)ZOrder::UI });
+		TornadoE->SetStartPos({ 640.0f, -530.0f, (int)ZOrder::UI });
 		TornadoE->GetTransform().SetWorldPosition(TornadoE->GetStartPos());
 		TornadoE->GetRenderer()->ChangeFrameAnimation("LittleTornadoA");
 		TornadoE->SetAnimationName("LittleTornadoA");
 		TornadoE->Off();
+
+		BreakObject* Ground = CreateActor<BreakObject>(GameObjectGroup::UI); // 작은거
+		Ground->SetStartPos({ 1280.0f, -490.0f, (int)ZOrder::Background - 3 });
+		Ground->GetTransform().SetWorldPosition(Ground->GetStartPos());
+		Ground->GetRenderer()->ChangeFrameAnimation("GroundBreak");
+		Ground->SetAnimationName("GroundBreak");
+		Ground->Off();
+
+		BreakObject* GroundTopper = CreateActor<BreakObject>(GameObjectGroup::UI); // 작은거
+		GroundTopper->SetStartPos({ 1280.0f, -700.0f, (int)ZOrder::Background - 3 });
+		GroundTopper->GetTransform().SetWorldPosition(GroundTopper->GetStartPos());
+		GroundTopper->GetRenderer()->ChangeFrameAnimation("GroundBreakTopper");
+		GroundTopper->SetAnimationName("GroundBreakTopper");
+		GroundTopper->Off();		
+
+		GlassPlatform* IceGroundA = CreateActor<GlassPlatform>(GameObjectGroup::UI);
+		IceGroundA->GetTransform().SetWorldPosition(IceGroundA->StartPos[0]);
+		IceGroundA->SetPositionNum(0);
+		IceGroundA->GetRenderer()->ChangeFrameAnimation("GlassPlatform0");
+		IceGroundA->Off();
+
+		GlassPlatform* IceGroundB = CreateActor<GlassPlatform>(GameObjectGroup::UI);
+		IceGroundB->GetTransform().SetWorldPosition(IceGroundB->StartPos[1]);
+		IceGroundB->SetPositionNum(1);
+		IceGroundB->GetRenderer()->ChangeFrameAnimation("GlassPlatform1");
+		IceGroundB->Off();
+
+		GlassPlatform* IceGroundC = CreateActor<GlassPlatform>(GameObjectGroup::UI);
+		IceGroundC->GetTransform().SetWorldPosition(IceGroundC->StartPos[2]);
+		IceGroundC->SetPositionNum(2);
+		IceGroundC->GetRenderer()->ChangeFrameAnimation("GlassPlatform2");
+		IceGroundC->Off();
 
 		BreakObjectActor.insert(std::make_pair(0, ObjectA));
 		BreakObjectActor.insert(std::make_pair(1, ObjectK));
@@ -354,6 +388,8 @@ void SaltBakerLevel::Start()
 		BreakObjectActor.insert(std::make_pair(9, ObjectG));
 		BreakObjectActor.insert(std::make_pair(10, ObjectF));
 		BreakObjectActor.insert(std::make_pair(11, SaltMan));
+		BreakObjectActor.insert(std::make_pair(12, Ground));
+		BreakObjectActor.insert(std::make_pair(13, GroundTopper));
 
 		LittleTornadoActor.insert(std::make_pair(0, TornadoA));
 		LittleTornadoActor.insert(std::make_pair(1, TornadoB));
@@ -361,6 +397,10 @@ void SaltBakerLevel::Start()
 		LittleTornadoActor.insert(std::make_pair(3, TornadoD));
 		LittleTornadoActor.insert(std::make_pair(4, TornadoE));
 		LittleTornadoActor.insert(std::make_pair(5, TornadoE));
+
+		IceObjectActor.insert(std::make_pair(0, IceGroundA));
+		IceObjectActor.insert(std::make_pair(1, IceGroundB));
+		IceObjectActor.insert(std::make_pair(2, IceGroundC));
 
 		for (int i = 0; i < 11; i++)
 		{
@@ -414,6 +454,15 @@ void SaltBakerLevel::Update(float _DeltaTime)
 	OldFilmElapsedTime += _DeltaTime;
 	TornadoElapsedTime += _DeltaTime;
 	PlayElapsedTime += _DeltaTime;
+
+	if (GlassOn == true)
+	{
+		for (int i = 0; i < 3; i++)
+		{
+			IceObjectActor[i]->On();
+			GlassOn = false;
+		}
+	}
 
 	if (TornadoCheck == true)
 	{
@@ -590,6 +639,11 @@ void SaltBakerLevel::OnPh4WarningSkyAnimationFrameChanged(const FrameAnimation_D
 		if (Background* Actor = dynamic_cast<Background*>(BackgroundActor[1]))
 		{
 			Actor->GetRenderer()->ChangeFrameAnimation("Ph3Sky");
+
+			BreakObjectActor[12]->On();
+			BreakObjectActor[13]->On();
+			//ColMapRenderer->SetTexture("SBPh4ColMap.png");
+			BackgroundActor[4]->Death();
 		}
 	}
 }

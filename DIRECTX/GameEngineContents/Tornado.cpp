@@ -14,6 +14,7 @@ void Tornado::Start()
 {
 	Renderer = CreateComponent<GameEngineTextureRenderer>();
 	Renderer->CreateFrameAnimationFolder("TornadoIdle", FrameAnimation_DESC("TornadoIdle", 0.05f, true));
+	Renderer->CreateFrameAnimationFolder("TornadoDie", FrameAnimation_DESC("TornadoDie", 0.05f, true));
 
 	Renderer->ChangeFrameAnimation("TornadoIdle");
 	Renderer->SetScaleModeImage();

@@ -213,6 +213,7 @@
     <ClInclude Include="DogFightLevel.h" />
     <ClInclude Include="Enums.h" />
     <ClInclude Include="Ghost.h" />
+    <ClInclude Include="GlassPlatform.h" />
     <ClInclude Include="HourglassLevel.h" />
     <ClInclude Include="HydrantBullet.h" />
     <ClInclude Include="IAimable.h" />
@@ -389,6 +390,7 @@
     <ClCompile Include="Dogfight.cpp" />
     <ClCompile Include="DogFightLevel.cpp" />
     <ClCompile Include="Ghost.cpp" />
+    <ClCompile Include="GlassPlatform.cpp" />
     <ClCompile Include="HourglassLevel.cpp" />
     <ClCompile Include="HydrantBullet.cpp" />
     <ClCompile Include="IAimable.cpp" />

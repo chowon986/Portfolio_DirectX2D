@@ -33,7 +33,8 @@ void SaltBakerHeart::Start()
 	Renderer->AnimationBindFrame("SaltBakerHeartIntro", std::bind(&SaltBakerHeart::OnSaltBakerHeartIntroAnimationFrameChanged, this, std::placeholders::_1));
 	Renderer->AnimationBindFrame("SaltBakerHeartIntroLoop", std::bind(&SaltBakerHeart::OnSaltBakerHeartIntroLoopAnimationFrameChanged, this, std::placeholders::_1));
 	Renderer->AnimationBindFrame("SaltBakerHeartTurn", std::bind(&SaltBakerHeart::OnSaltBakerHeartTurnAnimationFrameChanged, this, std::placeholders::_1));
-	Renderer->AnimationBindFrame("SaltBakerHeartTurnPink", std::bind(&SaltBakerHeart::OnSaltBakerHeartIntroAnimationFrameChanged, this, std::placeholders::_1));
+	Renderer->AnimationBindFrame("SaltBakerHeartTurnPink", std::bind(&SaltBakerHeart::OnSaltBakerHeartTurnAnimationFrameChanged, this, std::placeholders::_1));
+	Renderer->AnimationBindFrame("SaltBakerHeartDeath", std::bind(&SaltBakerHeart::OnSaltBakerHeartDeathAnimationFrameChanged, this, std::placeholders::_1));
 
 	Renderer->SetScaleModeImage();
 	
@@ -54,10 +55,16 @@ void SaltBakerHeart::Start()
 	SetHorizontalDirection(float4::ZERO);
 
 	SetState(InGameMonsterState::Prepare);
+	SetHP(3);
 }
 
 void SaltBakerHeart::Update(float _DeltaTime)
 {
+	if (GetHP() <= 0)
+	{
+		SetState(InGameMonsterState::Die);
+	}
+
 	if (true == CanMoveTimerOn && OnceCheck == false)
 	{
 		CanMoveTime += _DeltaTime;
@@ -85,22 +92,22 @@ void SaltBakerHeart::Update(float _DeltaTime)
 	{
 		if (GetState() == InGameMonsterState::Turn)
 		{
-			Renderer->GetTransform().PixLocalPositiveX();
+			Renderer->GetTransform().PixLocalNegativeX();
 		}
 		else
 		{
-			Renderer->GetTransform().PixLocalNegativeX();
+			Renderer->GetTransform().PixLocalPositiveX();
 		}
 	}
 	else
 	{
 		if (GetState() == InGameMonsterState::Turn)
 		{
-			Renderer->GetTransform().PixLocalNegativeX();
+			Renderer->GetTransform().PixLocalPositiveX();
 		}
 		else
 		{
-			Renderer->GetTransform().PixLocalPositiveX();
+			Renderer->GetTransform().PixLocalNegativeX();
 		}
 	}
 
@@ -292,4 +299,9 @@ void SaltBakerHeart::OnSaltBakerHeartIntroLoopAnimationFrameChanged(const FrameA
 			}
 		}
 	}
+}
+
+void SaltBakerHeart::OnSaltBakerHeartDeathAnimationFrameChanged(const FrameAnimation_DESC& _Info)
+{
+	//if(_Info.CurFrame == )
 }

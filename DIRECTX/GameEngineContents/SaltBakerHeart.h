@@ -50,6 +50,8 @@ public:
 	void OnSaltBakerHeartIntroAnimationFrameChanged(const FrameAnimation_DESC& _Info);
 	void OnSaltBakerHeartTurnAnimationFrameChanged(const FrameAnimation_DESC& _Info);
 	void OnSaltBakerHeartIntroLoopAnimationFrameChanged(const FrameAnimation_DESC& _Info);
+	void OnSaltBakerHeartDeathAnimationFrameChanged(const FrameAnimation_DESC& _Info);
+
 private:
 	GameEngineTextureRenderer* Renderer;
 	InGameMonsterState State;

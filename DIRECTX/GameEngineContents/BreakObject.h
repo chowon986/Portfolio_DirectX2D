@@ -31,6 +31,7 @@ private:
 	void OnGround(const FrameAnimation_DESC& _Info);
 	void OnBreakObjectsAnimationFrameChanged(const FrameAnimation_DESC& _Info);
 	void OnSaltManIntroAnimationFrameChanged(const FrameAnimation_DESC& _Info);
+	void OnSaltManGroundBreakTopperAnimationFrameChanged(const FrameAnimation_DESC& _Info);
 
 private:
 	float4 StartPos;
@@ -38,5 +39,6 @@ private:
 	std::string AnimationName;
 	bool IsOnGround;
 	bool CanMove;
+	bool OnceCheck;
 };
 
