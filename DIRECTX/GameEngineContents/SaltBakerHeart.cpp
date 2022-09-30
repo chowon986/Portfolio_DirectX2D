@@ -190,7 +190,7 @@ CollisionReturn SaltBakerHeart::OnDirectionChangeColToRight(GameEngineCollision*
 
 CollisionReturn SaltBakerHeart::OnChangeParriable(GameEngineCollision* _This, GameEngineCollision* _Other)
 {
-	SetHP(GetHP() - 1);
+	//SetHP(GetHP() - 1);
 	Collision->ChangeOrder(ObjectOrder::PARRIABLEOBJECT);
 	if (GetState() == InGameMonsterState::Idle)
 	{
