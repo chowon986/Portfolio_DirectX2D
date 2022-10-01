@@ -2,6 +2,7 @@
 #include <GameEngineCore/GameEngineLevel.h>
 
 // Ό³Έν :
+class Background;
 class CharacterState;
 class ItemInventory;
 class GameEngineTextureRenderer;
@@ -27,6 +28,8 @@ protected:
 	void Update(float _DeltaTime) override;
 	void End() override;
 
+	void OnLoadCompleted();
+
 private:
 	GameEngineTextureRenderer* IrisRenderer;
 	GameEngineTextureRenderer* MainLandRenderer;
@@ -38,5 +41,9 @@ private:
 	CharacterState* State;
 	ItemInventory* Inventory;
 	int CurCoin;
+	Background* Hourglass;
+	float LoadInterval;
+	float LoadElapsedTime;
+	float LoadCompleted;
 };
 

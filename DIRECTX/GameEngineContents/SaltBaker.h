@@ -3,6 +3,7 @@
 
 enum class InGameMonsterState;
 enum class InGameMonsterAttackState;
+class Background;
 class Chicken;
 class BulldogPlane;
 class SaltBakerHand;

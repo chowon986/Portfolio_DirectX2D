@@ -42,6 +42,10 @@ WorldMapLevel::WorldMapLevel()
 	, OutsideOfMainLandRightRenderer(nullptr)
 	, State(nullptr)
 	, CurCoin(0)
+	, LoadInterval(0.005f)
+	, LoadElapsedTime(0.0f)
+	, LoadCompleted(false)
+	, Hourglass(nullptr)
 {
 }
 
@@ -63,14 +67,84 @@ void WorldMapLevel::ColMapOnOffSwitch()
 
 void WorldMapLevel::LevelStartEvent()
 {
-	//Loading
-	TextureLoadUtils::LoadTextures("14WorldMapLevel");
-	TextureLoadUtils::LoadTextures("05Item");
 
 	//Start
 	GetMainCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
 	GetUICamera2()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
 
+	{
+		Hourglass = CreateActor<Background>(GameObjectGroup::UI);
+		GameEngineTextureRenderer* Renderer = Hourglass->CreateComponent<GameEngineTextureRenderer>();
+		Renderer->CreateFrameAnimationFolder("Hourglass", FrameAnimation_DESC("Loading", 0.05f));
+		Renderer->ChangeFrameAnimation("Hourglass");
+		Renderer->ScaleToTexture();
+		Renderer->GetTransform().SetLocalPosition({ 545,-190,-100 });
+	}
+}
+
+void WorldMapLevel::Update(float _DeltaTime)
+{
+	if (LoadCompleted == false)
+	{
+		LoadElapsedTime += _DeltaTime;
+		if (LoadElapsedTime > LoadInterval)
+		{
+			LoadElapsedTime -= LoadInterval;
+
+
+			//Loading
+			bool DogFightLevelLoadCompleted = TextureLoadUtils::LoadTexturesAsync("14WorldMapLevel");
+			if (DogFightLevelLoadCompleted)
+			{
+				LoadCompleted = TextureLoadUtils::LoadTexturesAsync("05Item");
+				if (LoadCompleted == true)
+				{
+					OnLoadCompleted();
+				}
+			}
+		}
+		return;
+	}
+
+	if (true == GameEngineInput::GetInst()->IsDown("LevelChange"))
+	{
+		GEngine::ChangeLevel("DogFight");
+	}
+
+	if (true == GameEngineInput::GetInst()->IsDown("Inventory"))
+	{
+		if (Inventory != nullptr)
+		{
+			Inventory->OnOffSwitch();
+		}
+	}
+	
+	ColMapOnOffSwitch();
+
+
+	if (State != nullptr)
+	{
+		CurCoin = State->Coin;
+		if (CurCoin < 0)
+		{
+			CurCoin = 0;
+		}
+		else if (CurCoin > 25)
+		{
+			CurCoin = 25;
+		}
+		CoinCountRenderer->SetTexture("CoinCount" + std::to_string(CurCoin) + ".png");
+	}
+}
+
+
+void WorldMapLevel::End()
+{
+	Inventory->Off();
+}
+
+void WorldMapLevel::OnLoadCompleted()
+{
 	Inventory = CreateActor<ItemInventory>(GameObjectGroup::INVENTORY);
 	Inventory->SetLevelOverOn();
 	Inventory->Off();
@@ -510,43 +584,4 @@ void WorldMapLevel::LevelStartEvent()
 			CurCoin = State->Coin;
 		}
 	}
-}
-
-void WorldMapLevel::Update(float _DeltaTime)
-{
-	if (true == GameEngineInput::GetInst()->IsDown("LevelChange"))
-	{
-		GEngine::ChangeLevel("DogFight");
-	}
-
-	if (true == GameEngineInput::GetInst()->IsDown("Inventory"))
-	{
-		if (Inventory != nullptr)
-		{
-			Inventory->OnOffSwitch();
-		}
-	}
-	
-	ColMapOnOffSwitch();
-
-
-	if (State != nullptr)
-	{
-		CurCoin = State->Coin;
-		if (CurCoin < 0)
-		{
-			CurCoin = 0;
-		}
-		else if (CurCoin > 25)
-		{
-			CurCoin = 25;
-		}
-		CoinCountRenderer->SetTexture("CoinCount" + std::to_string(CurCoin) + ".png");
-	}
-}
-
-
-void WorldMapLevel::End()
-{
-	Inventory->Off();
 }
