@@ -11,6 +11,7 @@
 #include "SuperInvincibleItem.h"
 #include "AstalCookieItem.h"
 #include "CharacterScore.h"
+#include <GameEngineContents/TextureLoadUtils.h>
 
 SelectLevel::SelectLevel()
 	: OptionRenderer(nullptr)
@@ -42,8 +43,12 @@ SelectLevel::~SelectLevel()
 {
 }
 
-void SelectLevel::Start()
+void SelectLevel::LevelStartEvent()
 {
+	//Loading
+	TextureLoadUtils::LoadTextures("12SelectLevel");
+
+	//Start
 	GetMainCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
 
 	Score = CreateActor<CharacterScore>(GameObjectGroup::CharacterScore);

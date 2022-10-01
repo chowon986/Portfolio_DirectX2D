@@ -9,7 +9,7 @@ StoryLevel::~StoryLevel()
 {
 }
 
-void StoryLevel::Start()
+void StoryLevel::LevelStartEvent()
 {
 	//GameEngineActor* IntroStory = CreateActor<GameEngineActor>();
 	//GameEngineTextureRenderer* Renderer = IntroStory->CreateComponent<GameEngineTextureRenderer>();

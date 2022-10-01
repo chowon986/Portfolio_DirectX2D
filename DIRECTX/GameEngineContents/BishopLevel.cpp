@@ -8,6 +8,7 @@
 #include <GameEngineContents/Enums.h>
 #include <functional>
 #include <GameEngineCore/GameEngineBlur.h>
+#include <GameEngineContents/TextureLoadUtils.h>
 
 BishopLevel::BishopLevel()
 	: BackgroundRenderer(nullptr)
@@ -21,14 +22,13 @@ BishopLevel::~BishopLevel()
 
 void BishopLevel::LevelStartEvent()
 {
+	TextureLoadUtils::LoadTextures("15DogFightLevel");
+
+	//Start
 	Cuphead = CreateActor<InGameCuphead>(GameObjectGroup::Player);
 	Cuphead->GetTransform().SetLocalPosition({ 640.0f, -360.0f, (int)ZOrder::Player });
 	Cuphead->SetColMapImage(ColMapRenderer);
 	PushToRotateCamera(Cuphead);
-}
-
-void BishopLevel::Start()
-{
 	GetMainCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
 
 	{
@@ -45,7 +45,7 @@ void BishopLevel::Start()
 
 		GameEngineCollision* GroundCollisionB = BishopBackground->CreateComponent<GameEngineCollision>();
 		GroundCollisionB->GetTransform().SetLocalScale({ 50.0f, 800.0f, 1.0f });
-		GroundCollisionB->GetTransform().SetLocalPosition({-25.0f,-400.0f });
+		GroundCollisionB->GetTransform().SetLocalPosition({ -25.0f,-400.0f });
 		GroundCollisionB->ChangeOrder((int)ObjectOrder::RETURN);
 
 		IndexCollisionA = BishopBackground->CreateComponent<GameEngineCollision>();
@@ -58,7 +58,7 @@ void BishopLevel::Start()
 		IndexCollisionB->GetTransform().SetLocalPosition({ 290.0f,-50.0f });
 		IndexCollisionB->ChangeOrder((int)ObjectOrder::POSINDEX);
 
-		
+
 		IndexCollisionC = BishopBackground->CreateComponent<GameEngineCollision>();
 		IndexCollisionC->GetTransform().SetLocalScale({ 50.0f, 200.0f, 1.0f });
 		IndexCollisionC->GetTransform().SetLocalPosition({ 430.0,-50.0f });

@@ -32,16 +32,24 @@ void TutorialLevel::ColMapOnOffSwitch()
 
 void TutorialLevel::LevelStartEvent()
 {
-	std::list<GameEngineActor*> Actors = GetGroup(GameObjectGroup::CharacterState);
-	for (GameEngineActor* Actor : Actors)
+	//Loading
+	GameEngineDirectory Dir;
+	Dir.MoveParentToExitsChildDirectory("ConstantResources");
+	Dir.Move("ConstantResources");
+	Dir.Move("Texture");
+	Dir.Move("02TutorialLevel");
+	std::vector<GameEngineDirectory> RecursiveDir = Dir.GetRecursiveAllDirectory();
+	for (GameEngineDirectory Dir : RecursiveDir)
 	{
-		if (CharacterState* _State = dynamic_cast<CharacterState*>(Actor))
-		{
-			State = _State;
-			CurCoin = State->Coin;
-		}
+		GameEngineFolderTexture::Load(Dir.GetFullPath());
+	}
+	std::vector<GameEngineFile> Textures = Dir.GetAllFile();
+	for (size_t i = 0; i < Textures.size(); i++)
+	{
+		GameEngineTexture::Load(Textures[i].GetFullPath());
 	}
 
+	//Start
 	Cuphead = CreateActor<InGameCuphead>(GameObjectGroup::Player);
 	Cuphead->GetTransform().SetLocalPosition({ 640, -360, (int)ZOrder::Player });
 	Cuphead->SetColMapImage(ColMapRenderer);
@@ -49,10 +57,7 @@ void TutorialLevel::LevelStartEvent()
 	Cuphead->SetOnDashInvisible(State->OnDashInvisible);
 	PushToRotateCamera(Cuphead);
 	Player = Cuphead;
-}
 
-void TutorialLevel::Start()
-{
 	GetMainCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
 
 	{
@@ -158,6 +163,7 @@ void TutorialLevel::Start()
 		EnterCollision->GetTransform().SetLocalPosition({ 0.0f, -100.0f,(int)ZOrder::Foreground });
 		EnterCollision->ChangeOrder(ObjectOrder::NPC);
 	}
+
 	GetMainCamera()->SetProjectionSize({ 1280.0f, 720.0f });
 	GetRotateCamera()->SetProjectionSize({ 1536.0f, 864.0f });
 	GetIrisCamera()->SetProjectionSize({ 1280.0f, 720.0f });
@@ -165,6 +171,16 @@ void TutorialLevel::Start()
 	GetMainCameraActorTransform().SetLocalPosition({ 640, -360 });
 	GetRotateCameraActorTransform().SetLocalPosition({ 640, -360 });
 	GetIrisCameraActorTransform().SetLocalPosition({ 640.0f, -360.0f });
+
+	std::list<GameEngineActor*> Actors = GetGroup(GameObjectGroup::CharacterState);
+	for (GameEngineActor* Actor : Actors)
+	{
+		if (CharacterState* _State = dynamic_cast<CharacterState*>(Actor))
+		{
+			State = _State;
+			CurCoin = State->Coin;
+		}
+	}
 }
 
 void TutorialLevel::Update(float _DeltaTime)

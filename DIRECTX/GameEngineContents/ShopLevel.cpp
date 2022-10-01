@@ -42,19 +42,24 @@ ShopLevel::~ShopLevel()
 
 void ShopLevel::LevelStartEvent()
 {
-	std::list<GameEngineActor*> Actors = GetGroup(GameObjectGroup::CharacterState);
-	for (GameEngineActor* Actor : Actors)
+	//Loading
+	GameEngineDirectory Dir;
+	Dir.MoveParentToExitsChildDirectory("ConstantResources");
+	Dir.Move("ConstantResources");
+	Dir.Move("Texture");
+	Dir.Move("01ShopLevel");
+	std::vector<GameEngineDirectory> RecursiveDir = Dir.GetRecursiveAllDirectory();
+	for (GameEngineDirectory Dir : RecursiveDir)
 	{
-		if (CharacterState* _State = dynamic_cast<CharacterState*>(Actor))
-		{
-			State = _State;
-			CurCoin = State->Coin;
-		}
+		GameEngineFolderTexture::Load(Dir.GetFullPath());
 	}
-}
+	std::vector<GameEngineFile> Textures = Dir.GetAllFile();
+	for (size_t i = 0; i < Textures.size(); i++)
+	{
+		GameEngineTexture::Load(Textures[i].GetFullPath());
+	}
 
-void ShopLevel::Start()
-{
+	// Start
 	GetMainCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
 	{
 		Background* ShopBackground = CreateActor<Background>(GameObjectGroup::UI);
@@ -63,7 +68,6 @@ void ShopLevel::Start()
 		Renderer->ScaleToTexture();
 		Renderer->GetTransform().SetLocalPosition({ 0, 200, (int)ZOrder::Background });
 	}
-
 	{
 		Background* TableChalkboard = CreateActor<Background>(GameObjectGroup::UI);
 		GameEngineTextureRenderer* Renderer = TableChalkboard->CreateComponent<GameEngineTextureRenderer>();
@@ -195,8 +199,17 @@ void ShopLevel::Start()
 		FontRenderer->CreateFrameAnimationFolder("Nothing", FrameAnimation_DESC("Nothing", 0.1f, false));
 		FontRenderer->GetTransform().SetWorldPosition({ -300.0f, -205.0f,(int)ZOrder::Background - 2 });
 	}
-}
 
+	std::list<GameEngineActor*> Actors = GetGroup(GameObjectGroup::CharacterState);
+	for (GameEngineActor* Actor : Actors)
+	{
+		if (CharacterState* _State = dynamic_cast<CharacterState*>(Actor))
+		{
+			State = _State;
+			CurCoin = State->Coin;
+		}
+	}
+}
 void ShopLevel::Update(float _DeltaTime)
 {
 	if (State != nullptr)

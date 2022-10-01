@@ -31,6 +31,7 @@
 #include <GameEngineBase/GameEngineInput.h>
 #include "ItemInventory.h"
 #include <GameEngineCore/GameEngineBlur.h>
+#include <GameEngineContents/TextureLoadUtils.h>
 
 WorldMapLevel::WorldMapLevel()
 	: IrisRenderer(nullptr)
@@ -62,19 +63,11 @@ void WorldMapLevel::ColMapOnOffSwitch()
 
 void WorldMapLevel::LevelStartEvent()
 {
-	std::list<GameEngineActor*> Actors = GetGroup(GameObjectGroup::CharacterState);
-	for (GameEngineActor* Actor : Actors)
-	{
-		if (CharacterState* _State = dynamic_cast<CharacterState*>(Actor))
-		{
-			State = _State;
-			CurCoin = State->Coin;
-		}
-	}
-}
+	//Loading
+	TextureLoadUtils::LoadTextures("14WorldMapLevel");
+	TextureLoadUtils::LoadTextures("05Item");
 
-void WorldMapLevel::Start()
-{
+	//Start
 	GetMainCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
 	GetUICamera2()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
 
@@ -516,6 +509,16 @@ void WorldMapLevel::Start()
 		Renderer->SetTexture("dlc_main_top.png");
 		Renderer->ScaleToTexture();
 		Renderer->GetTransform().SetLocalPosition({ 1860.0f, -1085.0f, (int)ZOrder::NPCB });
+	}
+
+	std::list<GameEngineActor*> Actors = GetGroup(GameObjectGroup::CharacterState);
+	for (GameEngineActor* Actor : Actors)
+	{
+		if (CharacterState* _State = dynamic_cast<CharacterState*>(Actor))
+		{
+			State = _State;
+			CurCoin = State->Coin;
+		}
 	}
 }
 

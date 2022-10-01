@@ -4,6 +4,7 @@
 #include "CharacterScore.h"
 #include <GameEngineCore/GameEngineBlur.h>
 #include <GameEngineCore/GameEngineFontRenderer.h>
+#include <GameEngineContents/TextureLoadUtils.h>
 
 ScoreLevel::ScoreLevel()
 	: BackgroundRenderer(nullptr)
@@ -21,39 +22,14 @@ ScoreLevel::~ScoreLevel()
 
 void ScoreLevel::LevelStartEvent()
 {
-	{
-		std::list<GameEngineActor*> Actors = GetGroup(GameObjectGroup::CharacterState);
-		for (GameEngineActor* Actor : Actors)
-		{
-			if (CharacterState* _State = dynamic_cast<CharacterState*>(Actor))
-			{
-				State = _State;
-			}
-		}
-	}
+	TextureLoadUtils::LoadTextures("08ScoreLevel");
 
-	{
-		std::list<GameEngineActor*> Actors = GetGroup(GameObjectGroup::CharacterScore);
-		for (GameEngineActor* Actor : Actors)
-		{
-			if (CharacterScore* _Score = dynamic_cast<CharacterScore*>(Actor))
-			{
-				Score = _Score;
-				PlayMinute = static_cast<int>(Score->PlayTime) / 60;
-				PlaySecond = static_cast<int>(Score->PlayTime) % 60;
-			}
-		}
-	}
-}
-
-void ScoreLevel::Start()
-{
 	GetMainCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
 	GetUICamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
 	{
 		GameEngineActor* Iris = CreateActor<GameEngineActor>();
 		IrisRenderer = Iris->CreateComponent<GameEngineTextureRenderer>();
-		IrisRenderer->CreateFrameAnimationFolder("LightOn", FrameAnimation_DESC("IrisA", 0,0,0.05f, true));
+		IrisRenderer->CreateFrameAnimationFolder("LightOn", FrameAnimation_DESC("IrisA", 0, 0, 0.05f, true));
 		IrisRenderer->ChangeFrameAnimation("LightOn");
 		IrisRenderer->GetTransform().SetLocalScale(float4{ 1280.0f,720.0f,1.0f });
 		IrisRenderer->GetTransform().SetLocalPosition(float4{ 640.0f,-360.0f,(int)ZOrder::UI });
@@ -111,7 +87,7 @@ void ScoreLevel::Start()
 
 			GameEngineActor* PlayerName = CreateActor<GameEngineActor>();
 			GameEngineTextureRenderer* PlayerNameRenderer = PlayerName->CreateComponent<GameEngineTextureRenderer>();
-			PlayerNameRenderer->CreateFrameAnimationFolder("CupheadName", FrameAnimation_DESC("CupheadName",0.1f,false));
+			PlayerNameRenderer->CreateFrameAnimationFolder("CupheadName", FrameAnimation_DESC("CupheadName", 0.1f, false));
 			PlayerNameRenderer->ChangeFrameAnimation("CupheadName");
 			PlayerNameRenderer->SetScaleModeImage();
 			PlayerNameRenderer->GetTransform().SetLocalPosition(float4{ 320.0, -660.0f,(int)ZOrder::Foreground - 1 });
@@ -139,7 +115,7 @@ void ScoreLevel::Start()
 		GameEngineActor* FontA = CreateActor<GameEngineActor>();
 		GameEngineFontRenderer* FontRendererA = FontA->CreateComponent<GameEngineFontRenderer>();
 		FontRendererA->SetText("00", "Yoon-Backjae");
-		FontRendererA->SetColor({ (1.0/255) * 190.0f, (1.0 / 255) * 190.0f, (1.0 / 255) * 190.0f, 1.0f });
+		FontRendererA->SetColor({ (1.0 / 255) * 190.0f, (1.0 / 255) * 190.0f, (1.0 / 255) * 190.0f, 1.0f });
 		FontRendererA->SetSize(35);
 		FontRendererA->SetScreenPostion(float4{ 850.0f, 250.0f, (int)ZOrder::Foreground - 1 });
 		FontRendererA->SetRenderingOrder(10000);
@@ -229,6 +205,30 @@ void ScoreLevel::Start()
 	GetMainCameraActorTransform().SetLocalPosition({ 640, -360 });
 
 	Phase = ScorePhase::Minute;
+
+	{
+		std::list<GameEngineActor*> Actors = GetGroup(GameObjectGroup::CharacterState);
+		for (GameEngineActor* Actor : Actors)
+		{
+			if (CharacterState* _State = dynamic_cast<CharacterState*>(Actor))
+			{
+				State = _State;
+			}
+		}
+	}
+
+	{
+		std::list<GameEngineActor*> Actors = GetGroup(GameObjectGroup::CharacterScore);
+		for (GameEngineActor* Actor : Actors)
+		{
+			if (CharacterScore* _Score = dynamic_cast<CharacterScore*>(Actor))
+			{
+				Score = _Score;
+				PlayMinute = static_cast<int>(Score->PlayTime) / 60;
+				PlaySecond = static_cast<int>(Score->PlayTime) % 60;
+			}
+		}
+	}
 }
 
 void ScoreLevel::Update(float _DeltaTime)

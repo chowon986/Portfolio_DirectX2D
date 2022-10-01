@@ -16,6 +16,7 @@
 #include "CharacterScore.h"
 #include "BreakObject.h"
 #include "GlassPlatform.h"
+#include <GameEngineContents/TextureLoadUtils.h>
 
 SaltBakerLevel::SaltBakerLevel()
 	:BeforePhase(Phase::Ready)
@@ -39,47 +40,9 @@ SaltBakerLevel::~SaltBakerLevel()
 
 void SaltBakerLevel::LevelStartEvent()
 {
-	{
-		std::list<GameEngineActor*> Actors = GetGroup(GameObjectGroup::CharacterState);
-		for (GameEngineActor* Actor : Actors)
-		{
-			if (CharacterState* _State = dynamic_cast<CharacterState*>(Actor))
-			{
-				State = _State;
-				HPCount = State->MaxHP;
-			}
-		}
-	}
+	TextureLoadUtils::LoadTextures("17SaltBakerLevel");
+	TextureLoadUtils::LoadFolderTextures("SaltBakerBoss", "22Boss");
 
-	{
-		std::list<GameEngineActor*> Actors = GetGroup(GameObjectGroup::CharacterScore);
-		for (GameEngineActor* Actor : Actors)
-		{
-			if (CharacterScore* _Score = dynamic_cast<CharacterScore*>(Actor))
-			{
-				Score = _Score;
-
-				Score->PlayTime = 0.0f;
-				Score->HP = 0;
-				Score->Parry = 0;
-				Score->UseCard = 0;
-				Score->SkillLevel = 2;
-			}
-		}
-	}
-}
-
-void SaltBakerLevel::LevelEndEvent()
-{
-	if (nullptr != Score)
-	{
-		Score->PlayTime = PlayElapsedTime;
-		Score->HP = Player->GetHP();
-	}
-}
-
-void SaltBakerLevel::Start()
-{
 	GetMainCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
 	{
 		Background* ColMapImage = CreateActor<Background>(GameObjectGroup::UI);
@@ -87,7 +50,7 @@ void SaltBakerLevel::Start()
 		ColMapRenderer->SetTexture("TestColMap.png");
 		ColMapRenderer->ScaleToTexture();
 		ColMapRenderer->GetTransform().SetWorldScale({ 1280.0f, 720.0f, 1.0f });
-		ColMapRenderer->GetTransform().SetWorldPosition({640.0f, -360.0f, (int)ZOrder::Background + 5 });
+		ColMapRenderer->GetTransform().SetWorldPosition({ 640.0f, -360.0f, (int)ZOrder::Background + 5 });
 		SetMainColMapImage(ColMapRenderer);
 	}
 
@@ -98,14 +61,14 @@ void SaltBakerLevel::Start()
 		KitchenRenderer->ScaleToTexture();
 		KitchenRenderer->GetTransform().SetLocalPosition({ 640.0f, 843.0f, (int)ZOrder::Background });
 	}
-	
+
 	{
 		KitchenTopper = CreateActor<Background>(GameObjectGroup::UI);
 		KitchenRendererTopper = KitchenTopper->CreateComponent<GameEngineTextureRenderer>();
 		KitchenRendererTopper->CreateFrameAnimationFolder("Kitchen", FrameAnimation_DESC("Kitchen", 0.1f, true));
 		KitchenRendererTopper->ChangeFrameAnimation("Kitchen");
 		KitchenRendererTopper->SetScaleModeImage();
-		KitchenRendererTopper->GetTransform().SetLocalPosition({ 640.0f, -360.0f, (int)ZOrder::Background - 1});
+		KitchenRendererTopper->GetTransform().SetLocalPosition({ 640.0f, -360.0f, (int)ZOrder::Background - 1 });
 	}
 
 	{
@@ -167,7 +130,7 @@ void SaltBakerLevel::Start()
 		RendererH->CreateFrameAnimationFolder("SaltManBust", FrameAnimation_DESC("SaltManBust", 0.05f, true));
 		RendererH->ChangeFrameAnimation("SaltManBust");
 		RendererH->SetScaleModeImage();
-		RendererH->GetTransform().SetWorldPosition({ 850.0f, -250.0f,  (int)ZOrder::Background - 0.5f});
+		RendererH->GetTransform().SetWorldPosition({ 850.0f, -250.0f,  (int)ZOrder::Background - 0.5f });
 		BackgroundH->Off();
 
 		Background* BackgroundI = CreateActor<Background>(GameObjectGroup::UI); // ¹Û
@@ -193,7 +156,7 @@ void SaltBakerLevel::Start()
 		RendererK->CreateFrameAnimationFolder("SaltManBustLeft", FrameAnimation_DESC("SaltManBustLeft", 0.05f, false));
 		RendererK->ChangeFrameAnimation("SaltManBustLeft");
 		RendererK->SetScaleModeImage();
-		RendererK->GetTransform().SetWorldPosition({ 700.0f, -260.0f, (int)ZOrder::Background});
+		RendererK->GetTransform().SetWorldPosition({ 700.0f, -260.0f, (int)ZOrder::Background });
 		BackgroundK->Off();
 
 		Background* BackgroundL = CreateActor<Background>(GameObjectGroup::UI); // ¹Û
@@ -220,11 +183,11 @@ void SaltBakerLevel::Start()
 
 	}
 
-		// BreakObject
+	// BreakObject
 	{
 		BreakObject* ObjectA = CreateActor<BreakObject>(GameObjectGroup::UI);
 		ObjectA->SetStartPos({ 1100.0f, 50.0f, (int)ZOrder::UI });
-		ObjectA-> GetTransform().SetWorldPosition(ObjectA->GetStartPos());
+		ObjectA->GetTransform().SetWorldPosition(ObjectA->GetStartPos());
 		ObjectA->GetRenderer()->ChangeFrameAnimation("Ph2DeribsA");
 		ObjectA->SetAnimationName("Ph2DeribsA");
 		ObjectA->Off();
@@ -331,7 +294,7 @@ void SaltBakerLevel::Start()
 		TornadoD->Off();
 
 		BreakObject* SaltMan = CreateActor<BreakObject>(GameObjectGroup::UI); // ¾È
-		SaltMan->SetStartPos({ 750.0f, -400.0f, (int)ZOrder::Background - 0.05});
+		SaltMan->SetStartPos({ 750.0f, -400.0f, (int)ZOrder::Background - 0.05 });
 		SaltMan->GetTransform().SetWorldPosition(SaltMan->GetStartPos());
 		SaltMan->GetRenderer()->ChangeFrameAnimation("SaltManIntro");
 		SaltMan->SetAnimationName("SaltManIntro");
@@ -356,7 +319,7 @@ void SaltBakerLevel::Start()
 		GroundTopper->GetTransform().SetWorldPosition(GroundTopper->GetStartPos());
 		GroundTopper->GetRenderer()->ChangeFrameAnimation("GroundBreakTopper");
 		GroundTopper->SetAnimationName("GroundBreakTopper");
-		GroundTopper->Off();		
+		GroundTopper->Off();
 
 		GlassPlatform* IceGroundA = CreateActor<GlassPlatform>(GameObjectGroup::UI);
 		IceGroundA->GetTransform().SetWorldPosition(IceGroundA->StartPos[0]);
@@ -414,8 +377,8 @@ void SaltBakerLevel::Start()
 	{
 		Background* OldFilm = CreateActor<Background>(GameObjectGroup::UI);
 		OldFilmRenderer = OldFilm->CreateComponent<GameEngineTextureRenderer>();
-		OldFilmRenderer->CreateFrameAnimationFolder("03ScreenFX", FrameAnimation_DESC("03ScreenFX", 0.1f, true));
-		OldFilmRenderer->ChangeFrameAnimation("03ScreenFX");
+		OldFilmRenderer->CreateFrameAnimationFolder("ScreenFX", FrameAnimation_DESC("ScreenFX", 0.1f, true));
+		OldFilmRenderer->ChangeFrameAnimation("ScreenFX");
 		OldFilmRenderer->GetTransform().SetLocalScale({ 1280.0f, 720.0f, 1.0f });
 		OldFilmRenderer->GetTransform().SetLocalPosition({ 640.0f, -360.0f, (int)ZOrder::UI });
 		OldFilmRenderer->Off();
@@ -445,6 +408,44 @@ void SaltBakerLevel::Start()
 	GetIrisCameraActorTransform().SetLocalPosition({ 640.0f, -360.0f });
 	GetRotateCamera2ActorTransform().SetLocalPosition({ 640.0f, -360.0f });
 	SetPhase(Phase::Phase1);
+
+	{
+		std::list<GameEngineActor*> Actors = GetGroup(GameObjectGroup::CharacterState);
+		for (GameEngineActor* Actor : Actors)
+		{
+			if (CharacterState* _State = dynamic_cast<CharacterState*>(Actor))
+			{
+				State = _State;
+				HPCount = State->MaxHP;
+			}
+		}
+	}
+
+	{
+		std::list<GameEngineActor*> Actors = GetGroup(GameObjectGroup::CharacterScore);
+		for (GameEngineActor* Actor : Actors)
+		{
+			if (CharacterScore* _Score = dynamic_cast<CharacterScore*>(Actor))
+			{
+				Score = _Score;
+
+				Score->PlayTime = 0.0f;
+				Score->HP = 0;
+				Score->Parry = 0;
+				Score->UseCard = 0;
+				Score->SkillLevel = 2;
+			}
+		}
+	}
+}
+
+void SaltBakerLevel::LevelEndEvent()
+{
+	if (nullptr != Score)
+	{
+		Score->PlayTime = PlayElapsedTime;
+		Score->HP = Player->GetHP();
+	}
 }
 
 void SaltBakerLevel::Update(float _DeltaTime)

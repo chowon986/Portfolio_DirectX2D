@@ -654,6 +654,7 @@
     <ClInclude Include="GlassPlatform.h">
       <Filter>Actor\Play\InGame\Object</Filter>
     </ClInclude>
+    <ClInclude Include="TextureLoadUtils.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp">
@@ -1154,5 +1155,6 @@
     <ClCompile Include="GlassPlatform.cpp">
       <Filter>Actor\Play\InGame\Object</Filter>
     </ClCompile>
+    <ClCompile Include="TextureLoadUtils.cpp" />
   </ItemGroup>
 </Project>

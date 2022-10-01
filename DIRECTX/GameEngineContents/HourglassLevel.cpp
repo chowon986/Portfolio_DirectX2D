@@ -6,6 +6,7 @@
 #include <GameEngineContents/Enums.h>
 #include <functional>
 #include <GameEngineCore/GameEngineBlur.h>
+#include <GameEngineContents/TextureLoadUtils.h>
 
 HourglassLevel::HourglassLevel()
 {
@@ -15,8 +16,10 @@ HourglassLevel::~HourglassLevel()
 {
 }
 
-void HourglassLevel::Start()
+void HourglassLevel::LevelStartEvent()
 {
+	TextureLoadUtils::LoadTextures("13HourglassLevel");
+
 	GetMainCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
 
 	{
@@ -29,7 +32,7 @@ void HourglassLevel::Start()
 	{
 		Background* Hourglass = CreateActor<Background>(GameObjectGroup::UI);
 		GameEngineTextureRenderer* Renderer = Hourglass->CreateComponent<GameEngineTextureRenderer>();
-		Renderer->CreateFrameAnimationFolder("Hourglass", FrameAnimation_DESC("13HourglassLevel", 0.05f));
+		Renderer->CreateFrameAnimationFolder("Hourglass", FrameAnimation_DESC("Loading", 0.05f));
 		Renderer->AnimationBindEnd("Hourglass", std::bind(&HourglassLevel::EndAnimation, this, std::placeholders::_1));
 		Renderer->ChangeFrameAnimation("Hourglass");
 		Renderer->ScaleToTexture();

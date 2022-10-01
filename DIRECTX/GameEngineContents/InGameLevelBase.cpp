@@ -27,7 +27,7 @@ void InGameLevelBase::SetPhase(Phase _Phase)
 	}
 }
 
-void InGameLevelBase::Start()
+void InGameLevelBase::LevelStartEvent()
 {
 }
 

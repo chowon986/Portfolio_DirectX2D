@@ -8,6 +8,7 @@
 #include <GameEngineCore/GameEngineBlur.h>
 #include <GameEngineBase/GameEngineInput.h>
 #include <GameEngineCore/GameEngineTextureRenderer.h>
+#include <GameEngineContents/TextureLoadUtils.h>
 
 BeforeTitleLevel::BeforeTitleLevel()
 	: BlackScreenToAnimationIntervalTime(3.5f)
@@ -20,8 +21,10 @@ BeforeTitleLevel::~BeforeTitleLevel()
 {
 }
 
-void BeforeTitleLevel::Start()
+void BeforeTitleLevel::LevelStartEvent()
 {
+	TextureLoadUtils::LoadTextures("10BeforeTitleLevel");
+
 	GetMainCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
 	GetUICameraActorTransform().SetLocalPosition({ 0, 0 });
 	GetDarknessCameraActorTransform().SetLocalPosition({ 0, 0 });
@@ -29,10 +32,10 @@ void BeforeTitleLevel::Start()
 	Background* MDHRLogo = CreateActor<Background>(GameObjectGroup::UI);
 	MDHRLogoRenderer = MDHRLogo->CreateComponent<GameEngineTextureRenderer>();
 	MDHRLogoRenderer->GetTransform().SetLocalScale({ 1280,720,100 });
-	MDHRLogoRenderer->CreateFrameAnimationFolder("BeforeTitle", FrameAnimation_DESC("10BeforeTitleLevel", 0.05f));
+	MDHRLogoRenderer->CreateFrameAnimationFolder("BeforeTitle", FrameAnimation_DESC("Logo", 0.05f));
 	MDHRLogoRenderer->SetTexture("Loading_background.png");
 	MDHRLogoRenderer->AnimationBindEnd("BeforeTitle", std::bind(&BeforeTitleLevel::OnHDMRAnimationFrameEnd, this, std::placeholders::_1));
-	
+
 	//Darkness* DarknessActor = CreateActor<Darkness>();
 	//DarknessActor->GetTransform().SetWorldPosition({ 0.0f, 0.0f });
 	//DarknessActor->SetLevelOverOn();

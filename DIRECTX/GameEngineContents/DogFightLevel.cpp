@@ -14,6 +14,7 @@
 #include "CharacterScore.h"
 #include <GameEngineCore/GameEngineBlur.h>
 #include "PlayerHP.h"
+#include <GameEngineContents/TextureLoadUtils.h>
 
 DogFightLevel::DogFightLevel()
 	: ColMapRenderer(nullptr)
@@ -60,47 +61,11 @@ void DogFightLevel::ColMapOnOffSwitch()
 
 void DogFightLevel::LevelStartEvent()
 {
-	{
-		std::list<GameEngineActor*> Actors = GetGroup(GameObjectGroup::CharacterState);
-		for (GameEngineActor* Actor : Actors)
-		{
-			if (CharacterState* _State = dynamic_cast<CharacterState*>(Actor))
-			{
-				State = _State;
-				HPCount = State->MaxHP;
-			}
-		}
-	}
+	//Loading
+	TextureLoadUtils::LoadTextures("15DogFightLevel");
+	TextureLoadUtils::LoadFolderTextures("DogFightBoss", "22Boss");
 
-	{
-		std::list<GameEngineActor*> Actors = GetGroup(GameObjectGroup::CharacterScore);
-		for (GameEngineActor* Actor : Actors)
-		{
-			if (CharacterScore* _Score = dynamic_cast<CharacterScore*>(Actor))
-			{
-				Score = _Score;
-
-				Score->PlayTime = 0.0f;
-				Score->HP = 0;
-				Score->Parry = 0;
-				Score->UseCard = 0;
-				Score->SkillLevel = 2;
-			}
-		}
-	}
-}
-
-void DogFightLevel::LevelEndEvent()
-{
-	if (nullptr != Score)
-	{
-		Score->PlayTime = PlayElapsedTime;
-		Score->HP = Player->GetHP();
-	}
-}
-
-void DogFightLevel::Start()
-{
+	//Start
 	GetMainCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
 	GetBackgroundCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
 	GetRotateCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
@@ -114,7 +79,7 @@ void DogFightLevel::Start()
 	{
 		Background* ScreenLight = CreateActor<Background>(GameObjectGroup::UI);
 		ScreenLightRenderer = ScreenLight->CreateComponent <GameEngineTextureRenderer>();
-		ScreenLightRenderer->CreateFrameAnimationFolder("LightOn", FrameAnimation_DESC("IrisA", 0.05f,false));
+		ScreenLightRenderer->CreateFrameAnimationFolder("LightOn", FrameAnimation_DESC("IrisA", 0.05f, false));
 		ScreenLightRenderer->CreateFrameAnimationFolder("LightOff", FrameAnimation_DESC("IrisA", 16, 16, 0.1f));
 		ScreenLightRenderer->ChangeFrameAnimation("LightOff");
 		ScreenLightRenderer->GetTransform().SetLocalScale({ 1280.0f, 720.0f, 0 });
@@ -373,7 +338,46 @@ void DogFightLevel::Start()
 	GetRotateCameraActorTransform().SetLocalPosition({ 640, -360 });
 	GetRotateCamera2ActorTransform().SetLocalPosition({ 640, -360 });
 	GetIrisCameraActorTransform().SetLocalPosition({ 640.0f, -360.0f });
+
+	{
+		std::list<GameEngineActor*> Actors = GetGroup(GameObjectGroup::CharacterState);
+		for (GameEngineActor* Actor : Actors)
+		{
+			if (CharacterState* _State = dynamic_cast<CharacterState*>(Actor))
+			{
+				State = _State;
+				HPCount = State->MaxHP;
+			}
+		}
+	}
+
+	{
+		std::list<GameEngineActor*> Actors = GetGroup(GameObjectGroup::CharacterScore);
+		for (GameEngineActor* Actor : Actors)
+		{
+			if (CharacterScore* _Score = dynamic_cast<CharacterScore*>(Actor))
+			{
+				Score = _Score;
+
+				Score->PlayTime = 0.0f;
+				Score->HP = 0;
+				Score->Parry = 0;
+				Score->UseCard = 0;
+				Score->SkillLevel = 2;
+			}
+		}
+	}
 }
+
+void DogFightLevel::LevelEndEvent()
+{
+	if (nullptr != Score)
+	{
+		Score->PlayTime = PlayElapsedTime;
+		Score->HP = Player->GetHP();
+	}
+}
+
 void DogFightLevel::ResetPositionCloudLeftA(const FrameAnimation_DESC& _Info)
 {
 	CloudA1->GetTransform().SetLocalPosition({ -150, -250, (int)ZOrder::Background - 1 });
@@ -523,8 +527,8 @@ void DogFightLevel::DogCopterIntroPhase1IntroAnimationFrameChanged(const FrameAn
 	{
 		GameEngineActor* ReadyWallop = CreateActor<GameEngineActor>(GameObjectGroup::UI);
 		ReadyWallopRenderer = ReadyWallop->CreateComponent<GameEngineTextureRenderer>();
-		ReadyWallopRenderer->CreateFrameAnimationFolder("Ready", FrameAnimation_DESC("06ReadyWallop", 0.05, false));
-		ReadyWallopRenderer->CreateFrameAnimationFolder("KnockOut", FrameAnimation_DESC("07KnockOut", 0.05, false));
+		ReadyWallopRenderer->CreateFrameAnimationFolder("Ready", FrameAnimation_DESC("ReadyWallop", 0.05, false));
+		ReadyWallopRenderer->CreateFrameAnimationFolder("KnockOut", FrameAnimation_DESC("KnockOut", 0.05, false));
 		ReadyWallopRenderer->AnimationBindEnd("Ready", std::bind(&DogFightLevel::ReadyWallopAnimationFrameFinished, this, std::placeholders::_1));
 		ReadyWallopRenderer->AnimationBindEnd("KnockOut", std::bind(&DogFightLevel::KnockOutAnimationFrameFinished, this, std::placeholders::_1));
 		ReadyWallopRenderer->GetTransform().SetWorldScale({ 1280.0f,720.0f,1.0f });

@@ -14,6 +14,7 @@
 #include "ScoreLevel.h"
 #include "BishopLevel.h"
 #include <GameEngineCore/GameEngineBlend.h>
+#include <GameEngineContents/TextureLoadUtils.h>
 
 #pragma comment(lib, "GameEngineBase.lib")
 
@@ -92,17 +93,13 @@ void ContentsCore::Start()
 	}
 
 	GameEngineDirectory Dir;
-	Dir.MoveParentToExitsChildDirectory("ConstantResources");
-	Dir.Move("ConstantResources");
-	Dir.Move("Texture");
 
-	std::vector<GameEngineDirectory> RecursiveDir = Dir.GetRecursiveAllDirectory();
-	for (GameEngineDirectory Dir : RecursiveDir)
-	{
-		GameEngineFolderTexture::Load(Dir.GetFullPath());
-	}
+	TextureLoadUtils::LoadTextures("00Common");
+	TextureLoadUtils::LoadTextures("20Player");
+	TextureLoadUtils::LoadTextures("21Bullet");
+	//TextureLoadUtils::LoadTextures("22Boss");
 
-	Dir.Move("01ShopLevel");
+	/*Dir.Move("01ShopLevel");
 	std::vector<GameEngineFile> Textures = Dir.GetAllFile();
 
 	for (size_t i = 0; i < Textures.size(); i++)
@@ -153,7 +150,7 @@ void ContentsCore::Start()
 	for (size_t i = 0; i < Textures5.size(); i++)
 	{
 		GameEngineTexture::Load(Textures5[i].GetFullPath());
-	}
+	}*/
 
 	GameEngineTexture::Cut("Cup.png", 20, 20);
 	GameEngineTexture::Cut("Cup_Dash.png", 8, 1);

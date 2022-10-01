@@ -3,6 +3,7 @@
 #include "TitleLevel.h"
 #include "Background.h"
 #include <GameEngineCore/GameEngineBlur.h>
+#include <GameEngineContents/TextureLoadUtils.h>
 
 TitleLevel::TitleLevel()
 	: IrisRenderer(nullptr)
@@ -13,8 +14,12 @@ TitleLevel::~TitleLevel()
 {
 }
 
-void TitleLevel::Start()
+void TitleLevel::LevelStartEvent()
 {
+	//Loading
+	TextureLoadUtils::LoadTextures("11TitleLevel");
+
+	//Start
 	GetMainCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
 
 	{
@@ -22,7 +27,7 @@ void TitleLevel::Start()
 		GameEngineTextureRenderer* TitleRenderer = Title->CreateComponent<GameEngineTextureRenderer>();
 		TitleRenderer->GetTransform().SetLocalScale({ 1280.0f, 720.0f, 1.0f });
 		TitleRenderer->SetTexture("TitleScreenBackground.png");
-		TitleRenderer->GetTransform().SetLocalPosition({ 0.0f, 0.0f, (int)ZOrder::Background }); 
+		TitleRenderer->GetTransform().SetLocalPosition({ 0.0f, 0.0f, (int)ZOrder::Background });
 
 		Background* Bottom = CreateActor<Background>(GameObjectGroup::UI);
 		GameEngineTextureRenderer* BottomRenderer = Bottom->CreateComponent<GameEngineTextureRenderer>();
