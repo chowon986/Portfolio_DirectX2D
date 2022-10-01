@@ -320,8 +320,6 @@ void DogFightLevel::Update(float _DeltaTime)
 
 	if (GetPhase() == Phase::Ready && IrisOnceCheck == false)
 	{
-		ScreenLightRenderer->ChangeFrameAnimation("LightOn");
-
 		if (CaptainCanteenPlane == nullptr)
 		{
 			CaptainCanteenPlane = CreateActor<CanteenPlane>(GameObjectGroup::Monster);
@@ -802,6 +800,7 @@ void DogFightLevel::OnLoadCompleted()
 		}
 
 		Hourglass->Off();
+		ScreenLightRenderer->ChangeFrameAnimation("LightOn");
 	}
 }
 
