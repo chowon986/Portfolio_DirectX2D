@@ -18,8 +18,6 @@ HourglassLevel::~HourglassLevel()
 
 void HourglassLevel::LevelStartEvent()
 {
-	TextureLoadUtils::LoadTextures("13HourglassLevel");
-
 	GetMainCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
 
 	{
