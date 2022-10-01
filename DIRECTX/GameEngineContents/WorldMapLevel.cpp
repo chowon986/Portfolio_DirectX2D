@@ -65,16 +65,17 @@ void WorldMapLevel::ColMapOnOffSwitch()
 }
 
 
-void WorldMapLevel::LevelStartEvent()
+void WorldMapLevel::Start()
 {
-
-
 	//Start
 	GetMainCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
 	GetBackgroundCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
 	GetRotateCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
 	GetRotateCamera2()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
+}
 
+void WorldMapLevel::LevelStartEvent()
+{
 	{
 		Hourglass = CreateActor<Background>(GameObjectGroup::UI);
 		GameEngineTextureRenderer* Renderer = Hourglass->CreateComponent<GameEngineTextureRenderer>();

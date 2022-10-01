@@ -63,7 +63,7 @@ void DogFightLevel::ColMapOnOffSwitch()
 	}
 }
 
-void DogFightLevel::LevelStartEvent()
+void DogFightLevel::Start()
 {
 
 	//Start
@@ -71,6 +71,10 @@ void DogFightLevel::LevelStartEvent()
 	GetBackgroundCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
 	GetRotateCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
 	GetRotateCamera2()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
+}
+
+void DogFightLevel::LevelStartEvent()
+{
 
 	GetMainCamera()->SetProjectionSize({ 1280.0f, 720.0f });
 	GetRotateCamera()->SetProjectionSize({ 1536.0f,864.0f });

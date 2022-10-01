@@ -196,7 +196,7 @@ void GameEngineRenderTarget::Setting()
 
 void GameEngineRenderTarget::EffectProcess()
 {
-	// Setting();
+	Setting();
 
 	for (GameEnginePostEffect* Effect : Effects)
 	{

@@ -37,6 +37,7 @@ public:
 	bool GlassOn;
 
 protected:
+	void Start() override;
 	void LevelStartEvent() override;
 	void LevelEndEvent() override;
 	void Update(float _DeltaTime) override;
