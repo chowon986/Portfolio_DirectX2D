@@ -33,7 +33,12 @@ void BeforeTitleLevel::LevelStartEvent()
 {
 	TextureLoadUtils::LoadTextures("10BeforeTitleLevel");
 
+	//Start
 	GetMainCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
+	GetBackgroundCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
+	GetRotateCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
+	GetRotateCamera2()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
+
 	GetUICameraActorTransform().SetLocalPosition({ 0, 0 });
 	GetDarknessCameraActorTransform().SetLocalPosition({ 0, 0 });
 

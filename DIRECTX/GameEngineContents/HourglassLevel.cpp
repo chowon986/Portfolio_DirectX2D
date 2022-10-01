@@ -18,7 +18,6 @@ HourglassLevel::~HourglassLevel()
 
 void HourglassLevel::LevelStartEvent()
 {
-	GetMainCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
 
 	{
 		Background* HourglassBackground = CreateActor<Background>(GameObjectGroup::UI);

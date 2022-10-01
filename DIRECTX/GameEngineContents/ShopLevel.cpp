@@ -60,7 +60,6 @@ void ShopLevel::LevelStartEvent()
 	}
 
 	// Start
-	GetMainCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
 	{
 		Background* ShopBackground = CreateActor<Background>(GameObjectGroup::UI);
 		GameEngineTextureRenderer* Renderer = ShopBackground->CreateComponent<GameEngineTextureRenderer>();

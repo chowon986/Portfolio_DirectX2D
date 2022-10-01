@@ -46,7 +46,6 @@ SaltBakerLevel::~SaltBakerLevel()
 
 void SaltBakerLevel::LevelStartEvent()
 {
-	GetMainCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
 	GetMainCamera()->SetProjectionSize({ 1280.0f, 720.0f });
 	GetRotateCamera()->SetProjectionSize({ 1536.0f, 864.0f });
 	GetRotateCamera2()->SetProjectionSize({ 1280.0f, 720.0f });

@@ -29,7 +29,6 @@ void BishopLevel::LevelStartEvent()
 	Cuphead->GetTransform().SetLocalPosition({ 640.0f, -360.0f, (int)ZOrder::Player });
 	Cuphead->SetColMapImage(ColMapRenderer);
 	PushToRotateCamera(Cuphead);
-	GetMainCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
 
 	{
 		Background* BishopBackground = CreateActor<Background>(GameObjectGroup::UI);

@@ -24,8 +24,6 @@ void ScoreLevel::LevelStartEvent()
 {
 	TextureLoadUtils::LoadTextures("08ScoreLevel");
 
-	GetMainCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
-	GetUICamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
 	{
 		GameEngineActor* Iris = CreateActor<GameEngineActor>();
 		IrisRenderer = Iris->CreateComponent<GameEngineTextureRenderer>();

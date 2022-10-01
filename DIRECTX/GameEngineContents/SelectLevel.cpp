@@ -49,7 +49,6 @@ void SelectLevel::LevelStartEvent()
 	TextureLoadUtils::LoadTextures("12SelectLevel");
 
 	//Start
-	GetMainCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
 
 	Score = CreateActor<CharacterScore>(GameObjectGroup::CharacterScore);
 	Score->SetLevelOverOn();
