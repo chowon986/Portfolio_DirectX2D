@@ -84,7 +84,7 @@ void InGameCuphead::Start()
 	Renderer->AnimationBindEnd("IngameCupheadExShootStraight", std::bind(&InGameCuphead::OnExShootAnimationEnded, this, std::placeholders::_1));
 
 	// TakeDamage
-	Renderer->CreateFrameAnimationCutTexture("IngameCupheadTakeDamage", FrameAnimation_DESC("Cup.png", 28, 33, 0.1f, true));
+	Renderer->CreateFrameAnimationCutTexture("IngameCupheadTakeDamage", FrameAnimation_DESC("Cup.png", 28, 33, 0.05f, true));
 	Renderer->AnimationBindEnd("IngameCupheadTakeDamage", std::bind(&InGameCuphead::OnTakeDamageAnimationEnded, this, std::placeholders::_1));
 
 	// Die
