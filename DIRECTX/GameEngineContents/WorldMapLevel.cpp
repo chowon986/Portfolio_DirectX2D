@@ -75,16 +75,6 @@ void WorldMapLevel::LevelStartEvent()
 	Inventory->SetLevelOverOn();
 	Inventory->Off();
 
-	if (false == GameEngineInput::GetInst()->IsKey("EnterMap"))
-	{
-		GameEngineInput::GetInst()->CreateKey("EnterMap", 'B');
-	}
-
-	if (false == GameEngineInput::GetInst()->IsKey("Inventory"))
-	{
-		GameEngineInput::GetInst()->CreateKey("Inventory", 'Y');
-	}
-
 	{
 		GameEngineActor* CurCoin = CreateActor<GameEngineActor>(GameObjectGroup::UI);
 		GameEngineTextureRenderer* CoinRenderer = CurCoin->CreateComponent<GameEngineTextureRenderer>();

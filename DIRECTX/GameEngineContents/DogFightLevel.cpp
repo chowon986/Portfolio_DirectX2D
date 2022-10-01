@@ -71,11 +71,6 @@ void DogFightLevel::LevelStartEvent()
 	GetRotateCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
 	GetRotateCamera2()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
 
-	if (false == GameEngineInput::GetInst()->IsKey("PhaseChangeKey"))
-	{
-		GameEngineInput::GetInst()->CreateKey("PhaseChangeKey", 'L');
-	}
-
 	{
 		Background* ScreenLight = CreateActor<Background>(GameObjectGroup::UI);
 		ScreenLightRenderer = ScreenLight->CreateComponent <GameEngineTextureRenderer>();

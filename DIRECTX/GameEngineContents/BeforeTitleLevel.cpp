@@ -9,6 +9,14 @@
 #include <GameEngineBase/GameEngineInput.h>
 #include <GameEngineCore/GameEngineTextureRenderer.h>
 #include <GameEngineContents/TextureLoadUtils.h>
+#include <GameEngineContents/SuperBeamItem.h>
+#include <GameEngineContents/SuperGhostItem.h>
+#include <GameEngineContents/SuperInvincibleItem.h>
+#include <GameEngineContents/AstalCookieItem.h>
+#include <GameEngineContents/WeaponItemBase.h>
+#include <GameEngineContents/PeaShooterItem.h>
+#include <GameEngineContents/CharacterState.h>
+#include <GameEngineContents/PeaShooter.h>
 
 BeforeTitleLevel::BeforeTitleLevel()
 	: BlackScreenToAnimationIntervalTime(3.5f)
@@ -44,6 +52,27 @@ void BeforeTitleLevel::LevelStartEvent()
 	PostEffect->SetLevelOverOn();
 
 	//GameEngineSound::SoundPlayOneShot("MDHR.mp3");
+
+	CharacterState* State = CreateActor<CharacterState>(GameObjectGroup::CharacterState);
+	State->SetLevelOverOn();
+	std::shared_ptr<PeaShooterItem> PeaShot = std::make_shared<PeaShooterItem>();
+	State->EquippedItems[InventoryType::ShotA] = PeaShot;
+	State->Items[ItemType::Shoot].push_back(PeaShot);
+	if (WeaponItemBase* Item = dynamic_cast<WeaponItemBase*>(State->EquippedItems[InventoryType::ShotA].get()))
+	{
+		Item->Weapon = CreateActor<PeaShooter>();
+		Item->Weapon->SetLevelOverOn();
+	}
+
+	std::shared_ptr<SuperBeamItem> SuperBeamItemIcon = std::make_shared<SuperBeamItem>();
+	std::shared_ptr<SuperGhostItem> SuperGhostItemIcon = std::make_shared<SuperGhostItem>();
+	std::shared_ptr<SuperInvincibleItem> SuperInvincibleItemIcon = std::make_shared<SuperInvincibleItem>();
+	State->Items[ItemType::Super].push_back(SuperBeamItemIcon);
+	State->Items[ItemType::Super].push_back(SuperInvincibleItemIcon);
+	State->Items[ItemType::Super].push_back(SuperGhostItemIcon);
+
+	std::shared_ptr<AstalCookieItem> AstalCookieItemIcon = std::make_shared<AstalCookieItem>();
+	State->Items[ItemType::Charm].push_back(AstalCookieItemIcon);
 }
 
 void BeforeTitleLevel::Update(float _DeltaTime)

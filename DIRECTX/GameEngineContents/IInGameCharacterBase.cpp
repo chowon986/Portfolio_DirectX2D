@@ -37,15 +37,6 @@ void IInGameCharacterBase::SetShooterState(InGameCharacterShooterState _State)
 
 void IInGameCharacterBase::Start()
 {
-	if (false == GameEngineInput::GetInst()->IsKey("Aim"))
-	{
-		GameEngineInput::GetInst()->CreateKey("Aim", 'A');
-		GameEngineInput::GetInst()->CreateKey("Shoot", VK_LSHIFT);
-		GameEngineInput::GetInst()->CreateKey("GaugeShoot", 'X');
-		GameEngineInput::GetInst()->CreateKey("Jump", VK_CONTROL);
-		GameEngineInput::GetInst()->CreateKey("Dash", 'Z');
-		GameEngineInput::GetInst()->CreateKey("ChangeGun", 'Q');
-	}
 }
 
 void IInGameCharacterBase::Update(float _Delta)

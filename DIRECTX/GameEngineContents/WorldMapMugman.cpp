@@ -18,12 +18,6 @@ WorldMapMugman::~WorldMapMugman()
 
 void WorldMapMugman::Start()
 {
-	if (false == GameEngineInput::GetInst()->IsKey("MoveLeft"))
-	{
-		GameEngineInput::GetInst()->CreateKey("MoveLeft", VK_LEFT);
-		GameEngineInput::GetInst()->CreateKey("MoveRight", VK_RIGHT);
-	}
-
 	GameEngineTextureRenderer* Renderer = CreateComponent<GameEngineTextureRenderer>();
 	SetRenderer(Renderer);
 

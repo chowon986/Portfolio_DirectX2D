@@ -54,35 +54,13 @@ void SelectLevel::LevelStartEvent()
 	Score = CreateActor<CharacterScore>(GameObjectGroup::CharacterScore);
 	Score->SetLevelOverOn();
 
-	State = CreateActor<CharacterState>(GameObjectGroup::CharacterState);
-	State->SetLevelOverOn();
-	std::shared_ptr<PeaShooterItem> PeaShot = std::make_shared<PeaShooterItem>();
-	State->EquippedItems[InventoryType::ShotA] = PeaShot;
-	State->Items[ItemType::Shoot].push_back(PeaShot);
-	if (WeaponItemBase* Item = dynamic_cast<WeaponItemBase*>(State->EquippedItems[InventoryType::ShotA].get()))
+	std::list<GameEngineActor*> Actors = GetGroup(GameObjectGroup::CharacterState);
+	for (GameEngineActor* Actor : Actors)
 	{
-		Item->Weapon = CreateActor<PeaShooter>();
-		Item->Weapon->SetLevelOverOn();
-	}
-
-	std::shared_ptr<SuperBeamItem> SuperBeamItemIcon = std::make_shared<SuperBeamItem>();
-	std::shared_ptr<SuperGhostItem> SuperGhostItemIcon = std::make_shared<SuperGhostItem>();
-	std::shared_ptr<SuperInvincibleItem> SuperInvincibleItemIcon = std::make_shared<SuperInvincibleItem>();
-	State->Items[ItemType::Super].push_back(SuperBeamItemIcon);
-	State->Items[ItemType::Super].push_back(SuperInvincibleItemIcon);
-	State->Items[ItemType::Super].push_back(SuperGhostItemIcon);
-
-	std::shared_ptr<AstalCookieItem> AstalCookieItemIcon = std::make_shared<AstalCookieItem>();
-	State->Items[ItemType::Charm].push_back(AstalCookieItemIcon);
-
-	if (false == GameEngineInput::GetInst()->IsKey("MoveDown"))
-	{
-		GameEngineInput::GetInst()->CreateKey("MoveDown", VK_DOWN);
-		GameEngineInput::GetInst()->CreateKey("MoveUp", VK_UP);
-		GameEngineInput::GetInst()->CreateKey("MoveRight", VK_RIGHT);
-		GameEngineInput::GetInst()->CreateKey("MoveLeft", VK_LEFT);
-		GameEngineInput::GetInst()->CreateKey("Select", VK_RETURN);
-		GameEngineInput::GetInst()->CreateKey("ESC", VK_ESCAPE);
+		if (CharacterState* _State = dynamic_cast<CharacterState*>(Actor))
+		{
+			State = _State;
+		}
 	}
 
 	{

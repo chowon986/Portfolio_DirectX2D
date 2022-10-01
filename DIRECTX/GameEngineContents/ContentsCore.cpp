@@ -67,18 +67,8 @@ void ContentsCore::Start()
 		GameEngineBlend::Create("Darkness", Desc);
 	}
 
-	if (false == GameEngineInput::GetInst()->IsKey("LevelChange"))
 	{
-		GameEngineInput::GetInst()->CreateKey("LevelChange", 'P');
-	}
-
-	if (false == GameEngineInput::GetInst()->IsKey("ColMapOnOffSwitch"))
-	{
-		GameEngineInput::GetInst()->CreateKey("ColMapOnOffSwitch", 'O');
-	}
-
-	{
-
+		// 사운드도 나눠서 로드 하기
 		GameEngineDirectory Dir;
 		Dir.MoveParentToExitsChildDirectory("ConstantResources");
 		Dir.Move("ConstantResources");
@@ -92,68 +82,34 @@ void ContentsCore::Start()
 		}
 	}
 
-	GameEngineDirectory Dir;
-
+	// 공통 리소스 로드
 	TextureLoadUtils::LoadTextures("00Common");
 	TextureLoadUtils::LoadTextures("20Player");
 	TextureLoadUtils::LoadTextures("21Bullet");
-	//TextureLoadUtils::LoadTextures("22Boss");
-
-	/*Dir.Move("01ShopLevel");
-	std::vector<GameEngineFile> Textures = Dir.GetAllFile();
-
-	for (size_t i = 0; i < Textures.size(); i++)
-	{
-		GameEngineTexture::Load(Textures[i].GetFullPath());
-	}
-
-	Dir.MoveParent();
-	Dir.Move("11TitleLevel");
-	std::vector<GameEngineFile> Textures1 = Dir.GetAllFile();
-
-	for (size_t i = 0; i < Textures1.size(); i++)
-	{
-		GameEngineTexture::Load(Textures1[i].GetFullPath());
-	}
-
-	Dir.MoveParent();
-	Dir.Move("12SelectLevel");
-	std::vector<GameEngineFile> Textures2 = Dir.GetAllFile();
-
-	for (size_t i = 0; i < Textures2.size(); i++)
-	{
-		GameEngineTexture::Load(Textures2[i].GetFullPath());
-	}
-
-	Dir.MoveParent();
-	Dir.Move("14WorldMapLevel");
-	std::vector<GameEngineFile> Textures3 = Dir.GetAllFile();
-
-	for (size_t i = 0; i < Textures3.size(); i++)
-	{
-		GameEngineTexture::Load(Textures3[i].GetFullPath());
-	}
-
-	Dir.MoveParent();
-	Dir.Move("15DogFightLevel");
-	std::vector<GameEngineFile> Textures4 = Dir.GetAllFile();
-
-	for (size_t i = 0; i < Textures4.size(); i++)
-	{
-		GameEngineTexture::Load(Textures4[i].GetFullPath());
-	}
-
-	Dir.MoveParent();
-	Dir.Move("16BishopLevel");
-	std::vector<GameEngineFile> Textures5 = Dir.GetAllFile();
-
-	for (size_t i = 0; i < Textures5.size(); i++)
-	{
-		GameEngineTexture::Load(Textures5[i].GetFullPath());
-	}*/
 
 	GameEngineTexture::Cut("Cup.png", 20, 20);
 	GameEngineTexture::Cut("Cup_Dash.png", 8, 1);
+
+	// 키 생성
+	GameEngineInput::GetInst()->CreateKey("AddCoin", VK_OEM_PLUS);
+	GameEngineInput::GetInst()->CreateKey("MinusCoin", VK_OEM_MINUS);
+	GameEngineInput::GetInst()->CreateKey("LevelChange", 'P');
+	GameEngineInput::GetInst()->CreateKey("ColMapOnOffSwitch", 'O');
+	GameEngineInput::GetInst()->CreateKey("PhaseChangeKey", 'L');
+	GameEngineInput::GetInst()->CreateKey("Aim", 'A');
+	GameEngineInput::GetInst()->CreateKey("Shoot", VK_LSHIFT);
+	GameEngineInput::GetInst()->CreateKey("GaugeShoot", 'X');
+	GameEngineInput::GetInst()->CreateKey("Jump", VK_CONTROL);
+	GameEngineInput::GetInst()->CreateKey("Dash", 'Z');
+	GameEngineInput::GetInst()->CreateKey("ChangeGun", 'Q');
+	GameEngineInput::GetInst()->CreateKey("MoveDown", VK_DOWN);
+	GameEngineInput::GetInst()->CreateKey("MoveUp", VK_UP);
+	GameEngineInput::GetInst()->CreateKey("MoveRight", VK_RIGHT);
+	GameEngineInput::GetInst()->CreateKey("MoveLeft", VK_LEFT);
+	GameEngineInput::GetInst()->CreateKey("Select", VK_RETURN);
+	GameEngineInput::GetInst()->CreateKey("ESC", VK_ESCAPE);
+	GameEngineInput::GetInst()->CreateKey("EnterMap", 'B');
+	GameEngineInput::GetInst()->CreateKey("Inventory", 'Y');
 
 	CreateLevel<BeforeTitleLevel>("BeforeTitle");
 	CreateLevel<TitleLevel>("Title");

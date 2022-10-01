@@ -26,13 +26,6 @@ void CharacterState::Start()
 	Items.insert(std::make_pair<ItemType, std::vector<std::shared_ptr<ItemBase>>>(ItemType::Shoot, std::vector<std::shared_ptr<ItemBase>>()));
 	Items.insert(std::make_pair<ItemType, std::vector<std::shared_ptr<ItemBase>>>(ItemType::Super, std::vector<std::shared_ptr<ItemBase>>()));
 	Items.insert(std::make_pair<ItemType, std::vector<std::shared_ptr<ItemBase>>>(ItemType::Charm, std::vector<std::shared_ptr<ItemBase>>()));
-
-
-	if (false == GameEngineInput::GetInst()->IsKey("AddCoin"))
-	{
-		GameEngineInput::GetInst()->CreateKey("AddCoin", VK_OEM_PLUS);
-		GameEngineInput::GetInst()->CreateKey("MinusCoin", VK_OEM_MINUS);
-	}
 }
 
 void CharacterState::OnLevelChanged()
