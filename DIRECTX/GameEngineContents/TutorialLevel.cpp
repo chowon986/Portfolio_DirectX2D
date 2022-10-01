@@ -59,7 +59,12 @@ void TutorialLevel::LevelStartEvent()
 		GameEngineTexture::Load(Textures[i].GetFullPath());
 	}
 
+
 	//Start
+	GetMainCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
+	GetBackgroundCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
+	GetRotateCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
+	GetRotateCamera2()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
 
 	{
 		Background* ColMapImage = CreateActor<Background>(GameObjectGroup::UI);
@@ -76,8 +81,6 @@ void TutorialLevel::LevelStartEvent()
 	Cuphead->SetOnDashInvisible(State->OnDashInvisible);
 	PushToRotateCamera(Cuphead);
 	Player = Cuphead;
-
-	GetMainCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
 
 	{
 		GameEngineActor* TutorialBackground = CreateActor<GameEngineActor>(GameObjectGroup::UI);

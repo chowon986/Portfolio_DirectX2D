@@ -19,9 +19,12 @@ void TitleLevel::LevelStartEvent()
 	//Loading
 	TextureLoadUtils::LoadTextures("11TitleLevel");
 
+
 	//Start
 	GetMainCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
-
+	GetBackgroundCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
+	GetRotateCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
+	GetRotateCamera2()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
 	{
 		Background* Title = CreateActor<Background>(GameObjectGroup::UI);
 		GameEngineTextureRenderer* TitleRenderer = Title->CreateComponent<GameEngineTextureRenderer>();

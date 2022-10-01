@@ -22,6 +22,12 @@ ScoreLevel::~ScoreLevel()
 
 void ScoreLevel::LevelStartEvent()
 {
+	//Start
+	GetMainCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
+	GetBackgroundCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
+	GetRotateCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
+	GetRotateCamera2()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
+
 	TextureLoadUtils::LoadTextures("08ScoreLevel");
 
 	{

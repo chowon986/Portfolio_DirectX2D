@@ -66,11 +66,17 @@ void DogFightLevel::ColMapOnOffSwitch()
 void DogFightLevel::LevelStartEvent()
 {
 
-	/*GetMainCamera()->SetProjectionSize({ 1280.0f, 720.0f });
+	//Start
+	GetMainCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
+	GetBackgroundCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
+	GetRotateCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
+	GetRotateCamera2()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
+
+	GetMainCamera()->SetProjectionSize({ 1280.0f, 720.0f });
 	GetRotateCamera()->SetProjectionSize({ 1536.0f,864.0f });
 	GetRotateCamera2()->SetProjectionSize({ 1408.0f,792.0f });
 	GetIrisCamera()->SetProjectionSize({ 1280.0f, 720.0f });
-	GetBackgroundCamera()->SetProjectionSize({ 1408.0f,792.0f });*/
+	GetBackgroundCamera()->SetProjectionSize({ 1408.0f,792.0f });
 
 	GetMainCameraActorTransform().SetLocalPosition({ 640, -360 });
 	GetBackgroundCameraActorTransform().SetLocalPosition({ 640, -360 });

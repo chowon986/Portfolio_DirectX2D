@@ -1,5 +1,6 @@
 #include "PreCompile.h"
 #include "StoryLevel.h"
+#include <GameEngineCore/GameEngineBlur.h>
 
 StoryLevel::StoryLevel()
 {
@@ -11,6 +12,11 @@ StoryLevel::~StoryLevel()
 
 void StoryLevel::LevelStartEvent()
 {
+	//Start
+	GetMainCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
+	GetBackgroundCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
+	GetRotateCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
+	GetRotateCamera2()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
 	//GameEngineActor* IntroStory = CreateActor<GameEngineActor>();
 	//GameEngineTextureRenderer* Renderer = IntroStory->CreateComponent<GameEngineTextureRenderer>();
 	//Renderer->CreateFrameAnimationFolder("23IntroStory", FrameAnimation_DESC("23IntroStory", 0.05, false));

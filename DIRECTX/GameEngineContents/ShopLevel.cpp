@@ -59,7 +59,12 @@ void ShopLevel::LevelStartEvent()
 		GameEngineTexture::Load(Textures[i].GetFullPath());
 	}
 
-	// Start
+
+	//Start
+	GetMainCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
+	GetBackgroundCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
+	GetRotateCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
+	GetRotateCamera2()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
 	{
 		Background* ShopBackground = CreateActor<Background>(GameObjectGroup::UI);
 		GameEngineTextureRenderer* Renderer = ShopBackground->CreateComponent<GameEngineTextureRenderer>();

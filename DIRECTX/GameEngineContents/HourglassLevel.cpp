@@ -19,6 +19,12 @@ HourglassLevel::~HourglassLevel()
 void HourglassLevel::LevelStartEvent()
 {
 
+	//Start
+	GetMainCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
+	GetBackgroundCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
+	GetRotateCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
+	GetRotateCamera2()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
+
 	{
 		Background* HourglassBackground = CreateActor<Background>(GameObjectGroup::UI);
 		GameEngineTextureRenderer* Renderer = HourglassBackground->CreateComponent<GameEngineTextureRenderer>();

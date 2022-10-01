@@ -23,6 +23,11 @@ BishopLevel::~BishopLevel()
 void BishopLevel::LevelStartEvent()
 {
 	TextureLoadUtils::LoadTextures("15DogFightLevel");
+	//Start
+	GetMainCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
+	GetBackgroundCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
+	GetRotateCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
+	GetRotateCamera2()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
 
 	//Start
 	Cuphead = CreateActor<InGameCuphead>(GameObjectGroup::Player);
