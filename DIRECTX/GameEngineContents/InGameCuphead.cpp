@@ -13,6 +13,7 @@
 #include "CharmItemBase.h"
 #include "SaltBakerLevel.h"
 #include <GameEngineContents/TutorialLevel.h>
+#include <GameEngineContents/DogFightLevel.h>
 
 InGameCuphead::InGameCuphead()
 	: IsInputEnabled(false)
@@ -21,14 +22,12 @@ InGameCuphead::InGameCuphead()
 	, IsOpenScoreBoard(false)
 	, Collision(nullptr)
 	, Renderer(nullptr)
-	, OnParriable(false)
 	, AlphaOn(true)
 	, CanTakeDamageElapsedTime(0.0f)
 	, CanTakeDamageIntervalTime(1.0f)
 	, ToggleWeapon(false)
 	, IsInvisible(false)
 	, CountInvisibleTime(false)
-	, CanFly(false)
 {
 }
 
@@ -178,19 +177,6 @@ void InGameCuphead::Start()
 
 void InGameCuphead::Update(float _DeltaTime)
 {
-	if (CanFly == true)
-	{
-		Renderer->ChangeFrameAnimation("IngameCupheadJump");
-		GetPhysicsComponent()->Off();
-	}
-	else
-	{
-		if (false == GetPhysicsComponent()->IsUpdate())
-		{
-			GetPhysicsComponent()->On();
-		}
-	}
-
 	IInGameCharacterBase::Update(_DeltaTime);
 	OnCollisionDebug();
 	CheckCollision();
@@ -339,12 +325,44 @@ void InGameCuphead::OnStateChanged()
 	}
 	else if (GetState() == InGameCharacterState::Parry)
 	{
-		GetPhysicsComponent()->AddForce(20);
+		GetPhysicsComponent()->Reset();
+		GetPhysicsComponent()->AddForce(45);
+		SetGauge(GetGauge() + 1);
+		if (Score != nullptr)
+		{
+			Score->Parry += 1;
+		}
 	}
 	if (GetState() == InGameCharacterState::Dash)
 	{
 		GetPhysicsComponent()->Reset();
 		GetPhysicsComponent()->Off();
+	}
+}
+
+void InGameCuphead::OnIsOnGroundChanged()
+{
+	if (GetIsOnGround())
+	{
+		if (DogFightLevel* Level = dynamic_cast<DogFightLevel*>(GetLevel()))
+		{
+			GameEngineTextureRenderer* CollisionMap = GetColMapImage();
+			if (CollisionMap == nullptr)
+			{
+				return;
+			}
+
+			GameEngineTexture* ColMapTexture = CollisionMap->GetCurTexture();
+			if (ColMapTexture == nullptr)
+			{
+				return;
+			}
+			if (true == ColMapTexture->GetPixelToFloat4(GetTransform().GetWorldPosition().x, -GetTransform().GetWorldPosition().y - 1).CompareInt4D(float4::RED))
+			{
+				GetPhysicsComponent()->AddForce(50);
+				TakeDamage();
+			}
+		}
 	}
 }
 
@@ -439,6 +457,7 @@ void InGameCuphead::TakeDamage()
 	IsInputEnabled = false;
 	SetHP(GetHP() - 1);
 	SetState(InGameCharacterState::TakeDamage);
+	GetPhysicsComponent()->On();
 }
 
 void InGameCuphead::Dash()
@@ -508,8 +527,11 @@ void InGameCuphead::UpdateState()
 		}
 		else
 		{
-			IsInputEnabled = false;
-			Parry();
+			//IsInputEnabled = false;
+			MainCollision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::PARRIABLEOBJECT, CollisionType::CT_AABB2D,
+				std::bind(&InGameCuphead::OnParry, this, std::placeholders::_1, std::placeholders::_2));
+			MainCollision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::ONLYPARRIABLEOBJECT, CollisionType::CT_AABB2D,
+				std::bind(&InGameCuphead::OnParry, this, std::placeholders::_1, std::placeholders::_2));
 		}
 	}
 
@@ -570,16 +592,8 @@ void InGameCuphead::UpdateDirection()
 
 void InGameCuphead::CheckCollision()
 {
-	if (OnParriable == true)
-	{
-		MainCollision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::PARRIABLEOBJECT, CollisionType::CT_AABB2D,
-			std::bind(&InGameCuphead::OnParry, this, std::placeholders::_1, std::placeholders::_2));
-	}
-	else
-	{
-		MainCollision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::PARRIABLEOBJECT, CollisionType::CT_AABB2D,
-			std::bind(&InGameCuphead::OnTakeDamage, this, std::placeholders::_1, std::placeholders::_2));
-	}
+	MainCollision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::PARRIABLEOBJECT, CollisionType::CT_AABB2D,
+		std::bind(&InGameCuphead::OnTakeDamage, this, std::placeholders::_1, std::placeholders::_2));
 
 	MainCollision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::MONSTER_BULLET, CollisionType::CT_AABB2D,
 		std::bind(&InGameCuphead::OnTakeDamage, this, std::placeholders::_1, std::placeholders::_2));
@@ -617,24 +631,28 @@ CollisionReturn InGameCuphead::OnTakeDamage(GameEngineCollision* _This, GameEngi
 
 CollisionReturn InGameCuphead::OnParry(GameEngineCollision* _This, GameEngineCollision* _Other)
 {
-	SetGauge(GetGauge() + 1);
-	if (Score != nullptr)
+	Parry();
+
+	if (_Other != nullptr)
 	{
-		Score->Parry += 1;
+		if (GameEngineActor* Actor = _Other->GetActor())
+		{
+			// 다른 총알이면 죽여야 한다.
+			//Actor->Death();
+		}
 	}
+	
 	return CollisionReturn::Break;
 }
 
 void InGameCuphead::OnParryAnimationFrameEnd(const FrameAnimation_DESC& _Info)
 {
-	OnParriable = false;
 	IsInputEnabled = true;
 	Idle();
 }
 
 void InGameCuphead::OnParryAnimationFrameStarted(const FrameAnimation_DESC& _Info)
 {
-	OnParriable = true;
 }
 
 void InGameCuphead::OnCollisionDebug()

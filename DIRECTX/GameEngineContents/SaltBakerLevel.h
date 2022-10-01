@@ -42,6 +42,8 @@ protected:
 	void Update(float _DeltaTime) override;
 	void End() override;
 
+	void OnLoadCompleted();
+
 private:
 	void EndAnimation(const FrameAnimation_DESC& _Info);
 	void OnIrisAnimationFrameEnd(const FrameAnimation_DESC& _Info);
@@ -77,5 +79,9 @@ private:
 	std::map<int, GameEngineActor*> LittleTornadoActor;
 	InGameCuphead* Cuphead;
 	bool OldFilmTimeCountOn;
+	float LoadInterval;
+	float LoadElapsedTime;
+	float LoadCompleted;
+	Background* Hourglass;
 };
 

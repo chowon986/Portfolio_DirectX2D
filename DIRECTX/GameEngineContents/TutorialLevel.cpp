@@ -60,6 +60,15 @@ void TutorialLevel::LevelStartEvent()
 	}
 
 	//Start
+
+	{
+		Background* ColMapImage = CreateActor<Background>(GameObjectGroup::UI);
+		ColMapRenderer = ColMapImage->CreateComponent<GameEngineTextureRenderer>();
+		ColMapRenderer->SetTexture("TutorialColMap.png");
+		ColMapRenderer->ScaleToTexture();
+		ColMapRenderer->GetTransform().SetLocalPosition({ 640.0f, -360.0f, (int)ZOrder::Background + 1 });
+	}
+
 	Cuphead = CreateActor<InGameCuphead>(GameObjectGroup::Player);
 	Cuphead->GetTransform().SetLocalPosition({ 640, -360, (int)ZOrder::Player });
 	Cuphead->SetColMapImage(ColMapRenderer);
@@ -69,14 +78,6 @@ void TutorialLevel::LevelStartEvent()
 	Player = Cuphead;
 
 	GetMainCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
-
-	{
-		Background* ColMapImage = CreateActor<Background>(GameObjectGroup::UI);
-		ColMapRenderer = ColMapImage->CreateComponent<GameEngineTextureRenderer>();
-		ColMapRenderer->SetTexture("TutorialColMap.png");
-		ColMapRenderer->ScaleToTexture();
-		ColMapRenderer->GetTransform().SetLocalPosition({ 640.0f, -360.0f, (int)ZOrder::Background + 1 });
-	}
 
 	{
 		GameEngineActor* TutorialBackground = CreateActor<GameEngineActor>(GameObjectGroup::UI);
@@ -100,7 +101,7 @@ void TutorialLevel::LevelStartEvent()
 		WheatARenderer->SetScaleModeImage();
 		WheatA->GetTransform().SetLocalPosition({ 745.0f, -580.0f, (int)ZOrder::Foreground });
 		WheatACollision = WheatA->CreateComponent<GameEngineCollision>();
-		WheatACollision->GetTransform().SetLocalScale({ 50.0f,30.0f,1.0f });
+		WheatACollision->GetTransform().SetLocalScale({ 80.0f,80.0f,1.0f });
 		WheatACollision->GetTransform().SetLocalPosition({ 0.0f,0.0f,(int)ZOrder::Foreground });
 		WheatACollision->ChangeOrder(ObjectOrder::ONLYPARRIABLEOBJECT);
 		WheatA->Off();
@@ -113,7 +114,7 @@ void TutorialLevel::LevelStartEvent()
 		WheatBRenderer->SetScaleModeImage();
 		WheatB->GetTransform().SetLocalPosition({ 110.0f, -270.0f, (int)ZOrder::Foreground });
 		WheatBCollision = WheatB->CreateComponent<GameEngineCollision>();
-		WheatBCollision->GetTransform().SetLocalScale({ 30.0f,50.0f,1.0f });
+		WheatBCollision->GetTransform().SetLocalScale({ 80.0f,80.0f,1.0f });
 		WheatBCollision->GetTransform().SetLocalPosition({ 0.0f,0.0f,(int)ZOrder::Foreground });
 		WheatBCollision->ChangeOrder(ObjectOrder::ONLYPARRIABLEOBJECT);
 

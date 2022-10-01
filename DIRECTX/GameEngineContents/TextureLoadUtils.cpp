@@ -54,13 +54,18 @@ bool TextureLoadUtils::LoadTexturesAsync(std::string _FolderName)
 	{
 		std::string FullPath = Dir.GetFullPath();
 		std::string FileName = GameEnginePath::GetFileName(FullPath);
-		if (GameEngineRes<GameEngineFolderTexture>::Find(FileName) == nullptr)
+		GameEngineFolderTexture* FolderTexture = GameEngineRes<GameEngineFolderTexture>::Find(FileName);
+		if (FolderTexture == nullptr)
 		{
 			GameEngineFolderTexture::Load(FullPath);
 
 			// 한개씩 로드 한다
 			return false;
 		}
+		/*else if (FolderTexture->LoadFolderAsync(FullPath) == false)
+		{
+			return false;
+		}*/
 	}
 	std::vector<GameEngineFile> Textures = Dir.GetAllFile();
 	for (size_t i = 0; i < Textures.size(); i++)
@@ -94,13 +99,18 @@ bool TextureLoadUtils::LoadFolderTexturesAsync(std::string _FolderName, std::str
 	{
 		std::string FullPath = Dir.GetFullPath();
 		std::string FileName = GameEnginePath::GetFileName(FullPath);
-		if (GameEngineRes<GameEngineFolderTexture>::Find(FileName) == nullptr)
+		GameEngineFolderTexture* FolderTexture = GameEngineRes<GameEngineFolderTexture>::Find(FileName);
+		if (FolderTexture == nullptr)
 		{
-			GameEngineFolderTexture::Load(Dir.GetFullPath());
+			GameEngineFolderTexture::Load(FullPath);
 
 			// 한개씩 로드 한다
 			return false;
 		}
+		/*else if (FolderTexture->LoadFolderAsync(FullPath) == false)
+		{
+			return false;
+		}*/
 	}
 
 	return true;

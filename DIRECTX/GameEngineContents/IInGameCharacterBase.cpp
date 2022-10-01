@@ -1,5 +1,6 @@
 #include "PreCompile.h"
 #include "IInGameCharacterBase.h"
+#include <GameEngineContents/DogFightLevel.h>
 
 IInGameCharacterBase::IInGameCharacterBase()
 	: State(InGameCharacterState::Idle)
@@ -44,6 +45,10 @@ void IInGameCharacterBase::Update(float _Delta)
 }
 
 void IInGameCharacterBase::OnStateChanged()
+{
+}
+
+void IInGameCharacterBase::OnIsOnGroundChanged()
 {
 }
 
@@ -95,6 +100,7 @@ void IInGameCharacterBase::SetIsOnGround(bool _IsOnGround)
 	if (IsOnGround != _IsOnGround)
 	{
 		IsOnGround = _IsOnGround;
+		OnIsOnGroundChanged();
 		IsOnGroundChangedDelegate.Invoke(IsOnGround);
 	}
 }

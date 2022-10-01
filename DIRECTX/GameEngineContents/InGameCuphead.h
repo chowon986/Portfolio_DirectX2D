@@ -40,6 +40,7 @@ protected:
 	void Walk() override;
 	void Idle() override;
 	void OnStateChanged() override;
+	void OnIsOnGroundChanged() override;
 
 	void OnPrepareAnimationEnded(const FrameAnimation_DESC& _Info);
 	void OnDashAnimationEnded(const FrameAnimation_DESC& _Info);
@@ -69,10 +70,6 @@ protected:
 
 public:
 	void SetOnDashInvisible(bool _IsInvisible) { IsInvisible = _IsInvisible; }
-
-public:
-	bool CanFly;
-	bool OnParriable;
 
 private:
 	GameEngineTextureRenderer* Renderer;

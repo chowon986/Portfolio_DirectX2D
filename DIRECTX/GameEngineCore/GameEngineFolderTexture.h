@@ -19,6 +19,10 @@ public:
 
 	static GameEngineFolderTexture* Load(const std::string& _Path, const std::string& _Name);
 
+	static GameEngineFolderTexture* LoadAsync(const std::string& _Path);
+
+	static GameEngineFolderTexture* LoadAsync(const std::string& _Path, const std::string& _Name);
+
 	size_t GetTextureCount()
 	{
 		return Textures.size();
@@ -33,11 +37,13 @@ public:
 
 		return Textures[_Index];
 	}
+	bool LoadFolderAsync(const std::string& _Path);
 
 protected:
 	void LoadFolder(const std::string& _Path);
 
 private:
 	std::vector<GameEngineTexture*> Textures;
+	std::map<std::string, GameEngineTexture*> TextureMap;
 };
 

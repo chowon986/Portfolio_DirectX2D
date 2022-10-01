@@ -12,6 +12,7 @@
 #include <GameEngineBase/GameEngineRandom.h>
 #include "SaltBakerLevel.h"
 #include "SaltBakerHand.h"
+#include "PhysicsComponent.h"
 
 SaltBaker::SaltBaker()
 	: Renderer(nullptr)
@@ -119,11 +120,6 @@ void SaltBaker::Update(float _DeltaTime)
 			if (true == Renderer->IsCurAnimationPause())
 			{
 				Renderer->CurAnimationPauseOff();
-			}
-
-			if (InGameCuphead* Cuphead = dynamic_cast<InGameCuphead*>(Level->GetPlayer()))
-			{
-				Cuphead->CanFly = false;
 			}
 		}
 		if (Level->GetPhase() == Phase::Phase2 &&
@@ -360,7 +356,8 @@ void SaltBaker::OnSaltBakerPhase2IntroFrameChanged(const FrameAnimation_DESC& _I
 			{
 				Cuphead->GetTransform().SetWorldPosition({ 500.0f, -350.0f,Cuphead->GetTransform().GetWorldPosition().z });
 				Cuphead->On();
-				Cuphead->CanFly = true;
+				Cuphead->SetIsOnGround(false);
+				Cuphead->GetPhysicsComponent()->Off();
 			}
 		}
 	}

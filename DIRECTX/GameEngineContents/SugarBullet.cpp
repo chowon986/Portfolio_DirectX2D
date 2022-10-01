@@ -53,12 +53,12 @@ void SugarBullet::End()
 
 CollisionReturn SugarBullet::OnParryCollision(GameEngineCollision* _This, GameEngineCollision* _Other)
 {
-	if (InGameCuphead* Player = dynamic_cast<InGameCuphead*>(_Other->GetParent()))
+	/*if (InGameCuphead* Player = dynamic_cast<InGameCuphead*>(_Other->GetParent()))
 	{
 		if (true == Player->OnParriable)
 		{
 			Death();
 		}
-	}
+	}*/
 	return CollisionReturn::Break;
 }

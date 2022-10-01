@@ -1,6 +1,7 @@
 	#include "PreCompile.h"
 #include "PhysicsComponent.h"
 #include "IInGameCharacterBase.h"
+#include <GameEngineContents/DogFightLevel.h>
 
 PhysicsComponent::PhysicsComponent()
 	: Speed(0.0f)
