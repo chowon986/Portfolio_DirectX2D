@@ -88,4 +88,5 @@ private:
 	WeaponBase* EquippedWeapon;
 	float InvisibleElapsedTime;
 	bool CountInvisibleTime;
+	bool IsTakeDamageInProgess;
 };

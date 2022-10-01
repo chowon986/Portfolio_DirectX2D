@@ -338,6 +338,10 @@ void InGameCuphead::OnStateChanged()
 		GetPhysicsComponent()->Reset();
 		GetPhysicsComponent()->Off();
 	}
+	if (GetState() == InGameCharacterState::TakeDamage)
+	{
+		IsTakeDamageInProgess = true;
+	}
 }
 
 void InGameCuphead::OnIsOnGroundChanged()
@@ -357,7 +361,7 @@ void InGameCuphead::OnIsOnGroundChanged()
 			{
 				return;
 			}
-			if (true == ColMapTexture->GetPixelToFloat4(GetTransform().GetWorldPosition().x, -GetTransform().GetWorldPosition().y - 1).CompareInt4D(float4::RED))
+			if (true == ColMapTexture->GetPixelToFloat4(GetTransform().GetWorldPosition().x, -GetTransform().GetWorldPosition().y + 10).CompareInt4D(float4::RED))
 			{
 				GetPhysicsComponent()->AddForce(50);
 				TakeDamage();
@@ -396,7 +400,8 @@ void InGameCuphead::OnDashAnimationFrameChanged(const FrameAnimation_DESC& _Info
 
 void InGameCuphead::OnTakeDamageAnimationEnded(const FrameAnimation_DESC& _Info)
 {
-	IsInputEnabled = true;
+	IsTakeDamageInProgess = false;
+	UpdateState();
 }
 
 void InGameCuphead::OnExShootAnimationEnded(const FrameAnimation_DESC& _Info)
@@ -454,7 +459,6 @@ void InGameCuphead::Aim()
 
 void InGameCuphead::TakeDamage()
 {
-	IsInputEnabled = false;
 	SetHP(GetHP() - 1);
 	SetState(InGameCharacterState::TakeDamage);
 	GetPhysicsComponent()->On();
@@ -513,6 +517,11 @@ void InGameCuphead::SpecialAttack()
 }
 void InGameCuphead::UpdateState()
 {
+	if (IsTakeDamageInProgess == true)
+	{
+		return;
+	}
+
 	if (true == GameEngineInput::GetInst()->IsDown("Dash"))
 	{
 		IsInputEnabled = false;
@@ -553,7 +562,8 @@ void InGameCuphead::UpdateState()
 
 	else
 	{
-		if (GetIsOnGround() == true && GetAttackState() != InGameCharacterAttackState::SuperAttack)
+		if (GetIsOnGround() == true &&
+			GetAttackState() != InGameCharacterAttackState::SuperAttack)
 		{
 			IsInputEnabled = true;
 			Idle();
