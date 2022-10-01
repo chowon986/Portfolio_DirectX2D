@@ -32,6 +32,16 @@ void TutorialLevel::ColMapOnOffSwitch()
 
 void TutorialLevel::LevelStartEvent()
 {
+	std::list<GameEngineActor*> Actors = GetGroup(GameObjectGroup::CharacterState);
+	for (GameEngineActor* Actor : Actors)
+	{
+		if (CharacterState* _State = dynamic_cast<CharacterState*>(Actor))
+		{
+			State = _State;
+			CurCoin = State->Coin;
+		}
+	}
+
 	//Loading
 	GameEngineDirectory Dir;
 	Dir.MoveParentToExitsChildDirectory("ConstantResources");
@@ -171,16 +181,6 @@ void TutorialLevel::LevelStartEvent()
 	GetMainCameraActorTransform().SetLocalPosition({ 640, -360 });
 	GetRotateCameraActorTransform().SetLocalPosition({ 640, -360 });
 	GetIrisCameraActorTransform().SetLocalPosition({ 640.0f, -360.0f });
-
-	std::list<GameEngineActor*> Actors = GetGroup(GameObjectGroup::CharacterState);
-	for (GameEngineActor* Actor : Actors)
-	{
-		if (CharacterState* _State = dynamic_cast<CharacterState*>(Actor))
-		{
-			State = _State;
-			CurCoin = State->Coin;
-		}
-	}
 }
 
 void TutorialLevel::Update(float _DeltaTime)

@@ -43,6 +43,10 @@ DogFightLevel::DogFightLevel()
 	, RotateElapsedTime(0.0f)
 	, RotateTime(10)
 	, PlayElapsedTime(0.0f)
+	, LoadInterval(0.05f)
+	, LoadElapsedTime(0.0f)
+	, LoadCompleted(false)
+	, Hourglass(nullptr)
 {
 }
 
@@ -61,16 +65,457 @@ void DogFightLevel::ColMapOnOffSwitch()
 
 void DogFightLevel::LevelStartEvent()
 {
-	//Loading
-	TextureLoadUtils::LoadTextures("15DogFightLevel");
-	TextureLoadUtils::LoadFolderTextures("DogFightBoss", "22Boss");
-
 	//Start
 	GetMainCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
 	GetBackgroundCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
 	GetRotateCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
 	GetRotateCamera2()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
 
+	GetMainCamera()->SetProjectionSize({ 1280.0f, 720.0f });
+	GetRotateCamera()->SetProjectionSize({ 1536.0f,864.0f });
+	GetRotateCamera2()->SetProjectionSize({ 1408.0f,792.0f });
+	GetIrisCamera()->SetProjectionSize({ 1280.0f, 720.0f });
+	GetBackgroundCamera()->SetProjectionSize({ 1408.0f,792.0f });
+
+	GetMainCameraActorTransform().SetLocalPosition({ 640, -360 });
+	GetBackgroundCameraActorTransform().SetLocalPosition({ 640, -360 });
+	GetRotateCameraActorTransform().SetLocalPosition({ 640, -360 });
+	GetRotateCamera2ActorTransform().SetLocalPosition({ 640, -360 });
+	GetIrisCameraActorTransform().SetLocalPosition({ 640.0f, -360.0f });
+
+	{
+		Hourglass = CreateActor<Background>(GameObjectGroup::UI);
+		GameEngineTextureRenderer* Renderer = Hourglass->CreateComponent<GameEngineTextureRenderer>();
+		Renderer->CreateFrameAnimationFolder("Hourglass", FrameAnimation_DESC("Loading", 0.05f));
+		Renderer->ChangeFrameAnimation("Hourglass");
+		Renderer->ScaleToTexture();
+		Renderer->GetTransform().SetLocalPosition({ 1180,-550,-100 });
+	}
+}
+
+void DogFightLevel::LevelEndEvent()
+{
+	if (nullptr != Score)
+	{
+		Score->PlayTime = PlayElapsedTime;
+		Score->HP = Player->GetHP();
+	}
+}
+
+void DogFightLevel::ResetPositionCloudLeftA(const FrameAnimation_DESC& _Info)
+{
+	CloudA1->GetTransform().SetLocalPosition({ -150, -250, (int)ZOrder::Background - 1 });
+}
+
+void DogFightLevel::ResetPositionCloudLeftA2(const FrameAnimation_DESC& _Info)
+{
+	CloudA2->GetTransform().SetLocalPosition({ 1430, -250, (int)ZOrder::Background - 1 });
+}
+
+void DogFightLevel::ResetPositionCloudLeftB(const FrameAnimation_DESC& _Info)
+{
+	CloudB2->GetTransform().SetLocalPosition({ -150, -20, (int)ZOrder::Background - 1 });
+}
+
+void DogFightLevel::ResetPositionCloudLeftC(const FrameAnimation_DESC& _Info)
+{
+	CloudC1->GetTransform().SetLocalPosition({ 1200, -20, (int)ZOrder::Background - 1 });
+}
+
+void DogFightLevel::ResetPositionCloudLeftC2(const FrameAnimation_DESC& _Info)
+{
+	CloudC2->GetTransform().SetLocalPosition({ 150, -20, (int)ZOrder::Background - 1 });
+}
+
+void DogFightLevel::ResetPositionCloudLeftD(const FrameAnimation_DESC& _Info)
+{
+	CloudD1->GetTransform().SetLocalPosition({ 640, -20, (int)ZOrder::Background - 1 });
+}
+
+void DogFightLevel::ResetPositionCloudLeftD2(const FrameAnimation_DESC& _Info)
+{
+	CloudD2->GetTransform().SetLocalPosition({ 1130, -20, (int)ZOrder::Background - 1 });
+}
+
+void DogFightLevel::ResetPositionPatchMiddleA(const FrameAnimation_DESC& _Info)
+{
+	PatchLeftA->GetTransform().SetLocalPosition({ 640, -1000, (int)ZOrder::Background - 3 });
+}
+
+void DogFightLevel::ResetPositionPlanePuffRight(const FrameAnimation_DESC& _Info)
+{
+	PlanePuffRight->GetTransform().SetLocalPosition({ 900, -200, (int)ZOrder::NPC + 4 });
+}
+
+void DogFightLevel::ResetPositionPlanePuffLeft(const FrameAnimation_DESC& _Info)
+{
+	PlanePuffLeft->GetTransform().SetLocalPosition({ 380, -200, (int)ZOrder::NPC + 4 });
+}
+
+void DogFightLevel::PushToRotateCamera(GameEngineUpdateObject* _Object)
+{
+	for (auto* Child : _Object->GetChilds())
+	{
+		if (GameEngineUpdateObject* Object = dynamic_cast<GameEngineUpdateObject*>(Child))
+		{
+			PushToRotateCamera(Object);
+		}
+
+		if (GameEngineRenderer* Renderer = dynamic_cast<GameEngineRenderer*>(Child))
+		{
+			PushRendererToRotateCamera(Renderer);
+		}
+	}
+}
+
+void DogFightLevel::PushToRotateCamera2(GameEngineUpdateObject* _Object)
+{
+	for (auto* Child : _Object->GetChilds())
+	{
+		if (GameEngineUpdateObject* Object = dynamic_cast<GameEngineUpdateObject*>(Child))
+		{
+			PushToRotateCamera2(Object);
+		}
+
+		if (GameEngineRenderer* Renderer = dynamic_cast<GameEngineRenderer*>(Child))
+		{
+			PushRendererToRotateCamera2(Renderer);
+		}
+	}
+}
+
+void DogFightLevel::PushToBackgroundCamera(GameEngineUpdateObject* _Object)
+{
+	for (auto* Child : _Object->GetChilds())
+	{
+		if (GameEngineUpdateObject* Object = dynamic_cast<GameEngineUpdateObject*>(Child))
+		{
+			PushToBackgroundCamera(Object);
+		}
+
+		if (GameEngineRenderer* Renderer = dynamic_cast<GameEngineRenderer*>(Child))
+		{
+			PushRendererToBackgroundCamera(Renderer);
+		}
+	}
+}
+
+void DogFightLevel::LightOnAnimaitonFrameFinished(const FrameAnimation_DESC& _Info)
+{
+	// 몬스터 시작 이미지 넣기
+	{
+		Background* Intro = CreateActor<Background>(GameObjectGroup::UI);
+		BulldogIntroRenderer = Intro->CreateComponent<GameEngineTextureRenderer>();
+		BulldogIntroRenderer->CreateFrameAnimationFolder("BulldogIntro", FrameAnimation_DESC("BulldogIntro", 0.05f, false));
+		BulldogIntroRenderer->CreateFrameAnimationFolder("Nothing", FrameAnimation_DESC("Nothing", true));
+		BulldogIntroRenderer->ChangeFrameAnimation("Nothing");
+		BulldogIntroRenderer->AnimationBindEnd("BulldogIntro", std::bind(&DogFightLevel::BulldogIntroAnimationFrameFinished, this, std::placeholders::_1));
+		BulldogIntroRenderer->SetScaleModeImage();
+		BulldogIntroRenderer->ChangeCamera(CAMERAORDER::BACKGROUND);
+		BulldogIntroRenderer->GetTransform().SetLocalPosition({ 640.0f, -360.0f, (int)ZOrder::Background - 2 });
+	}
+
+	{
+		Background* Intro = CreateActor<Background>(GameObjectGroup::UI);
+		DogCopterIntroRenderer = Intro->CreateComponent<GameEngineTextureRenderer>();
+		DogCopterIntroRenderer->CreateFrameAnimationFolder("DogCopterIntroPhase1", FrameAnimation_DESC("DogCopterIntroPhase1", 0.05f, false));
+		DogCopterIntroRenderer->CreateFrameAnimationFolder("Nothing", FrameAnimation_DESC("Nothing", true));
+		DogCopterIntroRenderer->ChangeFrameAnimation("DogCopterIntroPhase1");
+		DogCopterIntroRenderer->AnimationBindEnd("DogCopterIntroPhase1", std::bind(&DogFightLevel::DogCopterIntroPhase1IntroAnimationFrameFinished, this, std::placeholders::_1));
+		DogCopterIntroRenderer->AnimationBindFrame("DogCopterIntroPhase1", std::bind(&DogFightLevel::DogCopterIntroPhase1IntroAnimationFrameChanged, this, std::placeholders::_1));
+		DogCopterIntroRenderer->SetScaleModeImage();
+		DogCopterIntroRenderer->GetTransform().SetLocalPosition({ 640.0f, -360.0f, (int)ZOrder::Background - 2 });
+	}
+
+}
+
+void DogFightLevel::BulldogIntroAnimationFrameFinished(const FrameAnimation_DESC& _Info)
+{
+	BulldogIntroRenderer->ChangeFrameAnimation("Nothing");
+	SetPhase(Phase::Phase1);
+}
+
+void DogFightLevel::DogCopterIntroPhase1IntroAnimationFrameFinished(const FrameAnimation_DESC& _Info)
+{
+		DogCopterIntroRenderer->ChangeFrameAnimation("Nothing");
+}
+
+void DogFightLevel::DogCopterIntroPhase1IntroAnimationFrameChanged(const FrameAnimation_DESC& _Info)
+{
+	if (_Info.CurFrame == 7)
+	{
+		BulldogIntroRenderer->ChangeFrameAnimation("BulldogIntro");
+	}
+
+	else if (_Info.CurFrame == 34)
+	{
+		GameEngineActor* ReadyWallop = CreateActor<GameEngineActor>(GameObjectGroup::UI);
+		ReadyWallopRenderer = ReadyWallop->CreateComponent<GameEngineTextureRenderer>();
+		ReadyWallopRenderer->CreateFrameAnimationFolder("Ready", FrameAnimation_DESC("ReadyWallop", 0.05, false));
+		ReadyWallopRenderer->CreateFrameAnimationFolder("KnockOut", FrameAnimation_DESC("KnockOut", 0.05, false));
+		ReadyWallopRenderer->AnimationBindEnd("Ready", std::bind(&DogFightLevel::ReadyWallopAnimationFrameFinished, this, std::placeholders::_1));
+		ReadyWallopRenderer->AnimationBindEnd("KnockOut", std::bind(&DogFightLevel::KnockOutAnimationFrameFinished, this, std::placeholders::_1));
+		ReadyWallopRenderer->GetTransform().SetWorldScale({ 1280.0f,720.0f,1.0f });
+		ReadyWallopRenderer->ChangeFrameAnimation("Ready");
+		PushRendererToUICamera(ReadyWallopRenderer);
+	}
+}
+
+void DogFightLevel::KnockOutAnimationFrameFinished(const FrameAnimation_DESC& _Info)
+{
+	ReadyWallopRenderer->Off();
+	LeaderCopter->SetState(InGameMonsterState::KnockOut);
+}
+
+void DogFightLevel::ReadyWallopAnimationFrameFinished(const FrameAnimation_DESC& _Info)
+{
+	ReadyWallopRenderer->Off();
+}
+
+void DogFightLevel::Update(float _DeltaTime)
+{
+	if (LoadCompleted == false)
+	{
+		LoadElapsedTime += _DeltaTime;
+		if (LoadElapsedTime > LoadInterval)
+		{
+			LoadElapsedTime -= LoadInterval;
+
+			bool DogFightLevelLoadCompleted = TextureLoadUtils::LoadTexturesAsync("15DogFightLevel");
+			if (DogFightLevelLoadCompleted)
+			{
+				LoadCompleted = TextureLoadUtils::LoadFolderTexturesAsync("DogFightBoss", "22Boss");
+				if (LoadCompleted == true)
+				{
+					OnLoadCompleted();
+				}
+			}
+		}
+		return;
+	}
+
+	PlayElapsedTime += _DeltaTime;
+
+	ColMapOnOffSwitch();
+	if (GameEngineInput::GetInst()->IsDown("PhaseChangeKey"))
+	{
+		if (GetPhase() == Phase::Ready)
+		{
+			SetPhase(Phase::Phase1);
+		}
+		else if (GetPhase() == Phase::Phase1)
+		{
+			SetPhase(Phase::Phase2);
+		}
+		else if (GetPhase() == Phase::Phase2)
+		{
+			SetPhase(Phase::Phase3);
+		}
+	}
+
+	if (GetPhase() == Phase::Ready && IrisOnceCheck == false)
+	{
+		ScreenLightRenderer->ChangeFrameAnimation("LightOn");
+
+		if (CaptainCanteenPlane == nullptr)
+		{
+			CaptainCanteenPlane = CreateActor<CanteenPlane>(GameObjectGroup::Monster);
+			CaptainCanteenPlane->GetTransform().SetWorldPosition({ 270, -650 });
+
+			Cuphead = CreateActor<InGameCuphead>(GameObjectGroup::Player);
+			Cuphead->SetParent(CaptainCanteenPlane);
+
+			Cuphead->GetTransform().SetLocalPosition({ -120, 50, (int)ZOrder::Player });
+			Cuphead->SetColMapImage(ColMapRenderer);
+
+			if (nullptr != State)
+			{
+				Cuphead->SetHP(State->MaxHP);
+				Cuphead->SetOnDashInvisible(State->OnDashInvisible);
+			}
+
+			PlayerHP* HPUI = CreateActor<PlayerHP>(GameObjectGroup::Monster);
+			HPUI->SetPlayer(Cuphead);
+			HPUI->GetTransform().SetLocalPosition({ 75.0f,-675.0f });
+
+			CaptainCanteenPlane->SetPlayer(Cuphead);
+			CaptainCanteenPlane->SetColMapImage(ColMapRenderer);
+			PushToRotateCamera(CaptainCanteenPlane);
+
+			Player = Cuphead;
+		}		
+		//PushToBackgroundCamera(CaptainCanteenPlane);
+		//PushToBackgroundCamera(PH1BulldogPlane);
+
+	}
+
+	else if (GetPhase() == Phase::Phase1)
+	{
+		if (PH1BulldogPlane == nullptr)
+		{
+			PH1BulldogPlane = CreateActor<BulldogPlane>(GameObjectGroup::Monster);
+			PH1BulldogPlane->GetTransform().SetWorldPosition({ 0, 100 });
+			PH1BulldogPlane->SetPlayer(Cuphead);
+			PushToBackgroundCamera(PH1BulldogPlane);
+		}
+	}
+
+	else if (GetPhase() == Phase::Phase2)
+	{
+		ElapsedTime += _DeltaTime;
+		ElapsedTime = ElapsedTime / 1.0f;
+
+		if (PH1BulldogPlane != nullptr)
+		{
+			PH1BulldogPlane->Death();
+			PH1BulldogPlane = nullptr;
+		}
+
+		if (CaptainCanteenPlane == nullptr)
+		{
+			CaptainCanteenPlane = CreateActor<CanteenPlane>(GameObjectGroup::Monster);
+			CaptainCanteenPlane->GetTransform().SetWorldPosition({ 270, -650 });
+
+			Cuphead = CreateActor<InGameCuphead>(GameObjectGroup::Player);
+			Cuphead->SetParent(CaptainCanteenPlane);
+
+			Cuphead->GetTransform().SetLocalPosition({ -120, 50, (int)ZOrder::Player });
+			Cuphead->SetColMapImage(ColMapRenderer);
+
+			CaptainCanteenPlane->SetPlayer(Cuphead);
+			CaptainCanteenPlane->SetColMapImage(ColMapRenderer);
+		}
+
+		if (OnceCheck == false)
+		{
+			{
+				DogFightPh2DogB = CreateActor<Ph2Dog>(GameObjectGroup::Monster);
+				DogFightPh2DogD = CreateActor<Ph2Dog>(GameObjectGroup::Monster);
+				DogFightPh2DogA = CreateActor<Ph2Dog>(GameObjectGroup::Monster);
+				DogFightPh2DogC = CreateActor<Ph2Dog>(GameObjectGroup::Monster);
+
+				DogFightPh2DogA->SetPlayer(Cuphead);
+				DogFightPh2DogB->SetPlayer(Cuphead);
+				DogFightPh2DogC->SetPlayer(Cuphead);
+				DogFightPh2DogD->SetPlayer(Cuphead);
+
+				DogFightPh2DogB->SetPh2DogState(InGamePh2DogState::Prepare2);
+				DogFightPh2DogA->SetPh2DogState(InGamePh2DogState::Prepare1);
+				DogFightPh2DogD->SetPh2DogState(InGamePh2DogState::Prepare4);
+				DogFightPh2DogC->SetPh2DogState(InGamePh2DogState::Prepare3);
+			}
+
+			OnceCheck = true;
+		}
+
+		if ((nullptr == DogFightPh2DogA || 0 >= DogFightPh2DogA->GetHP()) &&
+			(nullptr == DogFightPh2DogB || 0 >= DogFightPh2DogB->GetHP()) &&
+			(nullptr == DogFightPh2DogC || 0 >= DogFightPh2DogC->GetHP()) &&
+			(nullptr == DogFightPh2DogD || 0 >= DogFightPh2DogD->GetHP()))
+		{
+			SetPhase(Phase::Phase3);
+		}
+
+	}
+
+	else if (GetPhase() == Phase::Phase3)
+	{
+		if (LeaderCopter == nullptr)
+		{
+			LeaderCopter = CreateActor<DogCopter>(GameObjectGroup::Monster);
+			LeaderCopter->GetTransform().SetWorldPosition({ 0, 0 });
+			//LeaderCopter->SetColMapImage(ColMapRenderer);
+			//PushToBackgroundCamera(LeaderCopter);
+			OldState = LeaderCopter->GetState();
+		}
+
+		if (CaptainCanteenPlane == nullptr)
+		{
+			CaptainCanteenPlane = CreateActor<CanteenPlane>(GameObjectGroup::Monster);
+			CaptainCanteenPlane->GetTransform().SetWorldPosition({ 640, -600 });
+
+			Cuphead = CreateActor<InGameCuphead>(GameObjectGroup::Player);
+			Cuphead->GetTransform().SetLocalPosition({ 0, 300, -100 });
+			Cuphead->SetParent(CaptainCanteenPlane);
+			Cuphead->SetColMapImage(ColMapRenderer);
+
+			CaptainCanteenPlane->SetPlayer(Cuphead);
+			CaptainCanteenPlane->SetColMapImage(ColMapRenderer);
+			PushToRotateCamera(CaptainCanteenPlane);
+		}
+
+		if (LeaderCopter != nullptr)
+		{
+			CaptainCanteenPlane->SetDogCopter(LeaderCopter);
+
+			if (LeaderCopter->GetState() == InGameMonsterState::Die)
+			{
+				if (ReadyWallopRenderer != nullptr)
+				{
+				ReadyWallopRenderer->ChangeFrameAnimation("KnockOut");
+				ReadyWallopRenderer->On();
+				}
+			}
+		}
+
+	}
+
+	if (nullptr != LeaderCopter)
+	{
+		float4 CameraRotation = GetRotateCameraActorTransform().GetLocalRotation();
+		
+		if (OldState != LeaderCopter->GetState())
+		{
+			OldState = LeaderCopter->GetState();
+
+			switch (LeaderCopter->GetState())
+			{
+			case InGameMonsterState::RotateCameraIn:
+			case InGameMonsterState::RotateCameraOut:
+			{
+				ZAngle = CameraRotation.z - 90; 
+				IsRotateCompleted = false;
+				break;
+			}
+			}
+		}
+
+		if (IsRotateCompleted == false)
+		{
+			RotateElapsedTime += _DeltaTime;
+			switch (LeaderCopter->GetState())
+			{
+			case InGameMonsterState::RotateCameraIn:
+			{
+				RotateTime = 10;
+				break;
+			}
+			case InGameMonsterState::RotateCameraOut:
+			{
+				RotateTime = 4;
+				break;
+			}
+			}
+
+			float Time = RotateElapsedTime / RotateTime;
+			if (abs(CameraRotation.z - ZAngle) <= 0.1)
+			{
+				IsRotateCompleted = true;
+				RotateElapsedTime = 0.0f;
+			}
+			float NewZAngle = GameEngineMath::LerpLimit(CameraRotation.z, ZAngle, Time);
+			GetRotateCameraActorTransform().SetLocalRotation(float4({ CameraRotation.x ,CameraRotation.y, NewZAngle }));
+			GetRotateCamera2ActorTransform().SetLocalRotation(float4({ CameraRotation.x ,CameraRotation.y, NewZAngle }));
+
+		}
+	}
+}
+void DogFightLevel::End()
+{
+}
+
+void DogFightLevel::OnLoadCompleted()
+{
 	{
 		Background* ScreenLight = CreateActor<Background>(GameObjectGroup::UI);
 		ScreenLightRenderer = ScreenLight->CreateComponent <GameEngineTextureRenderer>();
@@ -322,17 +767,6 @@ void DogFightLevel::LevelStartEvent()
 
 	SetPhase(Phase::Ready);
 	//카메라 내 오브젝트 크기 조정 
-	GetMainCamera()->SetProjectionSize({ 1280.0f, 720.0f });
-	GetRotateCamera()->SetProjectionSize({ 1536.0f,864.0f });
-	GetRotateCamera2()->SetProjectionSize({ 1408.0f,792.0f });
-	GetIrisCamera()->SetProjectionSize({ 1280.0f, 720.0f });
-	GetBackgroundCamera()->SetProjectionSize({ 1408.0f,792.0f });
-
-	GetMainCameraActorTransform().SetLocalPosition({ 640, -360 });
-	GetBackgroundCameraActorTransform().SetLocalPosition({ 640, -360 });
-	GetRotateCameraActorTransform().SetLocalPosition({ 640, -360 });
-	GetRotateCamera2ActorTransform().SetLocalPosition({ 640, -360 });
-	GetIrisCameraActorTransform().SetLocalPosition({ 640.0f, -360.0f });
 
 	{
 		std::list<GameEngineActor*> Actors = GetGroup(GameObjectGroup::CharacterState);
@@ -361,407 +795,8 @@ void DogFightLevel::LevelStartEvent()
 				Score->SkillLevel = 2;
 			}
 		}
+
+		Hourglass->Off();
 	}
-}
-
-void DogFightLevel::LevelEndEvent()
-{
-	if (nullptr != Score)
-	{
-		Score->PlayTime = PlayElapsedTime;
-		Score->HP = Player->GetHP();
-	}
-}
-
-void DogFightLevel::ResetPositionCloudLeftA(const FrameAnimation_DESC& _Info)
-{
-	CloudA1->GetTransform().SetLocalPosition({ -150, -250, (int)ZOrder::Background - 1 });
-}
-
-void DogFightLevel::ResetPositionCloudLeftA2(const FrameAnimation_DESC& _Info)
-{
-	CloudA2->GetTransform().SetLocalPosition({ 1430, -250, (int)ZOrder::Background - 1 });
-}
-
-void DogFightLevel::ResetPositionCloudLeftB(const FrameAnimation_DESC& _Info)
-{
-	CloudB2->GetTransform().SetLocalPosition({ -150, -20, (int)ZOrder::Background - 1 });
-}
-
-void DogFightLevel::ResetPositionCloudLeftC(const FrameAnimation_DESC& _Info)
-{
-	CloudC1->GetTransform().SetLocalPosition({ 1200, -20, (int)ZOrder::Background - 1 });
-}
-
-void DogFightLevel::ResetPositionCloudLeftC2(const FrameAnimation_DESC& _Info)
-{
-	CloudC2->GetTransform().SetLocalPosition({ 150, -20, (int)ZOrder::Background - 1 });
-}
-
-void DogFightLevel::ResetPositionCloudLeftD(const FrameAnimation_DESC& _Info)
-{
-	CloudD1->GetTransform().SetLocalPosition({ 640, -20, (int)ZOrder::Background - 1 });
-}
-
-void DogFightLevel::ResetPositionCloudLeftD2(const FrameAnimation_DESC& _Info)
-{
-	CloudD2->GetTransform().SetLocalPosition({ 1130, -20, (int)ZOrder::Background - 1 });
-}
-
-void DogFightLevel::ResetPositionPatchMiddleA(const FrameAnimation_DESC& _Info)
-{
-	PatchLeftA->GetTransform().SetLocalPosition({ 640, -1000, (int)ZOrder::Background - 3 });
-}
-
-void DogFightLevel::ResetPositionPlanePuffRight(const FrameAnimation_DESC& _Info)
-{
-	PlanePuffRight->GetTransform().SetLocalPosition({ 900, -200, (int)ZOrder::NPC + 4 });
-}
-
-void DogFightLevel::ResetPositionPlanePuffLeft(const FrameAnimation_DESC& _Info)
-{
-	PlanePuffLeft->GetTransform().SetLocalPosition({ 380, -200, (int)ZOrder::NPC + 4 });
-}
-
-void DogFightLevel::PushToRotateCamera(GameEngineUpdateObject* _Object)
-{
-	for (auto* Child : _Object->GetChilds())
-	{
-		if (GameEngineUpdateObject* Object = dynamic_cast<GameEngineUpdateObject*>(Child))
-		{
-			PushToRotateCamera(Object);
-		}
-
-		if (GameEngineRenderer* Renderer = dynamic_cast<GameEngineRenderer*>(Child))
-		{
-			PushRendererToRotateCamera(Renderer);
-		}
-	}
-}
-
-void DogFightLevel::PushToRotateCamera2(GameEngineUpdateObject* _Object)
-{
-	for (auto* Child : _Object->GetChilds())
-	{
-		if (GameEngineUpdateObject* Object = dynamic_cast<GameEngineUpdateObject*>(Child))
-		{
-			PushToRotateCamera2(Object);
-		}
-
-		if (GameEngineRenderer* Renderer = dynamic_cast<GameEngineRenderer*>(Child))
-		{
-			PushRendererToRotateCamera2(Renderer);
-		}
-	}
-}
-
-void DogFightLevel::PushToBackgroundCamera(GameEngineUpdateObject* _Object)
-{
-	for (auto* Child : _Object->GetChilds())
-	{
-		if (GameEngineUpdateObject* Object = dynamic_cast<GameEngineUpdateObject*>(Child))
-		{
-			PushToBackgroundCamera(Object);
-		}
-
-		if (GameEngineRenderer* Renderer = dynamic_cast<GameEngineRenderer*>(Child))
-		{
-			PushRendererToBackgroundCamera(Renderer);
-		}
-	}
-}
-
-void DogFightLevel::LightOnAnimaitonFrameFinished(const FrameAnimation_DESC& _Info)
-{
-	// 몬스터 시작 이미지 넣기
-	{
-		Background* Intro = CreateActor<Background>(GameObjectGroup::UI);
-		BulldogIntroRenderer = Intro->CreateComponent<GameEngineTextureRenderer>();
-		BulldogIntroRenderer->CreateFrameAnimationFolder("BulldogIntro", FrameAnimation_DESC("BulldogIntro", 0.05f, false));
-		BulldogIntroRenderer->CreateFrameAnimationFolder("Nothing", FrameAnimation_DESC("Nothing", true));
-		BulldogIntroRenderer->ChangeFrameAnimation("Nothing");
-		BulldogIntroRenderer->AnimationBindEnd("BulldogIntro", std::bind(&DogFightLevel::BulldogIntroAnimationFrameFinished, this, std::placeholders::_1));
-		BulldogIntroRenderer->SetScaleModeImage();
-		BulldogIntroRenderer->ChangeCamera(CAMERAORDER::BACKGROUND);
-		BulldogIntroRenderer->GetTransform().SetLocalPosition({ 640.0f, -360.0f, (int)ZOrder::Background - 2 });
-	}
-
-	{
-		Background* Intro = CreateActor<Background>(GameObjectGroup::UI);
-		DogCopterIntroRenderer = Intro->CreateComponent<GameEngineTextureRenderer>();
-		DogCopterIntroRenderer->CreateFrameAnimationFolder("DogCopterIntroPhase1", FrameAnimation_DESC("DogCopterIntroPhase1", 0.05f, false));
-		DogCopterIntroRenderer->CreateFrameAnimationFolder("Nothing", FrameAnimation_DESC("Nothing", true));
-		DogCopterIntroRenderer->ChangeFrameAnimation("DogCopterIntroPhase1");
-		DogCopterIntroRenderer->AnimationBindEnd("DogCopterIntroPhase1", std::bind(&DogFightLevel::DogCopterIntroPhase1IntroAnimationFrameFinished, this, std::placeholders::_1));
-		DogCopterIntroRenderer->AnimationBindFrame("DogCopterIntroPhase1", std::bind(&DogFightLevel::DogCopterIntroPhase1IntroAnimationFrameChanged, this, std::placeholders::_1));
-		DogCopterIntroRenderer->SetScaleModeImage();
-		DogCopterIntroRenderer->GetTransform().SetLocalPosition({ 640.0f, -360.0f, (int)ZOrder::Background - 2 });
-	}
-
-}
-
-void DogFightLevel::BulldogIntroAnimationFrameFinished(const FrameAnimation_DESC& _Info)
-{
-	BulldogIntroRenderer->ChangeFrameAnimation("Nothing");
-	SetPhase(Phase::Phase1);
-}
-
-void DogFightLevel::DogCopterIntroPhase1IntroAnimationFrameFinished(const FrameAnimation_DESC& _Info)
-{
-		DogCopterIntroRenderer->ChangeFrameAnimation("Nothing");
-}
-
-void DogFightLevel::DogCopterIntroPhase1IntroAnimationFrameChanged(const FrameAnimation_DESC& _Info)
-{
-	if (_Info.CurFrame == 7)
-	{
-		BulldogIntroRenderer->ChangeFrameAnimation("BulldogIntro");
-	}
-
-	else if (_Info.CurFrame == 34)
-	{
-		GameEngineActor* ReadyWallop = CreateActor<GameEngineActor>(GameObjectGroup::UI);
-		ReadyWallopRenderer = ReadyWallop->CreateComponent<GameEngineTextureRenderer>();
-		ReadyWallopRenderer->CreateFrameAnimationFolder("Ready", FrameAnimation_DESC("ReadyWallop", 0.05, false));
-		ReadyWallopRenderer->CreateFrameAnimationFolder("KnockOut", FrameAnimation_DESC("KnockOut", 0.05, false));
-		ReadyWallopRenderer->AnimationBindEnd("Ready", std::bind(&DogFightLevel::ReadyWallopAnimationFrameFinished, this, std::placeholders::_1));
-		ReadyWallopRenderer->AnimationBindEnd("KnockOut", std::bind(&DogFightLevel::KnockOutAnimationFrameFinished, this, std::placeholders::_1));
-		ReadyWallopRenderer->GetTransform().SetWorldScale({ 1280.0f,720.0f,1.0f });
-		ReadyWallopRenderer->ChangeFrameAnimation("Ready");
-		PushRendererToUICamera(ReadyWallopRenderer);
-	}
-}
-
-void DogFightLevel::KnockOutAnimationFrameFinished(const FrameAnimation_DESC& _Info)
-{
-	ReadyWallopRenderer->Off();
-	LeaderCopter->SetState(InGameMonsterState::KnockOut);
-}
-
-void DogFightLevel::ReadyWallopAnimationFrameFinished(const FrameAnimation_DESC& _Info)
-{
-	ReadyWallopRenderer->Off();
-}
-
-void DogFightLevel::Update(float _DeltaTime)
-{
-	PlayElapsedTime += _DeltaTime;
-
-	ColMapOnOffSwitch();
-	if (GameEngineInput::GetInst()->IsDown("PhaseChangeKey"))
-	{
-		if (GetPhase() == Phase::Ready)
-		{
-			SetPhase(Phase::Phase1);
-		}
-		else if (GetPhase() == Phase::Phase1)
-		{
-			SetPhase(Phase::Phase2);
-		}
-		else if (GetPhase() == Phase::Phase2)
-		{
-			SetPhase(Phase::Phase3);
-		}
-	}
-
-	if (GetPhase() == Phase::Ready && IrisOnceCheck == false)
-	{
-		ScreenLightRenderer->ChangeFrameAnimation("LightOn");
-
-		if (CaptainCanteenPlane == nullptr)
-		{
-			CaptainCanteenPlane = CreateActor<CanteenPlane>(GameObjectGroup::Monster);
-			CaptainCanteenPlane->GetTransform().SetWorldPosition({ 270, -650 });
-
-			Cuphead = CreateActor<InGameCuphead>(GameObjectGroup::Player);
-			Cuphead->SetParent(CaptainCanteenPlane);
-
-			Cuphead->GetTransform().SetLocalPosition({ -120, 50, (int)ZOrder::Player });
-			Cuphead->SetColMapImage(ColMapRenderer);
-
-			if (nullptr != State)
-			{
-				Cuphead->SetHP(State->MaxHP);
-				Cuphead->SetOnDashInvisible(State->OnDashInvisible);
-			}
-
-			PlayerHP* HPUI = CreateActor<PlayerHP>(GameObjectGroup::Monster);
-			HPUI->SetPlayer(Cuphead);
-			HPUI->GetTransform().SetLocalPosition({ 75.0f,-675.0f });
-
-			CaptainCanteenPlane->SetPlayer(Cuphead);
-			CaptainCanteenPlane->SetColMapImage(ColMapRenderer);
-			PushToRotateCamera(CaptainCanteenPlane);
-
-			Player = Cuphead;
-		}		
-		//PushToBackgroundCamera(CaptainCanteenPlane);
-		//PushToBackgroundCamera(PH1BulldogPlane);
-
-	}
-
-	else if (GetPhase() == Phase::Phase1)
-	{
-		if (PH1BulldogPlane == nullptr)
-		{
-			PH1BulldogPlane = CreateActor<BulldogPlane>(GameObjectGroup::Monster);
-			PH1BulldogPlane->GetTransform().SetWorldPosition({ 0, 100 });
-			PH1BulldogPlane->SetPlayer(Cuphead);
-			PushToBackgroundCamera(PH1BulldogPlane);
-		}
-	}
-
-	else if (GetPhase() == Phase::Phase2)
-	{
-		ElapsedTime += _DeltaTime;
-		ElapsedTime = ElapsedTime / 1.0f;
-
-		if (PH1BulldogPlane != nullptr)
-		{
-			PH1BulldogPlane->Death();
-			PH1BulldogPlane = nullptr;
-		}
-
-		if (CaptainCanteenPlane == nullptr)
-		{
-			CaptainCanteenPlane = CreateActor<CanteenPlane>(GameObjectGroup::Monster);
-			CaptainCanteenPlane->GetTransform().SetWorldPosition({ 270, -650 });
-
-			Cuphead = CreateActor<InGameCuphead>(GameObjectGroup::Player);
-			Cuphead->SetParent(CaptainCanteenPlane);
-
-			Cuphead->GetTransform().SetLocalPosition({ -120, 50, (int)ZOrder::Player });
-			Cuphead->SetColMapImage(ColMapRenderer);
-
-			CaptainCanteenPlane->SetPlayer(Cuphead);
-			CaptainCanteenPlane->SetColMapImage(ColMapRenderer);
-		}
-
-		if (OnceCheck == false)
-		{
-			{
-				DogFightPh2DogB = CreateActor<Ph2Dog>(GameObjectGroup::Monster);
-				DogFightPh2DogD = CreateActor<Ph2Dog>(GameObjectGroup::Monster);
-				DogFightPh2DogA = CreateActor<Ph2Dog>(GameObjectGroup::Monster);
-				DogFightPh2DogC = CreateActor<Ph2Dog>(GameObjectGroup::Monster);
-
-				DogFightPh2DogA->SetPlayer(Cuphead);
-				DogFightPh2DogB->SetPlayer(Cuphead);
-				DogFightPh2DogC->SetPlayer(Cuphead);
-				DogFightPh2DogD->SetPlayer(Cuphead);
-
-				DogFightPh2DogB->SetPh2DogState(InGamePh2DogState::Prepare2);
-				DogFightPh2DogA->SetPh2DogState(InGamePh2DogState::Prepare1);
-				DogFightPh2DogD->SetPh2DogState(InGamePh2DogState::Prepare4);
-				DogFightPh2DogC->SetPh2DogState(InGamePh2DogState::Prepare3);
-			}
-
-			OnceCheck = true;
-		}
-
-		if ((nullptr == DogFightPh2DogA || 0 >= DogFightPh2DogA->GetHP()) &&
-			(nullptr == DogFightPh2DogB || 0 >= DogFightPh2DogB->GetHP()) &&
-			(nullptr == DogFightPh2DogC || 0 >= DogFightPh2DogC->GetHP()) &&
-			(nullptr == DogFightPh2DogD || 0 >= DogFightPh2DogD->GetHP()))
-		{
-			SetPhase(Phase::Phase3);
-		}
-
-	}
-
-	else if (GetPhase() == Phase::Phase3)
-	{
-		if (LeaderCopter == nullptr)
-		{
-			LeaderCopter = CreateActor<DogCopter>(GameObjectGroup::Monster);
-			LeaderCopter->GetTransform().SetWorldPosition({ 0, 0 });
-			//LeaderCopter->SetColMapImage(ColMapRenderer);
-			//PushToBackgroundCamera(LeaderCopter);
-			OldState = LeaderCopter->GetState();
-		}
-
-		if (CaptainCanteenPlane == nullptr)
-		{
-			CaptainCanteenPlane = CreateActor<CanteenPlane>(GameObjectGroup::Monster);
-			CaptainCanteenPlane->GetTransform().SetWorldPosition({ 640, -600 });
-
-			Cuphead = CreateActor<InGameCuphead>(GameObjectGroup::Player);
-			Cuphead->GetTransform().SetLocalPosition({ 0, 300, -100 });
-			Cuphead->SetParent(CaptainCanteenPlane);
-			Cuphead->SetColMapImage(ColMapRenderer);
-
-			CaptainCanteenPlane->SetPlayer(Cuphead);
-			CaptainCanteenPlane->SetColMapImage(ColMapRenderer);
-			PushToRotateCamera(CaptainCanteenPlane);
-		}
-
-		if (LeaderCopter != nullptr)
-		{
-			CaptainCanteenPlane->SetDogCopter(LeaderCopter);
-
-			if (LeaderCopter->GetState() == InGameMonsterState::Die)
-			{
-				if (ReadyWallopRenderer != nullptr)
-				{
-				ReadyWallopRenderer->ChangeFrameAnimation("KnockOut");
-				ReadyWallopRenderer->On();
-				}
-			}
-		}
-
-	}
-
-	if (nullptr != LeaderCopter)
-	{
-		float4 CameraRotation = GetRotateCameraActorTransform().GetLocalRotation();
-		
-		if (OldState != LeaderCopter->GetState())
-		{
-			OldState = LeaderCopter->GetState();
-
-			switch (LeaderCopter->GetState())
-			{
-			case InGameMonsterState::RotateCameraIn:
-			case InGameMonsterState::RotateCameraOut:
-			{
-				ZAngle = CameraRotation.z - 90; 
-				IsRotateCompleted = false;
-				break;
-			}
-			}
-		}
-
-		if (IsRotateCompleted == false)
-		{
-			RotateElapsedTime += _DeltaTime;
-			switch (LeaderCopter->GetState())
-			{
-			case InGameMonsterState::RotateCameraIn:
-			{
-				RotateTime = 10;
-				break;
-			}
-			case InGameMonsterState::RotateCameraOut:
-			{
-				RotateTime = 4;
-				break;
-			}
-			}
-
-			float Time = RotateElapsedTime / RotateTime;
-			if (abs(CameraRotation.z - ZAngle) <= 0.1)
-			{
-				IsRotateCompleted = true;
-				RotateElapsedTime = 0.0f;
-			}
-			float NewZAngle = GameEngineMath::LerpLimit(CameraRotation.z, ZAngle, Time);
-			GetRotateCameraActorTransform().SetLocalRotation(float4({ CameraRotation.x ,CameraRotation.y, NewZAngle }));
-			GetRotateCamera2ActorTransform().SetLocalRotation(float4({ CameraRotation.x ,CameraRotation.y, NewZAngle }));
-
-		}
-	}
-}
-void DogFightLevel::End()
-{
 }
 

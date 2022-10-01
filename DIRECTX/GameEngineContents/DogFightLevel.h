@@ -1,6 +1,7 @@
 #pragma once
 #include "InGameLevelBase.h"
 
+class Background;
 class Ph2Dog;
 class BulldogPlane;
 class GameEngineTextureRenderer;
@@ -57,7 +58,10 @@ protected:
 	void Update(float _DeltaTime) override;
 	void End() override;
 
+	void OnLoadCompleted();
+
 private:
+	Background* Hourglass;
 	BackgroundHills* Hills;
 	GameEngineTextureRenderer* ColMapRenderer;
 	GameEngineTextureRenderer* BackgroundSkyRenderer;
@@ -104,6 +108,9 @@ private:
 	CharacterState* State;
 	CharacterScore* Score;
 	float RotateTime;
+	float LoadInterval;
+	float LoadElapsedTime;
+	float LoadCompleted;
 
 };
 
