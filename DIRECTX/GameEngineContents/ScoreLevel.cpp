@@ -238,10 +238,10 @@ void ScoreLevel::LevelStartEvent()
 void ScoreLevel::Update(float _DeltaTime)
 {
 	ElapsedTime += _DeltaTime;
-	//if (IrisRenderer->GetPixelData().PlusColor.a > -1.0f)
-	//{
-	//	IrisRenderer->GetPixelData().PlusColor.a -= _DeltaTime * 0.3;
-	//}
+	if (IrisRenderer->GetPixelData().PlusColor.a > -1.0f)
+	{
+		IrisRenderer->GetPixelData().PlusColor.a -= _DeltaTime * 0.3;
+	}
 	//BackgroundRenderer->GetTransform().SetLocalRotate({0.0f, 0.0f, 10 * _DeltaTime});
 	if (nullptr != Score && ElapsedTime > IntervalTime)
 	{
