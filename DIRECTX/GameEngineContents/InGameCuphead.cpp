@@ -116,8 +116,6 @@ void InGameCuphead::Start()
 	Renderer->AnimationBindFrame("IngameCupheadDuckShoot", std::bind(&InGameCuphead::OnShootAnimationFrameChanged, this, std::placeholders::_1));
 	Renderer->AnimationBindFrame("IngameCupheadJump", std::bind(&InGameCuphead::OnJumpAnimationFrameChanged, this, std::placeholders::_1));
 
-	SetHP(3);
-
 	{
 		// Collision
 		MainCollision = CreateComponent<GameEngineCollision>();
@@ -151,6 +149,8 @@ void InGameCuphead::Start()
 					EquippedWeapon->SetParent(this);
 					EquippedWeapon->SetIsEquipped(true);
 				}
+
+				SetHP(State->MaxHP);
 			}
 		}
 

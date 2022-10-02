@@ -19,6 +19,7 @@
 #include <GameEngineContents/TextureLoadUtils.h>
 #include "InGameCuphead.h"
 #include "PhysicsComponent.h"
+#include <GameEngineContents/PlayerHP.h>
 
 SaltBakerLevel::SaltBakerLevel()
 	:BeforePhase(Phase::Ready)
@@ -269,6 +270,10 @@ void SaltBakerLevel::Update(float _DeltaTime)
 				Cuphead->SetOnDashInvisible(State->OnDashInvisible);
 			}
 			Player = Cuphead;
+
+			PlayerHP* HPUI = CreateActor<PlayerHP>(GameObjectGroup::UI);
+			HPUI->SetPlayer(Cuphead);
+			HPUI->GetTransform().SetLocalPosition({ 75.0f,-675.0f, (int)ZOrder::UI });
 		}
 
 		else if (CurrentPhase == Phase::Phase3)
@@ -656,6 +661,7 @@ void SaltBakerLevel::OnLoadCompleted()
 		IrisRenderer->ChangeFrameAnimation("IrisA");
 		IrisRenderer->ChangeCamera(CAMERAORDER::IRISCAMERA);
 	}
+
 	SetPhase(Phase::Phase1);
 
 	Hourglass->Off();

@@ -4,6 +4,7 @@
 #include "InGameCuphead.h"
 
 PlayerHP::PlayerHP()
+	: HP(-1)
 {
 }
 

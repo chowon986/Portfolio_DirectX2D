@@ -6,6 +6,7 @@
 #include "PeaShooterItem.h"
 
 CharacterState::CharacterState()
+	: MaxHP(3)
 {
 }
 
