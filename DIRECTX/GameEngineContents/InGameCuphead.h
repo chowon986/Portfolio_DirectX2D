@@ -47,6 +47,7 @@ protected:
 	void OnDashAnimationFrameChanged(const FrameAnimation_DESC& _Info);
 	void OnTakeDamageAnimationEnded(const FrameAnimation_DESC& _Info);
 	void OnExShootAnimationEnded(const FrameAnimation_DESC& _Info);
+	void OnExShootAnimationChanged(const FrameAnimation_DESC& _Info);
 	void OnGhostAnimationEnded(const FrameAnimation_DESC& _Info);
 	void OnShootAnimationFrameChanged(const FrameAnimation_DESC& _Info);
 	void OnShootAnimationFrameStarted(const FrameAnimation_DESC& _Info);

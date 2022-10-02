@@ -17,6 +17,7 @@
 #include <GameEngineContents/PeaShooterItem.h>
 #include <GameEngineContents/CharacterState.h>
 #include <GameEngineContents/PeaShooter.h>
+#include <GameEngineContents/CharacterScore.h>
 
 BeforeTitleLevel::BeforeTitleLevel()
 	: BlackScreenToAnimationIntervalTime(3.5f)
@@ -68,6 +69,9 @@ void BeforeTitleLevel::LevelStartEvent()
 		Item->Weapon = CreateActor<PeaShooter>();
 		Item->Weapon->SetLevelOverOn();
 	}
+
+	CharacterScore* Score = CreateActor<CharacterScore>(GameObjectGroup::CharacterScore);
+	Score->SetLevelOverOn();
 
 	std::shared_ptr<SuperBeamItem> SuperBeamItemIcon = std::make_shared<SuperBeamItem>();
 	std::shared_ptr<SuperGhostItem> SuperGhostItemIcon = std::make_shared<SuperGhostItem>();

@@ -86,7 +86,8 @@ void InGameCharacterAnimationControllerComponent::UpdateAnimation()
 		State != InGameCharacterState::TakeDamage &&
 		State != InGameCharacterState::Die &&
 		State != InGameCharacterState::Parry &&
-		State != InGameCharacterState::Duck)
+		State != InGameCharacterState::Duck &&
+		AttackState != InGameCharacterAttackState::SuperAttack)
 	{
 		Renderer->ChangeFrameAnimation("Ingame" + Name + "Jump");
 	}
@@ -96,6 +97,11 @@ void InGameCharacterAnimationControllerComponent::UpdateAnimation()
 		if (State == InGameCharacterState::Die)
 		{
 			Renderer->ChangeFrameAnimation("Ingame" + Name + "Ghost");
+		}
+
+		else if (AttackState == InGameCharacterAttackState::SuperAttack)
+		{
+			Renderer->ChangeFrameAnimation("Ingame" + Name + "ExShootStraight");
 		}
 
 		else if (State == InGameCharacterState::TakeDamage)

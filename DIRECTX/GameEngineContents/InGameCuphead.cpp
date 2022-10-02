@@ -80,8 +80,9 @@ void InGameCuphead::Start()
 	Renderer->CreateFrameAnimationCutTexture("IngameCupheadShootUp", FrameAnimation_DESC("Cup.png", 116, 118, 0.1f, true));
 	Renderer->CreateFrameAnimationCutTexture("IngameCupheadDuckShoot", FrameAnimation_DESC("Cup.png", 174, 176, 0.1f, true));
 
-	Renderer->CreateFrameAnimationFolder("IngameCupheadExShootStraight", FrameAnimation_DESC("IngameCupheadExShootStraight", 0.1f, true));
+	Renderer->CreateFrameAnimationFolder("IngameCupheadExShootStraight", FrameAnimation_DESC("IngameCupheadExShootStraight", 0.05f, true));
 	Renderer->AnimationBindEnd("IngameCupheadExShootStraight", std::bind(&InGameCuphead::OnExShootAnimationEnded, this, std::placeholders::_1));
+	Renderer->AnimationBindFrame("IngameCupheadExShootStraight", std::bind(&InGameCuphead::OnExShootAnimationChanged, this, std::placeholders::_1));
 
 	// TakeDamage
 	Renderer->CreateFrameAnimationCutTexture("IngameCupheadTakeDamage", FrameAnimation_DESC("Cup.png", 28, 33, 0.05f, true));
@@ -167,9 +168,9 @@ void InGameCuphead::Start()
 		std::list<GameEngineActor*> Actors = GetLevel()->GetGroup(GameObjectGroup::CharacterScore);
 		for (GameEngineActor* Actor : Actors)
 		{
-			if (nullptr != dynamic_cast<CharacterScore*>(Actor))
+			if (CharacterScore* _Score = dynamic_cast<CharacterScore*>(Actor))
 			{
-				Score = dynamic_cast<CharacterScore*>(Actor);
+				Score = _Score;
 			}
 		}
 	}
@@ -281,20 +282,17 @@ void InGameCuphead::Update(float _DeltaTime)
 			{
 				if (GetGauge() > 1.0f)
 				{
-					SetShooterState(InGameCharacterShooterState::SuperShot);
 					SetAttackState(InGameCharacterAttackState::SuperAttack);
+					GetPhysicsComponent()->Reset();
+					GetPhysicsComponent()->Off();
 					SetGauge(GetGauge()-1);
 					Score->UseCard += 1;
-				}
-				else
-				{
-					SetAttackState(InGameCharacterAttackState::None);
 				}
 			}
 		}
 		else
 		{
-			if (GetAttackState() != InGameCharacterAttackState::SuperAttack)
+			if (GetAttackState() == InGameCharacterAttackState::Shoot)
 			{
 				SetAttackState(InGameCharacterAttackState::None);
 			}
@@ -406,7 +404,21 @@ void InGameCuphead::OnTakeDamageAnimationEnded(const FrameAnimation_DESC& _Info)
 
 void InGameCuphead::OnExShootAnimationEnded(const FrameAnimation_DESC& _Info)
 {
-	Idle();
+	GetPhysicsComponent()->On();
+	SetAttackState(InGameCharacterAttackState::None);
+	UpdateState();
+}
+
+void InGameCuphead::OnExShootAnimationChanged(const FrameAnimation_DESC& _Info)
+{
+	if (_Info.CurFrame == 6)
+	{
+		SetShooterState(InGameCharacterShooterState::SuperShot);
+	}
+	else
+	{
+		SetShooterState(InGameCharacterShooterState::None);
+	}
 }
 
 void InGameCuphead::OnGhostAnimationEnded(const FrameAnimation_DESC& _Info)
@@ -517,9 +529,14 @@ void InGameCuphead::SpecialAttack()
 }
 void InGameCuphead::UpdateState()
 {
-	if (IsTakeDamageInProgess == true)
+	if (IsTakeDamageInProgess == true &&
+		GetState() == InGameCharacterState::TakeDamage)
 	{
 		return;
+	}
+	else
+	{
+		IsTakeDamageInProgess = false;
 	}
 
 	if (true == GameEngineInput::GetInst()->IsDown("Dash"))
@@ -562,8 +579,7 @@ void InGameCuphead::UpdateState()
 
 	else
 	{
-		if (GetIsOnGround() == true &&
-			GetAttackState() != InGameCharacterAttackState::SuperAttack)
+		if (GetIsOnGround() == true)
 		{
 			IsInputEnabled = true;
 			Idle();

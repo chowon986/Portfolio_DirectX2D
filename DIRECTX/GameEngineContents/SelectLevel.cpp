@@ -54,8 +54,6 @@ void SelectLevel::LevelStartEvent()
 	GetBackgroundCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
 	GetRotateCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
 	GetRotateCamera2()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
-	Score = CreateActor<CharacterScore>(GameObjectGroup::CharacterScore);
-	Score->SetLevelOverOn();
 
 	std::list<GameEngineActor*> Actors = GetGroup(GameObjectGroup::CharacterState);
 	for (GameEngineActor* Actor : Actors)
@@ -63,6 +61,11 @@ void SelectLevel::LevelStartEvent()
 		if (CharacterState* _State = dynamic_cast<CharacterState*>(Actor))
 		{
 			State = _State;
+		}
+
+		if (CharacterScore* _Score = dynamic_cast<CharacterScore*>(Actor))
+		{
+			Score = _Score;
 		}
 	}
 
