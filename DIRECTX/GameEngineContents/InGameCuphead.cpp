@@ -472,8 +472,16 @@ void InGameCuphead::Aim()
 void InGameCuphead::TakeDamage()
 {
 	SetHP(GetHP() - 1);
-	SetState(InGameCharacterState::TakeDamage);
-	GetPhysicsComponent()->On();
+	if (GetHP() > 0)
+	{
+		SetState(InGameCharacterState::TakeDamage);
+		GetPhysicsComponent()->On();
+	}
+	else
+	{
+		Die();
+		GetPhysicsComponent()->Off();
+	}
 }
 
 void InGameCuphead::Dash()
@@ -529,8 +537,12 @@ void InGameCuphead::SpecialAttack()
 }
 void InGameCuphead::UpdateState()
 {
-	if (IsTakeDamageInProgess == true &&
-		GetState() == InGameCharacterState::TakeDamage)
+	if (GetState() == InGameCharacterState::TakeDamage &&
+		IsTakeDamageInProgess == true)
+	{
+		return;
+	}
+	else if (GetState() == InGameCharacterState::Die)
 	{
 		return;
 	}
