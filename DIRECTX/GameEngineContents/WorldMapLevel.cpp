@@ -42,8 +42,6 @@ WorldMapLevel::WorldMapLevel()
 	, OutsideOfMainLandRightRenderer(nullptr)
 	, State(nullptr)
 	, CurCoin(0)
-	, LoadInterval(0.005f)
-	, LoadElapsedTime(0.0f)
 	, LoadCompleted(false)
 	, Hourglass(nullptr)
 {
@@ -76,6 +74,7 @@ void WorldMapLevel::Start()
 
 void WorldMapLevel::LevelStartEvent()
 {
+	if (Hourglass == nullptr)
 	{
 		Hourglass = CreateActor<Background>(GameObjectGroup::UI);
 		GameEngineTextureRenderer* Renderer = Hourglass->CreateComponent<GameEngineTextureRenderer>();
@@ -90,21 +89,14 @@ void WorldMapLevel::Update(float _DeltaTime)
 {
 	if (LoadCompleted == false)
 	{
-		LoadElapsedTime += _DeltaTime;
-		if (LoadElapsedTime > LoadInterval)
+		//Loading
+		bool DogFightLevelLoadCompleted = TextureLoadUtils::LoadTexturesAsync("14WorldMapLevel");
+		if (DogFightLevelLoadCompleted)
 		{
-			LoadElapsedTime -= LoadInterval;
-
-
-			//Loading
-			bool DogFightLevelLoadCompleted = TextureLoadUtils::LoadTexturesAsync("14WorldMapLevel");
-			if (DogFightLevelLoadCompleted)
+			LoadCompleted = TextureLoadUtils::LoadTexturesAsync("05Item");
+			if (LoadCompleted == true)
 			{
-				LoadCompleted = TextureLoadUtils::LoadTexturesAsync("05Item");
-				if (LoadCompleted == true)
-				{
-					OnLoadCompleted();
-				}
+				OnLoadCompleted();
 			}
 		}
 		return;

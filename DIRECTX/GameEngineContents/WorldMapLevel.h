@@ -42,8 +42,6 @@ private:
 	ItemInventory* Inventory;
 	int CurCoin;
 	Background* Hourglass;
-	float LoadInterval;
-	float LoadElapsedTime;
 	float LoadCompleted;
 };
 

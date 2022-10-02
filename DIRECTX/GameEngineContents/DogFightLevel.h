@@ -109,8 +109,6 @@ private:
 	CharacterState* State;
 	CharacterScore* Score;
 	float RotateTime;
-	float LoadInterval;
-	float LoadElapsedTime;
 	float LoadCompleted;
 
 };

@@ -80,8 +80,6 @@ private:
 	std::map<int, GameEngineActor*> LittleTornadoActor;
 	InGameCuphead* Cuphead;
 	bool OldFilmTimeCountOn;
-	float LoadInterval;
-	float LoadElapsedTime;
 	float LoadCompleted;
 	Background* Hourglass;
 };

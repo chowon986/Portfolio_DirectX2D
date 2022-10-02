@@ -43,8 +43,6 @@ DogFightLevel::DogFightLevel()
 	, RotateElapsedTime(0.0f)
 	, RotateTime(10)
 	, PlayElapsedTime(0.0f)
-	, LoadInterval(0.005f)
-	, LoadElapsedTime(0.0f)
 	, LoadCompleted(false)
 	, Hourglass(nullptr)
 {
@@ -88,6 +86,7 @@ void DogFightLevel::LevelStartEvent()
 	GetRotateCamera2ActorTransform().SetLocalPosition({ 640, -360 });
 	GetIrisCameraActorTransform().SetLocalPosition({ 640.0f, -360.0f });
 
+	if (Hourglass == nullptr)
 	{
 		Hourglass = CreateActor<Background>(GameObjectGroup::UI);
 		GameEngineTextureRenderer* Renderer = Hourglass->CreateComponent<GameEngineTextureRenderer>();
@@ -281,19 +280,13 @@ void DogFightLevel::Update(float _DeltaTime)
 {
 	if (LoadCompleted == false)
 	{
-		LoadElapsedTime += _DeltaTime;
-		if (LoadElapsedTime > LoadInterval)
+		bool DogFightLevelLoadCompleted = TextureLoadUtils::LoadTexturesAsync("15DogFightLevel");
+		if (DogFightLevelLoadCompleted)
 		{
-			LoadElapsedTime -= LoadInterval;
-
-			bool DogFightLevelLoadCompleted = TextureLoadUtils::LoadTexturesAsync("15DogFightLevel");
-			if (DogFightLevelLoadCompleted)
+			LoadCompleted = TextureLoadUtils::LoadFolderTexturesAsync("DogFightBoss", "22Boss");
+			if (LoadCompleted == true)
 			{
-				LoadCompleted = TextureLoadUtils::LoadFolderTexturesAsync("DogFightBoss", "22Boss");
-				if (LoadCompleted == true)
-				{
-					OnLoadCompleted();
-				}
+				OnLoadCompleted();
 			}
 		}
 		return;
@@ -337,9 +330,9 @@ void DogFightLevel::Update(float _DeltaTime)
 				Cuphead->SetOnDashInvisible(State->OnDashInvisible);
 			}
 
-			PlayerHP* HPUI = CreateActor<PlayerHP>(GameObjectGroup::Monster);
+			PlayerHP* HPUI = CreateActor<PlayerHP>(GameObjectGroup::UI);
 			HPUI->SetPlayer(Cuphead);
-			HPUI->GetTransform().SetLocalPosition({ 75.0f,-675.0f });
+			HPUI->GetTransform().SetLocalPosition({ 75.0f,-675.0f, (int)ZOrder::UI });
 
 			CaptainCanteenPlane->SetPlayer(Cuphead);
 			CaptainCanteenPlane->SetColMapImage(ColMapRenderer);

@@ -33,8 +33,6 @@ SaltBakerLevel::SaltBakerLevel()
 	, ActorNum(0)
 	, OldFilmTimeCountOn(true)
 	, GlassOn(false)
-	, LoadInterval(0.005f)
-	, LoadElapsedTime(0.0f)
 	, LoadCompleted(false)
 	, Hourglass(nullptr)
 {
@@ -65,6 +63,7 @@ void SaltBakerLevel::LevelStartEvent()
 	GetIrisCameraActorTransform().SetLocalPosition({ 640.0f, -360.0f });
 	GetRotateCamera2ActorTransform().SetLocalPosition({ 640.0f, -360.0f });
 
+	if (Hourglass == nullptr)
 	{
 		Hourglass = CreateActor<Background>(GameObjectGroup::UI);
 		GameEngineTextureRenderer* Renderer = Hourglass->CreateComponent<GameEngineTextureRenderer>();
@@ -117,18 +116,13 @@ void SaltBakerLevel::Update(float _DeltaTime)
 {
 	if (LoadCompleted == false)
 	{
-		LoadElapsedTime += _DeltaTime;
-		if (LoadElapsedTime > LoadInterval)
+		bool SaltBakerLevelLoadCompleted = TextureLoadUtils::LoadTexturesAsync("17SaltBakerLevel");
+		if (SaltBakerLevelLoadCompleted)
 		{
-			LoadElapsedTime -= LoadInterval;
-			bool SaltBakerLevelLoadCompleted = TextureLoadUtils::LoadTexturesAsync("17SaltBakerLevel");
-			if (SaltBakerLevelLoadCompleted)
+			LoadCompleted = TextureLoadUtils::LoadFolderTexturesAsync("SaltBakerBoss", "22Boss");
+			if (LoadCompleted == true)
 			{
-				LoadCompleted = TextureLoadUtils::LoadFolderTexturesAsync("SaltBakerBoss", "22Boss");
-				if (LoadCompleted == true)
-				{
-					OnLoadCompleted();
-				}
+				OnLoadCompleted();
 			}
 		}
 		return;
