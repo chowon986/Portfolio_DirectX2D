@@ -17,6 +17,7 @@ CanteenPlane::CanteenPlane()
 	, ColMapTexture(nullptr)
 	, IsPhase2MoveCompleted(false)
 	, IsPhase3MoveCompleted(false)
+	, DestRotationDegree(0)
 {
 }
 
@@ -33,12 +34,18 @@ void CanteenPlane::SetDogCopter(DogCopter* _LeaderCopter)
 CollisionReturn CanteenPlane::CanMoveLeft(GameEngineCollision* _This, GameEngineCollision* _Other)
 {
 	MoveDirection = float4::LEFT;
+	DestRotationDegree = 5;
+	IsOnWing = true;
+	ElapsedZTime = 0;
 	return CollisionReturn();
 }
 
 CollisionReturn CanteenPlane::CanMoveRight(GameEngineCollision* _This, GameEngineCollision* _Other)
 {
 	MoveDirection = float4::RIGHT;
+	DestRotationDegree = -5;
+	IsOnWing = true;
+	ElapsedZTime = 0;
 	return CollisionReturn();
 }
 
@@ -80,6 +87,7 @@ void CanteenPlane::Start()
 		Renderer->ChangeFrameAnimation("CanteenPlaneBody");
 		Renderer->ScaleToTexture();
 		Renderer->GetTransform().SetLocalPosition({ 0, 0, (int)ZOrder::NPC });
+		Renderers.push_back(Renderer);
 	}
 
 	{
@@ -88,6 +96,7 @@ void CanteenPlane::Start()
 		Renderer->ChangeFrameAnimation("CanteenPlanePropeller");
 		Renderer->ScaleToTexture();
 		Renderer->GetTransform().SetLocalPosition({ 0, -40, (int)ZOrder::Player - 1 });
+		Renderers.push_back(Renderer);
 	}
 
 	{
@@ -96,6 +105,7 @@ void CanteenPlane::Start()
 		Renderer->ChangeFrameAnimation("CanteenPlaneTail");
 		Renderer->ScaleToTexture();
 		Renderer->GetTransform().SetLocalPosition({ 0, +50, (int)ZOrder::NPC + 3 });
+		Renderers.push_back(Renderer);
 	}
 
 	{
@@ -104,6 +114,7 @@ void CanteenPlane::Start()
 		Renderer->ChangeFrameAnimation("CanteenPlaneTopWing");
 		Renderer->ScaleToTexture();
 		Renderer->GetTransform().SetLocalPosition({ 0, +40, (int)ZOrder::NPC - 1 });
+		Renderers.push_back(Renderer);
 	}
 
 	{
@@ -112,6 +123,7 @@ void CanteenPlane::Start()
 		Renderer->ChangeFrameAnimation("CanteenPlaneWheels");
 		Renderer->ScaleToTexture();
 		Renderer->GetTransform().SetLocalPosition({ 0, -70, (int)ZOrder::NPC + 2 });
+		Renderers.push_back(Renderer);
 	}
 
 	{
@@ -120,6 +132,7 @@ void CanteenPlane::Start()
 		Renderer->ChangeFrameAnimation("CanteenPlaneWing");
 		Renderer->ScaleToTexture();
 		Renderer->GetTransform().SetLocalPosition({ 0, 0, (int)ZOrder::NPC + 2 });
+		Renderers.push_back(Renderer);
 	}
 
 	{
@@ -225,9 +238,6 @@ void CanteenPlane::Update(float _DeltaTime)
 
 		}
 	}
-	//GameEngineDebug::DrawBox(LeftCollision->GetTransform(), { 1.0f, 0.0f,0.0f, 0.5f });
-	//GameEngineDebug::DrawBox(RightCollision->GetTransform(), { 1.0f, 0.0f,0.0f, 0.5f });
-	//GameEngineDebug::DrawBox(GroundCollision->GetTransform(), { 1.0f, 0.0f,0.0f, 0.5f });
 
 	if (LeaderCopter != nullptr)
 	{
@@ -237,6 +247,7 @@ void CanteenPlane::Update(float _DeltaTime)
 		}
 	}
 	MoveDirection = float4::ZERO;
+	IsOnWing = false;
 
 	LeftCollision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::PC, CollisionType::CT_AABB2D,
 		std::bind(&CanteenPlane::CanMoveLeft, this, std::placeholders::_1, std::placeholders::_2));
@@ -244,6 +255,21 @@ void CanteenPlane::Update(float _DeltaTime)
 	RightCollision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::PC, CollisionType::CT_AABB2D,
 		std::bind(&CanteenPlane::CanMoveRight, this, std::placeholders::_1, std::placeholders::_2));
 
+	if (IsOnWing == false)
+	{
+		if (DestRotationDegree != 0)
+		{
+			DestRotationDegree = 0;
+			ElapsedZTime = 0;
+		}
+	}
+
+	ElapsedZTime += _DeltaTime;
+	for (GameEngineRenderer* Renderer : Renderers)
+	{
+		float RotationZ = GameEngineMath::LerpLimit(Renderer->GetTransform().GetLocalRotation().z, DestRotationDegree, ElapsedZTime );
+		Renderer->GetTransform().SetLocalRotation({ 0, 0, RotationZ });
+	}
 
 	if (ColMapTexture == nullptr)
 	{

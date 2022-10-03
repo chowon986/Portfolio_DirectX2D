@@ -182,6 +182,7 @@ void InGameCuphead::Update(float _DeltaTime)
 	OnCollisionDebug();
 	CheckCollision();
 
+
 	if (true == CountInvisibleTime)
 	{
 		InvisibleElapsedTime += _DeltaTime;
@@ -240,14 +241,17 @@ void InGameCuphead::Update(float _DeltaTime)
 	if (GetState() == InGameCharacterState::Duck)
 	{
 		MainCollision->GetTransform().SetLocalScale({ 100.0f, 50.0f, 1.0f });
+		MainCollision->GetTransform().SetLocalPosition({ 0.0f, 35.0f });
 	}
 	else if(GetState() == InGameCharacterState::Die)
 	{
 		MainCollision->GetTransform().SetLocalScale({ 0.0f, 0.0f, 1.0f });
+		MainCollision->GetTransform().SetLocalPosition({ 0.0f, 60.0f });
 	}
 	else
 	{
 		MainCollision->GetTransform().SetLocalScale({ 100.0f, 100.0f, 1.0f });
+		MainCollision->GetTransform().SetLocalPosition({ 0.0f, 60.0f });
 	}
 
 	if (IsInputEnabled == false)
@@ -463,7 +467,6 @@ void InGameCuphead::OnJumpAnimationFrameChanged(const FrameAnimation_DESC& _Info
 	}
 }
 
-
 void InGameCuphead::Aim()
 {
 	SetState(InGameCharacterState::Aim);
@@ -580,7 +583,10 @@ void InGameCuphead::UpdateState()
 
 	else if (true == GameEngineInput::GetInst()->IsPress("MoveDown"))
 	{
-		Duck();
+		if (true == GetIsOnGround())
+		{
+			Duck();
+		}
 	}
 
 	else if (true == GameEngineInput::GetInst()->IsPress("MoveLeft") ||

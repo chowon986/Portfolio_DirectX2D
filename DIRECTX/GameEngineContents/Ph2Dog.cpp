@@ -228,6 +228,7 @@ CollisionReturn Ph2Dog::OnTakeDamage(GameEngineCollision* _This, GameEngineColli
 	if (GetHP() <= 0)
 	{
 		Renderer->ChangeFrameAnimation("Ph2DogDie");
+		_This->Off();
 	}
 	return CollisionReturn::ContinueCheck;
 }

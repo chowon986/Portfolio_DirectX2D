@@ -38,8 +38,11 @@ void InGameCharacterAnimationControllerComponent::OnHorizontalDirectionChanged(s
 
 void InGameCharacterAnimationControllerComponent::OnIdleDownStartAnimationEnded(const FrameAnimation_DESC& _Info)
 {
-	IsIdleDownStartAnimationChanged = true;
-	UpdateAnimation();
+	if (_Info.CurFrame == 6)
+	{
+		IsIdleDownStartAnimationChanged = true;
+		UpdateAnimation();
+	}
 }
 
 void InGameCharacterAnimationControllerComponent::OnIsOnGroundChanged(bool _IsOnGround)
@@ -58,7 +61,7 @@ void InGameCharacterAnimationControllerComponent::SetCharacterName(std::string _
 		if (Renderer != nullptr)
 		{
 			std::string Name = GetCharacterName();
-			Renderer->AnimationBindEnd("Ingame" + Name + "IdleDownStart", std::bind(&InGameCharacterAnimationControllerComponent::OnIdleDownStartAnimationEnded, this, std::placeholders::_1));
+			Renderer->AnimationBindFrame("Ingame" + Name + "IdleDownStart", std::bind(&InGameCharacterAnimationControllerComponent::OnIdleDownStartAnimationEnded, this, std::placeholders::_1));
 		}
 	}
 }

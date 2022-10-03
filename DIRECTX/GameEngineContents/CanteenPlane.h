@@ -49,6 +49,9 @@ private:
 	GameEngineTextureRenderer* ColMapImage;
 	GameEngineTexture* ColMapTexture;
 	float4 MoveDirection;
+	float DestRotationDegree;
+	float ElapsedZTime;
+	bool IsOnWing;
 
 	InGameMonsterState LeaderState;
 	IInGameCharacterBase* Player;
@@ -61,5 +64,6 @@ private:
 	bool IsPhase3MoveCompleted;
 	GameEngineCollision* RedDogBowlCollsion;
 	GameEngineCollision* YellowDogBowlCollsion;
+	std::vector<GameEngineRenderer*> Renderers;
 };
 
