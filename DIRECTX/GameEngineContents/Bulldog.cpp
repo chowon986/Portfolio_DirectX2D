@@ -368,17 +368,41 @@ void Bulldog::OnPrepareAttack1AnimationFrameChanged(const FrameAnimation_DESC& _
 {
 	if (_Info.CurFrame == 1)
 	{
+		float scaleX = Renderer->GetTransform().GetLocalScale().x > 0 ? 1 : -1;
+
 		GetTransform().SetWorldPosition(float4{ 640, -820 });
-		Collision->GetTransform().SetLocalPosition({ -500.0f, 350.0f });
+		Collision->GetTransform().SetLocalPosition({ 500.0f * scaleX, 350.0f });
 	}
 }
 
 void Bulldog::OnPrepareAttack2AnimationFrameChanged(const FrameAnimation_DESC& _Info)
 {
+	float posX = Renderer->GetTransform().GetLocalScale().x > 0 ? -500 : 500;
+	switch (_Info.CurFrame)
+	{
+		
+	case 0: Collision->GetTransform().SetLocalPosition({ posX, 700.0f }); break;
+	case 1: Collision->GetTransform().SetLocalPosition({ posX, 690.0f }); break;
+	case 2: Collision->GetTransform().SetLocalPosition({ posX, 680.0f }); break;
+	case 3: Collision->GetTransform().SetLocalPosition({ posX, 670.0f }); break;
+	case 4: Collision->GetTransform().SetLocalPosition({ posX, 660.0f }); break;
+	case 5: Collision->GetTransform().SetLocalPosition({ posX, 650.0f }); break;
+	case 6: Collision->GetTransform().SetLocalPosition({ posX, 640.0f }); break;
+	case 7: Collision->GetTransform().SetLocalPosition({ posX, 630.0f }); break;
+	case 8: Collision->GetTransform().SetLocalPosition({ posX, 620.0f }); break;
+	case 9: Collision->GetTransform().SetLocalPosition({ posX, 600.0f }); break;
+	case 10: Collision->GetTransform().SetLocalPosition({ posX, 600.0f }); break;
+	case 11: Collision->GetTransform().SetLocalPosition({ posX, 520.0f }); break;
+	case 12: Collision->GetTransform().SetLocalPosition({ posX, 510.0f }); break;
+	case 13: Collision->GetTransform().SetLocalPosition({ posX, 500.0f }); break;
+	case 14: Collision->GetTransform().SetLocalPosition({ posX, 490.0f }); break;
+	case 15: Collision->GetTransform().SetLocalPosition({ posX, 480.0f }); break;
+	}
+
 	if (_Info.CurFrame == 1)
 	{
 		GetTransform().SetWorldPosition(float4{ 640, -750 });
-		Collision->GetTransform().SetLocalPosition({ 500.0f, 350.0f });
+		Collision->GetTransform().SetLocalPosition({ -500.0f, 350.0f });
 	}
 }
 
@@ -398,6 +422,7 @@ void Bulldog::OnAttack1AnimationFrameChanged(const FrameAnimation_DESC& _Info)
 	if (OnceAttack1FrameChanged != _Info.CurFrame)
 	{
 		OnceAttack1FrameChanged = _Info.CurFrame;
+
 		if (OnceAttack1FrameChanged == 2)
 		{
 			SetAttackState(InGameMonsterAttackState::YarnBall1);
@@ -419,6 +444,19 @@ void Bulldog::OnAttack1AnimationFrameChanged(const FrameAnimation_DESC& _Info)
 
 void Bulldog::OnAttack2AnimationFrameChanged(const FrameAnimation_DESC& _Info)
 {
+	float scaleX = Renderer->GetTransform().GetLocalScale().x > 0 ? -1 : 1;
+	switch (_Info.CurFrame)
+	{
+	case 0: Collision->GetTransform().SetLocalPosition({ 500.0f * scaleX, 450.0f }); break;
+	case 5: Collision->GetTransform().SetLocalPosition({ 500.0f * scaleX, 380.0f }); break;
+	case 16: Collision->GetTransform().SetLocalPosition({ 500.0f * scaleX, 370.0f }); break;
+	case 17: Collision->GetTransform().SetLocalPosition({ 500.0f * scaleX, 360.0f }); break;
+	case 18: Collision->GetTransform().SetLocalPosition({ 500.0f * scaleX, 350.0f }); break;
+	case 19: Collision->GetTransform().SetLocalPosition({ 500.0f * scaleX, 340.0f }); break;
+	case 20: Collision->GetTransform().SetLocalPosition({ 500.0f * scaleX, 330.0f }); break;
+	case 21: Collision->GetTransform().SetLocalPosition({ 500.0f * scaleX, 320.0f }); break;
+	}
+
 	if (_Info.CurFrame == 2)
 	{
 		int RandomTattoo = (rand() % 2);

@@ -4,8 +4,9 @@
 #include <GameEngineCore/GameEngineFolderTexture.h>
 #include <GameEngineBase/GameEngineFile.h>
 
-void TextureLoadUtils::LoadTextures(std::string _FolderName)
+bool TextureLoadUtils::LoadTextures(std::string _FolderName)
 {
+	bool IsInitialLoad = false;
 	GameEngineDirectory Dir;
 	Dir.MoveParentToExitsChildDirectory("ConstantResources");
 	Dir.Move("ConstantResources");
@@ -14,17 +15,34 @@ void TextureLoadUtils::LoadTextures(std::string _FolderName)
 	std::vector<GameEngineDirectory> RecursiveDir = Dir.GetRecursiveAllDirectory();
 	for (GameEngineDirectory Dir : RecursiveDir)
 	{
-		GameEngineFolderTexture::Load(Dir.GetFullPath());
+		std::string FullPath = Dir.GetFullPath();
+		std::string FileName = GameEnginePath::GetFileName(FullPath);
+		GameEngineFolderTexture* FolderTexture = GameEngineRes<GameEngineFolderTexture>::Find(FileName);
+		if (FolderTexture == nullptr)
+		{
+			GameEngineFolderTexture::Load(FullPath);
+			IsInitialLoad = true;
+		}
 	}
 	std::vector<GameEngineFile> Textures = Dir.GetAllFile();
 	for (size_t i = 0; i < Textures.size(); i++)
 	{
-		GameEngineTexture::Load(Textures[i].GetFullPath());
+		std::string FullPath = Textures[i].GetFullPath();
+		std::string FileName = GameEnginePath::GetFileName(FullPath);
+		GameEngineTexture* FolderTexture = GameEngineRes<GameEngineTexture>::Find(FileName);
+		if (FolderTexture == nullptr)
+		{
+			GameEngineTexture::Load(FullPath);
+			IsInitialLoad = true;
+		}
 	}
+
+	return IsInitialLoad;
 }
 
-void TextureLoadUtils::LoadFolderTextures(std::string _FolderName, std::string _ParentFolderName)
+bool TextureLoadUtils::LoadFolderTextures(std::string _FolderName, std::string _ParentFolderName)
 {
+	bool IsInitialLoad = false;
 	GameEngineDirectory Dir;
 	Dir.MoveParentToExitsChildDirectory("ConstantResources");
 	Dir.Move("ConstantResources");
@@ -37,8 +55,17 @@ void TextureLoadUtils::LoadFolderTextures(std::string _FolderName, std::string _
 	std::vector<GameEngineDirectory> RecursiveDir = Dir.GetRecursiveAllDirectory();
 	for (GameEngineDirectory Dir : RecursiveDir)
 	{
-		GameEngineFolderTexture::Load(Dir.GetFullPath());
+		std::string FullPath = Dir.GetFullPath();
+		std::string FileName = GameEnginePath::GetFileName(FullPath);
+		GameEngineFolderTexture* FolderTexture = GameEngineRes<GameEngineFolderTexture>::Find(FileName);
+		if (FolderTexture == nullptr)
+		{
+			GameEngineFolderTexture::Load(Dir.GetFullPath());
+			IsInitialLoad = true;
+		}
 	}
+
+	return IsInitialLoad;
 }
 
 bool TextureLoadUtils::LoadTexturesAsync(std::string _FolderName)

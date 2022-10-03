@@ -45,9 +45,10 @@ SelectLevel::~SelectLevel()
 
 void SelectLevel::LevelStartEvent()
 {
-	//Loading
-	TextureLoadUtils::LoadTextures("12SelectLevel");
-
+	if (false == TextureLoadUtils::LoadTextures("12SelectLevel"))
+	{
+		return;
+	}
 
 	//Start
 	GetMainCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
@@ -76,6 +77,13 @@ void SelectLevel::LevelStartEvent()
 		SelectBackgroundRenderer->GetTransform().SetLocalScale({ 1280.0f, 720.0f, 1.0f });
 		SelectBackgroundRenderer->GetTransform().SetLocalPosition({ 0.0f, 0.0f, (int)ZOrder::Background });
 	}
+
+	GameEngineActor* DarknessActor = CreateActor<GameEngineActor>();
+	GameEngineTextureRenderer* DarknessRenderer = DarknessActor->CreateComponent<GameEngineTextureRenderer>();
+	DarknessRenderer->SetTexture("Darkness.png");
+	DarknessRenderer->GetTransform().SetWorldScale({ 1300.0f, 750, 1.0 });
+	DarknessRenderer->GetTransform().SetWorldPosition({ 0.0f, 0.0f, -100.0f });
+	DarknessRenderer->GetPipeLine()->SetOutputMergerBlend("Darkness");
 }
 
 void SelectLevel::Update(float _DeltaTime)
@@ -342,7 +350,7 @@ void SelectLevel::End()
 
 void SelectLevel::EndAnimation(const FrameAnimation_DESC& _Info)
 {
-	GEngine::ChangeLevel("Hourglass");
+	GEngine::ChangeLevel("Story");
 }
 
 SelectLevelPhase SelectLevel::GetPhase()

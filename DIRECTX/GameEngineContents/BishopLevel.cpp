@@ -22,7 +22,11 @@ BishopLevel::~BishopLevel()
 
 void BishopLevel::LevelStartEvent()
 {
-	TextureLoadUtils::LoadTextures("15DogFightLevel");
+	if (false == TextureLoadUtils::LoadTextures("15DogFightLevel"))
+	{
+		return;
+	}
+
 	//Start
 	GetMainCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
 	GetBackgroundCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();

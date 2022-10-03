@@ -4,9 +4,32 @@
 #include "Background.h"
 #include <GameEngineCore/GameEngineBlur.h>
 #include <GameEngineContents/TextureLoadUtils.h>
+#include "OldFilm.h"
+#include "Darkness.h"
+#include "Enums.h"
+#include <GameEngineCore/GEngine.h>
+#include <GameEngineCore/GameEngineBlur.h>
+#include <GameEngineBase/GameEngineInput.h>
+#include <GameEngineCore/GameEngineTextureRenderer.h>
+#include <GameEngineContents/TextureLoadUtils.h>
+#include <GameEngineContents/SuperBeamItem.h>
+#include <GameEngineContents/SuperGhostItem.h>
+#include <GameEngineContents/SuperInvincibleItem.h>
+#include <GameEngineContents/AstalCookieItem.h>
+#include <GameEngineContents/WeaponItemBase.h>
+#include <GameEngineContents/PeaShooterItem.h>
+#include <GameEngineContents/CharacterState.h>
+#include <GameEngineContents/PeaShooter.h>
+#include <GameEngineContents/CharacterScore.h>
 
 TitleLevel::TitleLevel()
 	: IrisRenderer(nullptr)
+	, MDHRLogoRenderer(nullptr)
+	, FadeInActorRenderer(nullptr)
+	, ElapsedTime(0.0f)
+	, FadeInElapsedTime(0.0f)
+	, BlackScreenToAnimationIntervalTime(3.5f)
+	, Phase(0)
 {
 }
 
@@ -14,18 +37,82 @@ TitleLevel::~TitleLevel()
 {
 }
 
+void TitleLevel::Start()
+{
+	GameEngineActor* FadeInActor = CreateActor<GameEngineActor>();
+	FadeInActorRenderer = FadeInActor->CreateComponent<GameEngineTextureRenderer>();
+	FadeInActorRenderer->SetTexture("Loading_background.png");
+	FadeInActorRenderer->GetTransform().SetWorldScale({ 1280.0f, 720, 1.0 });
+	FadeInActorRenderer->GetTransform().SetWorldPosition({ 0.0f, 0.0f, -50.0f });
+}
+
 void TitleLevel::LevelStartEvent()
 {
-	//Loading
-	TextureLoadUtils::LoadTextures("11TitleLevel");
+	if (false == TextureLoadUtils::LoadTextures("10BeforeTitleLevel"))
+	{
+		return;
+	}
 
+	if (false == TextureLoadUtils::LoadTextures("11TitleLevel"))
+	{
+		return;
+	}
 
 	//Start
 	GetMainCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
 	GetBackgroundCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
 	GetRotateCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
 	GetRotateCamera2()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
+
+	GetUICameraActorTransform().SetLocalPosition({ 0, 0 });
+	GetDarknessCameraActorTransform().SetLocalPosition({ 0, 0 });
+
+	Background* MDHRLogo = CreateActor<Background>(GameObjectGroup::UI);
+	MDHRLogoRenderer = MDHRLogo->CreateComponent<GameEngineTextureRenderer>();
+	MDHRLogoRenderer->GetTransform().SetLocalScale({ 1280.0f, 720.0f, 1.0f });
+	MDHRLogoRenderer->CreateFrameAnimationFolder("BeforeTitle", FrameAnimation_DESC("Logo", 0.04f, false));
+	MDHRLogoRenderer->GetTransform().SetWorldPosition({ 0.0f, 0.0f, -10 });
+	MDHRLogoRenderer->ChangeFrameAnimation("BeforeTitle");
+	MDHRLogoRenderer->CurAnimationPauseOn();
+	MDHRLogoRenderer->AnimationBindEnd("BeforeTitle", std::bind(&TitleLevel::OnHDMRAnimationFrameEnd, this, std::placeholders::_1));
+
+	OldFilm* PostEffect = CreateActor<OldFilm>(GameObjectGroup::UI);
+	PostEffect->SetLevelOverOn();
+
+	//GameEngineSound::SoundPlayOneShot("MDHR.mp3");
+
+	CharacterState* State = CreateActor<CharacterState>(GameObjectGroup::CharacterState);
+	State->SetLevelOverOn();
+	std::shared_ptr<PeaShooterItem> PeaShot = std::make_shared<PeaShooterItem>();
+	State->EquippedItems[InventoryType::ShotA] = PeaShot;
+	State->Items[ItemType::Shoot].push_back(PeaShot);
+	if (WeaponItemBase* Item = dynamic_cast<WeaponItemBase*>(State->EquippedItems[InventoryType::ShotA].get()))
 	{
+		Item->Weapon = CreateActor<PeaShooter>();
+		Item->Weapon->SetLevelOverOn();
+	}
+
+	CharacterScore* Score = CreateActor<CharacterScore>(GameObjectGroup::CharacterScore);
+	Score->SetLevelOverOn();
+
+	std::shared_ptr<SuperBeamItem> SuperBeamItemIcon = std::make_shared<SuperBeamItem>();
+	std::shared_ptr<SuperGhostItem> SuperGhostItemIcon = std::make_shared<SuperGhostItem>();
+	std::shared_ptr<SuperInvincibleItem> SuperInvincibleItemIcon = std::make_shared<SuperInvincibleItem>();
+	State->Items[ItemType::Super].push_back(SuperBeamItemIcon);
+	State->Items[ItemType::Super].push_back(SuperInvincibleItemIcon);
+	State->Items[ItemType::Super].push_back(SuperGhostItemIcon);
+
+	std::shared_ptr<AstalCookieItem> AstalCookieItemIcon = std::make_shared<AstalCookieItem>();
+	State->Items[ItemType::Charm].push_back(AstalCookieItemIcon);
+
+	{
+		GameEngineActor* DarknessActor = CreateActor<GameEngineActor>();
+		GameEngineTextureRenderer* DarknessRenderer = DarknessActor->CreateComponent<GameEngineTextureRenderer>();
+		DarknessRenderer->SetTexture("Darkness.png");
+		DarknessRenderer->GetTransform().SetWorldScale({ 1300.0f, 750, 1.0 });
+		DarknessRenderer->GetTransform().SetWorldPosition({ 0.0f, 0.0f, -100.0f });
+		DarknessRenderer->GetPipeLine()->SetOutputMergerBlend("Darkness");
+
 		Background* Title = CreateActor<Background>(GameObjectGroup::UI);
 		GameEngineTextureRenderer* TitleRenderer = Title->CreateComponent<GameEngineTextureRenderer>();
 		TitleRenderer->GetTransform().SetLocalScale({ 1280.0f, 720.0f, 1.0f });
@@ -82,9 +169,35 @@ void TitleLevel::LevelStartEvent()
 
 void TitleLevel::Update(float _DeltaTime)
 {
-	if (true == GameEngineInput::GetInst()->GetIsAnyKeyPressed()) // 아무키가 눌리면
+	if (0 == Phase)
 	{
-		IrisRenderer->ChangeFrameAnimation("IrisBStart");
+		ElapsedTime += _DeltaTime;
+		if (ElapsedTime > BlackScreenToAnimationIntervalTime)
+		{
+			FadeInElapsedTime += _DeltaTime;
+			FadeInActorRenderer->GetPixelData().PlusColor.a = max(-(FadeInElapsedTime / 2.0f), -1);
+			if (FadeInActorRenderer->GetPixelData().PlusColor.a == -1)
+			{
+				MDHRLogoRenderer->CurAnimationPauseOff();
+			}
+		}
+	}
+
+	if (1 == Phase)
+	{
+		ElapsedTime += _DeltaTime;
+		MDHRLogoRenderer->GetPixelData().PlusColor.a = max(-(ElapsedTime / 2.0f), -1);
+
+		if (true == GameEngineInput::GetInst()->GetIsAnyKeyPressed()) // 아무키가 눌리면
+		{
+			IrisRenderer->ChangeFrameAnimation("IrisBStart");
+		}
+
+	}
+
+	if (true == GameEngineInput::GetInst()->IsDown("LevelChange"))
+	{
+		GEngine::ChangeLevel("Select");
 	}
 }
 
@@ -95,4 +208,11 @@ void TitleLevel::End()
 void TitleLevel::OnIrisAnimationFrameEnd(const FrameAnimation_DESC& _Info)
 {
 	GEngine::ChangeLevel("Select");
+}
+
+void TitleLevel::OnHDMRAnimationFrameEnd(const FrameAnimation_DESC& _Info)
+{
+	ElapsedTime = 0.0f;
+	FadeInElapsedTime = 0.0f;
+	Phase = 1;
 }

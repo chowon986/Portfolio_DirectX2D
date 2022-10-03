@@ -1,5 +1,6 @@
 #include "PreCompile.h"
 #include "StoryLevel.h"
+#include "Background.h"
 #include <GameEngineCore/GameEngineBlur.h>
 
 StoryLevel::StoryLevel()
@@ -13,10 +14,16 @@ StoryLevel::~StoryLevel()
 void StoryLevel::LevelStartEvent()
 {
 	//Start
-	GetMainCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
-	GetBackgroundCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
-	GetRotateCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
-	GetRotateCamera2()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
+	 if (Hourglass == nullptr)
+	{
+		Hourglass = CreateActor<Background>(GameObjectGroup::UI);
+		GameEngineTextureRenderer* Renderer = Hourglass->CreateComponent<GameEngineTextureRenderer>();
+		Renderer->CreateFrameAnimationFolder("Hourglass", FrameAnimation_DESC("Loading", 0.05f));
+		Renderer->ChangeFrameAnimation("Hourglass");
+		Renderer->ScaleToTexture();
+		Renderer->GetTransform().SetLocalPosition({ 1180,-550,-100 });
+	}
+	// 
 	//GameEngineActor* IntroStory = CreateActor<GameEngineActor>();
 	//GameEngineTextureRenderer* Renderer = IntroStory->CreateComponent<GameEngineTextureRenderer>();
 	//Renderer->CreateFrameAnimationFolder("23IntroStory", FrameAnimation_DESC("23IntroStory", 0.05, false));
@@ -46,7 +53,7 @@ void StoryLevel::IntroStoryAnimationFrameChanged(const FrameAnimation_DESC& _Inf
 	if (GameEngineInput::GetInst()->IsDown("AnimationFrameChangeSpeedUp"))
 	{
 		FrameAnimation_DESC* Info = const_cast<FrameAnimation_DESC*>(&_Info);
-		Info->Inter -= 0.01;
+		Info->Inter = 0.0f;
 	}
 }
 

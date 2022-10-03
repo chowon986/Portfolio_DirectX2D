@@ -63,7 +63,6 @@ void DogFightLevel::ColMapOnOffSwitch()
 
 void DogFightLevel::Start()
 {
-
 	//Start
 	GetMainCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
 	GetBackgroundCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
@@ -74,17 +73,19 @@ void DogFightLevel::Start()
 void DogFightLevel::LevelStartEvent()
 {
 
-	GetMainCamera()->SetProjectionSize({ 1280.0f, 720.0f });
+	/*GetMainCamera()->SetProjectionSize({ 1280.0f, 720.0f });
 	GetRotateCamera()->SetProjectionSize({ 1536.0f,864.0f });
 	GetRotateCamera2()->SetProjectionSize({ 1408.0f,792.0f });
 	GetIrisCamera()->SetProjectionSize({ 1280.0f, 720.0f });
 	GetBackgroundCamera()->SetProjectionSize({ 1408.0f,792.0f });
+	GetDarknessCamera()->SetProjectionSize({ 1280.0f, 720.0f });*/
 
 	GetMainCameraActorTransform().SetLocalPosition({ 640, -360 });
 	GetBackgroundCameraActorTransform().SetLocalPosition({ 640, -360 });
 	GetRotateCameraActorTransform().SetLocalPosition({ 640, -360 });
 	GetRotateCamera2ActorTransform().SetLocalPosition({ 640, -360 });
 	GetIrisCameraActorTransform().SetLocalPosition({ 640.0f, -360.0f });
+	GetDarknessCameraActorTransform().SetLocalPosition({ 640.0f, -360.0f });
 
 	if (Hourglass == nullptr)
 	{
@@ -95,6 +96,14 @@ void DogFightLevel::LevelStartEvent()
 		Renderer->ScaleToTexture();
 		Renderer->GetTransform().SetLocalPosition({ 1180,-550,-100 });
 	}
+
+	GameEngineActor* DarknessActor = CreateActor<GameEngineActor>();
+	GameEngineTextureRenderer* DarknessRenderer = DarknessActor->CreateComponent<GameEngineTextureRenderer>();
+	DarknessRenderer->SetTexture("Darkness.png");
+	DarknessRenderer->GetTransform().SetWorldScale({ 1300.0f, 750, 1.0 });
+	DarknessRenderer->GetTransform().SetWorldPosition({ 0.0f, 0.0f, -100.0f });
+	DarknessRenderer->GetPipeLine()->SetOutputMergerBlend("Darkness");
+	DarknessRenderer->ChangeCamera(CAMERAORDER::DARKNESSCAMERA);
 }
 
 void DogFightLevel::LevelEndEvent()

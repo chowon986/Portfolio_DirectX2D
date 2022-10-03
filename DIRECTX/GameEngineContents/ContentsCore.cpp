@@ -9,8 +9,6 @@
 #include "DogFightLevel.h"
 #include "TutorialLevel.h"
 #include "WorldMapLevel.h"
-#include "HourglassLevel.h"
-#include "BeforeTitleLevel.h"
 #include "ScoreLevel.h"
 #include "BishopLevel.h"
 #include <GameEngineCore/GameEngineBlend.h>
@@ -111,10 +109,8 @@ void ContentsCore::Start()
 	GameEngineInput::GetInst()->CreateKey("EnterMap", 'B');
 	GameEngineInput::GetInst()->CreateKey("Inventory", 'Y');
 
-	CreateLevel<BeforeTitleLevel>("BeforeTitle");
 	CreateLevel<TitleLevel>("Title");
 	CreateLevel<SelectLevel>("Select");
-	CreateLevel<HourglassLevel>("Hourglass");
 	CreateLevel<StoryLevel>("Story");
 	CreateLevel<WorldMapLevel>("WorldMap");
 	CreateLevel<ShopLevel>("Shop");
@@ -123,7 +119,7 @@ void ContentsCore::Start()
 	CreateLevel<ScoreLevel>("Score");
 	CreateLevel<BishopLevel>("Bishop");
 	CreateLevel<SaltBakerLevel>("SaltBaker");
-	ChangeLevel("BeforeTitle");
+	ChangeLevel("Title");
 
 	GameEngineGUI::CreateGUIWindow<GameEngineStatusWindow>("EngineStatus", nullptr);
 }

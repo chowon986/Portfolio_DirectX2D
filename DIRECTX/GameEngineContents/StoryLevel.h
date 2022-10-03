@@ -2,6 +2,7 @@
 #include <GameEngineCore/GameEngineLevel.h>
 #include <string>
 
+class Background;
 class CharacterState;
 class StoryLevel : public GameEngineLevel
 {
@@ -27,6 +28,7 @@ private:
 	void IntroStoryAnimationFrameChanged(const FrameAnimation_DESC& _Info);
 
 private:
+	Background* Hourglass;
 	GameEngineTextureRenderer* BackgroundRenderer;
 	GameEngineTextureRenderer* IrisRenderer;
 	CharacterState* State;

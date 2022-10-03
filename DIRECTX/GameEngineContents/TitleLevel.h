@@ -14,15 +14,22 @@ public:
 	TitleLevel& operator=(TitleLevel&& _Other) noexcept = delete;
 
 protected:
-	void Start() override {}
+	void Start() override;
 	void LevelStartEvent() override;
 	void Update(float _DeltaTime) override;
 	void End() override;
 
 private:
 	void OnIrisAnimationFrameEnd(const FrameAnimation_DESC& _Info);
+	void OnHDMRAnimationFrameEnd(const FrameAnimation_DESC& _Info);
 
 private:
+	float BlackScreenToAnimationIntervalTime;
+	float ElapsedTime;
+	float FadeInElapsedTime;
 	GameEngineTextureRenderer* IrisRenderer;
+	GameEngineTextureRenderer* MDHRLogoRenderer;
+	GameEngineTextureRenderer* FadeInActorRenderer;
+	int Phase;
 };
 

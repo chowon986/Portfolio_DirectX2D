@@ -164,7 +164,6 @@
     <ClInclude Include="BackgroundHills.h" />
     <ClInclude Include="BackgroundObject.h" />
     <ClInclude Include="Bakery.h" />
-    <ClInclude Include="BeforeTitleLevel.h" />
     <ClInclude Include="BishopLevel.h" />
     <ClInclude Include="Boat.h" />
     <ClInclude Include="Boatman.h" />
@@ -214,7 +213,6 @@
     <ClInclude Include="Enums.h" />
     <ClInclude Include="Ghost.h" />
     <ClInclude Include="GlassPlatform.h" />
-    <ClInclude Include="HourglassLevel.h" />
     <ClInclude Include="HydrantBullet.h" />
     <ClInclude Include="IAimable.h" />
     <ClInclude Include="IDamageable.h" />
@@ -344,7 +342,6 @@
     <ClCompile Include="BackgroundHills.cpp" />
     <ClCompile Include="BackgroundObject.cpp" />
     <ClCompile Include="Bakery.cpp" />
-    <ClCompile Include="BeforeTitleLevel.cpp" />
     <ClCompile Include="BishopLevel.cpp" />
     <ClCompile Include="Boat.cpp" />
     <ClCompile Include="Boatman.cpp" />
@@ -392,7 +389,6 @@
     <ClCompile Include="DogFightLevel.cpp" />
     <ClCompile Include="Ghost.cpp" />
     <ClCompile Include="GlassPlatform.cpp" />
-    <ClCompile Include="HourglassLevel.cpp" />
     <ClCompile Include="HydrantBullet.cpp" />
     <ClCompile Include="IAimable.cpp" />
     <ClCompile Include="IDamageable.cpp" />

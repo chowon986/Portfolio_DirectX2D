@@ -162,9 +162,6 @@
     <ClInclude Include="Background.h">
       <Filter>Actor</Filter>
     </ClInclude>
-    <ClInclude Include="BeforeTitleLevel.h">
-      <Filter>Level\00 Title</Filter>
-    </ClInclude>
     <ClInclude Include="TitleLevel.h">
       <Filter>Level\00 Title</Filter>
     </ClInclude>
@@ -510,9 +507,6 @@
     <ClInclude Include="HydrantBullet.h">
       <Filter>Actor\Weapon\Bullet\Monster</Filter>
     </ClInclude>
-    <ClInclude Include="HourglassLevel.h">
-      <Filter>Level\01 Play</Filter>
-    </ClInclude>
     <ClInclude Include="PeaShooterItem.h">
       <Filter>Actor\Item\Weapon</Filter>
     </ClInclude>
@@ -665,9 +659,6 @@
     </ClCompile>
     <ClCompile Include="Background.cpp">
       <Filter>Actor</Filter>
-    </ClCompile>
-    <ClCompile Include="BeforeTitleLevel.cpp">
-      <Filter>Level\00 Title</Filter>
     </ClCompile>
     <ClCompile Include="TitleLevel.cpp">
       <Filter>Level\00 Title</Filter>
@@ -1010,9 +1001,6 @@
     </ClCompile>
     <ClCompile Include="HydrantBullet.cpp">
       <Filter>Actor\Weapon\Bullet\Monster</Filter>
-    </ClCompile>
-    <ClCompile Include="HourglassLevel.cpp">
-      <Filter>Level\01 Play</Filter>
     </ClCompile>
     <ClCompile Include="PeaShooterItem.cpp">
       <Filter>Actor\Item\Weapon</Filter>
