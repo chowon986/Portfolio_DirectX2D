@@ -31,7 +31,7 @@ void BowWowBullet::Start()
 	Collision->ChangeOrder(ObjectOrder::MONSTER_BULLET);
 
 	MovementComponent = CreateComponent<BulletMovementComponent>();
-	MovementComponent->SetSpeed(400.0f);
+	MovementComponent->SetSpeed(600.0f);
 
 	Renderer->ChangeCamera(CAMERAORDER::ROTATECAMERA);
 
@@ -39,6 +39,7 @@ void BowWowBullet::Start()
 
 void BowWowBullet::Update(float _DeltaTime)
 {
+	BulletBase::Update(_DeltaTime);
 	//GameEngineDebug::DrawBox(Collision->GetTransform(), { 1.0f, 0.0f,0.0f, 0.5f });
 }
 

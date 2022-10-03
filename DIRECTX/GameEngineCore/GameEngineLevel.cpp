@@ -46,13 +46,6 @@ GameEngineLevel::GameEngineLevel()
 		GameEngineCameraActor* CameraActor = CreateActor<GameEngineCameraActor>();
 		CameraActor->GetTransform().SetLocalPosition({ 0.0f, 0.0f, -100.0f });
 		CameraActor->GetCameraComponent()->SetProjectionMode(CAMERAPROJECTIONMODE::Orthographic);
-		CameraActor->GetCameraComponent()->SetCameraOrder(CAMERAORDER::IRISCAMERA);
-	}
-
-	{
-		GameEngineCameraActor* CameraActor = CreateActor<GameEngineCameraActor>();
-		CameraActor->GetTransform().SetLocalPosition({ 0.0f, 0.0f, -100.0f });
-		CameraActor->GetCameraComponent()->SetProjectionMode(CAMERAPROJECTIONMODE::Orthographic);
 		CameraActor->GetCameraComponent()->SetCameraOrder(CAMERAORDER::UICAMERA2);
 	}
 
@@ -61,6 +54,13 @@ GameEngineLevel::GameEngineLevel()
 		CameraActor->GetTransform().SetLocalPosition({ 0.0f, 0.0f, -100.0f });
 		CameraActor->GetCameraComponent()->SetProjectionMode(CAMERAPROJECTIONMODE::Orthographic);
 		CameraActor->GetCameraComponent()->SetCameraOrder(CAMERAORDER::DARKNESSCAMERA);
+	}
+
+	{
+		GameEngineCameraActor* CameraActor = CreateActor<GameEngineCameraActor>();
+		CameraActor->GetTransform().SetLocalPosition({ 0.0f, 0.0f, -100.0f });
+		CameraActor->GetCameraComponent()->SetProjectionMode(CAMERAPROJECTIONMODE::Orthographic);
+		CameraActor->GetCameraComponent()->SetCameraOrder(CAMERAORDER::IRISCAMERA);
 	}
 
 	{

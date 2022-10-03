@@ -24,6 +24,7 @@ void PlayerHP::Start()
 	Renderer->CreateFrameAnimationFolder("HP5", FrameAnimation_DESC("HP5", 0.1f, false));
 	Renderer->AnimationBindEnd("HP1", std::bind(&PlayerHP::HP1AnimationFrameFinished, this, std::placeholders::_1));
 	Renderer->SetScaleModeImage();
+	Renderer->ChangeCamera(CAMERAORDER::DARKNESSCAMERA);
 }
 
 void PlayerHP::Update(float _DeltaTime)
@@ -36,8 +37,6 @@ void PlayerHP::Update(float _DeltaTime)
 			ChangeHPUI(_HP);
 		}
 	}
-
-
 }
 
 void PlayerHP::End()

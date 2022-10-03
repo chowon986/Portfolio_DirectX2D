@@ -343,6 +343,7 @@ void DogFightLevel::Update(float _DeltaTime)
 			HPUI->SetPlayer(Cuphead);
 			HPUI->GetTransform().SetLocalPosition({ 75.0f,-675.0f, (int)ZOrder::UI });
 
+
 			CaptainCanteenPlane->SetPlayer(Cuphead);
 			CaptainCanteenPlane->SetColMapImage(ColMapRenderer);
 			PushToRotateCamera(CaptainCanteenPlane);
@@ -394,9 +395,9 @@ void DogFightLevel::Update(float _DeltaTime)
 		if (OnceCheck == false)
 		{
 			{
-				DogFightPh2DogB = CreateActor<Ph2Dog>(GameObjectGroup::Monster);
-				DogFightPh2DogD = CreateActor<Ph2Dog>(GameObjectGroup::Monster);
 				DogFightPh2DogA = CreateActor<Ph2Dog>(GameObjectGroup::Monster);
+				DogFightPh2DogD = CreateActor<Ph2Dog>(GameObjectGroup::Monster);
+				DogFightPh2DogB = CreateActor<Ph2Dog>(GameObjectGroup::Monster);
 				DogFightPh2DogC = CreateActor<Ph2Dog>(GameObjectGroup::Monster);
 
 				DogFightPh2DogA->SetPlayer(Cuphead);
@@ -404,10 +405,10 @@ void DogFightLevel::Update(float _DeltaTime)
 				DogFightPh2DogC->SetPlayer(Cuphead);
 				DogFightPh2DogD->SetPlayer(Cuphead);
 
-				DogFightPh2DogB->SetPh2DogState(InGamePh2DogState::Prepare2);
 				DogFightPh2DogA->SetPh2DogState(InGamePh2DogState::Prepare1);
-				DogFightPh2DogD->SetPh2DogState(InGamePh2DogState::Prepare4);
+				DogFightPh2DogB->SetPh2DogState(InGamePh2DogState::Prepare2);
 				DogFightPh2DogC->SetPh2DogState(InGamePh2DogState::Prepare3);
+				DogFightPh2DogD->SetPh2DogState(InGamePh2DogState::Prepare4);
 			}
 
 			OnceCheck = true;

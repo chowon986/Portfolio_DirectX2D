@@ -11,6 +11,7 @@ class GameEngineTextureRenderer;
 class IInGameCharacterBase;
 class InGameMovementComponent;
 class InGamePh2DogAnimationControllerComponent;
+class BowWowShooter;
 class Ph2Dog : public IInGameMonsterBase
 {
 public:
@@ -57,6 +58,7 @@ private:
 	GameEngineTextureRenderer* Renderer;
 	InGameMonsterAttackState AttackState;
 	InGamePh2DogAnimationControllerComponent* Animation;
+	BowWowShooter* BowWowGun;
 	float4 BowWowDirection;
 	float RotationAngle;
 	bool OnceCheck;

@@ -132,7 +132,7 @@ void Bulldog::Start()
 		YarnballShooter* YarnballGun = GetLevel()->CreateActor<YarnballShooter>();
 		YarnballGun->SetParent(this);
 
-		TattooShooter* TattooGun = GetLevel()->CreateActor<TattooShooter>();
+		TattooGun = GetLevel()->CreateActor<TattooShooter>();
 		TattooGun->SetParent(this);
 	}
 
@@ -380,7 +380,6 @@ void Bulldog::OnPrepareAttack2AnimationFrameChanged(const FrameAnimation_DESC& _
 	float posX = Renderer->GetTransform().GetLocalScale().x > 0 ? -500 : 500;
 	switch (_Info.CurFrame)
 	{
-		
 	case 0: Collision->GetTransform().SetLocalPosition({ posX, 700.0f }); break;
 	case 1: Collision->GetTransform().SetLocalPosition({ posX, 690.0f }); break;
 	case 2: Collision->GetTransform().SetLocalPosition({ posX, 680.0f }); break;
@@ -402,7 +401,6 @@ void Bulldog::OnPrepareAttack2AnimationFrameChanged(const FrameAnimation_DESC& _
 	if (_Info.CurFrame == 1)
 	{
 		GetTransform().SetWorldPosition(float4{ 640, -750 });
-		Collision->GetTransform().SetLocalPosition({ -500.0f, 350.0f });
 	}
 }
 
@@ -464,15 +462,18 @@ void Bulldog::OnAttack2AnimationFrameChanged(const FrameAnimation_DESC& _Info)
 		if (RandomTattoo == 1)
 		{
 			SetAttackState(InGameMonsterAttackState::Tattoo1);
+			TattooGun->Shoot(InGameMonsterAttackState::Tattoo1);
 		}
 		else
 		{
 			SetAttackState(InGameMonsterAttackState::Tattoo3);
+			TattooGun->Shoot(InGameMonsterAttackState::Tattoo3);
 		}
 	}
 	else if (_Info.CurFrame == 11)
 	{
 		SetAttackState(InGameMonsterAttackState::Tattoo2);
+		TattooGun->Shoot(InGameMonsterAttackState::Tattoo2);
 	}
 	else if (_Info.CurFrame == 29)
 	{
@@ -481,10 +482,12 @@ void Bulldog::OnAttack2AnimationFrameChanged(const FrameAnimation_DESC& _Info)
 		if (RandomTattoo == 1)
 		{
 			SetAttackState(InGameMonsterAttackState::Tattoo1);
+			TattooGun->Shoot(InGameMonsterAttackState::Tattoo1);
 		}
 		else
 		{
 			SetAttackState(InGameMonsterAttackState::Tattoo3);
+			TattooGun->Shoot(InGameMonsterAttackState::Tattoo3);
 		}
 	}
 	else

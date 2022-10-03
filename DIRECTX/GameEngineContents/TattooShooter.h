@@ -15,6 +15,7 @@ public:
 	TattooShooter& operator=(const TattooShooter& _Other) = delete;
 	TattooShooter& operator=(TattooShooter&& _Other) noexcept = delete;
 
+	void Shoot(InGameMonsterAttackState State);
 private:
 	void Start() override;
 	void Update(float _DeltaTime) override;
@@ -22,7 +23,6 @@ private:
 	void UpdatePivot() override;
 
 private:
-	InGameMonsterAttackState MonsterAttackState;
 	int TattooCount;
 
 };

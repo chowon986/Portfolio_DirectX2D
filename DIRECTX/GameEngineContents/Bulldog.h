@@ -10,6 +10,7 @@ class DogCopterPhase1;
 class GameEngineCollision;
 class InGameMovementComponent;
 class InGameMonsterAnimationControllerComponent;
+class TattooShooter;
 class Bulldog : public IInGameMonsterBase
 {
 public:
@@ -73,6 +74,7 @@ private:
 	float4 GetEndPos() { return EndPos; }
 
 private:
+	TattooShooter* TattooGun;
 	BulldogPlane* Plane;
 	DogCopterPhase1* DogCopter;
 	GameEngineCollision* Collision;

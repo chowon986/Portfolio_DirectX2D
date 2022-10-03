@@ -33,5 +33,6 @@ protected:
 private:
 	std::string Name; 
 	float Angle;
+	bool IsCurAnimationAttack;
 };
 

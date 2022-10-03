@@ -3,7 +3,8 @@
 #include "IInGameMonsterBase.h"
 
 InGamePh2DogAnimationControllerComponent::InGamePh2DogAnimationControllerComponent()
-	:Angle(0.0f)
+	: Angle(0.0f)
+	, IsCurAnimationAttack(false)
 {
 }
 
@@ -31,22 +32,29 @@ void InGamePh2DogAnimationControllerComponent::UpdateAnimation()
 	if (State == InGamePh2DogState::Prepare1)
 	{
 		Renderer->ChangeFrameAnimation(Name + "IntroTop");
+		IsCurAnimationAttack = false;
 	}
 
 	else if (State == InGamePh2DogState::Prepare2)
 	{
 		Renderer->GetTransform().PixLocalNegativeX();
 		Renderer->ChangeFrameAnimation(Name + "IntroRight");
+		IsCurAnimationAttack = false;
+
 	}
 
 	else if (State == InGamePh2DogState::Prepare3)
 	{
 		Renderer->ChangeFrameAnimation(Name + "IntroBottom");
+		IsCurAnimationAttack = false;
+
 	}
 
 	else if (State == InGamePh2DogState::Prepare4)
 	{
 		Renderer->ChangeFrameAnimation(Name + "IntroLeft");
+		IsCurAnimationAttack = false;
+
 	}
 
 
@@ -61,10 +69,17 @@ void InGamePh2DogAnimationControllerComponent::UpdateAnimation()
 		case InGamePh2DogState::Idle:
 			Renderer->ChangeFrameAnimation("Ph2DogIdle5");
 			Renderer->GetTransform().PixLocalNegativeX();
+			IsCurAnimationAttack = false;
+
 			break;
 		case InGamePh2DogState::Attack:
+			if (true == IsCurAnimationAttack)
+			{
+				return;
+			}
 			Renderer->ChangeFrameAnimation("Ph2DogAttack5");
 			Renderer->GetTransform().PixLocalNegativeX();
+			IsCurAnimationAttack = true;
 			break;
 		case InGamePh2DogState::TakeDamage:
 			break;
@@ -85,10 +100,17 @@ void InGamePh2DogAnimationControllerComponent::UpdateAnimation()
 		case InGamePh2DogState::Idle:
 			Renderer->ChangeFrameAnimation("Ph2DogIdle4");
 			Renderer->GetTransform().PixLocalNegativeX();
+			IsCurAnimationAttack = false;
+
 			break;
 		case InGamePh2DogState::Attack:
+			if (true == IsCurAnimationAttack)
+			{
+				return;
+			}
 			Renderer->ChangeFrameAnimation("Ph2DogAttack4");
 			Renderer->GetTransform().PixLocalNegativeX();
+			IsCurAnimationAttack = true;
 			break;
 		case InGamePh2DogState::TakeDamage:
 			break;
@@ -109,10 +131,18 @@ void InGamePh2DogAnimationControllerComponent::UpdateAnimation()
 		case InGamePh2DogState::Idle:
 			Renderer->ChangeFrameAnimation("Ph2DogIdle3");
 			Renderer->GetTransform().PixLocalNegativeX();
+			IsCurAnimationAttack = false;
+
 			break;
 		case InGamePh2DogState::Attack:
+			if (true == IsCurAnimationAttack)
+			{
+				return;
+			}
 			Renderer->ChangeFrameAnimation("Ph2DogAttack3");
 			Renderer->GetTransform().PixLocalNegativeX();
+			IsCurAnimationAttack = true;
+
 			break;
 		case InGamePh2DogState::TakeDamage:
 			break;
@@ -133,10 +163,16 @@ void InGamePh2DogAnimationControllerComponent::UpdateAnimation()
 		case InGamePh2DogState::Idle:
 			Renderer->ChangeFrameAnimation("Ph2DogIdle2");
 			Renderer->GetTransform().PixLocalNegativeX();
+			IsCurAnimationAttack = false;
 			break;
 		case InGamePh2DogState::Attack:
+			if (true == IsCurAnimationAttack)
+			{
+				return;
+			}
 			Renderer->ChangeFrameAnimation("Ph2DogAttack2");
 			Renderer->GetTransform().PixLocalNegativeX();
+			IsCurAnimationAttack = true;
 			break;
 		case InGamePh2DogState::TakeDamage:
 			break;
@@ -157,10 +193,16 @@ void InGamePh2DogAnimationControllerComponent::UpdateAnimation()
 		case InGamePh2DogState::Idle:
 			Renderer->ChangeFrameAnimation("Ph2DogIdle1");
 			Renderer->GetTransform().PixLocalPositiveX();
+			IsCurAnimationAttack = false;
 			break;
 		case InGamePh2DogState::Attack:
+			if (true == IsCurAnimationAttack)
+			{
+				return;
+			}
 			Renderer->ChangeFrameAnimation("Ph2DogAttack1");
 			Renderer->GetTransform().PixLocalPositiveX();
+			IsCurAnimationAttack = true;
 			break;
 		case InGamePh2DogState::TakeDamage:
 			break;
@@ -181,10 +223,18 @@ void InGamePh2DogAnimationControllerComponent::UpdateAnimation()
 		case InGamePh2DogState::Idle:
 			Renderer->ChangeFrameAnimation("Ph2DogIdle2");
 			Renderer->GetTransform().PixLocalPositiveX();
+			IsCurAnimationAttack = false;
+
 			break;
 		case InGamePh2DogState::Attack:
+			if (true == IsCurAnimationAttack)
+			{
+				return;
+			}
 			Renderer->ChangeFrameAnimation("Ph2DogAttack2");
 			Renderer->GetTransform().PixLocalPositiveX();
+			IsCurAnimationAttack = true;
+
 			break;
 		case InGamePh2DogState::TakeDamage:
 			break;
@@ -205,11 +255,18 @@ void InGamePh2DogAnimationControllerComponent::UpdateAnimation()
 		case InGamePh2DogState::Idle:
 			Renderer->ChangeFrameAnimation("Ph2DogIdle3");
 			Renderer->GetTransform().PixLocalPositiveX();
+			IsCurAnimationAttack = false;
 
 			break;
 		case InGamePh2DogState::Attack:
+			if (true == IsCurAnimationAttack)
+			{
+				return;
+			}
 			Renderer->ChangeFrameAnimation("Ph2DogAttack3");
 			Renderer->GetTransform().PixLocalPositiveX();
+			IsCurAnimationAttack = true;
+
 			break;
 		case InGamePh2DogState::TakeDamage:
 			break;
@@ -230,10 +287,18 @@ void InGamePh2DogAnimationControllerComponent::UpdateAnimation()
 		case InGamePh2DogState::Idle:
 			Renderer->ChangeFrameAnimation("Ph2DogIdle4");
 			Renderer->GetTransform().PixLocalPositiveX();
+			IsCurAnimationAttack = false;
+
 			break;
 		case InGamePh2DogState::Attack:
+			if (true == IsCurAnimationAttack)
+			{
+				return;
+			}
 			Renderer->ChangeFrameAnimation("Ph2DogAttack4");
 			Renderer->GetTransform().PixLocalPositiveX();
+			IsCurAnimationAttack = true;
+
 			break;
 		case InGamePh2DogState::TakeDamage:
 			break;
@@ -254,10 +319,17 @@ void InGamePh2DogAnimationControllerComponent::UpdateAnimation()
 		case InGamePh2DogState::Idle:
 			Renderer->ChangeFrameAnimation("Ph2DogIdle5");
 			Renderer->GetTransform().PixLocalPositiveX();
+			IsCurAnimationAttack = false;
+
 			break;
 		case InGamePh2DogState::Attack:
+			if (true == IsCurAnimationAttack)
+			{
+				return;
+			}
 			Renderer->ChangeFrameAnimation("Ph2DogAttack5");
 			Renderer->GetTransform().PixLocalPositiveX();
+			IsCurAnimationAttack = true;
 			break;
 		case InGamePh2DogState::TakeDamage:
 			break;
@@ -278,10 +350,18 @@ void InGamePh2DogAnimationControllerComponent::UpdateAnimation()
 		case InGamePh2DogState::Idle:
 			Renderer->ChangeFrameAnimation("Ph2DogIdle6");
 			Renderer->GetTransform().PixLocalPositiveX();
+			IsCurAnimationAttack = false;
+
 			break;
 		case InGamePh2DogState::Attack:
+			if (true == IsCurAnimationAttack)
+			{
+				return;
+			}
 			Renderer->ChangeFrameAnimation("Ph2DogAttack6");
 			Renderer->GetTransform().PixLocalPositiveX();
+			IsCurAnimationAttack = true;
+
 			break;
 		case InGamePh2DogState::TakeDamage:
 			break;
@@ -302,10 +382,19 @@ void InGamePh2DogAnimationControllerComponent::UpdateAnimation()
 		case InGamePh2DogState::Idle:
 			Renderer->ChangeFrameAnimation("Ph2DogIdle7");
 			Renderer->GetTransform().PixLocalPositiveX();
+			IsCurAnimationAttack = false;
+
+
 			break;
 		case InGamePh2DogState::Attack:
+			if (true == IsCurAnimationAttack)
+			{
+				return;
+			}
 			Renderer->ChangeFrameAnimation("Ph2DogAttack7");
 			Renderer->GetTransform().PixLocalPositiveX();
+			IsCurAnimationAttack = true;
+
 			break;
 		case InGamePh2DogState::TakeDamage:
 			break;
@@ -326,10 +415,19 @@ void InGamePh2DogAnimationControllerComponent::UpdateAnimation()
 		case InGamePh2DogState::Idle:
 			Renderer->ChangeFrameAnimation("Ph2DogIdle8");
 			Renderer->GetTransform().PixLocalPositiveX();
+			IsCurAnimationAttack = false;
+
+
 			break;
 		case InGamePh2DogState::Attack:
+			if (true == IsCurAnimationAttack)
+			{
+				return;
+			}
 			Renderer->ChangeFrameAnimation("Ph2DogAttack8");
 			Renderer->GetTransform().PixLocalPositiveX();
+			IsCurAnimationAttack = true;
+
 			break;
 		case InGamePh2DogState::TakeDamage:
 			break;
@@ -350,10 +448,19 @@ void InGamePh2DogAnimationControllerComponent::UpdateAnimation()
 		case InGamePh2DogState::Idle:
 			Renderer->ChangeFrameAnimation("Ph2DogIdle9");
 			Renderer->GetTransform().PixLocalPositiveX();
+			IsCurAnimationAttack = false;
+
+
 			break;
 		case InGamePh2DogState::Attack:
+			if (true == IsCurAnimationAttack)
+			{
+				return;
+			}
 			Renderer->ChangeFrameAnimation("Ph2DogAttack9");
 			Renderer->GetTransform().PixLocalPositiveX();
+			IsCurAnimationAttack = true;
+
 			break;
 		case InGamePh2DogState::TakeDamage:
 			break;
@@ -374,10 +481,19 @@ void InGamePh2DogAnimationControllerComponent::UpdateAnimation()
 		case InGamePh2DogState::Idle:
 			Renderer->ChangeFrameAnimation("Ph2DogIdle8");
 			Renderer->GetTransform().PixLocalNegativeX();
+			IsCurAnimationAttack = false;
+
+
 			break;
 		case InGamePh2DogState::Attack:
+			if (true == IsCurAnimationAttack)
+			{
+				return;
+			}
 			Renderer->ChangeFrameAnimation("Ph2DogAttack8");
 			Renderer->GetTransform().PixLocalNegativeX();
+			IsCurAnimationAttack = true;
+
 			break;
 		case InGamePh2DogState::TakeDamage:
 			break;
@@ -398,10 +514,19 @@ void InGamePh2DogAnimationControllerComponent::UpdateAnimation()
 		case InGamePh2DogState::Idle:
 			Renderer->ChangeFrameAnimation("Ph2DogIdle7");
 			Renderer->GetTransform().PixLocalNegativeX();
+			IsCurAnimationAttack = false;
+
+
 			break;
 		case InGamePh2DogState::Attack:
+			if (true == IsCurAnimationAttack)
+			{
+				return;
+			}
 			Renderer->ChangeFrameAnimation("Ph2DogAttack7");
-			Renderer->GetTransform().PixLocalNegativeX();
+			Renderer->GetTransform().PixLocalNegativeX();			
+			IsCurAnimationAttack = true;
+
 			break;
 		case InGamePh2DogState::TakeDamage:
 			break;
@@ -422,10 +547,16 @@ void InGamePh2DogAnimationControllerComponent::UpdateAnimation()
 		case InGamePh2DogState::Idle:
 			Renderer->ChangeFrameAnimation("Ph2DogIdle6");
 			Renderer->GetTransform().PixLocalNegativeX();
+			IsCurAnimationAttack = false;
 			break;
 		case InGamePh2DogState::Attack:
+			if (true == IsCurAnimationAttack)
+			{
+				return;
+			}
 			Renderer->ChangeFrameAnimation("Ph2DogAttack6");
 			Renderer->GetTransform().PixLocalNegativeX();
+			IsCurAnimationAttack = true;
 			break;
 		case InGamePh2DogState::TakeDamage:
 			break;

@@ -124,9 +124,11 @@ void Ph2Dog::Start()
 		Renderer->AnimationBindEnd("Ph2DogIdle9", std::bind(&Ph2Dog::OnIdleAnimaitionFinished, this, std::placeholders::_1));
 
 		Renderer->ChangeFrameAnimation("Ph2DogIntroTop");
-		Renderer->GetTransform().SetLocalPosition({ 0, 0, (int)ZOrder::UI + 1 });
+		Renderer->GetTransform().SetLocalPosition({ 0, 0 });
 		Renderer->SetScaleModeImage();
 		SetRenderer(Renderer);
+
+		Renderer->ChangeCamera(CAMERAORDER::ROTATECAMERA);
 	}
 
 
@@ -145,7 +147,7 @@ void Ph2Dog::Start()
 
 	// ÃÑ »ý¼º
 	{
-		BowWowShooter* BowWowGun = GetLevel()->CreateActor<BowWowShooter>();
+		BowWowGun = GetLevel()->CreateActor<BowWowShooter>();
 		BowWowGun->SetParent(this);
 	}
 
@@ -282,47 +284,24 @@ void Ph2Dog::OnAnimaitionFinished(const FrameAnimation_DESC& _Info)
 
 void Ph2Dog::OnIdleAnimaitionFinished(const FrameAnimation_DESC& _Info)
 {
-	int RandomAction = rand() % 5;
+	int RandomAction = rand() % 10;
 	++RandomAction;
 
 	if (RandomAction == 1)
 	{
-		float4 PlayerPos = Player->GetRenderer()->GetTransform().GetWorldPosition();
-		float4 MyPos = GetRenderer()->GetTransform().GetWorldPosition();
-		//PlayerPos - MyPos;
-		ShootPos = PlayerPos - MyPos;
-		
-		if (ShootPos.x > 0)
-		{
-			ShootPos.x = 1;
-		}
-		else if(ShootPos.x < 0)
-		{
-			ShootPos.x = -1;
-		}
-		else
-		{
-			ShootPos.x = 0;
-		}
-		if (ShootPos.y > 0)
-		{
-			ShootPos.y = 1;
-		}
-		else if(ShootPos.y < 0)
-		{
-			ShootPos.y = -1;
-		}
-		else
-		{
-			ShootPos.y = 0;
-		}
+		//float4 PlayerPos = Player->GetRenderer()->GetTransform().GetWorldPosition();
+		//float4 MyPos = GetRenderer()->GetTransform().GetWorldPosition();
+		////PlayerPos - MyPos;
+		//ShootPos = PlayerPos - MyPos;
+		//ShootPos.Normalize();
 
-		SetBowWowDirection(ShootPos);
+		//SetBowWowDirection(ShootPos);
 		Shoot();
 	}
 	else
 	{
 		SetPh2DogState(InGamePh2DogState::None);
+		SetAttackState(InGameMonsterAttackState::None);
 		Idle();
 	}
 }
@@ -338,6 +317,7 @@ void Ph2Dog::OnAttackAnimationFrameChanged(const FrameAnimation_DESC& _Info)
 		if (Player != nullptr)
 		{
 			SetAttackState(InGameMonsterAttackState::BowWow);
+			BowWowGun->Shoot(InGameMonsterAttackState::BowWow);
 		}
 	}
 	else
