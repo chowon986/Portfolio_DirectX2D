@@ -3,6 +3,7 @@
 #include "IInGameMonsterBase.h"
 #include "DogBowlBullet.h"
 #include "MonsterPhysicsComponent.h"
+#include <GameEngineBase/GameEngineRandom.h>
 
 DogBowlShooter::DogBowlShooter()
 {
@@ -49,7 +50,7 @@ void DogBowlShooter::Update(float _DeltaTime)
 
 			if (ShootCount < 7)
 			{
-				int RandomKey = rand() % 2;
+				int RandomKey = GameEngineRandom::MainRandom.RandomInt(0, 2);
 
 				DogBowlBullet* Bullet = GetLevel()->CreateActor<DogBowlBullet>();
 				Bullet->SetColMapImage(GetColMapImage());

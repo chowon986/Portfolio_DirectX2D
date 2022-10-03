@@ -45,11 +45,34 @@ void BowWowShooter::Shoot(InGameMonsterAttackState State)
 		Bullet->SetColMapImage(GetColMapImage());
 		Bullet->GetTransform().SetWorldPosition({ GetTransform().GetWorldPosition().x, GetTransform().GetWorldPosition().y, -1 });
 
-		
+
 		float4 PlayerPos = Player->GetRenderer()->GetTransform().GetWorldPosition();
 		float4 MyPos = Bullet->GetTransform().GetWorldPosition();
 		float4 ShootPos = PlayerPos - MyPos;
-		ShootPos.Normalize();
+		if (ShootPos.x > 0)
+		{
+			ShootPos.x = 1;
+		}
+		else if (ShootPos.x < 0)
+		{
+			ShootPos.x = -1;
+		}
+		else
+		{
+			ShootPos.x = 0;
+		}
+		if (ShootPos.y > 0)
+		{
+			ShootPos.y = 1;
+		}
+		else if (ShootPos.y < 0)
+		{
+			ShootPos.y = -1;
+		}
+		else
+		{
+			ShootPos.y = 0;
+		}
 		Bullet->SetDirection({ ShootPos.x, ShootPos.y });
 
 		int RandomAttack = (rand() % 4) + 1;

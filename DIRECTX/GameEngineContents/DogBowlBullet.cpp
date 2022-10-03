@@ -29,10 +29,8 @@ void DogBowlBullet::SetMonsterPhysicsComponent(MonsterPhysicsComponent* _Physics
 
 void DogBowlBullet::Start()
 {
-	DirectionMap.insert(std::make_pair<int, float4>(0, { 400, 300,(int)ZOrder::Player + 1 }));
-	DirectionMap.insert(std::make_pair<int, float4>(1, { 800, 300,(int)ZOrder::Player + 1 }));
-
-	srand(static_cast<unsigned int>(time(NULL)));
+	DirectionMap.insert(std::make_pair<int, float4>(0, { 400, 300 }));
+	DirectionMap.insert(std::make_pair<int, float4>(1, { 800, 300 }));
 
 	Index = rand() % DirectionMap.size();
 	GetTransform().SetLocalPosition(DirectionMap[Index]);
@@ -45,47 +43,28 @@ void DogBowlBullet::Start()
 	Renderer->ChangeFrameAnimation("RedDogBowlDrop");
 	Renderer->SetScaleModeImage();
 
-
 	SetMonsterPhysicsComponent(CreateComponent<MonsterPhysicsComponent>());
 
 	TrackCollision = CreateComponent<GameEngineCollision>();
 	TrackCollision->ChangeOrder((int)ObjectOrder::MONSTER_BULLET);
 	TrackCollision->GetTransform().SetLocalScale({ 50.0f, 50.0f, 1 });
 	
-	Renderer->ChangeCamera(CAMERAORDER::IRISCAMERA);
-
+	Renderer->ChangeCamera(CAMERAORDER::ROTATECAMERA);
+	Direction.x = Index == 0 ? -1.0f : 1.0f;
 }
 
 void DogBowlBullet::Update(float _DeltaTime)
 {
 	if (GetColor() == "Red")
 	{
-		if (TrackCollision->IsCollision(CollisionType::CT_AABB2D, (int)ObjectOrder::TRACKING1, CollisionType::CT_AABB2D, std::bind(&DogBowlBullet::CanCollision, this, std::placeholders::_1, std::placeholders::_2)))
-		{
-			int a = 0;
-		}
-		else
-		{
-			Direction.x = Index == 0 ? -1.0f : 1.0f;
-		}
+		TrackCollision->IsCollision(CollisionType::CT_AABB2D, (int)ObjectOrder::TRACKING1, CollisionType::CT_AABB2D, std::bind(&DogBowlBullet::CanCollision, this, std::placeholders::_1, std::placeholders::_2));
 	}
 	else if (GetColor() == "Yellow")
 	{
-		if (TrackCollision->IsCollision(CollisionType::CT_AABB2D, (int)ObjectOrder::TRACKING2, CollisionType::CT_AABB2D, std::bind(&DogBowlBullet::CanCollision, this, std::placeholders::_1, std::placeholders::_2)))
-		{
-			int a = 0;
-		}
-		else
-		{
-			Direction.x = Index == 0 ? -1.0f : 1.0f;
-		}
+		TrackCollision->IsCollision(CollisionType::CT_AABB2D, (int)ObjectOrder::TRACKING2, CollisionType::CT_AABB2D, std::bind(&DogBowlBullet::CanCollision, this, std::placeholders::_1, std::placeholders::_2));
 	}
 
-	// 충돌하기 전에는 왼쪽, 오른쪽으로 가다가 충돌하면 오른쪽 왼쪽으로 간다.
-
-	// 충돌 하기 전
-	Direction.z += _DeltaTime;
-	GetTransform().SetWorldMove(Direction * 200 * _DeltaTime);
+	GetTransform().SetWorldMove(Direction * 300 * _DeltaTime);
 }
 
 void DogBowlBullet::End()
@@ -101,5 +80,5 @@ CollisionReturn DogBowlBullet::CanCollision(GameEngineCollision* _This, GameEngi
 
 	Direction.x = Index == 0 ? 1.0f : -1.0f;
 
-	return CollisionReturn::ContinueCheck;
+	return CollisionReturn::Break;
 }

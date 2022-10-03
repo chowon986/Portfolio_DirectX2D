@@ -289,13 +289,6 @@ void Ph2Dog::OnIdleAnimaitionFinished(const FrameAnimation_DESC& _Info)
 
 	if (RandomAction == 1)
 	{
-		//float4 PlayerPos = Player->GetRenderer()->GetTransform().GetWorldPosition();
-		//float4 MyPos = GetRenderer()->GetTransform().GetWorldPosition();
-		////PlayerPos - MyPos;
-		//ShootPos = PlayerPos - MyPos;
-		//ShootPos.Normalize();
-
-		//SetBowWowDirection(ShootPos);
 		Shoot();
 	}
 	else
