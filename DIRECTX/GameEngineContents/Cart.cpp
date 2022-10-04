@@ -1,7 +1,9 @@
 #include "PreCompile.h"
 #include "Cart.h"
+#include "WorldMapLevel.h"
 
 Cart::Cart()
+	: TutorialEntryBubbleOn(false)
 {
 }
 
@@ -24,6 +26,14 @@ void Cart::Start()
 void Cart::Update(float _DeltaTime)
 {
 	PortalBase::Update(_DeltaTime);
+
+	if (true == TutorialEntryBubbleOn)
+	{
+		if (GameEngineInput::GetInst()->IsDown("Select"))
+		{
+			GEngine::ChangeLevel("Tutorial");
+		}
+	}
 }
 
 void Cart::End()
@@ -34,7 +44,17 @@ CollisionReturn Cart::OnPortalCollision(GameEngineCollision* _This, GameEngineCo
 {
 	if (true == GameEngineInput::GetInst()->IsDown("EnterMap"))
 	{
-		GEngine::ChangeLevel("Tutorial");
+		if (true == GameEngineInput::GetInst()->IsDown("EnterMap"))
+		{
+			if (WorldMapLevel* Level = dynamic_cast<WorldMapLevel*>(GetLevel()))
+			{
+				if (nullptr != Level->TutorialEntryBubbleRenderer)
+				{
+					Level->TutorialEntryBubbleRenderer->On();
+					TutorialEntryBubbleOn = true;
+				}
+			}
+		}
 	}
 	return CollisionReturn::ContinueCheck;
 }

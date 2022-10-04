@@ -1,7 +1,9 @@
 #include "PreCompile.h"
 #include "Dogfight.h"
+#include "WorldMapLevel.h"
 
 Dogfight::Dogfight()
+	: DogFightEntryBubbleOn(false)
 {
 }
 
@@ -25,6 +27,14 @@ void Dogfight::Start()
 void Dogfight::Update(float _DeltaTime)
 {
 	PortalBase::Update(_DeltaTime);
+
+	if (true == DogFightEntryBubbleOn)
+	{
+		if (GameEngineInput::GetInst()->IsDown("Select"))
+		{
+			GEngine::ChangeLevel("DogFight");
+		}
+	}
 }
 
 void Dogfight::End()
@@ -35,7 +45,14 @@ CollisionReturn Dogfight::OnPortalCollision(GameEngineCollision* _This, GameEngi
 {
 	if (true == GameEngineInput::GetInst()->IsDown("EnterMap"))
 	{
-		GEngine::ChangeLevel("DogFight");
+		if (WorldMapLevel* Level = dynamic_cast<WorldMapLevel*>(GetLevel()))
+		{
+			if (nullptr != Level->DogFightEntryBubbleRenderer)
+			{
+				Level->DogFightEntryBubbleRenderer->On();
+				DogFightEntryBubbleOn = true;
+			}
+		}
 	}
 	return CollisionReturn::ContinueCheck;
 }

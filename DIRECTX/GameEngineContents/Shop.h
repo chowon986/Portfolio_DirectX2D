@@ -23,5 +23,6 @@ protected:
 
 private:
 	CollisionReturn OnPortalCollision(GameEngineCollision* _This, GameEngineCollision* _Other);
+	bool ShopEntryBubbleOn;
 };
 

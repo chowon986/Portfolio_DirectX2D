@@ -2,9 +2,10 @@
 #include "Shop.h"
 #include "GameEngineCore/GameEngineCollision.h"
 #include "WorldMapCuphead.h"
-
+#include "WorldMapLevel.h"
 
 Shop::Shop()
+	: ShopEntryBubbleOn(false)
 {
 }
 
@@ -28,6 +29,15 @@ void Shop::Update(float _DeltaTime)
 {
 	PortalBase::Update(_DeltaTime);
 	Collision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::PC, CollisionType::CT_AABB2D, std::bind(&Shop::OnPortalCollision, this, std::placeholders::_1, std::placeholders::_2));
+	
+	if (true == ShopEntryBubbleOn)
+	{
+		if (GameEngineInput::GetInst()->IsDown("Select"))
+		{
+			GEngine::ChangeLevel("Shop");
+		}
+	}
+
 }
 
 void Shop::End()
@@ -36,11 +46,18 @@ void Shop::End()
 
 CollisionReturn Shop::OnPortalCollision(GameEngineCollision* _This, GameEngineCollision* _Other)
 {
+
+	if (true == GameEngineInput::GetInst()->IsDown("EnterMap"))
 	{
-		if (true == GameEngineInput::GetInst()->IsDown("EnterMap"))
+		if (WorldMapLevel* Level = dynamic_cast<WorldMapLevel*>(GetLevel()))
 		{
-			GEngine::ChangeLevel("Shop");
+			if (nullptr != Level->ShopEntryBubbleRenderer)
+			{
+				Level->ShopEntryBubbleRenderer->On();
+				ShopEntryBubbleOn = true;
+			}
 		}
 	}
+
 	return CollisionReturn::ContinueCheck;
 }

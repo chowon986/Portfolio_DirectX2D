@@ -196,6 +196,24 @@ void WorldMapLevel::Update(float _DeltaTime)
 	}
 }
 
+void WorldMapLevel::LevelEndEvent()
+{
+	if (DogFightEntryBubbleRenderer->IsUpdate())
+	{
+		DogFightEntryBubbleRenderer->Off();
+	}
+
+	if (ShopEntryBubbleRenderer->IsUpdate())
+	{
+		ShopEntryBubbleRenderer->Off();
+	}
+
+	if (TutorialEntryBubbleRenderer->IsUpdate())
+	{
+		TutorialEntryBubbleRenderer->Off();
+	}
+}
+
 
 void WorldMapLevel::End()
 {
@@ -207,6 +225,36 @@ void WorldMapLevel::OnLoadCompleted()
 	Inventory = CreateActor<ItemInventory>(GameObjectGroup::INVENTORY);
 	Inventory->SetLevelOverOn();
 	Inventory->Off();
+
+	{
+		GameEngineActor* EntryActor = CreateActor<GameEngineActor>(GameObjectGroup::UI);
+		DogFightEntryBubbleRenderer = EntryActor->CreateComponent<GameEngineTextureRenderer>();
+		DogFightEntryBubbleRenderer->SetTexture("DogFightEntryBubble.png");
+		DogFightEntryBubbleRenderer->ScaleToTexture();
+		DogFightEntryBubbleRenderer->GetTransform().SetWorldPosition({ 0.0f, 0.0f,(int)ZOrder::UI - 300 });
+		DogFightEntryBubbleRenderer->ChangeCamera(CAMERAORDER::UICAMERA2);
+		DogFightEntryBubbleRenderer->Off();
+	}
+
+	{
+		GameEngineActor* EntryActor = CreateActor<GameEngineActor>(GameObjectGroup::UI);
+		ShopEntryBubbleRenderer = EntryActor->CreateComponent<GameEngineTextureRenderer>();
+		ShopEntryBubbleRenderer->SetTexture("ShopEntryBubble.png");
+		ShopEntryBubbleRenderer->ScaleToTexture();
+		ShopEntryBubbleRenderer->GetTransform().SetWorldPosition({ 0.0f, 0.0f,(int)ZOrder::UI - 300 });
+		ShopEntryBubbleRenderer->ChangeCamera(CAMERAORDER::UICAMERA2);
+		ShopEntryBubbleRenderer->Off();
+	}
+
+	{
+		GameEngineActor* EntryActor = CreateActor<GameEngineActor>(GameObjectGroup::UI);
+		TutorialEntryBubbleRenderer = EntryActor->CreateComponent<GameEngineTextureRenderer>();
+		TutorialEntryBubbleRenderer->SetTexture("TutorialEntryBubble.png");
+		TutorialEntryBubbleRenderer->ScaleToTexture();
+		TutorialEntryBubbleRenderer->GetTransform().SetWorldPosition({ 0.0f, 0.0f,(int)ZOrder::UI - 300 });
+		TutorialEntryBubbleRenderer->ChangeCamera(CAMERAORDER::UICAMERA2);
+		TutorialEntryBubbleRenderer->Off();
+	}
 
 	// 파인애플
 	{

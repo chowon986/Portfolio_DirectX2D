@@ -21,5 +21,8 @@ protected:
 	void Update(float _DeltaTime) override;
 	void End() override;
 	CollisionReturn OnPortalCollision(GameEngineCollision* _This, GameEngineCollision* _Other) override;
+
+private:
+	bool TutorialEntryBubbleOn;
 };
 

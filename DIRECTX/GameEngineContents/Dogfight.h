@@ -22,5 +22,7 @@ protected:
 	void End() override;
 	CollisionReturn OnPortalCollision(GameEngineCollision* _This, GameEngineCollision* _Other) override;
 
+private:
+	bool DogFightEntryBubbleOn;
 };
 

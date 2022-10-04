@@ -925,6 +925,11 @@ void ItemInventory::Update(float _DeltaTime)
 		{
 			Selector->GetTransform().SetLocalPosition(SelectorPosBack[CurPos]);
 		}
+
+		else if (GetPhase() == InventoryPhase::ListSlot)
+		{
+
+		}
 	}
 }
 

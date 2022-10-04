@@ -29,6 +29,7 @@ protected:
 	void Start() override;
 	void LevelStartEvent() override;
 	void Update(float _DeltaTime) override;
+	void LevelEndEvent() override;
 	void End() override;
 
 	void OnLoadCompleted();
@@ -37,6 +38,9 @@ protected:
 
 public:
 	GameEngineSoundPlayer Controller;
+	GameEngineTextureRenderer* DogFightEntryBubbleRenderer;
+	GameEngineTextureRenderer* ShopEntryBubbleRenderer;
+	GameEngineTextureRenderer* TutorialEntryBubbleRenderer;
 
 private:
 	GameEngineTextureRenderer* IrisRenderer;
