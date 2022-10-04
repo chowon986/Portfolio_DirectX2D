@@ -54,6 +54,7 @@ private:
 	ShopPhase Phase;
 	bool OddEvenSwitch() { IsOddNumber = !IsOddNumber; return IsOddNumber; }
 	ItemInventory* Inventory;
+	bool SoundOnceCheck;
 
 public:
 	std::vector<std::shared_ptr<ItemBase>> ItemNames;
@@ -68,5 +69,6 @@ public:
 	GameEngineTextureRenderer* CoinCountRenderer;
 	GameEngineTextureRenderer* FontRenderer;
 	int BeforeSelectItemNum;
+	GameEngineSoundPlayer Controller;
 };
 

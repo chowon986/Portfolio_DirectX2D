@@ -45,6 +45,7 @@ WorldMapLevel::WorldMapLevel()
 	, CurCoin(0)
 	, LoadCompleted(false)
 	, Hourglass(nullptr)
+	, SoundOnceCheck(false)
 {
 }
 
@@ -96,6 +97,12 @@ void WorldMapLevel::LevelStartEvent()
 
 void WorldMapLevel::Update(float _DeltaTime)
 {
+	if (false == SoundOnceCheck)
+	{
+		Controller = GameEngineSound::SoundPlayControl("mus_dlc_map_b.wav");
+		SoundOnceCheck = true;
+	}
+
 	if (LoadCompleted == false)
 	{
 		//Loading

@@ -33,6 +33,7 @@ ShopLevel::ShopLevel()
 	, ShopPig(nullptr)
 	, Time(0.0f)
 	, BeforeSelectItemNum(-1)
+	, SoundOnceCheck(false)
 {
 }
 
@@ -217,6 +218,13 @@ void ShopLevel::LevelStartEvent()
 }
 void ShopLevel::Update(float _DeltaTime)
 {
+	if (false == SoundOnceCheck)
+	{
+		Controller = GameEngineSound::SoundPlayControl("mus_dlc_shop.wav");
+		//Controller.Volume();
+		SoundOnceCheck = true;
+	}
+
 	if (State != nullptr)
 	{
 		CurCoin = State->Coin;

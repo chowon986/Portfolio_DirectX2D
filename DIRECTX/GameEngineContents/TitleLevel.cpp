@@ -30,6 +30,8 @@ TitleLevel::TitleLevel()
 	, FadeInElapsedTime(0.0f)
 	, BlackScreenToAnimationIntervalTime(3.5f)
 	, Phase(0)
+	, SoundOnceCheckA(false)
+	, SoundOnceCheckB(false)
 {
 }
 
@@ -78,8 +80,6 @@ void TitleLevel::LevelStartEvent()
 
 	OldFilm* PostEffect = CreateActor<OldFilm>(GameObjectGroup::UI);
 	PostEffect->SetLevelOverOn();
-
-	//GameEngineSound::SoundPlayOneShot("MDHR.mp3");
 
 	CharacterState* State = CreateActor<CharacterState>(GameObjectGroup::CharacterState);
 	State->SetLevelOverOn();
@@ -163,19 +163,23 @@ void TitleLevel::LevelStartEvent()
 		MugmanRenderer->SetScaleModeImage();
 		MugmanRenderer->GetTransform().SetLocalPosition({ 305.0f, -24.0f, (int)ZOrder::Player - 1 });
 	}
-
-	//GameEngineSound::SoundPlayOneShot("MDHR.mp3");
 }
 
 void TitleLevel::Update(float _DeltaTime)
 {
+	if (false == SoundOnceCheckA)
+	{
+		GameEngineSound::SoundPlayOneShot("MDHR.mp3");
+		SoundOnceCheckA = true;
+	}
+
 	if (0 == Phase)
 	{
 		ElapsedTime += _DeltaTime;
 		if (ElapsedTime > BlackScreenToAnimationIntervalTime)
 		{
 			FadeInElapsedTime += _DeltaTime;
-			FadeInActorRenderer->GetPixelData().PlusColor.a = max(-(FadeInElapsedTime / 2.0f), -1);
+			FadeInActorRenderer->GetPixelData().PlusColor.a = max(-(FadeInElapsedTime / 1.0f), -1);
 			if (FadeInActorRenderer->GetPixelData().PlusColor.a == -1)
 			{
 				MDHRLogoRenderer->CurAnimationPauseOff();
@@ -185,6 +189,11 @@ void TitleLevel::Update(float _DeltaTime)
 
 	if (1 == Phase)
 	{
+		if (false == SoundOnceCheckB)
+		{
+			Controller = GameEngineSound::SoundPlayControl("mus_dlc_title.wav");
+			SoundOnceCheckB = true;
+		}
 		ElapsedTime += _DeltaTime;
 		MDHRLogoRenderer->GetPixelData().PlusColor.a = max(-(ElapsedTime / 2.0f), -1);
 

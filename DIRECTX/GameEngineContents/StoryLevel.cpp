@@ -4,6 +4,10 @@
 #include <GameEngineCore/GameEngineBlur.h>
 
 StoryLevel::StoryLevel()
+	:SoundOnceCheck(false)
+	, Hourglass(nullptr)
+	, BackgroundRenderer(nullptr)
+	, IrisRenderer(nullptr)
 {
 }
 
@@ -37,6 +41,13 @@ void StoryLevel::LevelStartEvent()
 
 void StoryLevel::Update(float _DeltaTime)
 {
+	if (false == SoundOnceCheck)
+	{
+		Controller = GameEngineSound::SoundPlayControl("mus_dlc_intro_start.wav");
+		//Controller.Volume();
+		SoundOnceCheck = true;
+	}
+
 }
 
 void StoryLevel::End()
@@ -54,6 +65,11 @@ void StoryLevel::IntroStoryAnimationFrameChanged(const FrameAnimation_DESC& _Inf
 	{
 		FrameAnimation_DESC* Info = const_cast<FrameAnimation_DESC*>(&_Info);
 		Info->Inter = 0.0f;
+	}
+
+	if (_Info.CurFrame == 629)
+	{
+		Controller = GameEngineSound::SoundPlayControl("mus_dlc_intro.wav");
 	}
 }
 

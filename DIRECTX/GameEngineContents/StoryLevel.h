@@ -27,10 +27,14 @@ private:
 	void IntroStoryAnimationFrameFinished(const FrameAnimation_DESC& _Info);
 	void IntroStoryAnimationFrameChanged(const FrameAnimation_DESC& _Info);
 
+public:
+	GameEngineSoundPlayer Controller;
+
 private:
 	Background* Hourglass;
 	GameEngineTextureRenderer* BackgroundRenderer;
 	GameEngineTextureRenderer* IrisRenderer;
 	CharacterState* State;
+	bool SoundOnceCheck;
 };
 

@@ -32,6 +32,9 @@ protected:
 	void OnLoadCompleted();
 	void OnEventCoinDustAnimationFrameChanged(const FrameAnimation_DESC& _Info);
 
+public:
+	GameEngineSoundPlayer Controller;
+
 private:
 	GameEngineTextureRenderer* IrisRenderer;
 	GameEngineTextureRenderer* MainLandRenderer;
@@ -45,6 +48,7 @@ private:
 	int CurCoin;
 	Background* Hourglass;
 	float LoadCompleted;
+	bool SoundOnceCheck;
 
 	std::vector<GameEngineTextureRenderer*> EventCoinRenderers;
 };

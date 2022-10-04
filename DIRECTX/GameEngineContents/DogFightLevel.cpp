@@ -45,6 +45,7 @@ DogFightLevel::DogFightLevel()
 	, PlayElapsedTime(0.0f)
 	, LoadCompleted(false)
 	, Hourglass(nullptr)
+	, SoundOnceCheck(false)
 {
 }
 
@@ -287,6 +288,13 @@ void DogFightLevel::ReadyWallopAnimationFrameFinished(const FrameAnimation_DESC&
 
 void DogFightLevel::Update(float _DeltaTime)
 {
+	if (false == SoundOnceCheck)
+	{
+		Controller = GameEngineSound::SoundPlayControl("mus_dlc_dogfight_a.wav");
+		//Controller.Volume();
+		SoundOnceCheck = true;
+	}
+
 	if (LoadCompleted == false)
 	{
 		bool DogFightLevelLoadCompleted = TextureLoadUtils::LoadTexturesAsync("15DogFightLevel");

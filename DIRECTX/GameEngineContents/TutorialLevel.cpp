@@ -14,6 +14,7 @@ TutorialLevel::TutorialLevel()
 	, IsWheatCParriable(false)
 	, IsObjectOn(false)
 	, CurPhase(TutorialPhase::Phase1)
+	, SoundOnceCheck(false)
 {
 }
 
@@ -189,6 +190,12 @@ void TutorialLevel::LevelStartEvent()
 
 void TutorialLevel::Update(float _DeltaTime)
 {
+	if (false == SoundOnceCheck)
+	{
+		Controller = GameEngineSound::SoundPlayControl("mus_dlc_tutorial.wav");
+		//Controller.Volume();
+		SoundOnceCheck = true;
+	}
 	ColMapOnOffSwitch();
 	EnterRenderer->ScaleToTexture();
 

@@ -37,6 +37,9 @@ private:
 	void CreateSelectPlayerPhaseRenderer();
 	void EndAnimation(const FrameAnimation_DESC& _Info);
 
+public:
+	GameEngineSoundPlayer Controller;
+
 private:
 	int RecordNum;
 	int OptionImageNum;

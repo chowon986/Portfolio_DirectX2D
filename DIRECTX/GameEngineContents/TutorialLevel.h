@@ -72,6 +72,10 @@ private:
 	TutorialPhase GetPhase() { return CurPhase; }
 
 	bool IsObjectOn;
+	bool SoundOnceCheck;
+
+public:
+	GameEngineSoundPlayer Controller;
 
 private:
 	CharacterState* State;

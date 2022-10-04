@@ -61,6 +61,9 @@ protected:
 
 	void OnLoadCompleted();
 
+public:
+	GameEngineSoundPlayer Controller;
+
 private:
 	Background* Hourglass;
 	BackgroundHills* Hills;
@@ -110,6 +113,6 @@ private:
 	CharacterScore* Score;
 	float RotateTime;
 	float LoadCompleted;
-
+	bool SoundOnceCheck;
 };
 
