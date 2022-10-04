@@ -38,6 +38,8 @@ public:
 	GameEngineTextureRenderer* ShotABackRenderer;
 	GameEngineTextureRenderer* Selector;
 	GameEngineTextureRenderer* EIcon;
+	GameEngineTextureRenderer* DescRenderer;
+
 	InventoryPhase Phase;
 	InventoryPhase BeforePhase;
 	std::string EquippedShotAName;

@@ -504,21 +504,21 @@ void WorldMapLevel::OnLoadCompleted()
 			if (State->Type == CharacterType::Cuphead)
 			{
 				WorldMapCuphead* Cuphead = CreateActor<WorldMapCuphead>(GameObjectGroup::Player);
-				Cuphead->GetTransform().SetLocalPosition({ 382, -1450, (int)ZOrder::Player });
+				Cuphead->GetTransform().SetLocalPosition({ 1057.0f, -790.0f, (int)ZOrder::Player });
 				Cuphead->SetColMapImage(MainLandColMapRenderer);
 				Cuphead->SetInventory(Inventory);
 			}
 			else
 			{
 				WorldMapMugman* Mugman = CreateActor<WorldMapMugman>(GameObjectGroup::Player);
-				Mugman->GetTransform().SetLocalPosition({ 382, -1450, (int)ZOrder::Player });
+				Mugman->GetTransform().SetLocalPosition({ 1057.0f, -790.0f, (int)ZOrder::Player });
 				Mugman->SetColMapImage(MainLandColMapRenderer);
 			}
 		}
 		else
 		{
 			WorldMapCuphead* Cuphead = CreateActor<WorldMapCuphead>(GameObjectGroup::Player);
-			Cuphead->GetTransform().SetLocalPosition({ 382, -1450, (int)ZOrder::Player });
+			Cuphead->GetTransform().SetLocalPosition({ 1057.0f, -790.0f, (int)ZOrder::Player });
 			Cuphead->SetColMapImage(MainLandColMapRenderer);
 			Cuphead->SetInventory(Inventory);
 

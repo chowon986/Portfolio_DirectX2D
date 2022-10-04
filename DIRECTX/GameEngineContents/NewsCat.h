@@ -6,9 +6,11 @@
 enum class NewsCatState
 {
 	Idle,
-	Walk,
+	Talk,
 };
 
+class GameEngineUIRenderer;
+class GameEngineCollision;
 class GameEngineTextureRenderer;
 class NewsCat : public INonPlayerCharacterBase
 {
@@ -34,10 +36,19 @@ protected:
 	void Talk() override;
 	void Idle() override;
 
+private:
+	CollisionReturn OnPortalCollision(GameEngineCollision* _This, GameEngineCollision* _Other);
+	void GiveCoin();
 
 private:
+	GameEngineCollision* Collision;
 	GameEngineTextureRenderer* Renderer;
-	float Speed;
+	GameEngineTextureRenderer* TalkBubbleRenderer;
+	GameEngineTextureRenderer* BackgroundRenderer;
 	NewsCatState State;
-	std::string Dir;
+	NewsCatState BeforeState;
+	int CurAnimationNum;
+	bool OnceCheck;
+	float ElapsedTime;
+	std::vector<GameEngineTextureRenderer*> CoinRenderers;
 };

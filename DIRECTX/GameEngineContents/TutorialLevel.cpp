@@ -173,7 +173,7 @@ void TutorialLevel::LevelStartEvent()
 		EnterRenderer->ScaleToTexture();
 		Enter->GetTransform().SetLocalPosition({ 1100.0f, -450.0f,  (int)ZOrder::Foreground });
 		EnterCollision = Enter->CreateComponent<GameEngineCollision>();
-		EnterCollision->GetTransform().SetLocalScale({ 200.0f,200.0f,1.0f });
+		EnterCollision->GetTransform().SetLocalScale({ 100.0f,200.0f,1.0f });
 		EnterCollision->GetTransform().SetLocalPosition({ 0.0f, -100.0f,(int)ZOrder::Foreground });
 		EnterCollision->ChangeOrder(ObjectOrder::NPC);
 	}
@@ -192,15 +192,10 @@ void TutorialLevel::Update(float _DeltaTime)
 	ColMapOnOffSwitch();
 	EnterRenderer->ScaleToTexture();
 
-	if (false == EnterCollision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::PC, CollisionType::CT_AABB2D,
-		std::bind(&TutorialLevel::OnPortalCollision, this, std::placeholders::_1, std::placeholders::_2)))
-	{
-		EnterRenderer->Off();
-	}
-	else
-	{
-		EnterRenderer->On();
-	}
+	EnterRenderer->Off();
+
+	EnterCollision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::PC, CollisionType::CT_AABB2D,
+		std::bind(&TutorialLevel::OnPortalCollision, this, std::placeholders::_1, std::placeholders::_2));
 
 	if (IsObjectOn == true)
 	{
@@ -301,6 +296,13 @@ CollisionReturn TutorialLevel::OnCoinCollision(GameEngineCollision* _This, GameE
 
 CollisionReturn TutorialLevel::OnPortalCollision(GameEngineCollision* _This, GameEngineCollision* _Other)
 {
+	EnterRenderer->On();
+
+	if (GameEngineInput::GetInst()->IsDown("EnterMap"))
+	{
+		GEngine::ChangeLevel("WorldMap");
+	}
+
 	return CollisionReturn::ContinueCheck;
 }
 

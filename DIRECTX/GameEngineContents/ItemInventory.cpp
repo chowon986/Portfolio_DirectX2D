@@ -36,7 +36,7 @@ void ItemInventory::Start()
 	SelectorPosBack.push_back(float4{ -100.0f, 90.0f, (int)ZOrder::UI - 5 });
 	SelectorPosBack.push_back(float4{ 0.0f, 90.0f, (int)ZOrder::UI - 5 });
 	SelectorPosBack.push_back(float4{ 100.0f, 90.0f, (int)ZOrder::UI - 5 });
-	SelectorPosBack.push_back(float4{ 190.0f, 90.0f, (int)ZOrder::UI - 5 });
+	SelectorPosBack.push_back(float4{ 193.0f, 90.0f, (int)ZOrder::UI - 5 });
 	SelectorPosBack.push_back(float4{ -150.0f, 0.0f, (int)ZOrder::UI - 5 });
 	SelectorPosBack.push_back(float4{ -51.0f, 0.0f, (int)ZOrder::UI - 5 });
 	SelectorPosBack.push_back(float4{ 47.0f, 0.0f, (int)ZOrder::UI - 5 });
@@ -60,6 +60,12 @@ void ItemInventory::Start()
 	Selector->ChangeCamera(CAMERAORDER::UICAMERA2);
 
 	SetPhase(InventoryPhase::Front);
+
+	//DescRenderer = CreateComponent<GameEngineTextureRenderer>();
+	//DescRenderer->SetTexture("WeaponA.png");
+	//DescRenderer->ScaleToTexture();
+	//DescRenderer->GetTransform().SetLocalPosition({ 0.0f, 250.0f,(int)ZOrder::UI });
+	//DescRenderer->ChangeCamera(CAMERAORDER::UICAMERA2);
 
 	{
 		GameEngineTextureRenderer* ItemIconRenderer0 = CreateComponent<GameEngineTextureRenderer>();
