@@ -32,6 +32,7 @@ TitleLevel::TitleLevel()
 	, Phase(0)
 	, SoundOnceCheckA(false)
 	, SoundOnceCheckB(false)
+	, SoundOnceCheckC(false)
 {
 }
 
@@ -197,8 +198,10 @@ void TitleLevel::Update(float _DeltaTime)
 		ElapsedTime += _DeltaTime;
 		MDHRLogoRenderer->GetPixelData().PlusColor.a = max(-(ElapsedTime / 2.0f), -1);
 
-		if (true == GameEngineInput::GetInst()->GetIsAnyKeyPressed()) // 아무키가 눌리면
+		if (true == GameEngineInput::GetInst()->GetIsAnyKeyPressed() && false == SoundOnceCheckC) // 아무키가 눌리면
 		{
+			SoundOnceCheckC = true;
+			GameEngineSound::SoundPlayOneShot("sfx_WorldMap_LevelSelect_BubbleAppear.wav");
 			IrisRenderer->ChangeFrameAnimation("IrisBStart");
 		}
 

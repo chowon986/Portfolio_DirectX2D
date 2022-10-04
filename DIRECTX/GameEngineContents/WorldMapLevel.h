@@ -22,6 +22,8 @@ public:
 public:
 	void ColMapOnOffSwitch();
 	void GiveCoin();
+	void Win();
+	void GivePineApple();
 
 protected:
 	void Start() override;
@@ -31,12 +33,14 @@ protected:
 
 	void OnLoadCompleted();
 	void OnEventCoinDustAnimationFrameChanged(const FrameAnimation_DESC& _Info);
+	void OnFlagAnimationFrameChanged(const FrameAnimation_DESC& _Info);
 
 public:
 	GameEngineSoundPlayer Controller;
 
 private:
 	GameEngineTextureRenderer* IrisRenderer;
+	GameEngineTextureRenderer* FlagRenderer;
 	GameEngineTextureRenderer* MainLandRenderer;
 	GameEngineTextureRenderer* MainLandColMapRenderer;
 	GameEngineTextureRenderer* UnderWaterLandRenderer;
@@ -48,8 +52,11 @@ private:
 	int CurCoin;
 	Background* Hourglass;
 	float LoadCompleted;
+	float PineAppleElapsedTime;
 	bool SoundOnceCheck;
+	bool TimeCountOn;
 
 	std::vector<GameEngineTextureRenderer*> EventCoinRenderers;
+	std::vector<GameEngineTextureRenderer*> PineAppleRenderers;
 };
 

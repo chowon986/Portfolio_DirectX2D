@@ -81,8 +81,17 @@ bool GameEngineCollision::IsCollision(CollisionType _ThisType, int _GroupOrder
 
 	std::list<GameEngineCollision*>& Collisions = AllCollisions[_GroupOrder];
 
+	bool Check = false;
+
+	// [][][]
+
 	for (GameEngineCollision* Collision : Collisions)
 	{
+		if (Collision == this)
+		{
+			continue;
+		}
+
 		if (false == Collision->IsUpdate())
 		{
 			continue;
@@ -91,6 +100,7 @@ bool GameEngineCollision::IsCollision(CollisionType _ThisType, int _GroupOrder
 		// 충돌 체크를 했다.
 		if (true == GameEngineCollision::CollisionFunction[ThisType][OtherType](GetTransform(), Collision->GetTransform()))
 		{
+			Check = true;
 			// 이 충돌체와 충돌했다.
 			if (eCollisionMode == CollisionMode::Ex)
 			{
@@ -99,7 +109,7 @@ bool GameEngineCollision::IsCollision(CollisionType _ThisType, int _GroupOrder
 					// 이 충돌체와는 처음 충돌했다.
 					CollisionCheck.insert(Collision);
 
-					if (nullptr == _Enter && CollisionReturn::Break == _Enter(this, Collision))
+					if (nullptr != _Enter && CollisionReturn::Break == _Enter(this, Collision))
 					{
 						return true;
 					}
@@ -147,7 +157,7 @@ bool GameEngineCollision::IsCollision(CollisionType _ThisType, int _GroupOrder
 		}
 	}
 
-	return false;
+	return Check;
 }
 
 void GameEngineCollision::DebugRender()

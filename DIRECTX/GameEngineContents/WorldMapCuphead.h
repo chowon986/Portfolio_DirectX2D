@@ -50,4 +50,6 @@ private:
 	bool InventoryOn;
 	CharacterScore* Score;
 	GameEngineTextureRenderer* Renderer;
+	bool SoundOnceCheckA;
+	bool SoundOnceCheckB;
 };

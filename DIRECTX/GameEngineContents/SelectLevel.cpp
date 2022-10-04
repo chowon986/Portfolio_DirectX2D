@@ -134,6 +134,7 @@ void SelectLevel::Update(float _DeltaTime)
 
 		if (true == GameEngineInput::GetInst()->IsDown("Select") && OptionImageNum == 0)
 		{
+			GameEngineSound::SoundPlayOneShot("Menu_Category_Select.wav");
 			SetPhase(SelectLevelPhase::SelectRecord);
 			SelectCharacterElapsedTime = 0.0f;
 		}
@@ -210,6 +211,7 @@ void SelectLevel::Update(float _DeltaTime)
 			{
 				BlackLetterRenderer2->SetTexture("None.png");
 			}
+			GameEngineSound::SoundPlayOneShot("sfx_WorldMap_LevelSelect_BubbleAppear.wav");
 			SetPhase(SelectLevelPhase::SelectPlayer);
 			SelectCharacterElapsedTime = 0.0f;
 		}
@@ -311,6 +313,7 @@ void SelectLevel::Update(float _DeltaTime)
 					{
 						State->Type = CharacterType::Cuphead;
 						CanSelectCharacter = false;
+						GameEngineSound::SoundPlayOneShot("Menu_Ready.wav");
 						PlayerARenderer->ChangeFrameAnimation("SelectCupheadOk");
 					}
 
@@ -318,6 +321,7 @@ void SelectLevel::Update(float _DeltaTime)
 					{
 						State->Type = CharacterType::Mugman;
 						CanSelectCharacter = false;
+						GameEngineSound::SoundPlayOneShot("Menu_Ready.wav");
 						PlayerBRenderer->ChangeFrameAnimation("SelectMugmanOk");
 					}
 				}

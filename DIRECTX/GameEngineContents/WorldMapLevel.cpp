@@ -46,6 +46,9 @@ WorldMapLevel::WorldMapLevel()
 	, LoadCompleted(false)
 	, Hourglass(nullptr)
 	, SoundOnceCheck(false)
+	, FlagRenderer(nullptr)
+	, TimeCountOn(false)
+	, PineAppleElapsedTime(0.0f)
 {
 }
 
@@ -70,6 +73,32 @@ void WorldMapLevel::GiveCoin()
 	{
 		EventCoinRenderers[i]->On();
 	}
+	GameEngineSound::SoundPlayOneShot("sfx_worldmap_coin_open.wav");
+}
+
+void WorldMapLevel::GivePineApple()
+{
+	for (int i = 0; i < 4; i++)
+	{
+		PineAppleRenderers[i]->On();
+	}
+	TimeCountOn = true;
+}
+
+void WorldMapLevel::Win()
+{
+	if (FlagRenderer == nullptr)
+	{
+		GameEngineActor* FlagActor = CreateActor<GameEngineActor>();
+		FlagActor->GetTransform().SetLocalPosition({ 2700.0f, -1550.0f, (int)ZOrder::NPCB });
+		FlagRenderer = FlagActor->CreateComponent<GameEngineTextureRenderer>();
+		FlagRenderer->CreateFrameAnimationFolder("Flag", FrameAnimation_DESC("Flag", 0.07f, false));
+		FlagRenderer->CreateFrameAnimationFolder("FlagLoop", FrameAnimation_DESC("FlagLoop", 0.07f, true));
+		FlagRenderer->SetPivot(PIVOTMODE::LEFTBOT);
+		FlagRenderer->ChangeFrameAnimation("Flag");
+		FlagRenderer->SetScaleModeImage();
+		FlagRenderer->AnimationBindFrame("Flag", std::bind(&WorldMapLevel::OnFlagAnimationFrameChanged, this, std::placeholders::_1));
+	}
 }
 
 
@@ -86,6 +115,7 @@ void WorldMapLevel::LevelStartEvent()
 {
 	if (Hourglass == nullptr)
 	{
+		Controller = GameEngineSound::SoundPlayControl("sfx_noise_1920s_01.wav");
 		Hourglass = CreateActor<Background>(GameObjectGroup::UI);
 		GameEngineTextureRenderer* Renderer = Hourglass->CreateComponent<GameEngineTextureRenderer>();
 		Renderer->CreateFrameAnimationFolder("Hourglass", FrameAnimation_DESC("Loading", 0.05f));
@@ -97,10 +127,19 @@ void WorldMapLevel::LevelStartEvent()
 
 void WorldMapLevel::Update(float _DeltaTime)
 {
-	if (false == SoundOnceCheck)
+	if (TimeCountOn == true)
 	{
-		Controller = GameEngineSound::SoundPlayControl("mus_dlc_map_b.wav");
-		SoundOnceCheck = true;
+		PineAppleElapsedTime += _DeltaTime;
+
+		if (PineAppleElapsedTime > 2.0f)
+		{
+			for (int i = 0; i < 4; i++)
+			{
+				PineAppleRenderers[i]->Off();
+			}
+
+			TimeCountOn = false;
+		}
 	}
 
 	if (LoadCompleted == false)
@@ -112,6 +151,11 @@ void WorldMapLevel::Update(float _DeltaTime)
 			LoadCompleted = TextureLoadUtils::LoadTexturesAsync("05Item");
 			if (LoadCompleted == true)
 			{
+				if (false == SoundOnceCheck)
+				{
+					Controller = GameEngineSound::SoundPlayControl("mus_dlc_map_b.wav");
+					SoundOnceCheck = true;
+				}
 				OnLoadCompleted();
 			}
 		}
@@ -163,6 +207,58 @@ void WorldMapLevel::OnLoadCompleted()
 	Inventory = CreateActor<ItemInventory>(GameObjectGroup::INVENTORY);
 	Inventory->SetLevelOverOn();
 	Inventory->Off();
+
+	// 파인애플
+	{
+		GameEngineActor* PineAppleActor = CreateActor<GameEngineActor>(GameObjectGroup::UI);
+		GameEngineTextureRenderer* PineAppleRenderer = PineAppleActor->CreateComponent<GameEngineTextureRenderer>();
+		PineAppleRenderer->SetTexture("GetPineApple.png");
+		PineAppleRenderer->GetTransform().SetLocalScale({ 1280.0f, 720.0f, 1.0f });
+		PineAppleRenderer->GetTransform().SetWorldPosition({ 0.0f, 0.0f,(int)ZOrder::UI - 150 });
+		PineAppleRenderer->ChangeCamera(CAMERAORDER::UICAMERA2);
+		PineAppleRenderer->Off();
+
+		PineAppleRenderers.push_back(PineAppleRenderer);
+	}
+
+	{
+		GameEngineActor* PineAppleActor = CreateActor<GameEngineActor>(GameObjectGroup::UI);
+		GameEngineTextureRenderer* PineAppleRenderer = PineAppleActor->CreateComponent<GameEngineTextureRenderer>();
+		PineAppleRenderer->CreateFrameAnimationFolder("PineAppleShineBack", FrameAnimation_DESC("PineAppleShineBack", 0.05f));
+		PineAppleRenderer->ChangeFrameAnimation("PineAppleShineBack");
+		PineAppleRenderer->SetScaleModeImage();
+		PineAppleRenderer->GetTransform().SetWorldPosition({ 0.0f, 0.0f,(int)ZOrder::UI - 200 });
+		PineAppleRenderer->ChangeCamera(CAMERAORDER::UICAMERA2);
+		PineAppleRenderer->Off();
+
+		PineAppleRenderers.push_back(PineAppleRenderer);
+	}
+
+	{
+		GameEngineActor* PineAppleActor = CreateActor<GameEngineActor>(GameObjectGroup::UI);
+		GameEngineTextureRenderer* PineAppleRenderer = PineAppleActor->CreateComponent<GameEngineTextureRenderer>();
+		PineAppleRenderer->CreateFrameAnimationFolder("PineAppleShineForeBack", FrameAnimation_DESC("PineAppleShineForeBack", 0.05f));
+		PineAppleRenderer->ChangeFrameAnimation("PineAppleShineForeBack");
+		PineAppleRenderer->SetScaleModeImage();
+		PineAppleRenderer->GetTransform().SetWorldPosition({ 0.0f, 0.0f,(int)ZOrder::UI - 250 });
+		PineAppleRenderer->ChangeCamera(CAMERAORDER::UICAMERA2);
+		PineAppleRenderer->Off();
+
+		PineAppleRenderers.push_back(PineAppleRenderer);
+	}
+
+	{
+		GameEngineActor* PineAppleActor = CreateActor<GameEngineActor>(GameObjectGroup::UI);
+		GameEngineTextureRenderer* PineAppleRenderer = PineAppleActor->CreateComponent<GameEngineTextureRenderer>();
+		PineAppleRenderer->CreateFrameAnimationFolder("PineApple", FrameAnimation_DESC("PineApple", 0.07f));
+		PineAppleRenderer->ChangeFrameAnimation("PineApple");
+		PineAppleRenderer->SetScaleModeImage();
+		PineAppleRenderer->GetTransform().SetWorldPosition({ 0.0f, 0.0f,(int)ZOrder::UI - 300 });
+		PineAppleRenderer->ChangeCamera(CAMERAORDER::UICAMERA2);
+		PineAppleRenderer->Off();
+
+		PineAppleRenderers.push_back(PineAppleRenderer);
+	}
 
 	//이벤트 코인
 
@@ -675,6 +771,17 @@ void WorldMapLevel::OnEventCoinDustAnimationFrameChanged(const FrameAnimation_DE
 		{
 			Renderer->Off();
 		}
-		State->Coin = (State->Coin + 3);
+		if (State != nullptr)
+		{
+			State->Coin = (State->Coin + 3);
+		}
+	}
+}
+
+void WorldMapLevel::OnFlagAnimationFrameChanged(const FrameAnimation_DESC& _Info)
+{
+	if (_Info.CurFrame == 17)
+	{
+		FlagRenderer->ChangeFrameAnimation("FlagLoop");
 	}
 }

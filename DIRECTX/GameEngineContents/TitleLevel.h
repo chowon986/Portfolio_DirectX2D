@@ -36,5 +36,6 @@ private:
 	int Phase;
 	bool SoundOnceCheckA;
 	bool SoundOnceCheckB;
+	bool SoundOnceCheckC;
 };
 

@@ -19,11 +19,12 @@ NewsCat::~NewsCat()
 
 void NewsCat::SetState(NewsCatState _State)
 {
+	State = _State;
 }
 
 NewsCatState NewsCat::GetState()
 {
-	return NewsCatState();
+	return State;
 }
 
 void NewsCat::Start()
@@ -105,8 +106,7 @@ CollisionReturn NewsCat::OnPortalCollision(GameEngineCollision* _This, GameEngin
 {
 	if (true == GameEngineInput::GetInst()->IsDown("EnterMap"))
 	{
-		State = NewsCatState::Talk;
-		_This->Off();
+		SetState(NewsCatState::Talk);
 	}
 	return CollisionReturn::Break;
 }

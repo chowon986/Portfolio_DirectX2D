@@ -4,6 +4,8 @@
 #include "WorldMapCharacterAnimationControllerComponent.h"
 #include "ItemInventory.h"
 #include "CharacterScore.h"
+#include "NewsCat.h"
+#include "WorldMapLevel.h"
 
 WorldMapCuphead::WorldMapCuphead()
 	: Movement(nullptr)
@@ -11,6 +13,8 @@ WorldMapCuphead::WorldMapCuphead()
 	, WalkCheckInterval(0.03f)
 	, WalkCheckElapsedTime(0.0f)
 	, InventoryOn(false)
+	, SoundOnceCheckA(false)
+	, SoundOnceCheckB(false)
 {
 }
 
@@ -106,7 +110,18 @@ void WorldMapCuphead::Update(float _DeltaTime)
 
 	GetLevel()->GetMainCameraActorTransform().SetLocalPosition({ GetTransform().GetLocalPosition().x + 6.0f, GetTransform().GetLocalPosition().y - 32 });
 
-	EnterRenderer->Off();
+
+	if (false == Collision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::NPC, CollisionType::CT_AABB2D,
+		std::bind(&WorldMapCuphead::CanPortalCollision, this, std::placeholders::_1, std::placeholders::_2)))
+	{
+		EnterRenderer->Off();
+		SoundOnceCheckA = false;
+		if (false == SoundOnceCheckB)
+		{
+			GameEngineSound::SoundPlayOneShot("sfx_WorldMap_LevelSelect_BubbleAppear.wav");
+			SoundOnceCheckB = true;
+		}
+	}
 
 	Collision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::NPC, CollisionType::CT_AABB2D,
 		std::bind(&WorldMapCuphead::CanPortalCollision, this, std::placeholders::_1, std::placeholders::_2));
@@ -124,6 +139,10 @@ void WorldMapCuphead::Update(float _DeltaTime)
 	}
 	else if (Score != nullptr && true == Score->Win)
 	{
+		if (WorldMapLevel* Level = dynamic_cast<WorldMapLevel*>(GetLevel()))
+		{
+			Level->Win();
+		}
 		Win();
 	}
 	else
@@ -140,16 +159,35 @@ void WorldMapCuphead::Idle()
 
 CollisionReturn WorldMapCuphead::CanPortalCollision(GameEngineCollision* _This, GameEngineCollision* _Other)
 {
+	if (false == SoundOnceCheckA)
+	{
+		GameEngineSound::SoundPlayOneShot("sfx_WorldMap_LevelSelect_BubbleAppear.wav");
+		SoundOnceCheckA = true;
+		SoundOnceCheckB = false;
+	}	
+
 	EnterRenderer->On();
 
-	return CollisionReturn::ContinueCheck;
+	if (NewsCat* Cat = dynamic_cast<NewsCat*>(_Other->GetParent()))
+	{
+		if (Cat->GetState() == NewsCatState::Talk)
+		{
+			EnterRenderer->Off();
+		}
+	}
+
+	return CollisionReturn::Break;
 }
 
 void WorldMapCuphead::OnWorldMapCupheadWinAnimationFrameChanged(const FrameAnimation_DESC& _Info)
 {
-	if (_Info.CurFrame == 11)
+	if (_Info.CurFrame == 23)
 	{
 		Idle();
+		if (WorldMapLevel* Level = dynamic_cast<WorldMapLevel*>(GetLevel()))
+		{
+			Level->GivePineApple();
+		}
 		Score->Win = false;
 	}
 }

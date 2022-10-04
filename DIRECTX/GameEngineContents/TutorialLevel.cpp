@@ -303,6 +303,7 @@ CollisionReturn TutorialLevel::OnCoinCollision(GameEngineCollision* _This, GameE
 
 CollisionReturn TutorialLevel::OnPortalCollision(GameEngineCollision* _This, GameEngineCollision* _Other)
 {
+
 	EnterRenderer->On();
 
 	if (GameEngineInput::GetInst()->IsDown("EnterMap"))
