@@ -28,5 +28,6 @@ public:
 	int UseCard;
 	int SkillLevel;
 	std::string Score;
+	bool Win;
 };
 

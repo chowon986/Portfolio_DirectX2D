@@ -11,6 +11,7 @@ CharacterScore::CharacterScore()
 	, Parry(0)
 	, UseCard(0)
 	, Score("")
+	, SkillLevel(2)
 {
 
 }

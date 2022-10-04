@@ -32,18 +32,29 @@ protected:
 	void LevelStartEvent() override;
 	void Update(float _DeltaTime) override;
 	void End() override;
+	
+private:
+	void OnLightOffAnimationFrameChanged(const FrameAnimation_DESC& _Info);
 
 private:
 	GameEngineTextureRenderer* BackgroundRenderer;
 	GameEngineTextureRenderer* IrisRenderer;
 	CharacterState* State;
 	CharacterScore* Score;
+	int Num;
 	int PlayMinute;
 	int PlaySecond;
 	float ElapsedTime;
 	float IntervalTime;
-	int Num;
+	float GradeElapsedTime;
+	bool OnceCheck;
+	bool ScoreDone;
+	int PlusXIndex;
+	float StarElapsedTime;
 	std::map<int, GameEngineFontRenderer*> FontRenderers;
 	ScorePhase Phase;
+	int TTLGrade;
+	std::string Grade;
+	bool GradeOnceCheck;
 };
 

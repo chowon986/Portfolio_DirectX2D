@@ -32,6 +32,7 @@
 #include "ItemInventory.h"
 #include <GameEngineCore/GameEngineBlur.h>
 #include <GameEngineContents/TextureLoadUtils.h>
+#include "CharacterScore.h"
 
 WorldMapLevel::WorldMapLevel()
 	: IrisRenderer(nullptr)
@@ -95,7 +96,6 @@ void WorldMapLevel::LevelStartEvent()
 
 void WorldMapLevel::Update(float _DeltaTime)
 {
-
 	if (LoadCompleted == false)
 	{
 		//Loading

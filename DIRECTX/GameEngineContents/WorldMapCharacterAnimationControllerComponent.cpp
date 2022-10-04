@@ -33,30 +33,31 @@ void WorldMapCharacterAnimationControllerComponent::UpdateAnimation()
 	std::string Dir = WorldMapCharacter->GetDirection();
 	std::string Name = GetCharacterName();
 
-	if (State == WorldMapCharacterState::Idle)
+	if (State == WorldMapCharacterState::Win)
+	{
+		Renderer->ChangeFrameAnimation("WorldMap" + Name + "Win");
+	}
+
+	else if (State == WorldMapCharacterState::Idle)
 	{
 		if (Dir == "RightUp")
 		{
 			Renderer->ChangeFrameAnimation("WorldMap"+ Name + "IdleDiagUp");
-			Renderer->ScaleToTexture();
 
 		}
 		else if (Dir == "RightDown")
 		{
 			Renderer->ChangeFrameAnimation("WorldMap"+ Name+"IdleDiagDown");
-			Renderer->ScaleToTexture();
 
 		}
 		else if (Dir == "Right")
 		{
 			Renderer->ChangeFrameAnimation("WorldMap" + Name + "IdleSide");
-			Renderer->ScaleToTexture();
 		}
 
 		else if (Dir == "LeftUp")
 		{
 			Renderer->ChangeFrameAnimation("WorldMap" + Name + "IdleDiagUp");
-			Renderer->ScaleToTexture();
 			if (Renderer->GetTransform().GetLocalScale().x > 0)
 			{
 				float x = Renderer->GetTransform().GetLocalScale().x * -1;
@@ -67,7 +68,6 @@ void WorldMapCharacterAnimationControllerComponent::UpdateAnimation()
 		else if (Dir == "LeftDown")
 		{
 			Renderer->ChangeFrameAnimation("WorldMap" + Name + "IdleDiagDown");
-			Renderer->ScaleToTexture();
 			if (Renderer->GetTransform().GetLocalScale().x > 0)
 			{
 				float x = Renderer->GetTransform().GetLocalScale().x * -1;
@@ -78,7 +78,6 @@ void WorldMapCharacterAnimationControllerComponent::UpdateAnimation()
 		else if (Dir == "Left")
 		{
 			Renderer->ChangeFrameAnimation("WorldMap" + Name + "IdleSide");
-			Renderer->ScaleToTexture();
 			if (Renderer->GetTransform().GetLocalScale().x > 0)
 			{
 				float x = Renderer->GetTransform().GetLocalScale().x * -1;
@@ -88,13 +87,11 @@ void WorldMapCharacterAnimationControllerComponent::UpdateAnimation()
 		else if (Dir == "Up")
 		{
 			Renderer->ChangeFrameAnimation("WorldMap" + Name + "IdleUp");
-			Renderer->ScaleToTexture();
 
 		}
 		else if (Dir == "Down")
 		{
 			Renderer->ChangeFrameAnimation("WorldMap" + Name + "IdleDown");
-			Renderer->ScaleToTexture();
 		}
 	}
 
@@ -103,54 +100,46 @@ void WorldMapCharacterAnimationControllerComponent::UpdateAnimation()
 		if (Dir == "Right")
 		{
 			Renderer->ChangeFrameAnimation("WorldMap" + Name + "WalkSide");
-			Renderer->ScaleToTexture();
 			Renderer->GetTransform().PixLocalPositiveX();
 		}
 		else if (Dir == "RightUp")
 		{
 			Renderer->ChangeFrameAnimation("WorldMap" + Name + "WalkDiagUp");
-			Renderer->ScaleToTexture();
 			Renderer->GetTransform().PixLocalPositiveX();
 
 		}
 		else if (Dir == "RightDown")
 		{
 			Renderer->ChangeFrameAnimation("WorldMap" + Name + "WalkDiagDown");
-			Renderer->ScaleToTexture();
 			Renderer->GetTransform().PixLocalPositiveX();
 
 		}
 		else if (Dir == "Left")
 		{
 			Renderer->ChangeFrameAnimation("WorldMap" + Name + "WalkSide");
-			Renderer->ScaleToTexture();
 			Renderer->GetTransform().PixLocalNegativeX();
 
 		}
 		else if (Dir == "LeftUp")
 		{
 			Renderer->ChangeFrameAnimation("WorldMap" + Name + "WalkDiagUp");
-			Renderer->ScaleToTexture();
 			Renderer->GetTransform().PixLocalNegativeX();
 
 		}
 		else if (Dir == "LeftDown")
 		{
 			Renderer->ChangeFrameAnimation("WorldMap" + Name + "WalkDiagDown");
-			Renderer->ScaleToTexture();
 			Renderer->GetTransform().PixLocalNegativeX();
 
 		}
 		else if (Dir == "Up")
 		{
 			Renderer->ChangeFrameAnimation("WorldMap" + Name + "WalkUp");
-			Renderer->ScaleToTexture();
 
 		}
 		else if (Dir == "Down")
 		{
 			Renderer->ChangeFrameAnimation("WorldMap" + Name + "WalkDown");
-			Renderer->ScaleToTexture();
 		}
 	}
 }

@@ -3,6 +3,7 @@
 #include "MovementComponent.h"
 #include "WorldMapCharacterAnimationControllerComponent.h"
 #include "ItemInventory.h"
+#include "CharacterScore.h"
 
 WorldMapCuphead::WorldMapCuphead()
 	: Movement(nullptr)
@@ -21,7 +22,7 @@ void WorldMapCuphead::Start()
 {
 	{
 		// 애니메이션
-		GameEngineTextureRenderer* Renderer = CreateComponent<GameEngineTextureRenderer>();
+		Renderer = CreateComponent<GameEngineTextureRenderer>();
 		SetRenderer(Renderer);
 
 		// Idle
@@ -43,9 +44,11 @@ void WorldMapCuphead::Start()
 		// Win
 		Renderer->CreateFrameAnimationFolder("WorldMapCupheadWin", FrameAnimation_DESC("WorldMapCupheadWin", 0.05f));
 
+		Renderer->AnimationBindFrame("WorldMapCupheadWin", std::bind(&WorldMapCuphead::OnWorldMapCupheadWinAnimationFrameChanged, this, std::placeholders::_1));
+
 		SetState(WorldMapCharacterState::Idle);
 		Renderer->ChangeFrameAnimation("WorldMapCupheadIdleDown");
-		Renderer->ScaleToTexture();
+		Renderer->SetScaleModeImage();
 		Renderer->SetPivot(PIVOTMODE::BOT);
 
 		// EnterRenderer
@@ -76,8 +79,22 @@ void WorldMapCuphead::Start()
 	//DustRenderer->
 }
 
+void WorldMapCuphead::Win()
+{
+	SetState(WorldMapCharacterState::Win);
+}
+
 void WorldMapCuphead::Update(float _DeltaTime)
 {
+	std::list<GameEngineActor*> Actors = GetLevel()->GetGroup(GameObjectGroup::CharacterScore);
+	for (GameEngineActor* Actor : Actors)
+	{
+		if (CharacterScore* _Score = dynamic_cast<CharacterScore*>(Actor))
+		{
+			Score = _Score;
+		}
+	}
+
 	if (Inventory->IsUpdate())
 	{
 		InventoryOn = true;
@@ -102,8 +119,12 @@ void WorldMapCuphead::Update(float _DeltaTime)
 	{
 		if (InventoryOn == false)
 		{
-		Walk();
+			Walk();
 		}
+	}
+	else if (Score != nullptr && true == Score->Win)
+	{
+		Win();
 	}
 	else
 	{
@@ -122,6 +143,15 @@ CollisionReturn WorldMapCuphead::CanPortalCollision(GameEngineCollision* _This, 
 	EnterRenderer->On();
 
 	return CollisionReturn::ContinueCheck;
+}
+
+void WorldMapCuphead::OnWorldMapCupheadWinAnimationFrameChanged(const FrameAnimation_DESC& _Info)
+{
+	if (_Info.CurFrame == 11)
+	{
+		Idle();
+		Score->Win = false;
+	}
 }
 
 void WorldMapCuphead::Walk()

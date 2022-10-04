@@ -7,6 +7,7 @@ class MovementComponent;
 class ItemInventory;
 class GameEngineCollision;
 class GameEngineTextureRenderer;
+class CharacterScore;
 class WorldMapCharacterAnimationControllerComponent;
 class WorldMapCuphead : public IWorldMapCharacterBase
 {
@@ -34,6 +35,8 @@ protected:
 
 private:
 	CollisionReturn CanPortalCollision(GameEngineCollision* _This, GameEngineCollision* _Other);
+	void OnWorldMapCupheadWinAnimationFrameChanged(const FrameAnimation_DESC& _Info);
+	void Win();
 
 private:
 	MovementComponent* Movement;
@@ -45,4 +48,6 @@ private:
 	float WalkCheckInterval;
 	float WalkCheckElapsedTime;
 	bool InventoryOn;
+	CharacterScore* Score;
+	GameEngineTextureRenderer* Renderer;
 };

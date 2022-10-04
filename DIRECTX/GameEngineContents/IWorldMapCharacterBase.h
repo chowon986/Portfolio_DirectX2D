@@ -9,6 +9,7 @@ enum class WorldMapCharacterState
 {
 	Idle,
 	Walk,
+	Win,
 	// talk, enter
 };
 
