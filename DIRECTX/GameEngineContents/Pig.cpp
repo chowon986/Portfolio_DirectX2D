@@ -24,12 +24,12 @@ void Pig::Start()
 {
 	Renderer = CreateComponent<GameEngineTextureRenderer>();
 	Renderer->CreateFrameAnimationFolder("Welcome", FrameAnimation_DESC("PigWelcome", 0.07f, false));
-	Renderer->CreateFrameAnimationFolder("Start", FrameAnimation_DESC("PigWelcome",0,0, 0.07f, false));
+	Renderer->CreateFrameAnimationFolder("Bye", FrameAnimation_DESC("PigWelcome", 0.07f, false));
 	Renderer->GetTransform().SetLocalScale({ 424,389,1 });
 	Renderer->GetTransform().SetLocalPosition({ 0,155,(int)ZOrder::UI + 2 });
-	Renderer->ChangeFrameAnimation("Start");
+	Renderer->ChangeFrameAnimation("Welcome");
 	
-	//Renderer->AnimationBindEnd 바이하면
+	Renderer->AnimationBindFrame("Bye", std::bind(&Pig::OnByeAnimationFrameChanged, this, std::placeholders::_1));
 }
 
 void Pig::Update(float _DeltaTime)
@@ -43,4 +43,12 @@ void Pig::Talk()
 
 void Pig::Idle()
 {
+}
+
+void Pig::OnByeAnimationFrameChanged(const FrameAnimation_DESC& _Info)
+{
+	if (_Info.CurFrame == 3) // need to chng
+	{
+		GEngine::ChangeLevel("WorldMap");
+	}
 }

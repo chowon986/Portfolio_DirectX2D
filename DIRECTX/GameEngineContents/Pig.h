@@ -36,6 +36,8 @@ protected:
 	void Talk() override;
 	void Idle() override;
 
+private:
+	void OnByeAnimationFrameChanged(const FrameAnimation_DESC& _Info);
 
 private:
 	GameEngineTextureRenderer* Renderer;

@@ -131,6 +131,14 @@ void Ph2Dog::Start()
 		Renderer->ChangeCamera(CAMERAORDER::ROTATECAMERA);
 	}
 
+	{
+		// 이펙트
+		EffectRenderer = CreateComponent<GameEngineTextureRenderer>();
+		EffectRenderer->CreateFrameAnimationFolder("Ph2DogIntroTop", FrameAnimation_DESC("Ph2DogIntroTop", 0.06f));
+		EffectRenderer->CreateFrameAnimationFolder("Ph2DogIntroRight", FrameAnimation_DESC("Ph2DogIntroRight", 0.06f));
+		EffectRenderer->CreateFrameAnimationFolder("Ph2DogIntroBottom", FrameAnimation_DESC("Ph2DogIntroBottom", 0.06f));
+		EffectRenderer->CreateFrameAnimationFolder("Ph2DogIntroLeft", FrameAnimation_DESC("Ph2DogIntroLeft", 0.06f));
+	}
 
 	// 컴포넌트 생성
 	{

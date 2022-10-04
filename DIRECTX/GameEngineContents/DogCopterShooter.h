@@ -46,6 +46,11 @@ private:
 	std::vector<GameEngineTextureRenderer*> LaserRenderers;
 	std::vector<GameEngineTextureRenderer*> AuraRenderers;
 	std::vector<GameEngineTextureRenderer*> MachineTeethRenderers;
+	std::vector<GameEngineCollision*> LaserCollision0;
+	std::vector<GameEngineCollision*> LaserCollision1;
+	std::vector<GameEngineCollision*> LaserCollision2;
+	std::vector<GameEngineCollision*> LaserCollision3;
+	std::vector<GameEngineCollision*> LaserCollision4;
 
 	int FirstIdx;
 	int SecondIdx;

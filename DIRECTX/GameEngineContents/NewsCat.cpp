@@ -1,5 +1,6 @@
 #include "PreCompile.h"
 #include "NewsCat.h"
+#include "WorldMapLevel.h"
 
 NewsCat::NewsCat()
 	: Collision(nullptr)
@@ -8,7 +9,6 @@ NewsCat::NewsCat()
 	, BeforeState(NewsCatState::Idle)
 	, CurAnimationNum(0)
 	, OnceCheck(false)
-	, BackgroundRenderer(nullptr)
 	, ElapsedTime(0.0f)
 {
 }
@@ -45,44 +45,6 @@ void NewsCat::Start()
 	TalkBubbleRenderer->GetTransform().SetLocalPosition({ -310.0f, 300.0f, -1000.0f});
 	TalkBubbleRenderer->Off();
 
-	BackgroundRenderer = CreateComponent<GameEngineTextureRenderer>();
-	BackgroundRenderer->SetTexture("GetCoin.png");
-	BackgroundRenderer->GetTransform().SetLocalScale({ 1280.0f, 720.0f, 1.0f });
-	BackgroundRenderer->GetTransform().SetLocalPosition({ 0.0f, 0.0f, -1100.0f });
-	BackgroundRenderer->Off();
-
-	{
-		GameEngineTextureRenderer* CoinRenderer = CreateComponent<GameEngineTextureRenderer>();
-		CoinRenderer->CreateFrameAnimationFolder("EventCoin", FrameAnimation_DESC("EventCoin", 0.1f));
-		CoinRenderer->ChangeFrameAnimation("EventCoin");
-		CoinRenderer->SetScaleModeImage();
-		CoinRenderer->GetTransform().SetLocalPosition({ 0.0f, 0.0f, GetTransform().GetWorldPosition().z });
-		CoinRenderer->Off();
-
-		CoinRenderers.push_back(CoinRenderer);
-	}
-
-	{
-		GameEngineTextureRenderer* CoinRenderer = CreateComponent<GameEngineTextureRenderer>();
-		CoinRenderer->CreateFrameAnimationFolder("EventCoin", FrameAnimation_DESC("EventCoin", 0.1f));
-		CoinRenderer->ChangeFrameAnimation("EventCoin");
-		CoinRenderer->SetScaleModeImage();
-		CoinRenderer->GetTransform().SetLocalPosition({ 0.0f, 0.0f, -2000.0f });
-		CoinRenderer->Off();
-
-		CoinRenderers.push_back(CoinRenderer);
-	}
-
-	{
-		GameEngineTextureRenderer* CoinRenderer = CreateComponent<GameEngineTextureRenderer>();
-		CoinRenderer->CreateFrameAnimationFolder("EventCoin", FrameAnimation_DESC("EventCoin", 0.1f));
-		CoinRenderer->ChangeFrameAnimation("EventCoin");
-		CoinRenderer->SetScaleModeImage();
-		CoinRenderer->GetTransform().SetLocalPosition({ 0.0f, 0.0f, -2000.0f });
-		CoinRenderer->Off();
-
-		CoinRenderers.push_back(CoinRenderer);
-	}
 }
 
 void NewsCat::Update(float _DeltaTime)
@@ -98,6 +60,7 @@ void NewsCat::Update(float _DeltaTime)
 			TalkBubbleRenderer->On();
 			CurAnimationNum = 0;
 			TalkBubbleRenderer->SetTexture("SpeechBubble" + std::to_string(CurAnimationNum) + ".png");
+			OnceCheck = false;
 		}
 	}
 
@@ -112,8 +75,14 @@ void NewsCat::Update(float _DeltaTime)
 			{
 				if (CurAnimationNum >= 5)
 				{
-					GiveCoin();
-					OnceCheck = true;
+					if (WorldMapLevel* Level = dynamic_cast<WorldMapLevel*>(GetLevel()))
+					{
+						Level->GiveCoin();
+						OnceCheck = true;
+						TalkBubbleRenderer->Off();
+						Collision->On();
+						State = NewsCatState::Idle;
+					}
 				}
 				else
 				{
@@ -140,13 +109,4 @@ CollisionReturn NewsCat::OnPortalCollision(GameEngineCollision* _This, GameEngin
 		_This->Off();
 	}
 	return CollisionReturn::Break;
-}
-
-void NewsCat::GiveCoin()
-{
-	BackgroundRenderer->On();
-	for (int i = 0; i < 3; i++)
-	{
-		CoinRenderers[i]->On();
-	}
 }

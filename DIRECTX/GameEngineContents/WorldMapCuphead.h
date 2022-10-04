@@ -39,6 +39,7 @@ private:
 	MovementComponent* Movement;
 	GameEngineCollision* Collision;
 	GameEngineTextureRenderer* EnterRenderer;
+	GameEngineTextureRenderer* DustRenderer;
 	ItemInventory* Inventory;
 	WorldMapCharacterAnimationControllerComponent* Animation;
 	float WalkCheckInterval;

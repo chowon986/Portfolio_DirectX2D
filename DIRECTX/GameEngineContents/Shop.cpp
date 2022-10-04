@@ -22,7 +22,6 @@ void Shop::Start()
 	Renderer->SetPivot(PIVOTMODE::CENTER);
 
 	Collision->GetTransform().SetLocalScale({ 300.0f, 200.0f, 1.0f });
-
 }
 
 void Shop::Update(float _DeltaTime)

@@ -71,6 +71,9 @@ void WorldMapCuphead::Start()
 		Animation = CreateComponent<WorldMapCharacterAnimationControllerComponent>();
 		Animation->SetCharacterName("Cuphead");
 	}
+
+	//DustRenderer = CreateComponent<GameEngineTextureRenderer>();
+	//DustRenderer->
 }
 
 void WorldMapCuphead::Update(float _DeltaTime)

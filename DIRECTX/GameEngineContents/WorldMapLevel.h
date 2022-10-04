@@ -21,6 +21,7 @@ public:
 
 public:
 	void ColMapOnOffSwitch();
+	void GiveCoin();
 
 protected:
 	void Start() override;
@@ -29,6 +30,7 @@ protected:
 	void End() override;
 
 	void OnLoadCompleted();
+	void OnEventCoinDustAnimationFrameChanged(const FrameAnimation_DESC& _Info);
 
 private:
 	GameEngineTextureRenderer* IrisRenderer;
@@ -43,5 +45,7 @@ private:
 	int CurCoin;
 	Background* Hourglass;
 	float LoadCompleted;
+
+	std::vector<GameEngineTextureRenderer*> EventCoinRenderers;
 };
 

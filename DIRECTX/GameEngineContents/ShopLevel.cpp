@@ -48,6 +48,7 @@ void ShopLevel::LevelStartEvent()
 	Dir.Move("ConstantResources");
 	Dir.Move("Texture");
 	Dir.Move("01ShopLevel");
+
 	std::vector<GameEngineDirectory> RecursiveDir = Dir.GetRecursiveAllDirectory();
 	for (GameEngineDirectory Dir : RecursiveDir)
 	{
@@ -297,7 +298,7 @@ void ShopLevel::Update(float _DeltaTime)
 					State->Coin = CurCoin;
 				}
 			}
-			ShopPig->GetRenderer()->ChangeFrameAnimation("Welcome"); // bye로 바꾸기, 닫히기, 바이 인사하기, iris
+			ShopPig->GetRenderer()->ChangeFrameAnimation("Bye"); 
 		}
 
 		if (SelectItemNum != BeforeSelectItemNum)

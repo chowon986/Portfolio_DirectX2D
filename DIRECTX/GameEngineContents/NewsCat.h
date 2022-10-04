@@ -38,17 +38,14 @@ protected:
 
 private:
 	CollisionReturn OnPortalCollision(GameEngineCollision* _This, GameEngineCollision* _Other);
-	void GiveCoin();
 
 private:
 	GameEngineCollision* Collision;
 	GameEngineTextureRenderer* Renderer;
 	GameEngineTextureRenderer* TalkBubbleRenderer;
-	GameEngineTextureRenderer* BackgroundRenderer;
 	NewsCatState State;
 	NewsCatState BeforeState;
 	int CurAnimationNum;
 	bool OnceCheck;
 	float ElapsedTime;
-	std::vector<GameEngineTextureRenderer*> CoinRenderers;
 };

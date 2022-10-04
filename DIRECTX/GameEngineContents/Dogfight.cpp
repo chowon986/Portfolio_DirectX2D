@@ -18,7 +18,7 @@ void Dogfight::Start()
 	Renderer->GetTransform().SetLocalScale({ 189,163,1 });
 	Renderer->SetPivot(PIVOTMODE::CENTER);
 
-	Collision->GetTransform().SetLocalScale({ 100.0f, 100.0f, 1.0f });
+	Collision->GetTransform().SetLocalScale({ 100.0f, 150.0f, 1.0f });
 
 }
 

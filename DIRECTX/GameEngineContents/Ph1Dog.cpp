@@ -7,6 +7,7 @@
 #include "BulldogPlane.h"
 #include "IInGameCharacterBase.h"
 #include "TennisballShooter.h"
+#include <GameEngineBase/GameEngineRandom.h>
 
 Ph1Dog::Ph1Dog()
 	: Collision(nullptr)
@@ -18,7 +19,7 @@ Ph1Dog::Ph1Dog()
 	, IsAnimationDiretionRight(true)
 	, Plane(nullptr)
 	, Animation(nullptr)
-	,AttackState(InGameMonsterAttackState::None)
+	, AttackState(InGameMonsterAttackState::None)
 	, Movement(nullptr)
 	, State(InGameMonsterState::Idle)
 {
@@ -107,8 +108,7 @@ void Ph1Dog::Idle()
 
 void Ph1Dog::Shoot()
 {
-	int RandomAttack = 2;/*(rand() % 2);
-	++RandomAttack;*/
+	int RandomAttack = GameEngineRandom::MainRandom.RandomInt(0, 1);
 	AnimationDirectionSwtich();
 	if(RandomAttack == 1)
 	{

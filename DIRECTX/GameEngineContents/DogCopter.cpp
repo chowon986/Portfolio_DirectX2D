@@ -138,7 +138,7 @@ void DogCopter::Start()
 	Collision = CreateComponent<GameEngineCollision>();
 	Collision->GetTransform().SetWorldScale({ 300.0f,300.0f,1.0f });
 	Collision->GetTransform().SetWorldPosition({ 640.0f, -360.0f });
-	SetHP(1);
+	SetHP(5);
 }
 
 void DogCopter::Update(float _DeltaTime)

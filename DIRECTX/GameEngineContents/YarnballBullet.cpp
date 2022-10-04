@@ -19,9 +19,9 @@ void YarnballBullet::Start()
 {
 
 	Renderer = CreateComponent<GameEngineTextureRenderer>();
-	Renderer->CreateFrameAnimationFolder("Yarnball1", FrameAnimation_DESC("Yarnball1", 0.05f));
-	Renderer->CreateFrameAnimationFolder("Yarnball2", FrameAnimation_DESC("Yarnball2", 0.05f));
-	Renderer->CreateFrameAnimationFolder("Yarnball3", FrameAnimation_DESC("Yarnball3", 0.05f));
+	Renderer->CreateFrameAnimationFolder("Yarnball1", FrameAnimation_DESC("Yarnball1", 0.04f));
+	Renderer->CreateFrameAnimationFolder("Yarnball2", FrameAnimation_DESC("Yarnball2", 0.04f));
+	Renderer->CreateFrameAnimationFolder("Yarnball3", FrameAnimation_DESC("Yarnball3", 0.04f));
 	Renderer->ChangeFrameAnimation("Yarnball1");
 	Renderer->SetScaleModeImage();
 	SetRenderer(Renderer);
@@ -30,7 +30,7 @@ void YarnballBullet::Start()
 	Collision->ChangeOrder(ObjectOrder::MONSTER_BULLET);
 
 	MovementComponent = CreateComponent<BulletMovementComponent>();
-	MovementComponent->SetSpeed(400.0f);
+	MovementComponent->SetSpeed(700.0f);
 
 	Renderer->ChangeCamera(CAMERAORDER::ROTATECAMERA);
 }

@@ -56,6 +56,7 @@ private:
 	IInGameCharacterBase* Player;
 	GameEngineCollision* Collision;
 	GameEngineTextureRenderer* Renderer;
+	GameEngineTextureRenderer* EffectRenderer;
 	InGameMonsterAttackState AttackState;
 	InGamePh2DogAnimationControllerComponent* Animation;
 	BowWowShooter* BowWowGun;

@@ -56,9 +56,17 @@ void WorldMapLevel::ColMapOnOffSwitch()
 	if (true == GameEngineInput::GetInst()->IsDown("ColMapOnOffSwitch"))
 	{
 		MainLandRenderer->OnOffSwitch();
-		//UnderWaterLandRenderer->OnOffSwitch();
+		UnderWaterLandRenderer->OnOffSwitch();
 		OutsideOfMainLandLeftRenderer->OnOffSwitch();
 		OutsideOfMainLandRightRenderer->OnOffSwitch();
+	}
+}
+
+void WorldMapLevel::GiveCoin()
+{
+	for (int i = 0; i < 5; i++)
+	{
+		EventCoinRenderers[i]->On();
 	}
 }
 
@@ -87,6 +95,7 @@ void WorldMapLevel::LevelStartEvent()
 
 void WorldMapLevel::Update(float _DeltaTime)
 {
+
 	if (LoadCompleted == false)
 	{
 		//Loading
@@ -114,22 +123,25 @@ void WorldMapLevel::Update(float _DeltaTime)
 			Inventory->OnOffSwitch();
 		}
 	}
-	
+
 	ColMapOnOffSwitch();
 
 
 	if (State != nullptr)
 	{
-		CurCoin = State->Coin;
-		if (CurCoin < 0)
+		if (CurCoin != State->Coin)
 		{
-			CurCoin = 0;
+			CurCoin = State->Coin;
+			if (CurCoin < 0)
+			{
+				CurCoin = 0;
+			}
+			else if (CurCoin > 25)
+			{
+				CurCoin = 25;
+			}
+			CoinCountRenderer->SetTexture("CoinCount" + std::to_string(CurCoin) + ".png");
 		}
-		else if (CurCoin > 25)
-		{
-			CurCoin = 25;
-		}
-		CoinCountRenderer->SetTexture("CoinCount" + std::to_string(CurCoin) + ".png");
 	}
 }
 
@@ -144,6 +156,72 @@ void WorldMapLevel::OnLoadCompleted()
 	Inventory = CreateActor<ItemInventory>(GameObjectGroup::INVENTORY);
 	Inventory->SetLevelOverOn();
 	Inventory->Off();
+
+	//이벤트 코인
+
+	{
+		GameEngineActor* EventCoinActor = CreateActor<GameEngineActor>(GameObjectGroup::UI);
+		GameEngineTextureRenderer* BackgroundRenderer = EventCoinActor->CreateComponent<GameEngineTextureRenderer>();
+		BackgroundRenderer->SetTexture("GetCoin.png");
+		BackgroundRenderer->GetTransform().SetLocalScale({ 1280.0f, 720.0f, 1.0f });
+		BackgroundRenderer->GetTransform().SetWorldPosition({ 0.0f, 0.0f,(int)ZOrder::UI - 300 });
+		BackgroundRenderer->ChangeCamera(CAMERAORDER::UICAMERA2);
+		BackgroundRenderer->Off();
+
+		EventCoinRenderers.push_back(BackgroundRenderer);
+	}
+
+	{
+		GameEngineActor* EventCoinActor = CreateActor<GameEngineActor>(GameObjectGroup::UI);
+		GameEngineTextureRenderer* CoinRenderer = EventCoinActor->CreateComponent<GameEngineTextureRenderer>();
+		CoinRenderer->CreateFrameAnimationFolder("EventCoin", FrameAnimation_DESC("EventCoin", 0.05f));
+		CoinRenderer->ChangeFrameAnimation("EventCoin");
+		CoinRenderer->SetScaleModeImage();
+		CoinRenderer->GetTransform().SetWorldPosition({ 0.0f, 0.0f,(int)ZOrder::UI - 150 });
+		CoinRenderer->ChangeCamera(CAMERAORDER::UICAMERA2);
+		CoinRenderer->Off();
+
+		EventCoinRenderers.push_back(CoinRenderer);
+	}
+
+	{
+		GameEngineActor* EventCoinActor = CreateActor<GameEngineActor>(GameObjectGroup::UI);
+		GameEngineTextureRenderer* CoinRenderer = EventCoinActor->CreateComponent<GameEngineTextureRenderer>();
+		CoinRenderer->CreateFrameAnimationFolder("EventCoin", FrameAnimation_DESC("EventCoin", 0.05f));
+		CoinRenderer->ChangeFrameAnimation("EventCoin");
+		CoinRenderer->SetScaleModeImage();
+		CoinRenderer->GetTransform().SetWorldPosition({ -200.0f, 0.0f,(int)ZOrder::UI - 100 });
+		CoinRenderer->Off();
+		CoinRenderer->ChangeCamera(CAMERAORDER::UICAMERA2);
+		EventCoinRenderers.push_back(CoinRenderer);
+	}
+
+	{
+		GameEngineActor* EventCoinActor = CreateActor<GameEngineActor>(GameObjectGroup::UI);
+		GameEngineTextureRenderer* CoinRenderer = EventCoinActor->CreateComponent<GameEngineTextureRenderer>();
+		CoinRenderer->CreateFrameAnimationFolder("EventCoin", FrameAnimation_DESC("EventCoin", 0.05f));
+		CoinRenderer->ChangeFrameAnimation("EventCoin");
+		CoinRenderer->SetScaleModeImage();
+		CoinRenderer->GetTransform().SetWorldPosition({ 200.0f, 0.0f,(int)ZOrder::UI - 100 });
+		CoinRenderer->ChangeCamera(CAMERAORDER::UICAMERA2);
+		CoinRenderer->Off();
+
+		EventCoinRenderers.push_back(CoinRenderer);
+	}
+
+	{
+		GameEngineActor* EventCoinActor = CreateActor<GameEngineActor>(GameObjectGroup::UI);
+		GameEngineTextureRenderer* CoinDustRenderer = EventCoinActor->CreateComponent<GameEngineTextureRenderer>();
+		CoinDustRenderer->CreateFrameAnimationFolder("CoinDust", FrameAnimation_DESC("CoinDust", 0.1f));
+		CoinDustRenderer->ChangeFrameAnimation("CoinDust");
+		CoinDustRenderer->SetScaleModeImage();
+		CoinDustRenderer->GetTransform().SetWorldPosition({ 0.0f, 0.0f,(int)ZOrder::UI - 50 });
+		CoinDustRenderer->ChangeCamera(CAMERAORDER::UICAMERA2);
+		CoinDustRenderer->Off();
+		CoinDustRenderer->AnimationBindFrame("CoinDust", std::bind(&WorldMapLevel::OnEventCoinDustAnimationFrameChanged, this, std::placeholders::_1));
+
+		EventCoinRenderers.push_back(CoinDustRenderer);
+	}
 
 	{
 		GameEngineActor* CurCoin = CreateActor<GameEngineActor>(GameObjectGroup::UI);
@@ -579,5 +657,17 @@ void WorldMapLevel::OnLoadCompleted()
 			State = _State;
 			CurCoin = State->Coin;
 		}
+	}
+}
+
+void WorldMapLevel::OnEventCoinDustAnimationFrameChanged(const FrameAnimation_DESC& _Info)
+{
+	if (_Info.CurFrame == 12)
+	{
+		for (GameEngineTextureRenderer* Renderer : EventCoinRenderers)
+		{
+			Renderer->Off();
+		}
+		State->Coin = (State->Coin + 3);
 	}
 }

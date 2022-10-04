@@ -22,9 +22,9 @@ void TattooBullet::Start()
 {
 
 	Renderer = CreateComponent<GameEngineTextureRenderer>();
-	Renderer->CreateFrameAnimationFolder("BulldogTattooA", FrameAnimation_DESC("BulldogTattooA", 0.05f));
-	Renderer->CreateFrameAnimationFolder("BulldogTattooB", FrameAnimation_DESC("BulldogTattooB", 0.05f));
-	Renderer->CreateFrameAnimationFolder("BulldogTattooPink", FrameAnimation_DESC("BulldogTattooPink", 0.05f));
+	Renderer->CreateFrameAnimationFolder("BulldogTattooA", FrameAnimation_DESC("BulldogTattooA", 0.04f));
+	Renderer->CreateFrameAnimationFolder("BulldogTattooB", FrameAnimation_DESC("BulldogTattooB", 0.04f));
+	Renderer->CreateFrameAnimationFolder("BulldogTattooPink", FrameAnimation_DESC("BulldogTattooPink", 0.04f));
 	Renderer->ChangeFrameAnimation("BulldogTattooA");
 	Renderer->SetScaleModeImage();
 	SetRenderer(Renderer);
@@ -34,7 +34,7 @@ void TattooBullet::Start()
 	SetCollision(Collision);
 
 	MovementComponent = CreateComponent<BulletMovementComponent>();
-	MovementComponent->SetSpeed(400.0f);
+	MovementComponent->SetSpeed(700.0f);
 
 	Renderer->ChangeCamera(CAMERAORDER::ROTATECAMERA);
 
