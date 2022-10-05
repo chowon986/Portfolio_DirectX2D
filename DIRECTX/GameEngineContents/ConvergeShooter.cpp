@@ -29,6 +29,11 @@ void ConvergeShooter::Shoot()
 			case InGameCharacterShooterState::BasicShot:
 			{
 				float4 Direction = GetVerticalDirection() + GetHorizontalDirection();
+				if (Direction.CompareInt3D(float4::ZERO))
+				{
+					return;
+				}
+
 				{
 					ConvergeBullet* Bullet = GetLevel()->CreateActor<ConvergeBullet>();
 					Bullet->SetColMapImage(GetColMapImage());

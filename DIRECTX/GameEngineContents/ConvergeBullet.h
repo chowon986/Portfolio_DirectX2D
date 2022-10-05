@@ -18,6 +18,10 @@ private:
 	virtual void Update(float _DeltaTime) override;
 	virtual void End() override;
 
+public:
+	virtual void SetDirection(float4 _Direction) override;
+	void OnAttackSuccess(GameEngineCollision* _This, GameEngineCollision* _Other) override;
+
 private:
 	ConvergeShooter* Weapon;
 };
