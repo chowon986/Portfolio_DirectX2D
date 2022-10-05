@@ -4,10 +4,10 @@
 #include "Ph1Dog.h"
 #include <vector>
 
-
 BulldogPlane::BulldogPlane()
 	: Player(nullptr)
 	, BossBulldog(nullptr)
+	, CanMoveLeftRight(false)
 {
 }
 
@@ -34,6 +34,7 @@ void BulldogPlane::Start()
 		Renderer->ScaleToTexture();
 		Renderer->GetTransform().SetLocalPosition({ 275, 200, (int)ZOrder::NPC + 3 });
 		AllBulldogPlaneRenderer.push_back(Renderer);
+		WingRenderers.push_back(Renderer);
 	}
 
 	{
@@ -45,6 +46,7 @@ void BulldogPlane::Start()
 		Renderer->ScaleToTexture();
 		Renderer->GetTransform().SetLocalPosition({ 1010, 200, (int)ZOrder::NPC + 3 });
 		AllBulldogPlaneRenderer.push_back(Renderer);
+		WingRenderers.push_back(Renderer);
 	}
 
 	{
@@ -224,6 +226,7 @@ void BulldogPlane::Start()
 		BossBulldog->SetPh1Dog(DogFightPh1Dog);
 	}
 
+	Direction = float4::LEFT;
 }
 
 void BulldogPlane::Update(float _DeltaTime)
@@ -240,6 +243,34 @@ void BulldogPlane::Update(float _DeltaTime)
 			DogFightPh1Dog->Death();
 			DogFightPh1Dog = nullptr;
 		}
+	}
+
+	if (ColMapImage == nullptr)
+	{
+		ColMapImage = GetLevel()->GetMainColMapImage();
+		ColMapImage->SetPivot(PIVOTMODE::LEFTTOP);
+	}
+
+	if (ColMapTexture == nullptr)
+	{
+		ColMapTexture = ColMapImage->GetCurTexture();
+	}
+	//GameEngineDebug::DrawBox(Collision->GetTransform(), { 1.0f, 0.0f,0.0f, 0.5f });
+
+	if (WingRenderers[0] == nullptr || WingRenderers[1] == nullptr)
+	{
+		return;
+	}
+
+	if (true == ColMapTexture->GetPixelToFloat4(WingRenderers[0]->GetTransform().GetWorldPosition().ix(), -WingRenderers[0]->GetTransform().GetWorldPosition().iy()).CompareInt3D(float4::BLACK) ||
+		true == ColMapTexture->GetPixelToFloat4(WingRenderers[1]->GetTransform().GetWorldPosition().ix(), -WingRenderers[1]->GetTransform().GetWorldPosition().iy()).CompareInt3D(float4::BLACK))
+	{
+		Direction.x *= -1;
+	}
+
+	if (BossBulldog->GetState() == InGameMonsterState::Idle && CanMoveLeftRight == true)
+	{
+		GetTransform().SetLocalMove(Direction * _DeltaTime * 200);
 	}
 }
 

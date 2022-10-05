@@ -27,6 +27,7 @@ Bulldog::Bulldog()
 	, CanTakeDamageTime(0.0f)
 	, EndPos(float4::ZERO)
 	, MoveSpeed(0.0f)
+	, SetEndPosOk(false)
 {
 }
 
@@ -87,8 +88,6 @@ void Bulldog::Start()
 		Renderer->AnimationBindEnd("BulldogPrepareAttack2", std::bind(&Bulldog::OnPrepareAttackAnimationFinished, this, std::placeholders::_1));
 		Renderer->AnimationBindEnd("BulldogAttack1", std::bind(&Bulldog::OnAttackAnimationFinished, this, std::placeholders::_1));
 		Renderer->AnimationBindEnd("BulldogAttack2", std::bind(&Bulldog::OnAttackAnimationFinished, this, std::placeholders::_1));
-		Renderer->AnimationBindEnd("BulldogAttackFinish1", std::bind(&Bulldog::OnAttackFinishAnimationFinished, this, std::placeholders::_1));
-		Renderer->AnimationBindEnd("BulldogAttackFinish2", std::bind(&Bulldog::OnAttackFinishAnimationFinished, this, std::placeholders::_1));
 		Renderer->AnimationBindEnd("BulldogIdle", std::bind(&Bulldog::OnBulldogIdleAnimationFinished, this, std::placeholders::_1));
 		Renderer->AnimationBindEnd("BulldogLookRight", std::bind(&Bulldog::OnBulldogLookAnimationFinished, this, std::placeholders::_1));
 		Renderer->AnimationBindEnd("BulldogLookLeft", std::bind(&Bulldog::OnBulldogLookAnimationFinished, this, std::placeholders::_1));
@@ -100,6 +99,8 @@ void Bulldog::Start()
 		Renderer->AnimationBindFrame("BulldogIdle", std::bind(&Bulldog::OnIdleAnimationFrameChanged, this, std::placeholders::_1));
 		Renderer->AnimationBindFrame("BulldogAttack1", std::bind(&Bulldog::OnAttack1AnimationFrameChanged, this, std::placeholders::_1));
 		Renderer->AnimationBindFrame("BulldogAttack2", std::bind(&Bulldog::OnAttack2AnimationFrameChanged, this, std::placeholders::_1));
+		Renderer->AnimationBindFrame("BulldogAttackFinish1", std::bind(&Bulldog::OnAttackFinish1AnimationFrameChanged, this, std::placeholders::_1));
+		Renderer->AnimationBindFrame("BulldogAttackFinish2", std::bind(&Bulldog::OnAttackFinish2AnimationFrameChanged, this, std::placeholders::_1));
 
 
 		Renderer->CreateFrameAnimationFolder("BulldogDie", FrameAnimation_DESC("BulldogDie", 0.05f));
@@ -166,10 +167,17 @@ void Bulldog::Update(float _DeltaTime)
 
 	if (GetState() != InGameMonsterState::Mount || GetState() != InGameMonsterState::Unmount)
 	{
+		SetEndPosOk = false;
 		float4 BulldogCurPos = GetTransform().GetLocalPosition();
 		GetTransform().SetLocalPosition(float4{ BulldogCurPos.x, BulldogCurPos.y, (int)ZOrder::NPC - 2 });
 	}
+	
 	Plane->GetTransform().SetWorldPosition(float4{ CurPos.x, MovePosY, CurPos.z });
+
+	if (SetEndPosOk == true && abs(Plane->GetTransform().GetWorldPosition().y - EndPos.y) <= 0.1) // Endpos가 -250으로 설정되어있고 그 위치가 맞으면
+	{
+		Plane->CanMoveLeftRight = true;
+	}
 
 	if (GetState() == InGameMonsterState::Mount ||
 		GetState() == InGameMonsterState::Unmount ||
@@ -496,6 +504,126 @@ void Bulldog::OnAttack2AnimationFrameChanged(const FrameAnimation_DESC& _Info)
 	}
 }
 
+void Bulldog::OnAttackFinish1AnimationFrameChanged(const FrameAnimation_DESC& _Info)
+{
+	float posX = Renderer->GetTransform().GetLocalScale().x > 0 ? 500 : -500;
+	switch (_Info.CurFrame)
+	{
+	case 0: Collision->GetTransform().SetLocalPosition({ posX, 320.0f }); break;
+	case 1: Collision->GetTransform().SetLocalPosition({ posX, 320.0f }); break;
+	case 2:
+	{
+		if (posX > 0)
+		{
+			Collision->GetTransform().SetLocalPosition({ posX + 50, 320.0f });
+		}
+		else
+		{
+			Collision->GetTransform().SetLocalPosition({ posX - 50, 320.0f });
+		}
+	}
+	break;
+
+	case 3:
+	{
+		if (posX > 0)
+		{
+			Collision->GetTransform().SetLocalPosition({ posX + 50, 350.0f });
+		}
+		else
+		{
+			Collision->GetTransform().SetLocalPosition({ posX - 50, 350.0f });
+		}
+	}
+	break;
+	case 4:
+	{
+		if (posX > 0)
+		{
+			Collision->GetTransform().SetLocalPosition({ posX + 70, 350.0f });
+		}
+		else
+		{
+			Collision->GetTransform().SetLocalPosition({ posX - 70, 350.0f });
+		}
+	}
+	break;
+	case 5:
+	{
+		if (posX > 0)
+		{
+			Collision->GetTransform().SetLocalPosition({ posX + 90, 350.0f });
+		}
+		else
+		{
+			Collision->GetTransform().SetLocalPosition({ posX - 90, 350.0f });
+		}
+	}
+	break;
+	case 6:
+	{
+		if (posX > 0)
+		{
+			Collision->GetTransform().SetLocalPosition({ posX + 120, 350.0f });
+		}
+		else
+		{
+			Collision->GetTransform().SetLocalPosition({ posX - 120, 350.0f });
+		}
+	}
+	break;
+	case 7:
+	{
+		if (posX > 0)
+		{
+			Collision->GetTransform().SetLocalPosition({ posX + 150, 350.0f });
+		}
+		else
+		{
+			Collision->GetTransform().SetLocalPosition({ posX - 150, 350.0f });
+		}
+	}
+	break;
+	case 8:
+	{
+		if (posX > 0)
+		{
+			Collision->GetTransform().SetLocalPosition({ posX + 500, 350.0f });
+		}
+		else
+		{
+			Collision->GetTransform().SetLocalPosition({ posX - 500, 350.0f });
+		}
+	}
+	break;
+	case 14:
+	{
+		Mount();
+		break;
+	}
+	}
+}
+
+void Bulldog::OnAttackFinish2AnimationFrameChanged(const FrameAnimation_DESC& _Info)
+{
+	float posX = Renderer->GetTransform().GetLocalScale().x > 0 ? -500 : 500;
+	switch (_Info.CurFrame)
+	{
+	case 0: Collision->GetTransform().SetLocalPosition({ posX, 320.0f }); break;
+	case 1: Collision->GetTransform().SetLocalPosition({ posX, 320.0f }); break;
+	case 2: Collision->GetTransform().SetLocalPosition({ posX, 320.0f }); break;
+	case 3: Collision->GetTransform().SetLocalPosition({ posX, 320.0f }); break;
+	case 4: Collision->GetTransform().SetLocalPosition({ posX, 400.0f }); break;
+	case 5: Collision->GetTransform().SetLocalPosition({ posX, 500.0f }); break;
+	case 6:
+	{
+		Collision->GetTransform().SetLocalPosition({ posX, 700.0f });
+		Mount();
+		break;
+	}
+	}
+}
+
 void Bulldog::Test(const FrameAnimation_DESC& _Info)
 {
 	int a = 0;
@@ -533,6 +661,7 @@ void Bulldog::OnIdleAnimationFrameChanged(const FrameAnimation_DESC& _Info)
 		EndPos = float4(Plane->GetTransform().GetLocalPosition().x, -250);
 		MoveSpeed = static_cast<float>(0.01);
 		PlayerPosX = Plane->GetPlayer()->GetTransform().GetLocalPosition().x;
+		SetEndPosOk = true;
 	}
 }
 

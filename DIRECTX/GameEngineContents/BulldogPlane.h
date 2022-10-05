@@ -7,6 +7,7 @@ class GameEngineTextureRenderer;
 class IInGameCharacterBase;
 class Ph1Dog;
 class Bulldog;
+class GameEngineTexture;
 class BulldogPlane : public GameEngineActor
 {
 public:
@@ -33,25 +34,14 @@ private:
 	IInGameCharacterBase* Player;
 	Bulldog* BossBulldog;
 	Ph1Dog* DogFightPh1Dog;
-	GameEngineTextureRenderer* BulldogPlaneFront;
-	GameEngineTextureRenderer* BulldogPlaneWingLeft;
-	GameEngineTextureRenderer* BulldogPlaneWingRight;
-	GameEngineTextureRenderer* BulldogPlaneBack;
-	GameEngineTextureRenderer* BulldogPlaneTail;
-	GameEngineTextureRenderer* BulldogPropellorRingCenter;
-	GameEngineTextureRenderer* BulldogPropellorTipCenter;
-	GameEngineTextureRenderer* BulldogPropellorSpinCenter;
-	GameEngineTextureRenderer* BulldogPropelloRingLeft;
-	GameEngineTextureRenderer* BulldogPropelloRingRight;
-	GameEngineTextureRenderer* BulldogPropellorTipLeft;
-	GameEngineTextureRenderer* BulldogPropellorSpinLeft;
-	GameEngineTextureRenderer* BulldogPropellorTipRight;
-	GameEngineTextureRenderer* BulldogPropellorSpinRight;
-	GameEngineTextureRenderer* BulldogPlaneFlapLeftA;
-	GameEngineTextureRenderer* BulldogPlaneFlapLeftB;
-	GameEngineTextureRenderer* BulldogPlaneFlapRightA;
-	GameEngineTextureRenderer* BulldogPlaneFlapRightB;
 
 	std::vector<GameEngineTextureRenderer*> AllBulldogPlaneRenderer;
+	std::vector<GameEngineTextureRenderer*> WingRenderers;
+	GameEngineTexture* ColMapTexture;
+	GameEngineTextureRenderer* ColMapImage;
+	float4 Direction;
+
+public:
+	bool CanMoveLeftRight;
 };
 
