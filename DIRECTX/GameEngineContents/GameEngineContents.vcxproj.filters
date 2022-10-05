@@ -660,6 +660,12 @@
     <ClInclude Include="Ph2DogZetPuff.h">
       <Filter>Actor\Play\InGame\NPC\Effect</Filter>
     </ClInclude>
+    <ClInclude Include="InGameCharacterDust.h">
+      <Filter>Actor\Play\InGame\PC</Filter>
+    </ClInclude>
+    <ClInclude Include="InGameCharacterJumpDust.h">
+      <Filter>Actor\Play\InGame\PC</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp">
@@ -1165,6 +1171,12 @@
     </ClCompile>
     <ClCompile Include="Ph2DogZetPuff.cpp">
       <Filter>Actor\Play\InGame\NPC\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="InGameCharacterDust.cpp">
+      <Filter>Actor\Play\InGame\PC</Filter>
+    </ClCompile>
+    <ClCompile Include="InGameCharacterJumpDust.cpp">
+      <Filter>Actor\Play\InGame\PC</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

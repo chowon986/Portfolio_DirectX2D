@@ -228,6 +228,8 @@
     <ClInclude Include="IJumpable.h" />
     <ClInclude Include="InGameChalice.h" />
     <ClInclude Include="InGameCharacterAnimationControllerComponent.h" />
+    <ClInclude Include="InGameCharacterDust.h" />
+    <ClInclude Include="InGameCharacterJumpDust.h" />
     <ClInclude Include="InGameCharacterMovementCompmonent.h" />
     <ClInclude Include="InGameCuphead.h" />
     <ClInclude Include="IInGameMonsterBase.h" />
@@ -407,6 +409,8 @@
     <ClCompile Include="IJumpable.cpp" />
     <ClCompile Include="InGameChalice.cpp" />
     <ClCompile Include="InGameCharacterAnimationControllerComponent.cpp" />
+    <ClCompile Include="InGameCharacterDust.cpp" />
+    <ClCompile Include="InGameCharacterJumpDust.cpp" />
     <ClCompile Include="InGameCharacterMovementCompmonent.cpp" />
     <ClCompile Include="InGameCuphead.cpp" />
     <ClCompile Include="IInGameMonsterBase.cpp" />

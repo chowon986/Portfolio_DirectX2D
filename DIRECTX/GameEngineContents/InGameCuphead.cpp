@@ -12,6 +12,8 @@
 #include "WeaponItemBase.h"
 #include "CharmItemBase.h"
 #include "SaltBakerLevel.h"
+#include "InGameCharacterDust.h"
+#include "InGameCharacterJumpDust.h"
 #include <GameEngineContents/TutorialLevel.h>
 #include <GameEngineContents/DogFightLevel.h>
 
@@ -28,6 +30,7 @@ InGameCuphead::InGameCuphead()
 	, ToggleWeapon(false)
 	, IsInvisible(false)
 	, CountInvisibleTime(false)
+	, DustElapsedTime(0.0f)
 {
 }
 
@@ -182,6 +185,31 @@ void InGameCuphead::Update(float _DeltaTime)
 	OnCollisionDebug();
 	CheckCollision();
 
+	DustElapsedTime += _DeltaTime;
+
+	if (DustElapsedTime > 0.5 && GetState() == InGameCharacterState::Walk)
+	{
+		InGameCharacterDust* Dust = GetLevel()->CreateActor<InGameCharacterDust>();
+		Dust->SetBoss(this);
+		Dust->GetRenderer()->ChangeFrameAnimation("IngameCupheadWalk");
+		float4 MyPos = GetTransform().GetWorldPosition();
+		Dust->GetTransform().SetWorldPosition({ MyPos.x, MyPos.y + 50, MyPos.z + 0.1f });
+		DustElapsedTime = 0.0f;
+	}
+
+	if (BeforeState != GetState())
+	{
+		BeforeState = GetState();
+
+		if (GetState() == InGameCharacterState::Jump)
+		{
+			InGameCharacterJumpDust* Dust = GetLevel()->CreateActor<InGameCharacterJumpDust>();
+			Dust->SetBoss(this);
+			Dust->GetRenderer()->ChangeFrameAnimation("IngameCupheadJump");
+			float4 MyPos = GetTransform().GetWorldPosition();
+			Dust->GetTransform().SetWorldPosition({ MyPos.x, MyPos.y + 50, MyPos.z + 0.1f });
+		}
+	}
 
 	if (true == CountInvisibleTime)
 	{

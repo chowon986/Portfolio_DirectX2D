@@ -90,4 +90,6 @@ private:
 	float InvisibleElapsedTime;
 	bool CountInvisibleTime;
 	bool IsTakeDamageInProgess;
+	float DustElapsedTime;
+	InGameCharacterState BeforeState;
 };

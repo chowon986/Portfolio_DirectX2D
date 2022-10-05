@@ -146,6 +146,7 @@ void DogCopter::Update(float _DeltaTime)
 
 		if (KnockOutElapsedTime > 3.0f)
 		{
+			// 화면 하나가 어두워진다 -> ScoreLevel로 이동한다
 			GEngine::ChangeLevel("Score");
 		}
 	}
