@@ -33,6 +33,7 @@ void Dogfight::Update(float _DeltaTime)
 		if (GameEngineInput::GetInst()->IsDown("Select"))
 		{
 			GEngine::ChangeLevel("DogFight");
+			DogFightEntryBubbleOn = false;
 		}
 	}
 }

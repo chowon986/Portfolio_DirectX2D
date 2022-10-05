@@ -35,6 +35,7 @@ void Shop::Update(float _DeltaTime)
 		if (GameEngineInput::GetInst()->IsDown("Select"))
 		{
 			GEngine::ChangeLevel("Shop");
+			ShopEntryBubbleOn = false;
 		}
 	}
 

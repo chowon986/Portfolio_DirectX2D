@@ -5,6 +5,7 @@
 #include "InGameCuphead.h"
 #include "CharacterState.h"
 #include <GameEngineCore/GameEngineBlur.h>
+#include <GameEngineContents/TextureLoadUtils.h>
 
 TutorialLevel::TutorialLevel()
 	: BackgroundRenderer(nullptr)
@@ -33,6 +34,12 @@ void TutorialLevel::ColMapOnOffSwitch()
 
 void TutorialLevel::LevelStartEvent()
 {
+	//Loading
+	if (TextureLoadUtils::LoadTextures("02TutorialLevel") == false)
+	{
+		return;
+	}
+
 	std::list<GameEngineActor*> Actors = GetGroup(GameObjectGroup::CharacterState);
 	for (GameEngineActor* Actor : Actors)
 	{
@@ -42,24 +49,6 @@ void TutorialLevel::LevelStartEvent()
 			CurCoin = State->Coin;
 		}
 	}
-
-	//Loading
-	GameEngineDirectory Dir;
-	Dir.MoveParentToExitsChildDirectory("ConstantResources");
-	Dir.Move("ConstantResources");
-	Dir.Move("Texture");
-	Dir.Move("02TutorialLevel");
-	std::vector<GameEngineDirectory> RecursiveDir = Dir.GetRecursiveAllDirectory();
-	for (GameEngineDirectory Dir : RecursiveDir)
-	{
-		GameEngineFolderTexture::Load(Dir.GetFullPath());
-	}
-	std::vector<GameEngineFile> Textures = Dir.GetAllFile();
-	for (size_t i = 0; i < Textures.size(); i++)
-	{
-		GameEngineTexture::Load(Textures[i].GetFullPath());
-	}
-
 
 	//Start
 	GetMainCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();

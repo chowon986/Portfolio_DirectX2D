@@ -67,10 +67,11 @@ void ConvergeShooter::Shoot()
 			}
 			break;
 			case InGameCharacterShooterState::None:
-				SparkRenderer->ChangeFrameAnimation("Nothing");
+				//SparkRenderer->ChangeFrameAnimation("Nothing");
 				break;
 			default:
-				SparkRenderer->ChangeFrameAnimation("Nothing");
+				//SparkRenderer->ChangeFrameAnimation("Nothing");
+				break;
 			}
 		}
 	}

@@ -32,6 +32,29 @@ void Cart::Update(float _DeltaTime)
 		if (GameEngineInput::GetInst()->IsDown("Select"))
 		{
 			GEngine::ChangeLevel("Tutorial");
+			TutorialEntryBubbleOn = false;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 		}
 	}
 }

@@ -16,6 +16,7 @@
 #include "SpreadShooter.h"
 #include "ConvergeShooter.h"
 #include "BoomerangShooter.h"
+#include <GameEngineContents/TextureLoadUtils.h>
 
 ShopLevel::ShopLevel()
 	: IrisRenderer(nullptr)
@@ -44,23 +45,10 @@ ShopLevel::~ShopLevel()
 void ShopLevel::LevelStartEvent()
 {
 	//Loading
-	GameEngineDirectory Dir;
-	Dir.MoveParentToExitsChildDirectory("ConstantResources");
-	Dir.Move("ConstantResources");
-	Dir.Move("Texture");
-	Dir.Move("01ShopLevel");
-
-	std::vector<GameEngineDirectory> RecursiveDir = Dir.GetRecursiveAllDirectory();
-	for (GameEngineDirectory Dir : RecursiveDir)
+	if (TextureLoadUtils::LoadTextures("01ShopLevel") == false)
 	{
-		GameEngineFolderTexture::Load(Dir.GetFullPath());
+		return;
 	}
-	std::vector<GameEngineFile> Textures = Dir.GetAllFile();
-	for (size_t i = 0; i < Textures.size(); i++)
-	{
-		GameEngineTexture::Load(Textures[i].GetFullPath());
-	}
-
 
 	//Start
 	GetMainCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
