@@ -474,16 +474,16 @@ void InGameCuphead::Aim()
 
 void InGameCuphead::TakeDamage()
 {
-	//SetHP(GetHP() - 1);
+	SetHP(GetHP() - 1);
 	if (GetHP() > 0)
 	{
 		SetState(InGameCharacterState::TakeDamage);
 		GetPhysicsComponent()->On();
 	}
-	else
+	else 
 	{
-		Die();
-		GetPhysicsComponent()->Off();
+		//Die();
+		//GetPhysicsComponent()->Off();
 	}
 }
 
