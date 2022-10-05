@@ -648,7 +648,12 @@
     <ClInclude Include="GlassPlatform.h">
       <Filter>Actor\Play\InGame\Object</Filter>
     </ClInclude>
-    <ClInclude Include="TextureLoadUtils.h" />
+    <ClInclude Include="HydrantBulletPuff.h">
+      <Filter>Actor\Play\InGame\NPC\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureLoadUtils.h">
+      <Filter>Global</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp">
@@ -1143,6 +1148,11 @@
     <ClCompile Include="GlassPlatform.cpp">
       <Filter>Actor\Play\InGame\Object</Filter>
     </ClCompile>
-    <ClCompile Include="TextureLoadUtils.cpp" />
+    <ClCompile Include="HydrantBulletPuff.cpp">
+      <Filter>Actor\Play\InGame\NPC\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureLoadUtils.cpp">
+      <Filter>Global</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

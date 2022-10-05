@@ -3,6 +3,7 @@
 #include "DogCopterPhase1.h"
 #include "IInGameCharacterBase.h"
 #include "DogFightLevel.h"
+#include "HydrantBulletPuff.h"
 #include <GameEngineBase/GameEngineMath.h>
 
 HydrantBullet::HydrantBullet()
@@ -11,7 +12,6 @@ HydrantBullet::HydrantBullet()
 	, ElapsedTime(0.0f)
 	, UpdateDirectionInterval(1.f)
 	, CurDirection(0.0f)
-	, HydrantPuffRenderer(nullptr)
 	, OnDeath(false)
 {
 }
@@ -35,11 +35,6 @@ void HydrantBullet::OnDeathAnimationFrameFninished(const FrameAnimation_DESC& _I
 	Death();
 }
 
-void HydrantBullet::OnPuffAnimationFrameFninished(const FrameAnimation_DESC& _Info)
-{
-
-}
-
 void HydrantBullet::Start()
 {
 	srand(static_cast<int>(time(NULL)));
@@ -59,7 +54,6 @@ void HydrantBullet::Start()
 	Collision->GetTransform().SetLocalScale({ 80.0f, 80.0f, 1.0f });
 	Collision->ChangeOrder(ObjectOrder::MONSTER_DAMAGEABLE_BULLET);
 	Renderer->ChangeCamera(CAMERAORDER::ROTATECAMERA);
-
 }
 
 void HydrantBullet::Update(float _DeltaTime)
@@ -68,6 +62,8 @@ void HydrantBullet::Update(float _DeltaTime)
 		std::bind(&HydrantBullet::Attack, this, std::placeholders::_1, std::placeholders::_2));
 	Collision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::PC_BULLET, CollisionType::CT_AABB2D,
 		std::bind(&HydrantBullet::Attack, this, std::placeholders::_1, std::placeholders::_2));
+	
+	PuffElapsedTime += _DeltaTime;
 
 	if (DogFightLevel* Level = dynamic_cast<DogFightLevel*>(GetLevel()))
 	{
@@ -83,12 +79,6 @@ void HydrantBullet::Update(float _DeltaTime)
 					DestPosition = PlayerPos - GetTransform().GetWorldPosition();
 					DestPosition.Normalize();
 					DestPosition.z = 0;
-					{
-						GameEngineActor* HydrantPuff = GetLevel()->CreateActor<GameEngineActor>();
-						HydrantPuffRenderer = HydrantPuff->CreateComponent<GameEngineTextureRenderer>();
-						HydrantPuffRenderer->CreateFrameAnimationFolder("HydrantPuff", FrameAnimation_DESC("HydrantPuff", 0.05f, false));
-						HydrantPuffRenderer->AnimationBindEnd("HydrantPuff", std::bind(&HydrantBullet::OnPuffAnimationFrameFninished, this, std::placeholders::_1));
-					}
 				}
 
 				CurDirection.x = GameEngineMath::LerpLimit(CurDirection.x, DestPosition.x, ElapsedTime / 20);
@@ -100,6 +90,15 @@ void HydrantBullet::Update(float _DeltaTime)
 				GetTransform().SetWorldMove(CurDirection * _DeltaTime * 400);
 			}
 		}
+	}
+
+	if (PuffElapsedTime > 0.2f && false == OnDeath)
+	{
+		HydrantBulletPuff* Puff = GetLevel()->CreateActor<HydrantBulletPuff>();
+		Puff->SetBoss(this);
+		float4 MyPos = GetTransform().GetWorldPosition();
+		Puff->GetTransform().SetWorldPosition({ MyPos.x, MyPos.y, MyPos.z+1 });
+		PuffElapsedTime = 0.0f;
 	}
 }
 

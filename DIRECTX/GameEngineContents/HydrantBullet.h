@@ -19,7 +19,6 @@ public:
 	void SetRenderer(GameEngineTextureRenderer* _Renderer) { Renderer = _Renderer; }
 	CollisionReturn Attack(GameEngineCollision* _This, GameEngineCollision* _Other);
 	void OnDeathAnimationFrameFninished(const FrameAnimation_DESC& _Info);
-	void OnPuffAnimationFrameFninished(const FrameAnimation_DESC& _Info);
 
 private:
 	virtual void Start() override;
@@ -31,9 +30,9 @@ private:
 	DogCopterPhase1* Parent;
 	float4 DestPosition;
 	float ElapsedTime;
+	float PuffElapsedTime;
 	float UpdateDirectionInterval;
 	float4 CurDirection;
-	GameEngineTextureRenderer* HydrantPuffRenderer;
 	bool OnDeath;
 };
 

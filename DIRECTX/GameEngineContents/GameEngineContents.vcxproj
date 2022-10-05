@@ -214,6 +214,7 @@
     <ClInclude Include="Ghost.h" />
     <ClInclude Include="GlassPlatform.h" />
     <ClInclude Include="HydrantBullet.h" />
+    <ClInclude Include="HydrantBulletPuff.h" />
     <ClInclude Include="IAimable.h" />
     <ClInclude Include="IDamageable.h" />
     <ClInclude Include="IDashable.h" />
@@ -390,6 +391,7 @@
     <ClCompile Include="Ghost.cpp" />
     <ClCompile Include="GlassPlatform.cpp" />
     <ClCompile Include="HydrantBullet.cpp" />
+    <ClCompile Include="HydrantBulletPuff.cpp" />
     <ClCompile Include="IAimable.cpp" />
     <ClCompile Include="IDamageable.cpp" />
     <ClCompile Include="IDashable.cpp" />
