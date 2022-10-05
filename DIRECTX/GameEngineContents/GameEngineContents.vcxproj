@@ -178,6 +178,7 @@
     <ClInclude Include="BreakObject.h" />
     <ClInclude Include="Bulldog.h" />
     <ClInclude Include="BulldogPlane.h" />
+    <ClInclude Include="BulldogPlanePuff.h" />
     <ClInclude Include="BulletBase.h" />
     <ClInclude Include="BulletMovementComponent.h" />
     <ClInclude Include="Canteen.h" />
@@ -357,6 +358,7 @@
     <ClCompile Include="BreakObject.cpp" />
     <ClCompile Include="Bulldog.cpp" />
     <ClCompile Include="BulldogPlane.cpp" />
+    <ClCompile Include="BulldogPlanePuff.cpp" />
     <ClCompile Include="BulletBase.cpp" />
     <ClCompile Include="BulletMovementComponent.cpp" />
     <ClCompile Include="Canteen.cpp" />

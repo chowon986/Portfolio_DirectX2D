@@ -3,11 +3,16 @@
 #include "Bulldog.h"
 #include "Ph1Dog.h"
 #include <vector>
+#include "BulldogPlanePuff.h"
 
 BulldogPlane::BulldogPlane()
 	: Player(nullptr)
 	, BossBulldog(nullptr)
 	, CanMoveLeftRight(false)
+	, OnDeath(false)
+	, ColMapImage(nullptr)
+	, ColMapTexture(nullptr)
+	, DogFightPh1Dog(nullptr)
 {
 }
 
@@ -231,6 +236,22 @@ void BulldogPlane::Start()
 
 void BulldogPlane::Update(float _DeltaTime)
 {
+	PuffDeltaTime += _DeltaTime;
+	if (PuffDeltaTime > 1.5 && false == OnDeath)
+	{
+		float4 MyPos = GetTransform().GetWorldPosition();
+		BulldogPlanePuff* PuffLeft = GetLevel()->CreateActor<BulldogPlanePuff>();
+		PuffLeft->GetTransform().SetLocalPosition({ MyPos.x + 360.0f, -50.0f });
+		PuffLeft->GetRenderer()->ChangeFrameAnimation("BulldogPlanePuffA");
+		PuffLeft->SetDirection({ float4::RIGHT * 2 + float4::UP });
+	
+		BulldogPlanePuff* PuffRight = GetLevel()->CreateActor<BulldogPlanePuff>();
+		PuffRight->GetTransform().SetLocalPosition({MyPos.x + 920, -50.0f });
+		PuffRight->GetRenderer()->ChangeFrameAnimation("BulldogPlanePuffB");
+		PuffRight->SetDirection({ float4::LEFT * 2 + float4::UP });
+		PuffDeltaTime = 0.0f;
+	}
+
 	if (BossBulldog->GetState() == InGameMonsterState::Die)
 	{
 		for (int i = 0; i< AllBulldogPlaneRenderer.size(); i++)
@@ -241,6 +262,7 @@ void BulldogPlane::Update(float _DeltaTime)
 		if (DogFightPh1Dog != nullptr)
 		{
 			DogFightPh1Dog->Death();
+			OnDeath = true;
 			DogFightPh1Dog = nullptr;
 		}
 	}

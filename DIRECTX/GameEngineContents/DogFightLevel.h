@@ -38,8 +38,6 @@ public:
 	void ResetPositionCloudLeftD(const FrameAnimation_DESC& _Info);
 	void ResetPositionCloudLeftD2(const FrameAnimation_DESC& _Info);
 	void ResetPositionPatchMiddleA(const FrameAnimation_DESC& _Info);
-	void ResetPositionPlanePuffRight(const FrameAnimation_DESC& _Info);
-	void ResetPositionPlanePuffLeft(const FrameAnimation_DESC& _Info);
 	void PushToRotateCamera(GameEngineUpdateObject* _Object) override;
 	void PushToRotateCamera2(GameEngineUpdateObject* _Object) override;
 	void PushToBackgroundCamera(GameEngineUpdateObject* _Object) override;
@@ -77,8 +75,6 @@ private:
 	BackgroundObject* CloudC2;
 	BackgroundObject* CloudD1;
 	BackgroundObject* CloudD2;
-	BackgroundObject* PlanePuffRight;
-	BackgroundObject* PlanePuffLeft;
 	GameEngineTextureRenderer* BulldogIntroRenderer;
 	GameEngineTextureRenderer* DogCopterIntroRenderer;
 	// 

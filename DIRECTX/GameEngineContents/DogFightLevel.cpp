@@ -27,8 +27,6 @@ DogFightLevel::DogFightLevel()
 	, CloudC2(nullptr)
 	, CloudD1(nullptr)
 	, CloudD2(nullptr)
-	, PlanePuffRight(nullptr)
-	, PlanePuffLeft(nullptr)
 	, PatchLeftA(nullptr)
 	, PH1BullDog(nullptr)
 	, PH1BulldogPlane(nullptr)
@@ -153,16 +151,6 @@ void DogFightLevel::ResetPositionCloudLeftD2(const FrameAnimation_DESC& _Info)
 void DogFightLevel::ResetPositionPatchMiddleA(const FrameAnimation_DESC& _Info)
 {
 	PatchLeftA->GetTransform().SetLocalPosition({ 640, -1000, (int)ZOrder::Background - 3 });
-}
-
-void DogFightLevel::ResetPositionPlanePuffRight(const FrameAnimation_DESC& _Info)
-{
-	PlanePuffRight->GetTransform().SetLocalPosition({ 900, -200, (int)ZOrder::NPC + 4 });
-}
-
-void DogFightLevel::ResetPositionPlanePuffLeft(const FrameAnimation_DESC& _Info)
-{
-	PlanePuffLeft->GetTransform().SetLocalPosition({ 380, -200, (int)ZOrder::NPC + 4 });
 }
 
 void DogFightLevel::PushToRotateCamera(GameEngineUpdateObject* _Object)
@@ -717,40 +705,6 @@ void DogFightLevel::OnLoadCompleted()
 			CloudD2->GetTransform().SetLocalPosition({ 1130, -20, (int)ZOrder::Background - 1 });
 			CloudD2->SetDirection((float4::LEFT * 1.5) + (float4::DOWN * 1.5));
 			CloudD2->SetMoveSpeed(250.0f);
-		}
-
-		{
-			PlanePuffRight = CreateActor<BackgroundObject>(GameObjectGroup::Monster);
-			if (PlanePuffRight == nullptr)
-			{
-				return;
-			}
-			GameEngineTextureRenderer* Renderer = PlanePuffRight->GetRenderer();
-			Renderer->CreateFrameAnimationFolder("BulldogPlanePuffA", FrameAnimation_DESC("BulldogPlanePuffA", 0.03f, true));
-			Renderer->AnimationBindEnd("BulldogPlanePuffA", std::bind(&DogFightLevel::ResetPositionPlanePuffRight, this, std::placeholders::_1));
-			Renderer->ChangeFrameAnimation("BulldogPlanePuffA");
-			Renderer->ScaleToTexture();
-			Renderer->SetPivot(PIVOTMODE::CENTER);
-			PlanePuffRight->GetTransform().SetLocalPosition({ 900, -200, (int)ZOrder::NPC + 4 });
-			PlanePuffRight->SetDirection((float4::LEFT * 1.5) + (float4::UP));
-			PlanePuffRight->SetMoveSpeed(200.0f);
-		}
-
-		{
-			PlanePuffLeft = CreateActor<BackgroundObject>(GameObjectGroup::Monster);
-			if (PlanePuffLeft == nullptr)
-			{
-				return;
-			}
-			GameEngineTextureRenderer* Renderer = PlanePuffLeft->GetRenderer();
-			Renderer->CreateFrameAnimationFolder("BulldogPlanePuffB", FrameAnimation_DESC("BulldogPlanePuffB", 0.03f, true));
-			Renderer->AnimationBindEnd("BulldogPlanePuffB", std::bind(&DogFightLevel::ResetPositionPlanePuffLeft, this, std::placeholders::_1));
-			Renderer->ChangeFrameAnimation("BulldogPlanePuffB");
-			Renderer->ScaleToTexture();
-			Renderer->SetPivot(PIVOTMODE::CENTER);
-			PlanePuffLeft->GetTransform().SetLocalPosition({ 380, -200, (int)ZOrder::NPC + 4 });
-			PlanePuffLeft->SetDirection((float4::RIGHT * 1.5) + (float4::UP));
-			PlanePuffLeft->SetMoveSpeed(200.0f);
 		}
 	}
 

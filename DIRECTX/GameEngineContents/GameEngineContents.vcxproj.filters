@@ -654,6 +654,9 @@
     <ClInclude Include="TextureLoadUtils.h">
       <Filter>Global</Filter>
     </ClInclude>
+    <ClInclude Include="BulldogPlanePuff.h">
+      <Filter>Actor\Play\InGame\NPC\Effect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp">
@@ -1153,6 +1156,9 @@
     </ClCompile>
     <ClCompile Include="TextureLoadUtils.cpp">
       <Filter>Global</Filter>
+    </ClCompile>
+    <ClCompile Include="BulldogPlanePuff.cpp">
+      <Filter>Actor\Play\InGame\NPC\Effect</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

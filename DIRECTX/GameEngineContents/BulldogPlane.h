@@ -41,6 +41,9 @@ private:
 	GameEngineTextureRenderer* ColMapImage;
 	float4 Direction;
 
+	float PuffDeltaTime;
+	bool OnDeath;
+
 public:
 	bool CanMoveLeftRight;
 };
