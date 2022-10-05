@@ -8,6 +8,7 @@
 #include "BowWowShooter.h"
 #include "BulletBase.h"
 #include <math.h>
+#include "Ph2DogZetPuff.h"
 
 Ph2Dog::Ph2Dog()
 	: Renderer(nullptr)
@@ -18,6 +19,9 @@ Ph2Dog::Ph2Dog()
 	, State(InGamePh2DogState::None)
 	, Player(nullptr)
 	, OnceCheck(false)
+	, OnDeath(false)
+	, BowWowGun(nullptr)
+	, ZetPuffElapsedTime(0.0f)
 {
 }
 
@@ -128,16 +132,7 @@ void Ph2Dog::Start()
 		Renderer->SetScaleModeImage();
 		SetRenderer(Renderer);
 
-		Renderer->ChangeCamera(CAMERAORDER::ROTATECAMERA);
-	}
-
-	{
-		// ¿Ã∆Â∆Æ
-		EffectRenderer = CreateComponent<GameEngineTextureRenderer>();
-		EffectRenderer->CreateFrameAnimationFolder("Ph2DogIntroTop", FrameAnimation_DESC("Ph2DogIntroTop", 0.06f));
-		EffectRenderer->CreateFrameAnimationFolder("Ph2DogIntroRight", FrameAnimation_DESC("Ph2DogIntroRight", 0.06f));
-		EffectRenderer->CreateFrameAnimationFolder("Ph2DogIntroBottom", FrameAnimation_DESC("Ph2DogIntroBottom", 0.06f));
-		EffectRenderer->CreateFrameAnimationFolder("Ph2DogIntroLeft", FrameAnimation_DESC("Ph2DogIntroLeft", 0.06f));
+		Renderer->ChangeCamera(CAMERAORDER::IRISCAMERA);
 	}
 
 	// ƒƒ∆˜≥Õ∆Æ ª˝º∫
@@ -165,6 +160,23 @@ void Ph2Dog::Start()
 
 void Ph2Dog::Update(float _DeltaTime)
 {
+	ZetPuffElapsedTime += _DeltaTime;
+
+	if (ZetPuffElapsedTime > 0.07 && false == OnDeath)
+	{
+		Ph2DogZetPuff* ZetPuff = GetLevel()->CreateActor<Ph2DogZetPuff>();
+		if (GetHP() <= 5)
+		{
+			ZetPuff->GetRenderer()->ChangeFrameAnimation("Ph2DogPuffGrey");
+		}
+		ZetPuff->SetBoss(this);
+		float4 MyPos = GetTransform().GetWorldPosition();
+		ZetPuff->GetTransform().SetWorldPosition({ MyPos.x, MyPos.y+5, MyPos.z + 1 });
+		ZetPuffElapsedTime = 0.0f;
+
+	}
+
+
 	if (OnceCheck == false)
 	{
 		if (GetPh2DogState() == InGamePh2DogState::Prepare1)
@@ -235,6 +247,7 @@ CollisionReturn Ph2Dog::OnTakeDamage(GameEngineCollision* _This, GameEngineColli
 	SetHP(GetHP() - 1);
 	if (GetHP() <= 0)
 	{
+		OnDeath = true;
 		Renderer->ChangeFrameAnimation("Ph2DogDie");
 		_This->Off();
 	}

@@ -790,6 +790,11 @@ void DogCopterShooter::Start()
 		LaserCollision3.push_back(RightMidLaserRendererCollision7);
 
 		LaserCollision4.push_back(LeftLowLaserRendererCollision);
+
+		Collision = CreateComponent<GameEngineCollision>();
+		Collision->GetTransform().SetWorldScale({ 100.0f,100.0f,1.0f });
+		Collision->GetTransform().SetLocalPosition({ 640.0f, -360.0f });
+		Collision->Off();
 	}
 
 	srand(time(NULL));
@@ -849,6 +854,7 @@ void DogCopterShooter::OnMonsterStateChanged(InGameMonsterState _State)
 		if (DogCopter* Parent = dynamic_cast<DogCopter*>(GetParent()))
 		{
 			Parent->SetAttackState(InGameMonsterAttackState::DogBowl);
+			Collision->On();
 		}
 	}
 }
@@ -918,10 +924,15 @@ void DogCopterShooter::UpdatePivot()
 
 }
 
+CollisionReturn DogCopterShooter::OnTakeDamage(GameEngineCollision* _This, GameEngineCollision* _Other)
+{
+	SetHP(GetHP() - 1);
+	return CollisionReturn::Break;
+}
 
 void DogCopterShooter::Update(float _DeltaTime)
 {
-
+	Collision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::PC_BULLET, CollisionType::CT_AABB2D, std::bind(&DogCopterShooter::OnTakeDamage, this, std::placeholders::_1, std::placeholders::_2));
 }
 
 void DogCopterShooter::OnLaserAnimationFrameChanged(const FrameAnimation_DESC& _Info)

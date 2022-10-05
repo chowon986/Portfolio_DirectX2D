@@ -8,9 +8,7 @@
 
 DogCopter::DogCopter()
 	: Renderer(nullptr)
-	, Leader(nullptr)
 	, ArmsRenderer(nullptr)
-	, Collision(nullptr)
 	, LeftHandRenderer(nullptr)
 	, WristRenderer(nullptr)
 	, OnceCheck(false)
@@ -135,9 +133,6 @@ void DogCopter::Start()
 
 	srand(static_cast<unsigned int>(time(NULL)));
 
-	Collision = CreateComponent<GameEngineCollision>();
-	Collision->GetTransform().SetWorldScale({ 300.0f,300.0f,1.0f });
-	Collision->GetTransform().SetWorldPosition({ 640.0f, -360.0f });
 	SetHP(5);
 }
 
@@ -148,9 +143,6 @@ void DogCopter::Update(float _DeltaTime)
 		OnceCheck = true;
 		ArmsRenderer->ChangeFrameAnimation("DogCopterDeathIdleArms");
 	}
-
-	Collision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::PC_BULLET, CollisionType::CT_AABB2D, std::bind(&DogCopter::OnTakeDamage, this, std::placeholders::_1, std::placeholders::_2));
-
 }
 
 void DogCopter::End()
@@ -211,13 +203,6 @@ void DogCopter::BeforeRoateCameraIn()
 {
 	SetState(InGameMonsterState::BeforeRotateCameraIn);
 }
-
-CollisionReturn DogCopter::OnTakeDamage(GameEngineCollision* _This, GameEngineCollision* _Other)
-{
-	SetHP(GetHP() - 1);
-	return CollisionReturn::Break;
-}
-
 
 void DogCopter::OnIntroAnimationFrameFinished(const FrameAnimation_DESC& _Info)
 {

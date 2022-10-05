@@ -478,10 +478,18 @@ void InGameCuphead::TakeDamage()
 	if (GetHP() > 0)
 	{
 		SetState(InGameCharacterState::TakeDamage);
-		GetPhysicsComponent()->On();
+		if (false == GetPhysicsComponent()->IsUpdate())
+		{
+			GetPhysicsComponent()->On();
+		}
 	}
-	else 
+	else
 	{
+		SetState(InGameCharacterState::TakeDamage);
+		if (false == GetPhysicsComponent()->IsUpdate())
+		{
+			GetPhysicsComponent()->On();
+		}
 		//Die();
 		//GetPhysicsComponent()->Off();
 	}

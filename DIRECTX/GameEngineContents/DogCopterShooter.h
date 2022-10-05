@@ -36,6 +36,10 @@ private:
 	virtual void OnMonsterStateChanged(InGameMonsterState _State) override;
 	virtual void OnMonsterAttackStateChanged(InGameMonsterAttackState _AttackState) override;
 	virtual void UpdatePivot() override;
+	CollisionReturn OnTakeDamage(GameEngineCollision* _This, GameEngineCollision* _Other);
+
+	void SetHP(int _HP) { HP = _HP; }
+	int GetHP() { return HP; }
 
 private:
 	std::vector<GameEngineTextureRenderer*> PadRenderers;
@@ -55,4 +59,8 @@ private:
 	int FirstIdx;
 	int SecondIdx;
 	InGameMonsterAttackState MonsterAttackState;
+	int HP;
+
+public:
+	GameEngineCollision* Collision;
 };

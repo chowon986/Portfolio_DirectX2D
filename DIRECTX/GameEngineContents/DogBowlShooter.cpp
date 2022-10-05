@@ -3,6 +3,7 @@
 #include "IInGameMonsterBase.h"
 #include "DogBowlBullet.h"
 #include "MonsterPhysicsComponent.h"
+#include "DogCopterShooter.h"
 #include <GameEngineBase/GameEngineRandom.h>
 
 DogBowlShooter::DogBowlShooter()
@@ -43,6 +44,11 @@ void DogBowlShooter::Update(float _DeltaTime)
 					Character->SetState(InGameMonsterState::BeforeRoToateCameraOut);
 					Character->SetAttackState(InGameMonsterAttackState::None);
 					ShootCount = 0;
+					if (DogCopterShooter* Shooter = dynamic_cast<DogCopterShooter*>(Character))
+					{
+						Shooter->Collision->Off();
+					}
+
 					return;
 				}
 			}

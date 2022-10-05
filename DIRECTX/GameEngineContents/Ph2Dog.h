@@ -56,7 +56,6 @@ private:
 	IInGameCharacterBase* Player;
 	GameEngineCollision* Collision;
 	GameEngineTextureRenderer* Renderer;
-	GameEngineTextureRenderer* EffectRenderer;
 	InGameMonsterAttackState AttackState;
 	InGamePh2DogAnimationControllerComponent* Animation;
 	BowWowShooter* BowWowGun;
@@ -64,4 +63,6 @@ private:
 	float RotationAngle;
 	bool OnceCheck;
 	float4 ShootPos;
+	bool OnDeath;
+	float ZetPuffElapsedTime;
 };

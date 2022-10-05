@@ -268,6 +268,7 @@
     <ClInclude Include="PepperShooter.h" />
     <ClInclude Include="Ph1Dog.h" />
     <ClInclude Include="Ph2Dog.h" />
+    <ClInclude Include="Ph2DogZetPuff.h" />
     <ClInclude Include="PhysicsComponent.h" />
     <ClInclude Include="Pickaxe.h" />
     <ClInclude Include="Pig.h" />
@@ -446,6 +447,7 @@
     <ClCompile Include="PepperShooter.cpp" />
     <ClCompile Include="Ph1Dog.cpp" />
     <ClCompile Include="Ph2Dog.cpp" />
+    <ClCompile Include="Ph2DogZetPuff.cpp" />
     <ClCompile Include="PhysicsComponent.cpp" />
     <ClCompile Include="Pickaxe.cpp" />
     <ClCompile Include="Pig.cpp" />
