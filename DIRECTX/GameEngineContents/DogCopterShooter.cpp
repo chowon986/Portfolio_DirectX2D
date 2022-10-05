@@ -9,6 +9,7 @@ DogCopterShooter::DogCopterShooter()
 	, LaserMachineRenderers()
 	, PadBackRenderers()
 	, LaserRenderers()
+	, HP(5)
 {
 }
 
@@ -557,49 +558,49 @@ void DogCopterShooter::Start()
 
 		GameEngineCollision* LeftTopLaserRendererCollision0 = CreateComponent<GameEngineCollision>();
 		LeftTopLaserRendererCollision0->GetTransform().SetLocalScale({ 10.0f, 10.0f, 1.0f });
-		LeftTopLaserRendererCollision0->GetTransform().SetLocalPosition({ 506, -250, (int)ZOrder::NPC - 8 });
+		LeftTopLaserRendererCollision0->GetTransform().SetLocalPosition({ 516, -250, (int)ZOrder::NPC - 8 });
 		LeftTopLaserRendererCollision0->ChangeOrder(ObjectOrder::MONSTER_BULLET);
 		LeftTopLaserRendererCollision0->Off();
 
 		GameEngineCollision* LeftTopLaserRendererCollision1 = CreateComponent<GameEngineCollision>();
 		LeftTopLaserRendererCollision1->GetTransform().SetLocalScale({ 10.0f, 10.0f, 1.0f });
-		LeftTopLaserRendererCollision1->GetTransform().SetLocalPosition({ 556, -300, (int)ZOrder::NPC - 8 });
+		LeftTopLaserRendererCollision1->GetTransform().SetLocalPosition({ 570, -300, (int)ZOrder::NPC - 8 });
 		LeftTopLaserRendererCollision1->ChangeOrder(ObjectOrder::MONSTER_BULLET);
 		LeftTopLaserRendererCollision1->Off();
 
 		GameEngineCollision* LeftTopLaserRendererCollision2 = CreateComponent<GameEngineCollision>();
 		LeftTopLaserRendererCollision2->GetTransform().SetLocalScale({ 10.0f, 10.0f, 1.0f });
-		LeftTopLaserRendererCollision2->GetTransform().SetLocalPosition({ 606, -350, (int)ZOrder::NPC - 8 });
+		LeftTopLaserRendererCollision2->GetTransform().SetLocalPosition({ 636, -350, (int)ZOrder::NPC - 8 });
 		LeftTopLaserRendererCollision2->ChangeOrder(ObjectOrder::MONSTER_BULLET);
 		LeftTopLaserRendererCollision2->Off();
 
 		GameEngineCollision* LeftTopLaserRendererCollision3 = CreateComponent<GameEngineCollision>();
 		LeftTopLaserRendererCollision3->GetTransform().SetLocalScale({ 10.0f, 10.0f, 1.0f });
-		LeftTopLaserRendererCollision3->GetTransform().SetLocalPosition({ 656, -400, (int)ZOrder::NPC - 8 });
+		LeftTopLaserRendererCollision3->GetTransform().SetLocalPosition({ 666, -400, (int)ZOrder::NPC - 8 });
 		LeftTopLaserRendererCollision3->ChangeOrder(ObjectOrder::MONSTER_BULLET);
 		LeftTopLaserRendererCollision3->Off();
 
 		GameEngineCollision* LeftTopLaserRendererCollision4 = CreateComponent<GameEngineCollision>();
 		LeftTopLaserRendererCollision4->GetTransform().SetLocalScale({ 10.0f, 10.0f, 1.0f });
-		LeftTopLaserRendererCollision4->GetTransform().SetLocalPosition({ 706, -450, (int)ZOrder::NPC - 8 });
+		LeftTopLaserRendererCollision4->GetTransform().SetLocalPosition({ 736, -450, (int)ZOrder::NPC - 8 });
 		LeftTopLaserRendererCollision4->ChangeOrder(ObjectOrder::MONSTER_BULLET);
 		LeftTopLaserRendererCollision4->Off();
 
 		GameEngineCollision* LeftTopLaserRendererCollision5 = CreateComponent<GameEngineCollision>();
 		LeftTopLaserRendererCollision5->GetTransform().SetLocalScale({ 10.0f, 10.0f, 1.0f });
-		LeftTopLaserRendererCollision5->GetTransform().SetLocalPosition({ 756, -500, (int)ZOrder::NPC - 8 });
+		LeftTopLaserRendererCollision5->GetTransform().SetLocalPosition({ 796, -500, (int)ZOrder::NPC - 8 });
 		LeftTopLaserRendererCollision5->ChangeOrder(ObjectOrder::MONSTER_BULLET);
 		LeftTopLaserRendererCollision5->Off();
 
 		GameEngineCollision* LeftTopLaserRendererCollision6 = CreateComponent<GameEngineCollision>();
 		LeftTopLaserRendererCollision6->GetTransform().SetLocalScale({ 10.0f, 10.0f, 1.0f });
-		LeftTopLaserRendererCollision6->GetTransform().SetLocalPosition({ 806, -550, (int)ZOrder::NPC - 8 });
+		LeftTopLaserRendererCollision6->GetTransform().SetLocalPosition({ 856, -550, (int)ZOrder::NPC - 8 });
 		LeftTopLaserRendererCollision6->ChangeOrder(ObjectOrder::MONSTER_BULLET);
 		LeftTopLaserRendererCollision6->Off();
 
 		GameEngineCollision* LeftTopLaserRendererCollision7 = CreateComponent<GameEngineCollision>();
 		LeftTopLaserRendererCollision7->GetTransform().SetLocalScale({ 10.0f, 10.0f, 1.0f });
-		LeftTopLaserRendererCollision7->GetTransform().SetLocalPosition({ 856, -600, (int)ZOrder::NPC - 8 });
+		LeftTopLaserRendererCollision7->GetTransform().SetLocalPosition({ 906, -600, (int)ZOrder::NPC - 8 });
 		LeftTopLaserRendererCollision7->ChangeOrder(ObjectOrder::MONSTER_BULLET);
 		LeftTopLaserRendererCollision7->Off();
 
@@ -623,133 +624,133 @@ void DogCopterShooter::Start()
 
 		GameEngineCollision* LeftMidLaserRendererCollision3 = CreateComponent<GameEngineCollision>();
 		LeftMidLaserRendererCollision3->GetTransform().SetLocalScale({ 10.0f, 10.0f, 1.0f });
-		LeftMidLaserRendererCollision3->GetTransform().SetLocalPosition({ 483, -400, (int)ZOrder::NPC - 8 });
+		LeftMidLaserRendererCollision3->GetTransform().SetLocalPosition({ 503, -400, (int)ZOrder::NPC - 8 });
 		LeftMidLaserRendererCollision3->ChangeOrder(ObjectOrder::MONSTER_BULLET);
 		LeftMidLaserRendererCollision3->Off();
 
 		GameEngineCollision* LeftMidLaserRendererCollision4 = CreateComponent<GameEngineCollision>();
 		LeftMidLaserRendererCollision4->GetTransform().SetLocalScale({ 10.0f, 10.0f, 1.0f });
-		LeftMidLaserRendererCollision4->GetTransform().SetLocalPosition({ 533, -450, (int)ZOrder::NPC - 8 });
+		LeftMidLaserRendererCollision4->GetTransform().SetLocalPosition({ 543, -450, (int)ZOrder::NPC - 8 });
 		LeftMidLaserRendererCollision4->ChangeOrder(ObjectOrder::MONSTER_BULLET);
 		LeftMidLaserRendererCollision4->Off();
 
 		GameEngineCollision* LeftMidLaserRendererCollision5 = CreateComponent<GameEngineCollision>();
 		LeftMidLaserRendererCollision5->GetTransform().SetLocalScale({ 10.0f, 10.0f, 1.0f });
-		LeftMidLaserRendererCollision5->GetTransform().SetLocalPosition({ 583, -500, (int)ZOrder::NPC - 8 });
+		LeftMidLaserRendererCollision5->GetTransform().SetLocalPosition({ 608, -500, (int)ZOrder::NPC - 8 });
 		LeftMidLaserRendererCollision5->ChangeOrder(ObjectOrder::MONSTER_BULLET);
 		LeftMidLaserRendererCollision5->Off();
 
 		GameEngineCollision* LeftMidLaserRendererCollision6 = CreateComponent<GameEngineCollision>();
 		LeftMidLaserRendererCollision6->GetTransform().SetLocalScale({ 10.0f, 10.0f, 1.0f });
-		LeftMidLaserRendererCollision6->GetTransform().SetLocalPosition({ 633, -550, (int)ZOrder::NPC - 8 });
+		LeftMidLaserRendererCollision6->GetTransform().SetLocalPosition({ 653, -550, (int)ZOrder::NPC - 8 });
 		LeftMidLaserRendererCollision6->ChangeOrder(ObjectOrder::MONSTER_BULLET);
 		LeftMidLaserRendererCollision6->Off();
 
 		GameEngineCollision* LeftMidLaserRendererCollision7 = CreateComponent<GameEngineCollision>();
 		LeftMidLaserRendererCollision7->GetTransform().SetLocalScale({ 10.0f, 10.0f, 1.0f });
-		LeftMidLaserRendererCollision7->GetTransform().SetLocalPosition({ 683, -600, (int)ZOrder::NPC - 8 });
+		LeftMidLaserRendererCollision7->GetTransform().SetLocalPosition({ 718, -600, (int)ZOrder::NPC - 8 });
 		LeftMidLaserRendererCollision7->ChangeOrder(ObjectOrder::MONSTER_BULLET);
 		LeftMidLaserRendererCollision7->Off();
 
 		GameEngineCollision* RightTopLaserRendererCollision0 = CreateComponent<GameEngineCollision>();
 		RightTopLaserRendererCollision0->GetTransform().SetLocalScale({ 10.0f, 10.0f, 1.0f });
-		RightTopLaserRendererCollision0->GetTransform().SetLocalPosition({ 705.0f, -305, (int)ZOrder::NPC - 8 });
+		RightTopLaserRendererCollision0->GetTransform().SetLocalPosition({ 705.0f, -315, (int)ZOrder::NPC - 8 });
 		RightTopLaserRendererCollision0->ChangeOrder(ObjectOrder::MONSTER_BULLET);
 		RightTopLaserRendererCollision0->Off();
 
 		GameEngineCollision* RightTopLaserRendererCollision1 = CreateComponent<GameEngineCollision>();
 		RightTopLaserRendererCollision1->GetTransform().SetLocalScale({ 10.0f, 10.0f, 1.0f });
-		RightTopLaserRendererCollision1->GetTransform().SetLocalPosition({ 755.0f, -355, (int)ZOrder::NPC - 8 });
+		RightTopLaserRendererCollision1->GetTransform().SetLocalPosition({ 655.0f, -355, (int)ZOrder::NPC - 8 });
 		RightTopLaserRendererCollision1->ChangeOrder(ObjectOrder::MONSTER_BULLET);
 		RightTopLaserRendererCollision1->Off();
 
 		GameEngineCollision* RightTopLaserRendererCollision2 = CreateComponent<GameEngineCollision>();
 		RightTopLaserRendererCollision2->GetTransform().SetLocalScale({ 10.0f, 10.0f, 1.0f });
-		RightTopLaserRendererCollision2->GetTransform().SetLocalPosition({ 805.0f, -405, (int)ZOrder::NPC - 8 });
+		RightTopLaserRendererCollision2->GetTransform().SetLocalPosition({ 605.0f, -400, (int)ZOrder::NPC - 8 });
 		RightTopLaserRendererCollision2->ChangeOrder(ObjectOrder::MONSTER_BULLET);
 		RightTopLaserRendererCollision2->Off();
 
 		GameEngineCollision* RightTopLaserRendererCollision3 = CreateComponent<GameEngineCollision>();
 		RightTopLaserRendererCollision3->GetTransform().SetLocalScale({ 10.0f, 10.0f, 1.0f });
-		RightTopLaserRendererCollision3->GetTransform().SetLocalPosition({ 855.0f, -455, (int)ZOrder::NPC - 8 });
+		RightTopLaserRendererCollision3->GetTransform().SetLocalPosition({ 555.0f, -445, (int)ZOrder::NPC - 8 });
 		RightTopLaserRendererCollision3->ChangeOrder(ObjectOrder::MONSTER_BULLET);
 		RightTopLaserRendererCollision3->Off();
 
 		GameEngineCollision* RightTopLaserRendererCollision4 = CreateComponent<GameEngineCollision>();
 		RightTopLaserRendererCollision4->GetTransform().SetLocalScale({ 10.0f, 10.0f, 1.0f });
-		RightTopLaserRendererCollision4->GetTransform().SetLocalPosition({ 905.0f, -505, (int)ZOrder::NPC - 8 });
+		RightTopLaserRendererCollision4->GetTransform().SetLocalPosition({ 505.0f, -480, (int)ZOrder::NPC - 8 });
 		RightTopLaserRendererCollision4->ChangeOrder(ObjectOrder::MONSTER_BULLET);
 		RightTopLaserRendererCollision4->Off();
 
 		GameEngineCollision* RightTopLaserRendererCollision5 = CreateComponent<GameEngineCollision>();
 		RightTopLaserRendererCollision5->GetTransform().SetLocalScale({ 10.0f, 10.0f, 1.0f });
-		RightTopLaserRendererCollision5->GetTransform().SetLocalPosition({ 955.0f, -555, (int)ZOrder::NPC - 8 });
+		RightTopLaserRendererCollision5->GetTransform().SetLocalPosition({ 455.0f, -525, (int)ZOrder::NPC - 8 });
 		RightTopLaserRendererCollision5->ChangeOrder(ObjectOrder::MONSTER_BULLET);
 		RightTopLaserRendererCollision5->Off();
 
 		GameEngineCollision* RightTopLaserRendererCollision6 = CreateComponent<GameEngineCollision>();
 		RightTopLaserRendererCollision6->GetTransform().SetLocalScale({ 10.0f, 10.0f, 1.0f });
-		RightTopLaserRendererCollision6->GetTransform().SetLocalPosition({ 1005.0f, -605, (int)ZOrder::NPC - 8 });
+		RightTopLaserRendererCollision6->GetTransform().SetLocalPosition({ 415.0f, -555, (int)ZOrder::NPC - 8 });
 		RightTopLaserRendererCollision6->ChangeOrder(ObjectOrder::MONSTER_BULLET);
 		RightTopLaserRendererCollision6->Off();
 
 		GameEngineCollision* RightTopLaserRendererCollision7 = CreateComponent<GameEngineCollision>();
 		RightTopLaserRendererCollision7->GetTransform().SetLocalScale({ 10.0f, 10.0f, 1.0f });
-		RightTopLaserRendererCollision7->GetTransform().SetLocalPosition({ 1055.0f, -655, (int)ZOrder::NPC - 8 });
+		RightTopLaserRendererCollision7->GetTransform().SetLocalPosition({ 395.0f, -575, (int)ZOrder::NPC - 8 });
 		RightTopLaserRendererCollision7->ChangeOrder(ObjectOrder::MONSTER_BULLET);
 		RightTopLaserRendererCollision7->Off();
 
 		GameEngineCollision* RightMidLaserRendererCollision0 = CreateComponent<GameEngineCollision>();
 		RightMidLaserRendererCollision0->GetTransform().SetLocalScale({ 10.0f, 10.0f, 1.0f });
-		RightMidLaserRendererCollision0->GetTransform().SetLocalPosition({ 705.0f, -310, (int)ZOrder::NPC - 8 });
+		RightMidLaserRendererCollision0->GetTransform().SetLocalPosition({ 905.0f, -310, (int)ZOrder::NPC - 8 });
 		RightMidLaserRendererCollision0->ChangeOrder(ObjectOrder::MONSTER_BULLET);
 		RightMidLaserRendererCollision0->Off();
 
 		GameEngineCollision* RightMidLaserRendererCollision1 = CreateComponent<GameEngineCollision>();
 		RightMidLaserRendererCollision1->GetTransform().SetLocalScale({ 10.0f, 10.0f, 1.0f });
-		RightMidLaserRendererCollision1->GetTransform().SetLocalPosition({ 755.0f, -360, (int)ZOrder::NPC - 8 });
+		RightMidLaserRendererCollision1->GetTransform().SetLocalPosition({ 855.0f, -360, (int)ZOrder::NPC - 8 });
 		RightMidLaserRendererCollision1->ChangeOrder(ObjectOrder::MONSTER_BULLET);
 		RightMidLaserRendererCollision1->Off();
 
 		GameEngineCollision* RightMidLaserRendererCollision2 = CreateComponent<GameEngineCollision>();
 		RightMidLaserRendererCollision2->GetTransform().SetLocalScale({ 10.0f, 10.0f, 1.0f });
-		RightMidLaserRendererCollision2->GetTransform().SetLocalPosition({ 805.0f, -410, (int)ZOrder::NPC - 8 });
+		RightMidLaserRendererCollision2->GetTransform().SetLocalPosition({ 800.0f, -410, (int)ZOrder::NPC - 8 });
 		RightMidLaserRendererCollision2->ChangeOrder(ObjectOrder::MONSTER_BULLET);
 		RightMidLaserRendererCollision2->Off();
 
 		GameEngineCollision* RightMidLaserRendererCollision3 = CreateComponent<GameEngineCollision>();
 		RightMidLaserRendererCollision3->GetTransform().SetLocalScale({ 10.0f, 10.0f, 1.0f });
-		RightMidLaserRendererCollision3->GetTransform().SetLocalPosition({ 855.0f, -460, (int)ZOrder::NPC - 8 });
+		RightMidLaserRendererCollision3->GetTransform().SetLocalPosition({ 745.0f, -460, (int)ZOrder::NPC - 8 });
 		RightMidLaserRendererCollision3->ChangeOrder(ObjectOrder::MONSTER_BULLET);
 		RightMidLaserRendererCollision3->Off();
 
 		GameEngineCollision* RightMidLaserRendererCollision4 = CreateComponent<GameEngineCollision>();
 		RightMidLaserRendererCollision4->GetTransform().SetLocalScale({ 10.0f, 10.0f, 1.0f });
-		RightMidLaserRendererCollision4->GetTransform().SetLocalPosition({ 905.0f, -510, (int)ZOrder::NPC - 8 });
+		RightMidLaserRendererCollision4->GetTransform().SetLocalPosition({ 695.0f, -510, (int)ZOrder::NPC - 8 });
 		RightMidLaserRendererCollision4->ChangeOrder(ObjectOrder::MONSTER_BULLET);
 		RightMidLaserRendererCollision4->Off();
 
 		GameEngineCollision* RightMidLaserRendererCollision5 = CreateComponent<GameEngineCollision>();
 		RightMidLaserRendererCollision5->GetTransform().SetLocalScale({ 10.0f, 10.0f, 1.0f });
-		RightMidLaserRendererCollision5->GetTransform().SetLocalPosition({ 955.0f, -560, (int)ZOrder::NPC - 8 });
+		RightMidLaserRendererCollision5->GetTransform().SetLocalPosition({ 640.0f, -560, (int)ZOrder::NPC - 8 });
 		RightMidLaserRendererCollision5->ChangeOrder(ObjectOrder::MONSTER_BULLET);
 		RightMidLaserRendererCollision5->Off();
 
 		GameEngineCollision* RightMidLaserRendererCollision6 = CreateComponent<GameEngineCollision>();
 		RightMidLaserRendererCollision6->GetTransform().SetLocalScale({ 10.0f, 10.0f, 1.0f });
-		RightMidLaserRendererCollision6->GetTransform().SetLocalPosition({ 1005.0f, -610, (int)ZOrder::NPC - 8 });
+		RightMidLaserRendererCollision6->GetTransform().SetLocalPosition({ 585.0f, -610, (int)ZOrder::NPC - 8 });
 		RightMidLaserRendererCollision6->ChangeOrder(ObjectOrder::MONSTER_BULLET);
 		RightMidLaserRendererCollision6->Off();
 
 		GameEngineCollision* RightMidLaserRendererCollision7 = CreateComponent<GameEngineCollision>();
 		RightMidLaserRendererCollision7->GetTransform().SetLocalScale({ 10.0f, 10.0f, 1.0f });
-		RightMidLaserRendererCollision7->GetTransform().SetLocalPosition({ 1055.0f, -660, (int)ZOrder::NPC - 8 });
+		RightMidLaserRendererCollision7->GetTransform().SetLocalPosition({ 515.0f, -660, (int)ZOrder::NPC - 8 });
 		RightMidLaserRendererCollision7->ChangeOrder(ObjectOrder::MONSTER_BULLET);
 		RightMidLaserRendererCollision7->Off();
 
 		GameEngineCollision* LeftLowLaserRendererCollision = CreateComponent<GameEngineCollision>();
-		LeftLowLaserRendererCollision->GetTransform().SetLocalScale({ 10.0f, 10.0f, 1.0f });
-		LeftLowLaserRendererCollision->GetTransform().SetLocalPosition({ 600, -540, (int)ZOrder::NPC - 8 });
+		LeftLowLaserRendererCollision->GetTransform().SetLocalScale({ 1000.0f, 10.0f, 1.0f });
+		LeftLowLaserRendererCollision->GetTransform().SetLocalPosition({ 600, -520, (int)ZOrder::NPC - 8 });
 		LeftLowLaserRendererCollision->ChangeOrder(ObjectOrder::MONSTER_BULLET);
 		LeftLowLaserRendererCollision->Off();
 
@@ -793,8 +794,63 @@ void DogCopterShooter::Start()
 
 		Collision = CreateComponent<GameEngineCollision>();
 		Collision->GetTransform().SetWorldScale({ 100.0f,100.0f,1.0f });
-		Collision->GetTransform().SetLocalPosition({ 640.0f, -360.0f });
+		Collision->GetTransform().SetLocalPosition({ 475.0f, -360.0f });
+		Collision->ChangeOrder(ObjectOrder::MONSTER);
 		Collision->Off();
+
+		{
+			GameEngineCollision* LaserBodyCollision = CreateComponent<GameEngineCollision>();
+			LaserBodyCollision->GetTransform().SetWorldScale({ 100.0f,100.0f,1.0f });
+			LaserBodyCollision->GetTransform().SetLocalPosition({ 194.0f, -154.0f });
+			LaserBodyCollision->ChangeOrder(ObjectOrder::MONSTER);
+			LaserBodyCollision->Off();
+			LaserBodyCollisions.push_back(LaserBodyCollision);
+		}
+
+		{
+			GameEngineCollision* LaserBodyCollision = CreateComponent<GameEngineCollision>();
+			LaserBodyCollision->GetTransform().SetWorldScale({ 100.0f,100.0f,1.0f });
+			LaserBodyCollision->GetTransform().SetLocalPosition({ 1111.0f, -133.0f });
+			LaserBodyCollision->ChangeOrder(ObjectOrder::MONSTER);
+			LaserBodyCollision->Off();
+			LaserBodyCollisions.push_back(LaserBodyCollision);
+		}
+
+		{
+			GameEngineCollision* LaserBodyCollision = CreateComponent<GameEngineCollision>();
+			LaserBodyCollision->GetTransform().SetWorldScale({ 100.0f,100.0f,1.0f });
+			LaserBodyCollision->GetTransform().SetLocalPosition({ 223.0f, -363.0f });
+			LaserBodyCollision->ChangeOrder(ObjectOrder::MONSTER);
+			LaserBodyCollision->Off();
+			LaserBodyCollisions.push_back(LaserBodyCollision);
+		}
+
+		{
+			GameEngineCollision* LaserBodyCollision = CreateComponent<GameEngineCollision>();
+			LaserBodyCollision->GetTransform().SetWorldScale({ 100.0f,100.0f,1.0f });
+			LaserBodyCollision->GetTransform().SetLocalPosition({ 1082.0f, -345.0f });
+			LaserBodyCollision->ChangeOrder(ObjectOrder::MONSTER);
+			LaserBodyCollision->Off();
+			LaserBodyCollisions.push_back(LaserBodyCollision);
+		}
+
+		{
+			GameEngineCollision* LaserBodyCollision = CreateComponent<GameEngineCollision>();
+			LaserBodyCollision->GetTransform().SetWorldScale({ 100.0f,100.0f,1.0f });
+			LaserBodyCollision->GetTransform().SetLocalPosition({ 178.0f, -608.0f });
+			LaserBodyCollision->ChangeOrder(ObjectOrder::MONSTER);
+			LaserBodyCollision->Off();
+			LaserBodyCollisions.push_back(LaserBodyCollision);
+		}
+
+		{
+			GameEngineCollision* LaserBodyCollision = CreateComponent<GameEngineCollision>();
+			LaserBodyCollision->GetTransform().SetWorldScale({ 100.0f,100.0f,1.0f });
+			LaserBodyCollision->GetTransform().SetLocalPosition({ 1126.0f, -589.0f });
+			LaserBodyCollision->ChangeOrder(ObjectOrder::MONSTER);
+			LaserBodyCollision->Off();
+			LaserBodyCollisions.push_back(LaserBodyCollision);
+		}
 	}
 
 	srand(time(NULL));
@@ -879,6 +935,7 @@ void DogCopterShooter::OnMonsterAttackStateChanged(InGameMonsterAttackState _Att
 			int Idx = i == 0 ? FirstIdx : SecondIdx;
 			LaserMachineBackerRenderers[Idx]->On();
 			LaserMachineBackerRenderers[Idx]->ChangeFrameAnimation("LaserBackerStart");
+			LaserBodyCollisions[Idx]->On();
 
 			PadRenderers[Idx]->On();
 			PadRenderers[Idx]->ChangeFrameAnimation("PadOpen");
@@ -908,6 +965,7 @@ void DogCopterShooter::OnMonsterAttackStateChanged(InGameMonsterAttackState _Att
 		PadBackRenderers[4]->On();
 		LaserMachineRenderers[4]->On();
 		LaserMachineRenderers[4]->ChangeFrameAnimation("LaserPrepare");
+		LaserBodyCollisions[4]->On();
 
 		PadRenderers[5]->On();
 		PadRenderers[5]->ChangeFrameAnimation("PadOpen");
@@ -916,6 +974,7 @@ void DogCopterShooter::OnMonsterAttackStateChanged(InGameMonsterAttackState _Att
 		PadBackRenderers[5]->On();
 		LaserMachineRenderers[5]->On();
 		LaserMachineRenderers[5]->ChangeFrameAnimation("LaserPrepare");
+		LaserBodyCollisions[5]->On();
 	}
 }
 
@@ -932,7 +991,28 @@ CollisionReturn DogCopterShooter::OnTakeDamage(GameEngineCollision* _This, GameE
 
 void DogCopterShooter::Update(float _DeltaTime)
 {
+	if (GetHP() <= 0)
+	{
+		if (DogCopter* Boss = dynamic_cast<DogCopter*>(GetParent()))
+		{
+			if (Boss->GetState() == InGameMonsterState::Idle)
+			{
+				DieTime += _DeltaTime;
+				if (DieTime > 0.3)
+				{
+					Boss->SetState(InGameMonsterState::Die);
+				}
+			}
+		}
+	}
+
 	Collision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::PC_BULLET, CollisionType::CT_AABB2D, std::bind(&DogCopterShooter::OnTakeDamage, this, std::placeholders::_1, std::placeholders::_2));
+	LaserBodyCollisions[0]->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::PC_BULLET, CollisionType::CT_AABB2D, std::bind(&DogCopterShooter::OnTakeDamage, this, std::placeholders::_1, std::placeholders::_2));
+	LaserBodyCollisions[1]->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::PC_BULLET, CollisionType::CT_AABB2D, std::bind(&DogCopterShooter::OnTakeDamage, this, std::placeholders::_1, std::placeholders::_2));
+	LaserBodyCollisions[2]->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::PC_BULLET, CollisionType::CT_AABB2D, std::bind(&DogCopterShooter::OnTakeDamage, this, std::placeholders::_1, std::placeholders::_2));
+	LaserBodyCollisions[3]->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::PC_BULLET, CollisionType::CT_AABB2D, std::bind(&DogCopterShooter::OnTakeDamage, this, std::placeholders::_1, std::placeholders::_2));
+	LaserBodyCollisions[4]->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::PC_BULLET, CollisionType::CT_AABB2D, std::bind(&DogCopterShooter::OnTakeDamage, this, std::placeholders::_1, std::placeholders::_2));
+	LaserBodyCollisions[5]->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::PC_BULLET, CollisionType::CT_AABB2D, std::bind(&DogCopterShooter::OnTakeDamage, this, std::placeholders::_1, std::placeholders::_2));
 }
 
 void DogCopterShooter::OnLaserAnimationFrameChanged(const FrameAnimation_DESC& _Info)
@@ -1402,12 +1482,15 @@ void DogCopterShooter::OnLaserCloseAnimationFrameFinished(const FrameAnimation_D
 			PadBackRenderers[5]->Off();
 			LaserMachineBackerRenderers[5]->ChangeFrameAnimation("Nothing");
 			LaserMachineBackerRenderers[5]->Off();
+			LaserBodyCollisions[4]->Off();
+			LaserBodyCollisions[5]->Off();
 		}
 		else
 		{
 			PadRenderers[FirstIdx]->ChangeFrameAnimation("PadClose");
 			LaserMachineRenderers[FirstIdx]->ChangeFrameAnimation("LaserNothing");
 			LaserMachineRenderers[FirstIdx]->Off();
+			LaserBodyCollisions[FirstIdx]->Off();
 
 			if ((FirstIdx == 0 && SecondIdx == 2) || (FirstIdx == 2 && SecondIdx == 0))
 			{
@@ -1430,6 +1513,7 @@ void DogCopterShooter::OnLaserCloseAnimationFrameFinished(const FrameAnimation_D
 				PadRenderers[SecondIdx]->ChangeFrameAnimation("PadClose");
 				LaserMachineRenderers[SecondIdx]->ChangeFrameAnimation("LaserNothing");
 				LaserMachineRenderers[SecondIdx]->Off();
+				LaserBodyCollisions[SecondIdx]->Off();
 
 				if ((FirstIdx == 0 && SecondIdx == 2) || (FirstIdx == 2 && SecondIdx == 0))
 				{

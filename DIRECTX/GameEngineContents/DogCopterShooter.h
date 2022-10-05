@@ -55,11 +55,14 @@ private:
 	std::vector<GameEngineCollision*> LaserCollision2;
 	std::vector<GameEngineCollision*> LaserCollision3;
 	std::vector<GameEngineCollision*> LaserCollision4;
+	std::vector<GameEngineCollision*> LaserBodyCollisions;
 
 	int FirstIdx;
 	int SecondIdx;
 	InGameMonsterAttackState MonsterAttackState;
 	int HP;
+
+	float DieTime;
 
 public:
 	GameEngineCollision* Collision;

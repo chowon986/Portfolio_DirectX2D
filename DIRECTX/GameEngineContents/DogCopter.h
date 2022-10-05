@@ -56,5 +56,8 @@ private:
 	GameEngineTextureRenderer* RightHandRenderer;
 	GameEngineTextureRenderer* FakeRightHandRenderer;
 	bool OnceCheck;
+
+public:
+	bool CanDie;
 };
 

@@ -8,7 +8,7 @@
 
 DogBowlShooter::DogBowlShooter()
 {
-	IntervalTime = 2.0f;
+	IntervalTime = 1.0f;
 	ShootCount = 0;
 }
 
@@ -56,24 +56,24 @@ void DogBowlShooter::Update(float _DeltaTime)
 
 			if (ShootCount < 7)
 			{
-				int RandomKey = GameEngineRandom::MainRandom.RandomInt(0, 2);
+				int RandomKey = GameEngineRandom::MainRandom.RandomInt(0, 3);
 
 				DogBowlBullet* Bullet = GetLevel()->CreateActor<DogBowlBullet>();
 				Bullet->SetColMapImage(GetColMapImage());
 				Bullet->GetLevel()->PushToRotateCamera(Bullet);
 				if (RandomKey == 0)
 				{
-					Bullet->GetRenderer()->ChangeFrameAnimation("RedDogBowlDrop");
-					Bullet->GetMonsterPhysicsComponent()->Reset();
-					Bullet->GetMonsterPhysicsComponent()->AddForce(30);
-					Bullet->SetColor("Red");
-				}
-				else
-				{
 					Bullet->GetRenderer()->ChangeFrameAnimation("YellowDogBowlDrop");
 					Bullet->GetMonsterPhysicsComponent()->Reset();
 					Bullet->GetMonsterPhysicsComponent()->AddForce(30);
 					Bullet->SetColor("Yellow");
+				}
+				else
+				{
+					Bullet->GetRenderer()->ChangeFrameAnimation("RedDogBowlDrop");
+					Bullet->GetMonsterPhysicsComponent()->Reset();
+					Bullet->GetMonsterPhysicsComponent()->AddForce(30);
+					Bullet->SetColor("Red");
 				}
 			}
 			break;
