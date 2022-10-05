@@ -453,8 +453,8 @@ void DogFightLevel::Update(float _DeltaTime)
 			{
 				if (ReadyWallopRenderer != nullptr)
 				{
-				ReadyWallopRenderer->ChangeFrameAnimation("KnockOut");
-				ReadyWallopRenderer->On();
+					ReadyWallopRenderer->ChangeFrameAnimation("KnockOut");
+					ReadyWallopRenderer->On();
 				}
 			}
 		}

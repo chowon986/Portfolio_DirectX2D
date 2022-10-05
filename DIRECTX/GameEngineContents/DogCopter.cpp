@@ -13,6 +13,7 @@ DogCopter::DogCopter()
 	, WristRenderer(nullptr)
 	, OnceCheck(false)
 	, CanDie(false)
+	, KnockOutElapsedTime(0.0f)
 {
 }
 
@@ -139,6 +140,16 @@ void DogCopter::Start()
 
 void DogCopter::Update(float _DeltaTime)
 {
+	if (GetState() == InGameMonsterState::KnockOut)
+	{
+		KnockOutElapsedTime += _DeltaTime;
+
+		if (KnockOutElapsedTime > 3.0f)
+		{
+			GEngine::ChangeLevel("Score");
+		}
+	}
+
 	if (GetState() == InGameMonsterState::Die && OnceCheck == false)
 	{
 		OnceCheck = true;
@@ -270,7 +281,7 @@ void DogCopter::OnRotateCameraOutAnimationFrameChanged(const FrameAnimation_DESC
 
 void DogCopter::OnDeathAnimationFrameFinished(const FrameAnimation_DESC& _Info)
 {
-	GEngine::ChangeLevel("Score");
+	//GEngine::ChangeLevel("Score");
 }
 
 void DogCopter::OnBeforeRotateCameraAnimationFrameChanged(const FrameAnimation_DESC& _Info)

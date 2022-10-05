@@ -56,6 +56,7 @@ private:
 	GameEngineTextureRenderer* RightHandRenderer;
 	GameEngineTextureRenderer* FakeRightHandRenderer;
 	bool OnceCheck;
+	float KnockOutElapsedTime;
 
 public:
 	bool CanDie;
