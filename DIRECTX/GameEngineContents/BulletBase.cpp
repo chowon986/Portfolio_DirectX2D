@@ -10,6 +10,7 @@ BulletBase::BulletBase()
 	, MovementComponent(nullptr)
 	, Collision(nullptr)
 	, ColMapImage(nullptr)
+	, GaugeElapsedTime(0.0f)
 {
 }
 
@@ -29,53 +30,53 @@ void BulletBase::SetIsOnGround(bool _IsOnGround)
 void BulletBase::SetDirection(float4 _Direction)
 {
 	Direction = _Direction;
-	 if (nullptr != MovementComponent)
-	 {
-		 MovementComponent->SetDirection(Direction);
-	 }
+	if (nullptr != MovementComponent)
+	{
+		MovementComponent->SetDirection(Direction);
+	}
 
-	 if (nullptr != Renderer)
-	 {
-		 if (Direction.CompareInt2D(float4::UP))
-		 {
-			 Renderer->GetTransform().SetLocalRotate({ 0,0,90 });
-		 }
+	if (nullptr != Renderer)
+	{
+		if (Direction.CompareInt2D(float4::UP))
+		{
+			Renderer->GetTransform().SetLocalRotate({ 0,0,90 });
+		}
 
-		 else if (Direction.CompareInt2D(float4::UP+float4::RIGHT))
-		 {
-			 Renderer->GetTransform().SetLocalRotate({ 0, 0, 45 });
-		 }
+		else if (Direction.CompareInt2D(float4::UP + float4::RIGHT))
+		{
+			Renderer->GetTransform().SetLocalRotate({ 0, 0, 45 });
+		}
 
-		 else if (Direction.CompareInt2D(float4::UP + float4::LEFT))
-		 {
-			 Renderer->GetTransform().SetLocalRotate({ 0, 0, 135 });
-		 }
+		else if (Direction.CompareInt2D(float4::UP + float4::LEFT))
+		{
+			Renderer->GetTransform().SetLocalRotate({ 0, 0, 135 });
+		}
 
-		 else if (Direction.CompareInt2D(float4::RIGHT))
-		 {
-			 Renderer->GetTransform().SetLocalRotate({ 0, 0, 0 });
-		 }
+		else if (Direction.CompareInt2D(float4::RIGHT))
+		{
+			Renderer->GetTransform().SetLocalRotate({ 0, 0, 0 });
+		}
 
-		 else if (Direction.CompareInt2D(float4::LEFT))
-		 {
-			 Renderer->GetTransform().SetLocalRotate({ 0, 0, 180 });
-		 }
+		else if (Direction.CompareInt2D(float4::LEFT))
+		{
+			Renderer->GetTransform().SetLocalRotate({ 0, 0, 180 });
+		}
 
-		 else if (Direction.CompareInt2D(float4::DOWN + float4::RIGHT))
-		 {
-			 Renderer->GetTransform().SetLocalRotate({ 0, 0, 315 });
-		 }
+		else if (Direction.CompareInt2D(float4::DOWN + float4::RIGHT))
+		{
+			Renderer->GetTransform().SetLocalRotate({ 0, 0, 315 });
+		}
 
-		 else if (Direction.CompareInt2D(float4::DOWN + float4::LEFT))
-		 {
-			 Renderer->GetTransform().SetLocalRotate({ 0, 0, 225 });
-		 }
+		else if (Direction.CompareInt2D(float4::DOWN + float4::LEFT))
+		{
+			Renderer->GetTransform().SetLocalRotate({ 0, 0, 225 });
+		}
 
-		 else if (Direction.CompareInt2D(float4::DOWN))
-		 {
-			 Renderer->GetTransform().SetLocalRotate({ 0,0, 270 });
-		 }
-	 }
+		else if (Direction.CompareInt2D(float4::DOWN))
+		{
+			Renderer->GetTransform().SetLocalRotate({ 0,0, 270 });
+		}
+	}
 }
 
 void BulletBase::Start()
@@ -85,6 +86,8 @@ void BulletBase::Start()
 
 void BulletBase::Update(float _DeltaTime)
 {
+	GaugeElapsedTime += _DeltaTime;
+
 	if (nullptr != Collision)
 	{
 		Collision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::MONSTER, CollisionType::CT_AABB2D, std::bind(&BulletBase::AttackSuccess, this, std::placeholders::_1, std::placeholders::_2));
@@ -110,7 +113,7 @@ void BulletBase::Update(float _DeltaTime)
 	if (true == ColMapTexture->GetPixelToFloat4(Renderer->GetTransform().GetWorldPosition().ix(), -Renderer->GetTransform().GetWorldPosition().iy()).CompareInt3D(float4::BLACK))
 	{
 		Death();
-	} 
+	}
 }
 
 void BulletBase::End()
@@ -127,19 +130,23 @@ CollisionReturn BulletBase::AttackSuccess(GameEngineCollision* _This, GameEngine
 	{
 		if (nullptr != MovementComponent)
 		{
-		MovementComponent->SetSpeed(0.0f);
+			MovementComponent->SetSpeed(0.0f);
 		}
 	}
 
-	if (InGameLevelBase* Level = dynamic_cast<InGameLevelBase*>(GetLevel()))
+	if (GaugeElapsedTime > 0.2f)
 	{
-		if (IInGameCharacterBase* Character = Level->GetPlayer())
+		if (InGameLevelBase* Level = dynamic_cast<InGameLevelBase*>(GetLevel()))
 		{
-			//Character->SetGauge(Character->GetGauge() + 0.05f);
-			Character->SetGauge(4);
+			if (IInGameCharacterBase* Character = Level->GetPlayer())
+			{
+				Character->SetGauge(Character->GetGauge() + 0.05f);
+				//Character->SetGauge(4);
+			}
 		}
+		GaugeElapsedTime = 0.0f;
 	}
-	OnAttackSuccess( _This,  _Other);
+	OnAttackSuccess(_This, _Other);
 	return CollisionReturn::Break;
 }
 

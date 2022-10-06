@@ -193,7 +193,14 @@ void InGameCuphead::Update(float _DeltaTime)
 		Dust->SetBoss(this);
 		Dust->GetRenderer()->ChangeFrameAnimation("IngameCupheadWalk");
 		float4 MyPos = GetTransform().GetWorldPosition();
-		Dust->GetTransform().SetWorldPosition({ MyPos.x, MyPos.y + 50, MyPos.z + 0.1f });
+		if (GetLevel()->GetNameCopy() == "DOGFIGHT")
+		{
+			Dust->GetTransform().SetWorldPosition({ MyPos.x, MyPos.y + 50, MyPos.z + 0.1f });
+		}
+		else if (GetLevel()->GetNameCopy() == "TUTORIAL")
+		{
+			Dust->GetTransform().SetWorldPosition({ MyPos.x - 640.0f, (MyPos.y + 50) + 360.0f, MyPos.z + 0.1f });
+		}
 		DustElapsedTime = 0.0f;
 	}
 
@@ -207,7 +214,14 @@ void InGameCuphead::Update(float _DeltaTime)
 			Dust->SetBoss(this);
 			Dust->GetRenderer()->ChangeFrameAnimation("IngameCupheadJump");
 			float4 MyPos = GetTransform().GetWorldPosition();
-			Dust->GetTransform().SetWorldPosition({ MyPos.x, MyPos.y + 50, MyPos.z + 0.1f });
+			if (GetLevel()->GetNameCopy() == "DOGFIGHT")
+			{
+				Dust->GetTransform().SetWorldPosition({ MyPos.x, MyPos.y + 50, MyPos.z + 0.1f });
+			}
+			else if (GetLevel()->GetNameCopy() == "TUTORIAL")
+			{
+				Dust->GetTransform().SetWorldPosition({ MyPos.x - 640.0f, (MyPos.y + 50) +360.0f, MyPos.z + 0.1f });
+			}
 		}
 	}
 

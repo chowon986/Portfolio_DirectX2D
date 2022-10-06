@@ -14,6 +14,7 @@
 #include "CharacterScore.h"
 #include <GameEngineCore/GameEngineBlur.h>
 #include "PlayerHP.h"
+#include "PlayerCard.h"
 #include <GameEngineContents/TextureLoadUtils.h>
 
 DogFightLevel::DogFightLevel()
@@ -44,6 +45,8 @@ DogFightLevel::DogFightLevel()
 	, LoadCompleted(false)
 	, Hourglass(nullptr)
 	, SoundOnceCheck(false)
+	, CardGauge(0.0f)
+	, CardCount(0)
 {
 }
 
@@ -275,6 +278,42 @@ void DogFightLevel::ReadyWallopAnimationFrameFinished(const FrameAnimation_DESC&
 
 void DogFightLevel::Update(float _DeltaTime)
 {
+	if (Player != nullptr)
+	{
+		if (CardGauge != Player->GetGauge())
+		{
+			CardGauge = Player->GetGauge();
+
+			CardCount = static_cast<int>(CardGauge);
+
+
+			if (CardGauge - CardCount != 0)
+			{
+				int CardScaleYPercent = (CardGauge - CardCount) * 10;
+				float Num = (static_cast<float>(CardScaleYPercent) / 10.0f);
+				CardRenderers[CardCount]->ChangeFrameAnimation("CardBack");
+				CardRenderers[CardCount]->GetTransform().SetWorldScale({ 20, (30 * Num) });
+			}
+
+			for (int i = 0; i < 5; i++) // 카드 게이지
+			{
+				if (i < CardCount)
+				{
+					CardRenderers[i]->GetTransform().SetWorldScale({ 20, 30  });
+					CardRenderers[i]->ChangeFrameAnimation("CardOpen");
+				}
+
+				if (i > CardCount)
+				{
+					CardRenderers[i]->GetTransform().SetWorldScale({ 20, 0 });
+					CardRenderers[i]->Off();
+				}
+			}
+
+
+		}
+	}
+
 	if (false == SoundOnceCheck)
 	{
 		Controller = GameEngineSound::SoundPlayControl("mus_dlc_dogfight_a.wav");
@@ -338,6 +377,40 @@ void DogFightLevel::Update(float _DeltaTime)
 			HPUI->SetPlayer(Cuphead);
 			HPUI->GetTransform().SetLocalPosition({ 75.0f,-675.0f, (int)ZOrder::UI });
 
+			{
+				PlayerCard* Card = CreateActor<PlayerCard>(GameObjectGroup::UI);
+				Card->SetPlayer(Cuphead);
+				Card->GetTransform().SetLocalPosition({ 130.0f,-690.0f, (int)ZOrder::UI });
+				CardRenderers.push_back(Card->GetRenderer());
+			}
+
+			{
+				PlayerCard* Card = CreateActor<PlayerCard>(GameObjectGroup::UI);
+				Card->SetPlayer(Cuphead);
+				Card->GetTransform().SetLocalPosition({ 155.0f,-690.0f, (int)ZOrder::UI });
+				CardRenderers.push_back(Card->GetRenderer());
+			}
+
+			{
+				PlayerCard* Card = CreateActor<PlayerCard>(GameObjectGroup::UI);
+				Card->SetPlayer(Cuphead);
+				Card->GetTransform().SetLocalPosition({ 180.0f,-690.0f, (int)ZOrder::UI });
+				CardRenderers.push_back(Card->GetRenderer());
+			}
+
+			{
+				PlayerCard* Card = CreateActor<PlayerCard>(GameObjectGroup::UI);
+				Card->SetPlayer(Cuphead);
+				Card->GetTransform().SetLocalPosition({ 205.0f,-690.0f, (int)ZOrder::UI });
+				CardRenderers.push_back(Card->GetRenderer());
+			}
+
+			{
+				PlayerCard* Card = CreateActor<PlayerCard>(GameObjectGroup::UI);
+				Card->SetPlayer(Cuphead);
+				Card->GetTransform().SetLocalPosition({ 230.0f,-690.0f, (int)ZOrder::UI });
+				CardRenderers.push_back(Card->GetRenderer());
+			}
 
 			CaptainCanteenPlane->SetPlayer(Cuphead);
 			CaptainCanteenPlane->SetColMapImage(ColMapRenderer);

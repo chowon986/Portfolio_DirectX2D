@@ -60,4 +60,5 @@ protected:
 	MulticastDelegate<bool> IsOnGroundChangedDelegate;
 	bool IsOnGround;
 	GameEngineTexture* ColMapTexture;
+	float GaugeElapsedTime;
 };

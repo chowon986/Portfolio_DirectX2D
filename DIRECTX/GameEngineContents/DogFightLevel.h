@@ -110,5 +110,9 @@ private:
 	float RotateTime;
 	float LoadCompleted;
 	bool SoundOnceCheck;
+
+	float CardGauge;
+	int CardCount;
+	std::vector<GameEngineTextureRenderer*> CardRenderers;
 };
 
