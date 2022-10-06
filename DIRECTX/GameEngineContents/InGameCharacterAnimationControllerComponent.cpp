@@ -122,6 +122,11 @@ void InGameCharacterAnimationControllerComponent::UpdateAnimation()
 			Renderer->ChangeFrameAnimation("Ingame" + Name + "Parry");
 		}
 
+		else if (State == InGameCharacterState::Evade)
+		{
+			Renderer->ChangeFrameAnimation("Ingame" + Name + "Dash");
+		}
+
 		else if (State == InGameCharacterState::Dash)
 		{
 			Renderer->ChangeFrameAnimation("Ingame" + Name + "Dash");

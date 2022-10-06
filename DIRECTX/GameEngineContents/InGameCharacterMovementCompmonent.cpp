@@ -85,7 +85,8 @@ void InGameCharacterMovementCompmonent::Update(float _DeltaTime)
 
 	InGameCharacterState State = InGameCharacter->GetState();
 
-	if (State == InGameCharacterState::Dash)
+	if (State == InGameCharacterState::Dash ||
+		State == InGameCharacterState::Evade)
 	{
 		float4 Dir = InGameCharacter->GetRenderer()->GetTransform().GetLocalScale().x < 0 ? float4::LEFT : float4::RIGHT;
 		float DashSpeed = Speed;

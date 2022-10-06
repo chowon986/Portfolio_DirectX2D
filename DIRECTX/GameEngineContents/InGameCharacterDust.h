@@ -2,7 +2,7 @@
 #include <GameEngineCore/GameEngineActor.h>
 #include <GameEngineCore/GameEngineTextureRenderer.h>
 
-class InGameCuphead;
+class IInGameCharacterBase;
 enum class InGameCharacterState;
 class GameEngineTextureRenderer;
 class InGameCharacterDust : public GameEngineActor
@@ -17,8 +17,8 @@ public:
 	InGameCharacterDust& operator=(InGameCharacterDust&& _Other) noexcept = delete;
 
 public:
-	void SetBoss(InGameCuphead* _Boss) { Boss = _Boss; }
-	InGameCuphead* GetBoss() { return Boss; }
+	void SetBoss(IInGameCharacterBase* _Boss) { Boss = _Boss; }
+	IInGameCharacterBase* GetBoss() { return Boss; }
 
 	GameEngineTextureRenderer* GetRenderer() { return Renderer; }
 
@@ -31,7 +31,7 @@ protected:
 	void End() override;
 
 private:
-	InGameCuphead* Boss;
+	IInGameCharacterBase* Boss;
 	GameEngineTextureRenderer* Renderer;
 	float ElapsedTime;
 	InGameCharacterState BeforeState;

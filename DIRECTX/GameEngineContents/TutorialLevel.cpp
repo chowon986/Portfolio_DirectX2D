@@ -3,6 +3,7 @@
 #include "TutorialLevel.h"
 #include "WorldMapCuphead.h"
 #include "InGameCuphead.h"
+#include "InGameChalice.h"
 #include "CharacterState.h"
 #include <GameEngineCore/GameEngineBlur.h>
 #include <GameEngineContents/TextureLoadUtils.h>
@@ -64,13 +65,20 @@ void TutorialLevel::LevelStartEvent()
 		ColMapRenderer->GetTransform().SetLocalPosition({ 640.0f, -360.0f, (int)ZOrder::Background + 1 });
 	}
 
-	Cuphead = CreateActor<InGameCuphead>(GameObjectGroup::Player);
-	Cuphead->GetTransform().SetLocalPosition({ 640, -360, (int)ZOrder::Player });
-	Cuphead->SetColMapImage(ColMapRenderer);
-	Cuphead->SetHP(static_cast<float>(State->MaxHP));
-	Cuphead->SetOnDashInvisible(State->OnDashInvisible);
-	PushToRotateCamera(Cuphead);
-	Player = Cuphead;
+	if (State->Type == CharacterType::Chalice)
+	{
+		Character = CreateActor<InGameChalice>(GameObjectGroup::Player);
+	}
+	else
+	{
+		Character = CreateActor<InGameCuphead>(GameObjectGroup::Player);
+	}
+	Character->GetTransform().SetLocalPosition({ 640, -360, (int)ZOrder::Player });
+	Character->SetColMapImage(ColMapRenderer);
+	Character->SetHP(static_cast<float>(State->MaxHP));
+	Character->SetOnDashInvisible(State->OnDashInvisible);
+	PushToRotateCamera(Character);
+	Player = Character;
 
 	{
 		GameEngineActor* TutorialBackground = CreateActor<GameEngineActor>(GameObjectGroup::UI);
@@ -198,14 +206,21 @@ void TutorialLevel::Update(float _DeltaTime)
 		WheatA->On();
 	}
 
-	if (Cuphead->GetState() == InGameCharacterState::Parry)
+	if (Character->GetState() == InGameCharacterState::Parry)
+	{
+		WheatACollision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::PC, CollisionType::CT_AABB2D, std::bind(&TutorialLevel::OnWheatACollision, this, std::placeholders::_1, std::placeholders::_2));
+		WheatBCollision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::PC, CollisionType::CT_AABB2D, std::bind(&TutorialLevel::OnWheatBCollision, this, std::placeholders::_1, std::placeholders::_2));
+		WheatCCollision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::PC, CollisionType::CT_AABB2D, std::bind(&TutorialLevel::OnWheatCCollision, this, std::placeholders::_1, std::placeholders::_2));
+	}
+	else if (Character->GetState() == InGameCharacterState::Dash &&
+		dynamic_cast<InGameChalice*>(Character) != nullptr)
 	{
 		WheatACollision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::PC, CollisionType::CT_AABB2D, std::bind(&TutorialLevel::OnWheatACollision, this, std::placeholders::_1, std::placeholders::_2));
 		WheatBCollision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::PC, CollisionType::CT_AABB2D, std::bind(&TutorialLevel::OnWheatBCollision, this, std::placeholders::_1, std::placeholders::_2));
 		WheatCCollision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::PC, CollisionType::CT_AABB2D, std::bind(&TutorialLevel::OnWheatCCollision, this, std::placeholders::_1, std::placeholders::_2));
 	}
 	
-	if (Cuphead->GetState() != InGameCharacterState::Evade)
+	if (Character->GetState() != InGameCharacterState::Evade)
 	{
 		RipCollision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::PC, CollisionType::CT_AABB2D, std::bind(&TutorialLevel::OnRipCollision, this, std::placeholders::_1, std::placeholders::_2));
 	}

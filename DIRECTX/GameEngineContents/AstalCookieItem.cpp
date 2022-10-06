@@ -4,9 +4,9 @@
 AstalCookieItem::AstalCookieItem()
 {
 	ItemName = "AstalCookie";
-	MaxHP = 3;
+	MaxHP = 4;
 	OnDashInvisible = false;
-	//PlayerCharacterType = CharacterType::Chalice;
+	PlayerCharacterType = CharacterType::Chalice;
 }
 
 AstalCookieItem::~AstalCookieItem()

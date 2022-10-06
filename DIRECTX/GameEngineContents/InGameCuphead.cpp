@@ -28,7 +28,6 @@ InGameCuphead::InGameCuphead()
 	, CanTakeDamageElapsedTime(0.0f)
 	, CanTakeDamageIntervalTime(1.0f)
 	, ToggleWeapon(false)
-	, IsInvisible(false)
 	, CountInvisibleTime(false)
 	, DustElapsedTime(0.0f)
 {
@@ -446,7 +445,7 @@ void InGameCuphead::OnDashAnimationFrameChanged(const FrameAnimation_DESC& _Info
 
 	if (_Info.CurFrame == 2)
 	{
-		if (true == IsInvisible)
+		if (true == GetOnDashInvisible())
 		{
 			Renderer->Off();
 			MainCollision->Off();

@@ -11,6 +11,7 @@ IInGameCharacterBase::IInGameCharacterBase()
 	, HP(0)
 	, Gauge(0.0f)
 	, MaxGauge(5)
+	, IsInvisible(false)
 {
 }
 

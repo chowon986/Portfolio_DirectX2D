@@ -70,8 +70,6 @@ protected:
 	void SetCharacterState(CharacterState* _State) { State = _State; }
 	CharacterState* GetCharacterState() { return State; }
 
-public:
-	void SetOnDashInvisible(bool _IsInvisible) { IsInvisible = _IsInvisible; }
 
 private:
 	GameEngineTextureRenderer* Renderer;
@@ -84,7 +82,6 @@ private:
 	float CanTakeDamageIntervalTime;
 	float CanTakeDamageElapsedTime;
 	bool ToggleWeapon;
-	bool IsInvisible;
 	CharacterState* State;
 	CharacterScore* Score;
 	WeaponBase* EquippedWeapon;

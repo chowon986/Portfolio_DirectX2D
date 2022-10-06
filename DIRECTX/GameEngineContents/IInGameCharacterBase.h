@@ -99,6 +99,9 @@ public:
 	void SetPhysicsComponent(PhysicsComponent* _Physics);
 	PhysicsComponent* GetPhysicsComponent() { return Physics; }
 
+	void SetOnDashInvisible(bool _IsInvisible) { IsInvisible = _IsInvisible; }
+	bool GetOnDashInvisible() { return IsInvisible; }
+
 	void SetHP(float _HP) { HP = _HP; }
 	float GetHP() { return HP; }
 
@@ -138,5 +141,6 @@ private:
 	float HP;
 	float Gauge;
 	int MaxGauge;
+	bool IsInvisible;
 };
 

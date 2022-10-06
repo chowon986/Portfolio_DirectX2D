@@ -81,7 +81,7 @@ public:
 private:
 	CharacterState* State;
 	TutorialPhase CurPhase;
-	InGameCuphead* Cuphead;
+	IInGameCharacterBase* Character;
 	int CurCoin;
 };
 
