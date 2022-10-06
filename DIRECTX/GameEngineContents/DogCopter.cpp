@@ -41,9 +41,7 @@ void DogCopter::Start()
 
 		Renderer->AnimationBindEnd("DogCopterKnockOut", std::bind(&DogCopter::OnDeathAnimationFrameFinished, this, std::placeholders::_1));
 
-		Renderer->AnimationBindEnd("DogCopterIntro", std::bind(&DogCopter::OnIntroAnimationFrameFinished, this, std::placeholders::_1));
-		Renderer->AnimationBindFrame("DogCopterIntro", std::bind(&DogCopter::Test, this, std::placeholders::_1));
-		Renderer->AnimationBindFrame("DogCopterIntro", std::bind(&DogCopter::Test, this, std::placeholders::_1));
+		Renderer->AnimationBindFrame("DogCopterIntro", std::bind(&DogCopter::OnIntroAnimationFrameFinished, this, std::placeholders::_1));
 		Renderer->AnimationBindEnd("DogCopterRotateCamera", std::bind(&DogCopter::OnRotateCameraAnimationFrameFinished, this, std::placeholders::_1));
 		Renderer->AnimationBindEnd("DogCopterRotatedIdle", std::bind(&DogCopter::OnRotatedIdleAnimationFrameFinished, this, std::placeholders::_1));
 		Renderer->AnimationBindFrame("DogCopterRotatedIdle", std::bind(&DogCopter::Test, this, std::placeholders::_1));
@@ -226,15 +224,33 @@ void DogCopter::BeforeRoateCameraIn()
 
 void DogCopter::OnIntroAnimationFrameFinished(const FrameAnimation_DESC& _Info)
 {
-	ArmsRenderer->ChangeFrameAnimation("DogCopterIdleArms");
-	ArmsRenderer->On();
-	WristRenderer->ChangeFrameAnimation("DogCopterIdleWrist");
-	WristRenderer->On();
-	LeftHandRenderer->ChangeFrameAnimation("PawMerge");
-	LeftHandRenderer->On();
-	RightHandRenderer->ChangeFrameAnimation("PawMerge");
-	RightHandRenderer->On();
-	Idle();
+	if (_Info.CurFrame == 1)
+	{
+		GameEngineSound::SoundPlayOneShot("sfx_DLC_Dogfight_P3_DogCopter_Intro.wav");
+	}
+
+	if (_Info.CurFrame == 15)
+	{
+		GameEngineSound::SoundPlayOneShot("sfx_DLC_Dogfight_P3_DogCopter_Intro2.wav");
+	}
+	
+	if (_Info.CurFrame == 40)
+	{
+		GameEngineSound::SoundPlayOneShot("sfx_DLC_Dogfight_P3_DogCopter_Settle_GrabScreen.wav");
+	}
+
+	if (_Info.CurFrame == 44)
+	{
+		ArmsRenderer->ChangeFrameAnimation("DogCopterIdleArms");
+		ArmsRenderer->On();
+		WristRenderer->ChangeFrameAnimation("DogCopterIdleWrist");
+		WristRenderer->On();
+		LeftHandRenderer->ChangeFrameAnimation("PawMerge");
+		LeftHandRenderer->On();
+		RightHandRenderer->ChangeFrameAnimation("PawMerge");
+		RightHandRenderer->On();
+		Idle();
+	}
 }
 
 void DogCopter::OnIdleAnimationFrameChanged(const FrameAnimation_DESC& _Info)

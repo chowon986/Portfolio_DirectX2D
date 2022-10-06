@@ -23,6 +23,7 @@ Ph2Dog::Ph2Dog()
 	, BowWowGun(nullptr)
 	, ZetPuffElapsedTime(0.0f)
 	, OnGrey(false)
+	, CanTakeDamageTime(0.0f)
 {
 }
 
@@ -156,13 +157,13 @@ void Ph2Dog::Start()
 	}
 
 	srand(static_cast<unsigned int>(time(NULL)));
-	SetHP(3);
+	SetHP(10);
 }
 
 void Ph2Dog::Update(float _DeltaTime)
 {
 	ZetPuffElapsedTime += _DeltaTime;
-
+	CanTakeDamageTime += _DeltaTime;
 	if (ZetPuffElapsedTime > 0.07 && false == OnDeath)
 	{
 		Ph2DogZetPuff* ZetPuff = GetLevel()->CreateActor<Ph2DogZetPuff>();
@@ -248,17 +249,21 @@ bool Ph2Dog::SetStartPos()
 
 CollisionReturn Ph2Dog::OnTakeDamage(GameEngineCollision* _This, GameEngineCollision* _Other)
 {
-	TakeDamage();
-	SetHP(GetHP() - 1);
-	if (GetHP() <= 0)
+	if (CanTakeDamageTime > 0.5f)
 	{
-		if (OnDeath == false)
+		TakeDamage();
+		SetHP(GetHP() - 1);
+		if (GetHP() <= 0)
 		{
-			GameEngineSound::SoundPlayOneShot("sfx_DLC_Dogfight_P2_TerrierJetpack_Explosion_01.wav");
+			if (OnDeath == false)
+			{
+				GameEngineSound::SoundPlayOneShot("sfx_DLC_Dogfight_P2_TerrierJetpack_Explosion_01.wav");
+			}
+			OnDeath = true;
+			Renderer->ChangeFrameAnimation("Ph2DogDie");
+			_This->Off();
 		}
-		OnDeath = true;
-		Renderer->ChangeFrameAnimation("Ph2DogDie");
-		_This->Off();
+		CanTakeDamageTime = 0.0f;
 	}
 	return CollisionReturn::ContinueCheck;
 }

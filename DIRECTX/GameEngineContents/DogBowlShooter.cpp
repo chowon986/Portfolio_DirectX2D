@@ -7,6 +7,7 @@
 #include <GameEngineBase/GameEngineRandom.h>
 
 DogBowlShooter::DogBowlShooter()
+	:RedOrYellow(false)
 {
 	IntervalTime = 1.0f;
 	ShootCount = 0;
@@ -61,17 +62,18 @@ void DogBowlShooter::Update(float _DeltaTime)
 
 			if (ShootCount < 7)
 			{
-				int RandomKey = GameEngineRandom::MainRandom.RandomInt(0, 3);
 
+				GameEngineSound::SoundPlayOneShot("sfx_DLC_Dogfight_P3_DogCopter_DogBowl_Fire_01.wav");
 				DogBowlBullet* Bullet = GetLevel()->CreateActor<DogBowlBullet>();
 				Bullet->SetColMapImage(GetColMapImage());
 				Bullet->GetLevel()->PushToRotateCamera(Bullet);
-				if (RandomKey == 0)
+				if (RedOrYellow == false)
 				{
 					Bullet->GetRenderer()->ChangeFrameAnimation("YellowDogBowlDrop");
 					Bullet->GetMonsterPhysicsComponent()->Reset();
 					Bullet->GetMonsterPhysicsComponent()->AddForce(30);
 					Bullet->SetColor("Yellow");
+					RedOrYellow = true;
 				}
 				else
 				{
@@ -79,6 +81,7 @@ void DogBowlShooter::Update(float _DeltaTime)
 					Bullet->GetMonsterPhysicsComponent()->Reset();
 					Bullet->GetMonsterPhysicsComponent()->AddForce(30);
 					Bullet->SetColor("Red");
+					RedOrYellow = false;
 				}
 			}
 			break;

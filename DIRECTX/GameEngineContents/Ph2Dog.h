@@ -66,4 +66,6 @@ private:
 	bool OnDeath;
 	float ZetPuffElapsedTime;
 	bool OnGrey;
+	float CanTakeDamageTime;
+
 };

@@ -74,6 +74,7 @@ private:
 
 	bool IsObjectOn;
 	bool SoundOnceCheck;
+	bool SoundOnceCheck2;
 
 public:
 	GameEngineSoundPlayer Controller;
@@ -83,5 +84,6 @@ private:
 	TutorialPhase CurPhase;
 	IInGameCharacterBase* Character;
 	int CurCoin;
+	bool SoundOnceCheckZ;
 };
 

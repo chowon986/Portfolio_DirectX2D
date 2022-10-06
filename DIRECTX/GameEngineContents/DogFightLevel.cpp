@@ -103,7 +103,8 @@ void DogFightLevel::LevelStartEvent()
 
 	GameEngineActor* DarknessActor = CreateActor<GameEngineActor>();
 	GameEngineTextureRenderer* DarknessRenderer = DarknessActor->CreateComponent<GameEngineTextureRenderer>();
-	DarknessRenderer->SetTexture("Darkness.png");
+	DarknessRenderer->CreateFrameAnimationFolder("Darkness", FrameAnimation_DESC("Darkness", 0.05f, true));
+	DarknessRenderer->ChangeFrameAnimation("Darkness");
 	DarknessRenderer->GetTransform().SetWorldScale({ 1300.0f, 750, 1.0 });
 	DarknessRenderer->GetTransform().SetWorldPosition({ 0.0f, 0.0f, -100.0f });
 	DarknessRenderer->GetPipeLine()->SetOutputMergerBlend("Darkness");
@@ -117,6 +118,8 @@ void DogFightLevel::LevelEndEvent()
 		Score->PlayTime = PlayElapsedTime;
 		Score->HP = Player->GetHP();
 	}
+
+	Controller.Stop();
 }
 
 void DogFightLevel::ResetPositionCloudLeftA(const FrameAnimation_DESC& _Info)

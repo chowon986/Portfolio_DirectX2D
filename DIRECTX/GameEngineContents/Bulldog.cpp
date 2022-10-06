@@ -105,8 +105,7 @@ void Bulldog::Start()
 
 
 		Renderer->CreateFrameAnimationFolder("BulldogDie", FrameAnimation_DESC("BulldogDie", 0.05f));
-		Renderer->AnimationBindEnd("BulldogDie", std::bind(&Bulldog::BulldogDieCheck, this, std::placeholders::_1));
-		Renderer->AnimationBindFrame("BulldogDie", std::bind(&Bulldog::Test, this, std::placeholders::_1));
+		Renderer->AnimationBindFrame("BulldogDie", std::bind(&Bulldog::BulldogDieCheck, this, std::placeholders::_1));
 		Renderer->SetScaleModeImage();
 		Renderer->SetPivot(PIVOTMODE::BOT);
 		SetRenderer(Renderer);
@@ -127,7 +126,7 @@ void Bulldog::Start()
 
 	srand(static_cast<int>(time(NULL)));
 
-	SetHP(3);
+	SetHP(20);
 
 	// ÃÑ »ý¼º
 	{
@@ -293,7 +292,7 @@ void Bulldog::OnPrepareAnimationFinished(const FrameAnimation_DESC& _Info)
 
 CollisionReturn Bulldog::OnTakeDamage(GameEngineCollision* _This, GameEngineCollision* _Other)
 {
-	if (CanTakeDamageTime > 1.0f)
+	if (CanTakeDamageTime > 0.5f)
 	{
 		CanTakeDamageTime = 0.0f;
 		SetHP(GetHP() - 1);
@@ -305,7 +304,7 @@ CollisionReturn Bulldog::OnTakeDamage(GameEngineCollision* _This, GameEngineColl
 		{
 			TakeDamage();
 		}
-		if (GetHP() == 2)
+		if (GetHP() == 10)
 		{
 			if (DogCopter == nullptr)
 			{
@@ -319,11 +318,24 @@ CollisionReturn Bulldog::OnTakeDamage(GameEngineCollision* _This, GameEngineColl
 
 void Bulldog::BulldogDieCheck(const FrameAnimation_DESC& _Info)
 {
-	Death();
-
-	if (InGameLevelBase* Level = dynamic_cast<InGameLevelBase*>(GetLevel()))
+	if (_Info.CurFrame == 1)
 	{
-		Level->SetPhase(Phase::Phase2);
+		GameEngineSound::SoundPlayOneShot("sfx_DLC_Dogfight_P1_Bulldog_PlaneExplodes.wav");
+	}
+
+	if (_Info.CurFrame == 33)
+	{
+		GameEngineSound::SoundPlayOneShot("sfx_DLC_Dogfight_P1_Bulldog_PlaneExplodes_VO_01.wav");
+	}
+
+	if (_Info.CurFrame == 57)
+	{
+		Death();
+
+		if (InGameLevelBase* Level = dynamic_cast<InGameLevelBase*>(GetLevel()))
+		{
+			Level->SetPhase(Phase::Phase2);
+		}
 	}
 }
 
@@ -332,6 +344,7 @@ void Bulldog::OnUnmountAnimationFrameChanged(const FrameAnimation_DESC& _Info)
 {
 	if (_Info.CurFrame == 1)
 	{
+		GameEngineSound::SoundPlayOneShot("sfx_DLC_Dogfight_P1_Bulldog_EjectUp.wav");
 		float4 BulldogCurPos = GetTransform().GetLocalPosition();
 		GetTransform().SetLocalPosition(float4{ BulldogCurPos.x, BulldogCurPos.y, (int)ZOrder::NPC + 1 });
 	}
@@ -639,6 +652,7 @@ void Bulldog::OnMountAnimationFrameChanged(const FrameAnimation_DESC& _Info)
 {
 	if (_Info.CurFrame == 1)
 	{
+		GameEngineSound::SoundPlayOneShot("sfx_DLC_Dogfight_P1_Bulldog_EjectDown.wav");
 	float4 BulldogCurPos = GetTransform().GetLocalPosition();
 	GetTransform().SetLocalPosition(float4{ BulldogCurPos.x, BulldogCurPos.y, (int)ZOrder::NPC +1 });
 		}

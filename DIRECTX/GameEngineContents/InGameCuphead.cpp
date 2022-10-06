@@ -14,6 +14,7 @@
 #include "SaltBakerLevel.h"
 #include "InGameCharacterDust.h"
 #include "InGameCharacterJumpDust.h"
+#include "InGameCharacterPerryEffect.h"
 #include <GameEngineContents/TutorialLevel.h>
 #include <GameEngineContents/DogFightLevel.h>
 
@@ -30,6 +31,7 @@ InGameCuphead::InGameCuphead()
 	, ToggleWeapon(false)
 	, CountInvisibleTime(false)
 	, DustElapsedTime(0.0f)
+	, CanParry(false)
 {
 }
 
@@ -713,8 +715,11 @@ void InGameCuphead::UpdateDirection()
 
 void InGameCuphead::CheckCollision()
 {
-	MainCollision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::PARRIABLEOBJECT, CollisionType::CT_AABB2D,
-		std::bind(&InGameCuphead::OnTakeDamage, this, std::placeholders::_1, std::placeholders::_2));
+	if (CanParry == false)
+	{
+		MainCollision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::PARRIABLEOBJECT, CollisionType::CT_AABB2D,
+			std::bind(&InGameCuphead::OnTakeDamage, this, std::placeholders::_1, std::placeholders::_2));
+	}
 
 	MainCollision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::MONSTER_BULLET, CollisionType::CT_AABB2D,
 		std::bind(&InGameCuphead::OnTakeDamage, this, std::placeholders::_1, std::placeholders::_2));
@@ -747,19 +752,11 @@ CollisionReturn InGameCuphead::OnTakeDamage(GameEngineCollision* _This, GameEngi
 		TakeDamage();
 	}
 
-	return CollisionReturn::ContinueCheck;
+	return CollisionReturn::Break;
 }
 
 CollisionReturn InGameCuphead::OnParry(GameEngineCollision* _This, GameEngineCollision* _Other)
 {
-	if (_Other != nullptr)
-	{
-		if (GameEngineActor* Actor = _Other->GetActor())
-		{
-			// 다른 총알이면 죽여야 한다.
-			//Actor->Death();
-		}
-	}
 	if (JumpOnParry == false)
 	{
 		GetPhysicsComponent()->Reset();
@@ -768,8 +765,22 @@ CollisionReturn InGameCuphead::OnParry(GameEngineCollision* _This, GameEngineCol
 		if (Score != nullptr)
 		{
 			Score->Parry += 1;
+			GameEngineSound::SoundPlayOneShot("sfx_player_parry_slap_02.wav");
+			InGameCharacterPerryEffect* Dust = GetLevel()->CreateActor<InGameCharacterPerryEffect>();
+			Dust->SetBoss(this);
+			Dust->GetRenderer()->ChangeFrameAnimation("PlayerParryEffect");
+			float4 MyPos = GetTransform().GetWorldPosition();
+			if (GetLevel()->GetNameCopy() == "DOGFIGHT")
+			{
+				Dust->GetTransform().SetWorldPosition({ MyPos.x, MyPos.y + 50, MyPos.z + 0.1f });
+			}
+			else if (GetLevel()->GetNameCopy() == "TUTORIAL")
+			{
+				Dust->GetTransform().SetWorldPosition({ MyPos.x - 640.0f, (MyPos.y + 50) + 360.0f, MyPos.z + 0.1f });
+			}
 		}
 		JumpOnParry = true;
+
 	}
 	
 	return CollisionReturn::Break;
@@ -778,11 +789,13 @@ CollisionReturn InGameCuphead::OnParry(GameEngineCollision* _This, GameEngineCol
 void InGameCuphead::OnParryAnimationFrameEnd(const FrameAnimation_DESC& _Info)
 {
 	IsInputEnabled = true;
+	CanParry = false;
 	Idle();
 }
 
 void InGameCuphead::OnParryAnimationFrameStarted(const FrameAnimation_DESC& _Info)
 {
+	CanParry = true;
 }
 
 void InGameCuphead::OnCollisionDebug()

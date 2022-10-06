@@ -29,7 +29,13 @@ void Pig::Start()
 	Renderer->GetTransform().SetLocalPosition({ 0, 175, (int)ZOrder::UI + 2 });
 	Renderer->ChangeFrameAnimation("Welcome");
 	
+	Renderer->AnimationBindFrame("Welcome", std::bind(&Pig::OnWelcomeAnimationFrameChanged, this, std::placeholders::_1));
 	Renderer->AnimationBindFrame("Bye", std::bind(&Pig::OnByeAnimationFrameChanged, this, std::placeholders::_1));
+}
+
+void Pig::LevelEndEvent()
+{
+
 }
 
 void Pig::Update(float _DeltaTime)
@@ -46,8 +52,21 @@ void Pig::Idle()
 
 void Pig::OnByeAnimationFrameChanged(const FrameAnimation_DESC& _Info)
 {
+	if (_Info.CurFrame == 1)
+	{
+		GameEngineSound::SoundPlayOneShot("sfx_store_pig_goodbye.wav");
+	}
+
 	if (_Info.CurFrame == 33) // need to chng
 	{
 		GEngine::ChangeLevel("WorldMap");
+	}
+}
+
+void Pig::OnWelcomeAnimationFrameChanged(const FrameAnimation_DESC& _Info)
+{
+	if (_Info.CurFrame == 1)
+	{
+		GameEngineSound::SoundPlayOneShot("sfx_store_pig_welcome.wav");
 	}
 }

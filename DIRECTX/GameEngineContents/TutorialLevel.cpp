@@ -17,6 +17,8 @@ TutorialLevel::TutorialLevel()
 	, IsObjectOn(false)
 	, CurPhase(TutorialPhase::Phase1)
 	, SoundOnceCheck(false)
+	, SoundOnceCheck2(false)
+	, SoundOnceCheckZ(false)
 {
 }
 
@@ -127,7 +129,7 @@ void TutorialLevel::LevelStartEvent()
 		WheatC->GetTransform().SetLocalPosition({ 950.0f, -150.0f, (int)ZOrder::Foreground });
 		WheatCRenderer->SetScaleModeImage();
 		WheatCCollision = WheatC->CreateComponent<GameEngineCollision>();
-		WheatCCollision->GetTransform().SetLocalScale({ 50.0f,30.0f,1.0f });
+		WheatCCollision->GetTransform().SetLocalScale({ 60.0f,40.0f,1.0f });
 		WheatCCollision->GetTransform().SetLocalPosition({ 0.0f,10.0f,(int)ZOrder::Foreground });
 		WheatCCollision->ChangeOrder(ObjectOrder::ONLYPARRIABLEOBJECT);
 	}
@@ -279,6 +281,12 @@ CollisionReturn TutorialLevel::OnWheatACollision(GameEngineCollision* _This, Gam
 
 CollisionReturn TutorialLevel::OnWheatBCollision(GameEngineCollision* _This, GameEngineCollision* _Other)
 {
+	if (SoundOnceCheck2 == false)
+	{
+	GameEngineSound::SoundPlayOneShot("sfx_player_parry_slap_02.wav");
+	SoundOnceCheck2 = true;
+	}
+
 	RipRenderer->ChangeFrameAnimation("RipClose");
 	SetPhase(TutorialPhase::Phase3);
 	return CollisionReturn::ContinueCheck;
@@ -306,6 +314,13 @@ CollisionReturn TutorialLevel::OnCoinCollision(GameEngineCollision* _This, GameE
 	{
 		State->Coin = 1;
 	}
+
+	if (SoundOnceCheckZ == false)
+	{
+		GameEngineSound::SoundPlayOneShot("sfx_store_purchase.wav");
+		SoundOnceCheckZ = true;
+	}
+
 	return CollisionReturn::ContinueCheck;
 }
 

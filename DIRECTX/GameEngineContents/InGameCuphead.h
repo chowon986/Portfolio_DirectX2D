@@ -91,4 +91,5 @@ private:
 	float DustElapsedTime;
 	bool JumpOnParry;
 	InGameCharacterState BeforeState;
+	bool CanParry;
 };

@@ -63,6 +63,7 @@ private:
 	int HP;
 
 	float DieTime;
+	float CanTakeDamgageTime;
 
 public:
 	GameEngineCollision* Collision;

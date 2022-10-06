@@ -110,7 +110,8 @@ void TitleLevel::LevelStartEvent()
 	{
 		GameEngineActor* DarknessActor = CreateActor<GameEngineActor>();
 		GameEngineTextureRenderer* DarknessRenderer = DarknessActor->CreateComponent<GameEngineTextureRenderer>();
-		DarknessRenderer->SetTexture("Darkness.png");
+		DarknessRenderer->CreateFrameAnimationFolder("Darkness", FrameAnimation_DESC("Darkness", 0.05f, true));
+		DarknessRenderer->ChangeFrameAnimation("Darkness");
 		DarknessRenderer->GetTransform().SetWorldScale({ 1300.0f, 750, 1.0 });
 		DarknessRenderer->GetTransform().SetWorldPosition({ 0.0f, 0.0f, -100.0f });
 		DarknessRenderer->GetPipeLine()->SetOutputMergerBlend("Darkness");
@@ -137,8 +138,8 @@ void TitleLevel::LevelStartEvent()
 		Background* Iris = CreateActor<Background>(GameObjectGroup::UI);
 		IrisRenderer = Iris->CreateComponent<GameEngineTextureRenderer>();
 		IrisRenderer->GetTransform().SetLocalScale({ 1280.0f, 720.0f, 1.0f });
-		IrisRenderer->CreateFrameAnimationFolder("IrisBStart", FrameAnimation_DESC("IrisB", 0.07f, false));
-		IrisRenderer->CreateFrameAnimationFolder("IrisB", FrameAnimation_DESC("IrisB", 0, 0, 0.07f, true));
+		IrisRenderer->CreateFrameAnimationFolder("IrisBStart", FrameAnimation_DESC("IrisB", 0.05f, false));
+		IrisRenderer->CreateFrameAnimationFolder("IrisB", FrameAnimation_DESC("IrisB", 0, 0, 0.05f, true));
 		IrisRenderer->AnimationBindEnd("IrisBStart", std::bind(&TitleLevel::OnIrisAnimationFrameEnd, this, std::placeholders::_1));
 		IrisRenderer->ChangeFrameAnimation("IrisB");
 	}
@@ -171,15 +172,18 @@ void TitleLevel::Update(float _DeltaTime)
 {
 	TextureLoadUtils::LoadTexturesAsync("23IntroStory", 1);
 
-	if (false == SoundOnceCheckA)
-	{
-		GameEngineSound::SoundPlayOneShot("MDHR.mp3");
-		SoundOnceCheckA = true;
-	}
-
 	if (0 == Phase)
 	{
 		ElapsedTime += _DeltaTime;
+		if (ElapsedTime > 0.8)
+		{
+			if (false == SoundOnceCheckA)
+			{
+				GameEngineSound::SoundPlayOneShot("MDHR.mp3");
+				SoundOnceCheckA = true;
+			}
+		}
+
 		if (ElapsedTime > BlackScreenToAnimationIntervalTime)
 		{
 			FadeInElapsedTime += _DeltaTime;

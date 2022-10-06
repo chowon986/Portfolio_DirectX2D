@@ -31,6 +31,7 @@ public:
 
 protected:
 	void Start() override;
+	void LevelEndEvent() override;
 	void Update(float _DeltaTime);
 	void End() {}
 	void Talk() override;
@@ -38,6 +39,7 @@ protected:
 
 private:
 	void OnByeAnimationFrameChanged(const FrameAnimation_DESC& _Info);
+	void OnWelcomeAnimationFrameChanged(const FrameAnimation_DESC& _Info);
 
 private:
 	GameEngineTextureRenderer* Renderer;

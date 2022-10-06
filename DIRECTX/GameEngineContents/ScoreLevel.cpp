@@ -19,6 +19,7 @@ ScoreLevel::ScoreLevel()
 	, TTLGrade(0)
 	, GradeOnceCheck(false)
 	, ScoreDone(false)
+	, ScoreStartOn(false)
 {
 }
 
@@ -37,17 +38,18 @@ void ScoreLevel::LevelStartEvent()
 	GetMainCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
 	GetBackgroundCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
 	GetRotateCamera()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
-	GetRotateCamera2()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>(); \
+	GetRotateCamera2()->GetCameraRenderTarget()->AddEffect<GameEngineBlur>();
 
 	{
 		GameEngineActor* Iris = CreateActor<GameEngineActor>();
 		IrisRenderer = Iris->CreateComponent<GameEngineTextureRenderer>();
-		IrisRenderer->CreateFrameAnimationFolder("LightOn", FrameAnimation_DESC("IrisA", 0, 0, 0.05f, true));
+		IrisRenderer->CreateFrameAnimationFolder("LightOn", FrameAnimation_DESC("IrisA", 0.05f, false));
 		IrisRenderer->CreateFrameAnimationFolder("LightOff", FrameAnimation_DESC("IrisB", 0.05f, true));
 		IrisRenderer->ChangeFrameAnimation("LightOn");
 		IrisRenderer->GetTransform().SetLocalScale(float4{ 1280.0f,720.0f,1.0f });
 		IrisRenderer->GetTransform().SetLocalPosition(float4{ 0.0f, 0.0f, -10 });
 		IrisRenderer->AnimationBindFrame("LightOff", std::bind(&ScoreLevel::OnLightOffAnimationFrameChanged, this, std::placeholders::_1));
+		IrisRenderer->AnimationBindFrame("LightOn", std::bind(&ScoreLevel::OnLightOnAnimationFrameChanged, this, std::placeholders::_1));
 		IrisRenderer->ChangeCamera(CAMERAORDER::UICAMERA);
 	}
 	{
@@ -227,280 +229,305 @@ void ScoreLevel::LevelStartEvent()
 	}
 }
 
+void ScoreLevel::LevelEndEvent()
+{
+	Controller.Stop();
+}
+
 void ScoreLevel::Update(float _DeltaTime)
 {
 	ElapsedTime += _DeltaTime;
-	if (IrisRenderer->GetPixelData().PlusColor.a > -1.0f)
+	CountElapsedTime += _DeltaTime;
+
+	if (nullptr != Score && ScoreStartOn == true)
 	{
-		IrisRenderer->GetPixelData().PlusColor.a -= _DeltaTime * 0.3;
-	}
-	//BackgroundRenderer->GetTransform().SetLocalRotate({0.0f, 0.0f, 10 * _DeltaTime});
-	if (nullptr != Score && ElapsedTime > IntervalTime)
-	{
-		if (Phase == ScorePhase::Minute)
+		if (CountElapsedTime > 0.3)
 		{
-			if (nullptr != FontRenderers[0])
+			Controller = GameEngineSound::SoundPlayControl("win_score_tick_02.wav");
+			CountElapsedTime = 0.0f;
+		}
+
+		if (ElapsedTime > IntervalTime)
+		{
+			if (Phase == ScorePhase::Minute)
 			{
-				if (PlayMinute != 0)
+				if (nullptr != FontRenderers[0])
 				{
-					if (Num <= PlayMinute)
+					if (PlayMinute != 0)
 					{
-						if (PlayMinute < 10)
+						if (Num <= PlayMinute)
 						{
-							FontRenderers[0]->SetText("0" + std::to_string(Num), "Yoon-Backjae");
-							ElapsedTime = 0.0f;
-							++Num;
+							if (PlayMinute < 10)
+							{
+								FontRenderers[0]->SetText("0" + std::to_string(Num), "Yoon-Backjae");
+								ElapsedTime = 0.0f;
+								++Num;
+							}
+							else
+							{
+								FontRenderers[0]->SetText(std::to_string(Num), "Yoon-Backjae");
+								ElapsedTime = 0.0f;
+								++Num;
+							}
 						}
-						else
+
+						if (Num > PlayMinute)
 						{
-							FontRenderers[0]->SetText(std::to_string(Num), "Yoon-Backjae");
+							Num = 0;
 							ElapsedTime = 0.0f;
-							++Num;
+							Phase = ScorePhase::Second;
 						}
 					}
-
-					if (Num > PlayMinute)
+					else
 					{
-						Num = 0;
+						FontRenderers[0]->SetText("00", "Yoon-Backjae");
+						if (Num != 0)
+						{
+							Num = 0;
+						}
 						ElapsedTime = 0.0f;
 						Phase = ScorePhase::Second;
 					}
 				}
-				else
-				{
-					FontRenderers[0]->SetText("00", "Yoon-Backjae");
-					if (Num != 0)
-					{
-						Num = 0;
-					}
-					ElapsedTime = 0.0f;
-					Phase = ScorePhase::Second;
-				}
 			}
-		}
 
-		else if (Phase == ScorePhase::Second)
-		{
-			if (nullptr != FontRenderers[1])
+			else if (Phase == ScorePhase::Second)
 			{
-				if (PlaySecond != 0)
+				if (nullptr != FontRenderers[1])
 				{
-					if (Num <= PlaySecond)
+					if (PlaySecond != 0)
 					{
-						if (PlaySecond < 10)
+						if (Num <= PlaySecond)
 						{
-							FontRenderers[1]->SetText("0" + std::to_string(Num), "Yoon-Backjae");
-							ElapsedTime = 0.0f;
-							++Num;
+							if (PlaySecond < 10)
+							{
+								FontRenderers[1]->SetText("0" + std::to_string(Num), "Yoon-Backjae");
+								ElapsedTime = 0.0f;
+								++Num;
+							}
+							else
+							{
+								FontRenderers[1]->SetText(std::to_string(Num), "Yoon-Backjae");
+								ElapsedTime = 0.0f;
+								++Num;
+							}
 						}
-						else
+
+						if (Num > PlaySecond)
 						{
-							FontRenderers[1]->SetText(std::to_string(Num), "Yoon-Backjae");
+							Num = 0;
 							ElapsedTime = 0.0f;
-							++Num;
+							Phase = ScorePhase::HP;
 						}
 					}
-
-					if (Num > PlaySecond)
+					else
 					{
+						FontRenderers[1]->SetText("00", "Yoon-Backjae");
 						Num = 0;
 						ElapsedTime = 0.0f;
 						Phase = ScorePhase::HP;
 					}
 				}
-				else
-				{
-					FontRenderers[1]->SetText("00", "Yoon-Backjae");
-					Num = 0;
-					ElapsedTime = 0.0f;
-					Phase = ScorePhase::HP;
-				}
 			}
-		}
 
 
-		else if (Phase == ScorePhase::HP)
-		{
-			if (nullptr != FontRenderers[2])
+			else if (Phase == ScorePhase::HP)
 			{
-				if (Score->HP != 0)
+				if (nullptr != FontRenderers[2])
 				{
-					if (Num <= Score->HP)
+					if (Score->HP != 0)
 					{
-						FontRenderers[2]->SetText(std::to_string(Num), "Yoon-Backjae");
-						ElapsedTime = 0.0f;
-						++Num;
-					}
+						if (Num <= Score->HP)
+						{
+							if (Num > 3)
+							{
+								Num = 3;
+							}
 
-					if (Num > Score->HP)
+							FontRenderers[2]->SetText(std::to_string(Num), "Yoon-Backjae");
+							ElapsedTime = 0.0f;
+							++Num;
+						}
+
+						if (Num > Score->HP)
+						{
+							Num = 0;
+							ElapsedTime = 0.0f;
+							Phase = ScorePhase::Parry;
+						}
+					}
+					else
 					{
+						FontRenderers[2]->SetText("0", "Yoon-Backjae");
 						Num = 0;
 						ElapsedTime = 0.0f;
 						Phase = ScorePhase::Parry;
 					}
 				}
-				else
-				{
-					FontRenderers[2]->SetText("0", "Yoon-Backjae");
-					Num = 0;
-					ElapsedTime = 0.0f;
-					Phase = ScorePhase::Parry;
-				}
 			}
-		}
 
-		else if (Phase == ScorePhase::Parry)
-		{
-			if (nullptr != FontRenderers[3])
+			else if (Phase == ScorePhase::Parry)
 			{
-				if (Score->Parry != 0)
+				if (nullptr != FontRenderers[3])
 				{
-					if (Num <= Score->Parry)
+					if (Score->Parry != 0)
 					{
-						FontRenderers[3]->SetText(std::to_string(Num), "Yoon-Backjae");
-						ElapsedTime = 0.0f;
-						++Num;
-					}
+						if (Num <= Score->Parry)
+						{
+							if (Num > 3)
+							{
+								Num = 3;
+							}
 
-					if (Num > Score->Parry)
+							FontRenderers[3]->SetText(std::to_string(Num), "Yoon-Backjae");
+							ElapsedTime = 0.0f;
+							++Num;
+						}
+
+						if (Num > Score->Parry)
+						{
+							Num = 0;
+							ElapsedTime = 0.0f;
+							Phase = ScorePhase::UseCard;
+						}
+					}
+					else
 					{
+						FontRenderers[3]->SetText("0", "Yoon-Backjae");
 						Num = 0;
 						ElapsedTime = 0.0f;
 						Phase = ScorePhase::UseCard;
 					}
 				}
-				else
-				{
-					FontRenderers[3]->SetText("0", "Yoon-Backjae");
-					Num = 0;
-					ElapsedTime = 0.0f;
-					Phase = ScorePhase::UseCard;
-				}
 			}
-		}
 
-		else if (Phase == ScorePhase::UseCard)
-		{
-			if (nullptr != FontRenderers[4])
+			else if (Phase == ScorePhase::UseCard)
 			{
-				if (Score->UseCard != 0)
+				if (nullptr != FontRenderers[4])
 				{
-					if (Num <= Score->UseCard)
+					if (Score->UseCard != 0)
 					{
-						FontRenderers[3]->SetText(std::to_string(Num), "Yoon-Backjae");
-						ElapsedTime = 0.0f;
-						++Num;
+						if (Num <= Score->UseCard)
+						{
+							if (Num > 6)
+							{
+								Num = 6;
+							}
+
+							FontRenderers[3]->SetText(std::to_string(Num), "Yoon-Backjae");
+							ElapsedTime = 0.0f;
+							++Num;
+						}
+
+						if (Num > Score->UseCard)
+						{
+							Num = 0;
+							ElapsedTime = 0.0f;
+							Phase = ScorePhase::SkillLevel;
+						}
 					}
 
-					if (Num > Score->UseCard)
+					else
 					{
+						FontRenderers[4]->SetText("0", "Yoon-Backjae");
 						Num = 0;
 						ElapsedTime = 0.0f;
 						Phase = ScorePhase::SkillLevel;
 					}
 				}
-
-				else
-				{
-					FontRenderers[4]->SetText("0", "Yoon-Backjae");
-					Num = 0;
-					ElapsedTime = 0.0f;
-					Phase = ScorePhase::SkillLevel;
-				}
 			}
-		}
 
-		else if (Phase == ScorePhase::SkillLevel)
-		{
-			if (false == OnceCheck)
+			else if (Phase == ScorePhase::SkillLevel)
 			{
-				StarElapsedTime += _DeltaTime;
-
-				if (PlusXIndex <= Score->SkillLevel)
+				if (false == OnceCheck)
 				{
-					if (StarElapsedTime > 0.2)
-					{
-						GameEngineActor* StarActor = CreateActor<GameEngineActor>();
-						GameEngineTextureRenderer* Renderer = StarActor->CreateComponent<GameEngineTextureRenderer>();
-						Renderer->CreateFrameAnimationFolder("LittileStar", FrameAnimation_DESC("LittileStar", 0.05f, false));
-						Renderer->ChangeFrameAnimation("LittileStar");
-						Renderer->SetScaleModeImage();
-						Renderer->GetTransform().SetWorldPosition({ (895.0f + (PlusXIndex * 30)), -452.0f,(int)ZOrder::Foreground - 1 });
-						if (PlusXIndex == Score->SkillLevel - 1)
-						{
-							OnceCheck = true;
-							StarElapsedTime = 0.0f;
-						}
-						else
-						{
-							++PlusXIndex;
-							StarElapsedTime = 0.0f;
-						}
-					}
-				}
-			}
-			else // Grade
-			{
-				if (false == GradeOnceCheck)
-				{
-					TTLGrade += Score->HP; // Max 3
-					TTLGrade += Score->Parry; // Max 3
-					TTLGrade += Score->UseCard; // Max 6
-					TTLGrade += Score->SkillLevel; // Max 2
-					if (PlayMinute < 1)
-					{
-						TTLGrade += 1; // TTL Max 15
-					}
+					StarElapsedTime += _DeltaTime;
 
-					if (TTLGrade > 12)
+					if (PlusXIndex <= Score->SkillLevel)
 					{
-						Grade = "A";
-					}
-					else if (TTLGrade > 9 && TTLGrade <= 12)
-					{
-						Grade = "B";
-					}
-					else if (TTLGrade > 6 && TTLGrade <= 9)
-					{
-						Grade = "C";
-					}
-					else if (TTLGrade > 3 && TTLGrade <= 6)
-					{
-						Grade = "D";
-					}
-					else if (TTLGrade <= 3)
-					{
-						Grade = "E";
-					}
-
-					GradeOnceCheck = true;
-				}
-				else
-				{
-					GradeElapsedTime += _DeltaTime;
-					if (GradeElapsedTime > 0.5)
-					{
-						if (ScoreDone == false)
+						if (StarElapsedTime > 0.2)
 						{
-							GameEngineActor* TTLGrade = CreateActor<GameEngineActor>();
-							GameEngineFontRenderer* GradeRenderer = TTLGrade->CreateComponent<GameEngineFontRenderer>();
-							GradeRenderer->SetText(Grade, "Yoon-Backjae");
-							GradeRenderer->SetColor({ (1.0 / 255) * 198.0f, (1.0 / 255) * 164.0f, (1.0 / 255) * 41.0f, 1.0f });
-							GradeRenderer->SetSize(50);
-							GradeRenderer->SetScreenPostion(float4{ 850.0f, 500.0f, (int)ZOrder::Foreground - 1 });
-							GradeRenderer->SetRenderingOrder(10000);
-							GradeElapsedTime = 0.0f;
-							ScoreDone = true;
-						}
-						else
-						{
-							Score->Win = true;
-							if (GradeElapsedTime > 0.5)
+							GameEngineActor* StarActor = CreateActor<GameEngineActor>();
+							GameEngineTextureRenderer* Renderer = StarActor->CreateComponent<GameEngineTextureRenderer>();
+							Renderer->CreateFrameAnimationFolder("LittileStar", FrameAnimation_DESC("LittileStar", 0.05f, false));
+							Renderer->ChangeFrameAnimation("LittileStar");
+							Renderer->SetScaleModeImage();
+							Renderer->GetTransform().SetWorldPosition({ (895.0f + (PlusXIndex * 30)), -452.0f,(int)ZOrder::Foreground - 1 });
+							if (PlusXIndex == Score->SkillLevel - 1)
 							{
-								IrisRenderer->GetPixelData().PlusColor.a = 0;
-								IrisRenderer->ChangeFrameAnimation("LightOff");
+								OnceCheck = true;
+								StarElapsedTime = 0.0f;
 							}
-							
+							else
+							{
+								++PlusXIndex;
+								StarElapsedTime = 0.0f;
+							}
+						}
+					}
+				}
+				else // Grade
+				{
+					if (false == GradeOnceCheck)
+					{
+						TTLGrade += Score->HP; // Max 3
+						TTLGrade += Score->Parry; // Max 3
+						TTLGrade += Score->UseCard; // Max 6
+						TTLGrade += Score->SkillLevel; // Max 2
+						if (PlayMinute < 1)
+						{
+							TTLGrade += 1; // TTL Max 15
+						}
+
+						if (TTLGrade > 12)
+						{
+							Grade = "A";
+						}
+						else if (TTLGrade > 9 && TTLGrade <= 12)
+						{
+							Grade = "B";
+						}
+						else if (TTLGrade > 6 && TTLGrade <= 9)
+						{
+							Grade = "C";
+						}
+						else if (TTLGrade > 3 && TTLGrade <= 6)
+						{
+							Grade = "D";
+						}
+						else if (TTLGrade <= 3)
+						{
+							Grade = "E";
+						}
+
+						GradeOnceCheck = true;
+					}
+					else
+					{
+						GradeElapsedTime += _DeltaTime;
+						if (GradeElapsedTime > 0.5)
+						{
+							if (ScoreDone == false)
+							{
+								GameEngineActor* TTLGrade = CreateActor<GameEngineActor>();
+								GameEngineFontRenderer* GradeRenderer = TTLGrade->CreateComponent<GameEngineFontRenderer>();
+								GradeRenderer->SetText(Grade, "Yoon-Backjae");
+								GradeRenderer->SetColor({ (1.0 / 255) * 198.0f, (1.0 / 255) * 164.0f, (1.0 / 255) * 41.0f, 1.0f });
+								GradeRenderer->SetSize(50);
+								GradeRenderer->SetScreenPostion(float4{ 850.0f, 500.0f, (int)ZOrder::Foreground - 1 });
+								GradeRenderer->SetRenderingOrder(10000);
+								GradeElapsedTime = 0.0f;
+								ScoreDone = true;
+							}
+							else
+							{
+								Score->Win = true;
+								if (GradeElapsedTime > 1.0f)
+								{
+									IrisRenderer->ChangeFrameAnimation("LightOff");
+								}
+
+							}
 						}
 					}
 				}
@@ -508,7 +535,6 @@ void ScoreLevel::Update(float _DeltaTime)
 		}
 	}
 }
-
 void ScoreLevel::End()
 {
 }
@@ -518,5 +544,14 @@ void ScoreLevel::OnLightOffAnimationFrameChanged(const FrameAnimation_DESC& _Inf
 	if (_Info.CurFrame == 15)
 	{
 		GEngine::ChangeLevel("WorldMap");
+	}
+}
+
+void ScoreLevel::OnLightOnAnimationFrameChanged(const FrameAnimation_DESC& _Info)
+{
+	if (_Info.CurFrame == 16)
+	{
+		ScoreStartOn = true;
+		GameEngineSound::SoundPlayOneShot("MUS_VictoryScreen.wav");
 	}
 }

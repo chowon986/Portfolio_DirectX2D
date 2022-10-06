@@ -30,11 +30,13 @@ public:
 protected:
 	void Start() override {}
 	void LevelStartEvent() override;
+	void LevelEndEvent() override;
 	void Update(float _DeltaTime) override;
 	void End() override;
 	
 private:
 	void OnLightOffAnimationFrameChanged(const FrameAnimation_DESC& _Info);
+	void OnLightOnAnimationFrameChanged(const FrameAnimation_DESC& _Info);
 
 private:
 	GameEngineTextureRenderer* BackgroundRenderer;
@@ -56,5 +58,8 @@ private:
 	int TTLGrade;
 	std::string Grade;
 	bool GradeOnceCheck;
+	bool ScoreStartOn;
+	float CountElapsedTime;
+	GameEngineSoundPlayer Controller;
 };
 

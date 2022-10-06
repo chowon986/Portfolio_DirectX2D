@@ -36,6 +36,7 @@ private:
 	void CreateSelectRecordPhaseRenderer();
 	void CreateSelectPlayerPhaseRenderer();
 	void EndAnimation(const FrameAnimation_DESC& _Info);
+	void OnLightOffAnimationFrameChanged(const FrameAnimation_DESC& _Info);
 
 public:
 	GameEngineSoundPlayer Controller;

@@ -9,7 +9,8 @@ DogCopterShooter::DogCopterShooter()
 	, LaserMachineRenderers()
 	, PadBackRenderers()
 	, LaserRenderers()
-	, HP(5)
+	, HP(10)
+	, CanTakeDamgageTime(0.0f)
 {
 }
 
@@ -793,15 +794,15 @@ void DogCopterShooter::Start()
 		LaserCollision4.push_back(LeftLowLaserRendererCollision);
 
 		Collision = CreateComponent<GameEngineCollision>();
-		Collision->GetTransform().SetWorldScale({ 100.0f,100.0f,1.0f });
-		Collision->GetTransform().SetLocalPosition({ 475.0f, -360.0f });
+		Collision->GetTransform().SetWorldScale({ 150.0f,100.0f,1.0f });
+		Collision->GetTransform().SetLocalPosition({ 640.0f, -300.0f });
 		Collision->ChangeOrder(ObjectOrder::MONSTER);
 		Collision->Off();
 
 		{
 			GameEngineCollision* LaserBodyCollision = CreateComponent<GameEngineCollision>();
-			LaserBodyCollision->GetTransform().SetWorldScale({ 100.0f,100.0f,1.0f });
-			LaserBodyCollision->GetTransform().SetLocalPosition({ 194.0f, -154.0f });
+			LaserBodyCollision->GetTransform().SetWorldScale({ 100.0f, 100.0f,1.0f });
+			LaserBodyCollision->GetTransform().SetLocalPosition({ 300.0f, -154.0f });
 			LaserBodyCollision->ChangeOrder(ObjectOrder::MONSTER);
 			LaserBodyCollision->Off();
 			LaserBodyCollisions.push_back(LaserBodyCollision);
@@ -810,7 +811,7 @@ void DogCopterShooter::Start()
 		{
 			GameEngineCollision* LaserBodyCollision = CreateComponent<GameEngineCollision>();
 			LaserBodyCollision->GetTransform().SetWorldScale({ 100.0f,100.0f,1.0f });
-			LaserBodyCollision->GetTransform().SetLocalPosition({ 1111.0f, -133.0f });
+			LaserBodyCollision->GetTransform().SetLocalPosition({ 1000.0f, -133.0f });
 			LaserBodyCollision->ChangeOrder(ObjectOrder::MONSTER);
 			LaserBodyCollision->Off();
 			LaserBodyCollisions.push_back(LaserBodyCollision);
@@ -819,7 +820,7 @@ void DogCopterShooter::Start()
 		{
 			GameEngineCollision* LaserBodyCollision = CreateComponent<GameEngineCollision>();
 			LaserBodyCollision->GetTransform().SetWorldScale({ 100.0f,100.0f,1.0f });
-			LaserBodyCollision->GetTransform().SetLocalPosition({ 223.0f, -363.0f });
+			LaserBodyCollision->GetTransform().SetLocalPosition({ 300.0f, -363.0f });
 			LaserBodyCollision->ChangeOrder(ObjectOrder::MONSTER);
 			LaserBodyCollision->Off();
 			LaserBodyCollisions.push_back(LaserBodyCollision);
@@ -828,7 +829,7 @@ void DogCopterShooter::Start()
 		{
 			GameEngineCollision* LaserBodyCollision = CreateComponent<GameEngineCollision>();
 			LaserBodyCollision->GetTransform().SetWorldScale({ 100.0f,100.0f,1.0f });
-			LaserBodyCollision->GetTransform().SetLocalPosition({ 1082.0f, -345.0f });
+			LaserBodyCollision->GetTransform().SetLocalPosition({ 1000.0f, -345.0f });
 			LaserBodyCollision->ChangeOrder(ObjectOrder::MONSTER);
 			LaserBodyCollision->Off();
 			LaserBodyCollisions.push_back(LaserBodyCollision);
@@ -837,7 +838,7 @@ void DogCopterShooter::Start()
 		{
 			GameEngineCollision* LaserBodyCollision = CreateComponent<GameEngineCollision>();
 			LaserBodyCollision->GetTransform().SetWorldScale({ 100.0f,100.0f,1.0f });
-			LaserBodyCollision->GetTransform().SetLocalPosition({ 178.0f, -608.0f });
+			LaserBodyCollision->GetTransform().SetLocalPosition({ 250.0f, -608.0f });
 			LaserBodyCollision->ChangeOrder(ObjectOrder::MONSTER);
 			LaserBodyCollision->Off();
 			LaserBodyCollisions.push_back(LaserBodyCollision);
@@ -846,7 +847,7 @@ void DogCopterShooter::Start()
 		{
 			GameEngineCollision* LaserBodyCollision = CreateComponent<GameEngineCollision>();
 			LaserBodyCollision->GetTransform().SetWorldScale({ 100.0f,100.0f,1.0f });
-			LaserBodyCollision->GetTransform().SetLocalPosition({ 1126.0f, -589.0f });
+			LaserBodyCollision->GetTransform().SetLocalPosition({ 1000.0f, -589.0f });
 			LaserBodyCollision->ChangeOrder(ObjectOrder::MONSTER);
 			LaserBodyCollision->Off();
 			LaserBodyCollisions.push_back(LaserBodyCollision);
@@ -985,12 +986,17 @@ void DogCopterShooter::UpdatePivot()
 
 CollisionReturn DogCopterShooter::OnTakeDamage(GameEngineCollision* _This, GameEngineCollision* _Other)
 {
-	SetHP(GetHP() - 1);
+	if (CanTakeDamgageTime > 0.5f)
+	{
+		SetHP(GetHP() - 1);
+		CanTakeDamgageTime = 0.0f;
+	}
 	return CollisionReturn::Break;
 }
 
 void DogCopterShooter::Update(float _DeltaTime)
 {
+	CanTakeDamgageTime += _DeltaTime;
 	if (GetHP() <= 0)
 	{
 		if (DogCopter* Boss = dynamic_cast<DogCopter*>(GetParent()))

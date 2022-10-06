@@ -22,5 +22,6 @@ private:
 	void End() override;
 
 	int ShootCount;
+	bool RedOrYellow;
 };
 

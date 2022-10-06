@@ -35,6 +35,7 @@ ShopLevel::ShopLevel()
 	, Time(0.0f)
 	, BeforeSelectItemNum(-1)
 	, SoundOnceCheck(false)
+	, SoundOnceCheckB(false)
 {
 }
 
@@ -239,6 +240,11 @@ void ShopLevel::Update(float _DeltaTime)
 
 		if (IsLeftDrawerOpened == false)
 		{
+			if (SoundOnceCheckB == false)
+			{
+				GameEngineSound::SoundPlayOneShot("sfx_store_panel_slide_open.wav");
+				SoundOnceCheckB = true;
+			}
 			if (StartLerpValueX.y == LeftDrawerPosX)
 			{
 				IsLeftDrawerOpened = true;
@@ -269,6 +275,8 @@ void ShopLevel::Update(float _DeltaTime)
 
 		if (true == GameEngineInput::GetInst()->IsDown("MoveRight"))
 		{
+			GameEngineSound::SoundPlayOneShot("sfx_store_navigate_item.wav");
+
 			ItemRenderers[SelectItemNum]->ChangeFrameAnimation(ItemName[SelectItemNum]);
 			++SelectItemNum;
 
@@ -280,6 +288,8 @@ void ShopLevel::Update(float _DeltaTime)
 
 		else if (true == GameEngineInput::GetInst()->IsDown("MoveLeft"))
 		{
+			GameEngineSound::SoundPlayOneShot("sfx_store_navigate_item.wav");
+
 			ItemRenderers[SelectItemNum]->ChangeFrameAnimation(ItemName[SelectItemNum]);
 			--SelectItemNum;
 
@@ -320,6 +330,7 @@ void ShopLevel::Update(float _DeltaTime)
 
 		if (nullptr != State)
 		{
+			GameEngineSound::SoundPlayOneShot("sfx_store_purchase.wav");
 			switch (SelectItemNum)
 			{
 			case 0:

@@ -81,7 +81,8 @@ void SelectLevel::LevelStartEvent()
 
 	GameEngineActor* DarknessActor = CreateActor<GameEngineActor>();
 	GameEngineTextureRenderer* DarknessRenderer = DarknessActor->CreateComponent<GameEngineTextureRenderer>();
-	DarknessRenderer->SetTexture("Darkness.png");
+	DarknessRenderer->CreateFrameAnimationFolder("Darkness", FrameAnimation_DESC("Darkness", 0.05f, true));
+	DarknessRenderer->ChangeFrameAnimation("Darkness");
 	DarknessRenderer->GetTransform().SetWorldScale({ 1300.0f, 750, 1.0 });
 	DarknessRenderer->GetTransform().SetWorldPosition({ 0.0f, 0.0f, -100.0f });
 	DarknessRenderer->GetPipeLine()->SetOutputMergerBlend("Darkness");
@@ -356,15 +357,23 @@ void SelectLevel::End()
 
 void SelectLevel::EndAnimation(const FrameAnimation_DESC& _Info)
 {
-	std::list<GameEngineActor*> Actors = GetGroup(GameObjectGroup::TitleBGM);
-	for (GameEngineActor* Actor : Actors)
+	ScreenLightRenderer->ChangeFrameAnimation("LightOff");
+}
+
+void SelectLevel::OnLightOffAnimationFrameChanged(const FrameAnimation_DESC& _Info)
+{
+	if (_Info.CurFrame == 15)
 	{
-		if (TitleBGMPlayer* BGMPlayer = dynamic_cast<TitleBGMPlayer*>(Actor))
+		std::list<GameEngineActor*> Actors = GetGroup(GameObjectGroup::TitleBGM);
+		for (GameEngineActor* Actor : Actors)
 		{
-			BGMPlayer->BGMPlayer.Stop();
+			if (TitleBGMPlayer* BGMPlayer = dynamic_cast<TitleBGMPlayer*>(Actor))
+			{
+				BGMPlayer->BGMPlayer.Stop();
+			}
 		}
+		GEngine::ChangeLevel("Story");
 	}
-	GEngine::ChangeLevel("Story");
 }
 
 SelectLevelPhase SelectLevel::GetPhase()
@@ -492,7 +501,9 @@ void SelectLevel::CreateSelectPlayerPhaseRenderer()
 		Background* ScreenLight = CreateActor<Background>(GameObjectGroup::UI);
 		ScreenLightRenderer = ScreenLight->CreateComponent <GameEngineTextureRenderer>();
 		ScreenLightRenderer->CreateFrameAnimationFolder("LightDown", FrameAnimation_DESC("IrisB", 0, 0, 0.1f));
+		ScreenLightRenderer->CreateFrameAnimationFolder("LightOff", FrameAnimation_DESC("IrisB", 0.05f, false));
 		ScreenLightRenderer->ChangeFrameAnimation("LightDown");
+		ScreenLightRenderer->AnimationBindFrame("LightOff", std::bind(&SelectLevel::OnLightOffAnimationFrameChanged, this, std::placeholders::_1));
 		ScreenLightRenderer->GetTransform().SetLocalScale({ 1280.0f, 720.0f, (int)ZOrder::UI + 1 });
 		ScreenLightRenderer->GetPixelData().PlusColor.a = 0.3f;
 	}

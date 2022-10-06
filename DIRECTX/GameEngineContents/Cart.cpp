@@ -31,30 +31,10 @@ void Cart::Update(float _DeltaTime)
 	{
 		if (GameEngineInput::GetInst()->IsDown("Select"))
 		{
+			GameEngineSound::SoundPlayOneShot("sfx_WorldMap_LevelSelect_DiffucultySettings_Appear.wav");
+			GameEngineSound::SoundPlayOneShot("sfx_worldmap_level_menu_up.wav");
 			GEngine::ChangeLevel("Tutorial");
 			TutorialEntryBubbleOn = false;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 		}
 	}
 }

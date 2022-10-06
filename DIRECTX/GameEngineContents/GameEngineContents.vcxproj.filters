@@ -669,6 +669,9 @@
     <ClInclude Include="TitleBGMPlayer.h">
       <Filter>Global</Filter>
     </ClInclude>
+    <ClInclude Include="InGameCharacterPerryEffect.h">
+      <Filter>Actor\Play\InGame\PC</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp">
@@ -1183,6 +1186,9 @@
     </ClCompile>
     <ClCompile Include="TitleBGMPlayer.cpp">
       <Filter>Global</Filter>
+    </ClCompile>
+    <ClCompile Include="InGameCharacterPerryEffect.cpp">
+      <Filter>Actor\Play\InGame\PC</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

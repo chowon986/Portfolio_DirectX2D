@@ -231,6 +231,7 @@
     <ClInclude Include="InGameCharacterDust.h" />
     <ClInclude Include="InGameCharacterJumpDust.h" />
     <ClInclude Include="InGameCharacterMovementCompmonent.h" />
+    <ClInclude Include="InGameCharacterPerryEffect.h" />
     <ClInclude Include="InGameCuphead.h" />
     <ClInclude Include="IInGameMonsterBase.h" />
     <ClInclude Include="InGameDogCopterAnimationControllerComponent.h" />
@@ -413,6 +414,7 @@
     <ClCompile Include="InGameCharacterDust.cpp" />
     <ClCompile Include="InGameCharacterJumpDust.cpp" />
     <ClCompile Include="InGameCharacterMovementCompmonent.cpp" />
+    <ClCompile Include="InGameCharacterPerryEffect.cpp" />
     <ClCompile Include="InGameCuphead.cpp" />
     <ClCompile Include="IInGameMonsterBase.cpp" />
     <ClCompile Include="InGameDogCopterAnimationControllerComponent.cpp" />

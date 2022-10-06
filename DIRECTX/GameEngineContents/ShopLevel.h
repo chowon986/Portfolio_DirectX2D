@@ -71,5 +71,6 @@ public:
 	GameEngineTextureRenderer* FontRenderer;
 	int BeforeSelectItemNum;
 	GameEngineSoundPlayer Controller;
+	bool SoundOnceCheckB;
 };
 
