@@ -87,6 +87,7 @@ void ContentsCore::Start()
 
 	GameEngineTexture::Cut("Cup.png", 20, 20);
 	GameEngineTexture::Cut("Cup_Dash.png", 8, 1);
+	GameEngineTexture::Cut("Cup_ExShot.png", 5, 3);
 	GameEngineTexture::Cut("PlayerWalkDust.png", 20, 6);
 
 	// Å° »ý¼º

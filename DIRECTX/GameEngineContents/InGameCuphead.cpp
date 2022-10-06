@@ -84,7 +84,8 @@ void InGameCuphead::Start()
 	Renderer->CreateFrameAnimationCutTexture("IngameCupheadShootUp", FrameAnimation_DESC("Cup.png", 116, 118, 0.1f, true));
 	Renderer->CreateFrameAnimationCutTexture("IngameCupheadDuckShoot", FrameAnimation_DESC("Cup.png", 174, 176, 0.1f, true));
 
-	Renderer->CreateFrameAnimationFolder("IngameCupheadExShootStraight", FrameAnimation_DESC("IngameCupheadExShootStraight", 0.05f, true));
+
+	Renderer->CreateFrameAnimationCutTexture("IngameCupheadExShootStraight", FrameAnimation_DESC("Cup_ExShot.png", 0, 13, 0.05f, true));
 	Renderer->AnimationBindEnd("IngameCupheadExShootStraight", std::bind(&InGameCuphead::OnExShootAnimationEnded, this, std::placeholders::_1));
 	Renderer->AnimationBindFrame("IngameCupheadExShootStraight", std::bind(&InGameCuphead::OnExShootAnimationChanged, this, std::placeholders::_1));
 
