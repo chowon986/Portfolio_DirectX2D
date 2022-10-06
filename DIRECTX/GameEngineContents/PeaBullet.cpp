@@ -57,6 +57,7 @@ void PeaBullet::End()
 
 void PeaBullet::OnPeashotDeathAnimationFrameFinished(const FrameAnimation_DESC& _Info)
 {
+	GameEngineSound::SoundPlayOneShot("sfx_player_weapon_peashot_death_001.wav");
 	Death();
 }
 

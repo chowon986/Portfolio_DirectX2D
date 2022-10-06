@@ -61,5 +61,6 @@ private:
 	bool ScoreStartOn;
 	float CountElapsedTime;
 	GameEngineSoundPlayer Controller;
+	GameEngineSoundPlayer BGMController;
 };
 

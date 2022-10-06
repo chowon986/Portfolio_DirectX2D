@@ -21,8 +21,11 @@ private:
 public:
 	virtual void SetDirection(float4 _Direction) override;
 	void OnAttackSuccess(GameEngineCollision* _This, GameEngineCollision* _Other) override;
+	void OnConvergeHitSparkFrameChanged(const FrameAnimation_DESC& _Info);
 
 private:
 	ConvergeShooter* Weapon;
+	GameEngineActor* HitSparkActor;
+	
 };
 

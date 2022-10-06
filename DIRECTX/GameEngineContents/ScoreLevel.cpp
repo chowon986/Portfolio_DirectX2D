@@ -232,6 +232,7 @@ void ScoreLevel::LevelStartEvent()
 void ScoreLevel::LevelEndEvent()
 {
 	Controller.Stop();
+	BGMController.Stop();
 }
 
 void ScoreLevel::Update(float _DeltaTime)

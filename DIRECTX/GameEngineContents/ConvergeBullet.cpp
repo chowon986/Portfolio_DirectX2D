@@ -69,4 +69,17 @@ void ConvergeBullet::SetDirection(float4 _Direction)
 
 void ConvergeBullet::OnAttackSuccess(GameEngineCollision* _This, GameEngineCollision* _Other)
 {
+	//HitSparkActor = GetLevel()->CreateActor<GameEngineActor>();
+	//GameEngineTextureRenderer* HitSparkRenderer = HitSparkActor->CreateComponent<GameEngineTextureRenderer>();
+	//HitSparkRenderer->CreateFrameAnimationFolder("ConvergeHitSpark", FrameAnimation_DESC("ConvergeHitSpark", 0.03, true));
+	//HitSparkRenderer->ChangeFrameAnimation("ConvergeHitSpark");
+	//HitSparkRenderer->SetScaleModeImage();
+	//HitSparkRenderer->AnimationBindEnd("ConvergeHitSpark", std::bind(&ConvergeBullet::OnConvergeHitSparkFrameChanged, this, std::placeholders::_1));
+	//float4 MyPos = GetTransform().GetWorldPosition();
+	//HitSparkActor->GetTransform().SetWorldPosition({ MyPos.x, MyPos.y + 50, MyPos.z + 0.1f });
+}
+
+void ConvergeBullet::OnConvergeHitSparkFrameChanged(const FrameAnimation_DESC& _Info)
+{
+	//HitSparkActor->Death();
 }

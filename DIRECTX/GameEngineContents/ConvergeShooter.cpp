@@ -28,6 +28,8 @@ void ConvergeShooter::Shoot()
 
 			case InGameCharacterShooterState::BasicShot:
 			{
+				SparkRenderer->ChangeFrameAnimation("ConvergeSpark");
+
 				float4 Direction = GetVerticalDirection() + GetHorizontalDirection();
 				if (Direction.CompareInt3D(float4::ZERO))
 				{
@@ -72,10 +74,10 @@ void ConvergeShooter::Shoot()
 			}
 			break;
 			case InGameCharacterShooterState::None:
-				//SparkRenderer->ChangeFrameAnimation("Nothing");
+				SparkRenderer->ChangeFrameAnimation("Nothing");
 				break;
 			default:
-				//SparkRenderer->ChangeFrameAnimation("Nothing");
+				SparkRenderer->ChangeFrameAnimation("Nothing");
 				break;
 			}
 		}
@@ -84,10 +86,23 @@ void ConvergeShooter::Shoot()
 
 void ConvergeShooter::Start()
 {
+	SparkRenderer = CreateComponent<GameEngineTextureRenderer>();
+	SparkRenderer->CreateFrameAnimationFolder("ConvergeSpark", FrameAnimation_DESC("ConvergeSpark", 0.05f));
+	SparkRenderer->CreateFrameAnimationFolder("Nothing", FrameAnimation_DESC("Nothing", 0.1f, false));
+	SparkRenderer->AnimationBindEnd("ConvergeSpark", std::bind(&ConvergeShooter::PeashotSparkAnimationFrameFinished, this, std::placeholders::_1));
+	SparkRenderer->ChangeFrameAnimation("Nothing");
+	SparkRenderer->SetScaleModeImage();
+	IntervalTime = 0.0f; 
+	SparkRenderer->ChangeCamera(CAMERAORDER::ROTATECAMERA2);
 }
 
 void ConvergeShooter::End()
 {
+}
+
+void ConvergeShooter::PeashotSparkAnimationFrameFinished(const FrameAnimation_DESC& _Info)
+{
+	SparkRenderer->ChangeFrameAnimation("Nothing");
 }
 
 void ConvergeShooter::Update(float _DeltaTime)
