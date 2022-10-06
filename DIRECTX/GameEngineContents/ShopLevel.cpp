@@ -204,6 +204,11 @@ void ShopLevel::LevelStartEvent()
 		}
 	}
 }
+void ShopLevel::LevelEndEvent()
+{
+	Controller.Stop();
+}
+
 void ShopLevel::Update(float _DeltaTime)
 {
 	if (false == SoundOnceCheck)

@@ -57,7 +57,7 @@ private:
 	Background* Hourglass;
 	float LoadCompleted;
 	float PineAppleElapsedTime;
-	bool SoundOnceCheck;
+	bool SoundOnceCheckA;
 	bool TimeCountOn;
 
 	std::vector<GameEngineTextureRenderer*> EventCoinRenderers;

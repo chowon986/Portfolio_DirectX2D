@@ -37,6 +37,11 @@ void DogBowlShooter::Update(float _DeltaTime)
 		{
 		case InGameMonsterAttackState::DogBowl:
 		{
+			if (ShootCount == 0)
+			{
+				GameEngineSound::SoundPlayOneShot("sfx_DLC_Dogfight_P3_Leader_ButtonPresses_Loop.wav");
+			}
+
 			if (ShootCount > 7)
 			{
 				if (Character != nullptr)

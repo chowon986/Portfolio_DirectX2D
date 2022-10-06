@@ -22,6 +22,7 @@ Ph2Dog::Ph2Dog()
 	, OnDeath(false)
 	, BowWowGun(nullptr)
 	, ZetPuffElapsedTime(0.0f)
+	, OnGrey(false)
 {
 }
 
@@ -168,12 +169,16 @@ void Ph2Dog::Update(float _DeltaTime)
 		if (GetHP() <= 5)
 		{
 			ZetPuff->GetRenderer()->ChangeFrameAnimation("Ph2DogPuffGrey");
+			if (OnGrey == false)
+			{
+				GameEngineSound::SoundPlayOneShot("sfx_DLC_Dogfight_P2_TerrierJetpackDmgSmoke_01.wav");
+				OnGrey = true;
+			}
 		}
 		ZetPuff->SetBoss(this);
 		float4 MyPos = GetTransform().GetWorldPosition();
 		ZetPuff->GetTransform().SetWorldPosition({ MyPos.x, MyPos.y+5, MyPos.z + 1 });
 		ZetPuffElapsedTime = 0.0f;
-
 	}
 
 
@@ -247,6 +252,10 @@ CollisionReturn Ph2Dog::OnTakeDamage(GameEngineCollision* _This, GameEngineColli
 	SetHP(GetHP() - 1);
 	if (GetHP() <= 0)
 	{
+		if (OnDeath == false)
+		{
+			GameEngineSound::SoundPlayOneShot("sfx_DLC_Dogfight_P2_TerrierJetpack_Explosion_01.wav");
+		}
 		OnDeath = true;
 		Renderer->ChangeFrameAnimation("Ph2DogDie");
 		_This->Off();

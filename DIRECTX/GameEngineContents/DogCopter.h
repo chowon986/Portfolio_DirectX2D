@@ -60,5 +60,6 @@ private:
 
 public:
 	bool CanDie;
+	bool KnockOutOnceCheck;
 };
 

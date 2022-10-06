@@ -65,4 +65,5 @@ private:
 	float4 ShootPos;
 	bool OnDeath;
 	float ZetPuffElapsedTime;
+	bool OnGrey;
 };

@@ -25,6 +25,7 @@ public:
 protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;
+	void LevelEndEvent() override;
 	void Aim() override;
 	void TakeDamage() override;
 	void Dash() override;
@@ -91,6 +92,6 @@ private:
 	bool CountInvisibleTime;
 	bool IsTakeDamageInProgess;
 	float DustElapsedTime;
-	bool CanParryJump;
+	bool JumpOnParry;
 	InGameCharacterState BeforeState;
 };

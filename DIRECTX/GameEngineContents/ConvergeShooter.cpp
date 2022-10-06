@@ -33,7 +33,7 @@ void ConvergeShooter::Shoot()
 				{
 					return;
 				}
-
+				GameEngineSound::SoundPlayOneShot("sfx_player_weapon_wideshot_shoot_03.wav");
 				{
 					ConvergeBullet* Bullet = GetLevel()->CreateActor<ConvergeBullet>();
 					Bullet->SetColMapImage(GetColMapImage());

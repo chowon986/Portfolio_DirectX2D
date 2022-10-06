@@ -110,7 +110,8 @@ void BulletBase::Update(float _DeltaTime)
 		return;
 	}
 
-	if (true == ColMapTexture->GetPixelToFloat4(Renderer->GetTransform().GetWorldPosition().ix(), -Renderer->GetTransform().GetWorldPosition().iy()).CompareInt3D(float4::BLACK))
+	if ((true == Renderer->GetTransform().GetWorldPosition().ix() < -500 || true == Renderer->GetTransform().GetWorldPosition().ix() > 1500)||
+		(true == Renderer->GetTransform().GetWorldPosition().iy() < -800 || true == Renderer->GetTransform().GetWorldPosition().iy() > 100))
 	{
 		Death();
 	}

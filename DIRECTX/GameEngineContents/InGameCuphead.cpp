@@ -350,6 +350,21 @@ void InGameCuphead::Update(float _DeltaTime)
 	}
 }
 
+void InGameCuphead::LevelEndEvent()
+{
+	std::list<GameEngineActor*> Actors = GetLevel()->GetGroup(GameObjectGroup::CharacterState);
+	for (GameEngineActor* Actor : Actors)
+	{
+		if (State = dynamic_cast<CharacterState*>(Actor))
+		{
+			if (WeaponItemBase* ShotAItem = dynamic_cast<WeaponItemBase*>(State->EquippedItems[InventoryType::ShotA].get()))
+			{
+				ShotAItem->Weapon->SetParent(nullptr);
+			}
+		}
+	}
+}
+
 void InGameCuphead::Walk()
 {
 	SetState(InGameCharacterState::Walk);
@@ -367,21 +382,6 @@ void InGameCuphead::OnStateChanged()
 		GetPhysicsComponent()->Reset();
 		GetPhysicsComponent()->AddForce(50);
 	}
-	else if (GetState() == InGameCharacterState::Parry)
-	{
-		if (CanParryJump == true)
-		{
-			GetPhysicsComponent()->Reset();
-			GetPhysicsComponent()->AddForce(45);
-			SetGauge(GetGauge() + 1);
-			if (Score != nullptr)
-			{
-				Score->Parry += 1;
-			}
-
-			CanParryJump = false;
-		}
-	}
 	if (GetState() == InGameCharacterState::Dash)
 	{
 		GetPhysicsComponent()->Reset();
@@ -391,6 +391,7 @@ void InGameCuphead::OnStateChanged()
 	{
 		IsTakeDamageInProgess = true;
 	}
+	JumpOnParry = false;
 }
 
 void InGameCuphead::OnIsOnGroundChanged()
@@ -436,6 +437,13 @@ void InGameCuphead::OnDashAnimationEnded(const FrameAnimation_DESC& _Info)
 
 void InGameCuphead::OnDashAnimationFrameChanged(const FrameAnimation_DESC& _Info)
 {
+
+	if (_Info.CurFrame == 1)
+	{
+		GameEngineSound::SoundPlayOneShot("sfx_player_dash_01.wav");
+	}
+
+
 	if (_Info.CurFrame == 2)
 	{
 		if (true == IsInvisible)
@@ -511,6 +519,11 @@ void InGameCuphead::OnShootAnimationFrameStarted(const FrameAnimation_DESC& _Inf
 
 void InGameCuphead::OnJumpAnimationFrameChanged(const FrameAnimation_DESC& _Info)
 {
+	if (_Info.CurFrame == 1)
+	{
+		GameEngineSound::SoundPlayOneShot("sfx_player_jump_01.wav");
+	}
+
 	FrameAnimation_DESC* Info = const_cast<FrameAnimation_DESC*>(&_Info);
 	if (Info->CurFrame % 2 == 0)
 	{
@@ -631,12 +644,13 @@ void InGameCuphead::UpdateState()
 		}
 		else
 		{
+			Parry();
+
 			//IsInputEnabled = false;
 			MainCollision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::PARRIABLEOBJECT, CollisionType::CT_AABB2D,
 				std::bind(&InGameCuphead::OnParry, this, std::placeholders::_1, std::placeholders::_2));
 			MainCollision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::ONLYPARRIABLEOBJECT, CollisionType::CT_AABB2D,
 				std::bind(&InGameCuphead::OnParry, this, std::placeholders::_1, std::placeholders::_2));
-			Parry();
 		}
 	}
 
@@ -747,7 +761,17 @@ CollisionReturn InGameCuphead::OnParry(GameEngineCollision* _This, GameEngineCol
 			//Actor->Death();
 		}
 	}
-	CanParryJump = true;
+	if (JumpOnParry == false)
+	{
+		GetPhysicsComponent()->Reset();
+		GetPhysicsComponent()->AddForce(45);
+		SetGauge(GetGauge() + 1);
+		if (Score != nullptr)
+		{
+			Score->Parry += 1;
+		}
+		JumpOnParry = true;
+	}
 	
 	return CollisionReturn::Break;
 }

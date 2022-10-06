@@ -39,5 +39,6 @@ private:
 	bool SoundOnceCheck;
 	bool LoadCompleted;
 	GameEngineTextureRenderer* StoryRenderer;
+	bool SoundOnceCheckA;
 };
 

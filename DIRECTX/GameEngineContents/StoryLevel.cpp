@@ -10,6 +10,7 @@ StoryLevel::StoryLevel()
 	, BackgroundRenderer(nullptr)
 	, IrisRenderer(nullptr)
 	, LoadCompleted(false)
+	, SoundOnceCheckA(false)
 {
 }
 
@@ -26,7 +27,7 @@ void StoryLevel::LevelStartEvent()
 		Renderer->CreateFrameAnimationFolder("Hourglass", FrameAnimation_DESC("Loading", 0.05f));
 		Renderer->ChangeFrameAnimation("Hourglass");
 		Renderer->ScaleToTexture();
-		Renderer->GetTransform().SetLocalPosition({ 500, -250,-100 });
+		Renderer->GetTransform().SetLocalPosition({ 550, -200,-100 });
 	}
 }
 
@@ -71,6 +72,7 @@ void StoryLevel::IntroStoryAnimationFrameChanged(const FrameAnimation_DESC& _Inf
 
 	if (_Info.CurFrame == 629)
 	{
+		Controller.Stop();
 		Controller = GameEngineSound::SoundPlayControl("mus_dlc_intro.wav");
 	}
 }

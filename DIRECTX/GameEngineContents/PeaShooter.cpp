@@ -49,6 +49,7 @@ void PeaShooter::Shoot()
 				{
 					return;
 				}
+				GameEngineSound::SoundPlayOneShot("sfx_player_weapon_peashot_002.wav");
 				PeaBullet* Bullet = GetLevel()->CreateActor<PeaBullet>();
 				Bullet->SetColMapImage(GetColMapImage());
 				Bullet->GetTransform().SetWorldPosition(GetTransform().GetWorldPosition()); // Need to CHK

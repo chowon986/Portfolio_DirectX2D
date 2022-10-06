@@ -14,6 +14,7 @@ DogCopter::DogCopter()
 	, OnceCheck(false)
 	, CanDie(false)
 	, KnockOutElapsedTime(0.0f)
+	, KnockOutOnceCheck(false)
 {
 }
 
@@ -142,9 +143,15 @@ void DogCopter::Update(float _DeltaTime)
 {
 	if (GetState() == InGameMonsterState::KnockOut)
 	{
+		if (KnockOutOnceCheck == false)
+		{
+			GameEngineSound::SoundPlayOneShot("sfx_level_knockout_boom_01.wav");
+			KnockOutOnceCheck = true;
+		}
+
 		KnockOutElapsedTime += _DeltaTime;
 
-		if (KnockOutElapsedTime > 3.0f)
+		if (KnockOutElapsedTime > 4.0f)
 		{
 			// 화면 하나가 어두워진다 -> ScoreLevel로 이동한다
 			GEngine::ChangeLevel("Score");

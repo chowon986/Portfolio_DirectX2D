@@ -1021,6 +1021,7 @@ void DogCopterShooter::OnLaserAnimationFrameChanged(const FrameAnimation_DESC& _
 	{
 		if (_Info.CurFrame == 13)
 		{
+			GameEngineSound::SoundPlayOneShot("sfx_DLC_Dogfight_P3_DogCopter_Laser_PreFire_Warning.wav");
 			if (Parent->GetAttackState() == InGameMonsterAttackState::LaserPattern3)
 			{
 				LaserMachineRenderers[4]->ChangeFrameAnimation("LaserWarning");
@@ -1258,6 +1259,7 @@ void DogCopterShooter::OnLaserWarningAnimationFrameFinished(const FrameAnimation
 {
 	if (DogCopter* Parent = dynamic_cast<DogCopter*>(GetParent()))
 	{
+		GameEngineSound::SoundPlayOneShot("sfx_DLC_Dogfight_P3_DogCopter_Laser_Fire_01.wav");
 		if (Parent->GetAttackState() == InGameMonsterAttackState::LaserPattern3)
 		{
 			LaserMachineRenderers[4]->ChangeFrameAnimation("LaserShooting");

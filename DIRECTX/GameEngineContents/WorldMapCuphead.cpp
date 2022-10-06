@@ -181,6 +181,11 @@ CollisionReturn WorldMapCuphead::CanPortalCollision(GameEngineCollision* _This, 
 
 void WorldMapCuphead::OnWorldMapCupheadWinAnimationFrameChanged(const FrameAnimation_DESC& _Info)
 {
+	if (_Info.CurFrame == 1 || _Info.CurFrame == 10)
+	{
+		GameEngineSound::SoundPlayOneShot("sfx_map_player_win_bounce_cuphead_01.wav");
+	}
+
 	if (_Info.CurFrame == 23)
 	{
 		Idle();

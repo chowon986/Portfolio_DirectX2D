@@ -45,10 +45,10 @@ WorldMapLevel::WorldMapLevel()
 	, CurCoin(0)
 	, LoadCompleted(false)
 	, Hourglass(nullptr)
-	, SoundOnceCheck(false)
 	, FlagRenderer(nullptr)
 	, TimeCountOn(false)
 	, PineAppleElapsedTime(0.0f)
+	, SoundOnceCheckA(false)
 {
 }
 
@@ -113,7 +113,8 @@ void WorldMapLevel::Start()
 
 void WorldMapLevel::LevelStartEvent()
 {
-	Controller = GameEngineSound::SoundPlayControl("sfx_noise_1920s_01.wav");
+	SoundOnceCheckA = false;
+
 	if (Hourglass == nullptr)
 	{
 		Hourglass = CreateActor<Background>(GameObjectGroup::UI);
@@ -151,16 +152,18 @@ void WorldMapLevel::Update(float _DeltaTime)
 			LoadCompleted = TextureLoadUtils::LoadTexturesAsync("05Item");
 			if (LoadCompleted == true)
 			{
-				if (false == SoundOnceCheck)
-				{
-					Controller = GameEngineSound::SoundPlayControl("mus_dlc_map_b.wav");
-					SoundOnceCheck = true;
-				}
 				OnLoadCompleted();
 			}
 		}
 		return;
 	}
+
+	if (SoundOnceCheckA == false)
+	{
+		Controller = GameEngineSound::SoundPlayControl("mus_dlc_map_b.wav");
+		SoundOnceCheckA = true;
+	}
+
 
 	if (true == GameEngineInput::GetInst()->IsDown("LevelChange"))
 	{

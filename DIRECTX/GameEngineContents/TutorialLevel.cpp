@@ -287,9 +287,9 @@ CollisionReturn TutorialLevel::OnRipCollision(GameEngineCollision* _This, GameEn
 CollisionReturn TutorialLevel::OnCoinCollision(GameEngineCollision* _This, GameEngineCollision* _Other)
 {
 	CoinRenderer->ChangeFrameAnimation("TutorialCoinDeath");
-	if (CurCoin < 25)
+	if (State->Coin < 25)
 	{
-		++CurCoin;
+		State->Coin = 1;
 	}
 	return CollisionReturn::ContinueCheck;
 }

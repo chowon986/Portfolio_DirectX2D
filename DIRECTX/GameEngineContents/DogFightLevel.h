@@ -117,5 +117,6 @@ private:
 	float CardGauge;
 	int CardCount;
 	std::vector<GameEngineTextureRenderer*> CardRenderers;
+	bool KnockOutOnceCheck;
 };
 

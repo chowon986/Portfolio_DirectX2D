@@ -49,6 +49,7 @@ DogFightLevel::DogFightLevel()
 	, CardCount(0)
 	, AnnouncerElapsedTime(0.0f)
 	, AnnounceOn(false)
+	, KnockOutOnceCheck(false)
 {
 }
 
@@ -551,6 +552,13 @@ void DogFightLevel::Update(float _DeltaTime)
 			{
 				if (ReadyWallopRenderer != nullptr)
 				{
+					if (KnockOutOnceCheck == false)
+					{
+						GameEngineSound::SoundPlayOneShot("sfx_level_knockout_bell.wav");
+						GameEngineSound::SoundPlayOneShot("sfx_level_announcer_knockout_0004.wav");
+						KnockOutOnceCheck = true;
+					}
+
 					ReadyWallopRenderer->ChangeFrameAnimation("KnockOut");
 					ReadyWallopRenderer->On();
 				}
