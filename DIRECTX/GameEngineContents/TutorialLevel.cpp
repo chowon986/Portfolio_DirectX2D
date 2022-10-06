@@ -181,7 +181,7 @@ void TutorialLevel::Update(float _DeltaTime)
 {
 	if (false == SoundOnceCheck)
 	{
-		Controller = GameEngineSound::SoundPlayControl("mus_dlc_tutorial.wav");
+		//Controller = GameEngineSound::SoundPlayControl("mus_dlc_tutorial.wav");
 		//Controller.Volume();
 		SoundOnceCheck = true;
 	}

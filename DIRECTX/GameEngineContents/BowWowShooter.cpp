@@ -42,6 +42,7 @@ void BowWowShooter::Shoot(InGameMonsterAttackState State)
 
 		//SetBowWowDirection(ShootPos);
 		BowWowBullet* Bullet = GetLevel()->CreateActor<BowWowBullet>();
+		//GameEngineSound::SoundPlayOneShot("sfx_DLC_Dogfight_P2_TerrierJetpack_BarkShoot_06.wav");
 		Bullet->SetColMapImage(GetColMapImage());
 		Bullet->GetTransform().SetWorldPosition({ GetTransform().GetWorldPosition().x, GetTransform().GetWorldPosition().y, -1 });
 

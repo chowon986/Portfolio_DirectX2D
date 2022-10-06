@@ -47,6 +47,8 @@ DogFightLevel::DogFightLevel()
 	, SoundOnceCheck(false)
 	, CardGauge(0.0f)
 	, CardCount(0)
+	, AnnouncerElapsedTime(0.0f)
+	, AnnounceOn(false)
 {
 }
 
@@ -316,8 +318,6 @@ void DogFightLevel::Update(float _DeltaTime)
 
 	if (false == SoundOnceCheck)
 	{
-		Controller = GameEngineSound::SoundPlayControl("mus_dlc_dogfight_a.wav");
-		//Controller.Volume();
 		SoundOnceCheck = true;
 	}
 
@@ -329,6 +329,9 @@ void DogFightLevel::Update(float _DeltaTime)
 			LoadCompleted = TextureLoadUtils::LoadFolderTexturesAsync("DogFightBoss", "22Boss");
 			if (LoadCompleted == true)
 			{
+				//Controller = GameEngineSound::SoundPlayControl("mus_dlc_dogfight_a.wav");
+				//AnnouncerController = GameEngineSound::SoundPlayControl("sfx_level_announcer_0001_e.wav");
+				AnnounceOn = true;
 				OnLoadCompleted();
 			}
 		}
@@ -336,6 +339,20 @@ void DogFightLevel::Update(float _DeltaTime)
 	}
 
 	PlayElapsedTime += _DeltaTime;
+
+	if (AnnounceOn == true)
+	{
+		AnnouncerElapsedTime += _DeltaTime;
+	}
+
+	if (AnnouncerElapsedTime > 3.0f)
+	{
+		AnnouncerController.Stop();
+		//AnnouncerController = GameEngineSound::SoundPlayControl("sfx_level_announcer_0002_d.wav");
+		AnnounceOn = false;
+		AnnouncerElapsedTime = 0.0f;
+	}
+
 
 	ColMapOnOffSwitch();
 	if (GameEngineInput::GetInst()->IsDown("PhaseChangeKey"))

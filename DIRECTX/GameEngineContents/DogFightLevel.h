@@ -61,6 +61,7 @@ protected:
 
 public:
 	GameEngineSoundPlayer Controller;
+	GameEngineSoundPlayer AnnouncerController;
 
 private:
 	Background* Hourglass;
@@ -99,6 +100,7 @@ private:
 
 	float RotateElapsedTime;
 	bool IsRotateCompleted;
+	bool AnnounceOn;
 	float ZAngle;
 
 	GameEngineTextureRenderer* ReadyWallopRenderer;
@@ -110,6 +112,7 @@ private:
 	float RotateTime;
 	float LoadCompleted;
 	bool SoundOnceCheck;
+	float AnnouncerElapsedTime;
 
 	float CardGauge;
 	int CardCount;

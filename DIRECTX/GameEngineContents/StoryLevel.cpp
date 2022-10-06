@@ -43,7 +43,7 @@ void StoryLevel::Update(float _DeltaTime)
 {
 	if (false == SoundOnceCheck)
 	{
-		Controller = GameEngineSound::SoundPlayControl("mus_dlc_intro_start.wav");
+		//Controller = GameEngineSound::SoundPlayControl("mus_dlc_intro_start.wav");
 		//Controller.Volume();
 		SoundOnceCheck = true;
 	}
@@ -69,7 +69,7 @@ void StoryLevel::IntroStoryAnimationFrameChanged(const FrameAnimation_DESC& _Inf
 
 	if (_Info.CurFrame == 629)
 	{
-		Controller = GameEngineSound::SoundPlayControl("mus_dlc_intro.wav");
+		//Controller = GameEngineSound::SoundPlayControl("mus_dlc_intro.wav");
 	}
 }
 
