@@ -666,6 +666,9 @@
     <ClInclude Include="InGameCharacterJumpDust.h">
       <Filter>Actor\Play\InGame\PC</Filter>
     </ClInclude>
+    <ClInclude Include="TitleBGMPlayer.h">
+      <Filter>Global</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp">
@@ -1177,6 +1180,9 @@
     </ClCompile>
     <ClCompile Include="InGameCharacterJumpDust.cpp">
       <Filter>Actor\Play\InGame\PC</Filter>
+    </ClCompile>
+    <ClCompile Include="TitleBGMPlayer.cpp">
+      <Filter>Global</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

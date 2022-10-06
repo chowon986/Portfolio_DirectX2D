@@ -13,9 +13,6 @@ public:
 	TitleLevel& operator=(const TitleLevel& _Other) = delete;
 	TitleLevel& operator=(TitleLevel&& _Other) noexcept = delete;
 
-public:
-	GameEngineSoundPlayer Controller;
-
 protected:
 	void Start() override;
 	void LevelStartEvent() override;

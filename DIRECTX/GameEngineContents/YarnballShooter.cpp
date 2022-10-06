@@ -61,6 +61,7 @@ void YarnballShooter::Update(float _DeltaTime)
 				Bullet->SetColMapImage(GetColMapImage());
 				Bullet->GetTransform().SetWorldPosition(GetTransform().GetWorldPosition());
 				Bullet->SetDirection(GetDirection());
+				GameEngineSound::SoundPlayOneShot("sfx_DLC_Dogfight_P1_CatGun_Shoot_05.wav");
 				break;
 			}
 			case InGameMonsterAttackState::YarnBall2:
@@ -70,6 +71,7 @@ void YarnballShooter::Update(float _DeltaTime)
 				Bullet->SetColMapImage(GetColMapImage());
 				Bullet->GetTransform().SetWorldPosition(GetTransform().GetWorldPosition());
 				Bullet->SetDirection(GetDirection());
+				GameEngineSound::SoundPlayOneShot("sfx_DLC_Dogfight_P1_CatGun_Shoot_05.wav");
 				break;
 			}
 			case InGameMonsterAttackState::YarnBall3:
@@ -79,6 +81,7 @@ void YarnballShooter::Update(float _DeltaTime)
 				Bullet->SetColMapImage(GetColMapImage());
 				Bullet->GetTransform().SetWorldPosition(GetTransform().GetWorldPosition());
 				Bullet->SetDirection(GetDirection());
+				GameEngineSound::SoundPlayOneShot("sfx_DLC_Dogfight_P1_CatGun_Shoot_05.wav");
 				break;
 			}
 			}

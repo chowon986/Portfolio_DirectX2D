@@ -31,7 +31,7 @@ protected:
 	
 private:
 	void Attack1();
-	void PrepareAnimationFrameFinished(const FrameAnimation_DESC& _Info);
+	void PrepareAnimationFrameChanged(const FrameAnimation_DESC& _Info);
 
 public:
 	void SetPlayer(IInGameCharacterBase* _Player) { Player = _Player; }
@@ -45,5 +45,6 @@ private:
 	HydrantBullet* Bullet;
 	float CreateTimeInterval;
 	float ElapsedTime;
+	GameEngineSoundPlayer SoundPlayer;
 };
 

@@ -319,6 +319,7 @@
     <ClInclude Include="TennisballBullet.h" />
     <ClInclude Include="TennisballShooter.h" />
     <ClInclude Include="TextureLoadUtils.h" />
+    <ClInclude Include="TitleBGMPlayer.h" />
     <ClInclude Include="TitleLevel.h">
       <SubType>
       </SubType>
@@ -502,6 +503,7 @@
     <ClCompile Include="TennisballBullet.cpp" />
     <ClCompile Include="TennisballShooter.cpp" />
     <ClCompile Include="TextureLoadUtils.cpp" />
+    <ClCompile Include="TitleBGMPlayer.cpp" />
     <ClCompile Include="TitleLevel.cpp">
       <SubType>
       </SubType>

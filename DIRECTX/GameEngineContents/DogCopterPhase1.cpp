@@ -20,10 +20,10 @@ void DogCopterPhase1::Start()
 	GetTransform().SetWorldPosition({ 640.0f, -360.0f, (int)ZOrder::NPC });
 
 	GameEngineTextureRenderer* Renderer = CreateComponent<GameEngineTextureRenderer>();
-	Renderer->CreateFrameAnimationFolder("DogCopterPhase1Intro", FrameAnimation_DESC("DogCopterHydrant", 0.1f, true));
+	Renderer->CreateFrameAnimationFolder("DogCopterPhase1Intro", FrameAnimation_DESC("DogCopterHydrant", 0.07f, true));
 	Renderer->CreateFrameAnimationFolder("DogCopterPhase1Attack1", FrameAnimation_DESC("Nothing", 0.1f, true));
 	Renderer->ChangeFrameAnimation("DogCopterPhase1Intro");
-	Renderer->AnimationBindEnd("DogCopterPhase1Intro", std::bind(&DogCopterPhase1::PrepareAnimationFrameFinished, this, std::placeholders::_1));
+	Renderer->AnimationBindFrame("DogCopterPhase1Intro", std::bind(&DogCopterPhase1::PrepareAnimationFrameChanged, this, std::placeholders::_1));
 	Renderer->SetScaleModeImage();
 	SetRenderer(Renderer);
 
@@ -53,6 +53,7 @@ void DogCopterPhase1::Update(float _DeltaTime)
 				{
 					ElapsedTime -= CreateTimeInterval;
 					Bullet = GetLevel()->CreateActor<HydrantBullet>();
+					GameEngineSound::SoundPlayOneShot("sfx_DLC_Dogfight_P1_HydrantMissile_Entrance.wav");
 				}
 			}
 		}
@@ -89,7 +90,23 @@ void DogCopterPhase1::Attack1()
 	SetState(InGameMonsterState::Attack1);
 }
 
-void DogCopterPhase1::PrepareAnimationFrameFinished(const FrameAnimation_DESC& _Info)
+
+void DogCopterPhase1::PrepareAnimationFrameChanged(const FrameAnimation_DESC& _Info)
 {
-	Attack1();
+	if (_Info.CurFrame == 1)
+	{
+		SoundPlayer = GameEngineSound::SoundPlayControl("sfx_DLC_Dogfight_P1_Leader_CopterIntroRightScreen.wav");
+	}
+
+
+	if (_Info.CurFrame == 16 || _Info.CurFrame == 22 || _Info.CurFrame == 25)
+	{
+		GameEngineSound::SoundPlayOneShot("sfx_DLC_Dogfight_P1_Leader_CopterBackground_Canon_01.wav");
+	}
+
+	if (_Info.CurFrame == 40)
+	{
+		SoundPlayer.Stop();
+		Attack1();
+	}
 }

@@ -96,4 +96,5 @@ private:
 	float MoveSpeed;
 	float MoveElapsedTime;
 	bool SetEndPosOk;
+	bool IntroDecendCheck;
 };

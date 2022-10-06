@@ -28,6 +28,7 @@ Bulldog::Bulldog()
 	, EndPos(float4::ZERO)
 	, MoveSpeed(0.0f)
 	, SetEndPosOk(false)
+	, IntroDecendCheck(false)
 {
 }
 
@@ -362,6 +363,11 @@ void Bulldog::OnBulldogLookAnimationFinished(const FrameAnimation_DESC& _Info)
 
 void Bulldog::OnPrepareAttackAnimationFinished(const FrameAnimation_DESC& _Info)
 {
+	if (_Info.CurFrame == 3)
+	{
+		GameEngineSound::SoundPlayOneShot("sfx_DLC_Dogfight_P1_Bulldog_Whistle_In.wav");
+	}
+
 	if (GetHP() <= 0)
 	{
 		FinishAttack();
@@ -635,9 +641,7 @@ void Bulldog::OnMountAnimationFrameChanged(const FrameAnimation_DESC& _Info)
 	{
 	float4 BulldogCurPos = GetTransform().GetLocalPosition();
 	GetTransform().SetLocalPosition(float4{ BulldogCurPos.x, BulldogCurPos.y, (int)ZOrder::NPC +1 });
-
-
-	}
+		}
 	if (Plane == nullptr)
 	{
 		Plane = GetParent<BulldogPlane>();
@@ -662,6 +666,11 @@ void Bulldog::OnIdleAnimationFrameChanged(const FrameAnimation_DESC& _Info)
 		MoveSpeed = static_cast<float>(0.01);
 		PlayerPosX = Plane->GetPlayer()->GetTransform().GetLocalPosition().x;
 		SetEndPosOk = true;
+	}
+
+	if (_Info.CurFrame == 8 && IntroDecendCheck == false)
+	{
+		GameEngineSound::SoundPlayOneShot("sfx_DLC_Dogfight_BulldogPlane_IntroDecend.wav");
 	}
 }
 

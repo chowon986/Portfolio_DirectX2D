@@ -215,7 +215,7 @@ void DogFightLevel::LightOnAnimaitonFrameFinished(const FrameAnimation_DESC& _In
 		BulldogIntroRenderer->CreateFrameAnimationFolder("BulldogIntro", FrameAnimation_DESC("BulldogIntro", 0.05f, false));
 		BulldogIntroRenderer->CreateFrameAnimationFolder("Nothing", FrameAnimation_DESC("Nothing", true));
 		BulldogIntroRenderer->ChangeFrameAnimation("Nothing");
-		BulldogIntroRenderer->AnimationBindEnd("BulldogIntro", std::bind(&DogFightLevel::BulldogIntroAnimationFrameFinished, this, std::placeholders::_1));
+		BulldogIntroRenderer->AnimationBindFrame("BulldogIntro", std::bind(&DogFightLevel::BulldogIntroAnimationFrameFinished, this, std::placeholders::_1));
 		BulldogIntroRenderer->SetScaleModeImage();
 		BulldogIntroRenderer->ChangeCamera(CAMERAORDER::BACKGROUND);
 		BulldogIntroRenderer->GetTransform().SetLocalPosition({ 640.0f, -360.0f, (int)ZOrder::Background - 2 });
@@ -237,8 +237,16 @@ void DogFightLevel::LightOnAnimaitonFrameFinished(const FrameAnimation_DESC& _In
 
 void DogFightLevel::BulldogIntroAnimationFrameFinished(const FrameAnimation_DESC& _Info)
 {
-	BulldogIntroRenderer->ChangeFrameAnimation("Nothing");
-	SetPhase(Phase::Phase1);
+	if (_Info.CurFrame == 1)
+	{
+		GameEngineSound::SoundPlayOneShot("sfx_DLC_Dogfight_BulldogPlane_IntroFlyby.wav");
+	}
+
+	if (_Info.CurFrame == 24)
+	{
+		BulldogIntroRenderer->ChangeFrameAnimation("Nothing");
+		SetPhase(Phase::Phase1);
+	}
 }
 
 void DogFightLevel::DogCopterIntroPhase1IntroAnimationFrameFinished(const FrameAnimation_DESC& _Info)
@@ -329,8 +337,8 @@ void DogFightLevel::Update(float _DeltaTime)
 			LoadCompleted = TextureLoadUtils::LoadFolderTexturesAsync("DogFightBoss", "22Boss");
 			if (LoadCompleted == true)
 			{
-				//Controller = GameEngineSound::SoundPlayControl("mus_dlc_dogfight_a.wav");
-				//AnnouncerController = GameEngineSound::SoundPlayControl("sfx_level_announcer_0001_e.wav");
+				Controller = GameEngineSound::SoundPlayControl("mus_dlc_dogfight_a.wav");
+				AnnouncerController = GameEngineSound::SoundPlayControl("sfx_level_announcer_0001_e.wav");
 				AnnounceOn = true;
 				OnLoadCompleted();
 			}
@@ -348,7 +356,7 @@ void DogFightLevel::Update(float _DeltaTime)
 	if (AnnouncerElapsedTime > 3.0f)
 	{
 		AnnouncerController.Stop();
-		//AnnouncerController = GameEngineSound::SoundPlayControl("sfx_level_announcer_0002_d.wav");
+		AnnouncerController = GameEngineSound::SoundPlayControl("sfx_level_announcer_0002_d.wav");
 		AnnounceOn = false;
 		AnnouncerElapsedTime = 0.0f;
 	}

@@ -73,7 +73,7 @@ void WorldMapLevel::GiveCoin()
 	{
 		EventCoinRenderers[i]->On();
 	}
-	//GameEngineSound::SoundPlayOneShot("sfx_worldmap_coin_open.wav");
+	GameEngineSound::SoundPlayOneShot("sfx_worldmap_coin_open.wav");
 }
 
 void WorldMapLevel::GivePineApple()
@@ -113,9 +113,9 @@ void WorldMapLevel::Start()
 
 void WorldMapLevel::LevelStartEvent()
 {
+	Controller = GameEngineSound::SoundPlayControl("sfx_noise_1920s_01.wav");
 	if (Hourglass == nullptr)
 	{
-		//Controller = GameEngineSound::SoundPlayControl("sfx_noise_1920s_01.wav");
 		Hourglass = CreateActor<Background>(GameObjectGroup::UI);
 		GameEngineTextureRenderer* Renderer = Hourglass->CreateComponent<GameEngineTextureRenderer>();
 		Renderer->CreateFrameAnimationFolder("Hourglass", FrameAnimation_DESC("Loading", 0.05f));
@@ -153,7 +153,7 @@ void WorldMapLevel::Update(float _DeltaTime)
 			{
 				if (false == SoundOnceCheck)
 				{
-					//Controller = GameEngineSound::SoundPlayControl("mus_dlc_map_b.wav");
+					Controller = GameEngineSound::SoundPlayControl("mus_dlc_map_b.wav");
 					SoundOnceCheck = true;
 				}
 				OnLoadCompleted();
@@ -212,6 +212,8 @@ void WorldMapLevel::LevelEndEvent()
 	{
 		TutorialEntryBubbleRenderer->Off();
 	}
+
+	Controller.Stop();
 }
 
 

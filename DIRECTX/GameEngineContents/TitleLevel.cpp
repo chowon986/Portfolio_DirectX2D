@@ -21,6 +21,7 @@
 #include <GameEngineContents/CharacterState.h>
 #include <GameEngineContents/PeaShooter.h>
 #include <GameEngineContents/CharacterScore.h>
+#include <GameEngineContents/TitleBGMPlayer.h>
 
 TitleLevel::TitleLevel()
 	: IrisRenderer(nullptr)
@@ -168,9 +169,11 @@ void TitleLevel::LevelStartEvent()
 
 void TitleLevel::Update(float _DeltaTime)
 {
+	TextureLoadUtils::LoadTexturesAsync("23IntroStory", 1);
+
 	if (false == SoundOnceCheckA)
 	{
-		//GameEngineSound::SoundPlayOneShot("MDHR.mp3");
+		GameEngineSound::SoundPlayOneShot("MDHR.mp3");
 		SoundOnceCheckA = true;
 	}
 
@@ -192,7 +195,9 @@ void TitleLevel::Update(float _DeltaTime)
 	{
 		if (false == SoundOnceCheckB)
 		{
-			//Controller = GameEngineSound::SoundPlayControl("mus_dlc_title.wav");
+			TitleBGMPlayer* BGMPlayer = CreateActor<TitleBGMPlayer>(GameObjectGroup::TitleBGM);
+			BGMPlayer->SetLevelOverOn();
+			BGMPlayer->BGMPlayer = GameEngineSound::SoundPlayControl("mus_dlc_title.wav");
 			SoundOnceCheckB = true;
 		}
 		ElapsedTime += _DeltaTime;
@@ -201,7 +206,7 @@ void TitleLevel::Update(float _DeltaTime)
 		if (true == GameEngineInput::GetInst()->GetIsAnyKeyPressed() && false == SoundOnceCheckC) // 아무키가 눌리면
 		{
 			SoundOnceCheckC = true;
-			//GameEngineSound::SoundPlayOneShot("sfx_WorldMap_LevelSelect_BubbleAppear.wav");
+			GameEngineSound::SoundPlayOneShot("sfx_WorldMap_LevelSelect_BubbleAppear.wav");
 			IrisRenderer->ChangeFrameAnimation("IrisBStart");
 		}
 

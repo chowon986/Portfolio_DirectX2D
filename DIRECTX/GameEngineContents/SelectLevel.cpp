@@ -12,6 +12,7 @@
 #include "AstalCookieItem.h"
 #include "CharacterScore.h"
 #include <GameEngineContents/TextureLoadUtils.h>
+#include <GameEngineContents/TitleBGMPlayer.h>
 
 SelectLevel::SelectLevel()
 	: OptionRenderer(nullptr)
@@ -88,6 +89,7 @@ void SelectLevel::LevelStartEvent()
 
 void SelectLevel::Update(float _DeltaTime)
 {
+	TextureLoadUtils::LoadTexturesAsync("23IntroStory", 1);
 	SelectCharacterElapsedTime += _DeltaTime;
 
 	if (GetPhase() == SelectLevelPhase::SelectOption)
@@ -134,7 +136,7 @@ void SelectLevel::Update(float _DeltaTime)
 
 		if (true == GameEngineInput::GetInst()->IsDown("Select") && OptionImageNum == 0)
 		{
-			//GameEngineSound::SoundPlayOneShot("Menu_Category_Select.wav");
+			GameEngineSound::SoundPlayOneShot("Menu_Category_Select.wav");
 			SetPhase(SelectLevelPhase::SelectRecord);
 			SelectCharacterElapsedTime = 0.0f;
 		}
@@ -211,7 +213,7 @@ void SelectLevel::Update(float _DeltaTime)
 			{
 				BlackLetterRenderer2->SetTexture("None.png");
 			}
-			//GameEngineSound::SoundPlayOneShot("sfx_WorldMap_LevelSelect_BubbleAppear.wav");
+			GameEngineSound::SoundPlayOneShot("sfx_WorldMap_LevelSelect_BubbleAppear.wav");
 			SetPhase(SelectLevelPhase::SelectPlayer);
 			SelectCharacterElapsedTime = 0.0f;
 		}
@@ -313,7 +315,7 @@ void SelectLevel::Update(float _DeltaTime)
 					{
 						State->Type = CharacterType::Cuphead;
 						CanSelectCharacter = false;
-						//GameEngineSound::SoundPlayOneShot("Menu_Ready.wav");
+						GameEngineSound::SoundPlayOneShot("Menu_Ready.wav");
 						PlayerARenderer->ChangeFrameAnimation("SelectCupheadOk");
 					}
 
@@ -321,7 +323,7 @@ void SelectLevel::Update(float _DeltaTime)
 					{
 						State->Type = CharacterType::Mugman;
 						CanSelectCharacter = false;
-						//GameEngineSound::SoundPlayOneShot("Menu_Ready.wav");
+						GameEngineSound::SoundPlayOneShot("Menu_Ready.wav");
 						PlayerBRenderer->ChangeFrameAnimation("SelectMugmanOk");
 					}
 				}
@@ -354,6 +356,14 @@ void SelectLevel::End()
 
 void SelectLevel::EndAnimation(const FrameAnimation_DESC& _Info)
 {
+	std::list<GameEngineActor*> Actors = GetGroup(GameObjectGroup::TitleBGM);
+	for (GameEngineActor* Actor : Actors)
+	{
+		if (TitleBGMPlayer* BGMPlayer = dynamic_cast<TitleBGMPlayer*>(Actor))
+		{
+			BGMPlayer->BGMPlayer.Stop();
+		}
+	}
 	GEngine::ChangeLevel("Story");
 }
 

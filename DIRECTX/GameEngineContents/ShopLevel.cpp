@@ -208,8 +208,7 @@ void ShopLevel::Update(float _DeltaTime)
 {
 	if (false == SoundOnceCheck)
 	{
-		//Controller = GameEngineSound::SoundPlayControl("mus_dlc_shop.wav");
-		//Controller.Volume();
+		Controller = GameEngineSound::SoundPlayControl("mus_dlc_shop.wav");
 		SoundOnceCheck = true;
 	}
 

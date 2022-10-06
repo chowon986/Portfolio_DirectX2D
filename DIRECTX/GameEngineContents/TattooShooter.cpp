@@ -55,6 +55,7 @@ void TattooShooter::Shoot(InGameMonsterAttackState State)
 		Bullet->SetColMapImage(GetColMapImage());
 		Bullet->GetTransform().SetWorldPosition(GetTransform().GetWorldPosition());
 		Bullet->SetDirection(GetDirection());
+		GameEngineSound::SoundPlayOneShot("sfx_DLC_Dogfight_P1_Bulldog_Boneshot_01.wav");
 		break;
 	}
 	case InGameMonsterAttackState::Tattoo2:
@@ -79,6 +80,7 @@ void TattooShooter::Shoot(InGameMonsterAttackState State)
 		Bullet->SetColMapImage(GetColMapImage());
 		Bullet->GetTransform().SetWorldPosition(GetTransform().GetWorldPosition());
 		Bullet->SetDirection(GetDirection());
+		GameEngineSound::SoundPlayOneShot("sfx_DLC_Dogfight_P1_Bulldog_Boneshot_01.wav");
 		break;
 	}
 	}

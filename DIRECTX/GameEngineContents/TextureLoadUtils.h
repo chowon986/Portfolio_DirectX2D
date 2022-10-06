@@ -8,5 +8,6 @@ public:
 	static bool LoadFolderTextures(std::string _FolderName, std::string _ParentFolderName = "");
 
 	static bool LoadTexturesAsync(std::string _FolderName);
+	static bool LoadTexturesAsync(std::string _FolderName, int Count);
 	static bool LoadFolderTexturesAsync(std::string _FolderName, std::string _ParentFolderName = "");
 };

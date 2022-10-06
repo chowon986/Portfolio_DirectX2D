@@ -369,12 +369,17 @@ void InGameCuphead::OnStateChanged()
 	}
 	else if (GetState() == InGameCharacterState::Parry)
 	{
-		GetPhysicsComponent()->Reset();
-		GetPhysicsComponent()->AddForce(45);
-		SetGauge(GetGauge() + 1);
-		if (Score != nullptr)
+		if (CanParryJump == true)
 		{
-			Score->Parry += 1;
+			GetPhysicsComponent()->Reset();
+			GetPhysicsComponent()->AddForce(45);
+			SetGauge(GetGauge() + 1);
+			if (Score != nullptr)
+			{
+				Score->Parry += 1;
+			}
+
+			CanParryJump = false;
 		}
 	}
 	if (GetState() == InGameCharacterState::Dash)
@@ -631,6 +636,7 @@ void InGameCuphead::UpdateState()
 				std::bind(&InGameCuphead::OnParry, this, std::placeholders::_1, std::placeholders::_2));
 			MainCollision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::ONLYPARRIABLEOBJECT, CollisionType::CT_AABB2D,
 				std::bind(&InGameCuphead::OnParry, this, std::placeholders::_1, std::placeholders::_2));
+			Parry();
 		}
 	}
 
@@ -733,8 +739,6 @@ CollisionReturn InGameCuphead::OnTakeDamage(GameEngineCollision* _This, GameEngi
 
 CollisionReturn InGameCuphead::OnParry(GameEngineCollision* _This, GameEngineCollision* _Other)
 {
-	Parry();
-
 	if (_Other != nullptr)
 	{
 		if (GameEngineActor* Actor = _Other->GetActor())
@@ -743,6 +747,7 @@ CollisionReturn InGameCuphead::OnParry(GameEngineCollision* _This, GameEngineCol
 			//Actor->Death();
 		}
 	}
+	CanParryJump = true;
 	
 	return CollisionReturn::Break;
 }

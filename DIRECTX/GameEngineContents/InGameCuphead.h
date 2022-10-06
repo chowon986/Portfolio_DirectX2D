@@ -91,5 +91,6 @@ private:
 	bool CountInvisibleTime;
 	bool IsTakeDamageInProgess;
 	float DustElapsedTime;
+	bool CanParryJump;
 	InGameCharacterState BeforeState;
 };

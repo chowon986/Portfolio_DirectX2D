@@ -118,7 +118,7 @@ void WorldMapCuphead::Update(float _DeltaTime)
 		SoundOnceCheckA = false;
 		if (false == SoundOnceCheckB)
 		{
-			//GameEngineSound::SoundPlayOneShot("sfx_WorldMap_LevelSelect_BubbleAppear.wav");
+			GameEngineSound::SoundPlayOneShot("sfx_WorldMap_LevelSelect_BubbleAppear.wav");
 			SoundOnceCheckB = true;
 		}
 	}
@@ -161,7 +161,7 @@ CollisionReturn WorldMapCuphead::CanPortalCollision(GameEngineCollision* _This, 
 {
 	if (false == SoundOnceCheckA)
 	{
-		//GameEngineSound::SoundPlayOneShot("sfx_WorldMap_LevelSelect_BubbleAppear.wav");
+		GameEngineSound::SoundPlayOneShot("sfx_WorldMap_LevelSelect_BubbleAppear.wav");
 		SoundOnceCheckA = true;
 		SoundOnceCheckB = false;
 	}	

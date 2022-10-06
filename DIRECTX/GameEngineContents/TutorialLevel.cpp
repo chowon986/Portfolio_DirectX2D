@@ -181,8 +181,7 @@ void TutorialLevel::Update(float _DeltaTime)
 {
 	if (false == SoundOnceCheck)
 	{
-		//Controller = GameEngineSound::SoundPlayControl("mus_dlc_tutorial.wav");
-		//Controller.Volume();
+		Controller = GameEngineSound::SoundPlayControl("mus_dlc_tutorial.wav");
 		SoundOnceCheck = true;
 	}
 	ColMapOnOffSwitch();
@@ -250,6 +249,11 @@ void TutorialLevel::Update(float _DeltaTime)
 
 void TutorialLevel::End()
 {
+}
+
+void TutorialLevel::LevelEndEvent()
+{
+	Controller.Stop();
 }
 
 CollisionReturn TutorialLevel::OnWheatACollision(GameEngineCollision* _This, GameEngineCollision* _Other)

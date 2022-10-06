@@ -26,6 +26,7 @@ protected:
 private:
 	void IntroStoryAnimationFrameFinished(const FrameAnimation_DESC& _Info);
 	void IntroStoryAnimationFrameChanged(const FrameAnimation_DESC& _Info);
+	void OnLoadCompleted();
 
 public:
 	GameEngineSoundPlayer Controller;
@@ -36,5 +37,7 @@ private:
 	GameEngineTextureRenderer* IrisRenderer;
 	CharacterState* State;
 	bool SoundOnceCheck;
+	bool LoadCompleted;
+	GameEngineTextureRenderer* StoryRenderer;
 };
 

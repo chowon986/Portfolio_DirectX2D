@@ -32,7 +32,15 @@ CollisionReturn HydrantBullet::Attack(GameEngineCollision* _This, GameEngineColl
 
 void HydrantBullet::OnDeathAnimationFrameFninished(const FrameAnimation_DESC& _Info)
 {
-	Death();
+	if (_Info.CurFrame == 1)
+	{
+		GameEngineSound::SoundPlayOneShot("sfx_DLC_Dogfight_P1_HydrantMissile_DeathExplode_02.wav");
+	}
+
+	if (_Info.CurFrame == 13)
+	{
+		Death();
+	}
 }
 
 void HydrantBullet::Start()
@@ -46,7 +54,7 @@ void HydrantBullet::Start()
 	Renderer = CreateComponent<GameEngineTextureRenderer>();
 	Renderer->CreateFrameAnimationFolder("HydrantBullet", FrameAnimation_DESC("HydrantBullet", 0.05f, true));
 	Renderer->CreateFrameAnimationFolder("HydrantBulletDeath", FrameAnimation_DESC("HydrantBulletDeath", 0.05f, true));
-	Renderer->AnimationBindEnd("HydrantBulletDeath", std::bind(&HydrantBullet::OnDeathAnimationFrameFninished, this, std::placeholders::_1));
+	Renderer->AnimationBindFrame("HydrantBulletDeath", std::bind(&HydrantBullet::OnDeathAnimationFrameFninished, this, std::placeholders::_1));
 	Renderer->ChangeFrameAnimation("HydrantBullet");
 	Renderer->SetScaleModeImage();
 
@@ -100,6 +108,7 @@ void HydrantBullet::Update(float _DeltaTime)
 		Puff->GetTransform().SetWorldPosition({ MyPos.x, MyPos.y, MyPos.z+1 });
 		PuffElapsedTime = 0.0f;
 	}
+
 }
 
 void HydrantBullet::End()

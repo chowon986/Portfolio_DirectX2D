@@ -70,6 +70,7 @@ enum class GameObjectGroup
 	Monster,
 	CharacterState,
 	CharacterScore,
+	TitleBGM,
 	INVENTORY,
 };
 

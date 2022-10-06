@@ -29,7 +29,7 @@ GameEngineFolderTexture* GameEngineFolderTexture::Load(const std::string& _Path,
 
 GameEngineFolderTexture* GameEngineFolderTexture::LoadAsync(const std::string& _Path)
 {
-	return Load(_Path, GameEnginePath::GetFileName(_Path));
+	return LoadAsync(_Path, GameEnginePath::GetFileName(_Path));
 }
 
 GameEngineFolderTexture* GameEngineFolderTexture::LoadAsync(const std::string& _Path, const std::string& _Name)
