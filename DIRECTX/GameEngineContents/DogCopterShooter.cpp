@@ -795,14 +795,14 @@ void DogCopterShooter::Start()
 
 		Collision = CreateComponent<GameEngineCollision>();
 		Collision->GetTransform().SetWorldScale({ 150.0f,100.0f,1.0f });
-		Collision->GetTransform().SetLocalPosition({ 640.0f, -300.0f });
+		Collision->GetTransform().SetLocalPosition({ 640.0f, -100.0f });
 		Collision->ChangeOrder(ObjectOrder::MONSTER);
 		Collision->Off();
 
 		{
 			GameEngineCollision* LaserBodyCollision = CreateComponent<GameEngineCollision>();
 			LaserBodyCollision->GetTransform().SetWorldScale({ 100.0f, 100.0f,1.0f });
-			LaserBodyCollision->GetTransform().SetLocalPosition({ 300.0f, -154.0f });
+			LaserBodyCollision->GetTransform().SetLocalPosition({ 350.0f, -154.0f });
 			LaserBodyCollision->ChangeOrder(ObjectOrder::MONSTER);
 			LaserBodyCollision->Off();
 			LaserBodyCollisions.push_back(LaserBodyCollision);
@@ -820,7 +820,7 @@ void DogCopterShooter::Start()
 		{
 			GameEngineCollision* LaserBodyCollision = CreateComponent<GameEngineCollision>();
 			LaserBodyCollision->GetTransform().SetWorldScale({ 100.0f,100.0f,1.0f });
-			LaserBodyCollision->GetTransform().SetLocalPosition({ 300.0f, -363.0f });
+			LaserBodyCollision->GetTransform().SetLocalPosition({ 350.0f, -363.0f });
 			LaserBodyCollision->ChangeOrder(ObjectOrder::MONSTER);
 			LaserBodyCollision->Off();
 			LaserBodyCollisions.push_back(LaserBodyCollision);

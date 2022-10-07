@@ -92,7 +92,7 @@ void InGameCuphead::Start()
 
 	// TakeDamage
 	Renderer->CreateFrameAnimationCutTexture("IngameCupheadTakeDamage", FrameAnimation_DESC("Cup.png", 28, 33, 0.05f, true));
-	Renderer->AnimationBindEnd("IngameCupheadTakeDamage", std::bind(&InGameCuphead::OnTakeDamageAnimationEnded, this, std::placeholders::_1));
+	Renderer->AnimationBindFrame("IngameCupheadTakeDamage", std::bind(&InGameCuphead::OnTakeDamageAnimationEnded, this, std::placeholders::_1));
 
 	// Die
 	Renderer->CreateFrameAnimationCutTexture("IngameCupheadGhost", FrameAnimation_DESC("Cup.png", 140, 155, 0.1f, true));
@@ -336,6 +336,7 @@ void InGameCuphead::Update(float _DeltaTime)
 					GetPhysicsComponent()->Off();
 					SetGauge(GetGauge()-1);
 					Score->UseCard += 1;
+					Score->UseCard += 1;
 				}
 			}
 		}
@@ -460,8 +461,17 @@ void InGameCuphead::OnDashAnimationFrameChanged(const FrameAnimation_DESC& _Info
 
 void InGameCuphead::OnTakeDamageAnimationEnded(const FrameAnimation_DESC& _Info)
 {
-	IsTakeDamageInProgess = false;
-	UpdateState();
+	if (_Info.CurFrame == 1)
+	{
+		GameEngineSoundPlayer Player = GameEngineSound::SoundPlayControl("sfx_player_hit_03.wav");
+		Player.Volume(1.5);
+	}
+
+	if (_Info.CurFrame == 6)
+	{
+		IsTakeDamageInProgess = false;
+		UpdateState();
+	}
 }
 
 void InGameCuphead::OnExShootAnimationEnded(const FrameAnimation_DESC& _Info)
