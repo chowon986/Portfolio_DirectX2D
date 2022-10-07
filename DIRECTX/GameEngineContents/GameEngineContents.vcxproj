@@ -229,6 +229,7 @@
     <ClInclude Include="InGameChalice.h" />
     <ClInclude Include="InGameCharacterAnimationControllerComponent.h" />
     <ClInclude Include="InGameCharacterDust.h" />
+    <ClInclude Include="InGameCharacterExShotEffect.h" />
     <ClInclude Include="InGameCharacterJumpDust.h" />
     <ClInclude Include="InGameCharacterMovementCompmonent.h" />
     <ClInclude Include="InGameCharacterPerryEffect.h" />
@@ -412,6 +413,7 @@
     <ClCompile Include="InGameChalice.cpp" />
     <ClCompile Include="InGameCharacterAnimationControllerComponent.cpp" />
     <ClCompile Include="InGameCharacterDust.cpp" />
+    <ClCompile Include="InGameCharacterExShotEffect.cpp" />
     <ClCompile Include="InGameCharacterJumpDust.cpp" />
     <ClCompile Include="InGameCharacterMovementCompmonent.cpp" />
     <ClCompile Include="InGameCharacterPerryEffect.cpp" />

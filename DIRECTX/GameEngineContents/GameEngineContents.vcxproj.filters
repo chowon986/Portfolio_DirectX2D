@@ -672,6 +672,9 @@
     <ClInclude Include="InGameCharacterPerryEffect.h">
       <Filter>Actor\Play\InGame\PC</Filter>
     </ClInclude>
+    <ClInclude Include="InGameCharacterExShotEffect.h">
+      <Filter>Actor\Play\InGame\PC</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp">
@@ -1188,6 +1191,9 @@
       <Filter>Global</Filter>
     </ClCompile>
     <ClCompile Include="InGameCharacterPerryEffect.cpp">
+      <Filter>Actor\Play\InGame\PC</Filter>
+    </ClCompile>
+    <ClCompile Include="InGameCharacterExShotEffect.cpp">
       <Filter>Actor\Play\InGame\PC</Filter>
     </ClCompile>
   </ItemGroup>

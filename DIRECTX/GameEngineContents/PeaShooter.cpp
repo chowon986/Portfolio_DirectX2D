@@ -3,6 +3,7 @@
 #include "IInGameCharacterBase.h"
 #include "PeaBullet.h"
 #include "SuperPeaBullet.h"
+#include "InGameCharacterExShotEffect.h"
 
 PeaShooter::PeaShooter()
 {
@@ -64,6 +65,23 @@ void PeaShooter::Shoot()
 				Bullet->SetColMapImage(GetColMapImage());
 				Bullet->GetTransform().SetWorldPosition(GetTransform().GetWorldPosition()); // Need to CHK
 				Bullet->SetDirection(Direction);
+
+				InGameCharacterExShotEffect* Dust = GetLevel()->CreateActor<InGameCharacterExShotEffect>();
+				Dust->SetBoss(Parent);
+				Dust->GetRenderer()->ChangeFrameAnimation("PlayerExShotEffect");
+				float4 MyPos = GetTransform().GetWorldPosition();
+				if (GetLevel()->GetNameCopy() == "DOGFIGHT")
+				{
+					if (GetHorizontalDirection().CompareInt3D(float4::RIGHT))
+					{
+						Dust->GetTransform().SetWorldPosition({ MyPos.x - 500, MyPos.y + 50, MyPos.z + 0.1f });
+					}
+					else if (GetHorizontalDirection().CompareInt3D(float4::LEFT))
+					{
+						Dust->GetRenderer()->GetTransform().PixLocalNegativeX();
+						Dust->GetTransform().SetWorldPosition({ MyPos.x + 500, MyPos.y + 50, MyPos.z + 0.1f });
+					}
+				}
 			}
 			break;
 			case InGameCharacterShooterState::None:

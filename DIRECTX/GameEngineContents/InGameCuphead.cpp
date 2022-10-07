@@ -17,6 +17,7 @@
 #include "InGameCharacterPerryEffect.h"
 #include <GameEngineContents/TutorialLevel.h>
 #include <GameEngineContents/DogFightLevel.h>
+#include <GameEngineContents/InGameCharacterExShotEffect.h>
 
 InGameCuphead::InGameCuphead()
 	: IsInputEnabled(false)
