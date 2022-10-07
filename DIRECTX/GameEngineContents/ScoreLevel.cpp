@@ -343,6 +343,7 @@ void ScoreLevel::Update(float _DeltaTime)
 							if (Num > 3)
 							{
 								Num = 3;
+								Phase = ScorePhase::Parry;
 							}
 
 							FontRenderers[2]->SetText(std::to_string(Num), "Yoon-Backjae");
@@ -378,6 +379,7 @@ void ScoreLevel::Update(float _DeltaTime)
 							if (Num > 3)
 							{
 								Num = 3;
+								Phase = ScorePhase::UseCard;
 							}
 
 							FontRenderers[3]->SetText(std::to_string(Num), "Yoon-Backjae");
@@ -413,9 +415,10 @@ void ScoreLevel::Update(float _DeltaTime)
 							if (Num > 6)
 							{
 								Num = 6;
+								Phase = ScorePhase::SkillLevel;
 							}
 
-							FontRenderers[3]->SetText(std::to_string(Num), "Yoon-Backjae");
+							FontRenderers[4]->SetText(std::to_string(Num), "Yoon-Backjae");
 							ElapsedTime = 0.0f;
 							++Num;
 						}

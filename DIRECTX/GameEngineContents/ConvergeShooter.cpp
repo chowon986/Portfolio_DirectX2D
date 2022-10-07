@@ -35,7 +35,8 @@ void ConvergeShooter::Shoot()
 				{
 					return;
 				}
-				GameEngineSound::SoundPlayOneShot("sfx_player_weapon_wideshot_shoot_03.wav");
+				GameEngineSoundPlayer SoundControl = GameEngineSound::SoundPlayControl("sfx_player_weapon_wideshot_shoot_03.wav");
+				SoundControl.Volume(1.5);
 				{
 					ConvergeBullet* Bullet = GetLevel()->CreateActor<ConvergeBullet>();
 					Bullet->SetColMapImage(GetColMapImage());

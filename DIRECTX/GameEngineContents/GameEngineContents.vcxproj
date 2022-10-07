@@ -335,6 +335,7 @@
     <ClInclude Include="WeaponBase.h" />
     <ClInclude Include="WeaponItemBase.h" />
     <ClInclude Include="WorldMapCharacterAnimationControllerComponent.h" />
+    <ClInclude Include="WorldMapCharacterDust.h" />
     <ClInclude Include="WorldMapCuphead.h" />
     <ClInclude Include="WorldMapLevel.h" />
     <ClInclude Include="MovementComponent.h" />
@@ -521,6 +522,7 @@
     <ClCompile Include="WeaponBase.cpp" />
     <ClCompile Include="WeaponItemBase.cpp" />
     <ClCompile Include="WorldMapCharacterAnimationControllerComponent.cpp" />
+    <ClCompile Include="WorldMapCharacterDust.cpp" />
     <ClCompile Include="WorldMapCuphead.cpp" />
     <ClCompile Include="WorldMapLevel.cpp" />
     <ClCompile Include="MovementComponent.cpp" />

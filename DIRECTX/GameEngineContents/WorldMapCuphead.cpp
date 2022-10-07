@@ -6,6 +6,7 @@
 #include "CharacterScore.h"
 #include "NewsCat.h"
 #include "WorldMapLevel.h"
+#include "WorldMapCharacterDust.h"
 
 WorldMapCuphead::WorldMapCuphead()
 	: Movement(nullptr)
@@ -15,6 +16,7 @@ WorldMapCuphead::WorldMapCuphead()
 	, InventoryOn(false)
 	, SoundOnceCheckA(false)
 	, SoundOnceCheckB(false)
+	, DustElapsedTime(0.0f)
 {
 }
 
@@ -90,6 +92,21 @@ void WorldMapCuphead::Win()
 
 void WorldMapCuphead::Update(float _DeltaTime)
 {
+	DustElapsedTime += _DeltaTime;
+
+	if (DustElapsedTime > 0.5 && GetState() == WorldMapCharacterState::Walk)
+	{
+		GameEngineSoundPlayer Controller = GameEngineSound::SoundPlayControl("sfx_WorldMap_Footstep_008.wav");
+		Controller.Volume(1.5);
+		WorldMapCharacterDust* Dust = GetLevel()->CreateActor<WorldMapCharacterDust>();
+		Dust->SetBoss(this);
+		float4 MyPos = GetTransform().GetWorldPosition();
+		Dust->GetRenderer()->ChangeFrameAnimation("PlayerWorldMapDust");
+		Dust->GetTransform().SetWorldPosition({ MyPos.x, MyPos.y + 50, MyPos.z + 0.1f });
+
+		DustElapsedTime = 0.0f;
+	}
+
 	std::list<GameEngineActor*> Actors = GetLevel()->GetGroup(GameObjectGroup::CharacterScore);
 	for (GameEngineActor* Actor : Actors)
 	{
@@ -109,7 +126,6 @@ void WorldMapCuphead::Update(float _DeltaTime)
 	}
 
 	GetLevel()->GetMainCameraActorTransform().SetLocalPosition({ GetTransform().GetLocalPosition().x + 6.0f, GetTransform().GetLocalPosition().y - 32 });
-
 
 	if (false == Collision->IsCollision(CollisionType::CT_AABB2D, ObjectOrder::NPC, CollisionType::CT_AABB2D,
 		std::bind(&WorldMapCuphead::CanPortalCollision, this, std::placeholders::_1, std::placeholders::_2)))

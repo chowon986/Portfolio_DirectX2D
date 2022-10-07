@@ -55,7 +55,8 @@ void TattooShooter::Shoot(InGameMonsterAttackState State)
 		Bullet->SetColMapImage(GetColMapImage());
 		Bullet->GetTransform().SetWorldPosition(GetTransform().GetWorldPosition());
 		Bullet->SetDirection(GetDirection());
-		GameEngineSound::SoundPlayOneShot("sfx_DLC_Dogfight_P1_Bulldog_Boneshot_01.wav");
+		GameEngineSoundPlayer SoundControl = GameEngineSound::SoundPlayControl("sfx_DLC_Dogfight_P1_Bulldog_Boneshot_01.wav");
+		SoundControl.Volume(0.6);
 		break;
 	}
 	case InGameMonsterAttackState::Tattoo2:
@@ -79,8 +80,9 @@ void TattooShooter::Shoot(InGameMonsterAttackState State)
 		}
 		Bullet->SetColMapImage(GetColMapImage());
 		Bullet->GetTransform().SetWorldPosition(GetTransform().GetWorldPosition());
-		Bullet->SetDirection(GetDirection());
-		GameEngineSound::SoundPlayOneShot("sfx_DLC_Dogfight_P1_Bulldog_Boneshot_01.wav");
+		Bullet->SetDirection(GetDirection());		
+		GameEngineSoundPlayer SoundControl = GameEngineSound::SoundPlayControl("sfx_DLC_Dogfight_P1_Bulldog_Boneshot_01.wav");
+		SoundControl.Volume(0.6);
 		break;
 	}
 	}

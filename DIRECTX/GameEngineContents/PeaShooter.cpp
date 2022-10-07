@@ -50,7 +50,8 @@ void PeaShooter::Shoot()
 				{
 					return;
 				}
-				GameEngineSound::SoundPlayOneShot("sfx_player_weapon_peashot_002.wav");
+				GameEngineSoundPlayer SoundControl = GameEngineSound::SoundPlayControl("sfx_player_weapon_peashot_002.wav");
+				SoundControl.Volume(1.5);
 				PeaBullet* Bullet = GetLevel()->CreateActor<PeaBullet>();
 				Bullet->SetColMapImage(GetColMapImage());
 				Bullet->GetTransform().SetWorldPosition(GetTransform().GetWorldPosition()); // Need to CHK
@@ -65,6 +66,9 @@ void PeaShooter::Shoot()
 				Bullet->SetColMapImage(GetColMapImage());
 				Bullet->GetTransform().SetWorldPosition(GetTransform().GetWorldPosition()); // Need to CHK
 				Bullet->SetDirection(Direction);
+
+				GameEngineSoundPlayer SoundControl = GameEngineSound::SoundPlayControl("sfx_player_weapon_peashoot_ex_impact_01.wav");
+				SoundControl.Volume(1.5);
 
 				InGameCharacterExShotEffect* Dust = GetLevel()->CreateActor<InGameCharacterExShotEffect>();
 				Dust->SetBoss(Parent);

@@ -33,7 +33,7 @@ void BowWowBullet::Start()
 	MovementComponent = CreateComponent<BulletMovementComponent>();
 	MovementComponent->SetSpeed(300.0f);
 
-	Renderer->ChangeCamera(CAMERAORDER::ROTATECAMERA2);
+	Renderer->ChangeCamera(CAMERAORDER::ROTATECAMERA);
 
 }
 

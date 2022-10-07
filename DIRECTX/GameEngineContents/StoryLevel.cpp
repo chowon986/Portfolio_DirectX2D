@@ -64,7 +64,7 @@ void StoryLevel::IntroStoryAnimationFrameFinished(const FrameAnimation_DESC& _In
 void StoryLevel::IntroStoryAnimationFrameChanged(const FrameAnimation_DESC& _Info)
 {
 	StoryRenderer->GetTransform().SetWorldScale({ 1280.0f, 720.0f });
-	if (GameEngineInput::GetInst()->IsDown("AnimationFrameChangeSpeedUp"))
+	if (true == GameEngineInput::GetInst()->IsPress("AnimationFrameChangeSpeedUp"))
 	{
 		FrameAnimation_DESC* Info = const_cast<FrameAnimation_DESC*>(&_Info);
 		Info->Inter = 0.0f;

@@ -675,6 +675,9 @@
     <ClInclude Include="InGameCharacterExShotEffect.h">
       <Filter>Actor\Play\InGame\PC</Filter>
     </ClInclude>
+    <ClInclude Include="WorldMapCharacterDust.h">
+      <Filter>Actor\Play\InGame\PC</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp">
@@ -1194,6 +1197,9 @@
       <Filter>Actor\Play\InGame\PC</Filter>
     </ClCompile>
     <ClCompile Include="InGameCharacterExShotEffect.cpp">
+      <Filter>Actor\Play\InGame\PC</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldMapCharacterDust.cpp">
       <Filter>Actor\Play\InGame\PC</Filter>
     </ClCompile>
   </ItemGroup>

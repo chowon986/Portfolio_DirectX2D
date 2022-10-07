@@ -157,7 +157,7 @@ void Ph2Dog::Start()
 	}
 
 	srand(static_cast<unsigned int>(time(NULL)));
-	SetHP(10);
+	SetHP(5);
 }
 
 void Ph2Dog::Update(float _DeltaTime)
@@ -167,7 +167,7 @@ void Ph2Dog::Update(float _DeltaTime)
 	if (ZetPuffElapsedTime > 0.07 && false == OnDeath)
 	{
 		Ph2DogZetPuff* ZetPuff = GetLevel()->CreateActor<Ph2DogZetPuff>();
-		if (GetHP() <= 5)
+		if (GetHP() <= 3)
 		{
 			ZetPuff->GetRenderer()->ChangeFrameAnimation("Ph2DogPuffGrey");
 			if (OnGrey == false)
@@ -251,7 +251,6 @@ CollisionReturn Ph2Dog::OnTakeDamage(GameEngineCollision* _This, GameEngineColli
 {
 	if (CanTakeDamageTime > 0.5f)
 	{
-		TakeDamage();
 		SetHP(GetHP() - 1);
 		if (GetHP() <= 0)
 		{

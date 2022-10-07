@@ -89,6 +89,7 @@ void ContentsCore::Start()
 	GameEngineTexture::Cut("Cup_Dash.png", 8, 1);
 	GameEngineTexture::Cut("Cup_ExShot.png", 5, 3);
 	GameEngineTexture::Cut("PlayerWalkDust.png", 20, 6);
+	GameEngineTexture::Cut("PlayerWorldMapDust.png", 20, 6);
 
 	// Å° »ý¼º
 	GameEngineInput::GetInst()->CreateKey("AddCoin", VK_OEM_PLUS);

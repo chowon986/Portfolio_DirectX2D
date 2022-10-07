@@ -52,4 +52,5 @@ private:
 	GameEngineTextureRenderer* Renderer;
 	bool SoundOnceCheckA;
 	bool SoundOnceCheckB;
+	float DustElapsedTime;
 };

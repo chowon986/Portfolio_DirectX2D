@@ -9,7 +9,7 @@ DogCopterShooter::DogCopterShooter()
 	, LaserMachineRenderers()
 	, PadBackRenderers()
 	, LaserRenderers()
-	, HP(10)
+	, HP(20)
 	, CanTakeDamgageTime(0.0f)
 {
 }
