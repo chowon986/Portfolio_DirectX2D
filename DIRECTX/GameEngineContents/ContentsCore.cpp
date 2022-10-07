@@ -111,6 +111,7 @@ void ContentsCore::Start()
 	GameEngineInput::GetInst()->CreateKey("EnterMap", 'B');
 	GameEngineInput::GetInst()->CreateKey("Inventory", 'Y');
 	GameEngineInput::GetInst()->CreateKey("AnimationFrameChangeSpeedUp", VK_F1);
+	GameEngineInput::GetInst()->CreateKey("MagicKey", VK_F2);
 
 	CreateLevel<TitleLevel>("Title");
 	CreateLevel<SelectLevel>("Select");

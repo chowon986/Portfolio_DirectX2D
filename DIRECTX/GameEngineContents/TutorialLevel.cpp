@@ -189,6 +189,11 @@ void TutorialLevel::LevelStartEvent()
 
 void TutorialLevel::Update(float _DeltaTime)
 {
+	if (GameEngineInput::GetInst()->IsDown("MagicKey"))
+	{
+		GEngine::ChangeLevel("WorldMap");
+	}
+
 	if (false == SoundOnceCheck)
 	{
 		Controller = GameEngineSound::SoundPlayControl("mus_dlc_tutorial.wav");
