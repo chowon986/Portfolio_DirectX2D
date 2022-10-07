@@ -67,7 +67,7 @@ void StoryLevel::IntroStoryAnimationFrameChanged(const FrameAnimation_DESC& _Inf
 	if (true == GameEngineInput::GetInst()->IsPress("AnimationFrameChangeSpeedUp"))
 	{
 		FrameAnimation_DESC* Info = const_cast<FrameAnimation_DESC*>(&_Info);
-		Info->Inter = 0.0f;
+		Info->Inter = 0.005f;
 	}
 
 	if (_Info.CurFrame == 629)
