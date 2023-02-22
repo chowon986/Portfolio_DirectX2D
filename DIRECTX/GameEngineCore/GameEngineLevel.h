@@ -3,6 +3,7 @@
 #include <GameEngineBase/GameEngineUpdateObject.h>
 #include <list>
 #include <map>
+#include <GameEngineCore/GameEngineActor.h>
 
 enum class CAMERAORDER : int
 {
